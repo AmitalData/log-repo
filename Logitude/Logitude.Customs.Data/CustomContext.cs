@@ -272,6 +272,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomerActivityTypeMap());
 	
+            modelBuilder.Configurations.Add(new CustomerClassificationTypeMap());
+	
             modelBuilder.Configurations.Add(new CustomerIdentificationTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerIdentifyTypeMap());
@@ -593,6 +595,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
+	
+            modelBuilder.Configurations.Add(new PoaStatusTypeLookUpMap());
 	
             modelBuilder.Configurations.Add(new PointerLevelMap());
 	
@@ -1945,6 +1949,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomerClassificationType> CustomerClassificationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomerIdentificationType> CustomerIdentificationTypes 
 	 {
 	      get; set;
@@ -2906,6 +2916,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps 
 	 {
 	      get; set;
 	 

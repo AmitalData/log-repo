@@ -406,6 +406,8 @@ import { ReferenceStatusListService } from './Services/StandardLists/ReferenceSt
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
 import { ContainerizationPMService } from './Services/StandardPMs/ContainerizationPMService';
 import { ContainerizationExtendedListService } from './Services/ExtendedLists/ContainerizationExtendedListService';
+import { CustomerClassificationTypeListService } from './Services/StandardLists/CustomerClassificationTypeListService';
+import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -652,7 +654,9 @@ export class ModuleProviders {
             case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
             case "ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
             case "ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
+            case "CustomerClassificationTypeListService": { myResult = new CustomerClassificationTypeListService(); break; }
             case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
+            case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }

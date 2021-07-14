@@ -155,7 +155,7 @@
 
 
                                 <!-- Filters Fields-->
-                                <table *ngIf="ClonedItemPM" style="height: 150px;">
+                                <table *ngIf="ClonedItemPM" style="height: 150px;table-layout: fixed;">
 
                                     <tr>
                                         <!-- StatisticQuantity -->
@@ -215,11 +215,11 @@
                                             <LogLabel [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 65px; padding-left: 5px;">
+                                        <td style=" padding-left: 5px;">
                                             <LogTextBox [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td style="width: 70px;">
+                                        <td >
                                             <LogLov [ObjectFieldName]="'AdditionalQuantityType'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
@@ -228,7 +228,7 @@
                                             </LogLov>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td ><div></div></td>
 
                                         <!-- DeferredPurchaseTax -->
                                         <td>
@@ -240,18 +240,18 @@
                                                         [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td ><div></div></td>
 
                                         <!-- WholeSaleItemPrice -->
-                                        <td style="width: 170px;">
+                                        <td >
                                             <LogLabel [ObjectFieldName]="'WholeSaleItemPrice'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 85px; padding-left: 5px;">
+                                        <td style=" padding-left: 5px;">
                                             <LogTextBox [ObjectFieldName]="'WholeSaleItemPrice'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td style="width: 70px;">
+                                        <td >
                                             <LogLov [ObjectFieldName]="'WholeSaleItemPriceCurrencyCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
@@ -267,7 +267,7 @@
                                             <LogLabel [ObjectFieldName]="'CustomsBookTypeCode'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td colspan="2">
+                                        <td colspan="2" >
                                             <LogLov [ObjectFieldName]="'CustomsBookTypeCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
@@ -277,7 +277,7 @@
                                             </LogLov>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td><div></div></td>
 
                                         <!-- SalesTaxExemptionTypeCode -->
                                         <td>
@@ -300,10 +300,10 @@
                                             <LogLabel [ObjectFieldName]="'IsUsed'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td colspan="2" style="width: 160px;">
+                                        <td  style="width: 160px;">
                                             <CheckBox [IsChecked]="IsUsed" [IsEnabled]="!IsDisplayOnly" (Checked)="IsUsed = $event"></CheckBox>
                                         </td>
-
+                                        <td><div></div></td>
 
                                     </tr>
                                     <tr>
@@ -317,7 +317,7 @@
                                                         [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td ><div></div></td>
 
                                         <!-- TaxExemptCode -->
                                         <td>
@@ -326,7 +326,7 @@
                                         </td>
                                         <td>
                                             <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
-                [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
+        [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
 
                                             <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
                                                        [IsQuickSearch]="true"
@@ -343,18 +343,18 @@
 
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td ><div></div></td>
 
                                         <!-- ManufactureIdentifier -->
-                                        <td style="width: 130px;">
+                                        <td>
                                             <LogLabel [ObjectFieldName]="'ManufactureIdentifier'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td colspan="2" style="width: 135px;">
+                                        <td  style="width: 135px;">
                                             <LogTextBox [ObjectFieldName]="'ManufactureIdentifier'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td><div></div></td>
                                     </tr>
                                     <tr>
                                         <!-- ActualInvoiceLines -->
@@ -362,13 +362,13 @@
                                             <LogLabel [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td colspan="2">
+                                        <td colspan="2" >
                                             <LogTextBox style="float: right; width: 107px;" [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName" [Text]="ActualInvoiceLines"
                                                         [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                             <IconButton [IsEnabled]="!IsDisplayOnly" style="float: left; padding-top: 2px;" [IsSmall]="true" [Name]="'edit'" (click)="EditActualLines()"></IconButton>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td><div></div></td>
 
                                         <!-- OptionalTamaPercentage -->
                                         <td>
@@ -380,27 +380,27 @@
                                                         [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td><div></div></td>
 
                                         <!-- DangerousClassificationCode -->
                                         <td>
                                             <LogLabel [ObjectFieldName]="'DangerousClassificationCode'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td colspan="2">
+                                        <td>
                                             <LogTextBox [ObjectFieldName]="'DangerousClassificationCode'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'integer'" [HideColumns]="true" [DataContext]="DataContext"
                                                         (LostFocus)="OnDangClasCodeBlur()"></LogTextBox>
                                         </td>
-
+                                        <td><div></div></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6"><div></div></td>
+                                        <td colspan="6" ><div></div></td>
 
-                                        <td style="width: 10px;"><div></div></td>
+                                        <td ><div></div></td>
 
 
-                                        <!-- DangerousPackingGroupTypeCode -->
+                                          
                                         <td>
                                             <LogLabel [ObjectFieldName]="'DangerousPackingGroupTypeCode'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>

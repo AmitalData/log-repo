@@ -10,9 +10,9 @@
                         <td>
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'">
+                                <div *ngIf="FieldName == 'ShipmentsNumbers'" class="TemplateTrimming">
                                     <span *ngIf="IsHeaderScreenTemplate && !Entity.IsConsolidationInvoice" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice" class="TemplateTrimmingChild" style="font-size:11px;" [attr.title]="Entity.ShipmentsNumbers">{{Entity[FieldName]}}</span>
                                     <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
                                 </div>
 
@@ -172,9 +172,9 @@
                         <td>
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'">
+                                <div *ngIf="FieldName == 'ShipmentsNumbers'" class="TemplateTrimming">
                                     <span *ngIf="IsHeaderScreenTemplate && !Entity.IsMultipleEntities" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities" class="TemplateTrimmingChild" style="font-size:11px;" [attr.title]="Entity.ShipmentsNumbers">{{Entity[FieldName]}}</span>
                                     <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
                                 </div>
 

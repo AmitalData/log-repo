@@ -16,6 +16,7 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObjectFieldList } from '../../../../../Infrastructure/EntityLists/ObjectFieldList';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
@@ -77,9 +78,17 @@ export class AddRuleFieldComponent extends BaseComponent {
         logWindow.Title = "Insert Data Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
+        logWindow.WindowClosed.subscribe(($event: string) => {
 
             if ($event) {
+                 
+                const addedField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldName === $event.replace('[','').replace(']',''))[0];
+                if (addedField?.MaxLength > this.SelectedObjectField?.MaxLength) {
+                    const window: MessageWindow = new MessageWindow();
+                    window.ShowWarningIcon = true;
+                    window.Show(`${addedField.FieldName} field length (${addedField.MaxLength}) is greater than ${this.SelectedObjectField.FieldName} field length (${this.SelectedObjectField.MaxLength}), value will be trimmed!`);
+                }
+
                 this.Expression = insertAtSubject(this.RuleFieldTXTAreaId, $event);
             }
 

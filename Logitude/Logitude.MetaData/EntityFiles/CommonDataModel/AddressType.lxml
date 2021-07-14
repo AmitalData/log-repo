@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Address Type&quot;"
-  Code="&quot;8fd7&quot;"
+  Code="&quot;e3b9&quot;"
   Name="&quot;QuoteType&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;cec4&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -353,23 +354,8 @@
       Name="&quot;AddressType&quot;"
       Version="&quot;ApiV1&quot;">
       <DCField
-        DCFieldName="&quot;Code&quot;"
-        DCVersion="&quot;&quot;"
-        FieldName="&quot;Code&quot;"
-        IsKey="true"
-        IsManualMapping="false"
-        IsMulti="false"
-        FieldsDataType="&quot;Text&quot;"
-        IsNullable="false"
-        IsSpecialField="false"
-        IsCustomType="false"
-        IsAttribute="true"
-        IgnoreCustomTypeCheck="false"
-        IsCloseField="false"
-        IsCompositKey="false" />
-      <DCField
         DCFieldName="&quot;Name&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Name&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -381,7 +367,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -395,7 +382,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

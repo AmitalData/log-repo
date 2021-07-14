@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string journalid)
+        public HttpResponseMessage GetSingle(string journalid, int journallinenumber)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 JournalAdditionalDataQueryService journalAdditionalDataQuery = new JournalAdditionalDataQueryService(MyContext);
 				journalAdditionalDataQuery.InitializeSettings();
-                JournalAdditionalDataPM journalAdditionalDataPM = journalAdditionalDataQuery.GetSingle(journalid,true,false);
+                JournalAdditionalDataPM journalAdditionalDataPM = journalAdditionalDataQuery.GetSingle(journalid, journallinenumber,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

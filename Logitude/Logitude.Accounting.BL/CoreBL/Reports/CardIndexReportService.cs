@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 myLedgerTransactionBalanceFilter.CallBack = null;
                 myLedgerTransactionBalanceFilter
                     .ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts = 
-                    !(myLedgerTransactionBalanceFilter.IncludeChildAccounts && myLedgerTransactionBalanceFilter.IncludeRelatedCurrenciesAccount);
+                    !(myLedgerTransactionBalanceFilter.IncludeChildAccounts || myLedgerTransactionBalanceFilter.IncludeRelatedCurrenciesAccount);
                 var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter);
                 myLedgerTransactionBalanceService.Run();
                 if (this._Param.IsReconciled.HasValue /*&& _Param.IsReconciled==false*/)
@@ -122,5 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool? IsReconciled { get; set; }
         public string ChartOfAccountsTypeCode { get;  set; }
         public string SalesmanId { get; set; }
+
+        //public bool IncludeRelatedCurrenciesAccount { get; set; }
+        
     }
 }

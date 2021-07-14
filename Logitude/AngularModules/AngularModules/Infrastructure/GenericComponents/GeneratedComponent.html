@@ -19,25 +19,48 @@
 
                                 <td *ngIf="!objectField.MultiLine && !objectField.GeneratedComponentPath">
                                     <div *ngIf="objectField.DataTypeCode == 'Boolean'">
-                                        <LogCheckBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Checked]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"></LogCheckBox>
+                                        <LogCheckBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Checked]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
+                                                     [HideColumns]="HideColumns">
+
+                                        </LogCheckBox>
                                     </div>
 
                                     <div *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText' || objectField.DataTypeCode == 'Integer' || objectField.DataTypeCode == 'Double' ||objectField.DataTypeCode == 'Decimal'">
-                                        <LogTextBox *ngIf="objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM" [Text]="EntityPM[objectField.FieldName]" [IsNewEntityCall]="IsNewEntityCall"></LogTextBox>
-                                        <LogTextBox *ngIf="!objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall"></LogTextBox>
+                                        <LogTextBox *ngIf="objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM" [Text]="EntityPM[objectField.FieldName]" [IsNewEntityCall]="IsNewEntityCall"
+                                                    [HideColumns]="HideColumns"
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    >
+
+                                        </LogTextBox>
+                                        <LogTextBox *ngIf="!objectField.IsCustom" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall"
+                                                    [HideColumns]="HideColumns"
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    >
+
+                                        </LogTextBox>
                                     </div>
 
                                     <div *ngIf="objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == true">
                                         <table>
                                            <tr class="FormFieldRow">
                                                <td>
-                                                   <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"  [HideColumns]="true"></LogDatePicker>
+                                                   <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
+                                                                  [HideColumns]="true"
+                                                                  [HideLastColumn]="HideLastColumn"
+                                                                  >
+
+                                                   </LogDatePicker>
                                                 </td>
                                                <td style="width:3px;">
                                                    <div></div>
                                                </td>
                                                <td>
-                                                   <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                   <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [InputType]="'time'" [TimeMode]="12"
+                                                                  [HideColumns]="HideColumns"
+                                                                  [HideLastColumn]="HideLastColumn"
+                                                                  >
+
+                                                   </LogDatePicker>
                                                </td>
                                            </tr>
                                         </table>
@@ -45,7 +68,7 @@
                                     </div>
 
                                     <div *ngIf="((objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == false) || objectField.DataTypeCode == 'Date')">
-                                        <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"></LogDatePicker>
+                                        <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [HideColumns]="HideColumns"></LogDatePicker>
                                     </div>
 
                                     <div *ngIf="objectField.DataTypeCode == 'LookUp'">
@@ -54,6 +77,8 @@
                                                 [SelectedValue]="EntityPM[objectField.FieldName]"
                                                 [DataContext]="EntityPM"
                                                 [LookUpTableName]="objectField.ObjectTable_LookUpTableName"
+                                                [HideColumns]="HideColumns"
+                                                [HideLastColumn]="HideLastColumn"
                                                 >
                                         </LogLov>
                                     </div>
@@ -62,7 +87,10 @@
                                                   [ObjectTableName]="ObjectTableName"
                                                   [SelectedValue]="EntityPM[objectField.FieldName]"
                                                   [DataContext]="EntityPM"
-                                                  [PlaceHolder]="EntityPM[objectField.FieldName]!=null?EntityPM[objectField.FieldName].Code:''">
+                                                  [PlaceHolder]="EntityPM[objectField.FieldName]!=null?EntityPM[objectField.FieldName].Code:''"
+                                                  [HideColumns]="HideColumns"
+                                                  [HideLastColumn]="HideLastColumn"
+                                                  >
                                         </PickList>
                                     </div>
 
@@ -75,7 +103,12 @@
                                     </div>
 
                                     <div *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'" style="height: 80px; padding-left: 10px;">
-                                        <LogTextBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall" [IsMultiline]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Text]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [IsNewEntityCall]="IsNewEntityCall" [IsMultiline]="true"
+                                                    [HideColumns]="HideColumns"
+                                                    [HideLastColumn]="HideLastColumn"
+                                                    >
+
+                                        </LogTextBox>
                                     </div>
                                 </td>
 
@@ -89,7 +122,7 @@
                                     </div>
                                 </td>
 
-                                <td style="width: 20px;">
+                                <td [ngStyle]="{'width': (ScreenColumns?.length>1) ? '20px' : '0px;'}">
                                     <div></div>
                                 </td>
                             </tr>

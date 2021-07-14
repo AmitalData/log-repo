@@ -38,6 +38,13 @@ using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
 using Logitude.CargoTracking.Def.DataContracts;
 using Logitude.CargoTracking.BL.CoreBL;
+using WebFreight.Web.DataContracts;
+using Logitude.CargoTracking.BL.Utilities;
+using Logitude.CargoTracking.BL.DataContracts;
+using System.Web.Configuration;
+using System.Collections.Specialized;
+using System.Collections;
+using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -45,7 +52,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
     public class CargoTrackingSearchController : ApiController
     {
-
+        private const string ProjectToken = "24322335b969b8bc7cc9e3fd6af39aa0";
+        private const string MasterUserId = "13793";
 
         [HttpGet]
         public HttpResponseMessage GetShipments(string searchKey, int tenant)
@@ -59,7 +67,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
- 
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
+                MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
+                eventTracker.TrackEvent(searchEvent);
+
+
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
                 return reponseMessage;
@@ -71,28 +83,49 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
+        private static MixPanelEvent BuildMixPanelSearchEvent(string searchKey, List<CargoTrackingShipmentList> shipments)
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "Search";
+            mixPanelEvent.AddProperty("search_key", searchKey);
+            mixPanelEvent.AddProperty("results_count", shipments.Count().ToString());
+            return mixPanelEvent;
+        }
+
         [HttpGet]
-        public HttpResponseMessage GetShipment(string SecurityKey, int tenant)
+        public async Task<HttpResponseMessage> GetShipment(string SecurityKey, int tenant)
         {
             try
             {
 
-
+              
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
+                if (shipment == null) 
+                    return Request.CreateResponse(HttpStatusCode.OK);
 
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
-
-
+       
+                MixPanelTrackingService trackingService = new MixPanelTrackingService();
+                MixPanelTrackingEvent trackingEvent= CreateShipmentZoomMixPanelEvent(shipment.ShipmentNumber);              
+                await trackingService.SendTrackingEventPostRequest(trackingEvent);
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
                     Milestones = shipmentMilestones,
 
                 };
+
+
+                MixPanelEvent searchEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
+
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
+                eventTracker.TrackEvent(searchEvent);
+
+
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
 
                 return reponseMessage;
@@ -103,7 +136,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+        private MixPanelTrackingEvent CreateShipmentZoomMixPanelEvent(string searchKey)
+        {
+            int shipmentCount = 1;
+            MixPanelTrackingService trackingService = new MixPanelTrackingService();
+            MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipmentCount, "Zoom");
+            return trackingEvent;
+        }
+        private static MixPanelEvent BuildMixPanelZoomEvent(string shipmentNumber)
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "Zoom";
+            mixPanelEvent.AddProperty("shipment_number", shipmentNumber);
+            return mixPanelEvent;
+        }
 
+        private MixPanelTrackingEvent CreateSearchMixPanelEvent(string searchKey, int shipmentsCount)
+        {
+           
+            MixPanelTrackingService trackingService = new MixPanelTrackingService();
+            MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipmentsCount, "Search");
+            return trackingEvent;
+        }
         [HttpGet]
         public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
@@ -170,6 +224,96 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             List<string> references = shipmentsQuery.GetShipmentPublicReferences(SecurityKey, tenant);
             return references;
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetCaptchaData()
+        {
+            try
+            {
+                CaptchaHelper captchaHelper = new CaptchaHelper();
+                UserData data = new UserData();
+                captchaHelper.AddCaptchaKey(null,data,"Search");
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, data);
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+       
+        [HttpPut]
+        public HttpResponseMessage PutUserValidation(CaptchaParameters captchaParameters)
+        {
+            try
+            {
+                UserData userData = CheckCaptchaState(captchaParameters);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, userData);
+                return reponseMessage;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private UserData CheckCaptchaState(CaptchaParameters loginParameters)
+        {
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            UserData data = new UserData();
+            if (!captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, null, false))
+            {
+                captchaHelper.AddCaptchaKey(null, data, "Search");               
+            }
+
+
+            return data;
+        }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostSearchTrackAsync(string searchKey)
+        {
+            try
+            {
+                
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, "ok");
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        
+        [HttpGet]
+        public HttpResponseMessage GetSingleShipmentList(string SecurityKey, int tenant)
+        {
+            try
+            {
+
+
+                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
+                CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
+
+                CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
+
+               
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipment);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 
     public class CargoTrackingSearchArgs

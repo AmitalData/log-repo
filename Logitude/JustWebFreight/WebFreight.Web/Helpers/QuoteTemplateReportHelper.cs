@@ -77,11 +77,11 @@ namespace Logitude.BL.Helpers
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
             ObjectTableRepository objectTabelRepository = null;
             ObjectTable objectTable = null;
+            int correctTenant = userTenant != null ? (int)userTenant : tenant;
 
             if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
             {
-                int tenantNumber = userTenant != null ? (int)userTenant : tenant;
-                quotePM = quoteQuery.GetSinglePM(quoteId, tenantNumber);
+                quotePM = quoteQuery.GetSinglePM(quoteId, correctTenant);
             }
 
             if (quotePM == null) quotePM = BuildingQuotePM();
@@ -162,7 +162,7 @@ namespace Logitude.BL.Helpers
             quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists = quoteTemplateTextDesignsList;
             quoteTemplateBuildArges.QuoteTemplateTableDesignsLists = quoteTemplateTableDesignsList;
             quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
-            quoteTemplateBuildArges.UserTenant = userTenant != null ? (int)userTenant : tenant;
+            quoteTemplateBuildArges.UserTenant = correctTenant;
             quoteTemplateBuildArges.UserId = userId;
             quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
             quoteTemplateBuildArges.QuoteTemplatePM = template;
@@ -192,7 +192,7 @@ namespace Logitude.BL.Helpers
 
 
 
-                headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                headerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
                 HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
                 pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
                 pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
@@ -212,9 +212,9 @@ namespace Logitude.BL.Helpers
                 footerHtmlString += GetBodyString(footerdata);
 
                 double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
-                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
+                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin + 5;
 
-                footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                footerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
                 HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
                 pdfConverter.PdfFooterOptions.AddElement(footerHtml);
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
@@ -272,7 +272,7 @@ namespace Logitude.BL.Helpers
                 }
             }
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
-            bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+            bodyHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
 
             pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
             if (quotePM.Id != "10697")

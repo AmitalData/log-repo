@@ -95,6 +95,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         }
         private void MapMasterHouseFromPortFields()
         {
+            if (iHousePM.FromPortId != this.initializer.EntityPM.MainCarriageFromPortId)
+            {
+                iHousePM.FromPortId = this.initializer.EntityPM.MainCarriageFromPortId;              
+            }
+
             if (!string.IsNullOrEmpty(this.initializer.EntityPM.PreCarriageFromPortId))
             {
                 if (iHousePM.PreForwardingToPortId != null && iHousePM.PreForwardingToPortId != this.initializer.EntityPM.PreCarriageFromPortId)
@@ -103,10 +108,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 }
             }
 
-            else if (iHousePM.FromPortId != this.initializer.EntityPM.MainCarriageFromPortId)
+            else
             {
-                iHousePM.FromPortId = this.initializer.EntityPM.MainCarriageFromPortId;
-
                 if (iHousePM.PreForwardingFromPortId != null && iHousePM.PreForwardingToPortId != null)
                 {
                     iHousePM.PreForwardingToPortId = iHousePM.FromPortId;
@@ -115,6 +118,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         }
         private void MapMasterHouseToPortFields()
         {
+            if (iHousePM.ToPortId != this.initializer.EntityPM.MainCarriageFinalDestinationPortId)
+            {
+                iHousePM.ToPortId = this.initializer.EntityPM.MainCarriageFinalDestinationPortId;
+            }
+
             if (!string.IsNullOrEmpty(this.initializer.EntityPM.OnCarriageToPortId))
             {
                 if (iHousePM.OnForwardingFromPortId != null && iHousePM.OnForwardingFromPortId != this.initializer.EntityPM.OnCarriageToPortId)
@@ -123,10 +131,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 }
             }
 
-            else if (iHousePM.ToPortId != this.initializer.EntityPM.MainCarriageFinalDestinationPortId)
+            else
             {
-                iHousePM.ToPortId = this.initializer.EntityPM.MainCarriageFinalDestinationPortId;
-
                 if (iHousePM.OnForwardingFromPortId != null && iHousePM.OnForwardingToPortId != null)
                 {
                     iHousePM.OnForwardingFromPortId = iHousePM.ToPortId;
@@ -137,14 +143,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (initializer.ConnectedHousesIds.Count > 0)
             {
-                UpdateMasterHouses(initializer.ConnectedHousesIds);
+                UpdateMasterHouses(initializer.ConnectedHousesIds, false);
             }
         }
         private void UpdateMasterDisconnectedHouses()
         {
             if (initializer.DeletedHousesIds.Count > 0)
             {
-                UpdateMasterHouses(initializer.DeletedHousesIds);
+                UpdateMasterHouses(initializer.DeletedHousesIds, true);
 
                 foreach (string myShipmentId in initializer.DeletedHousesIds)
                 {
@@ -160,10 +166,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
-            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings);
+            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings, iHousePM.ShipmentProductItems);
             iShipmentService.Update(mapComposition);
         }
-        private void UpdateMasterHouses(List<string> ids)
+        private void UpdateMasterHouses(List<string> ids, bool isDisconnecting)
         {
             if (ids.Count > 0)
             {
@@ -175,9 +181,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
                     if (iHousePM != null)
                     {
+                        if (isDisconnecting)
+                        {
+                            UpdateDisconnectedHousePorts();
+                        }
+
                         UpdateShipment();
                     }
                 }
+            }
+        }
+        private void UpdateDisconnectedHousePorts()
+        {
+            if(!string.IsNullOrEmpty(iHousePM.PreForwardingFromPortId) && !string.IsNullOrEmpty(iHousePM.PreForwardingToPortId))
+            {
+                iHousePM.PreForwardingToPortId = iHousePM.FromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(iHousePM.OnForwardingFromPortId) && !string.IsNullOrEmpty(iHousePM.OnForwardingToPortId))
+            {
+                iHousePM.OnForwardingFromPortId = iHousePM.ToPortId;
             }
         }
         private void RunRegistryDateProcedure(string myShipmentId)

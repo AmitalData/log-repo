@@ -215,6 +215,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool AddedManually { get; set; }
+        [DataMember]
+        public string CopyName { get; set; }
 
 
 

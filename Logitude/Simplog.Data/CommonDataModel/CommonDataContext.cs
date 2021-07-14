@@ -1027,7 +1027,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
         public IDbSet<CardSearch> CardSearches { get; set; }
-
+        public IDbSet<ProductItem> ProductItems { get; set; }
+        public IDbSet<HTSCode> HTSCodes { get; set; }
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
 

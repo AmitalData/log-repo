@@ -69,6 +69,11 @@ export class GLAccountCardsDataPM {
     public set TotalOpenShipments(newValue: number) { if (this.totalOpenShipments != newValue) { this.totalOpenShipments = newValue; this.MarkAsDirty("TotalOpenShipments"); } }
        
 	 
+    private insuredcreditLimit: number;
+    public get InsuredcreditLimit() { return this.insuredcreditLimit; }
+    public set InsuredcreditLimit(newValue: number) { if (this.insuredcreditLimit != newValue) { this.insuredcreditLimit = newValue; this.MarkAsDirty("InsuredcreditLimit"); } }
+       
+	 
 
     public OldEntityPM: GLAccountCardsDataPM;
 		

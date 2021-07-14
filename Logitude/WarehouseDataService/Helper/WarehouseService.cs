@@ -87,8 +87,7 @@ namespace WarehouseDataService.Helper
                     {
                         isBuildStart = true;
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", true, sourceConnectionString);
-                        mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString);
-                       mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
+                        RuningBuildDataWarehouseByTasks();
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", false, sourceConnectionString);
                         warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                     }
@@ -96,6 +95,15 @@ namespace WarehouseDataService.Helper
                 }
                 else Thread.Sleep(new TimeSpan(0, 5, 0));
             }
+        }
+
+        private void RuningBuildDataWarehouseByTasks()
+        {
+            Task dataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString));
+            Task privateDataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build"));
+            dataWarehouseBuildTask.Start();
+            privateDataWarehouseBuildTask.Start();
+            Task.WhenAll(dataWarehouseBuildTask, privateDataWarehouseBuildTask).Wait();
         }
 
 
@@ -116,9 +124,9 @@ namespace WarehouseDataService.Helper
                             bool isFullBuildDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsFullBuildDWRunning", "DWHBuildStatus", sourceConnectionString);
                             if (!isFullBuildDWRunning)
                             {
+
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", true, sourceConnectionString);
-                                mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString);
-                                mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
+                                RuningUpdateDataWarehouseByTasks();
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", false, sourceConnectionString);
                                 warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                                 Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
@@ -137,7 +145,17 @@ namespace WarehouseDataService.Helper
             }
         }
 
-        
+
+        private void RuningUpdateDataWarehouseByTasks()
+        {
+            Task dataWarehouseUpdateTask = new Task(() => mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString));
+            Task privateDataWarehouseUpdateTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update"));
+            dataWarehouseUpdateTask.Start();
+            privateDataWarehouseUpdateTask.Start();
+            Task.WhenAll(dataWarehouseUpdateTask, privateDataWarehouseUpdateTask).Wait();
+        }
+
+
         #endregion
 
 

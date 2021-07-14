@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.DataContracts;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -49,13 +50,85 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(id, authToken.Tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(id, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetShipmentCustomsData(string shipmentId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                CargoTrackingShipmentCustomsData customsData = shipmentQuery.GetCargoTrackingShipmentCustomsData(shipmentId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, customsData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetPartnersAddresses([FromUri] List<string> partnersIds)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+
+
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                List<AddressList> addresses = addressQuery.GetAddressesByCardIds(partnersIds, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, addresses);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage GetDocumentsFilingsConnectedToShipment(string id)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+                List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(id, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, documentsFilingPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage GetShipmentPackages(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                int tenant = GetAuthinticatedTenant();
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                List<ShipmentPackagePM> shipmentPM = shipmentQuery.GetPackagesOfShipment(tenant, id);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -66,6 +139,15 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            var tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            return tenant;
         }
 
     }

@@ -85,8 +85,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string WarehouseReleaseNumber { get; set; }
 
-        [ForeignKey("LastStatusCode")]
-        public INTTRAStatus LastStatus { get; set; }
+        public string ContainerStatusSourceCode { get; set; }
+        [ForeignKey("ContainerStatusSourceCode")]
+        public virtual ContainerStatusSource ContainerStatusSource { get; set; }
+
         public string LastStatusCode { get; set; }
         public DateTime? LastStatusDate { get; set; }
 
@@ -146,5 +148,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LCLContainerTypeId { get; set; }
         [ForeignKey("LCLContainerTypeId")]
         public virtual PackageType LCLPackageType { get; set; }
+        public string ContainerEntityId { get; set; }
     }
 }

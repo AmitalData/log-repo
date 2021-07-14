@@ -139,6 +139,15 @@
         height: 100%;
         position: relative;
     }
+    .FormFieldRow td{
+        text-align: start !important;
+    }
+    .FormRow {
+        height: 60px;
+    }
+    .FormRow td{
+        text-align: start !important;
+    }
 </style>
 
 <table>
@@ -727,6 +736,48 @@
                                     </tr>
 
                                 </table>
+                            </div>
+
+                            <div *ngSwitchCase="'AgingDefinition'" style="height: 100%;">
+                                <table class="FixedTable">
+                                    <tr class="FormRow">
+                                        <td style="width:160px;"><LogLabel [ObjectFieldName]="'NumberofPeriods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>                                        </td>
+                                        <td >
+                                            <div style="width:150px;top: 8px; position: relative;">
+                                                <NumberInput [(ngModel)]="NumberOfPeriods" name="no" [min]="1" [max]="3"></NumberInput>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="NumberOfPeriods > 0" class="FormRow">
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'FirstPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
+                                        <td>
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods1"></LogChips>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="NumberOfPeriods > 1" class="FormRow">
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'SecondPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
+                                        <td>
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods2"></LogChips>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="NumberOfPeriods > 2" class="FormRow">
+                                        <td>                                                            <LogLabel [ObjectFieldName]="'ThirdsPeriodsMonths'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
+                                        <td>
+                                            <LogChips
+                                                [Options]="Periods"
+                                                [DisplayFieldName]="ShowLocals?'LocalName':'EnglishName'"
+                                                [(ngModel)]="SelectedPeriods3"></LogChips>
+                                        </td>
+                                    </tr>
+                                    <tr><td></td></tr>
+                                </table>
+
                             </div>
 
                         </div>

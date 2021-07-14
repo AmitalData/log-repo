@@ -131,16 +131,15 @@ input.watermark
     margin-top: 4px;
 }
 
-.HyperLinkQuery_SHI, .HyperLinkQuery_INV
-{
-    cursor:default;
+.HyperLinkQuery_SHI, .HyperLinkQuery_INV, .HyperLinkQuery_QUOTESREQUESTS {
+    cursor: default;
     font-size: 12px;
     color: #45494A;
     font-family: "Lucida Sans Unicode";
     text-indent: 10px;
     height: 25px;
-    width:100%;
-    display:table;
+    width: 100%;
+    display: table;
     width: 143px;
 }
 

@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.CRMTests.Models
+{
+    public class CRMContext
+    {
+        public ActivityPM ActiviyTask { get; set; }
+        public ActivityPM ActiviyAppointment { get; set; }
+        public ActivityPM ActiviyPhoneCall { get; set; }
+    }
+}

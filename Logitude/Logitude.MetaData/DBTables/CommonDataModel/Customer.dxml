@@ -439,6 +439,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InsuredcreditLimit"
+    OldNames="InsruedcreditLimit"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"

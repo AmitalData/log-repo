@@ -41,6 +41,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         MapConcurrencyFields_INTTRA(entityPM, entityPoco, entityMasterData);
                     }
 
+                    else if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+                    {
+                        MapConcurrencyFields_OCINS(entityPM, entityPoco, entityMasterData);
+                    }
+
                     else
                     {
                         MapConcurrencyFields_OnEdited(entityPM, entityPoco, entityMasterData);
@@ -165,6 +170,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.BookingConfirmedBy = entityPM.BookingConfirmedBy;
                     entityMasterData.BookingConfirmationNumber = entityPM.BookingConfirmationNumber;
                     entityMasterData.MainCarriageCarrierNumber = entityPM.MainCarriageCarrierNumber;
+                }
+            }
+        }
+        private static void MapConcurrencyFields_OCINS(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            if (entityPM.ShipmentLevelCode != "H")
+            {
+                if (entityMasterData != null)
+                {
+                    entityMasterData.MainCarriageATD = entityPM.MainCarriageATD;
+                    entityMasterData.MainCarriageETD = entityPM.MainCarriageETD;
+                    entityMasterData.MainCarriageETA = entityPM.MainCarriageETA;
+                    entityMasterData.MainCarriageATA = entityPM.MainCarriageATA;                    
                 }
             }
         }

@@ -20,9 +20,12 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { ShipmentPickupValidator } from '../../../../Shipment/Validators/ShipmentPickupValidator';
+import { ShipmentTool } from '../../../../Shipment/Tools';
+import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditPickupComponent.html',
 })
 
@@ -39,6 +42,8 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     private myCardListService: CardListService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAddingStandaloneShipmentVisible: boolean = false;
+    public IsEditingEnabled: boolean = true;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();        
     }
@@ -59,6 +64,19 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
         this.Clone();
 
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
+
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
+        if (featureToggle) {
+            this.IsAddingStandaloneShipmentVisible = true;
+        }
+
         if (this.ShipmentPM) {
             if (this.ShipmentPM.ShipmentLevelCode == "D" || this.ShipmentPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
@@ -76,6 +94,16 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    get IsCreateStandaloneShipmentEnabled() {
+        var isEnabled: boolean = false;
+
+        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+            isEnabled = true;
+        }
+
+        return isEnabled;
+    }
+
     private isViewInited: boolean = false;
     ngAfterViewInit() {
         this.isViewInited = true;
@@ -90,15 +118,24 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
         this.SaveCompletedEvent = null;
         this.LoadCompletedEvent = null;
+        this.SessionEvent = null;
     }
 
     Listen() {
         if (this.CurrentSession.CurrentEditComponent) {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "ReloadPickUpDelivery") {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            });
+
             if (this.LoadCompletedEvent == null) {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
@@ -140,6 +177,8 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
                     case "MAIN": {
                         if (this.PageChild_MAIN == null) {
+                            myLocation.viewContainerRef.clear();
+
                             SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupMainTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.PageChild_MAIN = cmpRef.instance;
@@ -333,7 +372,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             }
 
             if (this.PageChild_MAIN) {
-                this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+                // code modified due to refresh dates issue
+                //this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+
+                this.PageChild_MAIN = null;
+
+                if (this.SelectedTabCode == "MAIN") {
+                    this.SelectionChanged();
+                }
             }
 
             if (this.PageChild_PACG) {
@@ -348,9 +394,20 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
             }
 
+            if (this.isCreateStandaloneShipmentClicked) {
+                this.isCreateStandaloneShipmentClicked = false;
+                this.ValidateStandaloneAddresses();
+            }
+
+            if (this.isConnctingStandaloneShipmentClicked) {
+                this.isConnctingStandaloneShipmentClicked = false;
+                this.ValidateStandaloneAddresses();
+            }
+
             this.Clone();
         }
     }
+
     NewWarehouseEntryButtonClicked() {
 
         if (this.ShipmentPM.IsDirty) {
@@ -557,6 +614,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 }
             }
 
+            if (this.IsAddingStandaloneShipmentVisible) {
+                if (this.ShipmentPM.ShipmentPackages != null) {
+                    this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id)).forEach(item => {
+                        this.ShipmentPM.RemovePackage(item);
+                    });
+                }
+            }
+
             this.myCloner.RejectChanges();
         }
     }
@@ -624,6 +689,175 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         this.oldPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
             this.EntityPM.ShipmentPickUpDeliveryPackages.push(item);
         });
+    }
+
+    private standaloneAction: string;
+    StandAloneShipmentButtonClicked(buttonCode: string) {
+        this.standaloneAction = buttonCode;
+
+        if (buttonCode == "CreateStandalone") {
+            this.ValidateNumberOfPickupPackages("Create");
+            this.CreateStandaloneShipmentClicked();
+        }
+
+        else if (buttonCode == "ConnectStandalone") {
+            this.ValidateNumberOfPickupPackages("Connect");
+            this.ConnctingStandaloneShipmentClicked();
+        }
+
+        this.DropdownClose();
+    }
+    ValidateNumberOfPickupPackages(actionType: string) {
+        var numberOfAllowedPackages = 1;
+        var errors: string[] = [];
+
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length > numberOfAllowedPackages) {
+            errors.push("Can't " + actionType + " a Stand Alone Shipment Since Pickup has more than one Container");
+        }
+
+        this.ValidationErrorsList = errors;
+    }
+
+    private isCreateStandaloneShipmentClicked: boolean = false;
+    CreateStandaloneShipmentClicked() {
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.EntityPM.IsDirty) {
+                this.isCreateStandaloneShipmentClicked = true;
+                this.Save(false);
+            }
+
+            else {
+                this.ValidateStandaloneAddresses();
+            }
+        }
+    }
+
+    private isConnctingStandaloneShipmentClicked: boolean = false;
+    ConnctingStandaloneShipmentClicked() {
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.EntityPM.IsDirty) {
+                this.isConnctingStandaloneShipmentClicked = true;
+                this.Save(false);
+            }
+
+            else {
+                this.ValidateStandaloneAddresses();
+            }
+        }
+    }
+
+    private ValidateStandaloneAddresses() {
+        this.CurrentSession.StartBusyIndicator("");
+
+        var service: ShipmentDomainService = new ShipmentDomainService();
+        service.GetPickupDeliveryValidForInlandDomestic(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var isValid = myResponse.Result;
+                if (isValid) {
+                    if (this.standaloneAction == "CreateStandalone") {
+                        this.CreateStandaloneShipment();
+                    }
+
+                    else {
+                        this.ChooseStandAloneShipment();
+                    }
+                }
+
+                else {
+                    this.ValidationErrorsList.push("Both Addresses must be in the same country since the direction is Domestic");
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    private CreateStandaloneShipment() {
+        var shipmentPM: ShipmentPM = ShipmentTool.BuildStansaloneShipment(null, this.EntityPM, this.ShipmentPM);
+
+        var args = new NewShipmentComponentArgs();
+        args.Shipment = shipmentPM;
+        args.IsStandalone = true;
+        args.ForwarderShipmentPickUpDeliveryTypeCode = "Pickup";
+        var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
+        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = str;
+        logWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+    }    
+
+    public ShipmentNumber: string = null;
+    public ShipmentId: string = null;
+    ChooseStandAloneShipment() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 800;
+        logWindow.Height = 570;
+        logWindow.Title = "Shipments Search";
+        var args: any = {};        
+        args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+        args.FromPartnerId = this.EntityPM.FromPartnerCardId;
+        args.ToPartnerId = this.EntityPM.ToPartnerCardId;
+        args.CarrierId = this.EntityPM.CarrierId;
+        args.NumberOfPackages = this.EntityPM.ShipmentPickUpDeliveryPackages != null ? this.EntityPM.ShipmentPickUpDeliveryPackages.length : 0;
+        logWindow.WindowArgs = args;
+        logWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/ChooseStandaloneShipmentComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var shipmentList = s.SelectedShipment;
+                if (shipmentList != null) {
+                    this.EntityPM.StandaloneShipmentId = shipmentList.Id;
+                    this.EntityPM.StandaloneShipmentNumber = shipmentList.ShipmentNumber;
+                    this.Save(false);
+                }
+            });
+        });
+    }
+
+    ViewStandaloneShipmentClicked() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.EntityPM.StandaloneShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment" + ": " + this.ShipmentPM.ShipmentNumber });
+
+                let isEditComponentSaved = false;
+
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {                        
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+            });
+    }    
+
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
+    }
+
+    DropdownClose() {
+        this.dropdownDisplay = 'none';
     }
 }
 

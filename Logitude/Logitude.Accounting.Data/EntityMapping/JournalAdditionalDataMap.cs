@@ -21,7 +21,7 @@ namespace Logitude.Accounting.Data.EntityMapping
         { 
 				this.ToTable("JournalAdditionalDatas");
 		
-		    this.HasKey(t => new { t.JournalId });
+		    this.HasKey(t => new { t.JournalId, t.JournalLineNumber });
 	 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -30,6 +30,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.TaxReportId).HasColumnName("TaxReportId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.TaxReportTransmitStatusCode).HasColumnName("TaxReportTransmitStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.JournalLineNumber).HasColumnName("JournalLineNumber").HasDatabaseGeneratedOption(null);
         }
     }
 }

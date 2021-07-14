@@ -31,6 +31,7 @@ export class AccountingSettingList {
 		ARInvoiceTransferStartDate: Date;
 		APInvoiceTransferStartDate: Date;
 		ARPaymentTransferStartDate: Date;
+		APPaymentTransferStartDate: Date;
 		AllowPositiveAmountsInTheCreditNote: boolean;
 		QBOrealMeID: string;
 		TransferToDropboxActivated: boolean;

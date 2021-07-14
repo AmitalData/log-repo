@@ -618,7 +618,7 @@
                                                                                                         <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
-                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="SelectedShipment.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : 'Share With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
                                                                                                         <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />
@@ -821,7 +821,7 @@
                                                                                                         <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
-                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="SelectedShipment.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : 'Share With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
                                                                                                         <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />

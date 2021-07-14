@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     label {
         font-size: 13px;
@@ -47,135 +47,167 @@
         font-size: 15px;
         cursor: pointer;
     }
+
+    .error {
+        margin: 10px 0px;
+        padding: 15px 10px 15px 20px;
+        font-size: 18px;
+        color: #D8000C;
+        width: 290px;
+        white-space: normal;
+        text-align: left;
+        /* border: 1px solid;
+        background-color: #FFBABA;*/
+    }
+
 </style>
 
-<table>
-    <tr>
-        <td>
-            <div></div>
-        </td>
+ <table>
+        <tr>
+            <td>
+                <div></div>
+            </td>
 
-        <td style="width: 1024px;">
-            <table>
-                <tr style="height: 50px;">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+            <td style="width: 1024px;">
+                <table>
+                    <tr style="height: 50px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                <tr style="height: 114px;">
-                    <td style="text-align: center;">
-                        <a>
-                            <img [src]="LogoURL" id="loginlogo" style="width:290px; height:114px;" />
-                        </a>
-                    </td>
-                </tr>
+                    <tr style="height: 114px;">
+                        <td style="text-align: center;">
+                            <a>
+                                <img [src]="LogoURL" id="loginlogo" style="width:290px; height:114px;" />
+                            </a>
+                        </td>
+                    </tr>
 
-                <tr style="height: 20px;">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                    <tr style="height: 20px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                <tr style="height: 466px;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
-                                    <div></div>
-                                </td>
+                    <tr style="height: 466px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
 
-                                <td style="width: 980px; background: url('./Images/LoginScreen/map.png') center center no-repeat; background-size: 100% 100%;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
+                                    <td style="width: 980px; background: url('./Images/LoginScreen/map.png') center center no-repeat; background-size: 100% 100%;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
 
-                                        <tr style="height: 16px;">
-                                            <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow1.png'); background-repeat: no-repeat;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
+                                            <tr style="height: 16px;">
+                                                <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow1.png'); background-repeat: no-repeat;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
 
-                                        <tr style="height: 260px; min-height: 260px; background: white;">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:300px;">
+                                            <tr style="height: 260px; min-height: 260px; background: white;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:300px;">
+                                                                <table *ngIf="!HasErrorMessage">
+                                                                    <tr style="height:10px"><td></td></tr>
+                                                                    <tr style="height:20px"><td style="vertical-align:central"><p style="font-size:16px;color:steelblue;">{{Name}} Terms of Use</p></td></tr>
 
-                                                            <table>
-                                                                <tr style="height:10px"><td></td></tr>
-                                                                <tr style="height:20px"><td style="vertical-align:central"><p style="font-size:16px;color:steelblue;">{{Name}} Terms of Use</p></td></tr>
+                                                                    <tr style="height:15px"><td></td></tr>
+                                                                    <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">Please read the terms of use then click 'Accept'  in </span></td></tr>
+                                                                    <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">order to complete your login.</span></td></tr>
+                                                                    <tr style="height:20px"><td></td></tr>
+                                                                    <tr style="height:20px"><td style="text-align:center"><a style="margin-left:10px;color:#0094ff;font-size:13px;" (click)="GetTermsofUseDocument()">Terms of Use</a></td></tr>
+                                                                    <tr style="height:10px"><td></td></tr>
+                                                                    <tr style="height:50px">
+                                                                        <td style="text-align:center">
+                                                                            <button (click)="AcceptButtonClicked()" class="AcceptButton" style="height:35px;width:100px;">Accept ></button>
 
-                                                                <tr style="height:15px"><td></td></tr>
-                                                                <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">Please read the terms of use then click 'Accept'  in </span></td></tr>
-                                                                <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">order to complete your login.</span></td></tr>
-                                                                <tr style="height:20px"><td></td></tr>
-                                                                <tr style="height:20px"><td style="text-align:center"><a style="margin-left:10px;color:#0094ff;font-size:13px;" (click)="TermsofUse()">Terms of Use</a></td></tr>
-                                                                <tr style="height:10px"><td></td></tr>
-                                                                <tr style="height:50px">
-                                                                    <td style="text-align:center">
-                                                                        <button (click)="AcceptButtonClicked()" class="AcceptButton" style="height:35px;width:100px;">Accept ></button>
+                                                                            <button (click)="DeclineButtonClicked()" class="DeclineButton" style="height:35px;margin-left:15px;width:100px;">Decline</button>
+                                                                        </td>
 
-                                                                        <button (click)="DeclineButtonClicked()" class="DeclineButton" style="height:35px;margin-left:15px;width:100px;">Decline</button>
-                                                                    </td>
+                                                                    </tr>
 
-                                                                </tr>
+                                                                    <tr><td></td></tr>
 
-                                                                <tr><td></td></tr>
+                                                                </table>
 
-                                                            </table>
+                                                                <table *ngIf="HasErrorMessage">
+                                                                    <tr style="height:10px"><td></td></tr>
+                                                                    <tr style="height:20px"><td style="vertical-align:central"><p style="font-size:16px;color:steelblue;">{{Name}} Terms of Use</p></td></tr>
 
+                                                                    <tr style="height:15px"><td></td></tr>
+                                                                    <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px"></span></td></tr>
+                                                                    <tr style="height:20px"><td style="text-align:center"><div class="error">{{ErrorMessage}} </div></td></tr>
+                                                                    <tr style="height:10px"><td></td></tr>
+                                                                    <tr style="height:50px">
+                                                                        <td style="text-align:center">
+                                                                            <button (click)="DeclineButtonClicked()" class="DeclineButton" style="height:35px;margin-left:15px;width:120px;position: relative; left: 70px">Back to Login</button>
+                                                                        </td>
 
-                                                        </td>
+                                                                    </tr>
 
-                                                        <td style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                                    <tr><td></td></tr>
 
-
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 16px;">
-                                            <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow2.png'); background-repeat: no-repeat;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-
-        <td>
-            <div></div>
-        </td>
-    </tr>
-</table>
+                                                                </table>
 
 
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+
+                                                            </td>
+
+                                                            <td style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 16px;">
+                                                <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow2.png'); background-repeat: no-repeat;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+
+
+    <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

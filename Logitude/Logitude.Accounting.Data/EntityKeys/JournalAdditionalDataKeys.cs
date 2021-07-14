@@ -16,11 +16,15 @@ namespace Logitude.Accounting.Data.EntityKeys
 	  
 				 
 	    			   
+	  public int JournalLineNumber  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return JournalId ;
+                 return JournalId+'_'+JournalLineNumber ;
                  
       }
 

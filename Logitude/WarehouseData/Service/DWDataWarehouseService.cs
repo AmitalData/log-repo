@@ -141,7 +141,7 @@ namespace WarehouseData.Service
                 }
 
                 cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[IsDangerous],[ComputedStatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[FreightForwarderId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId] " +
-                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId] , [ConsigneeNotImporterId] , [IssuingCarrierAgentId] , [OnCarriageTransportModeId] , [FirstARInvoiceApprovalDate])";
+                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreForwardingETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId] , [ConsigneeNotImporterId] , [IssuingCarrierAgentId], [OnForwardingTransportModeId],[FirstARInvoiceApprovalDate])";
             }
             generalDataWarehouseService.ExecuteSql(cmd, connectionString);
         }
@@ -229,18 +229,19 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentId DEFAULT '-1' FOR ReleasingAgentId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterId DEFAULT '-1' FOR ConsigneeNotImporterId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IssuingCarrierAgentId DEFAULT '-1' FOR IssuingCarrierAgentId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageTransportModeId DEFAULT '1' FOR OnCarriageTransportModeId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ComputedStatusId DEFAULT '-1' FOR ComputedStatusId;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentPayableStatusCode DEFAULT '-1' FOR ShipmentPayableStatusCode;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentReceivableStatusCode DEFAULT '-1' FOR ShipmentReceivableStatusCode;"
 
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageTransportModeId DEFAULT '1' FOR PreCarriageTransportModeId"
-                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageFromPortId DEFAULT '-1' FOR PreCarriageFromPortId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageToPortId DEFAULT '-1' FOR PreCarriageToPortId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageToPortId DEFAULT '-1' FOR OnCarriageToPortId"
-                       + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageFromPortId DEFAULT '-1' FOR OnCarriageFromPortId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageCarrierId DEFAULT '-1' FOR OnCarriageCarrierId"
-                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageCarrierId DEFAULT '-1' FOR PreCarriageCarrierId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingTransportModeId DEFAULT '1' FOR OnForwardingTransportModeId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingTransportModeId DEFAULT '1' FOR PreForwardingTransportModeId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingFromPortId DEFAULT '-1' FOR PreForwardingFromPortId"
+
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingToPortId DEFAULT '-1' FOR PreForwardingToPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingToPortId DEFAULT '-1' FOR OnForwardingToPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingFromPortId DEFAULT '-1' FOR OnForwardingFromPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingCarrierId DEFAULT '-1' FOR OnForwardingCarrierId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingCarrierId DEFAULT '-1' FOR PreForwardingCarrierId"
 
 
                         ;
@@ -284,7 +285,15 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3FromPortId DEFAULT '-1' FOR Transshipment3FromPortId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2CarrierId DEFAULT '-1' FOR Transshipment2CarrierId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3CarrierId DEFAULT '-1' FOR Transshipment3CarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageTransportModeId DEFAULT '1' FOR OnCarriageTransportModeId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageTransportModeId DEFAULT '1' FOR PreCarriageTransportModeId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageFromPortId DEFAULT '-1' FOR PreCarriageFromPortId"
 
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageToPortId DEFAULT '-1' FOR PreCarriageToPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageToPortId DEFAULT '-1' FOR OnCarriageToPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageFromPortId DEFAULT '-1' FOR OnCarriageFromPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageCarrierId DEFAULT '-1' FOR OnCarriageCarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageCarrierId DEFAULT '-1' FOR PreCarriageCarrierId"
                         ;
 
                     break;
@@ -306,7 +315,17 @@ namespace WarehouseData.Service
 
                 case "ARInvoices":
 
-                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT -1 FOR BillToId";
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT -1 FOR BillToId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT -1 FOR SalesmanUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrintByUserId DEFAULT -1 FOR PrintByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerId DEFAULT -1 FOR PartnerId";
+
+                    break;
+
+                case "APInvoices":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId";
 
                     break;
 

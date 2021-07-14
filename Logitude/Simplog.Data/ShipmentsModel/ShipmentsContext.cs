@@ -337,6 +337,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
             modelBuilder.Configurations.Add(new ShipmentSubTypeMap());
             modelBuilder.Configurations.Add(new ShipmentStoragePricingMap());
+            modelBuilder.Configurations.Add(new ShipmentProductItemMap());
+            modelBuilder.Configurations.Add(new ContainerStatusMap());
+            modelBuilder.Configurations.Add(new ContainerStatusSourceMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -384,6 +387,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; set; }
+        public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; set; }
+
         public IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; set; }
         public IDbSet<OtherParticipantId> OtherParticipantIds { get; set; }
         public IDbSet<CustomsTransmissionsStatus> CustomsTransmissionsStatus { get; set; }
@@ -397,11 +402,18 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; set; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; set; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; set; }
+
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; set; }
         public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; set; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; set; }
         public IDbSet<ShipmentSubType> ShipmentSubTypes { get; set; }
         public IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
+        public IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        public IDbSet<Container> Containers { get; set; }
+        public IDbSet<ContainerStatus> ContainerStatuses { get; set; }
+        public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
+
+
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

@@ -1,4 +1,4 @@
-@release @all @stable 
+@release @all @stable
 Feature: Vendor Create, Search and Edit from Maintenance
     The user creates a vendor, searches for and edits it from the Maintenance Module.
 
@@ -9,7 +9,7 @@ Feature: Vendor Create, Search and Edit from Maintenance
             | LocalName   | Testing Vendor Scenario |
             | Address1    | 15 Vendor Street        |
             | Zip         | 0000                    |
-            | City        | las                     |
+            | City        | Anchorage               |
             | Country     | United States           |
             | State       | Alaska                  |
             | Phone       | 9999999999              |

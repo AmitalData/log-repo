@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
                 var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
 
-                var quaryAllGLAccount =
+                var dbAllGLAccount =
                     (from acc in myGLAccountRepo.GetAll(_Tenant)
                      join md in myGLAccountMoreDataRepo.GetAll(_Tenant) on acc.Id equals md.AccountId
                      where acc.Tenant == _Tenant
@@ -52,22 +52,25 @@ namespace Logitude.Accounting.BL.CoreBL
                      {
                          AccountId = acc.Id,
                          BalanceInLocalCurrency = md.BalanceInLocalCurrency,
+                         BalanceInForeignCurrency = md.BalanceInForeignCurrency ==null? 0: (decimal)md.BalanceInForeignCurrency,
                          CHANGE_TYPE = ""
                      }
 
                          );
 
                 //quaryAllControlAccount.First().BalanceInLocalCurrency
-                var quaryablMonthTotals =
+                var caclMonthTotals =
                  (
                 from tot in
                     myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
                 where tot.Tenant == _Tenant
-                group tot by tot.AccountId into g
+                join acc in myGLAccountRepo.GetAll(_Tenant) on tot.AccountId equals acc.Id
+                group tot by new { tot.AccountId, acc.IsMultiCurrency } into g
                 select new GLAccountBalanceDTO
                 {
-                    AccountId = g.Key,
+                    AccountId = g.Key.AccountId,
                     BalanceInLocalCurrency = g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit),
+                     BalanceInForeignCurrency  =g.Key.IsMultiCurrency==true  ? g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit): g.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit),
                     CHANGE_TYPE = ""
 
                 }
@@ -75,10 +78,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var qNotInTot =
                     (
-                    from acc in quaryAllGLAccount
+                    from acc in dbAllGLAccount
                     where acc.BalanceInLocalCurrency != null
                     where acc.BalanceInLocalCurrency != 0
-                    join tot in quaryablMonthTotals
+                    join tot in caclMonthTotals
                     on acc.AccountId equals tot.AccountId
                     into joinTotT
                     from joinTotRec in joinTotT.DefaultIfEmpty()
@@ -87,6 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         AccountId = acc.AccountId,
                         BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
+                        BalanceInForeignCurrency = acc.BalanceInForeignCurrency,
                         CHANGE_TYPE = const_ThereIsntAnyGLAccountTotalByMonths// "There Isn't Any GLAccountTotalByMonths"
 
                     }
@@ -95,8 +99,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var qNotInGLAcc =
                     (
-                    from tot in quaryablMonthTotals
-                    join acc in quaryAllGLAccount
+                    from tot in caclMonthTotals
+                    join acc in dbAllGLAccount
                     on tot.AccountId equals acc.AccountId
                     into joinAccT
                     from joinAccRec in joinAccT.DefaultIfEmpty()
@@ -105,20 +109,25 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         AccountId = tot.AccountId,
                         BalanceInLocalCurrency = tot.BalanceInLocalCurrency,
+                         BalanceInForeignCurrency = tot.BalanceInForeignCurrency,
                         CHANGE_TYPE = const_ThereIsntAnyGLAccounts
 
                     }
                     );
 
                 var qDiff = (
-                    from tot in quaryablMonthTotals
-                    join acc in quaryAllGLAccount
+                    from tot in caclMonthTotals
+                    join acc in dbAllGLAccount
                     on tot.AccountId equals acc.AccountId
-                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m)
+                    where 
+                    (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m) 
+                    ||
+                    (tot.BalanceInForeignCurrency - acc.BalanceInForeignCurrency>= 0.001m || tot.BalanceInForeignCurrency- acc.BalanceInForeignCurrency <= -0.001m)
                     select new GLAccountBalanceDTO
                     {
                         AccountId = tot.AccountId,
                         BalanceInLocalCurrency = tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency,
+                         BalanceInForeignCurrency = tot.BalanceInForeignCurrency - acc.BalanceInForeignCurrency,
                         CHANGE_TYPE = const_DifftotBalanceInLocalCurrencyMinusaccBalanceInLocalCurrency// "Diff = tot.BalanceInLocalCurrency-acc.BalanceInLocalCurrency"
 
                     }
@@ -136,6 +145,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     AccountId = g.Key,
                     BalanceInLocalCurrency = g.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit),
+                     BalanceInForeignCurrency =0,
                     CHANGE_TYPE = ""
 
                 }
@@ -146,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //0	Local Currency
                 IQueryable<GLAccountBalanceDTO> qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency = 
-                    GetTotalOpenAmountInTransactionDiffBalanceInLocalCurrency(myGLAccountRepo, myLedgerTransactionRepository, quaryablMonthTotals);
+                    GetTotalOpenAmountInTransactionDiffBalanceInLocalCurrency(myGLAccountRepo, myLedgerTransactionRepository, caclMonthTotals);
 
                 var qThe = qNotInTot.Union(qNotInGLAcc).Union(qDiff)
                     .Union(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency); ;
@@ -189,6 +199,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                    AccountId = gTransByAcc.Key,
 
                                    BalanceInLocalCurrency = gTransByAcc.Sum(r => r.OpenAmount),
+                                    BalanceInForeignCurrency =0,
                                    CHANGE_TYPE = ""
                                }
 
@@ -205,6 +216,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountId = myTotalsForeignAmount.AccountId,
 
                 BalanceInLocalCurrency = myTotalsForeignAmount.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency,
+                  BalanceInForeignCurrency = myTotalsForeignAmount.BalanceInForeignCurrency - totOpenAmountInTrans.BalanceInForeignCurrency,
                 CHANGE_TYPE = const_TotalOpenAmountInTransactionDiffBalanceInForeign
             }
 
@@ -225,6 +237,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                    AccountId = gTransByAcc.Key,
 
                                    BalanceInLocalCurrency = gTransByAcc.Sum(r => r.OpenAmount),
+                                    BalanceInForeignCurrency =0,
                                    CHANGE_TYPE = ""
                                }
 
@@ -239,6 +252,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountId = tot.AccountId,
 
                 BalanceInLocalCurrency = tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency,
+                 BalanceInForeignCurrency =0,
                 CHANGE_TYPE = const_TotalOpenAmountInTransactionDiffBalanceInLocalCurrency
             }
 
@@ -272,6 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccList.ForEach(poco =>
                {
                    poco.BalanceInLocalCurrency += tUpdateDiff.First(rDiff => rDiff.AccountId == poco.AccountId).BalanceInLocalCurrency;
+                   poco.BalanceInForeignCurrency+= tUpdateDiff.First(rDiff => rDiff.AccountId == poco.AccountId).BalanceInForeignCurrency;
                    myGLAccountMoreDataRepo.Update(poco);
                });
                 myGLAccountMoreDataRepo.SubmitChanges();
@@ -284,7 +299,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public string AccountId { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-
+        public decimal BalanceInForeignCurrency { get; set; }
         public string CHANGE_TYPE { get; set; }
+        
     }
 }

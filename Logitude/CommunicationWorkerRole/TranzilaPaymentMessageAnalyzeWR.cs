@@ -109,8 +109,8 @@ namespace CommunicationWorkerRole
             var DCdisableParam = MessageParameters.Where(a => a.Contains("DCdisable")).FirstOrDefault();
             if (DCdisableParam != null)
             {
-                return DCdisableParam.Split('=')[1];
-                
+                return !string.IsNullOrEmpty(DCdisableParam.Split('=')[1]) ? DCdisableParam.Split('=')[1].Split(',')[0] : null;
+           
             }
             return null;
         }

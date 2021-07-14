@@ -16,6 +16,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -83,8 +84,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
         public HttpResponseMessage GetCarrierUpdate(string entityId)
         {
             try
@@ -104,8 +103,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
         public HttpResponseMessage GetMessagingRulesForAirline(string myAirlineCode, string myMessageCode)
         {
             try
@@ -587,8 +584,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-        
+        }        
         public HttpResponseMessage GetAddressByCardAndType(string cardId, string type)
         {
             try
@@ -1958,7 +1954,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
+        public HttpResponseMessage PutPartnerExternalAccounts(PartnerExternalAccountsServicePM args)
         {
             try
             {
@@ -2578,6 +2574,106 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
                 args.Customer.PrimaryContactName = args.Contact.EnglishName;
                 args.IsPartnerDirty = true;
+            }
+        }
+
+        public HttpResponseMessage GetCustomerProductItemHTSCodeByCountry(string productItemId, string dischargePortCountryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                HTSCodePM hTSCode = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItemId, dischargePortCountryId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, hTSCode);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSingleCustomerProductItem(string productItemId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
+                ProductItemPM productItem = productItemQuery.GetSinglePM(productItemId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, productItem);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutCusttomerProductItem(ProductItemPM productItem)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.CheckContactFeature("Customer", "UPDATE", tenant);
+
+                    if (productItem != null)
+                    {
+                        productItem.ChangeSetOp = ChangeSetOperation.Update;
+                        ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                        CustomerRepository customerRepository = new CustomerRepository(commonContext);
+                        CustomerQuery customerQuery = new CustomerQuery(customerRepository);
+                        CustomerPM customerPM = customerQuery.GetSinglePM(productItem.CustomerId, tenant);
+
+                        if (customerPM != null)
+                        {
+                            customerPM.CustomerProductItems.Remove(customerPM.CustomerProductItems.Where(d => d.Id == productItem.Id).FirstOrDefault());
+                            customerPM.CustomerProductItems.Add(productItem);
+                            
+                            List<ProductItemPM> productItemsChangeSet = customerPM.CustomerProductItems;
+                            foreach (ProductItemPM itemPM in productItemsChangeSet)
+                            {
+                                switch (itemPM.ChangeSetOp)
+                                {
+                                    case ChangeSetOperation.Update:
+                                        {
+                                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                                            itemPM.HTSCodeChangeSet = itemPM.HTSCodes.ToList();
+                                            break;
+                                        }
+
+                                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                                }
+                            }
+
+                            CustomerService service = new CustomerService(commonContext, customerPM);
+                            service.SetChangeSet(customerPM.SalesNotes, customerPM.CustomerProducts, customerPM.CustomerCompetitors, customerPM.CustomerAdditionalServices, customerPM.CustomerSalesmanByProducts, customerPM.CustomerAccountManagerByProducts, customerPM.CustomerCustomsAgentByProducts, customerPM.CustomerForwarderByProducts, customerPM.CustomerMediatorByProducts, customerPM.CardExternalCodeByCurrencies, productItemsChangeSet);
+                            service.Update();
+                        }
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, productItem);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
     }

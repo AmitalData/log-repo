@@ -252,6 +252,7 @@
     <None Include="DBTables\CustomDocumentType.dxml" />
     <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
     <None Include="DBTables\CustomerActivityType.dxml" />
+    <None Include="DBTables\CustomerClassificationType.dxml" />
     <None Include="DBTables\CustomerIdentificationType.dxml" />
     <None Include="DBTables\CustomerIdentifyType.dxml" />
     <None Include="DBTables\CustomerRoleType.dxml" />
@@ -411,6 +412,7 @@
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
+    <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
     <None Include="DBTables\PointerLevel.dxml" />
     <None Include="DBTables\ProceduralFault.dxml" />
     <None Include="DBTables\ProceduralFaultInProcessType.dxml" />
@@ -506,8 +508,12 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
+    <None Include="EntityFiles\CustomerClassificationType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />

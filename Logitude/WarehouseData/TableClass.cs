@@ -42,7 +42,9 @@ namespace WarehouseData
         public List<TableClass> RelatedEntities { get; set; }
         public List<string> FieldsDBNameLists { get; set; }
         public List<string> RelatedFactTables { get; set; }
-
+        public bool HasMultipleDWTables { get; set; }
+        public List<string> MultipleDW_TablesNames { get; set; }
+        public List<string> MultipleTablesNames { get; set; }
 
     }
 

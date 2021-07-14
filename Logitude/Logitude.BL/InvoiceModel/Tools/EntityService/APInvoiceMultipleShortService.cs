@@ -24,6 +24,7 @@ using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -101,6 +102,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdateAllPayablesAccountedAmountAndStatus();
             this.shipmentPayableRepository.SubmitChanges();
+
+            PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, tenant, shipmentPayableRepository);
+            payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
+
             this.RunStoredProcedures();
         }
 

@@ -413,7 +413,7 @@
 
 
                                     <!-- balance -->
-                                    <div class="content-no-header" style="height: 90px;">
+                                    <div class="content-no-header" style="height: 150px;">
                                         <table class="labels-table" style="table-layout: fixed;">
                                             <tr>
                                                 <td class="header-labels">{{ 'GLAccounts.O.AccountingBalance' |
@@ -442,6 +442,37 @@
                                                 <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{
                                                         'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
                                             </tr>
+                                            <tr style="height:10px"></tr>
+
+                                            <tr  *ngIf="IsFollowUpVisible && this.EntityPM.AccountTypeCode == '2'">
+                                              <td colspan="3">
+                                                  <table>
+                                                      <tr>
+                                                          <td style="width:150px;font-size:11px;">
+                                                              {{ 'GLAccountFollowUpData.F.FollowUpDate' |  TextCodeTranslationPipe }}
+                                                          </td>
+                                                          <td style="width:150px">
+                                                              <LogDatePicker [ObjectFieldName]="'GLAccountFollowUpDate'" [ObjectTableName]="ObjectTableName"
+                                                                             [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                          </td>
+                                                          <td></td>
+                                                      </tr>
+                                                      <tr style="height:5px"></tr>
+                                                      <tr>
+                                                          <td style="width:150px;font-size:11px">
+                                                              {{ 'GLAccountFollowUpData.F.FollowUpRemarks' |  TextCodeTranslationPipe }}
+                                                          </td>
+                                                          <td>
+                                                              <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'GLAccountFollowUpRemarks'"
+                                                                   [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                                                    [DataContext]="DataContext"></LogTextBox>
+
+                                                          </td>
+                                                          <td></td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                            </tr>
                                         </table>
                                     </div>
 
@@ -453,7 +484,7 @@
                                         <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Add'"
                                             (click)="OpenAccountingNote(null)"></IconButton>
                                     </div>
-                                    <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
+                                    <div class="content" style="padding: 5px 0;height: calc(100% - 150px);overflow: scroll ;">
                                         <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
 
                                             <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
@@ -481,6 +512,8 @@
                                     </div>
 
                                 </div>
+
+                             
 
                                 <!-- Widget: Last 10 transactions -->
                                 <div float-start class="widget" style="">
@@ -591,14 +624,25 @@
                                             <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start style="padding-top: 5px;">
                                                  {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div     *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
-                                                <LogToolTip [bottom]="5" [float]="'none'" *ngIf="accountCardlist && accountCardlist.length > 1"  [direction]="!showLocal? 'topright':'topleft'" [name]="'CreditLimit'"
-                                                    [mode]="'Warning'" [title]="''">
-                                                    {{GLaccountConnectedMoreOneCardText}} 
-                                                </LogToolTip>
-                                                
+                                            <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
+                                                <div style="float:left">
+                                                    <div float-end style="height:20px;position:relative;top:3px">
+                                                        <LogToolTip [bottom]="5" *ngIf="accountCardlist && accountCardlist.length > 1" [name]="'CreditLimit'" [direction]="isRTL?'bottomleft':'bottomright'"
+                                                                    [mode]="'Warning'" [title]="''">
+                                                            {{GLaccountConnectedMoreOneCardText}}
+                                                        </LogToolTip>
+                                                    </div>
+                                                    <div float-end  style="height:20px;">
+                                                        <LogToolTip text-start *ngIf="IsInsuredCreditLimitDefined()" [bottom]="5" [name]="'InsuredCreditLimit'" [direction]="isRTL?'bottomright':'bottomleft'"
+                                                                    [mode]="'Info'">
+                                                            <span float-end>{{'GLAccount.O.AmountIsInsured' | TextCodeTranslationPipe}}</span>
+                                                            <span float-end>&nbsp;</span>
+                                                            <span float-end>{{InsuredCreditLimit }}</span>
+                                                        </LogToolTip>
+                                                    </div>
+                                                </div>
+                                              
                                                 {{CreditLimitAmount | NumbersPipe:'N2'}}
- 
 
                                             </div>
                                             <div *ngIf="!IsCreditNotDefined()" class="progress green" [class.red]="IsOverCredit()" float-end>
@@ -635,7 +679,7 @@
                                             <div class="amount" float-start style="text-align: right;" >
                                                 {{(GLAccountMoreData.TotalOpenChequesInLocalCur?GLAccountMoreData.TotalOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start text-start >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>

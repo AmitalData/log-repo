@@ -17,7 +17,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.LogitudeURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ChampURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.IOSSharedAppMinimumVersion).IsRequired();
-            this.Property(t => t.AndroidSharedAppMinimumVersion).IsRequired();           
+            this.Property(t => t.AndroidSharedAppMinimumVersion).IsRequired();
             this.Property(t => t.DeploymentStage).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.UsingAzure).IsRequired();
             this.Property(t => t.IsLogEnabled).IsRequired();
@@ -39,7 +39,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.NotificationHubConnectionString).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.ForwarderTenantsURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CustomerTenantsURL).HasMaxLength(600).IsUnicode(false);
-            this.Property(t => t.DomainName).HasMaxLength(100).IsUnicode(false);            
+            this.Property(t => t.DomainName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ProductName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EmailAlertSignature).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueueServiceMode).HasMaxLength(15).IsUnicode(false);
@@ -71,8 +71,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.TMPersonalAccessToken).HasMaxLength(100).IsUnicode(false);
-            this.Property(t=>t.LogitudeDemoTenants).IsUnicode(false).HasColumnName("LogitudeDemoTenants");
-
+            this.Property(t => t.LogitudeDemoTenants).IsUnicode(false).HasColumnName("LogitudeDemoTenants");
+            this.Property(t => t.AmitalCloudEnvironmentURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasMaxLength(50).IsUnicode(true);
+            
             // Table & Column Mappings
             this.ToTable("Settings");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -97,7 +99,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IOSSharedAppMinimumVersion).HasColumnName("IOSSharedAppMinimumVersion");
             this.Property(t => t.AndroidSharedAppMinimumVersion).HasColumnName("AndroidSharedAppMinimumVersion");
             this.Property(t => t.DomainName).HasColumnName("DomainName");
-            this.Property(t => t.ProductName).HasColumnName("ProductName");     
+            this.Property(t => t.ProductName).HasColumnName("ProductName");
             this.Property(t => t.LogoCode).HasColumnName("LogoCode");
             this.Property(t => t.EnableHybridQueue).HasColumnName("EnableHybridQueue");
             this.Property(t => t.GLSHKURL).HasColumnName("GLSHKURL");
@@ -126,17 +128,20 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.QBOClientID).HasColumnName("QBOClientID");
             this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret");
             this.Property(t => t.TMPersonalAccessExpirationDate).HasColumnName("TMPersonalAccessExpirationDate");
-
-
-
+            this.Property(t => t.OITenantNumber).HasColumnName("OITenantNumber");
+            this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL");
+            
+            
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnString");
+                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPK");
             }
             else
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString");
+                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
             }
 
             this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL");

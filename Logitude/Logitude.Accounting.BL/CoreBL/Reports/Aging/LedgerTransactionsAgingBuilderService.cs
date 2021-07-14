@@ -154,7 +154,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
                      {
 
                          OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                         OrderAfterOpenrECODueDate = true,
+                         OrderAfterOpenRecordDueDate = true,
                          AccountId = groupByAccCurrr.Key.AccountId,
 
                          Total = groupByAccCurrr.Sum(rec => rec.Total),
@@ -164,7 +164,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
              .FirstOrDefault() ?? new PeriodM()
              {
                  OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                 OrderAfterOpenrECODueDate = true,
+                 OrderAfterOpenRecordDueDate = true,
                  AccountId = curAccId
 
              };
@@ -255,7 +255,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
                 {
 
                     OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                    OrderAfterOpenrECODueDate = true,
+                    OrderAfterOpenRecordDueDate = true,
                     AccountId = groupByAccCurrr.Key.AccountId,
 
                     Total = groupByAccCurrr.Sum(rec => rec.Total),

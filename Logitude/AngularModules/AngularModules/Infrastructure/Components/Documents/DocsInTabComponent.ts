@@ -754,7 +754,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             if (this.externalDocs != null) {
                 this.externalDocs.forEach((docin) => {
                     if (this.AllDocumentTypeList != null) {
-                        var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId && d.InActive == false)[0];
+                        var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId)[0];
                         if (docType) {
                             var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
                             this.StaticDocumentsList.push(docVeiwModel);

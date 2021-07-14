@@ -313,7 +313,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                         if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
                         {
-                            r.OrderAfterOpenrECODueDate = true;
+                            r.OrderAfterOpenRecordDueDate = true;
                         }
                     });
 
@@ -421,12 +421,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     Tenant = tenant,
                     TotalOpenTransactions = listperiodMs.Sum(r => r.TotalOpenTransactions),
                     PeriodPast = listperiodMs.Skip(0).First().Total,
-                    Period0 = listperiodMs.Skip(1).First().Total,
-                    Period1 = listperiodMs.Skip(2).First().Total,
-                    Period2 = listperiodMs.Skip(3).First().Total,
-                    Period3 = listperiodMs.Skip(4).First().Total,
-                    Period4 = listperiodMs.Skip(5).First().Total,
-                    Period5 = listperiodMs.Skip(6).First().Total,
+                    //Period0 = listperiodMs.Skip(1).First().Total,
+                    //Period1 = listperiodMs.Skip(2).First().Total,
+                    //Period2 = listperiodMs.Skip(3).First().Total,
+                    //Period3 = listperiodMs.Skip(4).First().Total,
+                    //Period4 = listperiodMs.Skip(5).First().Total,
+                    //Period5 = listperiodMs.Skip(6).First().Total,
+                    Period5 = listperiodMs.Skip(1).First().Total,
+                    Period4 = listperiodMs.Skip(2).First().Total,
+                    Period3 = listperiodMs.Skip(3).First().Total,
+                    Period2 = listperiodMs.Skip(4).First().Total,
+                    Period1 = listperiodMs.Skip(5).First().Total,
+                    Period0 = listperiodMs.Skip(6).First().Total,
+
                     PeriodFuture = listperiodMs.Skip(7).First().Total,
 
                 };
@@ -510,7 +517,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                  {
 
                      OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                     OrderAfterOpenrECODueDate = true,
+                     OrderAfterOpenRecordDueDate = true,
                      AccountId = groupByAccCurrr.Key.AccountId,
                      CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                      Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
@@ -535,7 +542,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                     {
 
                         OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                        OrderAfterOpenrECODueDate = true,
+                        OrderAfterOpenRecordDueDate = true,
                         AccountId = groupByAccCurrr.Key.AccountId,
                         CurrencyId = _AccountingCurrencyId,
                         Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
@@ -976,12 +983,19 @@ _Param.AgingForDate.Date, false, true, true, false);
                 AccountId = entityPM.AccountId,
                 Tenant = entityPM.Tenant,
                 PeriodPast = myLess == null ? 0 : myLess.Total * multi,
-                Period0 = mainPeriods.Skip(0).First().Total* multi,
+                Period0 = mainPeriods.Skip(0).First().Total * multi,
                 Period1 = mainPeriods.Skip(1).First().Total * multi,
                 Period2 = mainPeriods.Skip(2).First().Total * multi,
                 Period3 = mainPeriods.Skip(3).First().Total * multi,
                 Period4 = mainPeriods.Skip(4).First().Total * multi,
                 Period5 = mainPeriods.Skip(5).First().Total * multi,
+                //Period5 = mainPeriods.Skip(0).First().Total * multi,
+                //Period4 = mainPeriods.Skip(1).First().Total * multi,
+                //Period3 = mainPeriods.Skip(2).First().Total * multi,
+                //Period2 = mainPeriods.Skip(3).First().Total * multi,
+                //Period1 = mainPeriods.Skip(4).First().Total * multi,
+                //Period0 = mainPeriods.Skip(5).First().Total * multi,
+
                 PeriodFuture = myFuture == null ? 0 : myFuture.Total * multi,
                 TotalOpenTransactions = totalClose * multi,
             };
@@ -1002,7 +1016,7 @@ _Param.AgingForDate.Date, false, true, true, false);
                            {
 
                                OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                               OrderAfterOpenrECODueDate = true,
+                               OrderAfterOpenRecordDueDate = true,
                                AccountId = groupByAccCurrr.Key.AccountId,
 
                                Total = groupByAccCurrr.Sum(rec => rec.Total),

@@ -126,7 +126,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 GLAccountId = period.GLAccountId,
                 From = RefDateFrom.Value,
                 To = RefDateTo.Value,
-                DateTypeCode = "3",
+                DateTypeCode = "1",
                 Tenant = tenant,
                 PageSize = 30
             };
@@ -191,6 +191,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                         })
                                         .Where(s => s.ExternalReconciliationPeriods.Count > 0)
                                         .ToList();
+            FillBanksCloseBalances();
+        }
+
+        private void FillBanksCloseBalances()
+        {
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+            foreach (var bankDetail in dataProvider.BankDetails)
+            {
+                bankDetail.BankPagesClosingBalance = dataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount", bankDetail.BankAccountId, RefDateTo.Value);
+            }
         }
 
         private List<BankAccountPM> GetBankAccounts()

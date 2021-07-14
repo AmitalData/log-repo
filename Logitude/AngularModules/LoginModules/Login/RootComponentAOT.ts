@@ -4,6 +4,8 @@ import {DynamicLoaderAOT} from './Utilities/DynamicLoaderAOT';
 import {Tools} from './Utilities/Tools';
 import {ExternalParams, ExternalParamsArg} from './Utilities/ExternalParams';
 import {SessionInfo} from './SessionInfo'
+import { ServiceResponse } from './PrivateLabels/DataContracts/ServiceResponse';
+import { PrivateLabelsService } from './PrivateLabels/Services/PrivateLabelsService';
 declare var changeFavicon: any;
 declare var changeTitle: any;
 declare var IsMobileDetected;
@@ -24,14 +26,13 @@ export class RootComponentAOT implements OnInit {
     isPrivateLable: boolean = false;
     isDSV: boolean = false;
     ResetPWD: string;
-    constructor(compiler: Compiler, private resolver: ComponentFactoryResolver, private http: Http) {
+    constructor(compiler: Compiler, private resolver: ComponentFactoryResolver, private http: Http,
+        private privateLabelsService: PrivateLabelsService) {
         //ServiceHelper.Http = http;
         DynamicLoaderAOT.Compiler = compiler;
         DynamicLoaderAOT.Resolver = resolver;
         Tools.DynamicLoader = DynamicLoaderAOT;
         this.ResetPWD = window.sessionStorage.getItem("ResetPWD");
-        //SessionLocator.DynamicLoader = DynamicLoaderAOT;
-        //SessionLocator.IsProduction = true;
 
         const data = window.sessionStorage.getItem('userdata');
         if (data != "SignOut") {
@@ -78,8 +79,11 @@ export class RootComponentAOT implements OnInit {
             changeFavicon(window.sessionStorage.getItem("SmallLogoURL"));
             changeTitle(privateLableShortName);
         }
+        else {
+            this.SetPrivateLabelsDataIntoSessionStorage();
+        }
         SessionInfo.MainLocation = this.location;
-        this.LoadLoginPage();
+        this.LoadPrivateLableLoginPages();
     }    
 
     private ClearLocation() {
@@ -87,37 +91,9 @@ export class RootComponentAOT implements OnInit {
             this.location.clear();
         }
     }
-  
-    LoadLoginPage() {
-        this.ClearLocation();
-        if (!this.isPrivateLable) {
-            if (this.ResetPWD == "true") {
-                DynamicLoaderAOT.Load("./Login/Components/ChangePasswordComponent", this.location)
-                    .then(cmpRef => {
-                        window.sessionStorage.setItem("ResetPWD", "false");
-                    });
-            }
-            else {
-                DynamicLoaderAOT.Load("./Login/Components/LoginComponent", this.location)
-                    .then(cmpRef => {
-
-                        //cmpRef.instance.Blocking.subscribe(s => {
-                        //    SessionLocator.BlockType = s;
-                        //    this.LoadBlockingScreen();
-                        //});
-
-                        //cmpRef.instance.LoginCompleted.subscribe(s => {
-                        //    this.OnLoginCompleted();
-                        //});
-                    });
-            }
-        }
-        else {
-            this.LoadPrivateLableLoginPages();
-        }
-    }
 
     LoadPrivateLableLoginPages() {
+        this.ClearLocation();
         if (this.ResetPWD == "true") {
             this.LoadPrivateLableChangePasswordPage();
         }
@@ -157,5 +133,18 @@ export class RootComponentAOT implements OnInit {
         DynamicLoaderAOT.Load("./Login/Components/DSVMobileLoginComponent", this.location)
             .then(cmpRef => { });
     }
- 
+
+    SetPrivateLabelsDataIntoSessionStorage() {
+        this.privateLabelsService.GetIsPrivateLableUrl(Tools.GetSystemURL()).subscribe((response: any) => {
+            if (response.EnablePrivateLable) {
+                window.sessionStorage.setItem("ContactEmail", response.ContactUsEmail);
+                window.sessionStorage.setItem("IsPrivateLabel", "true");
+                window.sessionStorage.setItem("SmallLogoURL", response.SmallLogoURL);
+                window.sessionStorage.setItem("LogoURL", response.LogoURL);
+                window.sessionStorage.setItem("PrivateLabelUrl", response.PrivateLabelUrl);
+                window.sessionStorage.setItem("PrivateLabelShortName", response.PrivateLabelShortName);
+                window.sessionStorage.setItem("IsDSV", (response.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1).toString());
+            }
+        })
+    } 
 }

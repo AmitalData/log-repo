@@ -11,6 +11,7 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -23,11 +24,12 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
-    public IsLCLEntity: boolean = false; 
+    public IsLCLEntity: boolean = false;
+    public IsFromStandAloneScreen: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
     }
 
     SetDataContext(dataContext: ShipmentPackageItem) {
@@ -36,8 +38,10 @@ export class AddEditOceanPackageComponent {
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
         this.IsLCLEntity = dataContext.IsLCLEntity;
+        this.IsFromStandAloneScreen = dataContext.IsFromStandAloneScreen;
         this.SetLabels();
         this.Clone();
+        this.GetContainerEntityReferenceVisiblity();
     }
 
     public TareLabel: string;
@@ -114,6 +118,17 @@ export class AddEditOceanPackageComponent {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Weight)) {
             errors.push("Gross Weight is required");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerNumber) && this.IsFromStandAloneScreen) {
+            errors.push("Container Number is required");
+        }
+        if (this.DataContext.ShipmentPM != null && !AppTool.IsNullOrEmpty(this.DataContext.ContainerNumber) && this.IsFromStandAloneScreen) {
+            if (this.DataContext.ShipmentPM.ShipmentPackages != null) {
+                if (this.DataContext.ShipmentPM.ShipmentPackages.find(item => item.ContainerNumber == this.DataContext.ContainerNumber)) {
+                    errors.push("Cannot have 2 containers with the same number");
+                }
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -224,6 +239,27 @@ export class AddEditOceanPackageComponent {
             logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
 
+            });
+        }
+    }
+
+    GetContainerEntityReferenceVisiblity() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        if (featureToggle && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
+            this.IsContainerEntityReferenceVisible = true;
+        }
+    }
+
+    OpenContainerEntityWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Container";
+        logWindow.IsFillScreen = true;
+        var ContainerEntityId = this.EntityPM?.ContainerEntityId;
+        if (!AppTool.IsNullOrEmpty(ContainerEntityId)) {
+            logWindow.ShowEditComponent(ContainerEntityId, "Container");
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                });
             });
         }
     }

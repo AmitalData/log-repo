@@ -223,19 +223,19 @@ namespace WebFreight.Web.Helpers
 
         private EmailParameters BuildEmailCommunicationLog(EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
         {
-            string fromemail = LogitudeSettings.WorkEnvironment == "cloud" ? "no-replay@amital.co.il" : "no-reply@LogitudeWorld.com";
+            string fromemail = LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
             string subject = LogitudeSettings.WorkEnvironment == "cloud" ? "Your Cloud Password!" : "Your Logitude Password! ";
 
             if (emailCommunicationLogBuilderArgs.ResetPasswordParameters.IsMobile)
             {
                 subject = emailCommunicationLogBuilderArgs.AppMobileEnvironment + " Mobile Password";
-                fromemail = emailCommunicationLogBuilderArgs.AppMobileEnvironment == "Unifreight" ? "no-replay@amital.co.il" : "no-reply@LogitudeWorld.com";
+                fromemail = emailCommunicationLogBuilderArgs.AppMobileEnvironment == "Unifreight" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
             }
 
             if (IsLogboxEnvironment())
             {
                 string envir = privatelabel == null ? "Logbox" : privatelabel.PrivateLabelShortName;
-                string Email = privatelabel == null ? "no-replay@logbox.co.il" : "no-reply@" + privatelabel.PrivateLabelDomain;
+                string Email = privatelabel == null ? "no-reply@logbox.co.il" : "no-reply@" + privatelabel.PrivateLabelDomain;
                 subject = "Your " + envir + " Password";
                 fromemail = Email;
             }

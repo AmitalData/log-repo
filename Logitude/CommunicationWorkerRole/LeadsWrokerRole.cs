@@ -191,7 +191,6 @@ namespace CommunicationWorkerRole
              LogitudeLead lead = GetLogitudeLeads(commLog);
             if (lead != null && lead.StatusCode == "InProgress" && (lead.IsEmailVerified || (lead.IsEmailVerified == false && lead.IsSentToCustomer == false)))
             {
-      
                 CreateTenant(lead);
             }
 
@@ -597,20 +596,20 @@ namespace CommunicationWorkerRole
 
                         #region send email to customer
                         string path = LogitudeSettings.LogitudeURL + "/SignUpVerification.aspx?id=" + lead.Id;
-                        HtmlTemplate.Append("<div style='text-align:left'>");
+                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
                         HtmlTemplate.Append("Dear " + (!string.IsNullOrEmpty(lead.ContactName) && lead.ContactName != "Unassigned" ? (lead.ContactName + ", ") : ",") + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Thank You for your interest in Logitude World, the First Freight Forwarding solution built in the cloud.");
+                        HtmlTemplate.Append("Thank You for your interest in Logitude World, the first Freight Forwarding Software built totally in the cloud.");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("In order to proceed with the demo environment, please confirm your detail using the following link: <a href='" + path + "'/>" + path + "</a>");
+                        HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link: <a href='" + path + "'/>" + path + "</a>");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("As a result we will send you an email with your user name and password for our demo environment and a Quick Tour Guide.");
+                        HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
                         HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                        HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
                         HtmlTemplate.Append("<br /><br />");
                         HtmlTemplate.Append("Best Regards,");
                         HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
                         HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
                         HtmlTemplate.Append("<br />");
                         HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
@@ -625,7 +624,7 @@ namespace CommunicationWorkerRole
                                 To = toEmail,
                                 Cc = "",
                                 Bcc = "",
-                                Subject = "Signup Request Verification",
+                                Subject = "Complete the Signup Request with Logitude World",
                                 Body = emailbody,
                                 IsBodyHtml = true,
                                 Tenant = demoTenant,
@@ -641,7 +640,7 @@ namespace CommunicationWorkerRole
                                 To = toEmail,
                                 Cc = "info@logitudeworld.com",
                                 Bcc = "jalal@logitudeworld.com",
-                                Subject = "Signup Request Verification",
+                                Subject = "Complete the Signup Request with Logitude World",
                                 Body = emailbody,
                                 IsBodyHtml = true,
                                 Tenant = demoTenant,
@@ -806,43 +805,47 @@ namespace CommunicationWorkerRole
 
         private void SendPasswordEmailToUser(int demoTenant, int crmTenant, User ownerUser, LogitudeLead lead, ObjectTable table, StringBuilder HtmlTemplate, UserPM createdUser)
         {
-
-            // HtmlTemplate.Append("<div style='text-align:right;margin-right:150px'>" + lead.CompanyName + " (" + lead.Country + ") </div>");
-            HtmlTemplate.Append("<div style='text-align:left;'>");
+            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
             HtmlTemplate.Append("Dear " + lead.ContactName + " , " + lead.CompanyName + " (" + lead.Country + ") ");
             HtmlTemplate.Append("<br /><br />");
-            //HtmlTemplate.Append("Thank You for your interest in Logitude World, the First Freight Forwarding solution built in the cloud.");
-            //HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Upon your request,  please find your User Name and Password below:");
+            HtmlTemplate.Append("Thank you for verifying your account!");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("Upon your request,  please find your username and password below:");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("<b>Email: </b>" + lead.Email);
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("<b>Password: </b>" + (createdUser.HasPassword ? "Your current password." : createdUser.Password));//+ "  (you will need to change the password on you first login)");
             HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("To log in please, click on the link below (or copy and paste it into your browser):");
+            HtmlTemplate.Append("In order to log in. Please, follow the link below (or copy and paste it into your browser):");
+
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append(LogitudeSettings.LogitudeURL);
+            HtmlTemplate.Append("<a href='" + LogitudeSettings.LogitudeURL + "'/>" + LogitudeSettings.LogitudeURL + "</a>");
+
             HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Please note that the trial period will end in 7 days.");
+            HtmlTemplate.Append("The access is to Logitude's demo environment where other customers might be using at the same time, and kindly note that the trial period ends in 7 days.");
             HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("The Access is to the demo environment where other customers might be using at the same time.");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Please use the following  link to see our Quick Tour Guide,");
+            HtmlTemplate.Append("Please use the following link to see our Quick Tour Guide,");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("https://www.logitudeworld.com/wp-content/uploads/2016/10/getting_around.pdf");
+
+
+            HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf'>https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf</a>");
             HtmlTemplate.Append("<br /><br />");
 
-            HtmlTemplate.Append("The demo environment provide access to all Logitude modules, including the e-AWB module, which is design to also run as a stand-alone application.");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Please use the following link for a Quick Tour through e-AWB: ");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("https://www.logitudeworld.com/wp-content/uploads/2016/10/eawb_quicktour.pdf");
+            HtmlTemplate.Append("The demo environment provides access to majority of Logitude modules, including the e-AWB module, which was also designed to be run as a stand-alone application.");
             HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("If you want to explore our Logitude World in more detail, we can create a private environment for you. To get this free 30-day trial please, contact me.");
+            HtmlTemplate.Append("Please use the following link for a Quick Tour Guide of the e-AWB module:");
+            HtmlTemplate.Append("<br />");
+            HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf'>https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf</a>");
+
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("If you want to explore our Logitude World in more detail, we can create a private environment for you. To get the 30-days free trial Please let us know.");
+            HtmlTemplate.Append("<br /><br />");
+
+            HtmlTemplate.Append("You are ready now! Your account manager will be in touch with you soon.");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Best Regards,");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+            HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
             HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
@@ -858,7 +861,7 @@ namespace CommunicationWorkerRole
                     From = "info@logitudeworld.com",
                     To = lead.Email,
                     CC = "info@logitudeworld.com",
-                    Subject = "Username & Password (7-day Trial)",
+                    Subject = "Welcome to Logitude's Demo Environment!",
                     EmailBody = emailbody,
                     Tenant = demoTenant,
                     IsBodySecured = true,
@@ -873,7 +876,7 @@ namespace CommunicationWorkerRole
                     To = "islam@logitudeWorld.com;jalal@logitudeworld.com",
                     CC = "",
                     BCC = "",
-                    Subject = "Username & Password (7-day Trial)",
+                    Subject = "Welcome to Logitude's Demo Environment!",
                     EmailBody = emailbody,
                     Tenant = demoTenant,
                     IsBodySecured = true,

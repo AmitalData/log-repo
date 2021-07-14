@@ -67,6 +67,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InsuredcreditLimit"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="SalesmanUserId"
     ReferencedTable="Users"

@@ -1243,99 +1243,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             Card myCard = null;
-
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-
-            if (!string.IsNullOrEmpty(entityPM.ShipperId))
-            {
-                myCard = cardRepository.GetSingleCard(entityPM.ShipperId, entityPM.Tenant);
-                if (myCard != null)
-                {
-                    if (entityPM.ShipmentLevelCode == "C")
-                    {
-                        if (tenantPM.AllowCustomersInAgentsLOV)
-                        {
-                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Shipper partner type should be agent or customer");
-                            }
-                        }
-
-                        else
-                        {
-                            if (myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Shipper partner type should be agent");
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        if (tenantPM.AllowAgentInCustomersLOV)
-                        {
-                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Shipper partner type should be agent or customer");
-                            }
-                        }
-
-                        else
-                        {
-                            if (myCard.PartnerTypeId != "CS")
-                            {
-                                throw new ApplicationException("Shipper partner type should be customer");
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-            {
-                myCard = cardRepository.GetSingleCard(entityPM.ConsigneeId, entityPM.Tenant);
-                if (myCard != null)
-                {
-                    if (entityPM.ShipmentLevelCode == "C")
-                    {
-                        if (tenantPM.AllowCustomersInAgentsLOV)
-                        {
-                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Consignee partner type should be agent or customer");
-                            }
-                        }
-
-                        else
-                        {
-                            if (myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Consignee partner type should be agent");
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        if (tenantPM.AllowAgentInCustomersLOV)
-                        {
-                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
-                            {
-                                throw new ApplicationException("Consignee partner type should be agent or customer");
-                            }
-                        }
-
-                        else
-                        {
-                            if (myCard.PartnerTypeId != "CS")
-                            {
-                                throw new ApplicationException("Consignee partner type should be customer");
-                            }
-                        }
-                    }
-                }
-            }
 
             if (!string.IsNullOrEmpty(entityPM.AgentId))
             {
@@ -1403,7 +1312,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS")
                     {
-                        throw new ApplicationException("Shipper not exporter partner type should be agent or customer");
+                       throw new ApplicationException("Shipper not exporter partner type should be agent or customer");
                     }
                 }
             }
@@ -1415,7 +1324,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS")
                     {
-                        throw new ApplicationException("Consignee not importer partner type should be agent or customer");
+                       throw new ApplicationException("Consignee not importer partner type should be agent or customer");
                     }
                 }
             }
@@ -1587,9 +1496,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
                 ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
 
-                if (subType != null)
+                if (subType != null && subType.Code?.ToLower() != "horse")
                 {
-                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
+                    if(entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode?.ToLower())
                     {
                         throw new ApplicationException("Sub Type is not allowed with this shipment type");
                     }

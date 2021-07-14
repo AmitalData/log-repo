@@ -13,9 +13,11 @@ namespace Logitude.CargoTracking.BL.CoreBL
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
 
-            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse();
-            response.Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList();
-            response.ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters);
+            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse
+            {
+                Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList(),
+                ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters)
+            };
 
             return response;
         }
@@ -34,7 +36,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Air = shipmentsIQuerable.Count(d => d.TransportModeId == "A");
             counter.Land = shipmentsIQuerable.Count(d => d.TransportModeId == "I");
             counter.Sea = shipmentsIQuerable.Count(d => d.TransportModeId == "O");
-            counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I");
+            counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I" || d.DirectionId == "C");
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
 
             return counter;

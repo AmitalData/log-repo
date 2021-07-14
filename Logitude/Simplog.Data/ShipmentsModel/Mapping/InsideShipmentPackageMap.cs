@@ -32,6 +32,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Harmonize).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.HorseId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("InsideShipmentPackages");
@@ -63,6 +64,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CountryId).HasColumnName("CountryId");
             this.Property(t => t.Harmonize).HasColumnName("Harmonize");
             this.Property(t => t.IsMultiHarmonize).HasColumnName("IsMultiHarmonize");
+            this.Property(t => t.HorseId).HasColumnName("HorseId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -86,6 +88,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.ShipmentPackageId);
             this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
+            this.HasOptional(t => t.Horse).WithMany().HasForeignKey(d => d.HorseId);
 
         }
     }

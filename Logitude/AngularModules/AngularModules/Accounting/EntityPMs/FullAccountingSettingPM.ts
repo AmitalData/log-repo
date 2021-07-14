@@ -254,6 +254,26 @@ export class FullAccountingSettingPM {
     public set AllowMultiRatesInInvoiceLines(newValue: boolean) { if (this.allowMultiRatesInInvoiceLines != newValue) { this.allowMultiRatesInInvoiceLines = newValue; this.MarkAsDirty("AllowMultiRatesInInvoiceLines"); } }
        
 	 
+    private numberofPeriods: number;
+    public get NumberofPeriods() { return this.numberofPeriods; }
+    public set NumberofPeriods(newValue: number) { if (this.numberofPeriods != newValue) { this.numberofPeriods = newValue; this.MarkAsDirty("NumberofPeriods"); } }
+       
+	 
+    private firstPeriodsMonths: string;
+    public get FirstPeriodsMonths() { return this.firstPeriodsMonths; }
+    public set FirstPeriodsMonths(newValue: string) { if (this.firstPeriodsMonths != newValue) { this.firstPeriodsMonths = newValue; this.MarkAsDirty("FirstPeriodsMonths"); } }
+       
+	 
+    private secondPeriodsMonths: string;
+    public get SecondPeriodsMonths() { return this.secondPeriodsMonths; }
+    public set SecondPeriodsMonths(newValue: string) { if (this.secondPeriodsMonths != newValue) { this.secondPeriodsMonths = newValue; this.MarkAsDirty("SecondPeriodsMonths"); } }
+       
+	 
+    private thirdsPeriodsMonths: string;
+    public get ThirdsPeriodsMonths() { return this.thirdsPeriodsMonths; }
+    public set ThirdsPeriodsMonths(newValue: string) { if (this.thirdsPeriodsMonths != newValue) { this.thirdsPeriodsMonths = newValue; this.MarkAsDirty("ThirdsPeriodsMonths"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

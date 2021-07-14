@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
@@ -6,6 +7,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -82,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
+                AddPortKafkaQueueMessage();
             }
 
             else
@@ -148,6 +151,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            AddPortKafkaQueueMessage();
+        }
+
+        private void AddPortKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Port" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }

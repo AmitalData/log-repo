@@ -159,6 +159,16 @@ export class TaxReportLinePM {
     public set UpdatedBUserName(newValue: string) { if (this.updatedBUserName != newValue) { this.updatedBUserName = newValue; this.MarkAsDirty("UpdatedBUserName"); } }
        
 	 
+    private journalLineNumber: number;
+    public get JournalLineNumber() { return this.journalLineNumber; }
+    public set JournalLineNumber(newValue: number) { if (this.journalLineNumber != newValue) { this.journalLineNumber = newValue; this.MarkAsDirty("JournalLineNumber"); } }
+       
+	 
+    private previousReference: string;
+    public get PreviousReference() { return this.previousReference; }
+    public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

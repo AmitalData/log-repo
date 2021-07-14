@@ -13,6 +13,7 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'SystemCurrenciesComponent',
@@ -229,7 +230,16 @@ export class SystemCurrenciesComponent extends BaseComponent {
             confirmWindow.Show("Are you sure you want to change " + this.Type + " currency?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+
                     var logWindow = new LogitudeWindow();
+
+                    logWindow.WindowClosed.subscribe(s => {
+                        if (s) {
+                            var messageWindow: MessageWindow = new MessageWindow();
+                            messageWindow.Show("Please logout and login again to refresh data");
+                        }
+                    });
+
                     logWindow.IsOverWindow = true;
                     logWindow.WindowArgs = { TenantPM: this.TenantPM, Type: this.Type };
                     logWindow.Title = "Change " + this.Type + " Currency";

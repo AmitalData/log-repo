@@ -204,6 +204,36 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="NumberofPeriods"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FirstPeriodsMonths"
+    OldNames="FirstPeriod'sMonths"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecondPeriodsMonths"
+    OldNames="SecondPeriod'sMonths"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ThirdsPeriodsMonths"
+    OldNames="Third'sPeriodsMonths"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

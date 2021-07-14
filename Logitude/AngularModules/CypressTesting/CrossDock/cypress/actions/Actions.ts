@@ -8,18 +8,15 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { LinkedShipmentDetails } from "../models/LinkedShipmentDetails";
 import { Constants } from "../../cypress/constants/Constants"
-import * as Baseactions from "../../../Base/cypress/actions/Actions"
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { LinkedReleaseDetails } from "../models/LinkedReleaseDetails";
 import { URLs } from '../../../Shipment/cypress/constants/URLs';
-import { ShipmentConstants } from "../../../Shipment/cypress/constants/constants"
 import { DeliveryDetails } from "../models/DeliveryDetails";
 
 export function OpenNewCrossDock(crossDockType: string) {
     cy.Click(CrossdockSelectors.CrossdockNewButton(crossDockType), null);
 }
 export function FillCrossdockWizardsFields(crossdockDetails: CrossDockDetails, crossDockType: string) {
-    let txt;
     if (crossDockType == Constants.Entry) {
         FillCrossdockWizardsEntryFields(crossdockDetails);
     }
@@ -52,17 +49,15 @@ function DefinePostCrossdockEntryRequest() {
     cy.DefineRequestWait(RestAPI.POST, CrossDockURLs.WarehouseEntry, RequestAliases.PostCrossdockEntry);
 }
 export function AssertCreateCrossdockEntry() {
-    AssertPostCrossdockEntry()
-}
-function AssertPostCrossdockEntry() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCrossdockEntry, 200).then((interception) => {
         let responseBody = interception.response.body;
         CrossDockContext.EntryNumber = responseBody.EntryNumber;
     });
 }
+
 export function UpdateCrossdockEntry() {
     DefinePutCrossdockEntryRequest()
-    cy.Click(CrossdockSelectors.WarehouseEntrySaveButton , null,true);
+    cy.Click(CrossdockSelectors.WarehouseEntrySaveButton, null, true);
 }
 function DefinePutCrossdockEntryRequest() {
     cy.DefineRequestWait(RestAPI.PUT, CrossDockURLs.WarehouseEntry, RequestAliases.PutCrossdockEntry);
@@ -154,14 +149,22 @@ function DefinePostCrossdockReleaseRequest() {
     cy.DefineRequestWait(RestAPI.POST, CrossDockURLs.WarehouseReleasExtended, RequestAliases.PostCrossdockRelease);
 }
 export function AssertCreateCrossdockRelease() {
-    AssertPostCrossdockRelease()
-}
-function AssertPostCrossdockRelease() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCrossdockRelease, 200).then((interception) => {
         let responseBody = interception.response.body;
         CrossDockContext.ReleaseNumber = responseBody.ReleaseNumber;
     });
 }
+
+export function DefineUpdateShipment() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetShipmentConnectedEntities, RequestAliases.GetShipmentConnectedEntities)
+}
+
+export function AssertUpdateShipment() {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetShipmentConnectedEntities, 200);
+}
+
 export function ValidateLinkedReleaseInShipment(linkedReleaseyDetails: CrossDockDetails) {
     BaseAssertion.AssertElementContain(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), linkedReleaseyDetails.ReleaseNumber)
     BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.ReleaseNumber), linkedReleaseyDetails.Status)
@@ -198,8 +201,9 @@ export function ValidateReleaseDisableFields() {
 }
 export function UpdateCrossdockRelease() {
     DefinePutCrossdockReleaseRequest()
-    cy.Click(CrossdockSelectors.WarehouseReleaseSaveButton + BaseSelectors.LastElement, null);
+    cy.get(CrossdockSelectors.WarehouseReleaseSaveButton + BaseSelectors.LastElement).click()
 }
+
 function DefinePutCrossdockReleaseRequest() {
     cy.DefineRequestWait(RestAPI.PUT, CrossDockURLs.WarehouseReleases, RequestAliases.PutCrossdockRelease);
 }
@@ -212,10 +216,10 @@ function AssertPutCrossdockRelease() {
 export function ValidateRoutingsReleaseFields(releaseDetails: CrossDockDetails) {
     cy.Navigate(ShipmentSelectors.RoutingsTab)
     cy.Click(ShipmentSelectors.EditWarehouseLegPickups, null)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseDate,GetTodayDate())
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseTime,releaseDetails.ExpectedReleaseTime)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseDate,GetTodayDate())
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseTime,releaseDetails.ActualReleaseTime)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseTime, releaseDetails.ExpectedReleaseTime)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseTime, releaseDetails.ActualReleaseTime)
     cy.Click(ShipmentSelectors.WarehouseOKBtn, null)
 }
 export function AddDelivery() {
@@ -235,7 +239,7 @@ export function ValidateRoutingsReleaseDeliveryLegFields(deliveryDetails: Delive
     BaseAssertion.AssertElementContain(ShipmentSelectors.RoutingDeliveryLeg, CrossDockContext.ShipmentNumber)
     cy.get(ShipmentSelectors.RoutingDeliveryLeg).should("contain.text", deliveryDetails.ATDDepartureDate)
     cy.Click(ShipmentSelectors.EditDelivery, null)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.DeliveryToPartnerName,deliveryDetails.ToPartner)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.DeliveryToPartnerName, deliveryDetails.ToPartner)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDDate, GetTodayDate())
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDTime, deliveryDetails.ETDDepartureTime)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATDDate, GetTodayDate())
@@ -245,28 +249,28 @@ export function FillReleaseDate(releaseDetails: CrossDockDetails) {
     FillCrossDockDate(CrossdockSelectors.CrossdockActualReleaseDate, releaseDetails.ActualReleaseDate)
     FillCrossDockDate(CrossdockSelectors.CrossdockActualReleaseTime, releaseDetails.ActualReleaseTime)
 }
-export function FillCrossDockDate(selector:string,date:string){
-    if(date=="Today"){
-        cy.FillDate(selector , GetTodayDate())
+export function FillCrossDockDate(selector: string, date: string) {
+    if (date == "Today") {
+        cy.FillDate(selector, GetTodayDate())
     }
-    else{
-        cy.FillDate(selector , date)
+    else {
+        cy.FillDate(selector, date)
     }
 }
- 
-function GetTodayDate(){ 
-    var dateString =  new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})  
+
+function GetTodayDate() {
+    var dateString = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem" })
     var currentDateArray = dateString.split("/");
     if ((parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10) && (parseInt(currentDateArray[1]) > 0 && parseInt(currentDateArray[1]) < 10)) {
-    return "0" + currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
+        return "0" + currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
     }
-    else if(parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10) {
-        return  currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
- 
+    else if (parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10) {
+        return currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
+
     }
-    else if(parseInt(currentDateArray[1]) > 0 && parseInt(currentDateArray[1]) < 10) {
-        return   "0" + currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
- 
+    else if (parseInt(currentDateArray[1]) > 0 && parseInt(currentDateArray[1]) < 10) {
+        return "0" + currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
+
     }
-   return currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
+    return currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
 }

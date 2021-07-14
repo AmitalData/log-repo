@@ -65,11 +65,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
 
         private ShipmentPM GetAShipmentFromFirstUserList()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
 
             ApiResponse<IEnumerable<ShipmentPM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentPM>>(Urls.ShipmentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();

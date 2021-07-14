@@ -91,6 +91,9 @@ namespace Logitude.BL.InvoiceModel.Tools
         List<ARInvoiceLinePM> lines;
         private bool isIndiaCountry=false;
         private string IndiaExternalQBOStates = "";
+        private Tenant loggedTenant;
+        private AccountingSystemPM accountingSystem;
+
         private void GetObjectTableData()
         {
 
@@ -135,18 +138,23 @@ namespace Logitude.BL.InvoiceModel.Tools
                     isTransferingVoiding = false;
                 }
 
+                if (entityPM.IsConstituentInvoice && string.IsNullOrEmpty(entityPM.ConsolidationInvoiceId))
+                {
+                    isTransferingVoiding = false;
+                }
+
                 if (isTransferingVoiding)
                 {
                     commonContext = CommonContext;
                     this.globalContext = GlobalContext.GetContext(tenant);
-                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
                     if (loggedTenant.AccountingSetting != null)
-                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
+                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                         {
                             if (entityPM.ExternalAccountingEntityId != null)
                             {
@@ -175,15 +183,15 @@ namespace Logitude.BL.InvoiceModel.Tools
             else if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
             {
                 commonContext = CommonContext;
-                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                 tenant = loggedTenant.Id;
                 this.globalContext = GlobalContext.GetContext(tenant);
                 tenantName = loggedTenant.Company;
                 AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                 AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
                 if (loggedTenant.AccountingSetting != null)
-                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
+                    if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                     {
                         ARInvoice = entityPM;
                         ARInvoiceId = entityPM.Id;
@@ -386,6 +394,15 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
             }
+        }
+
+        private bool IsQuickBooksAccoutingSystemTransfer(ARInvoicePM aRInvoicePM)
+        {
+            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
+            if (!(loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled)) return false;
+            if (!(accountingSystem.AllowARInvoicesTransfer)) return false;
+            if ((loggedTenant.AccountingSetting.ARInvoiceTransferStartDate != null && aRInvoicePM.InvoiceDate < loggedTenant.AccountingSetting.ARInvoiceTransferStartDate)) return false;
+            return true;
         }
 
         public  List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql, String tenant)

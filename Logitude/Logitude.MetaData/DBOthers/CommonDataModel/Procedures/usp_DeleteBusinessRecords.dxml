@@ -25,6 +25,7 @@ delete from QuoteDocumentVersions where Tenant = @Tenant
 delete from QuotePackages where Tenant = @Tenant
 delete from QuoteTotalVATs where Tenant = @Tenant
 delete from QuoteTemplateExcludedSections where Tenant = @Tenant
+delete from QuoteComputedFields where Tenant = @Tenant
 delete from Quotes where Tenant = @Tenant
 
 delete from ShipmentCustomsTransmissions where Tenant = @Tenant
@@ -49,6 +50,7 @@ delete from ShipmentMasterDatas where Tenant = @Tenant
 delete from ShipmentComputedFields where Tenant = @Tenant
 delete from ShipmentAdditionalCloudDatas where Tenant = @Tenant
 delete from ShipmentStoragePricings where Tenant= @Tenant
+delete from ShipmentProductItems where Tenant= @Tenant
 
 delete from WarehouseEntryPackagesReleases where Tenant = @Tenant
 delete from WarehouseEntryPackages where Tenant = @Tenant
