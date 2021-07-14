@@ -313,9 +313,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.DeclarationDocumentTypeCode = GetValueCodeType(declaration.DMExtensions.PreviousDocument.TypeCode);
 
                     }
-                    if(declaration.DMExtensions.ExpenseLoadingFactor!=null)
-                    declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
-                }
+ 
+                    if (declaration.DMExtensions.ExpenseLoadingFactor != null)
+                        declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
+                 }
 
 
                 if (declaration.Importer != null)
@@ -803,8 +804,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0,0);
+                //
+                //_OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
 
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0, 0);
+ 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
 
