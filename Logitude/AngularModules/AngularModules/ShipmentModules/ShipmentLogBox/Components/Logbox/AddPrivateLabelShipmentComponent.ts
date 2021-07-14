@@ -50,9 +50,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired"); 
     private args: any;
     EntityProgressStatusId: string;
+    public SessionIndex: number;
     private entityResourceService: EntityResourceService;
+    public ScreenOpacity: number = 1;
+
     constructor() {
         super();
+        this.SessionIndex = this.CurrentSession.SessionIndex;
         this.InitializeServices();
         this.BuildFiltersLists();
         this.LoadEntityResource(this.ObjectTableName);
