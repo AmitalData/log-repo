@@ -195,7 +195,7 @@
 									<td>
 										<!-- Directions -->
 										<div style="margin: 10px;">
-											<div style="font-size: 13px; color: #6E7172;">Direction{{'Shipment.F.DirectionId' | TextCodeTranslationPipe}}:</div>
+											<div style="font-size: 13px; color: #6E7172;">Direction:</div>
 											<div style="margin-top: -2px;">
 												<div class="RadioButton" *ngFor="let item of DirectionsList" [attr.id]="'DirectionRadio_Div_' + SessionIndex + item.Code">
 													<input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="changeDirection(item.Code)" />
@@ -210,14 +210,16 @@
 
 										<!-- Transport Modes -->
 										<div *ngIf="DirectionId == 'E'" style="margin: 10px;">
-											<div style="font-size: 13px; color: #6E7172">Transport{{'Shipment.F.TransportModeId.Short' | TextCodeTranslationPipe}}:</div>
+											<div style="font-size: 13px; color: #6E7172">Transport:</div>
 											<div style="margin-top: -2px;">
 												<div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
+
 													<input [disabled]="item.Code != 'A'" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
 													<label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
 														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
 														{{item.Name}}
 													</label>
+													<div style="margin-left: 80px;" *ngIf="item.Code != 'A'"> <HelpIcon [IconSize]="14" [Header]="'Transport'" [Text]="'Will be available in the near future'"></HelpIcon></div>
 												</div>
 											</div>
 										</div>

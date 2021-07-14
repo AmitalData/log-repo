@@ -52,7 +52,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     EntityProgressStatusId: string;
     public SessionIndex: number;
     private entityResourceService: EntityResourceService;
-    public ScreenOpacity: number = 1;
+    public ScreenOpacity: number = 1;  
 
     constructor() {
         super();
@@ -66,9 +66,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
  
         this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => { 
 
-            });
+        });
 
-        
+
     }
     InitializeServices() {
         this.portListService = new PortListService();
@@ -261,7 +261,10 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     private ValidateRequiredFields() { 
-        
+
+        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
+            this.ValidateRequestedFlightDate();
+        }
         if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
             this.PushErrorMessage("Reference");
         }
@@ -270,9 +273,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Incoterm");  
         }
 
-        if (AppTool.IsNullOrEmpty(this.BookingNumberOfPackages)) {
-            this.PushErrorMessage("Number Of Packages");  
-        }
+        this.ValidatBookingNumberOfPackagese();
 
         if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
             this.PushErrorMessage("Gross Weight (MT)");  
@@ -283,10 +284,27 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
+    private ValidatBookingNumberOfPackagese() {
+        if (AppTool.IsNullOrEmpty(this.BookingNumberOfPackages)) {
+            this.PushErrorMessage("Number Of Packages");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.BookingNumberOfPackages)) {
+            if (this.BookingNumberOfPackages > 999999999) {
+                this.ValidationErrorsList.push("Number Of Packages must be less than ten digits");
+            }
+        }
+    }
+
+    ValidateRequestedFlightDate() { 
+        if (this.RequestedFlightDate.getTime() < new Date().getTime()) { 
+            this.ValidationErrorsList.push("Requested flight date must be for a future date");
+        } 
+    }
 
 
-    private PushErrorMessage(  fieldName: string) {
-      
+
+    private PushErrorMessage(  fieldName: string) { 
         this.ValidationErrorsList.push(this.errorMessage.replace("%FieldName", fieldName));
     }
 
