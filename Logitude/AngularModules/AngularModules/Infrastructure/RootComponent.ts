@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
 import { ChildDirective } from './Directives/ChildDirective';
+import { ObjectsLocator } from './Locators/ObjectsLocator';
 declare var IsMobileDetected;
 
 @Component({
@@ -314,8 +315,9 @@ export class RootComponent implements AfterViewInit {
         }
     }
     private LoadTermsOfUse(serviceResponse: ServiceResponse) {
+        let isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
         this.ClearLocation();
-        if (this.isPrivateLable == true) {
+        if (this.isPrivateLable == true && !isLogbox) {
             this.LoadPrivateLableTermsOfUseComponent(serviceResponse);
         }
         else
