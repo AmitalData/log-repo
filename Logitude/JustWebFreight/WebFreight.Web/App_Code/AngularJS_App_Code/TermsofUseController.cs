@@ -25,6 +25,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {  
                 bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+                bool isLogboxUrl = LogitudeSettings.LogitudeURL.Contains("logbox");  
+                 
                 TermsofUseArgs result = new TermsofUseArgs();
 
                 if (!string.IsNullOrEmpty(userId))
@@ -39,7 +41,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
                     termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
-                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null && !isLogbox)
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null && !isLogboxUrl)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
                     }
