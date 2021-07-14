@@ -23,6 +23,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({    
     templateUrl: './RoutingsTabComponent.html',
@@ -90,6 +91,18 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CheckPreOnCarriageVisibility();
                     this.UpdateScreen();
+                    if (this.IsShowStanadAloneActionsWindow) {
+                        this.IsShowStanadAloneActionsWindow = false;
+                        this.ShowAddLegWindow();
+                    }
+                    if (this.IsShowEditLegWindow) {
+                        this.IsShowEditLegWindow = false;
+                        this.ShowEditLegWindow();
+                    }
+                    if (this.IsShowAddChildLeg) {
+                        this.IsShowAddChildLeg = false;
+                        this.ViewAddChildLedWindow();
+                    }
                 }
             });
 
@@ -298,14 +311,17 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.SetAddButtonsIsDisabled();
     }
-    AddLeg(myLegType: string) {
-        var isNewEntity = true;
-        var windowTitle = "Add " + myLegType;
 
-        switch (myLegType) {
+    IsShowStanadAloneActionsWindow: boolean = false;
+    private myLegType: string = null;
+    ShowAddLegWindow() {
+        var isNewEntity = true;
+        var windowTitle = "Add " + this.myLegType;
+
+        switch (this.myLegType) {
             case "Pick Up": {
                 if (!this.IsAddingStandaloneShipmentVisible) {
-                    this.ViewAddPickupWindow();                
+                    this.ViewAddPickupWindow();
                 } else {
                     this.ShowStanadAloneActionsWindow("Pickup");
                 }
@@ -325,7 +341,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -334,7 +350,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -344,7 +360,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -353,7 +369,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -366,7 +382,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType, IsNewLeg: true }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
                 }
@@ -391,6 +407,23 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+    AddLeg(myLegType: string) {
+        this.myLegType = myLegType;
+        if (this.IsAddingStandaloneShipmentVisible) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowStanadAloneActionsWindow = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ShowAddLegWindow();
+        } 
+    }
+
     ViewAddPickupWindow() {
         var myPickUpIndex = 1;
         if (this.EntityPM.ShipmentPickUpIndex) {
@@ -492,7 +525,28 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }); 
     }
 
+    IsShowEditLegWindow: boolean = false;
+    private myRoutingItem: RoutingItem = null;
+
     EditLeg(myRoutingItem: RoutingItem) {
+        this.myRoutingItem = myRoutingItem;
+        if (this.IsAddingStandaloneShipmentVisible) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowEditLegWindow = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ShowEditLegWindow();
+        } 
+    }
+
+    ShowEditLegWindow() {
+        var myRoutingItem = this.myRoutingItem;
         var myLegType: string = myRoutingItem.LegType;
 
         switch (myLegType) {
@@ -616,7 +670,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType}
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
                 }
@@ -640,6 +694,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+
     DeleteLeg(myRoutingItem: RoutingItem) {
         if (myRoutingItem) {
             var myLegType: string = myRoutingItem.LegType;
@@ -825,7 +880,32 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         });
     }
+
+    private childLegType: string = null;
+    private chiledRoutingItem: RoutingItem = null;
+    private IsShowAddChildLeg: boolean = false;
+
     AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
+        this.childLegType = myLegType;
+        this.chiledRoutingItem = myRoutingItem;
+        if (this.IsAddingStandaloneShipmentVisible) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowAddChildLeg = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ViewAddChildLedWindow();
+        } 
+    }
+
+    ViewAddChildLedWindow() {
+        var myLegType = this.childLegType;
+        var myRoutingItem = this.chiledRoutingItem;
         switch (myLegType) {
             case "Pick Up": {
                 this.AddChildPickUp(myRoutingItem);
@@ -838,10 +918,12 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+
     AddChildPickUp(myRoutingItem: RoutingItem) {
         var newPickupPM: ShipmentPickUpPM = this.CreateChildPickUp(myRoutingItem);
         this.OpenChildPickUpDeliveryWindow(newPickupPM, null);        
-    }    
+    }
+    
     AddChildDelivery(myRoutingItem: RoutingItem) {
         var newDeliveryPM: ShipmentDeliveryPM = this.CreateChildDelivery(myRoutingItem);
         this.OpenChildPickUpDeliveryWindow(null, newDeliveryPM);        

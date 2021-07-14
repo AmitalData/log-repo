@@ -1140,6 +1140,8 @@ namespace WebFreight.Web.WebServices
                                                          where user.Id == currentContact.Id
                                                          select userDepartment.EnglishName).FirstOrDefault();
                     }
+
+                    myDataProvider.UserSignatureImage = this.GetUserSignatureImage(tenant, commonContext, contactEmail);
                 }
                 #endregion
 
@@ -4793,6 +4795,21 @@ namespace WebFreight.Web.WebServices
                     break;
             }
             return result;
+        }
+
+        private byte[] GetUserSignatureImage(int tenant, ICommonDataContext commonContext, string contactEmail)
+        {
+            byte[] signatureImage = null;
+            User currentUser = (from a in commonContext.Users
+                                where a.Contact.Email == contactEmail && a.Tenant == tenant
+                                select a).FirstOrDefault();
+
+            if (currentUser != null)
+            {
+                signatureImage = DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant);
+            }
+
+            return signatureImage;
         }
     }
 }

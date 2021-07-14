@@ -444,7 +444,7 @@ export class LoginComponent {
                     else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
                     else if (userData.InValidMailOrPassword) this.errorMessage = "Login failed! invalid user name or password.";
                     else if (userData.InValidCaptcha && userData.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
-                    else this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                    else this.errorMessage = "Login failed! invalid user name or password.";
 
                 }
 

@@ -13922,7 +13922,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentDeliveryPM> GetForwaderShipmentDeliveriesByIdAndParentPickUpDeliveryId(ShipmentPM shipmentPM, ShipmentDeliveryPM forwarderDelivery)
         {
-            List<ShipmentDeliveryPM> filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => !string.IsNullOrEmpty(d.StandaloneShipmentId));
+            List<ShipmentDeliveryPM> filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries;
             if (!string.IsNullOrEmpty(forwarderDelivery.ParentPickUpDeliveryId))
             {
                 filteredShipmentDeliveries = shipmentPM.ShipmentDeliveries.FindAll(d => d.Id != forwarderDelivery.ParentPickUpDeliveryId 

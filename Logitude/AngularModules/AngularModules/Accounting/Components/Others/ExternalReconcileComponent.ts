@@ -1476,7 +1476,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
-            var entity = mm.Result.CreatedExternalReconciliation;
+            var entity = mm.Result?.CreatedExternalReconciliation;
             if (!mm.HasError) {
                 this.CreatedReconciliationsCount = mm.Result.CreatedReconciliationsCount;
                 this.ExternalRecoPM = entity;
