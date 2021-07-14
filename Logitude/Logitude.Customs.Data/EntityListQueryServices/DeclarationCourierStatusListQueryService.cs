@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             );
 
 
-            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
+            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable.Include("Trucker")
 
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
@@ -180,6 +180,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterHAWB = cm.HAWB,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
+                                                                  TruckerName = a.Trucker.Card.LocalName,
                                                                   CrateNumber = a.CrateNumber
                                                               });
 

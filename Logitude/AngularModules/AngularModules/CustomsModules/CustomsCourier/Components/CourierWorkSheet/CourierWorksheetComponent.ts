@@ -1052,6 +1052,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             ServerSideSortable: true,
             SortByName: 'CourierPendingReasonName'
         });
+        this.columns.push({
+            FieldName: 'TruckerName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.TruckerName"),
+            Styles: { width: '73px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'TruckerName'
+        });
 
         this.columns.push({
             FieldName: 'LastMileStatusCode',
