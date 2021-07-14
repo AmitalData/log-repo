@@ -52,7 +52,6 @@ export var RootComponentAOT = (function () {
         }
     };
     RootComponentAOT.prototype.ngOnInit = function () {
-        window.sessionStorage.setItem("ssHHHH", "WssESEW");
         this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLabel") == "true";
         this.isDSV = window.sessionStorage.getItem("IsDSV") == "true";
         if (this.isPrivateLable) {
@@ -62,8 +61,7 @@ export var RootComponentAOT = (function () {
             changeTitle(privateLableShortName);
         }
         else {
-            //document.location.href = Tools.GetSystemURL() + "Login.aspx";
-            this.GetPrivateLabelsData();
+            this.SetPrivateLabelsDataIntoSessionStorage();
         }
         SessionInfo.MainLocation = this.location;
         this.LoadPrivateLableLoginPages();
@@ -111,7 +109,7 @@ export var RootComponentAOT = (function () {
         DynamicLoaderAOT.Load("./Login/Components/DSVMobileLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
-    RootComponentAOT.prototype.GetPrivateLabelsData = function () {
+    RootComponentAOT.prototype.SetPrivateLabelsDataIntoSessionStorage = function () {
         this.privateLabelsService.GetIsPrivateLableUrl(Tools.GetSystemURL()).subscribe(function (response) {
             if (response.EnablePrivateLable) {
                 window.sessionStorage.setItem("ContactEmail", response.ContactUsEmail);
