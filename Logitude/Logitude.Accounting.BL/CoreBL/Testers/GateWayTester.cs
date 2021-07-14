@@ -74,6 +74,16 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadConsolTaxRep_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadJournals_ISL_Click":
+                    {
+                        return ButtonLoadJournals_ISL_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "ButtonLoadChargeTypes_Click":
+                    {
+                        return ButtonLoadChargeTypes_Click(tenant, _TextBoxParam);
+                    }
+                    break;
 
                 case "WorkWithoutQueue_Click":
                     {
@@ -428,7 +438,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-        private JournalPM ImmediateYearTransferthod(int YY, int tenant)
+        public JournalPM ImmediateYearTransferthod(int YY, int tenant)
         {
             JournalPM journal;
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
@@ -827,6 +837,81 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
+
+        private GateWayTesterResult ButtonLoadJournals_ISL_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileJournals_ISL = textBoxParam;
+
+
+                var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
+                myJournalsCSVFlatFileAnalyser_ISL.Analyse(null, fileJournals_ISL);
+
+                gateWayTesterResult.JsonOut = "Journals Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+        private GateWayTesterResult ButtonLoadChargeTypes_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileChargeTypes = textBoxParam;
+
+
+                var myChargeTypesCSVFlatFileAnalyser = new ChargeTypesCSVFlatFileAnalyser();
+                myChargeTypesCSVFlatFileAnalyser.Analyse(null, fileChargeTypes);
+
+                gateWayTesterResult.JsonOut = "ChargeTypes Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
 
 
         GateWayTesterResult _ButtonReverseTotal_Click(int tenant ,string _TextBoxParam)

@@ -56,6 +56,22 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="BalanceInForeignCurrency"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForeignBalanceInDue"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountId"
     ReferencedTable="GLAccounts"

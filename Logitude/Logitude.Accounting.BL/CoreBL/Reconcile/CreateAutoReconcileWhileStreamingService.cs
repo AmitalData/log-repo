@@ -61,6 +61,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var oldLTransGroupByAccountId in myOldTransToReconcile.GroupBy(r => r.AccountId))
             {
                 ReconciliationPM myReconciliationPM = CreateReconciliationPMPerAccount(oldLTransGroupByAccountId);
+                
                 ReconciliationList.Add(myReconciliationPM);
             }
 
@@ -257,6 +258,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private ReconciliationPM GetReconciliationPM(string currentAccountId)
         {
             var myReconciliationPM = new ReconciliationPM();
+            myReconciliationPM.CreateAutoReconcileWhileStreamingService = true;
             myReconciliationPM.Id = "new";
             myReconciliationPM.ChangeSetOp = ChangeSetOperation.Insert;
             myReconciliationPM.Tenant = _JournalPM.Tenant;

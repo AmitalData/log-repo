@@ -1373,7 +1373,40 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region PickUpsAndDeliveries
                 GetShipmentPickUpAndDeliveries();
-                #endregion               
+                #endregion
+
+                #region ProductItems
+                ShipmentProductItemQuery shipmentProductItemQuery = new ShipmentProductItemQuery(tenant);
+                List<ShipmentProductItemPM> shipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipmentid, tenant);                
+                if (shipmentProductItems != null)
+                {
+                    List<ProductItemLine> productItemsLines = new List<ProductItemLine>();
+                    ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
+
+                    foreach (ShipmentProductItemPM shipmentProductItem in shipmentProductItems)
+                    {
+                        ProductItemPM productItem = productItemQuery.GetSinglePM(shipmentProductItem.ProductItemId, tenant);
+                        ProductItemLine productItemLine = new ProductItemLine();
+              
+                        if (productItem != null)
+                        {
+                            productItemLine.Name = productItem.Name;
+                            productItemLine.Brand = productItem.Brand;
+                            productItemLine.InActive = productItem.InActive;
+                            productItemLine.Description = productItem.Description;
+                            productItemLine.Tenant = productItem.Tenant;
+                            productItemLine.SKU = productItem.SKU;
+                            productItemLine.CustomerId = productItem.CustomerId;
+                            productItemLine.ASIN = productItem.ASIN;
+                            productItemLine.UPC = productItem.UPC;
+                            productItemLine.OriginCountry = productItem.OriginCountryName;
+                            productItemsLines.Add(productItemLine);
+                        }                        
+                    }
+
+                    prealertDataProvider.ProductItemsLines = productItemsLines;
+                }                
+                #endregion
 
                 prealertDataProvider.PreCarriageETD = shipmentpm.PreCarriageETD;
                 prealertDataProvider.PreCarriageATD = shipmentpm.PreCarriageATD;

@@ -24,6 +24,7 @@ export class ChooseEntityComponent {
     private DomainService: ShipmentDomainService;
     public ListTitle = "";
     public EntityId: string;
+    public ShipmentType: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.DomainService = new ShipmentDomainService();
@@ -34,10 +35,11 @@ export class ChooseEntityComponent {
     public IsShipment = false; 
     public IsQuote = false; 
     public EntityObjectTableName: string = "";
-    public IsFromTicket = false; 
+    public IsFromTicket = false;
     SetWindowArgs(args: any) {
         this.EntityObjectTableName = args.EntityObjectTableName;
         this.IsFromTicket = args.IsFromTicket;
+        this.ShipmentType = args.ShipmentType
 
         if (this.EntityObjectTableName == "Shipment" || this.EntityObjectTableName == "Master") {
             this.IsShipment = true;
@@ -118,12 +120,19 @@ export class ChooseEntityComponent {
             }
         }
 
-        //this.DomainService.GetShipmentFullTextSearch(filters).subscribe((myResponse: ServiceResponse) => {
-        //    if (!myResponse.HasError) {
-        //        this.ItemsSource = myResponse.Result;
-        //        this.AllShipmentsCount = this.ItemsSource.length;
+        //if (this.IsStandAloneSearch) {
+        //    filters.addAdditionalFilter("SearchFields", searchValue, null, null, "Contains", false, false, false, "string");
+        //    filters.addAdditionalFilter("DirectionId", "D", null, null, "Equals", false, true, false, "string");
+        //    filters.addAdditionalFilter("TransportModeId", "I", null, null, "Equals", false, true, false, "string");
+        //    filters.addAdditionalFilter("IsStandalonePickupDelivery", false, null, null, "Equals", true, false, false, "Boolean");
+        //    if (!AppTool.IsNullOrEmpty(this.ShipmentType) && ["FCL", "FCLD"].includes(this.ShipmentType)) {
+        //        filters.addAdditionalFilter("ShipmentTypeId", "FTL", null, null, "Equals", true, false, false, "string");
+        //    } else if (!AppTool.IsNullOrEmpty(this.ShipmentType) && ["LCL", "LCLD"].includes(this.ShipmentType)) {
+        //        filters.addAdditionalFilter("ShipmentTypeId", "LTL", null, null, "Equals", true, false, false, "string");
+        //    } else {
+        //        filters.addAdditionalFilter("ShipmentTypeId", this.ShipmentType, null, null, "Equals", true, false, false, "string");
         //    }
-        //});
+        //}
 
         this.myShipmentListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();

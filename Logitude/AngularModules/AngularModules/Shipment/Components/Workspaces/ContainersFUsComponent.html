@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsResourcesReady">
+<table *ngIf="IsResourcesReady">
     <tr style="height: 1px;">
         <td>
             <table>
@@ -50,6 +50,14 @@
                                             <p attr.data-cy="{{'ContainersArrivedNotDeliveredView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('ArrivedNotDelivered')" *ngIf="IsQueryVisible_ArrivedNotDelivered">{{'ContainerFollowUp.Q.ArrivedNotDelivered' | TextCodeTranslationPipe}} ({{ArrivedNotDelivered}})</p>
                                             <p attr.data-cy="{{'ContainersDeliveredNotReturnedView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('DeliveredNotReturned')" *ngIf="IsQueryVisible_DeliveredNotReturned">{{'ContainerFollowUp.Q.DeliveredNotReturned' | TextCodeTranslationPipe}} ({{DeliveredNotReturned}})</p>
                                             <p attr.data-cy="{{'ContainersInTransitView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('InTransit')" *ngIf="IsQueryVisible_InTransit">{{'ContainerFollowUp.Q.InTransit' | TextCodeTranslationPipe}} ({{InTransit}})</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Containers Views -->
+                                    <div *ngIf="IsContainersToggleFeatureUp" class="QueriesSection">
+                                        <div>Containers Views</div>
+                                        <div>
+                                            <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
 

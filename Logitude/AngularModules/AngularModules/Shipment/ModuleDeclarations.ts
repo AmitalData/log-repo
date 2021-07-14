@@ -37,6 +37,7 @@ import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/Remove
 import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
 import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
 import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
+import { ContainerHelperComponent } from './Components/Helpers/ContainerHelperComponent';
 
 export const Components =
     [
@@ -46,6 +47,7 @@ export const Components =
         AMANACComponent,
         FieldTemplateComponent,
         ShipmentHelperComponent,
+        ContainerHelperComponent,
         ShipmentShortTitleComponent,
         ShipmentFiltersMenuComponent,
         TransportModeListHeaderTemplate,
@@ -96,6 +98,7 @@ export class ModuleDeclarations {
             case "AMANACComponent": { myResult = AMANACComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ShipmentHelperComponent": { myResult = ShipmentHelperComponent; break; }
+            case "ContainerHelperComponent": { myResult = ContainerHelperComponent; break; }
             case "ShipmentShortTitleComponent": { myResult = ShipmentShortTitleComponent; break; }
             case "ShipmentFiltersMenuComponent": { myResult = ShipmentFiltersMenuComponent; break; }
             case "TransportModeListHeaderTemplate": { myResult = TransportModeListHeaderTemplate; break; }

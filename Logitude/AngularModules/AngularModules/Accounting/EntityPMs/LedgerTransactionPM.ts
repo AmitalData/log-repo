@@ -354,6 +354,16 @@ export class LedgerTransactionPM {
     public set AccountDisplayNumber(newValue: string) { if (this.accountDisplayNumber != newValue) { this.accountDisplayNumber = newValue; this.MarkAsDirty("AccountDisplayNumber"); } }
        
 	 
+    private paymentValueDate: Date;
+    public get PaymentValueDate() { return this.paymentValueDate; }
+    public set PaymentValueDate(newValue: Date) { if (this.paymentValueDate != newValue) { this.paymentValueDate = newValue; this.MarkAsDirty("PaymentValueDate"); } }
+       
+	 
+    private paymentChequeStatus: string;
+    public get PaymentChequeStatus() { return this.paymentChequeStatus; }
+    public set PaymentChequeStatus(newValue: string) { if (this.paymentChequeStatus != newValue) { this.paymentChequeStatus = newValue; this.MarkAsDirty("PaymentChequeStatus"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

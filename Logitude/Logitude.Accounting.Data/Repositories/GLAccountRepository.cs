@@ -169,6 +169,7 @@ namespace Logitude.Accounting.Data.Repositories
                     ParentAccountId = a.ParentAccountId,
                     IsVATExempt = a.IsVATExempt,
                     LocalBalanceInDue = md.LocalBalanceInDue,
+                    ForeignBalanceInDue = md.ForeignBalanceInDue,
                     NextDueDate = md.NextDueDate,
                     AutomaticReconcile = a.AutomaticReconcile,
 
@@ -483,7 +484,7 @@ namespace Logitude.Accounting.Data.Repositories
                         where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode
                         select a;
             return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
-            && !String.IsNullOrEmpty(r.DeductionFileNumber)
+            //     && !String.IsNullOrEmpty(r.DeductionFileNumber) // ironically - see 140210 
             && !(r.Inactive.HasValue && r.Inactive.Value));
         }
 
@@ -1132,6 +1133,8 @@ namespace Logitude.Accounting.Data.Repositories
         public string AccountTypeName { get; set; }
         public decimal? BalanceInLocalCurrency { get; set; }
         public decimal? LocalBalanceInDue { get;  set;  }
+        public decimal? ForeignBalanceInDue  { get; set; } 
+        
         public DateTime? NextDueDate { get;  set;  }
         public int Tenant { get;  set;  }
         public string InternalNumber { get;  set;  }

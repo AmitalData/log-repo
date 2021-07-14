@@ -394,6 +394,7 @@ namespace Logitude.Accounting.BL.InterestService
                 UpdatedByUserId = interestReport.UpdatedByUserId,
                 UpdateDateTime = interestReport.UpdateDateTime,
                 Tenant = interestReport.Tenant,
+                CalCreditAllotmentCommission = interestReport.CalCreditAllotmentCommission,
                 CreateDateTime = interestReport.CreateDateTime,
                 CreatedByUserId = interestReport.CreatedByUserId,
                 CustomerId = interestReport.CustomerId,

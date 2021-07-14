@@ -223,9 +223,7 @@ export var LoginComponent = (function () {
             if (SessionInfo.MainLocation) {
                 SessionInfo.MainLocation.clear();
             }
-            Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
-                .then(function (cmpRef) {
-            });
+            this.LoadChangePasswordComponent();
         }
         else if (type == "No") {
             this.ComplateProcessLogin(this.UserDataPrompt, this.LoginParameters);
@@ -309,9 +307,7 @@ export var LoginComponent = (function () {
                     if (SessionInfo.MainLocation) {
                         SessionInfo.MainLocation.clear();
                     }
-                    Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
-                        .then(function (cmpRef) {
-                    });
+                    _this.LoadChangePasswordComponent();
                 }
                 else if (userData.PasswordExpirationDateMessage) {
                     if (userData.PasswordExpirationDateMessage.indexOf('days. Do') > -1) {
@@ -353,6 +349,11 @@ export var LoginComponent = (function () {
                 _this.ComplateProcessLogin(userData, loginParameters);
             }
             _this.HidePendingLoading = true;
+        });
+    };
+    LoginComponent.prototype.LoadChangePasswordComponent = function () {
+        Tools.DynamicLoader.Load("./Login/Components/DSVChangePasswordComponent", SessionInfo.MainLocation)
+            .then(function (cmpRef) {
         });
     };
     LoginComponent.prototype.TenantListChangeSelected = function (value) {

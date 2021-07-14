@@ -375,8 +375,22 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             }
             #endregion
 
+            #region ShipmentProductItems
+            List<ShipmentProductItemPM> shipmentProductItemsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ShipmentProductItems).Cast<ShipmentProductItemPM>().ToList();
+            foreach (ShipmentProductItemPM itemPM in shipmentProductItemsChangeSet)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update: { itemPM.ChangeSetOp = ChangeSetOperation.Update; break; }
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+            #endregion
+
             ShipmentService service = new ShipmentService(objectContext, entityPM, ServiceContext.User.Identity.Name);
-            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet, shipmentStoragePricingsChangeSet);
+            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet, shipmentStoragePricingsChangeSet, shipmentProductItemsChangeSet);
             service.Update();
 
             //if (this.ChangeSet != null)

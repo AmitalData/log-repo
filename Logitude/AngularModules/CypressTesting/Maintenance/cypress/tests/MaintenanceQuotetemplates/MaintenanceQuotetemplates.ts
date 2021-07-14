@@ -4,6 +4,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { QuoteTemplateDetails } from '../../models/QuoteTemplateDetails';
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region Create new Quote Template
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -38,15 +39,16 @@ When("save quote template", () => {
 });
 
 Then("the quote template should update successfully", () => {
-   Actions.AssertUpdateQuoteTemplate();
+    Actions.AssertUpdateQuoteTemplate();
 });
 //#endregion
 
 //#region Edit the quote template's Quote Header & Details
-Given("drag and drop the following details in {string} settings", (section, dataTable) => {
+Given("drag and drop the following details in quote header settings", (dataTable) => {
     let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
-   Actions.OpenQuoteTemplateSection(section);
-   Actions.DragAndDropFields(fieldDetails);
+    Actions.OpenQuoteHeaderSection();
+    Actions.AssertGetQuoteHeader()
+    Actions.DragAndDropFields(fieldDetails);
 });
 
 Given("edit {string} field in label tab to {string}", (labelToEdit, newFieldValue) => {
@@ -58,7 +60,26 @@ When("save quote header", () => {
 });
 
 Then("the quote header template should update successfully", () => {
-    Actions.AssertUpdateQuoteHeaderTemplate();
+    Actions.AssertUpdateQuoteHeaderTemplate()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+});
+//#endregion
+
+//#region Edit the quote template's Quote Details
+Given("drag and drop the following details in quote details settings", (dataTable) => {
+    let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
+    Actions.OpenQuoteDetailsSection();
+    Actions.AssertGetQuoteDetails()
+    Actions.DragAndDropFields(fieldDetails);
+});
+
+When("save quote details", () => {
+    Actions.UpdateQuoteDetailsTemplate();
+});
+
+Then("the quote template details should update successfully", () => {
+    Actions.AssertUpdateQuoteDetailsTemplate()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 });
 //#endregion
 
@@ -75,7 +96,6 @@ Given("add {string} field in {string} settings", (fieldToBeAdd: string, section,
 When("save quote introduction template", () => {
     Actions.UpdateQuoteIntroductionTemplate();
 });
-
 //#endregion
 
 //#region Edit the quote template's Pricing Packages and Containers
@@ -93,5 +113,3 @@ When("save quote pricing template", () => {
     Actions.UpdateQuotePricingTemplate();
 });
 //#endregion
-
-

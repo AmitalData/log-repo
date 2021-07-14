@@ -200,5 +200,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public int SplitIndex { get; set; }
         public bool IsFromSplit { get; set; }
+        public string StandaloneShipmentId { get; set; }
+        public string StandaloneShipmentNumber { get; set; }
+        public bool IsConnectedToStandalone { get; set; }
     }
 }

@@ -33,7 +33,16 @@ namespace Logitude.Update
             dataGridView1.DataSource = cheques;
             countLbl.Text = cheques.Count().ToString();
         }
+        private void GetDefferedChequesBtn_Click(object sender, EventArgs e)
+        {
+            int tenant = Convert.ToInt32(tenantTextBox.Text);
 
+            BankDepositRedeemedChequesVerifyService verifyService = new BankDepositRedeemedChequesVerifyService();
+            var cheques = verifyService.GetDeferredNotRedeemedReconciledCheques(tenant);
+
+            dataGridView1.DataSource = cheques;
+            countLbl.Text = cheques.Count().ToString();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -71,6 +80,23 @@ namespace Logitude.Update
             button3.Enabled = true;
         }
 
+        private void defered(object sender, EventArgs e)
+        {
+            logTextBox.Text = "";
+            progressBar1.Value = 0;
+            service.DoneTenants = 0;
+            service.LoggingText = "";
+
+            var tenantsCSV = tenantsTextBox.Text;
+            Tenants = tenantsCSV.Split(',').ToList();
+            progressBar1.Maximum = Tenants.Count();
+
+            Thread thread = new Thread(() => service.UpdateDeferredCheqesForTenantList(Tenants));
+            thread.IsBackground = true;
+            thread.Start();
+
+            button3.Enabled = true;
+        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {

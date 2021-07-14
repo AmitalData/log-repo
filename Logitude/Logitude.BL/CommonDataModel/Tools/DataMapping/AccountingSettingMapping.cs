@@ -40,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsSingleTaxPerInvoice = entityPM.IsSingleTaxPerInvoice;
             poco.IsARPaymentsTransferEnabled = entityPM.IsARPaymentsTransferEnabled;
             poco.ARPaymentTransferStartDate = entityPM.ARPaymentTransferStartDate;
+            poco.APPaymentTransferStartDate = entityPM.APPaymentTransferStartDate;
             poco.TransferToDropboxActivated = entityPM.TransferToDropboxActivated;
             poco.EnableMultiPercentageVATTypes = entityPM.EnableMultiPercentageVATTypes;
             poco.NotifyPastDateOnInvoiceEdit = entityPM.NotifyPastDateOnInvoiceEdit;

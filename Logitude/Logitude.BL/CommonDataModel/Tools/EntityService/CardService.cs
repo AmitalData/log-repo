@@ -19,6 +19,9 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -123,6 +126,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     addressRepository.Add(newAddress);
                 }
             }
+            AddCardKafkaQueueMessage();
         }
         public void Update(CardPM entityPM)
         {
@@ -163,6 +167,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
             }
+
+            AddCardKafkaQueueMessage();
 
         }
 
@@ -269,6 +275,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void AddCardKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Card" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 

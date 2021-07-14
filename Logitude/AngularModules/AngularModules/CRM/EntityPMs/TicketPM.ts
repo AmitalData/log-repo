@@ -599,6 +599,16 @@ export class TicketPM {
     public set EntityTypeName(newValue: string) { if (this.entityTypeName != newValue) { this.entityTypeName = newValue; this.MarkAsDirty("EntityTypeName"); } }
        
 	 
+    private quoteRequestFeedback: string;
+    public get QuoteRequestFeedback() { return this.quoteRequestFeedback; }
+    public set QuoteRequestFeedback(newValue: string) { if (this.quoteRequestFeedback != newValue) { this.quoteRequestFeedback = newValue; this.MarkAsDirty("QuoteRequestFeedback"); } }
+       
+	 
+    private quoteRequestComments: string;
+    public get QuoteRequestComments() { return this.quoteRequestComments; }
+    public set QuoteRequestComments(newValue: string) { if (this.quoteRequestComments != newValue) { this.quoteRequestComments = newValue; this.MarkAsDirty("QuoteRequestComments"); } }
+       
+	 
 
     public OldEntityPM: TicketPM;
 		

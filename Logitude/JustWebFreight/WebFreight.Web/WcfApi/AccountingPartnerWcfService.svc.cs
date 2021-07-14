@@ -53,8 +53,8 @@ namespace WebFreight.Web.WcfApi
 
                     PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
                     AccountingPartnerRepository AccountingPartnerRepository = new AccountingPartnerRepository(objectContext);
-                    AccountingPartnerService service = new AccountingPartnerService(objectContext, entityPM.Tenant);
-
+                    AccountingPartnerService service = new AccountingPartnerService(objectContext, entityPM.Tenant); 
+                    UserRepository userReporistory = new UserRepository(objectContext);
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(objectContext);
@@ -84,6 +84,12 @@ namespace WebFreight.Web.WcfApi
                             response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
                             return response;
                         }
+                    }
+
+                   response = MapCollectedIdField(entityPM, userReporistory);
+                    if (response.HasError)
+                    {
+                        return response;
                     }
 
                     entityPM.IsHybrid = true;
@@ -138,6 +144,34 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
+        private Response MapCollectedIdField(AccountingPartnerPM entityPM, UserRepository userReporistory)
+        {
+            Response response = new Response();
+            if (entityPM.CollectorId != null)
+            {
+                User user = userReporistory.GetSingleUserByCode(entityPM.CollectorId, entityPM.Tenant, true);
+                if (user != null)
+                {
+                    entityPM.CollectorId = user.Id;
+                    
+                }
+                else
+                {
+                    response = this.GetNotExistErrorMessage("CollectedId", response);
+                }
+            }
+
+            return response;
+        }
+         
+
+        private Response GetNotExistErrorMessage(string fieldName, Response response)
+        {
+            response.HasError = true;
+            response.ErrorMessage = fieldName+" field doesn't exist in the database,Upsert this entity before using it.";
+            return response; 
+        }
+     
 
         public AccountingPartnerPM GetAccountingPartnerPM(DataContracts.AccountingPartnerApiFilters filters, int tenant, ref Response response)
         { 

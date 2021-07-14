@@ -17,6 +17,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
+    public static readonly AccountingSettings = "#MaintenanceItemACSE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
     //#endregion
@@ -70,6 +71,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly  ContainSend="Send"
     public static readonly  ContainPrint="Print"
     public static readonly ContainSelected= "Selected:"
 
@@ -160,8 +162,9 @@ export class BaseSelectors extends RegexSelectors {
 
     //#region Customs settings
     public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
-
+    public static readonly LogLoveLocalCustomsInterfaceCode="#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode"
     //#endregion
+    public static readonly SingleError = ".SingleError"
     public static readonly HeaderScreen= ".HeaderScreen"
     public static readonly HeaderScreenLable=".HeaderScreenLable"
     public static readonly tr="tr"
@@ -173,6 +176,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly EditPng='[src="./Images/Buttons/Edit.png"]'
     public static readonly GridViewCell='.GridViewCell'
     public static readonly HyperlinkButtonControl='.HyperlinkButtonControl'
+    public static readonly HyperlinkQueryButtonControl=".HyperlinkQueryButtonControl"
     public static readonly ColorGreenClass=".ColorGreen"
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
@@ -180,9 +184,12 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CurvedEditArea=".CurvedEditArea"
     public static readonly ListDataLoaded='div[id=ListDataLoaded]'
     public static readonly ErrorPopUp = ".ErrorPopUp";
-   
-
+    public static readonly WindowHeader=".WindowHeader"
+    public static readonly TemplateBoxItem = ".TemplateBoxItem"
     public static readonly ShortTitleDiv = ".ShortTitleDiv";
+    public static readonly IsAir = "#IsAir"
+    public static readonly IsInland = "#IsInland"
+    public static readonly IsOcean = "#IsOcean"
 
     public static readonly EventNotes = "#EventNotes";
     public static readonly ConfirmWindowButton = "button[id^='ConfirmWindow_Yes']";

@@ -25,7 +25,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         JournalId, 
 	         TaxReportId, 
-	         TaxReportTransmitStatusCode,
+	         TaxReportTransmitStatusCode, 
+	         JournalLineNumber,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         JournalId, 
 	         TaxReportId, 
-	         TaxReportTransmitStatusCode,
+	         TaxReportTransmitStatusCode, 
+	         JournalLineNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -81,6 +83,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportTransmitStatusCode))
             {
 					entityPM.TaxReportTransmitStatusCode = entityPOCO.TaxReportTransmitStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalLineNumber))
+            {
+					entityPM.JournalLineNumber = entityPOCO.JournalLineNumber;
             }
 
 		}

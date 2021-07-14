@@ -58,8 +58,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CurrencyPM GetSinglePM(string id, int tenant)
         {
-            string entityName = //"CurrencyPM" + id + tenant;
-                "CurrencyPM" + id + "," + tenant;
+            string entityName = "CurrencyPM" + id + tenant;
+               
             CurrencyPM entity;
             if (true)/// HttpContext.Current != null)
             {
@@ -85,7 +85,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (var c in currencies)
                     {
-                        string name = "CurrencyPM" + c.Id + "," + tenant;
+                        string name = "CurrencyPM" + c.Id + tenant;
+
                         if (CacheManager.CacheWrapper.Get(name) == null)
                         {
                             CacheManager.CacheWrapper.Insert(name, c, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);

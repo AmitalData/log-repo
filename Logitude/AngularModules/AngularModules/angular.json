@@ -16,166 +16,166 @@
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-              "outputPath": "dist",
-              "index": "index.html",
-              "main": "App/Bootstraper.ts",
-              "polyfills": "polyfills.ts",
-              "tsConfig": "tsconfig.app.json",
-              "aot": false,
-              "assets": [
-                "assets",
-                "favicon.ico",
-                "_Resources",
-                "Js",
-                "Images"
-              ],
-              "styles": [
-                "styles.css"
-              ],
+            "outputPath": "dist",
+            "index": "index.html",
+            "main": "App/Bootstraper.ts",
+            "polyfills": "polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "assets",
+              "favicon.ico",
+              "_Resources",
+              "Js",
+              "Images"
+            ],
+            "styles": [
+              "styles.css",
+              "./node_modules/collaboration-tool-core/dist/index.css"
+            ],
             "scripts": [
-                "_Resources/js/FaviconManager.js",
-                "_Resources/js/JQuery/jquery-2.0.0.min.js",
-                "_Resources/js/JQuery/jquery.signalR.js",
-                "_Resources/js/js.js",
-                "_Resources/js/ChangePasswordFunctions.js",
-                "_Resources/js/UnifreightJSBridge.js",
-                "log.config.js",
-                "Js/Reflect.js",
-                "Js/jszip.js",
-                "Js/codemirror.min.js",
-                "Js/xml.min.js",
-                "Js/rx.all.js",
-                "_Resources/js/Charts/amcharts.js",
-                "_Resources/js/Charts/dark.js",
-                "_Resources/js/Charts/export.min.js",
-                "_Resources/js/Charts/funnel.js",
-                "_Resources/js/Charts/light.js",
-                "_Resources/js/Charts/pie.js",
-                "_Resources/js/Charts/serial.js",
-                "_Resources/js/Charts/responsive.min.js",
-                "_Resources/js/Charts/chartscript.js",
-                "_Resources/Froala/js/froala_editor.min.js",
-                "_Resources/Froala/js/plugins/align.min.js",
-                "_Resources/Froala/js/plugins/char_counter.min.js",
-                "_Resources/Froala/js/plugins/code_beautifier.min.js",
-                "_Resources/Froala/js/plugins/code_view.min.js",
-                "_Resources/Froala/js/plugins/colors.min.js",
-                "_Resources/Froala/js/plugins/emoticons.min.js",
-                "_Resources/Froala/js/plugins/entities.min.js",
-                "_Resources/Froala/js/plugins/file.min.js",
-                "_Resources/Froala/js/plugins/font_family.min.js",
-                "_Resources/Froala/js/plugins/font_size.min.js",
-                "_Resources/Froala/js/plugins/fullscreen.min.js",
-                "_Resources/Froala/js/plugins/image.min.js",
-                "_Resources/Froala/js/plugins/image_manager.min.js",
-                "_Resources/Froala/js/plugins/inline_style.min.js",
-                "_Resources/Froala/js/plugins/line_breaker.min.js",
-                "_Resources/Froala/js/plugins/link.min.js",
-                "_Resources/Froala/js/plugins/lists.min.js",
-                "_Resources/Froala/js/plugins/paragraph_format.min.js",
-                "_Resources/Froala/js/plugins/paragraph_style.min.js",
-                "_Resources/Froala/js/plugins/quick_insert.min.js",
-                "_Resources/Froala/js/plugins/quote.min.js",
-                "_Resources/Froala/js/plugins/table.min.js",
-                "_Resources/Froala/js/plugins/save.min.js",
-                "_Resources/Froala/js/plugins/url.min.js",
-                "_Resources/Froala/js/plugins/video.min.js",
-                "_Resources/Froala/js/plugins/line_height.min.js"
-
-              
+              "_Resources/js/FaviconManager.js",
+              "_Resources/js/JQuery/jquery-2.0.0.min.js",
+              "_Resources/js/JQuery/jquery.signalR.js",
+              "_Resources/js/js.js",
+              "_Resources/js/ChangePasswordFunctions.js",
+              "_Resources/js/UnifreightJSBridge.js",
+              "log.config.js",
+              "Js/Reflect.js",
+              "Js/jszip.js",
+              "Js/codemirror.min.js",
+              "Js/xml.min.js",
+              "Js/rx.all.js",
+              "_Resources/js/Charts/amcharts.js",
+              "_Resources/js/Charts/dark.js",
+              "_Resources/js/Charts/export.min.js",
+              "_Resources/js/Charts/funnel.js",
+              "_Resources/js/Charts/light.js",
+              "_Resources/js/Charts/pie.js",
+              "_Resources/js/Charts/serial.js",
+              "_Resources/js/Charts/responsive.min.js",
+              "_Resources/js/Charts/chartscript.js",
+              "_Resources/Froala/js/froala_editor.min.js",
+              "_Resources/Froala/js/plugins/align.min.js",
+              "_Resources/Froala/js/plugins/char_counter.min.js",
+              "_Resources/Froala/js/plugins/code_beautifier.min.js",
+              "_Resources/Froala/js/plugins/code_view.min.js",
+              "_Resources/Froala/js/plugins/colors.min.js",
+              "_Resources/Froala/js/plugins/emoticons.min.js",
+              "_Resources/Froala/js/plugins/entities.min.js",
+              "_Resources/Froala/js/plugins/file.min.js",
+              "_Resources/Froala/js/plugins/font_family.min.js",
+              "_Resources/Froala/js/plugins/font_size.min.js",
+              "_Resources/Froala/js/plugins/fullscreen.min.js",
+              "_Resources/Froala/js/plugins/image.min.js",
+              "_Resources/Froala/js/plugins/image_manager.min.js",
+              "_Resources/Froala/js/plugins/inline_style.min.js",
+              "_Resources/Froala/js/plugins/line_breaker.min.js",
+              "_Resources/Froala/js/plugins/link.min.js",
+              "_Resources/Froala/js/plugins/lists.min.js",
+              "_Resources/Froala/js/plugins/paragraph_format.min.js",
+              "_Resources/Froala/js/plugins/paragraph_style.min.js",
+              "_Resources/Froala/js/plugins/quick_insert.min.js",
+              "_Resources/Froala/js/plugins/quote.min.js",
+              "_Resources/Froala/js/plugins/table.min.js",
+              "_Resources/Froala/js/plugins/save.min.js",
+              "_Resources/Froala/js/plugins/url.min.js",
+              "_Resources/Froala/js/plugins/video.min.js",
+              "_Resources/Froala/js/plugins/line_height.min.js"
             ]
-            },
-            "configurations": {
-              "production": {
-                "fileReplacements": [
-                  {
-                    "replace": "environments/environment.ts",
-                    "with": "environments/environment.prod.ts"
-                  }
-                ],
-                "optimization": false,
-                "outputHashing": "all",
-                "sourceMap": false,
-                "extractCss": true,
-                "namedChunks": false,
-                "extractLicenses": true,
-                "vendorChunk": false,
-                "buildOptimizer": false,
-                "budgets": [
-                  {
-                    "type": "initial",
-                    "maximumWarning": "2mb",
-                    "maximumError": "5mb"
-                  },
-                  {
-                    "type": "anyComponentStyle",
-                    "maximumWarning": "6kb",
-                    "maximumError": "10kb"
-                  }
-                ]
-              }
-            }
           },
-          "serve": {
-            "builder": "@angular-devkit/build-angular:dev-server",
-            "options": {
-              "browserTarget": "AngularModules:build"
-            },
-            "configurations": {
-              "production": {
-                "browserTarget": "AngularModules:build:production"
-              }
-            }
-          },
-          "extract-i18n": {
-            "builder": "@angular-devkit/build-angular:extract-i18n",
-            "options": {
-              "browserTarget": "AngularModules:build"
-            }
-          },
-          "test": {
-            "builder": "@angular-devkit/build-angular:karma",
-            "options": {
-              "main": "test.ts",
-              "polyfills": "polyfills.ts",
-              "tsConfig": "tsconfig.spec.json",
-              "karmaConfig": "karma.conf.js",
-              "assets": [
-                "favicon.ico",
-                "assets"
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "environments/environment.ts",
+                  "with": "environments/environment.prod.ts"
+                }
               ],
-              "styles": [
-                "styles.css"
-              ],
-              "scripts": []
-            }
-          },
-          "lint": {
-            "builder": "@angular-devkit/build-angular:tslint",
-            "options": {
-              "tsConfig": [
-                "tsconfig.app.json",
-                "tsconfig.spec.json",
-                "e2e/tsconfig.json"
-              ],
-              "exclude": [
-                "**/node_modules/**"
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
               ]
             }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "AngularModules:build"
           },
-          "e2e": {
-            "builder": "@angular-devkit/build-angular:protractor",
-            "options": {
-              "protractorConfig": "e2e/protractor.conf.js",
-              "devServerTarget": "AngularModules:serve"
-            },
-            "configurations": {
-              "production": {
-                "devServerTarget": "AngularModules:serve:production"
-              }
+          "configurations": {
+            "production": {
+              "browserTarget": "AngularModules:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "AngularModules:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "test.ts",
+            "polyfills": "polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "favicon.ico",
+              "assets"
+            ],
+            "styles": [
+              "styles.css",
+              "./node_modules/collaboration-tool-core/dist/index.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "AngularModules:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "AngularModules:serve:production"
             }
           }
         }
+      }
     }
   },
   "defaultProject": "AngularModules",

@@ -127,7 +127,13 @@ export function ReceiveAPInvoice() {
         }
     })
 }
-
+export function AssertSaveMultipleAPInvoice(){
+    BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+        if (interception.response.body) {
+            ClickOnSaveOnConfirmWindow()
+        }
+    })
+}
 export function SaveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceSaveButton, null)
@@ -164,7 +170,7 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     if (aRInvoiceDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
-    cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency)
     if(aRInvoiceDetails.InvoiceExchangeRate) {
         cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
     }

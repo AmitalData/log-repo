@@ -602,14 +602,22 @@ export class APInvoiceLineShortItem extends BaseComponent {
             this.isChecked = value;
 
             if (value) {
+                if (this.EntityPM.AmountTypeCode != "NEXP") {
+                    if (AppTool.IsNullOrZero(this.ForiegnCurrencyAmount) && !AppTool.IsNullOrZero(this.OpenAmount)) {
+                        this.ForiegnCurrencyAmount = this.OpenAmount;
+                    }
+                }
+
                 this.fatherComponent.EntityPM.AddInvoiceLinePM(this.EntityPM);
             }
 
             else {
+                this.InvoiceCurrencyAmount = null;
                 this.fatherComponent.EntityPM.RemoveInvoiceLinePM(this.EntityPM);
             }
 
             this.SetCellColor();
+            this.SetUIProperties();
             this.fatherComponent.ComputeTotals();
             this.fatherComponent.CheckIsAllChecked();
         }

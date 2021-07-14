@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "fa535e0fe1da28c7bd88fe3f154470eb";
+		public const string HashString = "983ee4a7c4a846f18a57ed7bc7f0b0ae";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,6 +124,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "NewBankAccountComponent",
 			      				    LocalDefaultText =  "חשבון בנק",
 			      				    DefaultText =  "Bank Account",
+			      				    NewButtonLocalDefaultText =  "חשבון בנק חדש",
+			      				    NewButtonDefaultText =  "New Bank Account",
 			      				    Code =  "9b17",
 			      				    Name =  "BankAccount Query Group",
 			      				    GenerateDomainService =  true,
@@ -2429,6 +2431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BankCodeEnglishName",
 					  						ListPropertyPath =  "BankCodeEnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2484,6 +2487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BankCodeLocalName",
 					  						ListPropertyPath =  "BankCodeLocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2816,6 +2820,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode BankAccountTextCode_BankAccountsOCanCancelItsTransactionsReconciled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CanCancelItsTransactionsReconciled", DefaultText = "Can’t cancel the bank page. It’s transactions have been reconciled",LocalDefaultText = @"לא ניתן לבטל דף בנק זה משום שהתנועות שלו הותאמו כבר", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BankAccountTextCode_BankAccountOBank_and_GL_Account_must_be_same_currency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.O.Bank_and_GL_Account_must_be_same_currency", DefaultText = "Bank currency and GL Account currency must be the same",LocalDefaultText = @"מטבע הבנק ומטבע הכרטיס חייב להיות זהים", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountONewBankAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.O.NewBankAccount", DefaultText = "New Bank Account",LocalDefaultText = @"חשבון בנק חדש", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

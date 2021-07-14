@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagmentPrivateLabelsUpdateClass
    {  		
-		public const string HashString = "acc7d441b6fecedd483b49272c0d34ed";
+		public const string HashString = "842788bb8d3d6f546183e490eba4b5d4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -789,6 +789,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  		   TextCode TenantManagmentPrivateLabelsTextCode_TenantManagmentPrivateLabelsSMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.S.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantManagmentPrivateLabelsTextCode_TenantManagmentPrivateLabelsSBrandingData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.S.BrandingData", DefaultText = "Branding Data",LocalDefaultText = null, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagmentPrivateLabelsTextCode_TenantManagmentPrivateLabelsSTermsOfUse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.S.TermsOfUse", DefaultText = "Terms Of Use",LocalDefaultText = null, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

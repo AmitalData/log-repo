@@ -3,6 +3,8 @@ using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using Simplog.Data.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,142 +16,18 @@ namespace Logitude.ShipmentTests.Services
         {
             return new ShipmentVariables
             {
-                CurrencyEURId = GetCurrencyId("EUR"),
-                IncotermLDEId = GetIncotermId("LDE"),
-                MeasurementGRWTId = GetMeasurementId("GRWT"),
-                ChargeTypeAFTId = GetChargeTypeId("AFT"),
                 PackageTypePC1Id = GetPackageTypeId("PC1", "O", true),
                 PackageTypePC2Id = GetPackageTypeId("PC2", "O", true),
                 PackageTypePP1Id = GetPackageTypeId("PP1", "A", false),
                 PackageTypePP2Id = GetPackageTypeId("PP2", "A", false),
-                PaymentTermCashId = GetPaymentTermId("Cash"),
-                VATTypeZeroId = GetVATTypeId("ZERO"),
                 QuoteStageQTDRId = GetQuoteStageId("QTDR"),
                 VesselPTId = GetVesselId("PT"),
                 MoveTypeMTAId = GetMoveTypeId("MTA", "A" ),
+                MoveTypeTSMId = GetMoveTypeId("TSM", "A" ),
                 MoveTypeMTOId = GetMoveTypeId("MTO", "O"),
+                ShipmentSubTypeTSSTId = GetShipmentSubTypeId("TSST","Air")
         };
         }
-
-        #region Currency
-        private static string GetCurrencyId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);  
-
-            string UserTenantCurrencyId = GetCurrencyIdFromUserTenant(apiQueryFilters);
-            if (string.IsNullOrEmpty(UserTenantCurrencyId))
-            {
-                string ZeroTenantCurrencyId = GetCurrencyIdFromZeroTenant(apiQueryFilters);
-                UserTenantCurrencyId = GetCopiedCurrencyFromTenantZero(ZeroTenantCurrencyId);
-            }
-            return UserTenantCurrencyId;
-        }
-
-        private static string GetCurrencyIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-        private static string GetCurrencyIdFromZeroTenant(ApiQueryFilters apiQueryFilters)
-        {
-            apiQueryFilters.Tenant = 0;
-            ApiResponse<IEnumerable<Currency>> response = APICaller.CallGetByFilters<IEnumerable<Currency>>(Urls.CurrencyViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        private static string GetCopiedCurrencyFromTenantZero(string currencyId)
-        {
-            ApiResponse<Currency> response = APICaller.CallGet<Currency>(Urls.CommonDomainGetCopyCurrencyToTenant(currencyId), UserTenant.Token);
-            return response.Data?.Id;
-        }
-        #endregion
-
-        #region Incoterm
-        private static string GetIncotermId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantIncotermId = GetIncotermIdFromUserTenant(apiQueryFilters);
-            if (string.IsNullOrEmpty(UserTenantIncotermId))
-            {
-                UserTenantIncotermId = GetCreatedIncotermFromTenantZero(code);
-            }
-
-            return UserTenantIncotermId;
-        }
-
-        private static string GetIncotermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Incoterm>> response = APICaller.CallGetByFilters<IEnumerable<Incoterm>>(Urls.IncotermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        private static string GetCreatedIncotermFromTenantZero(string code)
-        {
-            Incoterm incoterm = CreateIncotermPM(code);
-            ApiResponse<Incoterm> response = APICaller.CallPost<Incoterm>(incoterm, Urls.IncotermsController, UserTenant.Token);
-            return response.Data?.Id;
-        }
-
-        private static Incoterm CreateIncotermPM(string code)
-        {
-            Incoterm incoterm = new Incoterm();
-            incoterm.Tenant = UserTenant.Tenant;
-            incoterm.Code = code;
-            incoterm.Name = code + " Incoterm";
-            incoterm.Freight = "P";
-            incoterm.OtherCharges = "P";
-            return incoterm;
-        }
-
-        #endregion
-
-        #region Measurement
-
-        private static string GetMeasurementId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantMeasurementId = GetMeasurementIdFromUserTenant(apiQueryFilters);
-            return UserTenantMeasurementId;
-        }
-
-        private static string GetMeasurementIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<Measurement>> response = APICaller.CallGetByFilters<IEnumerable<Measurement>>(Urls.MeasurementViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        #endregion
-
-        #region ChargeType
-
-        private static string GetChargeTypeId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code,null);
-
-            string UserTenantChargeTypeId = GetChargeTypeIdFromUserTenant(apiQueryFilters);
-            return UserTenantChargeTypeId;
-        }
-
-        private static string GetChargeTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<ChargeType>> response = APICaller.CallGetByFilters<IEnumerable<ChargeType>>(Urls.ChargeTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            ChargeType chargeType = response.Data?.FirstOrDefault();
-            if (chargeType != null && !chargeType.IsCustoms)
-            {
-                UpdateChargeType(chargeType);
-            }
-            return chargeType?.Id;
-        }
-
-        private static void UpdateChargeType(ChargeType chargeType)
-        {
-            chargeType.IsCustoms = true;
-            APICaller.CallPut<ChargeType>(chargeType, Urls.ChargesTypes, UserTenant.Token);
-        }
-
-        #endregion
 
         #region PackageType
 
@@ -190,44 +68,6 @@ namespace Logitude.ShipmentTests.Services
             PackageType.IsInland = transportModeCode == "I" ? true : false;
             PackageType.IsContainer = isContainer;
             return PackageType;
-        }
-
-        #endregion
-
-        #region PaymentTerm
-
-        private static string GetPaymentTermId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(null,code);
-
-            string UserTenantPaymentTermId = GetPaymentTermIdFromUserTenant(apiQueryFilters);
-            return UserTenantPaymentTermId;
-        }
-
-        private static string GetPaymentTermIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<PaymentTerm>> response = APICaller.CallGetByFilters<IEnumerable<PaymentTerm>>(Urls.PaymentTermViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
-        }
-
-        #endregion
-
-        #region VATType
-
-        private static string GetVATTypeId(string code)
-        {
-            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(null,code);
-            apiQueryFilters.GetAll = false;
-            apiQueryFilters.ForceCacheRefresh = false;
-            apiQueryFilters.GetCount = true;
-            string UserTenantVATTypeId = GetVATTypeIdFromUserTenant(apiQueryFilters);
-            return UserTenantVATTypeId;
-        }
-
-        private static string GetVATTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
-        {
-            ApiResponse<IEnumerable<VATType>> response = APICaller.CallGetByFilters<IEnumerable<VATType>>(Urls.VatTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
         }
 
         #endregion
@@ -337,20 +177,59 @@ namespace Logitude.ShipmentTests.Services
 
         #endregion
 
+        #region Shipment Sub Type
+        private static string GetShipmentSubTypeId(string code , string shipmentTypeCpde)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+
+            string UserTenantShipmentSubId = GetShipmentSubIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantShipmentSubId))
+            {
+                UserTenantShipmentSubId = GetCreatedShipmentSubFromTenantZero(code, shipmentTypeCpde);
+            }
+
+            return UserTenantShipmentSubId;
+        }
+
+        private static string GetShipmentSubIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<ShipmentSubTypePM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentSubTypePM>>(Urls.ShipmentSubTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string GetCreatedShipmentSubFromTenantZero(string code , string shipmentTypeCpde)
+        {
+            ShipmentSubTypePM ShipmentSub = CreateShipmentSubPM(code , shipmentTypeCpde);
+            ApiResponse<ShipmentSubTypePM> response = APICaller.CallPost<ShipmentSubTypePM>(ShipmentSub, Urls.ShipmentSubTypesController, UserTenant.Token);
+            return response.Data?.Id;
+        }
+
+        private static ShipmentSubTypePM CreateShipmentSubPM(string code,string shipmentTypeCpde)
+        {
+            ShipmentSubTypePM ShipmentSub = new ShipmentSubTypePM();
+            ShipmentSub.Tenant = UserTenant.Tenant;
+            ShipmentSub.Code = code;
+            ShipmentSub.Name = "Test Shipment Sub Type";
+            ShipmentSub.ShipmentTypeCode = shipmentTypeCpde;
+            ShipmentSub.CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+            ShipmentSub.UpdateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+            ShipmentSub.CreatedByUserId = UserTenant.UserId;
+            ShipmentSub.UpdatedByUserId = UserTenant.UserId;
+            return ShipmentSub;
+        }
+        #endregion
+
         #region Build ApiQueryFilters
         private static ApiQueryFilters BuildApiQueryFilters(string code ,string SearchFieldsCode)
         {
-            return new ApiQueryFilters 
-            {
-                PageIndex = 0,
-                PageSize = 1,
-                Filter1Name = "Code",
-                Filter1Operator = "equals",
-                Filter1Value = code ,
-                Filter2Name = "SearchFields",
-                Filter2Operator = "Contains",
-                Filter2Value = SearchFieldsCode
-            };
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
+                .Filter1Name("Code")
+                .Filter1Operator("equals")
+                .Filter1Value(code)
+                .Filter2Name("SearchFields")
+                .Filter2Operator("Contains")
+                .Filter2Value(SearchFieldsCode)
+                .Build();
         }
         #endregion
 

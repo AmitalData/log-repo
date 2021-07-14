@@ -39,5 +39,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
+        public string ContainerEntityId { get; set; }
     }
 }

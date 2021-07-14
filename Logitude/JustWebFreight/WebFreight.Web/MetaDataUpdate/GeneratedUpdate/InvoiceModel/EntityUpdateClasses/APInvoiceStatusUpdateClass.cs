@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceStatusUpdateClass
    {  		
-		public const string HashString = "f930733bd90323101a6488a26e5eddd7";
+		public const string HashString = "8862b3e6b375fdebc1c7770dfcd19740";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "APInvoiceStatus",
 			      				    IsNew =  false,
 			      				    DBTableName =  "APInvoiceStatus",
-			      				    OldDBTableName =  "APInvoiceStatus",
 			      				    ObjectTableSingular =  "A/P Invoice Status",
 			      				    ObjectTablePlural =  "A/P Invoice Status",
 			      				    HasCustomFilter =  false,
@@ -121,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Status",
-			      				    Code =  "d12f",
+			      				    Code =  "bc88",
 			      				    Name =  "APInvoiceStatus",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -148,13 +147,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "APInvoiceStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -196,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
@@ -208,13 +207,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "APInvoiceStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -256,6 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -268,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "APInvoiceStatus",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -318,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -331,7 +330,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable APInvoiceStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoiceStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> APInvoiceStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APInvoiceStatus").ToList();
+		       
+	      
+
+	         Screen APInvoiceStatusAPInvoiceStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoiceStatus.HeaderScreen", Name = "APInvoiceStatusHeaderScreen", ObjectTableId = APInvoiceStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    APInvoiceStatusObjectTable.HeaderScreenId = APInvoiceStatusAPInvoiceStatusHeaderScreenScreen0.Id;
+		    APInvoiceStatusObjectTable.HeaderScreenCode = APInvoiceStatusAPInvoiceStatusHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

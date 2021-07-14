@@ -23,6 +23,7 @@ import { PriceStepsGeneralTabComponent } from './Components/PriceSteps/PriceStep
 import { CustomEventTypeComponent } from './Components/EventType/CustomEventTypeComponent';
 import { FeatureToggleGeneralTabComponent } from './Components/FeatureToggle/FeatureToggleGeneralTabComponent';
 import { NewFeatureToggleComponent } from './Components/FeatureToggle/NewFeatureToggleComponent';
+import { OceanInsightsSettingsComponent } from './Components/OceanInsightsSetting/OceanInsightsSettingsComponent';
 
 export const Components =
     [
@@ -51,6 +52,7 @@ export const Components =
         CustomEventTypeComponent,
         FeatureToggleGeneralTabComponent,
         NewFeatureToggleComponent,
+        OceanInsightsSettingsComponent
     ];
 
 export class ModuleDeclarations {
@@ -84,6 +86,7 @@ export class ModuleDeclarations {
             case "CustomEventTypeComponent": { myResult = CustomEventTypeComponent; break; }
             case "FeatureToggleGeneralTabComponent": { myResult = FeatureToggleGeneralTabComponent; break; }
             case "NewFeatureToggleComponent": { myResult = NewFeatureToggleComponent; break; }
+            case "OceanInsightsSettingsComponent": { myResult = OceanInsightsSettingsComponent; break; }
         }
 
         return myResult;

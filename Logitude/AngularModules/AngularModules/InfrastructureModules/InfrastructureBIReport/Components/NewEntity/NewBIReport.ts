@@ -278,9 +278,10 @@ export class NewBIReport extends BaseComponent {
 
     omit_special_char(value: string) {
         this.ValidationErrorsList = [];
-        let format = /[#&]/;
+        var specialCharacter = new Array("+", "#", "&", "|", "/", "\\", ":", "*", "?", "<", ">", ('"').toString()).join(""); 
+        let format = /[+#&|/\\:*?<>\"]/;
         if (format.test(value)) {
-            this.ValidationErrorsList.push("Name field can't contain the following special characters # &")
+            this.ValidationErrorsList.push("Name field can't contain the following special characters:" + specialCharacter );
         }
     }
 

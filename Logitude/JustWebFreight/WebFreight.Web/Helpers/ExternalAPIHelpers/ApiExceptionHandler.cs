@@ -19,28 +19,29 @@ namespace WebFreight.Web.Helpers.ExternalAPIHelpers
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
 
             if (ex != null)
+            {
+                if (ex.GetType() == typeof(DbEntityValidationException))
                 {
-                    if (ex.GetType() == typeof(DbEntityValidationException))
-                    {
-                        apiException = BuildDBException(ex);
-                        statusCode = HttpStatusCode.BadRequest;
-                    }
-                    else
-                    {
-                        apiException = BuildInternalException(ex);
-                    }
-
-                    if (ex.GetType() == typeof(Logitude.BL.Security.AutenticationException)
-                        || ex.GetType() == typeof(WebFreight.Web.Security.AutenticationException))
-                    {
-                        statusCode = HttpStatusCode.Unauthorized;
-                    }
-
-                    if (ex.GetType() == typeof(ApplicationException))
-                    {
-                        statusCode = HttpStatusCode.BadRequest;
-                    }
+                    apiException = BuildDBException(ex);
+                    statusCode = HttpStatusCode.BadRequest;
                 }
+                else
+                {
+                    apiException = BuildInternalException(ex);
+                }
+
+                if (ex.GetType() == typeof(Logitude.BL.Security.AutenticationException)
+                    || ex.GetType() == typeof(WebFreight.Web.Security.AutenticationException))
+                {
+                    statusCode = HttpStatusCode.Unauthorized;
+                }
+
+                if (ex.GetType() == typeof(ApplicationException) || ex.GetType() == typeof(EntityNotFoundException))
+                {
+                    statusCode = HttpStatusCode.BadRequest;
+                }
+ 
+            }
 
             result.StatusCode = statusCode;
             result.Exception = apiException;
@@ -111,13 +112,14 @@ namespace WebFreight.Web.Helpers.ExternalAPIHelpers
               
 
             }
-           
+
 
             apiException = new APIException()
             {
                 ErrorType = ex.GetType().Name,
                 ErrorMessage = errorMessage,
-                ShortErrorMessage = shortErrorMessage
+                ShortErrorMessage = (shortErrorMessage != errorMessage ? shortErrorMessage:null),
+
             };
             return apiException;
         }

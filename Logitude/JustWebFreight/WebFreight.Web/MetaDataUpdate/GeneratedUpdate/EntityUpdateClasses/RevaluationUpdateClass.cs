@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationUpdateClass
    {  		
-		public const string HashString = "d35d3bc16e0129fba615054c094c5310";
+		public const string HashString = "be81c8c8d5d56d0605311eb722bbfae9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Revaluation",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Revaluations",
-			      				    OldDBTableName =  "Revaluations",
 			      				    ObjectTableSingular =  "Revaluation",
 			      				    ObjectTablePlural =  "Revaluations",
 			      				    DescriptionDefaultText =  "Revaluation",
@@ -125,6 +124,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Accounting.Views.Tabs.REV.NewRevaluationControlCommand",
 			      				    LocalDefaultText =  "שערוך",
 			      				    DefaultText =  "Revaluation",
+			      				    NewButtonLocalDefaultText =  "שערוך חדש",
+			      				    NewButtonDefaultText =  "New Revaluation",
 			      				    Code =  "026a",
 			      				    Name =  "Revaluation Query Group",
 			      				    GenerateDomainService =  false,
@@ -150,7 +151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -201,6 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -212,7 +213,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -258,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -269,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -318,6 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -329,7 +330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationNumber",
-					  						OldFieldName =  "RevaluationNumber",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -380,6 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -391,7 +392,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationDate",
-					  						OldFieldName =  "RevaluationDate",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -442,6 +442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -453,7 +454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsId",
-					  						OldFieldName =  "ChartOfAccountsId",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChartOfAccount",
@@ -505,6 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -516,7 +517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChartOfAccountsName",
-					  						OldFieldName =  "ChartOfAccountsName",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -567,6 +567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -578,7 +579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountId",
-					  						OldFieldName =  "GLAccountId",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "GLAccount",
@@ -630,6 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -641,7 +642,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountName",
-					  						OldFieldName =  "GLAccountName",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -692,6 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -703,7 +704,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountNumber",
-					  						OldFieldName =  "GLAccountNumber",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -754,6 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -765,7 +766,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationEnabled",
-					  						OldFieldName =  "RevaluationEnabled",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -816,6 +816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -827,7 +828,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -878,6 +878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -889,7 +890,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Status",
-					  						OldFieldName =  "Status",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -939,6 +939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -950,7 +951,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Message",
-					  						OldFieldName =  "Message",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1000,6 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1011,7 +1012,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationsGLAccountId",
-					  						OldFieldName =  "RevaluationsGLAccountId",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1062,6 +1062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1073,7 +1074,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RevaluationsGLAccountName",
-					  						OldFieldName =  "RevaluationsGLAccountName",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1123,6 +1123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1134,7 +1135,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "Revaluation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1185,6 +1185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1422,6 +1423,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode RevaluationTextCode_RevaluationCHRevaluationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationDate", DefaultText = "Revaluation Date",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode RevaluationTextCode_RevaluationCHRevaluationEnabled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationEnabled", DefaultText = "Revaluation Enabled",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationONewRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.NewRevaluation", DefaultText = "New Revaluation",LocalDefaultText = @"שערוך חדש", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

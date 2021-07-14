@@ -1366,7 +1366,7 @@ on record.JournalId equals j.Id
             //taxReportMonth. = 1;
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
-                    join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
+                    join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) 
                             && a.DocumentDate <= endOfTaxReportDate

@@ -16,7 +16,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             // Primary Key
             this.HasKey(t => t.Tenant);
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-         
+              
 
             // Table & Column Mappings
             this.ToTable("HybridTenantStates");
@@ -26,6 +26,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.WaitingQueue).HasColumnName("WaitingQueue");
             this.Property(t => t.LastUpdateDateTime).HasColumnName("LastUpdateDateTime");
             this.Property(t => t.LastQueueDateTime).HasColumnName("LastQueueDateTime");
+            this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
+            this.Property(t => t.VersionDate).HasColumnName("VersionDate");
         }
     }
 }

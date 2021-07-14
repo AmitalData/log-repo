@@ -82,14 +82,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             gLAccountCardsDataPM.Phone = SetPhone(); 
             gLAccountCardsDataPM.VatNumber = SetVatNumber();
             gLAccountCardsDataPM.TotalOpenShipments = GetTotalOpenFilesAmount();
+            gLAccountCardsDataPM.InsuredcreditLimit = GetInsuredCreditLimit();
             return gLAccountCardsDataPM;
         }
 
         private double? SetCreditLimit()
         {
-            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).FirstOrDefault();
+            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).Sum(d => d.CreditLimitAmount);
             if (cardWithCreditLimit == null) return null;
-            else return cardWithCreditLimit.CreditLimitAmount;
+            else return cardWithCreditLimit;
         }
         private string SetCollectorId()
         {
@@ -121,17 +122,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (cardWithPhone == null) return null;
             else return cardWithPhone.BusinessPhone;
         }
-        private CustomerPM GetCustomer()
+        private List<CustomerPM> GetCardsCustomers()
         {
             CustomerQuery customerQuery = new CustomerQuery(tenant);
-            return customerQuery.GetSinglePM(cardId, tenant);
+            List<string> cardIds = connectedCards.Select(d => d.Id).ToList();
+            return customerQuery.GetCustomersByCardsIds(cardIds, tenant);
         }
-        private double? GetCustomerCreditLimitAmount()
-        {
-            CustomerPM customer = GetCustomer();
-            if (customer == null) { return null; }
-            return customer.CreditLimitAmount;
-        }
+        //private double? GetCustomerCreditLimitAmount()
+        //{
+        //    CustomerPM customer = GetCustomer();
+        //    if (customer == null) { return null; }
+        //    return customer.CreditLimitAmount;
+        //}
         private GLAccountPM GetGlAccountAccordingToCurrencyDiversity()
         {
             GLAccountCurrencyPM gLAccountCurrencyPM = GetGLAccountCurrency();
@@ -188,13 +190,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardGLaccount.CardsDataId = gLAccountCardsDataPM.Id;
 
         }
-     
+        private double? GetInsuredCreditLimit()
+        {
+            List<CustomerPM> customerPMs = GetCardsCustomers();
+            return customerPMs.Where(d => d.InsuredcreditLimit !=null).Sum(d=> d.InsuredcreditLimit);
+           
+        }
         private decimal? GetTotalOpenFilesAmount()
         {
             List<CustomerOpenFilesAmountPM> customerOpenFilesAmountPMs = GetCustomerOpenFilesAmount();
-            var customerTotalOpenFilesAmount = customerOpenFilesAmountPMs.Where(d => d.TotalOpenFilesAmount != 0).FirstOrDefault();
+            var customerTotalOpenFilesAmount = customerOpenFilesAmountPMs.Where(d => d.TotalOpenFilesAmount != 0).Sum(d => d.TotalOpenFilesAmount);
             if (customerTotalOpenFilesAmount == null) return null;
-            else return customerTotalOpenFilesAmount.TotalOpenFilesAmount;
+            else return customerTotalOpenFilesAmount;
         }
         private void SaveGLAccountChanges(GLAccountPM accountPM)
         {

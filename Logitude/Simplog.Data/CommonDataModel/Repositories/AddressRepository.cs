@@ -51,6 +51,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.Addresses.Include("Country").Include("State") where record.AddressTypeId == addressTypeId && record.CardId == cardId && record.Tenant == tenant select record).FirstOrDefault();
         }
 
+        public Address GetByCardIdAndTypeId(string cardId, string addressTypeId, int tenant)
+        {
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                string key = "GetByCardIdAndTypeId," + cardId + "," + addressTypeId + ","+ tenant.ToString();
+                var val = CacheManager.GetOrInsertNewObject<Address>(key, () =>
+                {
+                    return (from record in context.Addresses.Include("Country").Include("State") where record.AddressTypeId == addressTypeId && record.CardId == cardId && record.Tenant == tenant select record).FirstOrDefault();
+
+                });
+                return val;
+            }
+            return (from record in context.Addresses.Include("Country").Include("State") where record.AddressTypeId == addressTypeId && record.CardId == cardId && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
         public Address GetMainAddressByCardId(string cardId, int tenent)
         {
             if (LogitudeSettings.IsCostomsDeploy)

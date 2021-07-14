@@ -1,0 +1,18 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="3">
+    <![CDATA[
+ 
+
+    update GLAccountCardsDatas 
+	set TotalOpenShipments=(  select sum(o.TotalOpenFilesAmount) from cards c 
+	join GLAccounts g on c.GLAccountId=g.Id 
+	join CustomerOpenFilesAmounts o on o.CustomerId= c.Id 
+	where g.CardsDataId =GLAccountCardsDatas.Id), 
+	CreditLimit=(  select sum(cs.CreditLimit) from cards c 
+	join GLAccounts g on c.GLAccountId=g.Id 
+	join customers  cs on c.Id = cs.Id where g.CardsDataId = GLAccountCardsDatas.Id)
+
+ 
+     ]]>
+ </Sql>
+</Script>

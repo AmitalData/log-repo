@@ -129,11 +129,6 @@
                                             </table>
                                         </div>
                                     </div>
-
-                                    <div *ngIf="IsGeneratingVisible" class="CenterCenter" style="width: 350px; height: 30px;">
-                                        <div *ngIf="IsBuildFromShipmentsVisible" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">{{BuildFromShipmentsLabel}}</div>
-                                        <div *ngIf="IsNoPackagesLoadedTextVisible" class="NoDataTextStyle">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</div>
-                                    </div>
                                 </div>
 
                                 <div class="MediaFill" *ngIf="IsMultipleCommodities">
@@ -296,6 +291,11 @@
                                         </log-column>
 
                                     </logitude-edit-grid>
+                                </div>
+
+                                <div *ngIf="IsGeneratingVisible" class="CenterCenter" style="width: 350px; height: 30px;">
+                                    <div *ngIf="IsBuildFromShipmentsVisible" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">{{BuildFromShipmentsLabel}}</div>
+                                    <div *ngIf="IsNoPackagesLoadedTextVisible" class="NoDataTextStyle">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</div>
                                 </div>
                             </td>
                         </tr>

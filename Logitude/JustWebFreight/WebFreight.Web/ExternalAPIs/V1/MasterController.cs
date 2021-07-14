@@ -36,6 +36,9 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -100,11 +103,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         computingPartnerCode = entity.ComputingPartnerCode;
                     }
 
-                    if (entity.TransportMode != null && entity.TransportMode.Code != "A")
+                    if (entity.TransportMode != null)
                     {
-                        if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                        if (entity.TransportMode.Code == "A")
                         {
-                            throw new ApplicationException("Missing Shipment Type");
+                            this.ValidateMasterNumberAndCarrier(entity);
+                        }
+
+                        else
+                        {
+                            if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                            {
+                                throw new ApplicationException("Missing Shipment Type");
+                            }
                         }
                     }
 
@@ -252,6 +263,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.CarrierIsLimitedLength = airline.LimitedLength;
                             }
                         }
+                    }
+
+                    if ((IsShipmentHasPickup(entityPM) || IsShipmentHasDelivery(entityPM)) && IsOceanInsightFeatureToggleExistInTenant(authToken.Tenant))
+                    {
+                        ValidatePickupDeliveryPackages(entityPM);
                     }
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -708,6 +724,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                    if (entity.TransportMode != null && entity.TransportMode.Code == "A")
+                    {
+                        this.ValidateMasterNumberAndCarrier(entity);
+                    }
+
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
@@ -793,6 +814,94 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
             return currency;
+        }
+
+        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
+        {
+            string ocaenInsightFeatureToggleCode = "OIC";
+            IInfrastructureContext context = InfrastructureContext.GetContext(0);
+            FeatureToggleRepository repository = new FeatureToggleRepository(context);
+            IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
+            List<FeatureToggle> featureTogglesList = featureToggles.ToList();
+            if (featureTogglesList != null)
+            {
+                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode), tenant);
+            }
+            return false;
+        }
+
+        private bool IsFeatureToggleExistInMultiOrSingleTenant(FeatureToggle ocaenInsightFeatureToggle, int tenant)
+        {
+            if (ocaenInsightFeatureToggle == null)
+                return false;
+
+            if (ocaenInsightFeatureToggle.IsMultiTenant)
+            {
+                return ((tenant >= ocaenInsightFeatureToggle.FromTenantNumber) && (ocaenInsightFeatureToggle.ToTenantNumber <= tenant));
+            }
+            else
+            {
+                return (tenant == ocaenInsightFeatureToggle.TenantNumber);
+            }
+        }
+
+        private void ValidatePickupDeliveryPackages(ShipmentPM shipmentPM)
+        {
+            if (IsShipmentHasPickup(shipmentPM))
+            {
+                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
+                {
+                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
+                    }
+                }
+            }
+            if (IsShipmentHasDelivery(shipmentPM))
+            {
+                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
+                {
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
+                    }
+                }
+            }
+        }
+
+        private bool IsShipmentHasPickup(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
+        }
+
+        private bool IsShipmentHasDelivery(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
+        }
+
+        private void ValidateMasterNumberAndCarrier(Master entity)
+        {
+            bool validate = false;
+            if (!string.IsNullOrEmpty(entity.MasterNumber))
+            {
+                if (entity.MainCarriageCarrier == null)
+                {
+                    validate = true;
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(entity.MainCarriageCarrier.Code))
+                    {
+                        validate = true;
+                    }
+                }
+            }
+
+            if (validate)
+            {
+                throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
+            }
         }
     }
 }

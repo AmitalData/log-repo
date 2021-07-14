@@ -189,6 +189,23 @@
                                                     </td>
                                                 </tr>
 
+                                                <tr class="FormFieldRow" *ngIf="DataContext.HorseFieldIsVisible">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'HorseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td>
+                                                        <LogLov [ObjectFieldName]="'HorseId'"
+                                                                [SelectedValue]="DataContext.HorseId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Horse'"
+                                                                (SelectedItemChanged)="DataContext.Horse = $event"
+                                                                [DisplayMemberPath]="'Name'">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
                                                 <tr style="height:10px;">
                                                     <td>
                                                         <div></div>

@@ -100,7 +100,7 @@
                             <td style="width:15px"><div></div></td>
                             <td style="width:70px">Template</td>
                             <td style="width:150px"><ComboBox style="width:150px;height:22px;display:inline" (SelectedItemChanged)="alertselected($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="CurrentDocumentTypeTemplateList" [Binding]="'Description'"></ComboBox></td>
-                            <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="isAWBWizard" style="margin-left:10px;font-size:13px;" (click)="showDialog('ManageTemplate')">Manage Template</a></td>
+                            <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="isAWBWizard || !IsEnableManageDocument" style="margin-left:10px;font-size:13px;" (click)="showDialog('ManageTemplate')">Manage Template</a></td>
                             <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="!IsEnableEditDocument" style="margin-left:10px;font-size:13px;" (click)="showDialog('EditDocument')">Edit Document</a></td>
                             <td><div></div></td>
                         </tr>

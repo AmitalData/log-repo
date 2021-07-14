@@ -611,6 +611,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ContainerEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContainerStatusSourceCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -642,11 +656,6 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="LastStatusCode"
-    ReferencedTable="INTTRAStatuses"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="DeliveryTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
@@ -675,6 +684,11 @@
     ForeignKeyColumn="LCLContainerTypeId"
     ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContainerStatusSourceCode"
+    ReferencedTable="ContainerStatusSources"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CommodityId" />

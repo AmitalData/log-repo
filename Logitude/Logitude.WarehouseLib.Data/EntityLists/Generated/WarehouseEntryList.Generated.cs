@@ -150,6 +150,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string ConnectedTo  { get; set; }
        [DataMember]
        public double? Ratio  { get; set; }
+       [DataMember]
+       public string MasterShipmentNumber  { get; set; }
    }
 
 }

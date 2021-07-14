@@ -17,7 +17,7 @@ namespace WebFreight.Web.App_Code
             try
             {
                 ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-                UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters);
+                UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , true);
                 return userData;
             }
             catch (Exception e)

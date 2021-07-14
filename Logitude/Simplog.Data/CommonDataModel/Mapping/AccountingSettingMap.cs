@@ -47,6 +47,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ARInvoiceTransferStartDate).HasColumnName("ARInvoiceTransferStartDate");
             this.Property(t => t.APInvoiceTransferStartDate).HasColumnName("APInvoiceTransferStartDate");
             this.Property(t => t.ARPaymentTransferStartDate).HasColumnName("ARPaymentTransferStartDate");
+            this.Property(t => t.APPaymentTransferStartDate).HasColumnName("APPaymentTransferStartDate");
             this.Property(t => t.QBOrealMeID).HasColumnName("QBOrealMeID");
             this.Property(t => t.AllowMinusInvoicelines).HasColumnName("AllowMinusInvoicelines");
             this.Property(t => t.TransferToDropboxActivated).HasColumnName("TransferToDropboxActivated");

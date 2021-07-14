@@ -26,16 +26,17 @@ import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDet
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
+import { isNullOrUndefined } from 'util';
 @Component({
-    
+
     templateUrl: 'BIReportPreviewComponent.html',
 })
 
 export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
-  @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
+    @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
 
-  public ComponentRef: ComponentRef<BIReportPreviewComponent>;
+    public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;
@@ -72,6 +73,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public hasFixedFilter = false;
+    public filterButtonTitle = "No available fixed filters"; 
+     
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
         super();
@@ -99,6 +103,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                 }
@@ -106,6 +111,30 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.LoadBIReportData();
         }
     }
+    checkFixedFilter() { 
+        this.hasFixedFilter = false; 
+        this.ShowStaticFilters = false;
+        this.SelectedFiltersDataSource.forEach(item => {
+            this.checkFixedItemFilters(item); 
+        }); 
+        this.getFixedButtonTitle(); 
+    }
+    checkFixedItemFilters(item: any) {
+        item.FilterItems.forEach(nestedItem => {
+            if (nestedItem.FilterItems.length > 0) {
+                this.checkFixedItemFilters(nestedItem);
+            }
+            else if (nestedItem.filterType == "Fixed Filter") {
+                this.hasFixedFilter = true 
+            }}) 
+    }
+    getFixedButtonTitle() {
+        if (this.hasFixedFilter)
+            this.filterButtonTitle = "Show fixed filters";
+        else
+        this.filterButtonTitle = "No available fixed filters";
+    } 
+
     public Run(args: any) {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
@@ -135,6 +164,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public set ShowStaticFilters(newValue: boolean) {
         this.showStaticFilters = newValue;
         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+
         this.ShowFixedFilters.emit(this.showStaticFilters);
     }
 
@@ -370,8 +400,15 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
         this.CountText = "";
-        this.StartBusyIndicator();
-        this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
+        this.RunReportAutomatically(arg);
+    }
+
+    RunReportAutomatically(arg: BIReportXMLData) {
+        let dateFieldFilter = arg?.DWQueryData?.Filters?.FilterItems?.find(f => f.DataTypeCode == "Date" || f.DataTypeCode == "DateTime");
+        if (isNullOrUndefined(dateFieldFilter)) {
+            this.StartBusyIndicator();
+            this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
+        }
     }
 
     private DateCellRenderer(params: any) {
@@ -401,7 +438,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -683,6 +720,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         temp.push(MyFilter);
                         //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        this.checkFixedFilter();
                         //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                     else {

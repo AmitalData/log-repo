@@ -193,24 +193,24 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         private static void MapJournalAmount(APInvoiceLinePM entityPM)
         {
-            double? LocalAmountWithVatRecognized = 0;
+          
             if (entityPM.VatRecognizedPercentage == 0 || entityPM.VatRecognizedPercentage == null)
             {
                 if (entityPM.VatPercentage == null || entityPM.VatRecognizedPercentage == null)
                 {
-                    LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount;
+                    entityPM.LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount;
                 }
                 else
                 {
-                    LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * entityPM.LocalCurrencyAmount);
+                    entityPM.LocalAmountWithVatRecognized = entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * entityPM.LocalCurrencyAmount);
                 }
 
             }
             else
             {
-                LocalAmountWithVatRecognized = (entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount)));
+                entityPM.LocalAmountWithVatRecognized = (entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount)));
             }
-            entityPM.ForiegnAmountWithRecognizedVat = LocalAmountWithVatRecognized != null ? LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate : LocalAmountWithVatRecognized;
+            entityPM.ForiegnAmountWithRecognizedVat = entityPM.LocalAmountWithVatRecognized != null ? entityPM.LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate : entityPM.LocalAmountWithVatRecognized;
 
 
         }

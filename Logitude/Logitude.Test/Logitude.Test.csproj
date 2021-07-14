@@ -161,6 +161,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AccountingClassesGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="..\Logitude.BL\CommonDataModel\EntityPMs\ReportExecutionLogPM.cs">
+      <Link>ReportExecutionLogPM.cs</Link>
+    </Compile>
     <Compile Include="CommonDataModel\AccountingSettingTests.cs" />
     <Compile Include="CommonDataModel\AccountingSystemTests.cs" />
     <Compile Include="CommonDataModel\AddressTests.cs" />

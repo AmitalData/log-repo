@@ -6,6 +6,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
+using System;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -52,10 +54,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName ,
                         HasCustomFields = a.HasCustomFields , 
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
 
                     }).FirstOrDefault();
         }
 
+  
 
         public IQueryable<DWObjectTablePM> GetDWObjectTablePMsByTenant(int tenant)
         {
@@ -81,6 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     });
         }
 
@@ -108,6 +113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     }).FirstOrDefault();
         }
 
@@ -135,6 +141,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableName = a.ObjectTableName,
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                        AdditionalFactRelationType = a.AdditionalFactRelationType,
                     });
         }
 
@@ -161,6 +168,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ObjectTableName = a.ObjectTableName,
                                                        HasCustomFields = a.HasCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
+                                                       AdditionalFactRelationType = a.AdditionalFactRelationType,
                                                    };
 
             return result;
@@ -185,7 +193,30 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Code = a.Code
                     }).ToList();
         }
+
+        public List<ShortFactTableDetails> CheckFactTablesToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
+        {
+            // Check if Tenant have Invoice Feature Toggle
+            if (FeatureToggleHelper.HasFeatureToggle("BIF", tenant))
+            {
+                return dwFactTablesNames;
+            }
+            else
+            {
+                var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == "Invoices");
+                if (invoiceFact != null)
+                {
+                    dwFactTablesNames.Remove(invoiceFact);
+                }
+
+                return dwFactTablesNames;
+            }
+        }
+
+
     }
+
+
 
     public class ShortFactTableDetails
     { 

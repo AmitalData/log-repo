@@ -35,4 +35,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="VersionNumber"
+    OldNames="HybridVersionNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VersionDate"
+    OldNames="HybridVersionDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

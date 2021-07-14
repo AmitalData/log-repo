@@ -4193,6 +4193,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Debug&quot;"
+    TabLocalName="&quot;ניהול&quot;"
+    ObjectTableName="&quot;Journal&quot;"
+    Code="&quot;JNDB&quot;"
+    ControlPath="&quot;Logitude.Accounting.Views.Tabs.JRNL.JournalDebugTabControl&quot;"
+    TextCode="&quot;Journal.TH.Debug&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/Journal/JournalDebugTabComponent&quot;"
+    HtmlComponentName="&quot;JournalDebugTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
     ObjectTableName="&quot;Journal&quot;"
@@ -4324,8 +4337,8 @@
     <EventType
       Code="&quot;JNUP&quot;"
       ObjectTableName="&quot;Journal&quot;"
-      EnglishName="&quot;Journal Notes Updated&quot;"
-      LocalName="&quot;Journal Notes Updated&quot;"
+      EnglishName="&quot;Journal Line Updated&quot;"
+      LocalName="&quot;Journal Line Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -4345,14 +4358,6 @@
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
       LocalDefaultText="&quot;שמור כטיוטה&quot;"
-      IsPackagable="false" />
-    <MenuButton
-      EventCode="&quot;JournalSaveButton&quot;"
-      DefaultText="&quot;Save&quot;"
-      MenuButtonType="&quot;button&quot;"
-      Style="&quot;&quot;"
-      IndexOrder="0"
-      LocalDefaultText="&quot;שמור&quot;"
       IsPackagable="false" />
     <MenuButton
       EventCode="&quot;JournalSave&quot;"
@@ -5025,9 +5030,9 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Journal.M.EditLineNote&quot;"
-      DefaultText="&quot;Edit Line Note&quot;"
-      LocalDefaultText="&quot;ערוך הערת שורה&quot;"
+      Code="&quot;Journal.M.EditJournalLine&quot;"
+      DefaultText="&quot;Edit Journal Line&quot;"
+      LocalDefaultText="&quot;ערוך שורה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5041,6 +5046,12 @@
       DefaultText="&quot;Line&quot;"
       LocalDefaultText="&quot;שורה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.LoadCsv&quot;"
+      DefaultText="&quot;Load Journal from CSV&quot;"
+      LocalDefaultText="&quot;טען פקודת יומן מ CSV&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
@@ -5148,6 +5159,15 @@
       FeatureTypeCode="&quot;QUER&quot;"
       FeatureTextCodeCode="&quot;Journal.Features.ExternalJournals&quot;"
       FeatureDefaultText="&quot;External Journals&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;LOADJOURNALCSV&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Journal.Features.LOADJOURNALCSV&quot;"
+      FeatureDefaultText="&quot;Load Journal From CSV&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

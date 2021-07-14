@@ -35,8 +35,7 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    ICommonDataContext objectContext = CommonDataContext.GetContext(entitypm.Tenant);
-
+                    ICommonDataContext objectContext = CommonDataContext.GetContext(entitypm.Tenant); 
                     HybridTenantStateRepository hybridTenantStateRepository = new HybridTenantStateRepository(objectContext);
                     HybridTenantState entity = hybridTenantStateRepository.GetSingleHybridTenantState(entitypm.Tenant);
                     if (entity != null)
@@ -45,12 +44,14 @@ namespace WebFreight.Web.WcfApi
                         entity.FailedQueue = entitypm.FailedQueue;
                         entity.LastUpdateDateTime = DateTime.UtcNow;
                         entity.LastQueueDateTime = entitypm.LastQueueDateTime;
+                        entity.VersionNumber = entitypm.VersionNumber;
+                        entity.VersionDate = entitypm.VersionDate;
                         hybridTenantStateRepository.Update(entity);
                         hybridTenantStateRepository.SubmitChanges();
                     }
                     else
                     {
-                        entity = new HybridTenantState() { Tenant = entitypm.Tenant, FailedQueue = entitypm.FailedQueue, WaitingQueue = entitypm.WaitingQueue, LastUpdateDateTime = DateTime.UtcNow };
+                        entity = new HybridTenantState() { Tenant = entitypm.Tenant, FailedQueue = entitypm.FailedQueue, WaitingQueue = entitypm.WaitingQueue, LastUpdateDateTime = DateTime.UtcNow, VersionNumber = entitypm.VersionNumber, VersionDate = entitypm.VersionDate};
                         hybridTenantStateRepository.Add(entity);
                         hybridTenantStateRepository.SubmitChanges();
                     }

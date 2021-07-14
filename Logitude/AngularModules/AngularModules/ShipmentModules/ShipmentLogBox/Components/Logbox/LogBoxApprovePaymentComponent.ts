@@ -442,20 +442,12 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         var newWindow = new LogitudeWindow();
         newWindow.Width = 550;
         newWindow.Height = 230;
-        //if (this.Language == 'HB') {
-        //    newWindow.RTL = true;
-        //}
-        //else {
         newWindow.RTL = this.RTL;
-        //}
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
-        //windowArgs.IsNew = false;
 
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
-        //newWindow.Add(control); 
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
-
     }
 }

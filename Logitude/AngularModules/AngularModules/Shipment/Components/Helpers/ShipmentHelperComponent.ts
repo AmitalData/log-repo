@@ -13,6 +13,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 
 @Component({
     
@@ -35,13 +36,13 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         if (this.EntityPM) {
             this.ShowHideShippingInstructionsButton();
+            this.ShowHideShipmentContainersSimulatorButton();
             this.ShowHideSendBookingButton();
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
                     this.IsAnalyzeChampXMLButtonVisible = true;
                 }
             }
-
             this.Listen();
             this.BuildComponent();
         }
@@ -228,6 +229,18 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsSendToCustomVisible: boolean = false
     public IsShippingInstructionsVisible: boolean = false;
     public IsSendBookingVisible: boolean = false;
+
+    public IsShipmentContainersSimulatorVisible: boolean = false;
+    private ShowHideShipmentContainersSimulatorButton() {
+        this.IsShipmentContainersSimulatorVisible = false;
+        if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
+            var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+            if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
+                this.IsShipmentContainersSimulatorVisible = true;
+            }
+        }
+    }
+
     setImportAWBWizardButton() {
         this.IsImportAWBWizardButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTAWBWIZARD")) {
@@ -300,9 +313,11 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
         this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
         this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
-        this.EntityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-        ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);
-        ShipmentTool.ComputeAWBFrieghtAmountCollectAndPrepaid(this.EntityPM);
+        if (!AppTool.IsNullOrEmpty(airFreightCharge.PrepaidCollectId)) {
+            this.EntityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
+            ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);
+            ShipmentTool.ComputeAWBFrieghtAmountCollectAndPrepaid(this.EntityPM);
+        }
     }
 
     private ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge) {
@@ -590,6 +605,27 @@ export class ShipmentHelperComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Simulate Champ Message";
         logWindow.Show('./Shipment/Components/Helpers/AnalyzeChampXMLComponent');
+    }
+
+    ShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { ShipmentId: this.EntityPM.Id, IsFromContainer: false, ContainerNumber: null};
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent');
+    }
+
+    ContainersRequestStatusClicked() {
+        this.CurrentSession.StartBusyIndicator("Sending");
+        var service = new ShipmentContainersWebService();
+        service.GetContainerStatusResult(this.EntityPM.Id, null, false).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+               
+            }
+            else {
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });            
     }
 }
 

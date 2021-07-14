@@ -1299,12 +1299,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             DateTime nowdate = TenantServerConfigration.GetCurrentDateTime(tenant);
             IQueryable<ARInvoice> invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), repository.context.ARInvoices.Where(t => t.Tenant == tenant), tenant);
 
-            double? invoicedue = (from a in invoiceList
-                                  where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.DueDate < nowdate && !a.IsAutoCredit && a.ARInvoiceTypeCode != "CD" && !a.IsCancelled
+            List<string> allowedStatuses = new List<string>() { "AD", "PP", "NT" };
+            invoiceList = invoiceList.Where(a => a.BillToId == customerid && a.Tenant == tenant && allowedStatuses.Contains(a.StatusCode) && a.DueDate < nowdate && !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled);
+
+            double ? invoicedue = (from a in invoiceList
+                                   where a.ARInvoiceTypeCode != "CD"
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? autoCredit = (from a in invoiceList
-                                  where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.DueDate < nowdate && !a.IsAutoCredit && a.ARInvoiceTypeCode == "CD"
+                                  where  a.ARInvoiceTypeCode == "CD"
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? result = invoicedue != null ? invoicedue : 0;
@@ -1431,6 +1434,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            string[] invoiceStatusCodes = { "DR", "LL" };
 
             var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                          select new ARInvoiceList()
@@ -1447,7 +1451,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             InvoiceNumber = invoiceStatusCodes.Contains(entity.StatusCode) ? entity.DraftNumber : entity.InvoiceNumber,
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,

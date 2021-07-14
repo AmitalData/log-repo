@@ -72,6 +72,8 @@ namespace WebFreight.Web.DataProviders
         public decimal? BankTotalOpened { get; set; }
 
         public decimal? BankTotalClosed { get; set; }
+        public decimal BankPagesClosingBalance { get; set; }
+
 
         public decimal? TotalInLocalCurrency { get; set; }
 

@@ -396,6 +396,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PostponedChequesCommission"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"

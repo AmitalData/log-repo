@@ -150,11 +150,14 @@ namespace Simplog.Server.Infrastructure
             string databaseName = information[0];
             string userName = information[1];
             string pass = information[2];
-            string servername = information[3];
+            //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,10.10.10.48,49172\ITZIK" />
+            //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,10.10.10.48:49172\ITZIK" />
+            //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,servername:port\Instance" />
+            string servername = information[3].Replace(":",",");
 
-            // Initialize the connection string builder for the
-            // underlying provider.
-            SqlConnectionStringBuilder sqlBuilder =
+               // Initialize the connection string builder for the
+               // underlying provider.
+               SqlConnectionStringBuilder sqlBuilder =
                 new SqlConnectionStringBuilder();
 
             // Set the properties for the data source.
@@ -171,7 +174,7 @@ namespace Simplog.Server.Infrastructure
             }
             else
             {
-                sqlBuilder.ConnectTimeout = 60;
+                sqlBuilder.ConnectTimeout = 100; // old value was 60 . the 100 added by Rabaia with mohammad in order to fix Time Out Problem caused by Lock on get next counter "the update is temporary"
             }
             sqlBuilder.MaxPoolSize = 200;
             //sqlBuilder.ConnectTimeout = 240;

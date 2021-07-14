@@ -36,12 +36,13 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public ChequesCounter: number;
     public TotalAmount: number;
-   public isLTR: boolean;
+    public isLTR: boolean;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.isLTR = (ObjectsLocator.GlobalSetting.LayoutDirection == "ltr");
+        this.CalculateTotal();
     }
    
     SetWindowArgs(args: any) {
@@ -54,7 +55,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.AddFirstChequeRecord();
             this.CalculateTotal();
             this.UpdateChequeCounter();
-            this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" ? true : false;
+            this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
     UpdateChequeCounter() {
@@ -80,7 +81,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             cheque.ValueDate = this.paymentPM.ValueDate;
             cheque.ChequeNumber = this.paymentPM.ChequeOrPaymentRef;
             cheque.ForeignAmount = this.paymentPM.AmountInPaymentCurrency;
-            this.UpdatePaymentChequeList(cheque);          
+            this.UpdatePaymentChequeList(cheque);
         }
     }
   
@@ -191,6 +192,16 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
         if (AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
+        }
+
+        this.ValidateDuplicateChequeNumbers(cheque.ChequeNumber);
+
+    }
+
+    ValidateDuplicateChequeNumbers(chequeNumber: string) {
+        var isDuplicateChequeNumber = this.paymentPM.ARPaymentChequeReplicas?.filter(c => c.ChequeNumber == chequeNumber).length > 1;
+        if (isDuplicateChequeNumber) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber"))
         }
     }
     public SelectedRow: any = null;

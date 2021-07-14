@@ -1,4 +1,4 @@
-@release @stable @all
+@release @dev @all
 Feature: Create Country, Edit, inactivate or activate it from Maintenance
     The user creates a Country, Inactivates it, then selects a different country,
     edits it and activates or inactivates it from the Maintenance module.
@@ -23,8 +23,8 @@ Feature: Create Country, Edit, inactivate or activate it from Maintenance
         When add country
         Then the country should add successfully
 
-    Scenario: Search for the Country by name
-        When search for "Test" country
+    Scenario: Search for the Country by code in filter
+        When search for "TS" country code
         Then the "Test" country should appear successfully
 
     Scenario: Open the country

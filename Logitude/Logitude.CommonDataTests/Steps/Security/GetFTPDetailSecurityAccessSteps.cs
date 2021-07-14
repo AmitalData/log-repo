@@ -66,11 +66,7 @@ namespace Logitude.CommonTests.Steps.Security
 
         private FTPDetailPM GetUserTenantFTPDetail()
         {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
-            {
-                PageIndex = 0,
-                PageSize = 1
-            };
+            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
 
             ApiResponse<IEnumerable<FTPDetailPM>> response = APICaller.CallGetByFilters<IEnumerable<FTPDetailPM>>(Urls.FTPDetailViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();

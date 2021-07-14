@@ -17,6 +17,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -350,17 +351,29 @@ namespace WebFreight.Web.Helpers
                     ReportTemplateId = automationSendEmailArgs.ReportTemplateId,
                     DocumentCopyId = automationSendEmailArgs.DocumentCopyId,
                     DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
-                    EntityId = automationSendEmailArgs.EntityId, 
+                    EntityId = automationSendEmailArgs.EntityId,
                     ObjectTableId = automationSendEmailArgs.ObjectTableId,
                 };
 
-                string documentId = new ReportTemplateDocOutService(reportTemplateDocOutArgs).GetDocOutDocumentId();
+                string documentId = GetReportTemplateDocumentId(automationSendEmailArgs, reportTemplateDocOutArgs);
+
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
                     context.CommunicationAttachments.Add(attachment);
                 }
             }
+        }
+
+        private  string GetReportTemplateDocumentId(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
+        {
+            if (new DocumentTypeRepository(automationSendEmailArgs.Tenant).IsQuotationDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant))
+            {
+                QuoteDocumentVersionRepository quoteDocumentVersionRepository = new QuoteDocumentVersionRepository(automationSendEmailArgs.Tenant);
+                return quoteDocumentVersionRepository.GetLastQuoteQuotationDocumentIdByQuoteIdAndQuoteTemplateId(automationSendEmailArgs.EntityId, automationSendEmailArgs.ReportTemplateId, automationSendEmailArgs.Tenant);
+            }
+
+            return new ReportTemplateDocOutService(reportTemplateDocOutArgs).GetDocOutDocumentId();
         }
 
         private static CommunicationAttachment GetNewCommunicationAttachment(int tenant, CommunicationLog log, string documentId)

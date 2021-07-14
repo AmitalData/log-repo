@@ -1078,6 +1078,98 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? numberofPeriods ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberofPeriods  
+	   {
+	    
+	     get
+		{
+		   return numberofPeriods;
+		 }
+		 set
+		 {
+		   if(numberofPeriods != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberofPeriods",OldValue=numberofPeriods,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberofPeriods=value;
+		   }
+			
+		 }
+	   }
+	  private string firstPeriodsMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FirstPeriodsMonths  
+	   {
+	    
+	     get
+		{
+		   return firstPeriodsMonths;
+		 }
+		 set
+		 {
+		   if(firstPeriodsMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstPeriodsMonths",OldValue=firstPeriodsMonths,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   firstPeriodsMonths=value;
+		   }
+			
+		 }
+	   }
+	  private string secondPeriodsMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecondPeriodsMonths  
+	   {
+	    
+	     get
+		{
+		   return secondPeriodsMonths;
+		 }
+		 set
+		 {
+		   if(secondPeriodsMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecondPeriodsMonths",OldValue=secondPeriodsMonths,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   secondPeriodsMonths=value;
+		   }
+			
+		 }
+	   }
+	  private string thirdsPeriodsMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ThirdsPeriodsMonths  
+	   {
+	    
+	     get
+		{
+		   return thirdsPeriodsMonths;
+		 }
+		 set
+		 {
+		   if(thirdsPeriodsMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThirdsPeriodsMonths",OldValue=thirdsPeriodsMonths,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   thirdsPeriodsMonths=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

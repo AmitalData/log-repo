@@ -168,7 +168,8 @@ namespace WebFreight.Web.WebServices
                              HasFile = true,
                              Folder = "docsin",
                              FileName = TruncateLongString(realFileName, 120),
-                        
+                             CalculatedFileName = TruncateLongString(realFileName, 120),
+
                          };
                          docRepository.Add(document);
                      }
@@ -181,7 +182,7 @@ namespace WebFreight.Web.WebServices
                          document.HasFile = true;
                          document.Folder = "docsin";
                          document.IsEncrypted = true;
-                         document.FileName = TruncateLongString(realFileName, 120);
+                         document.FileName = document.CalculatedFileName = TruncateLongString(realFileName, 120);
                          docRepository.Update(document);
                      }
 
@@ -231,46 +232,49 @@ namespace WebFreight.Web.WebServices
                         ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(externalDocumentId, tenant);
-
                         var OTName = objectTableRepository.GetSingleObjectTable(extDocPM.ObjectTableId, tenant, false);
                         if (OTName.Name == "Shipment")
                         {
                             var ShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(extDocPM.EntityId, tenant);
-                            ShipmentCompField.LastDocumentDateTime = DateTime.Now;
-                            ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-                            ShipmentCompField.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-                            if (ShipmentCompField.MissingDocumentsCount == 0)
+
+                            if (ShipmentCompField != null)
                             {
-                                ShipmentCompField.IsMissingDocuments = false;
+                                ShipmentCompField.LastDocumentDateTime = DateTime.Now;
+                                ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+                                ShipmentCompField.MissingDocumentsNames = documentsFilingQuery.GetMissingDocsNamesForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+                                if (ShipmentCompField.MissingDocumentsCount == 0)
+                                {
+                                    ShipmentCompField.IsMissingDocuments = false;
+                                }
+                                else
+                                {
+                                    ShipmentCompField.IsMissingDocuments = true;
+                                }
+                                ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(extDocPM.EntityId, tenant);
+                                ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(extDocPM.EntityId, tenant);
+
+                                //if (extDocPM.HasFile)
+                                //{
+                                //    //DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+                                //    //DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(externalDocumentId, tenant);
+                                //    bool hasmissing = documentsFilingQuery.CheckMissingDocForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+                                //    ShipmentCompField.IsMissingDocuments = hasmissing;
+                                //}
+                                //else
+                                //{
+                                //    if (extDocPM.DocumentTypeCode == "740" || extDocPM.DocumentTypeCode == "706" || extDocPM.DocumentTypeCode == "380")
+                                //    {
+                                //        ShipmentCompField.IsMissingDocuments = true;
+                                //    } 
+                                //}
+                                //ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
+
+                                ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
+
+                                //shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                                // shipmentComputedFieldsRepository.SubmitChanges();
                             }
-                            else
-                            {
-                                ShipmentCompField.IsMissingDocuments = true;
-                            }
-                            ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(extDocPM.EntityId, tenant);
-                            ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(extDocPM.EntityId, tenant);
-
-                            //if (extDocPM.HasFile)
-                            //{
-                            //    //DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-                            //    //DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(externalDocumentId, tenant);
-                            //    bool hasmissing = documentsFilingQuery.CheckMissingDocForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-                            //    ShipmentCompField.IsMissingDocuments = hasmissing;
-                            //}
-                            //else
-                            //{
-                            //    if (extDocPM.DocumentTypeCode == "740" || extDocPM.DocumentTypeCode == "706" || extDocPM.DocumentTypeCode == "380")
-                            //    {
-                            //        ShipmentCompField.IsMissingDocuments = true;
-                            //    } 
-                            //}
-                            //ShipmentCompField.MissingDocumentsCount = documentsFilingQuery.GetMissingDocCountForEntity(extDocPM.EntityId, extDocPM.ObjectTableId, tenant);
-
-                            ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                            shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
-
-                            //shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                            // shipmentComputedFieldsRepository.SubmitChanges();
                         }
 
                     }
