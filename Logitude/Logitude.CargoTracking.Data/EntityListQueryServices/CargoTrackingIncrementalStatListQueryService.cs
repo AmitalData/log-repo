@@ -41,6 +41,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 					                          Countries = a.Countries,
 					
 					                          TransportModes = a.TransportModes,
+
+											  ErrorLog = a.ErrorLog
 					
 		                    	            });
             return query;

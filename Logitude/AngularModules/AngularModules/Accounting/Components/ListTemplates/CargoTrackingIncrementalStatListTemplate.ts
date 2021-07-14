@@ -7,8 +7,10 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { InterestReportLinesByDatePM } from '../../EntityPMs/InterestReportLinesByDatePM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+
 @Component({
-    
+
     templateUrl: "./CargoTrackingIncrementalStatListTemplate.html"
 })
 export class CargoTrackingIncrementalStatListTemplate {
@@ -19,7 +21,7 @@ export class CargoTrackingIncrementalStatListTemplate {
     public IconCode: string;
     public ColorCode: string;
 
- 
+
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -28,7 +30,7 @@ export class CargoTrackingIncrementalStatListTemplate {
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
     }
 
-  
+
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
@@ -47,8 +49,15 @@ export class CargoTrackingIncrementalStatListTemplate {
         }
     }
 
-    
- 
+    ShowError(errorText){
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Title = "Build Error";
+        messageWindow.ShowErrorIcon = true;
+        messageWindow.Show(errorText);
+    }
 
-    
+
+
+
+
 }

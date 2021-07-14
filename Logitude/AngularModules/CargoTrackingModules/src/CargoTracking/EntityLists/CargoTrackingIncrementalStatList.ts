@@ -18,6 +18,7 @@ export class CargoTrackingIncrementalStatList {
 	ShipmentComputedFields: number;
 	ShipmentMasterDatas: number;
 	Id: number;
+	ErrorLog: string;
 	
 }
  
