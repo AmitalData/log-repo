@@ -67,7 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
                 MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
                 eventTracker.TrackEvent(searchEvent);
 
@@ -122,7 +122,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 MixPanelEvent searchEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
 
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
                 eventTracker.TrackEvent(searchEvent);
 
 
