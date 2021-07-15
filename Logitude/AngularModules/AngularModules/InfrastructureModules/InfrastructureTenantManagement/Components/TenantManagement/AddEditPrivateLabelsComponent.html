@@ -679,8 +679,8 @@
                         <!--   Tab 3 Label-->
                         <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'TOU'">
                             <div style="margin:10px" class="TabBody MediaFillAbsolute">
-                                <h3 style="color: #1B90CB;position: relative;margin: 8px;">Terms Of Use</h3> 
-                                <button  style="width:55px;position: relative; bottom: 30px; left: 180px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
+                                <h3 style="color: #1B90CB;position: relative;margin: 8px;margin-right: 100px;">Terms Of Use</h3> 
+                                <button  style="width:55px; bottom: 30px; margin-left: 180px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
                                 <!--accept=".xml,.XML"-->
                                 <input [attr.accept]="'.PDF'" [attr.id]="VersionDocumentId" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
 
