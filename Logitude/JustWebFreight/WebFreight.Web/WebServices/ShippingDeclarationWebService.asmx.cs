@@ -160,7 +160,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transhipment2Vessel = shipment.Transshipment2VesselName;
                 myDataProvider.Transhipment3Vessel = shipment.Transshipment3VesselName;
                 myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
-
+               
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
@@ -635,6 +635,7 @@ namespace WebFreight.Web.WebServices
 
                     myDataProvider.ShipperAddress = shipperClient != null ? shipperClient.EnglishName : "";
                     myDataProvider.ShipperAddress_NoTel = shipperClient != null ? shipperClient.EnglishName : "";
+                    myDataProvider.ShipperNotes = shipperClient != null ? shipperClient.Notes : "";
 
                     if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
                     {
@@ -783,6 +784,8 @@ namespace WebFreight.Web.WebServices
                                       select a).FirstOrDefault();
                     if (consignee != null)
                     {
+                        myDataProvider.ConsigneeNotes = consignee != null ? consignee.Notes : "";
+
                         string myResultConsignee = "";
 
                         myResultConsignee = consignee.EnglishName != null ? consignee.EnglishName : "";
@@ -814,6 +817,7 @@ namespace WebFreight.Web.WebServices
                     }
                     myDataProvider.ConsigneeName = consignee != null ? consignee.EnglishName : "";
                     myDataProvider.ConsigneeVAT = consignee != null ? consignee.VatNumber : "";
+
 
                     if (!string.IsNullOrEmpty(shipment.ConsigneeContactId))
                     {

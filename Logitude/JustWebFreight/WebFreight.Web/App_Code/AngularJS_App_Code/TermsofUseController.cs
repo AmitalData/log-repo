@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -24,11 +26,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {  
-                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1"; 
+                 
                 TermsofUseArgs result = new TermsofUseArgs();
-
+                 
                 if (!string.IsNullOrEmpty(userId))
-                {
+                { 
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -39,9 +42,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                     TermsofUsePM termofuse = new TermsofUsePM();
                     termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
-                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null && !isLogbox)
-                    {
-                        throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
+                    { 
+                        TenantManagmentPrivateLabelsQuery privateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
+                        TenantManagmentPrivateLabelsPM privateLabelsPM = privateLabelsQuery.GetSinglePM(tenantPM.PrivateLabelId);
+                        if(privateLabelsPM.PrivateLabelUrl == SecurityUtility.getLoggedDomain())
+                        { 
+                          throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+                        } 
                     }
 
                     if (termofuse == null) termofuse = termsofUseQuery.GetTermsofUseDefault();

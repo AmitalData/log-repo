@@ -67,7 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
                 MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
                 eventTracker.TrackEvent(searchEvent);
 
@@ -109,9 +109,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
        
-                MixPanelTrackingService trackingService = new MixPanelTrackingService();
-                MixPanelTrackingEvent trackingEvent= CreateShipmentZoomMixPanelEvent(shipment.ShipmentNumber);              
-                await trackingService.SendTrackingEventPostRequest(trackingEvent);
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
@@ -119,11 +116,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 };
 
+                MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
 
-                MixPanelEvent searchEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
-
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId);
-                eventTracker.TrackEvent(searchEvent);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
+                eventTracker.TrackEvent(zoomEvent);
 
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
