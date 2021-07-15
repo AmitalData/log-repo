@@ -290,9 +290,9 @@
                 <div>
                     <div class="title">containers</div>
                     <div class="description">
-                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
-                            {{container}}
-                            <a *ngIf="ContainersNumbers?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                        <div *ngFor="let container of ShipmentPackages?.slice(0,2), let i = index">
+                            {{container.ContainerNumber}}
+                            <a *ngIf="ShipmentPackages?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
                         </div>
                     </div>
