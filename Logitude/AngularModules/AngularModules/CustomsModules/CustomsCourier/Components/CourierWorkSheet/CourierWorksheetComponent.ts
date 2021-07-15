@@ -671,10 +671,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     RefreshStatistic() {
-        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+       // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
             .subscribe((res:any) => {
-                this.currentSession.StopBusyIndicator();
+            //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
 
                 list = res.Result;
@@ -1114,7 +1114,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
         if (filters == null) {
             filters = new ApiQueryFilters();
         }

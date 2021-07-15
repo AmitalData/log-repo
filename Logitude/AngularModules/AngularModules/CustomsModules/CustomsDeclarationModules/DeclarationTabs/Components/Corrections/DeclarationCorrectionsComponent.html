@@ -413,8 +413,8 @@
                                                                 <LogTextBox [ObjectFieldName]="'AmendmentissueDate'" [ObjectTableName]="ObjectTableName" [Text]="AmendmentissueDate"
                                                                             [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
 
-                                                   
- 
+
+
                                                             </td>
 
 
@@ -426,7 +426,7 @@
                                                             <td style="width:75px">
                                                                 <LogTextBox [ObjectFieldName]="'VersionId'" [ObjectTableName]="ObjectTableName" [Text]="VersionId"
                                                                             [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
-                           
+
                                                             </td>
                                                             <td style="width:7px"></td>
 
@@ -458,7 +458,7 @@
 
 
                                                         </tr>
-  
+
                                                     </table>
                                                 </div>
                                             </td>
@@ -733,20 +733,6 @@
 
                                                     </log-column>
 
-                                                 
-                                                    <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
-                                                                [width]="'120'" [Alignment]="'right'" [binding]="'Remarks'">
-
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="text-align: right;" class="TextTrimming">
-                                                                    <span>{{item.Remarks}}</span>
-                                                                </div>
-                                                            </log-cell-template>
-                                                        </ng-template>
-
-                                                    </log-column>
-
                                                     <log-column [header]="'Customs.Declaration.O.RefernceInputType' | TextCodeTranslationPipe"
                                                                 [width]="'120'" [Alignment]="'right'" [binding]="'RefernceInputTypeName'">
 
@@ -759,6 +745,30 @@
                                                         </ng-template>
 
                                                     </log-column>
+
+                                                    <log-column [header]="'Customs.Declaration.O.Remarks' | TextCodeTranslationPipe"
+                                                                [width]="'150'" [Alignment]="'right'" [binding]="'Remarks'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.Remarks}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <log-column [width]="'30'" [Alignment]="'right'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="item.Remarks != null ">
+                                                                    <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
+
 
                                                 </logitude-edit-grid>
 

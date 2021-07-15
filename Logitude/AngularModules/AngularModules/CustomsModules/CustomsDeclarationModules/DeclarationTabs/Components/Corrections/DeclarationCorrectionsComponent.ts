@@ -1021,5 +1021,17 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         return translation;
     }
 
+    ExpandComment(entity: any, $event: any) {
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
+        logitudeWindow.ShowCloseButton = true;
+        windowArgs.remarks = entity.Remarks;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Remarks");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
+    }
+
 }
 

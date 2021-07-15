@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "654a01c8404c83c5f251e1f4944fb0c0";
+		public const string HashString = "c9c132261ec7520ac90a5debe3bd338d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3738,6 +3738,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CourierMaster",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3811,21 +3812,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn OPENCOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CourierMaster.AirlineName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.OpenDeclarations" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OPENCOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OPENCOURIERMASTERSQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter OPENCOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CourierMaster.IsOpen", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OPENCOURIERMASTERSQuery.Id,QueryCode = OPENCOURIERMASTERSQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -3839,21 +3842,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CLOSECOURIERMASTERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CourierMaster.AirlineName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.OpenDeclarations" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CLOSECOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CLOSECOURIERMASTERSQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter CLOSECOURIERMASTERSQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CourierMaster.IsOpen", PredefinedValue = "false",PredefinedValue2 = null, QueryId = CLOSECOURIERMASTERSQuery.Id,QueryCode = CLOSECOURIERMASTERSQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -3867,21 +3872,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ALLCOURIERSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CourierMaster.AirlineName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierMaster.OpenDeclarations" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierMaster.IntegratorName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CourierMaster.MAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CourierMaster.HAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ALLCOURIERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALLCOURIERSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CourierMaster.IsOpen" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALLCOURIERSQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLCOURIERSQuery.Id,QueryCode = ALLCOURIERSQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.CourierMaster.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
