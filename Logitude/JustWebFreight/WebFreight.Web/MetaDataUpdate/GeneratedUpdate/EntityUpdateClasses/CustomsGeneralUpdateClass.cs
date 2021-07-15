@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "fcb072f91a3127dcc0555a3633318c02";
-
+		public const string HashString = "9bc6cfa88620930365e0ea7d3b8d39da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2024,6 +2023,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPaymentsExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.PaymentsExport", DefaultText = "Declaration Payment Export",LocalDefaultText = @"הגשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHCalcDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CalcDate", DefaultText = "Calculated Date",LocalDefaultText = @"תאריך חישוב", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationOCancelRequestSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelRequestSent", DefaultText = "Cancel Request was sent",LocalDefaultText = @"נשלח מסר ביטול הצהרה - ממתין לטיפול", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
