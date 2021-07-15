@@ -708,7 +708,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void SetTablesStructureHelper(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
-            throw new Exception("I am an error!!!");
             TableStructureHelper mainTableStructureHelper = cargoTrackingDataBaseArgs.BuildCargoArgs.Table.MainTableStructureHelper;
             TableStructureHelper innerTableStructureHelper = null;
             cargoTrackingDataBaseArgs.BuildCargoArgs.MainTableStructureHelper = mainTableStructureHelper;
