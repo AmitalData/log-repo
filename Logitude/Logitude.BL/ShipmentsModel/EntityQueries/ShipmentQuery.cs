@@ -13772,7 +13772,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      on shipment.Id equals pay.ShipmentId into payableJoin
                                                      from master in masterJoin.DefaultIfEmpty()
                                                      from payable in payableJoin
-                                                     where payable.VendorId == vendorId
+                                                     where payable.VendorId == vendorId && string.IsNullOrEmpty(payable.ShipmentPayableParentId)
                                                      && (payable.ShipmentPayableLineStatusCode == "OAMT" || payable.ShipmentPayableLineStatusCode == "PACC")
                                                      select new ShipmentList()
                                                      {
