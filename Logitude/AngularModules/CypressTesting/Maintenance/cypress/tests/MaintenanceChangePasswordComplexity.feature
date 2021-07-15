@@ -1,10 +1,11 @@
-@release  @all @dev 
+@release @all @stable 
 Feature: Change Password Complexity
     The user enters different combinations in the Change Password screen from the Maintenance Module
 
     Scenario: change password with empty fields
         Given the user logged in and navigates to change password window from maintenance menu
-        When change user password with the following details
+        When change user password with the following 
+        details
             | CurrentPassword |  |
             | NewPassword     |  |
             | RetypePassword  |  |

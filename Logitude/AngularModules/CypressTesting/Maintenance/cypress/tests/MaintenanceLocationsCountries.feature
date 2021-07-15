@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: Create Country, Edit, inactivate or activate it from Maintenance
     The user creates a Country, Inactivates it, then selects a different country,
     edits it and activates or inactivates it from the Maintenance module.

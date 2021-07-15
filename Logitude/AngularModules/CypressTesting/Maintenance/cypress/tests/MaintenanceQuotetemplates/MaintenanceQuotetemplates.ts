@@ -48,6 +48,7 @@ Given("drag and drop the following details in quote header settings", (dataTable
     let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
     Actions.OpenQuoteHeaderSection();
     Actions.AssertGetQuoteHeader()
+    cy.wait(5000)
     Actions.DragAndDropFields(fieldDetails);
 });
 
@@ -70,6 +71,7 @@ Given("drag and drop the following details in quote details settings", (dataTabl
     let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
     Actions.OpenQuoteDetailsSection();
     Actions.AssertGetQuoteDetails()
+    cy.wait(5000)
     Actions.DragAndDropFields(fieldDetails);
 });
 
