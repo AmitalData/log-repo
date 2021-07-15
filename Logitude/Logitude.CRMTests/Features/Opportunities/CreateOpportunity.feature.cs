@@ -121,24 +121,18 @@ this.ScenarioInitialize(scenarioInfo);
                             "Subject",
                             "specflow sub"});
                 table7.AddRow(new string[] {
-                            "Shipments",
+                            "ShipmentsCount",
                             "3"});
                 table7.AddRow(new string[] {
                             "Rating",
                             "Neutral"});
-                table7.AddRow(new string[] {
-                            "Customer",
-                            "TestCustomer"});
-                table7.AddRow(new string[] {
-                            "Contact",
-                            "TestCustomer Contact"});
 #line 5
  testRunner.Given("a opportunity with the following properties", ((string)(null)), table7, "Given ");
 #line hidden
-#line 14
+#line 12
  testRunner.When("create opportunity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 13
  testRunner.Then("the opportunity should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

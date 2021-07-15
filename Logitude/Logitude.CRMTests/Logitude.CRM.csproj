@@ -107,8 +107,6 @@
     <Compile Include="Models\Builders\ActivityBuilder.cs" />
     <Compile Include="Models\CRMData.cs" />
     <Compile Include="Models\OpportunityPM.cs" />
-    <Compile Include="Models\OpportunityTypePM.cs" />
-    <Compile Include="Models\StagePM.cs" />
     <Compile Include="Services\ActivityAppointmentDataPreparation.cs" />
     <Compile Include="Services\ActivityAppointmentServices.cs" />
     <Compile Include="Services\ActivityPhoneCallDataPreparation.cs" />
