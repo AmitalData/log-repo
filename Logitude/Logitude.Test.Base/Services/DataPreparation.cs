@@ -68,10 +68,10 @@ namespace Logitude.Test.Base.Services
                 Code = code,
                 EnglishName = "TestSpecialServicesTypes",
                 InActive = false,
-                IsHybrid=false,
-                IsSecured=false,
-                LocalName= null,
-                SearchFields=null
+                IsHybrid = false,
+                IsSecured = false,
+                LocalName = null,
+                SearchFields = null
             };
 
             ApiResponse<SpecialServicesTypePM> response = APICaller.CallPost<SpecialServicesTypePM>(type, Urls.SpecialServicesTypesController, UserTenant.Token);
@@ -88,17 +88,18 @@ namespace Logitude.Test.Base.Services
             {
                 VendorId = GetPartnerId(new PartnerParameters { TypeCode = "VD", Name = "TestVendor" }),
                 AgentId = GetPartnerId(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }),
-                AgentCode = GetPartnerCode(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }),
+                AgentCode = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }, "Code"),
                 CustomerId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestCustomer", IsCustomer = true }),
+                CustomerContactId = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "CS", Name = "TestCustomer", IsCustomer = true }, "PrimaryContactId"),
                 PotentialCustomerId = GetPartnerId(new PartnerParameters { TypeCode = "PO", Name = "TestPotentialCustomer" }),
                 CustomAgentId = GetPartnerId(new PartnerParameters { TypeCode = "CG", Name = "TestCustomAgent" }),
                 ShippingAgentId = GetPartnerId(new PartnerParameters { TypeCode = "SG", Name = "TestShippingAgent" }),
                 TruckerTLONId = GetPartnerId(new PartnerParameters { TypeCode = "TR", Name = "TestTLONTrucker", Code = "TLON" }),
                 TruckerTNYCId = GetPartnerId(new PartnerParameters { TypeCode = "TR", Name = "TestTNYCTrucker", Code = "TNYC" }),
                 ShipperExportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestShipperExport" }),
-                ShipperExportCode = GetPartnerCode(new PartnerParameters { TypeCode = "CS", Name = "TestShipperExport" }),
+                ShipperExportCode = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "CS", Name = "TestShipperExport" }, "Code"),
                 ShipperImportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestShipperImport" }),
-                ShipperImportCode = GetPartnerCode(new PartnerParameters { TypeCode = "CS", Name = "TestShipperImport" }),
+                ShipperImportCode = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "CS", Name = "TestShipperImport" }, "Code"),
                 ConsigneeExportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestConsigneeExport" }),
                 ConsigneeImportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestConsigneeImport" }),
                 AirlineAAId = GetPartnerId(new PartnerParameters { TypeCode = "AL", Name = "TestAAAirline", Code = "AA", CopyFromTenantZero = true }),
@@ -262,7 +263,7 @@ namespace Logitude.Test.Base.Services
                 .Filter2Name("CountryId")
                 .Filter2Operator("equals")
                 .Filter2Value(countryId)
-                .Build(); 
+                .Build();
 
             string userTenantCityId = GetCityIdFromUserTenant(apiQueryFilters);
             if (string.IsNullOrEmpty(userTenantCityId))
@@ -305,7 +306,7 @@ namespace Logitude.Test.Base.Services
                 .Filter2Name("CountryCode")
                 .Filter2Operator("contains")
                 .Filter2Value(countryCode)
-                .Build(); 
+                .Build();
         }
 
         private static ApiQueryFilters BuildApiQueryFiltersForBillings(string code, string SearchFieldsCode)
@@ -348,7 +349,7 @@ namespace Logitude.Test.Base.Services
             return userTenantPartnerId;
         }
 
-        private static string GetPartnerCode(PartnerParameters partnerParameters)
+        private static string GetPartnerPropertyValue(PartnerParameters partnerParameters, string propertyName)
         {
             string userTenantPartnerId = GetPartnerId(partnerParameters);
             string requestUrl = GetUrlForUserTenantPartnerRequest(partnerParameters.TypeCode);
@@ -357,10 +358,10 @@ namespace Logitude.Test.Base.Services
                 .Filter1Name("Id")
                 .Filter1Operator("equals")
                 .Filter1Value(userTenantPartnerId)
-                .Build(); 
+                .Build();
 
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?["Code"];
+            return response.Data?.FirstOrDefault()?[propertyName];
         }
 
         private static string GetPartnerIdFromTenant(PartnerParameters partnerParameters, bool getFromTenantZero)
@@ -371,7 +372,7 @@ namespace Logitude.Test.Base.Services
                 .Filter1Name(string.IsNullOrEmpty(partnerParameters.Code) ? "EnglishName" : "Code")
                 .Filter1Operator("equals")
                 .Filter1Value(string.IsNullOrEmpty(partnerParameters.Code) ? partnerParameters.Name : partnerParameters.Code)
-                .Build(); 
+                .Build();
 
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?["Id"];

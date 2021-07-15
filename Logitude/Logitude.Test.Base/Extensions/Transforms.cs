@@ -42,7 +42,13 @@ namespace Logitude.Test.Base.Extensions
             {"Busy","BS" },
             {"Free","FR" },
             {"Out Of Office" ,"OF" },
-            {"Tentative" ,"TN" }
+            {"Tentative" ,"TN" },
+        #endregion
+        #region ActivityTimeTypes
+            {"Cold","C" },
+            {"Hot","H" },
+            {"Neutral" ,"N" },
+            {"Warm" ,"W" }
         #endregion
         };
 
