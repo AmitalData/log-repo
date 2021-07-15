@@ -15,7 +15,27 @@ namespace Amital.QuoteOPM.Data
     public partial interface IQuoteOPMContext : IContext
     {
    
-       	 IDbSet<QuoteOP> QuoteOPs { get; }
+       	 IDbSet<BorderOPType> BorderOPTypes { get; }
+		 IDbSet<MarkUpOPType> MarkUpOPTypes { get; }
+		 IDbSet<QuoteOP> QuoteOPs { get; }
+		 IDbSet<QuoteOPCharge> QuoteOPCharges { get; }
+		 IDbSet<QuoteOPClosingReason> QuoteOPClosingReasons { get; }
+		 IDbSet<QuoteOPComputedField> QuoteOPComputedFields { get; }
+		 IDbSet<QuoteOPCustomerType> QuoteOPCustomerTypes { get; }
+		 IDbSet<QuoteopPackage> QuoteopPackages { get; }
+		 IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps { get; }
+		 IDbSet<QuoteOPRating> QuoteOPRatings { get; }
+		 IDbSet<QuoteOPSetting> QuoteOPSettings { get; }
+		 IDbSet<QuoteOPStage> QuoteOPStages { get; }
+		 IDbSet<QuoteOPTemplate> QuoteOPTemplates { get; }
+		 IDbSet<QuoteOPTemplateSection> QuoteOPTemplateSections { get; }
+		 IDbSet<QuoteOPTemplateSectionType> QuoteOPTemplateSectionTypes { get; }
+		 IDbSet<QuoteOPTemplateSetting> QuoteOPTemplateSettings { get; }
+		 IDbSet<QuoteOPTemplateTableDesign> QuoteOPTemplateTableDesigns { get; }
+		 IDbSet<QuoteOPTemplateTextCode> QuoteOPTemplateTextCodes { get; }
+		 IDbSet<QuoteOPTemplateTextDesign> QuoteOPTemplateTextDesigns { get; }
+		 IDbSet<QuoteOPTotalVAT> QuoteOPTotalVATs { get; }
+		 IDbSet<QuoteOPType> QuoteOPTypes { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

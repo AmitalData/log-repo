@@ -107,10 +107,16 @@ private void GenerateIDbSet(string xmlFilePath)
 		dBTableName = dBTableName.ToString().Split('.')[1];
           
     }
+    if(dBTableName=="NONE"){
+        
+        return;
+    }else{
 
 	#>
 	 IDbSet<<#= tableName #>> <#= dBTableName #> { get; }
 	<#+
+
+    }
     
 }
  
@@ -610,14 +616,21 @@ private void GenerateIDbSetForContext(string xmlFilePath)
           
     }
 
-	#>
+    if(dBTableName=="NONE"){
+        return;
+     }
+     else
+     {
 
+	#>
 	 public IDbSet<<#= tableName #>> <#= dBTableName #> 
 	 {
 	      get; set;
 	 
 	 }
 	<#+
+    }
+    
     
 }
  

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteOPPriceSteps"
+  Schema="dbo"
+  DBType="Main"
+  Module="Quote">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteOPId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteOPChargeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Step"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CostUnitPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleUnitPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MarkupValue"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="QuoteOPId"
+    ReferencedTable="QuoteOPs"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteOPChargeId"
+    ReferencedTable="QuoteOPCharges"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

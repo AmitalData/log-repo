@@ -15,7 +15,7 @@ import {QuoteSalesTotalPM} from './QuoteSalesTotalPM';
 import {QuoteVATsTotalPM} from './QuoteVATsTotalPM';
 import {QuoteFollowUpPM} from './QuoteFollowUpPM';
 import {QuoteDocumentVersionPM} from './QuoteDocumentVersionPM';
-import {QuoteTotalVATPM} from './QuoteTotalVATPM';
+import {QuoteOPTotalVATPM} from './QuoteOPTotalVATPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1216,7 +1216,7 @@ export class QuoteOPPM {
        
 	 
      
-	private totalVATs: QuoteTotalVATPM[];
+	private totalVATs: QuoteOPTotalVATPM[];
     get  TotalVATs() {
         if (this.totalVATs == null) {
             this.totalVATs = [];
@@ -1224,12 +1224,12 @@ export class QuoteOPPM {
 
         return this.totalVATs;
     }
-    set  TotalVATs(newValue: QuoteTotalVATPM[]) {
+    set  TotalVATs(newValue: QuoteOPTotalVATPM[]) {
         if (this.totalVATs != newValue) {
             this.totalVATs = newValue;
         }
     }
-    public AddQuoteTotalVAT(item: QuoteTotalVATPM) {
+    public AddQuoteOPTotalVAT(item: QuoteOPTotalVATPM) {
         if (item != null) {
             var index = this. TotalVATs.indexOf(item);
             if (index == -1) {
@@ -1239,7 +1239,7 @@ export class QuoteOPPM {
             }
         }
     }
-    public RemoveQuoteTotalVAT(item: QuoteTotalVATPM) {
+    public RemoveQuoteOPTotalVAT(item: QuoteOPTotalVATPM) {
         if (item != null) {
             var index = this. TotalVATs.indexOf(item);
             if (index > -1) {
@@ -1248,7 +1248,7 @@ export class QuoteOPPM {
             }
         }
     }
-    //public TotalVATs: Array<QuoteTotalVATPM>= [];
+    //public TotalVATs: Array<QuoteOPTotalVATPM>= [];
      private isQuoteDataExternal: boolean;
     public get IsQuoteDataExternal() { return this.isQuoteDataExternal; }
     public set IsQuoteDataExternal(newValue: boolean) { if (this.isQuoteDataExternal != newValue) { this.isQuoteDataExternal = newValue; this.MarkAsDirty("IsQuoteDataExternal"); } }

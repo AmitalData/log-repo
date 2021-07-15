@@ -64,7 +64,55 @@ namespace Amital.QuoteOPM.Data
             Database.SetInitializer<QuoteOPMContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
+            modelBuilder.Configurations.Add(new BorderOPTypeMap());
+	
+            modelBuilder.Configurations.Add(new MarkUpOPTypeMap());
+	
             modelBuilder.Configurations.Add(new QuoteOPMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPChargeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPClosingReasonMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPComputedFieldMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPCostChargeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPCustomerTypeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteopPackageMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPPriceStepsMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPRatingMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPSaleChargeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPSalesTotalMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPSettingMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPStageMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateSectionMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateSectionTypeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateSettingMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateTableDesignMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateTextCodeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTemplateTextDesignMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTotalVATMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPTypeMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPVATsTotalMap());
 	
 						  #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -340,8 +388,107 @@ namespace Amital.QuoteOPM.Data
 		}
 
  
-
-	 public IDbSet<QuoteOP> QuoteOPs 
+	 public IDbSet<BorderOPType> BorderOPTypes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<MarkUpOPType> MarkUpOPTypes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOP> QuoteOPs 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPCharge> QuoteOPCharges 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPClosingReason> QuoteOPClosingReasons 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPComputedField> QuoteOPComputedFields 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPCustomerType> QuoteOPCustomerTypes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteopPackage> QuoteopPackages 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPRating> QuoteOPRatings 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPSetting> QuoteOPSettings 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPStage> QuoteOPStages 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplate> QuoteOPTemplates 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateSection> QuoteOPTemplateSections 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateSectionType> QuoteOPTemplateSectionTypes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateSetting> QuoteOPTemplateSettings 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateTableDesign> QuoteOPTemplateTableDesigns 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateTextCode> QuoteOPTemplateTextCodes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTemplateTextDesign> QuoteOPTemplateTextDesigns 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPTotalVAT> QuoteOPTotalVATs 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPType> QuoteOPTypes 
 	 {
 	      get; set;
 	 

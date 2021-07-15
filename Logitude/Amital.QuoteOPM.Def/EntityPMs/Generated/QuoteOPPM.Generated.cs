@@ -4967,35 +4967,35 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 		 }
 	   }
 
-	   private List<QuoteTotalVATPM> totalVATs;
+	   private List<QuoteOPTotalVATPM> totalVATs;
 	    
        [Composition]
  
 		     
 	   [Include]
-	   [Association("QuoteTotalVATPMQuote", "Id","QuoteId")]
+	   [Association("QuoteOPTotalVATPMQuote", "Id","QuoteId")]
 	   [DataMember]
-	   public virtual List<QuoteTotalVATPM> TotalVATs  
+	   public virtual List<QuoteOPTotalVATPM> TotalVATs  
 	   {
 	        get
              {
                  if (totalVATs == null)
                  {
-                     totalVATs = new List<QuoteTotalVATPM>();
+                     totalVATs = new List<QuoteOPTotalVATPM>();
                  }
                  return totalVATs;
               }
              set { totalVATs = value; }
 	    }
 		   
-	   private List<QuoteTotalVATPM>  deletedTotalVATs;
-	   public virtual List<QuoteTotalVATPM> DeletedTotalVATs  
+	   private List<QuoteOPTotalVATPM>  deletedTotalVATs;
+	   public virtual List<QuoteOPTotalVATPM> DeletedTotalVATs  
 	   {
 	        get
              {
                  if ( deletedTotalVATs == null)
                  {
-                      deletedTotalVATs = new List<QuoteTotalVATPM>();
+                      deletedTotalVATs = new List<QuoteOPTotalVATPM>();
                  }
                  return  deletedTotalVATs;
               }

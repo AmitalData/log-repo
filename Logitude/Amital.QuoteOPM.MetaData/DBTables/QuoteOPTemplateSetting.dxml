@@ -1,0 +1,1328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="QuoteOPTemplateSettings"
+  Schema="dbo"
+  DBType="Main"
+  Module="QuoteOP">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalInSaleCurrencyPackages"
+    ShortName="ShowTotalSaleCurrencyPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalInSaleCurrencyContainers"
+    ShortName="ShowTotaInSaleCurrContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalInLocalCurrencyPackages"
+    ShortName="ShowTotalLocalCurrencyPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalInLocalCurrencyContainers"
+    ShortName="ShowTotalInLocalCurrContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowPricesTablePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowPricesTableContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeCodePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeDescriptionPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeDescriptionContainers"
+    ShortName="ShowChargeDescContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeCodeContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeNamePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeNameContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowMeasurementPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowMeasurementContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowFixedPriceContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowUnitsPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowUnitPricePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowLocalCurrencyColumnPackages"
+    ShortName="ShowLocalCurrColumnPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowLocalCurrencyColumnContainers"
+    ShortName="ShowLocalCurrColumnContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleCurrencyColumnPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleCurrencyColumnContainers"
+    ShortName="ShowSaleCurrColumnContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowLocalLanguage"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SplitChargesbyGroupsPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SplitChargesbyGroupsContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowContainerNameInsteadOfCodeContainers"
+    ShortName="ShowContainerNameInContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AlignRight"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowPriceByContainerColumn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowCodeChargeSaleMinMaxContainers"
+    ShortName="ShowCodeChargSaleMinContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowCodeChargeSaleMinMaxPackages"
+    ShortName="ShowCodeChargeSaleMinPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteTemplatePDFMarginLeft"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteTemplatePDFMarginRight"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1FreeTextDesignId"
+    ShortName="PageHeaderArea1FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2FreeTextDesignId"
+    ShortName="PageHeaderArea2FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3FreeTextDesignId"
+    ShortName="PageHeaderArea3FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderImage1Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderImage2Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderImage3Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterImage1Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterImage2Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterImage3Width"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderAreaHeight"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterAreaHeight"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderArea1ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea2ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderArea3ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea1Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea2Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea3Type"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea1ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea2ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea3ImageDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea1FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea2FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea3FreeText"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea1FreeTextDesignId"
+    ShortName="PageFooterArea1FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea2FreeTextDesignId"
+    ShortName="PageFooterArea2FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea3FreeTextDesignId"
+    ShortName="PageFooterArea3FreeTxtDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea1Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea2Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea3Width"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea1Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea2Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea3Height"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterArea1ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea2ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageFooterArea3ImageAlignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowHeaderQuoteDate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowHeaderExpirationDate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowHeaderQuoteNumber"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowHeaderCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsExpirationDate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsExpirationDays"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsShipperName"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsShipperAddress"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsShipperContact"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsShipperReferences"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsConsigneeName"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsConsigneeAddress"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsConsigneeContact"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsConsigneeReferences"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsPickupFrom"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsDeliveryTo"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsFromPort"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsToPort"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsIncoterms"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsService"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsSalesMan"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsDescriptionOfGoods"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsDangerousGoods"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsCarrier"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsCustomerName"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsCustomerAddress"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsCustomerContact"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowDetailsCustomerReferences"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTitleQuoteDetails"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTitlePricingPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTitlePricingContainsers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PackagesTableDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainserTableDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalsPackagesLabelDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalsContainsersLabelDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalsPackagesValueDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalsContainsersValueDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RightToLeft"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GroupByPackagesLabelDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GroupByPackagesValueDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GroupByContainsersLabelDesignId"
+    ShortName="GroupByContainersLabelDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GroupByContainsersValueDesignId"
+    ShortName="GroupByContainersValueDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DetailsTableDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DetailsSectionHasTwoColumns"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HeaderSectionHasTwoColumns"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTitleDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PricingPackagesTitleDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PricingContainsersTitleDesignId"
+    ShortName="PricingContainserTitleDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PageHeaderBorderTypeCode"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderBorderColor"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageHeaderBorderThickness"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterBorderTypeCode"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterBorderColor"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageFooterBorderThickness"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableColumWidthType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTableColumWidthType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTableColumn1LabelWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTableColumn1ValueWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTableColumn2LabelWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DetailsTableColumn2ValueWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableColumn1LabelWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableColumn1ValueWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableColumn2LabelWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HeaderTableColumn2ValueWidth"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalPerChargeGroupPackages"
+    ShortName="ShowTotalPerChargeGroupPacks"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowTotalPerChargeGroupContainers"
+    ShortName="ShowTotalPerChargeGroupConts"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowPageBreakBeforeTotalPerContainersTable"
+    ShortName="ShowPageBreakBeforeTotalPer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalPerContainersAdditionalTextDesignId"
+    ShortName="TotalPerAdditionalDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalPerContainersTableDesignId"
+    ShortName="TotalPerTableDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalPerContainersCurrencyType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowTitleTotalPerContainersTable"
+    ShortName="ShowTitleTotalPerContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeNotePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowChargeNoteContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleMaxMinAmountPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleMaxMinAmountContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowHeaderLabelsPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowHeaderLabelsContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforeContainers"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforePackages"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforeQuoteHeaders"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforeQuoteDetails"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforeHeaders"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforeFooters"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SpaceLinesBeforePerContainers"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteTemplatePDFMarginTop"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteTemplatePDFMarginBottom"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowIncludedChargesPerContainers"
+    ShortName="ShowIncludedChargesPerConts"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowIncludedChargesPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowIncludedChargesContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATTypePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATTypeContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATPercentagePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATPercentageContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HidePageNumber"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PageNumberingTextDesignId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowRegionalTAXPackages"
+    OldNames="ShowRegionalTAX"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowRegionalTAXContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="PageHeaderArea1ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageHeaderArea2ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageHeaderArea3ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageHeaderArea1FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageHeaderArea2FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageHeaderArea3FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea1ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea2ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea3ImageDetailId"
+    ReferencedTable="ImageDetails"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea1FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea2FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageFooterArea3FreeTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackagesTableDesignId"
+    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContainserTableDesignId"
+    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalsPackagesLabelDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalsContainsersLabelDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalsPackagesValueDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalsContainsersValueDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupByPackagesLabelDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupByPackagesValueDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupByContainsersLabelDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GroupByContainsersValueDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DetailsTableDesignId"
+    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="HeaderTableDesignId"
+    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DetailsTitleDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PricingPackagesTitleDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PricingContainsersTitleDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalPerContainersAdditionalTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TotalPerContainersTableDesignId"
+    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PageNumberingTextDesignId"
+    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>

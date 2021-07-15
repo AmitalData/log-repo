@@ -59,10 +59,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CustomClassesGenerator1.cs">
+    <Compile Include="AutoGenerators\QuoteOPMClassesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
+      <DependentUpon>QuoteOPMClassesGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
@@ -74,8 +74,53 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DBTables\BorderOPType.dxml" />
+    <None Include="DBTables\MarkUpOPType.dxml" />
     <None Include="DBTables\QuoteOP.dxml" />
+    <None Include="DBTables\QuoteOPCharge.dxml" />
+    <None Include="DBTables\QuoteOPClosingReason.dxml" />
+    <None Include="DBTables\QuoteOPComputedField.dxml" />
+    <None Include="DBTables\QuoteOPCustomerType.dxml" />
+    <None Include="DBTables\QuoteOPPriceSteps.dxml" />
+    <None Include="DBTables\QuoteOPRating.dxml" />
+    <None Include="DBTables\QuoteOPSetting.dxml" />
+    <None Include="DBTables\QuoteOPStage.dxml" />
+    <None Include="DBTables\QuoteOPTemplate.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSection.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSectionType.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSetting.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTableDesign.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTextCode.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTextDesign.dxml" />
+    <None Include="DBTables\QuoteOPTotalVat.dxml" />
+    <None Include="DBTables\QuoteOPType.dxml" />
+    <None Include="EntityFiles\BorderOPType.lxml" />
+    <None Include="EntityFiles\MarkUpOPType.lxml" />
+    <None Include="EntityFiles\QuoteOPCharge.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteOP.lxml" />
+    <None Include="EntityFiles\QuoteOPClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteOPComputedField.lxml" />
+    <None Include="EntityFiles\QuoteOPCostCharge.lxml" />
+    <None Include="EntityFiles\QuoteOPCustomerType.lxml" />
+    <None Include="EntityFiles\QuoteOPPackage.lxml" />
+    <None Include="EntityFiles\QuoteOPPriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteOPRating.lxml" />
+    <None Include="EntityFiles\QuoteOPSaleCharge.lxml" />
+    <None Include="EntityFiles\QuoteOPSalesTotal.lxml" />
+    <None Include="EntityFiles\QuoteOPSetting.lxml" />
+    <None Include="EntityFiles\QuoteOPStage.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplate.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSection.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSectionType.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSetting.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTableDesign.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTextCode.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTextDesign.lxml" />
+    <None Include="EntityFiles\QuoteOPTotalVat.lxml" />
+    <None Include="EntityFiles\QuoteOPType.lxml" />
+    <None Include="EntityFiles\QuoteOPVATsTotal.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +131,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator1.cs</LastGenOutput>
     </Content>
-    <Content Include="AutoGenerators\CustomClassesGenerator.tt">
+    <Content Include="AutoGenerators\QuoteOPMClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CustomClassesGenerator1.cs</LastGenOutput>
+      <LastGenOutput>QuoteOPMClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

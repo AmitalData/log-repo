@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="20"
   NewWizardControlName="&quot;Simplog.QuoteLib.NewQuoteCommand&quot;"
   DefaultText="&quot;Quote&quot;"
-  Code="&quot;QUOT&quot;"
+  Code="&quot;QUOP&quot;"
   Name="&quot;Queries&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;QuoteOP&quot;"
@@ -19480,7 +19480,7 @@
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="true"
-    MultiTableName="&quot;QuoteTotalVAT&quot;"
+    MultiTableName="&quot;QuoteOPTotalVAT&quot;"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
@@ -19508,7 +19508,7 @@
     HasPMField="true"
     ThisKey="&quot;Id&quot;"
     OtherKey="&quot;QuoteId&quot;"
-    AssociationName="&quot;QuoteTotalVATPMQuote&quot;"
+    AssociationName="&quot;QuoteOPTotalVATPMQuote&quot;"
     IsComposition="true"
     IsMaxLength="false"
     NoMetaDataField="true"
@@ -26023,7 +26023,7 @@
   <Query
     Code="&quot;Created Quotes&quot;"
     TextCode="&quot;Created Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26031,9 +26031,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.CreatedQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.CreatedQuotes&quot;"
     FeatureCode="&quot;CREATEDQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.CreatedQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.CreatedQuotes&quot;"
     FeatureDefaultText="&quot;Created Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26110,7 +26110,7 @@
   <Query
     Code="&quot;Draft Quotes&quot;"
     TextCode="&quot;Draft Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="1"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26118,9 +26118,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.DraftQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.DraftQuotes&quot;"
     FeatureCode="&quot;DRAFTQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.DraftQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.DraftQuotes&quot;"
     FeatureDefaultText="&quot;Draft Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26197,7 +26197,7 @@
   <Query
     Code="&quot;Sent Quotes&quot;"
     TextCode="&quot;Sent Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="2"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26205,9 +26205,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.SentQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.SentQuotes&quot;"
     FeatureCode="&quot;SENTQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.SentQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.SentQuotes&quot;"
     FeatureDefaultText="&quot;Sent Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26284,7 +26284,7 @@
   <Query
     Code="&quot;Expired Quotes&quot;"
     TextCode="&quot;Expired Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="3"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26292,9 +26292,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.ExpiredQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.ExpiredQuotes&quot;"
     FeatureCode="&quot;EXPIREDQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.ExpiredQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.ExpiredQuotes&quot;"
     FeatureDefaultText="&quot;Expired Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26386,7 +26386,7 @@
     IsPackagable="true"
     QueryGroupName="&quot;Follow Ups&quot;"
     FeatureCode="&quot;FOLLOWUPS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.FollowUps&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.FollowUps&quot;"
     FeatureDefaultText="&quot;Follow Ups&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26456,7 +26456,7 @@
   <Query
     Code="&quot;Accepted Quotes&quot;"
     TextCode="&quot;Accepted Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="5"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26464,9 +26464,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.AcceptedQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.AcceptedQuotes&quot;"
     FeatureCode="&quot;ACCEPTEDQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.AcceptedQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.AcceptedQuotes&quot;"
     FeatureDefaultText="&quot;Accepted Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26543,7 +26543,7 @@
   <Query
     Code="&quot;Accepted Without Shipments&quot;"
     TextCode="&quot;Accepted Without Shipments&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="6"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26551,9 +26551,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.AcceptedWithoutShipmentsQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.AcceptedWithoutShipmentsQuotes&quot;"
     FeatureCode="&quot;ACCEPTEDWITHOUTSHIPMENTS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.AcceptedWithoutShipments&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.AcceptedWithoutShipments&quot;"
     FeatureDefaultText="&quot;Accepted Without Shipments&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26630,7 +26630,7 @@
   <Query
     Code="&quot;All Quotes&quot;"
     TextCode="&quot;All Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="7"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26640,9 +26640,9 @@
     DefaultSortName="&quot;OpenDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.AllQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.AllQuotes&quot;"
     FeatureCode="&quot;ALLQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.AllQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.AllQuotes&quot;"
     FeatureDefaultText="&quot;All Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26712,7 +26712,7 @@
   <Query
     Code="&quot;Cancelled Quotes&quot;"
     TextCode="&quot;Cancelled Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="8"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26720,9 +26720,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.CancelledQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.CancelledQuotes&quot;"
     FeatureCode="&quot;CANCELLEDQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.CancelledQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.CancelledQuotes&quot;"
     FeatureDefaultText="&quot;Cancelled Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26812,9 +26812,9 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Follow Ups&quot;"
-    TextCodeCode="&quot;Quote.Q.AllFollowUps&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.AllFollowUps&quot;"
     FeatureCode="&quot;QUTALLFOLLOWUPS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.AllFollowUps&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.AllFollowUps&quot;"
     FeatureDefaultText="&quot;All FollowUps&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26904,9 +26904,9 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Follow Ups&quot;"
-    TextCodeCode="&quot;Quote.Q.MyFollowUps&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.MyFollowUps&quot;"
     FeatureCode="&quot;QUTMYFOLLOWUPS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.MyFollowUps&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.MyFollowUps&quot;"
     FeatureDefaultText="&quot;My FollowUps&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -26988,7 +26988,7 @@
   <Query
     Code="&quot;My Quotes&quot;"
     TextCode="&quot;My Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="11"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -26996,9 +26996,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.MyQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.MyQuotes&quot;"
     FeatureCode="&quot;MYQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.MyQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.MyQuotes&quot;"
     FeatureDefaultText="&quot;My Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -27075,7 +27075,7 @@
   <Query
     Code="&quot;Open Quotes&quot;"
     TextCode="&quot;Open Quotes&quot;"
-    QueryGroupCode="&quot;QUOT&quot;"
+    QueryGroupCode="&quot;QUOP&quot;"
     IndexOrder="12"
     ObjectTableName="&quot;QuoteOP&quot;"
     QuerySection="&quot;Quote&quot;"
@@ -27083,9 +27083,9 @@
     IsAddNewEntity="true"
     IsPackagable="true"
     QueryGroupName="&quot;Queries&quot;"
-    TextCodeCode="&quot;Quote.Q.OpenQuotes&quot;"
+    TextCodeCode="&quot;QuoteOP.Q.OpenQuotes&quot;"
     FeatureCode="&quot;OPENQUOTES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.OpenQuotes&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.OpenQuotes&quot;"
     FeatureDefaultText="&quot;Open Quotes&quot;"
     IsSpellChecked="false">
     <QueryColumns>
@@ -27164,7 +27164,7 @@
     ObjectTableName="&quot;QuoteOP&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;Quote.GeneralTabScreen&quot;"
+    Code="&quot;QuoteOP.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="6">
     <ScreenFields>
@@ -27205,7 +27205,7 @@
     ObjectTableName="&quot;QuoteOP&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;Quote.HeaderScreen&quot;"
+    Code="&quot;QuoteOP.HeaderScreen&quot;"
     NumberOfColumns="4"
     NumberOfRows="2">
     <ScreenFields>
@@ -27285,144 +27285,144 @@
   <Tab
     TabName="&quot;Overview&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTOV&quot;"
+    Code="&quot;QPOV&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.OverView.OverViewTabControl&quot;"
-    TextCode="&quot;Quote.TH.Overview&quot;"
+    TextCode="&quot;QuoteOP.TH.Overview&quot;"
     IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Overview/OverviewTabComponent&quot;"
     HtmlComponentName="&quot;OverviewTabComponent&quot;"
     FeatureCode="&quot;OVERVIEW&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Overview&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Overview&quot;"
     FeatureDefaultText="&quot;Overview&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Connected Entities&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTCE&quot;"
+    Code="&quot;QPCE&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Shipments.ShipmentsControl&quot;"
-    TextCode="&quot;Quote.TH.ConnectedEntities&quot;"
+    TextCode="&quot;QuoteOP.TH.ConnectedEntities&quot;"
     IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Connections/ConnectionsTabComponent&quot;"
     HtmlComponentName="&quot;ConnectionsTabComponent&quot;"
     FeatureCode="&quot;CONNECTEDENTITIES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.ConnectedEntities&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.ConnectedEntities&quot;"
     FeatureDefaultText="&quot;Connected Entities&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Details&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTOR&quot;"
+    Code="&quot;QPOR&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Orders.OrdersControl&quot;"
-    TextCode="&quot;Quote.TH.Details&quot;"
+    TextCode="&quot;QuoteOP.TH.Details&quot;"
     IsPackagable="true"
     IndexOrder="1"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Orders/OrdersTabComponent&quot;"
     HtmlComponentName="&quot;OrdersabComponent&quot;"
     FeatureCode="&quot;DETAILS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Details&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Details&quot;"
     FeatureDefaultText="&quot;Details&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Partners&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTPA&quot;"
+    Code="&quot;QPPA&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Partners.PartnersControl&quot;"
-    TextCode="&quot;Quote.TH.Partners&quot;"
+    TextCode="&quot;QuoteOP.TH.Partners&quot;"
     IsPackagable="true"
     IndexOrder="2"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Partners/PartnersTabComponent&quot;"
     HtmlComponentName="&quot;PartnersTabComponent&quot;"
     FeatureCode="&quot;PARTNERS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Partners&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Partners&quot;"
     FeatureDefaultText="&quot;Partners&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Packages&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTPK&quot;"
+    Code="&quot;QPPK&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Packages.PackagesControl&quot;"
-    TextCode="&quot;Quote.TH.Packages&quot;"
+    TextCode="&quot;QuoteOP.TH.Packages&quot;"
     IsPackagable="true"
     IndexOrder="3"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Packages/PackagesTabComponent&quot;"
     HtmlComponentName="&quot;PackagesTabComponent&quot;"
     FeatureCode="&quot;PACKAGES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Packages&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Packages&quot;"
     FeatureDefaultText="&quot;Packages&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Routings&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTRT&quot;"
+    Code="&quot;QPRT&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Routings.RoutingsControl&quot;"
-    TextCode="&quot;Quote.TH.Routings&quot;"
+    TextCode="&quot;QuoteOP.TH.Routings&quot;"
     IsPackagable="true"
     IndexOrder="4"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Routings/RoutingsTabComponent&quot;"
     HtmlComponentName="&quot;RoutingsTabComponent&quot;"
     FeatureCode="&quot;ROUTINGS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Routings&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Routings&quot;"
     FeatureDefaultText="&quot;Routings&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Charges&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTCH&quot;"
+    Code="&quot;QPCH&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Charges.ChargesUserControl&quot;"
-    TextCode="&quot;Quote.TH.Charges&quot;"
+    TextCode="&quot;QuoteOP.TH.Charges&quot;"
     IsPackagable="true"
     IndexOrder="5"
     HtmlComponentURL="&quot;./QuoteModules/QuoteCharges/Components/ChargesTabComponent&quot;"
     HtmlComponentName="&quot;ChargesTabComponent&quot;"
     FeatureCode="&quot;CHARGES&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Charges&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Charges&quot;"
     FeatureDefaultText="&quot;Charges&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Docs Out&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTDO&quot;"
+    Code="&quot;QPDO&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Documents.DocumentOutsControl&quot;"
-    TextCode="&quot;Quote.TH.DocsOut&quot;"
+    TextCode="&quot;QuoteOP.TH.DocsOut&quot;"
     IsPackagable="true"
     IndexOrder="6"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent&quot;"
     HtmlComponentName="&quot;QuoteDocsOutTabComponent&quot;"
     FeatureCode="&quot;DOCSOUT&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.DocsOut&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.DocsOut&quot;"
     FeatureDefaultText="&quot;DocsOut&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Docs In&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTDI&quot;"
+    Code="&quot;QPDI&quot;"
     ControlPath="&quot;Simplog.QuoteLib.Views.Documents.DocumentInsControl&quot;"
-    TextCode="&quot;Quote.TH.DocsIn&quot;"
+    TextCode="&quot;QuoteOP.TH.DocsIn&quot;"
     IsPackagable="true"
     IndexOrder="7"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent&quot;"
     HtmlComponentName="&quot;QuoteDocsInTabComponent&quot;"
     FeatureCode="&quot;DOCSIN&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.DocsIn&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.DocsIn&quot;"
     FeatureDefaultText="&quot;DocsIn&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Audit&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTAU&quot;"
+    Code="&quot;QPAU&quot;"
     ControlPath="&quot;./QuoteModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent&quot;"
-    TextCode="&quot;Quote.TH.Audit&quot;"
+    TextCode="&quot;QuoteOP.TH.Audit&quot;"
     IsPackagable="true"
     IndexOrder="8"
     HtmlComponentURL="&quot;./QuoteModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent&quot;"
@@ -27432,26 +27432,26 @@
   <Tab
     TabName="&quot;Events&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTEV&quot;"
+    Code="&quot;QPEV&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
-    TextCode="&quot;Quote.TH.Events&quot;"
+    TextCode="&quot;QuoteOP.TH.Events&quot;"
     IsPackagable="false"
     IndexOrder="9"
     FeatureCode="&quot;EVENTS&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Events&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Communications&quot;"
     ObjectTableName="&quot;QuoteOP&quot;"
-    Code="&quot;QTCM&quot;"
+    Code="&quot;QPCM&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationsControl&quot;"
-    TextCode="&quot;Quote.TH.Communications&quot;"
+    TextCode="&quot;QuoteOP.TH.Communications&quot;"
     IsPackagable="true"
     IndexOrder="10"
     FeatureCode="&quot;COMMUNICATION&quot;"
-    FeatureTextCodeCode="&quot;Quote.Features.Communication&quot;"
+    FeatureTextCodeCode="&quot;QuoteOP.Features.Communication&quot;"
     FeatureDefaultText="&quot;Communications&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
@@ -27853,8 +27853,8 @@
   </EventTypes>
   <Records />
   <MenuButtons
-    MenuButtonGroupType="&quot;QuoteEdit&quot;"
-    MenuButtonGroupName="&quot;QuoteEditButtonsGroup&quot;">
+    MenuButtonGroupType="&quot;QuoteOPEdit&quot;"
+    MenuButtonGroupName="&quot;QuoteOPEditButtonsGroup&quot;">
     <MenuButton
       EventCode="&quot;Accept&quot;"
       DefaultText="&quot;Accept&quot;"
@@ -27863,8 +27863,8 @@
       IndexOrder="12"
       FeatureCode="&quot;QUOTEACCEPTED&quot;"
       IsPackagable="false"
-      TextCodeCode="&quot;Quote.B.Accept&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Accepted&quot;"
+      TextCodeCode="&quot;QuoteOP.B.Accept&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.Accepted&quot;"
       FeatureDefaultText="&quot;Accepted&quot;" />
     <MenuButton
       EventCode="&quot;Decline&quot;"
@@ -27874,8 +27874,8 @@
       IndexOrder="12"
       FeatureCode="&quot;QUOTEDECLINED&quot;"
       IsPackagable="false"
-      TextCodeCode="&quot;Quote.B.Decline&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Declined&quot;"
+      TextCodeCode="&quot;QuoteOP.B.Decline&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.Declined&quot;"
       FeatureDefaultText="&quot;Declined&quot;" />
     <MenuButton
       EventCode="&quot;BuildShipment&quot;"
@@ -27884,8 +27884,8 @@
       IndexOrder="13"
       FeatureCode="&quot;BUILDSHIPMENT&quot;"
       IsPackagable="false"
-      TextCodeCode="&quot;Quote.B.BuildShipment&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.BuildShipment&quot;"
+      TextCodeCode="&quot;QuoteOP.B.BuildShipment&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.BuildShipment&quot;"
       FeatureDefaultText="&quot;Build Shipment&quot;" />
     <MenuButton
       EventCode="&quot;Quotation&quot;"
@@ -27894,8 +27894,8 @@
       IndexOrder="13"
       FeatureCode="&quot;QUOTEQUOTATION&quot;"
       IsPackagable="true"
-      TextCodeCode="&quot;Quote.B.Quotation&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Quotation&quot;"
+      TextCodeCode="&quot;QuoteOP.B.Quotation&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.Quotation&quot;"
       FeatureDefaultText="&quot;Quotation&quot;" />
     <MenuButton
       EventCode="&quot;Actions&quot;"
@@ -27903,7 +27903,7 @@
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="100"
       IsPackagable="false"
-      TextCodeCode="&quot;Quote.B.Actions&quot;">
+      TextCodeCode="&quot;QuoteOP.B.Actions&quot;">
       <MenuItem
         EventCode="&quot;SetAsSentToCustomer&quot;"
         DefaultText="&quot;Set As Sent to Customer&quot;"
@@ -27911,8 +27911,8 @@
         IndexOrder="6"
         FeatureCode="&quot;SETASSENT&quot;"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.SetAsSent&quot;"
-        FeatureTextCodeCode="&quot;Quote.Features.SetAsSent&quot;"
+        TextCodeCode="&quot;QuoteOP.B.SetAsSent&quot;"
+        FeatureTextCodeCode="&quot;QuoteOP.Features.SetAsSent&quot;"
         FeatureDefaultText="&quot;Set As Sent to Customer&quot;" />
       <MenuItem
         EventCode="&quot;ReturnToDraft&quot;"
@@ -27921,8 +27921,8 @@
         IndexOrder="7"
         FeatureCode="&quot;RETURNTODRAFT&quot;"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.ReturnToDraft&quot;"
-        FeatureTextCodeCode="&quot;Quote.Features.ReturnToDraft&quot;"
+        TextCodeCode="&quot;QuoteOP.B.ReturnToDraft&quot;"
+        FeatureTextCodeCode="&quot;QuoteOP.Features.ReturnToDraft&quot;"
         FeatureDefaultText="&quot;Return Quote To Draft&quot;" />
       <MenuItem
         EventCode="&quot;CopyQuote&quot;"
@@ -27931,8 +27931,8 @@
         IndexOrder="8"
         FeatureCode="&quot;COPY&quot;"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.CopyQuote&quot;"
-        FeatureTextCodeCode="&quot;Quote.Features.Copy&quot;"
+        TextCodeCode="&quot;QuoteOP.B.CopyQuote&quot;"
+        FeatureTextCodeCode="&quot;QuoteOP.Features.Copy&quot;"
         FeatureDefaultText="&quot;Copy Quote&quot;" />
       <MenuItem
         EventCode="&quot;QuoteCopySeparator&quot;"
@@ -27940,7 +27940,7 @@
         MenuButtonType="&quot;separator&quot;"
         IndexOrder="9"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.QuoteCopySeparator&quot;" />
+        TextCodeCode="&quot;QuoteOP.B.QuoteCopySeparator&quot;" />
       <MenuItem
         EventCode="&quot;CancelQuote&quot;"
         DefaultText="&quot;Cancel Quote&quot;"
@@ -27948,8 +27948,8 @@
         IndexOrder="10"
         FeatureCode="&quot;CANCEL&quot;"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.CancelQuote&quot;"
-        FeatureTextCodeCode="&quot;Quote.Features.Cancel&quot;"
+        TextCodeCode="&quot;QuoteOP.B.CancelQuote&quot;"
+        FeatureTextCodeCode="&quot;QuoteOP.Features.Cancel&quot;"
         FeatureDefaultText="&quot;Cancel Quote&quot;" />
       <MenuItem
         EventCode="&quot;ReactivateQuote&quot;"
@@ -27958,8 +27958,8 @@
         IndexOrder="11"
         FeatureCode="&quot;REACTIVATE&quot;"
         IsPackagable="false"
-        TextCodeCode="&quot;Quote.B.ReactivateQuote&quot;"
-        FeatureTextCodeCode="&quot;Quote.Features.Reactivate&quot;"
+        TextCodeCode="&quot;QuoteOP.B.ReactivateQuote&quot;"
+        FeatureTextCodeCode="&quot;QuoteOP.Features.Reactivate&quot;"
         FeatureDefaultText="&quot;Reactivate Quote&quot;" />
       <MenuItem
         EventCode="&quot;QuoteConvertSeparator&quot;"
@@ -27992,7 +27992,7 @@
   </MenuButtons>
   <DataContracts>
     <DataContract
-      Name="&quot;Quote&quot;"
+      Name="&quot;QuoteOP&quot;"
       Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
@@ -29464,1192 +29464,1192 @@
   </DataContracts>
   <AdditionalTextCodes>
     <TextCode
-      Code="&quot;Quote.B.Partners.AddPartners&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddPartners&quot;"
       DefaultText="&quot;Add Partners&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.FollowUps&quot;"
+      Code="&quot;QuoteOP.O.FollowUps&quot;"
       DefaultText="&quot;Follow Ups&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Details&quot;"
+      Code="&quot;QuoteOP.S.Details.Details&quot;"
       DefaultText="&quot;Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Partners.Partners&quot;"
+      Code="&quot;QuoteOP.O.Partners.Partners&quot;"
       DefaultText="&quot;Partners&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Charges&quot;"
+      Code="&quot;QuoteOP.O.Charges.Charges&quot;"
       DefaultText="&quot;Charges&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.SelectFields&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.SelectFields&quot;"
       DefaultText="&quot;Select Fields to Copy&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Partners&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Partners&quot;"
       DefaultText="&quot;Partners&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.MainCarriage&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.MainCarriage&quot;"
       DefaultText="&quot;Main Carriage&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.IncludePickUp&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.IncludePickUp&quot;"
       DefaultText="&quot;Include PickUp&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.IncludeDelivery&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.IncludeDelivery&quot;"
       DefaultText="&quot;Include Delivery&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Charges&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Charges&quot;"
       DefaultText="&quot;Charges&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.ChargeType&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.ChargeType&quot;"
       DefaultText="&quot;Charge Type&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Cost&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Cost&quot;"
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Sale&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Sale&quot;"
       DefaultText="&quot;Sale&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.SetAsMyCustomer&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.SetAsMyCustomer&quot;"
       DefaultText="&quot;Set as My Customer&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.PotentialShipper&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.PotentialShipper&quot;"
       DefaultText="&quot;Potential Shipper&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.PotentialConsignee&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.PotentialConsignee&quot;"
       DefaultText="&quot;Potential Consignee&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Details.EditAddress&quot;"
+      Code="&quot;QuoteOP.B.Details.EditAddress&quot;"
       DefaultText="&quot;Edit Address&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.ByPriceBreak&quot;"
+      Code="&quot;QuoteOP.B.Charges.ByPriceBreak&quot;"
       DefaultText="&quot;Price by break&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.AddStep&quot;"
+      Code="&quot;QuoteOP.B.Charges.AddStep&quot;"
       DefaultText="&quot;Add Break&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.EditStep&quot;"
+      Code="&quot;QuoteOP.B.Charges.EditStep&quot;"
       DefaultText="&quot;Edit Break&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.DeleteStep&quot;"
+      Code="&quot;QuoteOP.B.Charges.DeleteStep&quot;"
       DefaultText="&quot;Delete Break&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.YouCanTypeSalePrice&quot;"
+      Code="&quot;QuoteOP.M.YouCanTypeSalePrice&quot;"
       DefaultText="&quot;You can type Sale Price ex:(1000)%nOr%nYou can type Sale Markup ex:(+100) Or (+10%)&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.UnableToDoAllIn&quot;"
+      Code="&quot;QuoteOP.M.UnableToDoAllIn&quot;"
       DefaultText="&quot;Unable to do All In..&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.IfMatchesFrieghtCharge&quot;"
+      Code="&quot;QuoteOP.M.IfMatchesFrieghtCharge&quot;"
       DefaultText="&quot;Only if matches the Frieght Charge UOM and Currency&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Charges.ProfitInLocalCurrency&quot;"
+      Code="&quot;QuoteOP.S.Charges.ProfitInLocalCurrency&quot;"
       DefaultText="&quot;Profit in Local Currency&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostMinimum&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostMinimum&quot;"
       DefaultText="&quot;Cost Minimum&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleMinimum&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleMinimum&quot;"
       DefaultText="&quot;Sale Minimum&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Details.MeasurmentsSettings&quot;"
+      Code="&quot;QuoteOP.B.Details.MeasurmentsSettings&quot;"
       DefaultText="&quot;Measurement Settings&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Details.HideMeasurmentsSettings&quot;"
+      Code="&quot;QuoteOP.B.Details.HideMeasurmentsSettings&quot;"
       DefaultText="&quot;Hide Measurement Settings&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddShipper&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddShipper&quot;"
       DefaultText="&quot;Add Shipper&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddConsignee&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddConsignee&quot;"
       DefaultText="&quot;Add Consignee&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddPotentialShipper&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddPotentialShipper&quot;"
       DefaultText="&quot;Add Potential Shipper&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddPotentialConsignee&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddPotentialConsignee&quot;"
       DefaultText="&quot;Add Potential Consignee&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.AddCharge&quot;"
+      Code="&quot;QuoteOP.B.Charges.AddCharge&quot;"
       DefaultText="&quot;Add Charge&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.DeleteCharge&quot;"
+      Code="&quot;QuoteOP.B.Charges.DeleteCharge&quot;"
       DefaultText="&quot;Delete Charge&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.NewQuote.AddShipper&quot;"
+      Code="&quot;QuoteOP.B.NewQuote.AddShipper&quot;"
       DefaultText="&quot;Add Shipper&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.NewQuote.AddConsignee&quot;"
+      Code="&quot;QuoteOP.B.NewQuote.AddConsignee&quot;"
       DefaultText="&quot;Add Consignee&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.NewQuote.AddPotentialShipper&quot;"
+      Code="&quot;QuoteOP.B.NewQuote.AddPotentialShipper&quot;"
       DefaultText="&quot;Add Potential Shipper&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.NewQuote.AddPotentialConsignee&quot;"
+      Code="&quot;QuoteOP.B.NewQuote.AddPotentialConsignee&quot;"
       DefaultText="&quot;Add Potential Consignee&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.DeleteThisPartner&quot;"
+      Code="&quot;QuoteOP.M.DeleteThisPartner&quot;"
       DefaultText="&quot;Delete This Partner?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.DeleteThisCharge&quot;"
+      Code="&quot;QuoteOP.M.DeleteThisCharge&quot;"
       DefaultText="&quot;Delete This Charge?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.RoutingsDetails&quot;"
+      Code="&quot;QuoteOP.S.Details.RoutingsDetails&quot;"
       DefaultText="&quot;Routings Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.QuoteDetails&quot;"
+      Code="&quot;QuoteOP.S.Details.QuoteDetails&quot;"
       DefaultText="&quot;Quote Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.ExpectedOrderDetails&quot;"
+      Code="&quot;QuoteOP.S.Details.ExpectedOrderDetails&quot;"
       DefaultText="&quot;Expected Order Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.QuoteContainersTypes&quot;"
+      Code="&quot;QuoteOP.S.Details.QuoteContainersTypes&quot;"
       DefaultText="&quot;Quote Containers Types&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Adhoc&quot;"
+      Code="&quot;QuoteOP.S.Details.Adhoc&quot;"
       DefaultText="&quot;Ad hoc&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Periodical&quot;"
+      Code="&quot;QuoteOP.S.Details.Periodical&quot;"
       DefaultText="&quot;Periodical&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.S.Details.Gateway&quot;"
+      Code="&quot;QuoteOP.S.Details.Gateway&quot;"
       DefaultText="&quot;Gateway&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.LoadingPort&quot;"
+      Code="&quot;QuoteOP.S.Details.LoadingPort&quot;"
       DefaultText="&quot;Loading Port&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Destination&quot;"
+      Code="&quot;QuoteOP.S.Details.Destination&quot;"
       DefaultText="&quot;Destination&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.DischargePort&quot;"
+      Code="&quot;QuoteOP.S.Details.DischargePort&quot;"
       DefaultText="&quot;Discharge Port&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Airline&quot;"
+      Code="&quot;QuoteOP.S.Details.Airline&quot;"
       DefaultText="&quot;Airline&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Shippingline&quot;"
+      Code="&quot;QuoteOP.S.Details.Shippingline&quot;"
       DefaultText="&quot;Shipping line&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Trucker&quot;"
+      Code="&quot;QuoteOP.S.Details.Trucker&quot;"
       DefaultText="&quot;Trucker&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Name&quot;"
+      Code="&quot;QuoteOP.S.Partners.Name&quot;"
       DefaultText="&quot;Name&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Address&quot;"
+      Code="&quot;QuoteOP.S.Partners.Address&quot;"
       DefaultText="&quot;Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Contact&quot;"
+      Code="&quot;QuoteOP.S.Partners.Contact&quot;"
       DefaultText="&quot;Contact&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Reference1&quot;"
+      Code="&quot;QuoteOP.S.Partners.Reference1&quot;"
       DefaultText="&quot;Reference1&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Reference2&quot;"
+      Code="&quot;QuoteOP.S.Partners.Reference2&quot;"
       DefaultText="&quot;Reference2&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.MyCustomer&quot;"
+      Code="&quot;QuoteOP.S.Partners.MyCustomer&quot;"
       DefaultText="&quot;My Customer&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.AddShipper&quot;"
+      Code="&quot;QuoteOP.S.Partners.AddShipper&quot;"
       DefaultText="&quot;Add Shipper&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.AddConsignee&quot;"
+      Code="&quot;QuoteOP.S.Partners.AddConsignee&quot;"
       DefaultText="&quot;Add Consignee&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.EditShipper&quot;"
+      Code="&quot;QuoteOP.S.Partners.EditShipper&quot;"
       DefaultText="&quot;Edit Shipper&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.EditConsignee&quot;"
+      Code="&quot;QuoteOP.S.Partners.EditConsignee&quot;"
       DefaultText="&quot;Edit Consignee&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.AddCharges&quot;"
+      Code="&quot;QuoteOP.O.Charges.AddCharges&quot;"
       DefaultText="&quot;Add Charges&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.EditCharges&quot;"
+      Code="&quot;QuoteOP.O.Charges.EditCharges&quot;"
       DefaultText="&quot;Edit Charges&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostQuantity&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostQuantity&quot;"
       DefaultText="&quot;Cost%nQty&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostPrice&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostPrice&quot;"
       DefaultText="&quot;Cost%nPrice&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostAmount&quot;"
       DefaultText="&quot;Cost%nAmount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleQuantity&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleQuantity&quot;"
       DefaultText="&quot;Sale%nQty&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SalePrice&quot;"
+      Code="&quot;QuoteOP.O.Charges.SalePrice&quot;"
       DefaultText="&quot;Sale%nPrice (%SaleCurrencyCode)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleAmount&quot;"
       DefaultText="&quot;Sale%nAmount (%SaleCurrencyCode)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleAmountLocal&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleAmountLocal&quot;"
       DefaultText="&quot;Sale%nAmount (%LocalCurrencyCode)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.FillExchangeRate&quot;"
+      Code="&quot;QuoteOP.O.Charges.FillExchangeRate&quot;"
       DefaultText="&quot;Fill Exchange Rate&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Routings&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Routings&quot;"
       DefaultText="&quot;Routings&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.General&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.General&quot;"
       DefaultText="&quot;General&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.ExpectedOrderDetails&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.ExpectedOrderDetails&quot;"
       DefaultText="&quot;Expected Order Details&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.AdditionalFields&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.AdditionalFields&quot;"
       DefaultText="&quot;Additional Fields&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Adhoc&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Adhoc&quot;"
       DefaultText="&quot;Ad hoc&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Periodical&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Periodical&quot;"
       DefaultText="&quot;Periodical&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Gateway&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Gateway&quot;"
       DefaultText="&quot;Gateway&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.LoadingPort&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.LoadingPort&quot;"
       DefaultText="&quot;Loading Port&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.From&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.From&quot;"
       DefaultText="&quot;From&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Destination&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Destination&quot;"
       DefaultText="&quot;Destination&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.DischargePort&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.DischargePort&quot;"
       DefaultText="&quot;Discharge Port&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.To&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.To&quot;"
       DefaultText="&quot;To&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Carrier&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Carrier&quot;"
       DefaultText="&quot;Carrier&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Airline&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Airline&quot;"
       DefaultText="&quot;Airline&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Shippingline&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Shippingline&quot;"
       DefaultText="&quot;Shipping Line&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Trucker&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Trucker&quot;"
       DefaultText="&quot;Trucker&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Quantity&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Quantity&quot;"
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.PackageType&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.PackageType&quot;"
       DefaultText="&quot;Package Type&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Shipper&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Shipper&quot;"
       DefaultText="&quot;Shipper&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Consignee&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Consignee&quot;"
       DefaultText="&quot;Consignee&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Name&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Name&quot;"
       DefaultText="&quot;Name&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Address&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Address&quot;"
       DefaultText="&quot;Address&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Contact&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Contact&quot;"
       DefaultText="&quot;Contact&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Reference1&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Reference1&quot;"
       DefaultText="&quot;Reference 1&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.Reference2&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.Reference2&quot;"
       DefaultText="&quot;Reference 2&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.MyCustomer&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.MyCustomer&quot;"
       DefaultText="&quot;My Customer&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Rates&quot;"
+      Code="&quot;QuoteOP.O.Charges.Rates&quot;"
       DefaultText="&quot;Rates&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Cost&quot;"
+      Code="&quot;QuoteOP.O.Charges.Cost&quot;"
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Sale&quot;"
+      Code="&quot;QuoteOP.O.Charges.Sale&quot;"
       DefaultText="&quot;Sale&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleCurrency&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleCurrency&quot;"
       DefaultText="&quot;Sale Currency (%SaleCurrencyCode)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.LocalCurrency&quot;"
+      Code="&quot;QuoteOP.O.Charges.LocalCurrency&quot;"
       DefaultText="&quot;Local Currency (%LocalCurrencyCode)&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Charges.Markup&quot;"
+      Code="&quot;QuoteOP.S.Charges.Markup&quot;"
       DefaultText="&quot;Markup&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.SetAsRejected&quot;"
+      Code="&quot;QuoteOP.B.SetAsRejected&quot;"
       DefaultText="&quot;Set As Rejected by Customer&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.B.SetAsNoAnswer&quot;"
+      Code="&quot;QuoteOP.B.SetAsNoAnswer&quot;"
       DefaultText="&quot;Set As No Answer&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.B.ReturnInProgress&quot;"
+      Code="&quot;QuoteOP.B.ReturnInProgress&quot;"
       DefaultText="&quot;Return Quote in Progress&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="true" />
     <TextCode
-      Code="&quot;Quote.S.Details.RoutingRates&quot;"
+      Code="&quot;QuoteOP.S.Details.RoutingRates&quot;"
       DefaultText="&quot;Routing Rates&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.NewQuote.RoutingRates&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.RoutingRates&quot;"
       DefaultText="&quot;Routing Rates&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Create&quot;"
+      Code="&quot;QuoteOP.B.Create&quot;"
       DefaultText="&quot;Create&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Copy&quot;"
+      Code="&quot;QuoteOP.B.Copy&quot;"
       DefaultText="&quot;Copy&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Routings&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Routings&quot;"
       DefaultText="&quot;Routings&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.General&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.General&quot;"
       DefaultText="&quot;General&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ExpectedOrderDetails&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ExpectedOrderDetails&quot;"
       DefaultText="&quot;Expected Order Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.AdditionalFields&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.AdditionalFields&quot;"
       DefaultText="&quot;Additional Fields&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Adhoc&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Adhoc&quot;"
       DefaultText="&quot;Ad hoc&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.RoutingRates&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.RoutingRates&quot;"
       DefaultText="&quot;Routing Rates&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Gateway&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Gateway&quot;"
       DefaultText="&quot;Gateway&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.LoadingPort&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.LoadingPort&quot;"
       DefaultText="&quot;Loading Port&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.From&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.From&quot;"
       DefaultText="&quot;From&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Destination&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Destination&quot;"
       DefaultText="&quot;Destination&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.DischargePort&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.DischargePort&quot;"
       DefaultText="&quot;Discharge Port&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.To&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.To&quot;"
       DefaultText="&quot;To&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Carrier&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Carrier&quot;"
       DefaultText="&quot;Carrier&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Airline&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Airline&quot;"
       DefaultText="&quot;Airline&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Shippingline&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Shippingline&quot;"
       DefaultText="&quot;Shipping line&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Trucker&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Trucker&quot;"
       DefaultText="&quot;Trucker&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Quantity&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Quantity&quot;"
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.PackageType&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.PackageType&quot;"
       DefaultText="&quot;Package Type&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Name&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Name&quot;"
       DefaultText="&quot;Name&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.MyCustomer&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.MyCustomer&quot;"
       DefaultText="&quot;My Customer&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.SetAsMyCustomer&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.SetAsMyCustomer&quot;"
       DefaultText="&quot;Set as My Customer&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ShipperNotes&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ShipperNotes&quot;"
       DefaultText="&quot;Shipper Notes&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ConsigneeNotes&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ConsigneeNotes&quot;"
       DefaultText="&quot;Consignee Notes&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.SelectFields&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.SelectFields&quot;"
       DefaultText="&quot;Select Fields to Copy&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Partners&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Partners&quot;"
       DefaultText="&quot;Partners&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.MainCarriage&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.MainCarriage&quot;"
       DefaultText="&quot;Main Carriage&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Charges&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Charges&quot;"
       DefaultText="&quot;Charges&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ChargeType&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ChargeType&quot;"
       DefaultText="&quot;Charges Types&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Cost&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Cost&quot;"
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Sale&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Sale&quot;"
       DefaultText="&quot;Sale&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Routings&quot;"
+      Code="&quot;QuoteOP.O.Routings&quot;"
       DefaultText="&quot;Routings&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.Partners&quot;"
+      Code="&quot;QuoteOP.S.Partners.Partners&quot;"
       DefaultText="&quot;Partners&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddAgent&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddAgent&quot;"
       DefaultText="&quot;Add Agent&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.AddAgent&quot;"
+      Code="&quot;QuoteOP.S.Partners.AddAgent&quot;"
       DefaultText="&quot;Add Agent&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.EditAgent&quot;"
+      Code="&quot;QuoteOP.S.Partners.EditAgent&quot;"
       DefaultText="&quot;Edit Agent&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Charges.Tariffs&quot;"
+      Code="&quot;QuoteOP.B.Charges.Tariffs&quot;"
       DefaultText="&quot;Tariffs&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.NoVat&quot;"
+      Code="&quot;QuoteOP.O.Charges.NoVat&quot;"
       DefaultText="&quot;No VAT for this date&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.DeleteThisPackage&quot;"
+      Code="&quot;QuoteOP.M.DeleteThisPackage&quot;"
       DefaultText="&quot;Delete this package?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.BuildShipmentMessage&quot;"
+      Code="&quot;QuoteOP.M.BuildShipmentMessage&quot;"
       DefaultText="&quot;Build Shipment is Available Only if Ad-hoc Quotes&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.QuoteCancelMessage&quot;"
+      Code="&quot;QuoteOP.M.QuoteCancelMessage&quot;"
       DefaultText="&quot;Quote cannot be Cancelled, since it has connected Shipments&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.QuoteReturnMessage&quot;"
+      Code="&quot;QuoteOP.M.QuoteReturnMessage&quot;"
       DefaultText="&quot;Quote can't be returned to draft since it is connected to a shipment&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.DeclineReason&quot;"
+      Code="&quot;QuoteOP.O.DeclineReason&quot;"
       DefaultText="&quot;Decline Reason&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostMinAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostMinAmount&quot;"
       DefaultText="&quot;Cost%nMin Amount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.CostMaxAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.CostMaxAmount&quot;"
       DefaultText="&quot;Cost%nMax Amount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleMinAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleMinAmount&quot;"
       DefaultText="&quot;Sale%nMin Amount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SaleMaxAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.SaleMaxAmount&quot;"
       DefaultText="&quot;Sale%nMax Amount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.TotalSaleAmount&quot;"
+      Code="&quot;QuoteOP.O.Charges.TotalSaleAmount&quot;"
       DefaultText="&quot;Total Sale Amount&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.VATDetails&quot;"
+      Code="&quot;QuoteOP.O.Charges.VATDetails&quot;"
       DefaultText="&quot;VAT Details&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SubTotal&quot;"
+      Code="&quot;QuoteOP.O.Charges.SubTotal&quot;"
       DefaultText="&quot;Sub-Total&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.TotalVAT&quot;"
+      Code="&quot;QuoteOP.O.Charges.TotalVAT&quot;"
       DefaultText="&quot;Total VAT&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.TotalSale&quot;"
+      Code="&quot;QuoteOP.O.Charges.TotalSale&quot;"
       DefaultText="&quot;Total Sale&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Details&quot;"
+      Code="&quot;QuoteOP.O.Charges.Details&quot;"
       DefaultText="&quot;Details&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.NewQuote.AddAgent&quot;"
+      Code="&quot;QuoteOP.B.NewQuote.AddAgent&quot;"
       DefaultText="&quot;Add Agent&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Address&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Address&quot;"
       DefaultText="&quot;Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Packages.AddPackage&quot;"
+      Code="&quot;QuoteOP.S.Packages.AddPackage&quot;"
       DefaultText="&quot;Add Package&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Packages.EditPackage&quot;"
+      Code="&quot;QuoteOP.S.Packages.EditPackage&quot;"
       DefaultText="&quot;Edit Package&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.AddPackage&quot;"
+      Code="&quot;QuoteOP.B.AddPackage&quot;"
       DefaultText="&quot;Add Package&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Overview.Activities&quot;"
+      Code="&quot;QuoteOP.S.Overview.Activities&quot;"
       DefaultText="&quot;Activities&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Overview.NoActivities&quot;"
+      Code="&quot;QuoteOP.S.Overview.NoActivities&quot;"
       DefaultText="&quot;No Activities&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.GeneralDetails&quot;"
+      Code="&quot;QuoteOP.S.Details.GeneralDetails&quot;"
       DefaultText="&quot;General Details&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.CloseAutomatically&quot;"
+      Code="&quot;QuoteOP.S.Details.CloseAutomatically&quot;"
       DefaultText="&quot;Close automatically as declined after&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.Days&quot;"
+      Code="&quot;QuoteOP.S.Details.Days&quot;"
       DefaultText="&quot;days&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Details.ExpirationTime&quot;"
+      Code="&quot;QuoteOP.S.Details.ExpirationTime&quot;"
       DefaultText="&quot;Expiration Time&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.CreateNewQuote&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.CreateNewQuote&quot;"
       DefaultText="&quot;Create New Quote&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.SpotRate&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.SpotRate&quot;"
       DefaultText="&quot;Spot Rate&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ExpirationTime&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ExpirationTime&quot;"
       DefaultText="&quot;Expiration Time&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.CloseAutomatically&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.CloseAutomatically&quot;"
       DefaultText="&quot;Close automatically as declined after&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Days&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Days&quot;"
       DefaultText="&quot;days&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Pickup&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Pickup&quot;"
       DefaultText="&quot;Pickup&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.PickupAddress&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.PickupAddress&quot;"
       DefaultText="&quot;Pickup Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Delivery&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Delivery&quot;"
       DefaultText="&quot;Delivery&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.DeliveryAddress&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.DeliveryAddress&quot;"
       DefaultText="&quot;Delivery Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.ZipCode&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.ZipCode&quot;"
       DefaultText="&quot;Zip Code&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.City&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.City&quot;"
       DefaultText="&quot;City&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Country&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Country&quot;"
       DefaultText="&quot;Country&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.InsertTotals&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.InsertTotals&quot;"
       DefaultText="&quot;Please insert totals or&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.FillDimensions&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.FillDimensions&quot;"
       DefaultText="&quot;Fill Dimensions&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.Summary&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.Summary&quot;"
       DefaultText="&quot;Summary&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.NewQuote.IsLocalLanguage&quot;"
+      Code="&quot;QuoteOP.S.NewQuote.IsLocalLanguage&quot;"
       DefaultText="&quot;Is Local Language&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.QuoteQueries&quot;"
+      Code="&quot;QuoteOP.S.Workspace.QuoteQueries&quot;"
       DefaultText="&quot;Quote Queries&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.Others&quot;"
+      Code="&quot;QuoteOP.S.Workspace.Others&quot;"
       DefaultText="&quot;Others&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.MyViews&quot;"
+      Code="&quot;QuoteOP.S.Workspace.MyViews&quot;"
       DefaultText="&quot;My Views&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.RecentQuotes&quot;"
+      Code="&quot;QuoteOP.S.Workspace.RecentQuotes&quot;"
       DefaultText="&quot;Recent Quotes&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.TopQuotes&quot;"
+      Code="&quot;QuoteOP.S.Workspace.TopQuotes&quot;"
       DefaultText="&quot;Top Quotes&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Workspace.SalesFunnel&quot;"
+      Code="&quot;QuoteOP.S.Workspace.SalesFunnel&quot;"
       DefaultText="&quot;Sales Funnel&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.MainAddress&quot;"
+      Code="&quot;QuoteOP.S.Partners.MainAddress&quot;"
       DefaultText="&quot;Main Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.Pickup&quot;"
+      Code="&quot;QuoteOP.S.Routings.Pickup&quot;"
       DefaultText="&quot;Pickup&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.Delivery&quot;"
+      Code="&quot;QuoteOP.S.Routings.Delivery&quot;"
       DefaultText="&quot;Delivery&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.MainCarriage&quot;"
+      Code="&quot;QuoteOP.S.Routings.MainCarriage&quot;"
       DefaultText="&quot;Main Carriage&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.ZipCode&quot;"
+      Code="&quot;QuoteOP.S.Routings.ZipCode&quot;"
       DefaultText="&quot;Zip Code&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.City&quot;"
+      Code="&quot;QuoteOP.S.Routings.City&quot;"
       DefaultText="&quot;City&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.Country&quot;"
+      Code="&quot;QuoteOP.S.Routings.Country&quot;"
       DefaultText="&quot;Country&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.FromPartner&quot;"
+      Code="&quot;QuoteOP.S.Routings.FromPartner&quot;"
       DefaultText="&quot;From Partner&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.ToPartner&quot;"
+      Code="&quot;QuoteOP.S.Routings.ToPartner&quot;"
       DefaultText="&quot;To Partner&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.IsLocalLanguage&quot;"
+      Code="&quot;QuoteOP.S.Routings.IsLocalLanguage&quot;"
       DefaultText="&quot;Is Local Language&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.AddAddress&quot;"
+      Code="&quot;QuoteOP.S.Routings.AddAddress&quot;"
       DefaultText="&quot;Add Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Routings.EditAddress&quot;"
+      Code="&quot;QuoteOP.S.Routings.EditAddress&quot;"
       DefaultText="&quot;Edit Address&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.Fixed&quot;"
+      Code="&quot;QuoteOP.O.Charges.Fixed&quot;"
       DefaultText="&quot;Fixed&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.O.Charges.SameAsCost&quot;"
+      Code="&quot;QuoteOP.O.Charges.SameAsCost&quot;"
       DefaultText="&quot;Same as Cost Currency&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.B.Partners.AddNotify&quot;"
+      Code="&quot;QuoteOP.B.Partners.AddNotify&quot;"
       DefaultText="&quot;Add Notify&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.AddNotify&quot;"
+      Code="&quot;QuoteOP.S.Partners.AddNotify&quot;"
       DefaultText="&quot;Add Notify&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Partners.EditNotify&quot;"
+      Code="&quot;QuoteOP.S.Partners.EditNotify&quot;"
       DefaultText="&quot;Edit Notify&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Generate&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Generate&quot;"
       DefaultText="&quot;Generate&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Upload&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Upload&quot;"
       DefaultText="&quot;Upload&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.UploadQuote&quot;"
+      Code="&quot;QuoteOP.Quotation.B.UploadQuote&quot;"
       DefaultText="&quot;Upload Quote&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Print&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Print&quot;"
       DefaultText="&quot;Print&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Send&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Send&quot;"
       DefaultText="&quot;Send&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.SendtoCustomer&quot;"
+      Code="&quot;QuoteOP.Quotation.B.SendtoCustomer&quot;"
       DefaultText="&quot;Send to Customer&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.SendInternally&quot;"
+      Code="&quot;QuoteOP.Quotation.B.SendInternally&quot;"
       DefaultText="&quot;Send Internally&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.View&quot;"
+      Code="&quot;QuoteOP.Quotation.B.View&quot;"
       DefaultText="&quot;View&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Hide&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Hide&quot;"
       DefaultText="&quot;Hide&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.B.Expand&quot;"
+      Code="&quot;QuoteOP.Quotation.B.Expand&quot;"
       DefaultText="&quot;Expand&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Generated&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Generated&quot;"
       DefaultText="&quot;Generated&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Upload&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Upload&quot;"
       DefaultText="&quot;Upload&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Uploaded&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Uploaded&quot;"
       DefaultText="&quot;Uploaded&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Templates&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Templates&quot;"
       DefaultText="&quot;Templates&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Quotation&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Quotation&quot;"
       DefaultText="&quot;Quotation&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.GenerateUpload&quot;"
+      Code="&quot;QuoteOP.Quotation.S.GenerateUpload&quot;"
       DefaultText="&quot;Generate Upload&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.Quotation.S.Versions&quot;"
+      Code="&quot;QuoteOP.Quotation.S.Versions&quot;"
       DefaultText="&quot;Versions&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.M.ValueEditedByUser&quot;"
+      Code="&quot;QuoteOP.M.ValueEditedByUser&quot;"
       DefaultText="&quot;Value Edited by User, Double Click to Reset Calculated value&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.Charges.ProfitInSaleCurrency&quot;"
+      Code="&quot;QuoteOP.S.Charges.ProfitInSaleCurrency&quot;"
       DefaultText="&quot;Profit In Sale Currency&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.SaleTotalAmount&quot;"
+      Code="&quot;QuoteOP.S.SaleTotalAmount&quot;"
       DefaultText="&quot;Sale&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.S.CostTotalAmount&quot;"
+      Code="&quot;QuoteOP.S.CostTotalAmount&quot;"
       DefaultText="&quot;Cost&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Quote.F.PackageTypeQuantity.Short&quot;"
+      Code="&quot;QuoteOP.F.PackageTypeQuantity.Short&quot;"
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
@@ -30658,16 +30658,16 @@
     <Feature
       Code="&quot;SETTINGS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Settings&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.Settings&quot;"
       FeatureDefaultText="&quot;Settings&quot;"
       IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;Quote.Followups&quot;"
+      Code="&quot;QuoteOP.Followups&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.QuoteFollowups&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.QuoteFollowups&quot;"
       FeatureDefaultText="&quot;Follow ups&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30676,7 +30676,7 @@
     <Feature
       Code="&quot;NEWQUOTE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.NewQuote&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.NewQuote&quot;"
       FeatureDefaultText="&quot;New Quote&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30685,7 +30685,7 @@
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.OutlookConnection&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.OutlookConnection&quot;"
       FeatureDefaultText="&quot;Outlook Connection&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30694,7 +30694,7 @@
     <Feature
       Code="&quot;TARIFFS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Tariffs&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.Tariffs&quot;"
       FeatureDefaultText="&quot;Tariffs&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30703,7 +30703,7 @@
     <Feature
       Code="&quot;QouteEditExchangeRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.EditExchangeRate&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.EditExchangeRate&quot;"
       FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
       IsOld="false"
@@ -30712,7 +30712,7 @@
     <Feature
       Code="&quot;TOTALPERCONTAINER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.TOTALPERCONTAINER&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.TOTALPERCONTAINER&quot;"
       FeatureDefaultText="&quot;Total Per Container&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30721,7 +30721,7 @@
     <Feature
       Code="&quot;VATDetAILSINQUOTATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.VATDetAILSINQUOTATION&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.VATDetAILSINQUOTATION&quot;"
       FeatureDefaultText="&quot;VAT details in Quotation&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30730,7 +30730,7 @@
     <Feature
       Code="&quot;QuotePriceCheck&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.QuotePriceCheck&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.QuotePriceCheck&quot;"
       FeatureDefaultText="&quot;Price Check&quot;"
       IsPackagable="true"
       IsOld="false"
@@ -30739,7 +30739,7 @@
     <Feature
       Code="&quot;QuoteClosedAutomatically&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.QuoteClosedAutomatically&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.QuoteClosedAutomatically&quot;"
       FeatureDefaultText="&quot;Quote Closed Automatically&quot;"
       IsPackagable="false"
       IsOld="false"
@@ -30748,7 +30748,7 @@
     <Feature
       Code="&quot;AUTOMATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.AUTOMATION&quot;"
+      FeatureTextCodeCode="&quot;QuoteOP.Features.AUTOMATION&quot;"
       FeatureDefaultText="&quot;Automation&quot;"
       IsPackagable="true"
       IsOld="false"
