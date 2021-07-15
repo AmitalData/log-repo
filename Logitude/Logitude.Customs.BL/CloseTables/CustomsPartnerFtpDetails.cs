@@ -24,6 +24,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECMMNSPCL_Response = "ECSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSWSTHR_REQUEST = "ECSWSTHR";//EC = E-Commerce
         public const string InterfaceName_ECSWSTHR_RESPONE = "ECSWSTHR+RS";//EC = E-Commerce
+        public const string InterfaceName_ECSWSTHR_IN = "ECSWSTHR+IN";//EC = E-Commerce
 
 
         public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
@@ -253,19 +254,30 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="ש.מ.ב מסוויספורט",
+                Subject="ש.מ.ב  לסוויספורט",
                 ResponseCode = InterfaceName_ECSWSTHR_RESPONE,
             },
-            new InterfaceDetails()
+            new InterfaceDetails() // fake
             {
                 Code = InterfaceName_ECSWSTHR_RESPONE,
+                Name = "ש.מ.ב  מסוויספורט",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_ILSWS,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                Subject="ש.מ.ב  מסוויספורט",
+                ServerInternalDef= true,
+
+            },
+              new InterfaceDetails() // real
+            {
+                Code = InterfaceName_ECSWSTHR_IN,
                 Name = "ש.מ.ב מסוויספורט",
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
                 Subject="ש.מ.ב מסוויספורט",
-                ServerInternalDef= true,
 
             },
              new InterfaceDetails()

@@ -961,7 +961,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
 
                             LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
                             {
                                 if (declarationPendingPM_900 == null)
                                 {

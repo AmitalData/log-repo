@@ -121,7 +121,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(_PaymentOrderPM.AccountingCustomFile))
             {
                 isAddConnectionToAccountingFile = true;
-                declarationId = declarationQueryService.GetIdByCustomFileNo(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
+                //    declarationId = declarationQueryService.GetIdByCustomFileNo(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
+              
+                var declaration = declarationQueryService.GetAcceptDeclarationAmendmentByCustomsFile(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
+                declarationId = declaration.Id;
+
                 if (_PaymentOrderPM.PaymentOrderConnectionTables != null && !string.IsNullOrWhiteSpace(declarationId))
                 {
                     foreach (var connectedItem in _PaymentOrderPM.PaymentOrderConnectionTables)

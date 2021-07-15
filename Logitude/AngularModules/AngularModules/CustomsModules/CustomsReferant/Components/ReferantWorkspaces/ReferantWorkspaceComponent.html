@@ -72,15 +72,13 @@
                                     </div>
                                     <div style="height: 15px;"></div>
 
-
-                                    <!--(BackCompletedEvent)="onUserQueriesBackComplete($event)"-->
-                                    <!--<div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
                                         <div>My Views</div>
                                         <div style="height:80px;">
-                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.Declaration'" [BackButtonTitle]="'General.MH.CourierMaster' | TextCodeTranslationPipe"></UsersQueryList>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.DeclarationReferantData'" [BackButtonTitle]="'General.MH.ReferantWorkspace' | TextCodeTranslationPipe" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
                                         </div>
-                                    </div>-->
-
+                                    </div>
+                                   
                                     <div style="height: 15px;"></div>
 
                                 </SectionBody>

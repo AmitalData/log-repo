@@ -198,6 +198,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() 
+            {
+                Code = "5119A",
+                EnglishName = "נדרש תיקון להצהרת יבוא",
+                LocalName = "נדרש תיקון להצהרת יבוא",
+                AssigneeNotificationTypeCode = "I",
+            });
+
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
             {
                 Code = "5101A",
