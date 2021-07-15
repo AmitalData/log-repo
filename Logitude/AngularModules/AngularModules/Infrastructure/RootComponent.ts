@@ -315,9 +315,9 @@ export class RootComponent implements AfterViewInit {
         }
     }
     private LoadTermsOfUse(serviceResponse: ServiceResponse) {
-        let isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
+        //let isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
         this.ClearLocation();
-        if (this.isPrivateLable == true && !isLogbox) {
+        if (this.isPrivateLable == true) { //&& !isLogbox) {
             this.LoadPrivateLableTermsOfUseComponent(serviceResponse);
         }
         else
