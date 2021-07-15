@@ -30,14 +30,20 @@ namespace WebFreight.Web.Helpers
             globalContext = GlobalContext.GetContext();
         }
 
+        private TenantManagementPM tenantManagementPM { get; set; }
         public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string brandingTenant)
         {
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
+            if (!string.IsNullOrEmpty(brandingTenant))
+                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(brandingTenant));
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
+             
             string LogitudeURL = LogitudeSettings.LogitudeURL;
             string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
+             
 
             if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
             {
@@ -91,7 +97,7 @@ namespace WebFreight.Web.Helpers
             {
                 emailMessageParams.TeamName = privatelabel.PrivateLabelShortName + " Team";
                 emailMessageParams.SiteUri = privatelabel.PrivateLabelUrl;
-                emailMessageParams.SenderEmail = "no-reply@" + privatelabel.PrivateLabelUrl.Replace("www.", "");
+                emailMessageParams.SenderEmail = "no-reply@" + privatelabel.PrivateLabelDomain;
                 emailMessageParams.Environment = privatelabel.PrivateLabelShortName;
                 emailMessageParams.IsLogBox = true;
             }
@@ -112,7 +118,20 @@ namespace WebFreight.Web.Helpers
             string environment = LogitudeSettings.WorkEnvironment == "cloud" ? "Amital Cloud" : "Logitude";
             string senderEmail = "no-reply@" + LogitudeSettings.DomainName;
 
-            EmailMessageParams emailMessageParams = new EmailMessageParams
+            if (IsCargoTrackingDomain())
+            {
+                return new EmailMessageParams
+                {
+                    Environment = "Cargo Tracking",
+                    SiteUri = tenantManagementPM != null ? tenantManagementPM.CustomerURL : "",
+                    TeamName = "Cargo Tracking Team",
+                    SenderEmail = "no-reply@" + SecurityUtility.getLoggedDomain(),
+                    TenantName = tenantManagementPM != null ? tenantManagementPM.Name : "",
+                    IsCargoTracking = true,
+                };
+
+            }
+            else return new EmailMessageParams
             {
                 Environment = environment,
                 SiteUri = siteUri,
@@ -120,7 +139,7 @@ namespace WebFreight.Web.Helpers
                 SenderEmail = senderEmail,
             };
 
-            return emailMessageParams;
+
         }
 
         private EmailBodyResults BuildEmailBody(ResetPasswordParameters resetPasswordParameters, EmailMessageParams emailMessageParams, EmailBodyArgs emailBodyArgs)
@@ -240,6 +259,14 @@ namespace WebFreight.Web.Helpers
                 fromemail = Email;
             }
 
+            if (IsCargoTrackingDomain())
+            {
+                string tenantName = tenantManagementPM != null ? tenantManagementPM.Name : "";
+                string envir = "Cargo Tracking";
+                fromemail = "no-reply@" + SecurityUtility.getLoggedDomain();
+                subject = $"Your {tenantName} {envir} Password";
+            }
+
             if (!string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.HtmlTemplate))
             {
                 subject = !string.IsNullOrEmpty(emailCommunicationLogBuilderArgs.Result.Subject) ? emailCommunicationLogBuilderArgs.Result.Subject : subject;
@@ -259,6 +286,11 @@ namespace WebFreight.Web.Helpers
             return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
         }
 
+        private bool IsCargoTrackingDomain()
+        {
+            var requestURL = HttpContext.Current.Request.Url.ToString();
+            return requestURL.Contains("tracking.") || requestURL.Contains("ecommerce.");
+        }
         private PasswordResetRequest GetPasswordResetRequestForMobile(string email, string reqNumber)
         {
             Random generator = new Random();
@@ -280,6 +312,7 @@ namespace WebFreight.Web.Helpers
 
         private void BuildForgotPasswordEmailBody(StringBuilder HtmlTemplate, EmailBodyParams emailBodyParams)
         {
+            var tenantName = (emailBodyParams.EmailMessageParams.TenantName != null && IsCargoTrackingDomain()) ? emailBodyParams.EmailMessageParams.TenantName + " " : "";
             HtmlTemplate.Append("<p style='text-align:left'>");
             HtmlTemplate.Append("Hi,");
             HtmlTemplate.Append("<br /><br />");
@@ -289,12 +322,12 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + emailBodyParams.EmailMessageParams.Environment + " ID to sign in to " + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName + emailBodyParams.EmailMessageParams.Environment + " ID to sign in to " + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append(emailBodyParams.EmailMessageParams.TeamName);
+            HtmlTemplate.Append(tenantName + emailBodyParams.EmailMessageParams.TeamName);
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<a href='http://" + emailBodyParams.EmailMessageParams.SiteUri + "'>" + emailBodyParams.EmailMessageParams.SiteUri + "<a>");
             HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
@@ -341,6 +374,9 @@ namespace WebFreight.Web.Helpers
         public string SenderEmail { get; set; }
         public string TeamName { get; set; }
         public bool IsLogBox { get; set; }
+        public bool IsCargoTracking { get; set; }
+
+        public string TenantName { get; set; }
     }
     public class EmailBodyParams
     {
