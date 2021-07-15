@@ -342,7 +342,7 @@ export var LoginComponent = (function () {
                     else if (userData.InValidCaptcha && userData.CaptchaImage)
                         _this.errorMessage = "Please re-enter the characters you see in the image above";
                     else
-                        _this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                        _this.errorMessage = "Login failed! invalid user name or password.";
                 }
             }
             else {

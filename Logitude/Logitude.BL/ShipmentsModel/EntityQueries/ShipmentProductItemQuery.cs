@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentProductItemPM GetSinglePM(string id, int tenant)
         {
             ShipmentProductItemPM myResult
-                = (from a in repository.context.ShipmentProductItems
+                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry")
                    where a.Id == id && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -40,6 +40,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ApprovedByCustomer = a.ApprovedByCustomer,
                        Brand = a.Brand,
                        Name = a.Name,
+                       ASIN = a.ASIN,
+                       UPC = a.UPC,
+                       OriginCountryId = a.OriginCountryId,
+                       OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
                    }).FirstOrDefault();
 
             return myResult;
@@ -48,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public List<ShipmentProductItemPM> GetShipmentProductItems(string shipmentId, int tenant)
         {
             List<ShipmentProductItemPM> shipmentProductItems
-                = (from a in repository.context.ShipmentProductItems
+                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -62,6 +66,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ApprovedByCustomer = a.ApprovedByCustomer,
                        Brand = a.Brand,
                        Name = a.Name,
+                       ASIN = a.ASIN,
+                       UPC = a.UPC,
+                       OriginCountryId = a.OriginCountryId,
+                       OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
                    }).ToList();
 
             return shipmentProductItems;

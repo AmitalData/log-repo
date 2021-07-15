@@ -1,23 +1,14 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Utilities;
-using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Interfaces;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -26,9 +17,8 @@ namespace Logitude.Accounting.BL.CoreBL
         int tenant;
         IAccountingContext accountingContext;
         bool showLocal;
-        LedgerTransactionHelper ledgerTransactionHelper;
         const string paymentIconCode = "PY";
-        const string arPaymentSourceTypeCode = "3";
+        const string journalIconCode = "JR";
 
 
         public GLAccountChequesTransactionsRetreivingService(int Tenant, IAccountingContext context)
@@ -36,7 +26,6 @@ namespace Logitude.Accounting.BL.CoreBL
             tenant = Tenant;
             this.accountingContext = context;
             this.showLocal = GetLoggedContactShowLocal(tenant);
-            ledgerTransactionHelper = new LedgerTransactionHelper();
         }
 
         public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId)
@@ -50,14 +39,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private List<LedgerTransactionList> GetARPaymentLedgerTransactions(string accountId)
         {
-            const string arPaymentAccountingEntityCode = "3";
             return (from transaction in accountingContext.LedgerTransactions
                     join journal in accountingContext.Journals on transaction.JournalId equals journal.Id  
                     join arpaymentcheque in accountingContext.ARPaymentCheques on 
                       journal.AccountingEntityId equals   arpaymentcheque.PaymentId 
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
 
-                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == arPaymentAccountingEntityCode && 
+                    where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntityValues.ARPayment && 
                     transaction.Reference2 ==arpaymentcheque.ChequeNumber
 
                     select new LedgerTransactionList()
@@ -75,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         JournalNumber = journal.JournalNumber,
                         Notes = transaction.Notes,
                         SourceId = journal.AccountingEntityId,
-                        SourceTypeCode = arPaymentSourceTypeCode,
+                        SourceTypeCode = AccountingEntityValues.ARPayment,
                         JournalId = journal.Id,
                         IconCode = paymentIconCode,
                         IsForeignAmountCreditPos = transaction.ForeignAmountCredit != 0,
@@ -101,6 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     && trans.LocalAmountCredit != 0
                     select new LedgerTransactionList
                     {
+                        PaymentValueDate = trans.DueDate,
                         Source = journal.AccountingEntityReference,
                         SourceType = journal.AccountingEntityCode,
                         SourceNumber = journal.AccountingEntityReference,
@@ -112,8 +101,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         Reference3 = trans.Reference3,
                         Notes = trans.Notes,
                         JournalId = journal.Id,
-                        SourceId = journal.AccountingEntityId,
-                        SourceTypeCode = arPaymentSourceTypeCode,
+                        IconCode = journalIconCode,
+                        SourceId = journal.Id,
+                        SourceTypeCode = AccountingEntityValues.Journal,
                         IsForeignAmountCreditPos = trans.ForeignAmountCredit != 0,
                         IsLocalAmountCreditPos = trans.LocalAmountCredit != 0,
                         CalculatedForeignAmount = trans.ForeignAmountCredit != 0 ? trans.ForeignAmountCredit : trans.ForeignAmountDebit,

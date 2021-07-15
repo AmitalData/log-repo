@@ -333,7 +333,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "SHCMR":
                 case "TEST":
                 case "NCR":
-
+                case "782":
                     return true;
 
                 default:

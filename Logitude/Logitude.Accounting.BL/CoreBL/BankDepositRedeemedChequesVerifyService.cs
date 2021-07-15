@@ -43,9 +43,25 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             writeChequesOnFile();
         }
+        public void UpdateDeferredCheqesForTenantList(List<string> Tenants)
+        {
+            DoneCheques = new List<ARPaymentCheque>();
+            foreach (var tenant in Tenants)
+            {
+                WorkingTenant = Convert.ToInt32(tenant);
+                GetAndUpdateDeferedChequesForTenant(WorkingTenant);
+                DoneTenants++;
+            }
+            writeChequesOnFile();
+        }
         public void GetAndUpdateChequesForTenant(int tenant)
         {
             var cheques = GetNotRedeemedReconciledCheques(tenant);
+            SetChequesAsRedeemed(tenant, cheques);
+        }
+        public void GetAndUpdateDeferedChequesForTenant(int tenant)
+        {
+            var cheques = GetDeferredNotRedeemedReconciledCheques(tenant);
             SetChequesAsRedeemed(tenant, cheques);
         }
 
@@ -183,6 +199,51 @@ namespace Logitude.Accounting.BL.CoreBL
                                                                         && ledger.IsExternalReconcile == true
                                                                         && journal.AccountingEntityReference == cheque.ChequeNumber
                                                                         && journal.CreateDate > startOfFeb
+                                                                 select new ARPaymentChequePM()
+                                                                 {
+                                                                     Id = cheque.Id,
+                                                                     Tenant = cheque.Tenant,
+                                                                     CurrencyCode = cheque.Currency.Code,
+                                                                     SearchFields = cheque.SearchFields,
+                                                                     LineNumber = cheque.LineNumber,
+                                                                     ChequeNumber = cheque.ChequeNumber,
+                                                                     ValueDate = cheque.ValueDate,
+                                                                     LocalAmount = cheque.LocalAmount,
+                                                                     ForeignAmount = cheque.ForeignAmount,
+                                                                     BankId = cheque.BankId,
+                                                                     BankBranch = cheque.BankBranch,
+                                                                     BankAccount = cheque.BankAccount,
+                                                                     StatusName = cheque.ARPaymentChequeStatus != null ? cheque.ARPaymentChequeStatus.EnglishName : "",
+                                                                     PaymentId = cheque.PaymentId,
+                                                                     ExchangeRate = cheque.ExchangeRate,
+                                                                     StatusCode = cheque.StatusCode,
+                                                                     CurrencyId = cheque.CurrencyId,
+                                                                 }).OrderBy(d => d.ChequeNumber).Distinct().ToList();
+
+
+            Log("[Tenant " + tenant + "] cheques got, count: " + paymentChequesNotRedeemed.Count());
+
+            return paymentChequesNotRedeemed;
+
+        }
+        public List<ARPaymentChequePM> GetDeferredNotRedeemedReconciledCheques(int tenant)
+        {
+            Log("[Tenant " + tenant + "] getting cheques ...");
+
+            var context = AccountingContext.GetContext(tenant);
+
+            var isInBankStatusCode = "3";
+
+            List<ARPaymentChequePM> paymentChequesNotRedeemed = (from cheque in context.ARPaymentCheques
+                                                                 join ledger in context.LedgerTransactions on cheque.ChequeNumber equals ledger.Reference1
+                                                                 join journal in context.Journals on ledger.JournalId equals journal.Id
+                                                                 where cheque.StatusCode == isInBankStatusCode
+                                                                        && cheque.Tenant == tenant
+                                                                        && ledger.Tenant == tenant
+                                                                        && ledger.LocalAmountCredit == 0
+                                                                        && ledger.IsExternalReconcile == true
+                                                                        && ledger.Notes == "פרעון שיק דחוי"
+                                                                        && journal.AccountingEntityReference == journal.JournalNumber
                                                                  select new ARPaymentChequePM()
                                                                  {
                                                                      Id = cheque.Id,

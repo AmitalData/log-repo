@@ -83,6 +83,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
                                                    ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
                                                    CardsDataId = a.CardsDataId,
+                                                   PostponedChequesCommission = a.PostponedChequesCommission,
                                                    ActiveStatusName = a.Inactive == false ? active : inactive,
                                                    AutomaticReconcileId = a.AutomaticReconcileId,
                                                    AutomaticReconcileName = a.AutomaticReconcile != null ?
@@ -128,6 +129,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    NextDueDate = MoreDatas.NextDueDate,
                                                    TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                                                    TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
+
+                                                   BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
+                                                   ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
+                                                    
+
                                                    DeductionFileNumber = a.DeductionFileNumber,
 
                                                    //categories

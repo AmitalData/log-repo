@@ -39,13 +39,13 @@ export class TermsOfUseStartupComponent implements OnInit {
     public ErrorMessage = "";
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public Name: string = "Logitude";
-
+    public isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
     constructor() {
         if (this.termsofUseSignaturePMService == null) {
             this.termsofUseSignaturePMService = new TermsofUseSignaturePMService();
         }
 
-        if (SessionLocator.PrivateLableSettings) {
+        if (SessionLocator.PrivateLableSettings && !this.isLogbox) {
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.Name = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }

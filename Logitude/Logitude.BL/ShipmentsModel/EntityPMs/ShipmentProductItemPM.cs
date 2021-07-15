@@ -21,6 +21,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool ApprovedByCustomer { get; set; }
         public string Brand { get; set; }
         public string Name { get; set; }
+        public string ASIN { get; set; }
+        public string UPC { get; set; }
+        public string OriginCountryId { get; set; }
+        public string OriginCountryName { get; set; }
+        public bool IsEmptyLine { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

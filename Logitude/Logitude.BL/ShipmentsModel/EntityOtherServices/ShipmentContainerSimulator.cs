@@ -16,6 +16,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         public bool IsFromContainer { get; set; }
         public string ShipmentId { get; set; }
         public string ContainerNumber { get; set; }
+        public string CarrierId { get; set; }
         public ShipmentContainerSimulator()
         {
             this.Success = true;

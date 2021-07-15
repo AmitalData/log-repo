@@ -73,6 +73,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     LoadGrids: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     ExternalPagesTitle: string;
+    CreatedReconciliationsCount: number = 0;
 
     entityListService: EntityListService = new EntityListService();
     ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -1475,9 +1476,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
-            var entity = mm.Result;
+            var entity = mm.Result?.CreatedExternalReconciliation;
             if (!mm.HasError) {
-
+                this.CreatedReconciliationsCount = mm.Result.CreatedReconciliationsCount;
                 this.ExternalRecoPM = entity;
                 this.ShowSuccessAlert();
                 this.TransactionSelectedLines.Clear();
@@ -1568,10 +1569,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     CloseAlert() {
         this.showAlert = false;
-    }
-    GetAutoRecoMSG() {
-        var msg = TextCodeTranslator.Translate("Accounting.O.AreconcileOfXTransactionCreated");
-        return msg.replace("#Number", (this.ExternalRecoPM.ExternalReconciliationLines.length/2).toString());
     }
 
     openAmountCurrency: string = "";

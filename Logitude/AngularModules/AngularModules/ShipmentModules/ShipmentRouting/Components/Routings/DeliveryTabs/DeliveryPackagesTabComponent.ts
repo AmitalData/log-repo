@@ -307,7 +307,7 @@ export class DeliveryPackagesTabComponent {
         var entityArgs: EntityArgs = new EntityArgs();
         entityArgs.EntityPM = this.ShipmentPM;
         entityArgs.ObjectTableName = "Shipment";
-        entityArgs.IsFromStandAloneScreen  = true;
+        //entityArgs.IsFromStandAloneScreen  = true;
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
         packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;

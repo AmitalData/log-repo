@@ -252,6 +252,7 @@
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileAdjustBankFeesService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\ExternalReconciliationCreationResponse.cs" />
     <Compile Include="CoreBL\ExternalReconcile\MoveBankCheckFromTransfer2GLAccount\CreateAutoExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\MoveBankCheckFromTransfer2GLAccount\CreateJournal\ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
+    <Compile Include="CoreBL\JournalAdditionalDataCreationService.cs" />
     <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser_ISL.cs" />
     <Compile Include="CoreBL\JournalsReapproveService.cs" />

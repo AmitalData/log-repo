@@ -255,6 +255,16 @@ export class InsideShipmentPackagePM {
     public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
        
 	 
+    private horseId: string;
+    public get HorseId() { return this.horseId; }
+    public set HorseId(newValue: string) { if (this.horseId != newValue) { this.horseId = newValue; this.MarkAsDirty("HorseId"); } }
+       
+	 
+    private horseName: string;
+    public get HorseName() { return this.horseName; }
+    public set HorseName(newValue: string) { if (this.horseName != newValue) { this.horseName = newValue; this.MarkAsDirty("HorseName"); } }
+       
+	 
      
 	private insidePackageHarmonizes: ShipmentPackageHarmonizePM[];
     get  InsidePackageHarmonizes() {

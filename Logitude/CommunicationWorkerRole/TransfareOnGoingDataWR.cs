@@ -137,13 +137,13 @@ namespace CommunicationWorkerRole
             switch (Entity)
             {
                 case "Card":
-                    return 4;
+                    return KakaMessageTypes.Card;
                 case "Contact":
-                    return 5;
+                    return KakaMessageTypes.Contact;
                 case "Country":
-                    return 7;
+                    return KakaMessageTypes.Country;
                 case "Port":
-                    return 6;
+                    return KakaMessageTypes.Port;
                 default:
                     return 0;
             }

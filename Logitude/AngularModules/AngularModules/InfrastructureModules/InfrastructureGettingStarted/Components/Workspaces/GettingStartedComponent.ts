@@ -107,50 +107,50 @@ export class GettingStartedComponent extends BaseComponent {
     public AddAirlineVisibility: boolean = false;
     public AddShippingLineVisibility: boolean = false;
     CheckFeatures1() {
-        if (FeatureLocator.HasFeaturePermession("Customer", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERS")) {
             this.CustomerInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("Agent", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "AGENTS")) {
             this.AgentInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("User", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "USERS")) {
             this.UserInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("Port", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "PORTS")) {
             this.PortInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("Airline", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "AIRLINES")) {
             this.AirlineInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("ShippingLine", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "SHIPPINGLINES")) {
             this.ShippingLineInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("Customer", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERS")) {
             if (FeatureLocator.HasFeaturePermession("Customer", "NEW") && FeatureLocator.HasFeaturePermession("Customer", "NEWCUSTOMER")) {
                 this.AddCustomerVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("Agent", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "AGENTS")) {
             if (FeatureLocator.HasFeaturePermession("Agent", "NEW") && FeatureLocator.HasFeaturePermession("Agent", "NEWAGENT")) {
                 this.AddAgentVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("User", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "USERS")) {
             if (FeatureLocator.HasFeaturePermession("User", "NEW") && FeatureLocator.HasFeaturePermession("User", "NEWUSER")) {
                 this.AddUserVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("Port", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "PORTS")) {
             if (FeatureLocator.HasFeaturePermession("Port", "NEW") && FeatureLocator.HasFeaturePermession("Port", "NEWPORT")) {
                 this.AddPortVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("Airline", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "AIRLINES")) {
             if (FeatureLocator.HasFeaturePermession("Airline", "NEW") && FeatureLocator.HasFeaturePermession("Airline", "NEWAIRLINE")) {
                 this.AddAirlineVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("ShippingLine", "Module")) {
+        if (FeatureLocator.HasFeaturePermession("General", "SHIPPINGLINES")) {
             if (FeatureLocator.HasFeaturePermession("ShippingLine", "NEW") && FeatureLocator.HasFeaturePermession("ShippingLine", "NEWSHIPPINGLINE")) {
                 this.AddShippingLineVisibility = true;
             }
