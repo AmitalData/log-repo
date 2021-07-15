@@ -6,6 +6,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
+import * as GeneralActions from "../../actions/BaseActions";
 
 //#region variable
 let creditCardTypeDetails: CreditCardTypeDetails
@@ -35,19 +36,19 @@ Given("a credit card type with the following details", (dataTable) => {
 When("create credit card type", () => {
     MaintenanceActions.CreateCreditCardTypeMockCreate();
 });
- 
+
 Then("the credit card type should create successfully", () => {
     MaintenanceActions.AssertCreateCreditCardTypeMockCreate();
 });
- 
+
 //#endregion
 //#region Search for the credit card type by name
 When("search for {string} credit card type", (CreditCardTypeName) => {
-    MaintenanceActions.SearchCardByValue(CreditCardTypeName)
+    GeneralActions.Search(CreditCardTypeName)
 });
 
 Then("the {string} credit card type should appear successfully", (CreditCardTypeName) => {
-    MaintenanceActions.AssertSearchCreditCardType(CreditCardTypeName)
+    GeneralActions.AssertSearch(CreditCardTypeName)
 });
 
 //#endregion

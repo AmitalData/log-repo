@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @stable @weekly
 Feature: Shipment Sub Type Create and Edit it in Maintenance Module
     The user creates a Shipment Sub Type and edits it from the Maintenance Module.
 
