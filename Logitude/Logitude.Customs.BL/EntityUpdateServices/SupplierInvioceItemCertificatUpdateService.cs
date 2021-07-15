@@ -755,5 +755,48 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             return context.Database.Connection.ConnectionString;
         }
+
+        public int UpdateAllCertificateWithoutResponse(string declarationId, int tenant)
+        {
+            int count = 0;
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = @"Update (
+                                    select * from SupplierInvioceItemCertificats SIIC 
+                                    INNER JOIN supplierInvoiceItems s ON s.DeclarationId = SIIC.DeclarationId and s.CounterKey = SIIC.InvoiceCounterKey and s.LineNumber = SIIC.LineNumber 
+                                    where SIIC.DeclarationId ='" + declarationId + "' and s.IsParent = 0 and (SIIC.AttachmentTypeCode is null or (SIIC.CertificateExemptionTypeCode is null and SIIC.CertificateNumber is null))) SIIC " +
+                                    "set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    count = sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = @"Update SIIC set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
+                                   from  Customs.SupplierInvioceItemCertificats SIIC 
+                                   INNER JOIN Customs.supplierInvoiceItems s ON s.DeclarationId = SIIC.DeclarationId and s.CounterKey = SIIC.InvoiceCounterKey and s.LineNumber = SIIC.LineNumber 
+                                   where SIIC.DeclarationId ='" + declarationId + "' and s.IsParent = 0 and (i.AttachmentTypeCode is null or (i.CertificateExemptionTypeCode is null and i.CertificateNumber is null))";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    count = sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+            return count;
+        }
+
     }
 }
