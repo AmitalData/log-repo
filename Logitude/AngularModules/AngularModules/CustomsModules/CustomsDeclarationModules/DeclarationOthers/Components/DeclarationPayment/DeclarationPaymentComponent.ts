@@ -1346,7 +1346,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             item.Line = line;
             item.SequenceNumeric = seq;
             this.paymentPM.AddDeclarationPaymentMethod(item);
-            if (this.BetweenMinAndMax && isLoad && !(this.sumBtl != null && this.sumBtl > 0)) {
+            //&& !(this.sumBtl != null && this.sumBtl > 0)
+            if (this.BetweenMinAndMax && isLoad ) {
                 this.paymentMethodModelMax = new PaymentMethodModel(item, this);
             }
             else {
