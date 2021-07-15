@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     { 
                         TenantManagmentPrivateLabelsQuery privateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
                         TenantManagmentPrivateLabelsPM privateLabelsPM = privateLabelsQuery.GetSinglePM(tenantPM.PrivateLabelId);
-                        if(privateLabelsPM.PrivateLabelDomain == SecurityUtility.getLoggedDomain())
+                        if(privateLabelsPM.PrivateLabelUrl == SecurityUtility.getLoggedDomain())
                         { 
                           throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
                         } 
