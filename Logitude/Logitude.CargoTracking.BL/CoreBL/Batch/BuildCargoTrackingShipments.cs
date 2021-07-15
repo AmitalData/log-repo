@@ -36,10 +36,10 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
         public override void RunCode()
         {
+            TenantRepository tenantRepository = new TenantRepository(0);
             CargoTrackingArguments = GetCargoTrackingArgs();
             try
             {
-                TenantRepository tenantRepository = new TenantRepository(0);
                 UpdateIsIncrementalRunning(tenantRepository,true);
                 ServiceHelper.CheckAndUpdateWaterMark(destinationConnectionString,sourceConnectionString);
                 AddAllTablesToThread(CargoTrackingTableList.GetCargoTrackingTableList());
@@ -48,6 +48,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
             catch (Exception e)
             {
+                UpdateIsIncrementalRunning(tenantRepository,false);
                 throw new Exception(e.Message+"\n"+e.StackTrace);
             }
 
