@@ -22,6 +22,7 @@ import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/E
 import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -49,22 +50,28 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "ShortName": true,
         "LongName": false
     }
+    private entityResourceService: EntityResourceService;
 
     public AirShipmentToggle: boolean = false;
 
     constructor(private _entityListService: EntityListService) {
-        this.myShipmentDomainService = new ShipmentDomainService();
-        this.myUserPMService = new UserExtendedPMService();
-        this._ShipmentPMService = new ShipmentPMService();
-        this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
-        this._UserLastSettingsPMService = new UserLastSettingsPMService();
-        this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
+        this.InitializeServices();
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
         }
 
         this.checkAirShipmentToggle();
+    }
+
+    private InitializeServices() {
+        this.myShipmentDomainService = new ShipmentDomainService();
+        this.myUserPMService = new UserExtendedPMService();
+        this._ShipmentPMService = new ShipmentPMService();
+        this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        this._UserLastSettingsPMService = new UserLastSettingsPMService();
+        this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
+        this.entityResourceService = new EntityResourceService();
     }
 
     private checkAirShipmentToggle() {
@@ -904,10 +911,18 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
+        this.LoadEntityResource("Shipment");
         newWindow.Width = 600;
         newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
         newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
         return newWindowComponentPath;
+    }
+
+    LoadEntityResource(objectTableName: string) {
+
+        this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
+
+        });
     }
 
     private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
