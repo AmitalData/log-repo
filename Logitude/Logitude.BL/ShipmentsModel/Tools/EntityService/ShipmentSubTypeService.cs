@@ -56,6 +56,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CreatedByUserId = loggedContact.Id;
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.UpdatedByUserId = loggedContact.Id;
+            entityPM.IsManuallyAdded = true;
 
             this.ValidateCode(entityPM, true);
 

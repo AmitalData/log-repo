@@ -61,6 +61,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+            this.Property(t => t.IsManuallyAdded).HasColumnName("IsManuallyAdded");
 
             this.HasOptional(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeCode);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);

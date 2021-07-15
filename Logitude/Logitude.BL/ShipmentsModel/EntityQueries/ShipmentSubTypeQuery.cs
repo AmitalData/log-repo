@@ -50,6 +50,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Inactive = a.Inactive,
                         CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                         UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                        IsManuallyAdded = a.IsManuallyAdded,
                     }).FirstOrDefault();
         }
 
@@ -72,6 +73,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             Inactive = a.Inactive,
                                                             CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                                                             UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                                                            IsManuallyAdded = a.IsManuallyAdded,
                                                         };
             return result;
         }

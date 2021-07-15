@@ -78,6 +78,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsManuallyAdded"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

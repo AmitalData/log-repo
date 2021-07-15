@@ -21,5 +21,9 @@ export class ShipmentSubTypePMInitService {
         else {
             entityPM.UIProperties.SetEnabled("Code", "ShipmentSubType", false);
         }
+
+        if (!entityPM.IsManuallyAdded) {
+            entityPM.UIProperties.SetEnabled("Inactive", "ShipmentSubType", false);
+        }
     }
 }

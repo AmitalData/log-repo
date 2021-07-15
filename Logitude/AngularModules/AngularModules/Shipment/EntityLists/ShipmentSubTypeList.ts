@@ -21,5 +21,6 @@ export class ShipmentSubTypeList {
 		ShipmentTypeName: string;
 		CreatedByUserName: string;
 		UpdatedByUserName: string;
+		IsManuallyAdded: boolean;
 	
 }
