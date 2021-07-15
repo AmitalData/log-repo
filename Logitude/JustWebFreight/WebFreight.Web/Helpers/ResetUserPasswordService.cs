@@ -37,6 +37,7 @@ namespace WebFreight.Web.Helpers
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             if (!string.IsNullOrEmpty(brandingTenant))
                 tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(brandingTenant));
+
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
@@ -288,8 +289,7 @@ namespace WebFreight.Web.Helpers
 
         private bool IsCargoTrackingDomain()
         {
-            var requestURL = HttpContext.Current.Request.Url.ToString();
-            return requestURL.Contains("tracking.") || requestURL.Contains("ecommerce.");
+            return (tenantManagementPM != null && tenantManagementPM.EnableBranding && !String.IsNullOrEmpty(tenantManagementPM.CustomerURL));
         }
         private PasswordResetRequest GetPasswordResetRequestForMobile(string email, string reqNumber)
         {
