@@ -61,7 +61,13 @@ export class DeclarationDisplayOnlyChecks {
                 return of(serviceResponse);
             });
         }
-
+        if (this.entityPM.CancelRequestStatusCode == "2") {
+            return defer(() => {
+                var message = TextCodeTranslator.Translate("Customs.Declaration.O.CancelRequestSent");
+                serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
+                return of(serviceResponse);
+            });
+        }
 
         //other declaration checks
      declarationValidator.DeclarationViewDisplayOnlyChecks();

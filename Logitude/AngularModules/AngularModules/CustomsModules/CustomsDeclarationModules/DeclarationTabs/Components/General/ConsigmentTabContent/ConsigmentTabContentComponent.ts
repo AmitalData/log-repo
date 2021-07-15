@@ -34,6 +34,7 @@ import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLi
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 import { CargoIdentifireTypeListService } from '../../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
+import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -57,7 +58,7 @@ export class ConsigmentTabContentComponent
     IsCourierDeclaration: boolean = false;
     _DeclarationCourierStatus: DeclarationCourierStatusList;
     entityResourceService: EntityResourceService = new EntityResourceService();
-
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     public LoadingPortFilterItems: ApiQueryFilters;//38388
 
     // Edit grid array
@@ -75,7 +76,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
@@ -97,6 +98,36 @@ export class ConsigmentTabContentComponent
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
+
+    openKanamDeclaration()
+    {
+        this._declarationExtendedListService.GetSingleDeclarationByNumber(this.ManifestNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var entity = mm.Result;
+                if (entity != null)
+                {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת שחמ" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                DeclarationEventManager.DisplayModeChanged.emit(null);
+                            });
+                        });
+                }
+                else
+                {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 250;
+                    messageWindow.Height = 150;
+                    messageWindow.RTL = true;
+                    messageWindow.Show("לם נמצםה הצהרה");
+                }
+            }
+        });
+    }
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
@@ -141,7 +172,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -605,7 +636,7 @@ export class ConsigmentTabContentComponent
                 case '1':
                     {
                         this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ רםשי";
                         this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
@@ -618,7 +649,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
+                        this.ManifestNumberPlaceholder = "הזן הצהרת םחסנה";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -634,12 +665,12 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
                         break;
                     }
                 case '20':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
+                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלם";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -1127,7 +1158,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
 
     }
 
-
+   
 
 }
 

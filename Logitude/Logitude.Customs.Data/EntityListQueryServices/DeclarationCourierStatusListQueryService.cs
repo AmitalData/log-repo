@@ -180,7 +180,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterHAWB = cm.HAWB,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
-                                                                  CrateNumber = a.CrateNumber
+                                                                  CrateNumber = a.CrateNumber,
+                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList
                                                               });
 
 

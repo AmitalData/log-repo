@@ -24,7 +24,7 @@
                     <tr style="height:25px">
                         <td class="TabTitleRow" style="width:150px">
                             {{'Customs.Declaration.TH.DeclarationAmendment'| TextCodeTranslationPipe}}
-                            <button [disabled]="!CanOpenNewAmendment" style="width:100px;margin-top: 5px;margin-bottom: 5px;" class="Button" (click)="OpenNewAmendment(null,null)">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
+                            <button [disabled]="!declarationAmendmentSharedDataService.CanOpenNewAmendment" style="width:100px;margin-top: 5px;margin-bottom: 5px;" class="Button" (click)="OpenNewAmendment(null,null)">    {{'Customs.Declaration.O.OpenDeclarationAmendment'| TextCodeTranslationPipe}}</button>
     
 
                         </td>

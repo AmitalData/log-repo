@@ -409,6 +409,8 @@ import { ContainerizationExtendedListService } from './Services/ExtendedLists/Co
 import { CustomerClassificationTypeListService } from './Services/StandardLists/CustomerClassificationTypeListService';
 import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
+import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
+
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
@@ -825,7 +827,8 @@ export class ModuleProviders {
             case "VehicleEditComponentController": { myResult = new VehicleEditComponentController(); break; }
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
-          
+            case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+
                 
 
         }
