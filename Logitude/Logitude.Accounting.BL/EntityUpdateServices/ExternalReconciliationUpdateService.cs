@@ -21,6 +21,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class ExternalReconciliationUpdateService
    {
+        ExternalReconciliationPM externalRecoPM;
         protected override void OnCreating(ExternalReconciliationPM entityPM, EntityPM entityParentPM)
         {
             //Create ID
@@ -49,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(ExternalReconciliationPM externalRecoPM)
         {
-
+            this.externalRecoPM = externalRecoPM;
             if (externalRecoPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
@@ -134,16 +135,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ChequeDeposit)
             {
+                BankAccountPM bankAccount = GetBankAccountForExternalReconciliation(externalRecoPM);
+
+                var transactionComesFromDeferedAccountChequesMovingService = transactionPM.OppositeAccountId == bankAccount?.DeferredGLAccountId;
+                bool transactionHasOnlyOneCheque = !string.IsNullOrEmpty(transactionPM.Reference2);
                 var isDebitTransaction = (transactionPM.ForeignAmountDebit + transactionPM.LocalAmountDebit) != 0;
-                if (isDebitTransaction)
-                {
-                    arpaymentCheques = GetChequeOfDepositTransaction(transactionPM.SourceId, transactionPM.Tenant);
-                    bool transactionHasOnlyOneCheque = !string.IsNullOrEmpty(transactionPM.Reference2);
-                    if (transactionHasOnlyOneCheque)
-                        arpaymentCheques = FilterChequesByTransactionReference2(transactionPM, arpaymentCheques);
-                }
+                
+                if (isDebitTransaction && transactionComesFromDeferedAccountChequesMovingService)
+                    return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
+                else if(isDebitTransaction && !transactionHasOnlyOneCheque) 
+                    return GetChequeOfDepositTransactionBySource(transactionPM.SourceId, transactionPM.Tenant);
                 else
-                    arpaymentCheques = GetChequeOfDepositTransaction(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
+                    return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
             }
 
             if (transactionPM.SourceTypeCode == AccountingEntityValues.ARPayment)
@@ -156,14 +159,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             arpaymentCheques = arpaymentCheques.Where(d => d.ChequeNumber == transactionPM.Reference2).ToList();
             return arpaymentCheques;
         }
-        private List<ARPaymentChequePM> GetChequeOfDepositTransaction(string transactionReference, string depositId, int tenant)
+        private List<ARPaymentChequePM> GetChequeOfDepositTransactionBySourceAndReference(string transactionReference, string depositId, int tenant)
         {
             List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);
 
             arpaymentCheques = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).ToList();
             return arpaymentCheques;
         }
-        private List<ARPaymentChequePM> GetChequeOfDepositTransaction(string depositId, int tenant)
+        private List<ARPaymentChequePM> GetChequeOfDepositTransactionBySource(string depositId, int tenant)
         {
             List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);
             return arpaymentCheques;

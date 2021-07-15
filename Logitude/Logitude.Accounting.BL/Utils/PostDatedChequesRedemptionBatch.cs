@@ -175,6 +175,7 @@ namespace Logitude.Accounting.BL.Utils
                                 AccountingDate = DateTime.Now.Date,
                                 Tenant = aRPaymentCheque.Tenant,
                                 DebitAccountId = bankAccount.GLAccountId,
+                                CreditAccountId = bankAccount.DeferredGLAccountId,
                                 //  DebitControlAccountId = gLAccountPM.ControlAccountId,
                                 DocumentDate = aRPaymentCheque.ValueDate.Date,
                                 DueDate = aRPaymentCheque.ValueDate.Date,
