@@ -119,7 +119,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
 
                 MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
-                eventTracker.TrackEvent(searchEvent);
+                eventTracker.TrackEvent(zoomEvent);
 
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
