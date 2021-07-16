@@ -442,7 +442,15 @@
              document.getElementById("BackToLogin").style.display = "";
            
          } else document.getElementById("BackToLogin").style.display = "none";
-           var url = window.location.href;
+        var url = window.location.href;
+         
+        var IsLogitude = url.indexOf("logitudeworld") > -1
+
+        if (IsLogitude == false) {
+            $("#loginlogo").attr("src", "");
+        }
+
+
         //var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
         var myDomain = url.split('/')[2].split(':')[0];
            

@@ -14,6 +14,7 @@ namespace WebFreight.Web.DataProviders
         /// <summary>
         /// Consignor
         /// </summary>
+        public string ShipperNotes { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipperAddress_NoTel { get; set; }
         public string Messers { get; set; }
@@ -26,6 +27,7 @@ namespace WebFreight.Web.DataProviders
         /// Exporter's country code + HBL ( HBL not supported yet)
         /// </summary>
         public string TenantCountryCode { get; set; }
+        public string ConsigneeNotes { get; set; }
         public string ConsigneeAddress { get; set; }
         public string ConsigneeNameAddress { get; set; }
         public string TenantLogo { get; set; }
@@ -457,6 +459,7 @@ namespace WebFreight.Web.DataProviders
         public string ConnectedQuoteNumber { get; set; }
 
         public byte[] MainCarriageCarrierLogo { get; set; }
+        public byte[] UserSignatureImage { get; set; }
         public string DischargePortStateCode { get; set; }
         public string TotalContainers { get; set; }
         public DateTime? FirstPickupETA { get; set; }
