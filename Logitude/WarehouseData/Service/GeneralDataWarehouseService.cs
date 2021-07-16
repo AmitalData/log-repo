@@ -117,7 +117,7 @@ namespace WarehouseData.Helper
         }
 
         public List<TableClass> FillDataWarehouseTable()
-        {
+        {//
             List<TableClass> tableNameLists = new List<TableClass>();
             tableNameLists.Add(new TableClass() { TableName = "DWHSetting", DBTableName = "DWHSettings", Dw_TableName = "dw_DWHSettings", KeyName = "Tenant", HasConstraint = true, HasNotSpecifiedValue = true, RelatedFactTables = GetAllFactTableLists() });
             tableNameLists.Add(new TableClass() { TableName = "Address", DBTableName = "Addresses", Dw_TableName = "dw_Addresses", KeyName = "Id", HasConstraint = true, HasNotSpecifiedValue = true, RelatedFactTables = GetAllFactTableLists() });
