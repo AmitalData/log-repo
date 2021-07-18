@@ -355,7 +355,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
-    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment == null ? null : this.paymentPM.AutomaticPayment; }
     public set AutomaticPayment(newValue: number) {
         this.paymentPM.AutomaticPayment = newValue;
     }

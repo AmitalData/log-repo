@@ -410,6 +410,9 @@ import { CustomerClassificationTypeListService } from './Services/StandardLists/
 import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
 import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
+import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServices/DeclarationMenuButtonService';
+import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
+import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -788,6 +791,11 @@ export class ModuleProviders {
             case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
 
             //#endregion
+
+            //MetaData
+            case "DeclarationMenuButtonService": { myResult = new DeclarationMenuButtonService(); break; }
+            case "DeclarationHeaderScreenService": { myResult = new DeclarationHeaderScreenService(); break; }
+            case "DeclarationTabsService": { myResult = new DeclarationTabsService(); break; }
 
             //#region WebServices
             case "ClientMessagesService": { myResult = new ClientMessagesService(); break; }
