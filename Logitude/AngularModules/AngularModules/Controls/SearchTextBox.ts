@@ -155,7 +155,7 @@ export class SearchTextBox implements OnInit {
         temp.value = null;
         this.SearchText = null;
         temp.focus();
-        this.SearchTextChangeEvent.emit("");
+        this.SearchTextChangeEvent.emit(null);
     }
 
     GetObjectTableName(theObjectTableName: string) {
