@@ -1,11 +1,10 @@
-@release @all @stable 
+@release @all @stable
 Feature: Change Password Complexity
     The user enters different combinations in the Change Password screen from the Maintenance Module
 
     Scenario: change password with empty fields
         Given the user logged in and navigates to change password window from maintenance menu
-        When change user password with the following 
-        details
+        When change user password with the following details
             | CurrentPassword |  |
             | NewPassword     |  |
             | RetypePassword  |  |
@@ -15,7 +14,6 @@ Feature: Change Password Complexity
             | PasswordContainsNumber         | gray |
         When change password
         Then the validation message with "Confirm your password" message should appear
-
 
     Scenario: enter password with more than 3 following characters with correct format
         Given the user in change password window
@@ -54,7 +52,6 @@ Feature: Change Password Complexity
         When change password
         Then the validation message with "The passwords you entered do not match." message should appear
 
-
     Scenario: enter password with 8 following small letters
         Given the user in change password window
         When change user password with the following details
@@ -79,7 +76,7 @@ Feature: Change Password Complexity
             | PasswordContainsNumber         | green |
         When change password
         Then the validation message with "The current password is wrong!" message should appear
-        
+
 
     Scenario: change password with length less than 8 characters
         Given the user in change password window
