@@ -14,6 +14,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     public class DWObjectTableQuery
     {
         DWObjectTableRepository repository;
+        private readonly Dictionary<string, string> FactTablesFeatureToggle = new Dictionary<string, string>
+        {
+            {"BIF","Invoices"},
+            {"BQF", "Quotes"}
+        };
 
         public DWObjectTableQuery()
         {
@@ -194,31 +199,39 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).ToList();
         }
 
-        public List<ShortFactTableDetails> CheckFactTablesToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
+        public List<ShortFactTableDetails> CheckFactTablesFeatureToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
         {
-            // Check if Tenant have Invoice Feature Toggle
-            if (FeatureToggleHelper.HasFeatureToggle("BIF", tenant))
+            foreach (KeyValuePair<string, string> factTable in FactTablesFeatureToggle)
             {
-                return dwFactTablesNames;
-            }
-            else
-            {
-                var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == "Invoices");
-                if (invoiceFact != null)
+                if (!hasFeatureToggle(factTable.Key, tenant))
                 {
-                    dwFactTablesNames.Remove(invoiceFact);
+                    RemoveFactTable(factTable.Value, dwFactTablesNames);
                 }
-
-                return dwFactTablesNames;
             }
+            return dwFactTablesNames;
         }
 
 
-    }
+        private static void RemoveFactTable(string factTableName, List<ShortFactTableDetails> dwFactTablesNames)
+        {
+            var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == factTableName);
+            if (invoiceFact != null)
+            {
+                dwFactTablesNames.Remove(invoiceFact);
+            }
+        }
+
+        private static bool hasFeatureToggle(string code, int tenant)
+        {
+            return FeatureToggleHelper.HasFeatureToggle(code, tenant);
+        }
+    
+
+}
 
 
 
-    public class ShortFactTableDetails
+public class ShortFactTableDetails
     { 
         public string DisplayName { get; set; }
         public string Code { get; set; }
