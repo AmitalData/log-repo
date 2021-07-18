@@ -202,8 +202,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<ShortFactTableDetails> CheckFactTablesFeatureToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
         {
             foreach (KeyValuePair<string, string> factTable in FactTablesFeatureToggle)
-            {
-                if (!FeatureToggleHelper.HasFeatureToggle(code, tenant);)
+            { 
+                if (!FeatureToggleHelper.HasFeatureToggle(factTable.Key, tenant))
                 {
                     RemoveFactTable(factTable.Value, dwFactTablesNames);
                 }
@@ -213,13 +213,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
          
         private static void RemoveFactTable(string factTableName, List<ShortFactTableDetails> dwFactTablesNames)
         {
-            var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == factTableName);
-            if (invoiceFact != null)
+            var factTale = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == factTableName);
+            if (factTale != null)
             {
-                dwFactTablesNames.Remove(invoiceFact);
+                dwFactTablesNames.Remove(factTale);
             }
-        }
-          
+        } 
+
 }
 
 
