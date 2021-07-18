@@ -21,7 +21,6 @@ import { CardPMService } from '../../../Common/Services/StandardPMs/CardPMServic
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { APInvoiceLinePM } from '../../../Invoice/EntityPMs/APInvoiceLinePM';
-import { EntitlementTypeList } from '../../../Customs/EntityLists/EntitlementTypeList';
 import { ChargesTypePMService } from '../../../Common/Services/StandardPMs/ChargesTypePMService';
 import { VatTypePMService } from '../../../Common/Services/StandardPMs/VatTypePMService';
 
@@ -44,7 +43,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     public isRTL: boolean = false;
     public errors: string[] = [];
     public LocalCurrencyId: string;
-
+    public WaitingForApprovalStatusCode: string = "WA";
+    private VatTypePercentagesList: VatTypePercentagePM[] = [];
 
     // services
     private paymentTermListService: PaymentTermListService = new PaymentTermListService();
@@ -70,6 +70,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+        this.GetVatTypePercentegeListByDates();
         this.InitializeVendorLov();
 
     }
@@ -80,6 +81,22 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
         }
+    }
+
+    GetVatTypePercentegeListByDates() {
+        return new Promise(resolve => {
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
+            }
+            var commonDomainService: CommonDomainService = new CommonDomainService();
+            commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
+                if (!myResponse2.HasError) {
+                    this.VatTypePercentagesList = myResponse2.Result;
+                    resolve(myResponse2.Result);
+                }
+            });
+        });
     }
 
     public forceFocus: boolean = false;
@@ -121,7 +138,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     // Load Data
     private LastRatesList: LastRate[] = [];
-    private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -774,6 +790,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.IsCopied = true;
         entityPM.CopiedFrom = this.EntityPM.InvoiceNumber;
         entityPM.IsGeneralInvoice = true;
+        entityPM.StatusCode = this.WaitingForApprovalStatusCode;
     }
 
     CopyInvoiceLines(entityPM) {
@@ -787,12 +804,13 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         var apInvoiceLinePM = new APInvoiceLinePM(apInvoicePM);
         apInvoiceLinePM = originalAPInvoiceLine;
         this.SetChargesTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
-        this.SetVatTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
         apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
         apInvoiceLinePM.OpenAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.OpenAmount : 0;
-        apInvoiceLinePM.LocalDescription = originalAPInvoiceLine.LocalDescription;
+        apInvoiceLinePM.Description = originalAPInvoiceLine.Description;
+        apInvoiceLinePM.Notes = null;
         apInvoiceLinePM.VendorId = this.VendorId;
+        apInvoiceLinePM.VendorName = this.VendorName;
         return apInvoiceLinePM;
     }
 
@@ -801,8 +819,13 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         this.chargesTypePMService.get(originalAPInvoiceLine.ChargesTypeId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var chargetype = response.Result;
-                if (!chargetype.InActive)
+                if (!chargetype.InActive) {
                     copiedAPInvoiceLinePM.ChargesTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.ChargesTypeId : null;
+                    this.SetVatTypeIdIfActive(chargetype.VatTypeId, copiedAPInvoiceLinePM);
+                    copiedAPInvoiceLinePM.ChargeTypeGLAccountId = chargetype.PayableDebitGLAcountId;
+                    copiedAPInvoiceLinePM.ChargesTypeCode = chargetype.Code;
+                }
+
                 else {
                     this.ResetChargeTypeValues(copiedAPInvoiceLinePM);
                 }
@@ -817,16 +840,25 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         copiedAPInvoiceLinePM.ChargesTypeCode = null;
     }
 
-    private SetVatTypeIdIfActive(originalAPInvoiceLine: APInvoiceLinePM, copiedAPInvoiceLinePM: APInvoiceLinePM) {
-        this.vatTypePMService.get(originalAPInvoiceLine.VatTypeId).subscribe((response: ServiceResponse) => {
+    private SetVatTypeIdIfActive(vatTypeId: string, copiedAPInvoiceLinePM: APInvoiceLinePM) {
+        this.vatTypePMService.get(vatTypeId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var vattype = response.Result;
-                if (!vattype.InActive)
-                    copiedAPInvoiceLinePM.VatTypeId = this.IsCopyLinesChecked ? originalAPInvoiceLine.VatTypeId : null;
-                else
-                    copiedAPInvoiceLinePM.VatTypeId = null;
+                if (!vattype.InActive) {
+                    copiedAPInvoiceLinePM.VatTypeId = this.IsCopyLinesChecked ? vatTypeId : null;
+                    copiedAPInvoiceLinePM.VatTypeName = vattype.Code;
+                    copiedAPInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(vatTypeId);
+                }
+                else 
+                    this.ResetVatTypeValues(copiedAPInvoiceLinePM);
             }
         });
+    }
+
+    private ResetVatTypeValues(copiedAPInvoiceLinePM: APInvoiceLinePM) {
+        copiedAPInvoiceLinePM.VatTypeId = null;
+        copiedAPInvoiceLinePM.VatTypeName = null;
+        copiedAPInvoiceLinePM.VatPercentage = null;
     }
 
     private InitializeProfitCurrency(entityPM) {
@@ -881,5 +913,16 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                     this.CancelButtonClicked();
                 });
             });
+    }
+
+    GetVatTypePercentage(vatTypeId: string) {
+        var vatTypePercentage: number = null;
+
+        var vatTypePercentagePM = this.VatTypePercentagesList.filter(d => d.VatTypeId == vatTypeId)[0];
+        if (vatTypePercentagePM != null) {
+            vatTypePercentage = vatTypePercentagePM.Percentage;
+        }
+
+        return vatTypePercentage;
     }
 }
