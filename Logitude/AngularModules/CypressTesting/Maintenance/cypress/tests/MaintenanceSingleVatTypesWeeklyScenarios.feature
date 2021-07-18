@@ -1,4 +1,4 @@
-@stable @weekly
+@dev @weekly
 Feature: Single Vat Type Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
