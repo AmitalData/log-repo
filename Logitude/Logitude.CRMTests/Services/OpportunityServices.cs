@@ -50,6 +50,18 @@ namespace Logitude.CRMTests.Services
             return response.Data?.FirstOrDefault()?["Id"];
         }
 
+        public OpportunityPM UpdateInstance(Table appointmentTable, OpportunityPM opportunity)
+        {
+            dynamic dataTable = appointmentTable.CreateDynamicInstance();
+            return new OpportunityBuilder()
+                .WithModel(opportunity)
+                .Subject((string)dataTable.Subject)
+                .OpportunityTypeId(GetOpportunityTypeIdByName((string)dataTable.OpportunityType))
+                .NumberOfShipments((int)dataTable.ShipmentsCount)
+                .StageId(GetStageIdByName((string)dataTable.Stage))
+                .RatingCode((string)dataTable.Rating)
+                .Build();
+        }
 
     }
 }
