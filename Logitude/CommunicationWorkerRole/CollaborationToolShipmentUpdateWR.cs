@@ -29,7 +29,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         var msg = LogitudeConsumer.Consume();
-                        if (msg != null && msg.Message.Key == KakaMessageTypes.TaskUpdate)
+                        if (msg != null && msg.Message.Key == KakaMessageTypes.TaskDone)
                         {
                             UpdateShipmentPM(msg.Message.Value);
                         }
