@@ -203,15 +203,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             foreach (KeyValuePair<string, string> factTable in FactTablesFeatureToggle)
             {
-                if (!hasFeatureToggle(factTable.Key, tenant))
+                if (!FeatureToggleHelper.HasFeatureToggle(code, tenant);)
                 {
                     RemoveFactTable(factTable.Value, dwFactTablesNames);
                 }
             }
             return dwFactTablesNames;
         }
-
-
+         
         private static void RemoveFactTable(string factTableName, List<ShortFactTableDetails> dwFactTablesNames)
         {
             var invoiceFact = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == factTableName);
@@ -220,13 +219,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 dwFactTablesNames.Remove(invoiceFact);
             }
         }
-
-        private static bool hasFeatureToggle(string code, int tenant)
-        {
-            return FeatureToggleHelper.HasFeatureToggle(code, tenant);
-        }
-    
-
+          
 }
 
 
