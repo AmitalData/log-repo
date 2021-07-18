@@ -352,8 +352,8 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
       _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission;
         _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
         var length = this.EntityPM.InterestReportLinesByDates.length;
-      _ARInvoiceLinePM.Description = TextCodeTranslator.Translate("InterestReport.O.InterestFor")+ " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
-        _ARInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " עד " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
+      _ARInvoiceLinePM.Description = "Interest  For"+ " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
+      _ARInvoiceLinePM.LocalDescription = "ריבית ל" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
      _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
         _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
      _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;

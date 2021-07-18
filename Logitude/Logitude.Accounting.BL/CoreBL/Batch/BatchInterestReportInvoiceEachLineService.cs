@@ -267,8 +267,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)interestReport.TotalAmount;
             }
             aRInvoiceLinePM.Quantity = 1;         
-            aRInvoiceLinePM.Description =string.Concat(TranslateTextsClass.Translate("InterestReport.O.InterestFor", interestReport.Tenant), " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
-            aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים  " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd /MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
+            aRInvoiceLinePM.Description =string.Concat("Interest  For", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
+            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
