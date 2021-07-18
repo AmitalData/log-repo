@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;de45&quot;"
+  Code="&quot;37ff&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -562,11 +562,19 @@
       SearchFields="&quot;LCP,Lock Counter Procedure&quot;"
       Description="&quot;Lock Counter Procedure&quot;"
       Code="&quot;LCP&quot;" />
+
     <Record
       Code="&quot;PLE&quot;"
       Name="&quot;PL Export Shipments&quot;"
       SearchFields="&quot;PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label&quot;"
       Description="&quot;Allow to Create New Air Shipment From Private Label&quot;" />
+
+    <Record
+      Code="&quot;BQF&quot;"
+      Name="&quot;Quotes DWH&quot;"
+      SearchFields="&quot;BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen&quot;"
+      Description="&quot;Allow Tenants to Show Quotes Fact on the BI Report Screen&quot;" />
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
