@@ -783,6 +783,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PrivateLabelIncludePickup).HasColumnName("PrivateLabelIncludePickup");
             this.Property(t => t.PrivateLabelIncludeDelivery).HasColumnName("PrivateLabelIncludeDelivery");
             this.Property(t => t.RequestedFlightDate).HasColumnName("RequestedFlightDate");
+            this.Property(t => t.StandalonePickupDeliveryId).HasColumnName("StandalonePickupDeliveryId");
+            this.Property(t => t.ForwarderPickUpDeliveryType).HasColumnName("ForwarderPickUpDeliveryType");
 
             if (dbms == "oracle")
             {

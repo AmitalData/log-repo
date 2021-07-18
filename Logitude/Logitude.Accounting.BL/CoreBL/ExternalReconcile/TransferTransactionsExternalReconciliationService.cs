@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         int tenant;
         ExternalReconciliationPM externalRecoPM;
         BankAccountPM bankAccountPM;
+        int CreatedReconciliationsCount = 0;
 
         public TransferTransactionsExternalReconciliationService(ExternalReconciliationPM _externalRecoPM)
         {
@@ -35,15 +36,20 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         }
 
-        public void HandleTransferAccountTransactions()
+        public int HandleTransferAccountTransactions()
         {
             List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
 
             bool transferAccountIsSameAsBankAccount = (bankAccountPM == null || bankAccountPM.GLAccountId == bankAccountPM.TransferGLAcccountId);
             if (transferRecoLines.Count() == 0 || transferAccountIsSameAsBankAccount)
+            {
                 UpdateExternalReconciliation();
+                CreatedReconciliationsCount = 1;
+            }
             else
                 SplitTransferReconciliationsFromOriginalReconiliation();
+
+            return CreatedReconciliationsCount;
         }
 
         private void UpdateExternalReconciliation()
@@ -66,13 +72,19 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 var isTransferTransaction = transactionRecoLine.LedgerGLAccountId == bankAccountPM.TransferGLAcccountId;
                 if (isTransferTransaction)
+                {
                     CreateReconcileForTransferTransactionRecoLine(transactionRecoLine);
+                    CreatedReconciliationsCount++;
+                }
             }
         }
         private void SubmitOriginalReconciliation()
         {
             if (externalRecoPM.ExternalReconciliationLines.Count() > 0)
+            {
                 UpdateExternalReconciliation();
+                CreatedReconciliationsCount++;
+            }
         }
 
         private void CreateReconcileForTransferTransactionRecoLine(ExternalReconciliationLinePM transactionRecoLine)

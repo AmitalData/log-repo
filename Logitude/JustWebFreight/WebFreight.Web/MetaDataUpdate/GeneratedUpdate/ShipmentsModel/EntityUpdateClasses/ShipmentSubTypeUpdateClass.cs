@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentSubTypeUpdateClass
    {  		
-		public const string HashString = "02ad00026c6b98ab76ff3ba71a9793db";
+		public const string HashString = "88b9f9147f5f1a08c7a890b8023045a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -799,13 +799,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						LookUpTableName =  "ShipmentType",
 					  						MinLength =  0,
 					  						MaxLength =  4,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  true,
+					  						SystemRequired =  false,
 					  						SystemMaxLength =  4,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,

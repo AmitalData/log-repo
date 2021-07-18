@@ -90,6 +90,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsMultiHarmonize { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string HorseId { get; set; }
+        public string HorseName { get; set; }
+
         private List<ShipmentPackageHarmonizePM> insidePackageHarmonizes;
         [Composition]
         [Include]

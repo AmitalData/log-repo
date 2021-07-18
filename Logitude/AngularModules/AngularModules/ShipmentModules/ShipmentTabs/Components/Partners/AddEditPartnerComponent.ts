@@ -6,6 +6,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ShipmentTool } from '../../../../Shipment/Tools';
 
 @Component({
     
@@ -126,7 +127,9 @@ export class AddEditPartnerComponent implements OnInit {
                     this.DataContext.fatherComponent.OnCustomerChanged();
 
                     if (this.EntityPM.ShipmentProductItems.length > 0) {
-                        this.showDeleteProductItemsConfirmWindow = true;
+                        if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
+                            this.showDeleteProductItemsConfirmWindow = true;
+                        }
                     }                    
                 }
             }

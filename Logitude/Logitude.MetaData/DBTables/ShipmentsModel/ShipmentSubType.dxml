@@ -76,7 +76,7 @@
     Type="varchar"
     Size="4">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

@@ -73,6 +73,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           CountryCode = a.Country != null ? a.Country.Code : "",
                                                           Harmonize = a.Harmonize,
                                                           IsMultiHarmonize = a.IsMultiHarmonize,
+                                                          HorseName = a.Horse == null ? null : a.Horse.Name,
+                                                          HorseId = a.HorseId,
                                                       }).ToList();
 
             foreach (InsideShipmentPackagePM package in myResult)
@@ -136,6 +138,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CountryCode = a.Country != null ? a.Country.Code : "",
                                                     Harmonize = a.Harmonize,
                                                     IsMultiHarmonize = a.IsMultiHarmonize,
+                                                    HorseName = a.Horse == null ? null : a.Horse.Name,
+                                                    HorseId = a.HorseId,
                                                 }).FirstOrDefault();
 
             myResult.InsidePackageHarmonizes = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(myResult.Id, tenant);
