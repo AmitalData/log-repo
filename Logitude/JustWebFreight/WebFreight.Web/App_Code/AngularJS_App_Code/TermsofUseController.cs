@@ -26,8 +26,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {  
-                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1"; 
-                 
+                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+                bool isLogboxUrl = SecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;  
+
                 TermsofUseArgs result = new TermsofUseArgs();
                  
                 if (!string.IsNullOrEmpty(userId))
@@ -53,7 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         } 
                     }
 
-                    if (termofuse == null) termofuse = termsofUseQuery.GetTermsofUseDefault();
+                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault();
 
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
