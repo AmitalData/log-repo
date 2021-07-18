@@ -190,6 +190,10 @@
         {
             return "activities/GetSingle?id=" + id;
         }
+        public static string OpportunitySingle(string id)
+        {
+            return "Opportunities/GetSingle?id=" + id;
+        }
 
     }
 }
