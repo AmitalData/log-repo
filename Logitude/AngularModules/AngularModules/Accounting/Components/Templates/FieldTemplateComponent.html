@@ -12,158 +12,157 @@
         <td>
             <div class="MediaFill">
 
-                                <!-- UserDefinedReport -->
-                                <div *ngIf="ObjectTableName == 'UserDefinedReport'">
-                                    <div *ngIf="FieldName == 'CreatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
-                                        <div>
-                                            {{ showLocal ? Entity.CreatedByLocalName : Entity.CreatedByEnglishName }}
-                                        </div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'UpdatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
-                                        <div>
-                                            {{ showLocal ? Entity.UpdatedByLocalName : Entity.UpdatedByEnglishName }}
-                                        </div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'IsCancelled'">
-                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" />
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- UserDefinedReport -->
+                <div *ngIf="ObjectTableName == 'UserDefinedReport'">
+                    <div *ngIf="FieldName == 'CreatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
+                        <div>
+                            {{ showLocal ? Entity.CreatedByLocalName : Entity.CreatedByEnglishName }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'UpdatedByName'" [style.text-align]="isRTL ? 'right' : 'left'">
+                        <div>
+                            {{ showLocal ? Entity.UpdatedByLocalName : Entity.UpdatedByEnglishName }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'IsCancelled'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" />
+                        </div>
+                    </div>
+                </div>
 
 
 
 
                 <!-- GLAccount -->
-                                <div *ngIf="ObjectTableName == 'GLAccount'">
-                                    <div *ngIf="FieldName == 'BalanceInLocalCurrency'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                                            {{
+                <div *ngIf="ObjectTableName == 'GLAccount'">
+                    <div *ngIf="FieldName == 'BalanceInLocalCurrency'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
+                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
+                            {{
                             FieldValue | NumbersPipe:'n2'
-                                            }} {{
+                            }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
                             TenantCurrencySign : ''
-                                            }}
-                                        </div>
-                                    </div>
-
-
-                                    <div *ngIf="FieldName == 'BalanceInLocalCurrency'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                                            {{
+                            }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'LocalBalanceInDue'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
+                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
+                            {{
                             FieldValue | NumbersPipe:'n2'
-                                            }} {{
+                            }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
                             TenantCurrencySign : ''
-                                            }}
-                                        </div>
-                                    </div>
+                            }}
+                        </div>
+                    </div>
 
-                                    <div *ngIf="FieldName == 'ForeignBalanceInDue'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                                            {{
+
+                    <div *ngIf="FieldName == 'BalanceInForeignCurrency'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
+                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
+                            {{
                             FieldValue | NumbersPipe:'n2'
-                                            }} {{
+                            }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
                             TenantCurrencySign : ''
-                                            }}
-                                        </div>
-                                    </div>
-
-
-                                    <div *ngIf="FieldName == 'ForeignBalanceInDue'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                                            {{
+                            }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'ForeignBalanceInDue'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
+                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
+                            {{
                             FieldValue | NumbersPipe:'n2'
-                                            }} {{
+                            }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
                             TenantCurrencySign : ''
-                                            }}
-                                        </div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'LocalName'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue }}</div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'ActiveStatusName'">
-                                        <div [style.text-align]="isRTL ? 'right' : 'left'" [class.red]="FieldValue == 'Inactive'">
-                                            {{
+                            }}
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="FieldName == 'LocalName'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue }}</div>
+                    </div>
+                    <div *ngIf="FieldName == 'ActiveStatusName'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" [class.red]="FieldValue == 'Inactive'">
+                            {{
                             FieldValue
-                                            }}
-                                        </div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'VatNumber'">
-                                        <div>{{ FieldValue }}</div>
-                                    </div>
-                                    <div *ngIf="FieldName == 'AutomaticReconcileName'">
-                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{
+                            }}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'VatNumber'">
+                        <div>{{ FieldValue }}</div>
+                    </div>
+                    <div *ngIf="FieldName == 'AutomaticReconcileName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
  showLocal ?
                             Entity["AutomaticReconcileLocalName"] : Entity["AutomaticReconcileName"]
-                                            }}
-                                        </div>
-                                    </div>
+                            }}
+                        </div>
+                    </div>
 
-                                    <div *ngIf="FieldName == 'ReconcileMethodName'">
-                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{ Entity["ReconcileMethodName"] }}
-                                        </div>
-                                    </div>
+                    <div *ngIf="FieldName == 'ReconcileMethodName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{ Entity["ReconcileMethodName"] }}
+                        </div>
+                    </div>
 
-                                    <div *ngIf="FieldName == 'CreatedByUserName'">
-                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{ showLocal ? Entity["CreatedByLocalName"] : Entity["CreatedByUserName"] }}
-                                        </div>
-                                    </div>
+                    <div *ngIf="FieldName == 'CreatedByUserName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{ showLocal ? Entity["CreatedByLocalName"] : Entity["CreatedByUserName"] }}
+                        </div>
+                    </div>
 
-                                    <div *ngIf="FieldName == 'UpdatedByUserName'">
-                                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{ showLocal ? Entity["UpdatedByLocalName"] : Entity["UpdatedByUserName"] }}
-                                        </div>
-                                    </div>
+                    <div *ngIf="FieldName == 'UpdatedByUserName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{ showLocal ? Entity["UpdatedByLocalName"] : Entity["UpdatedByUserName"] }}
+                        </div>
+                    </div>
 
-                                    <div *ngIf="FieldName == 'SplitCurrencyAccount'">
-                                        <div *ngIf="IsHeaderScreenTemplate">
-                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="'left'" *ngIf="Entity.GLAccountCurrencies && Entity.GLAccountCurrencies.length > 0 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
-                                                        [mode]="'Info'">
-                                                <div *ngFor="let item of Entity.GLAccountCurrencies">
-                                                    {{item.CurrencyCode}} <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
-                                                </div>
-                                            </LogToolTip>
-                                        </div>
-                                    </div>
-
-                                    <div *ngIf="FieldName == 'RelatedGLAccount'">
-                                        <div *ngIf="IsHeaderScreenTemplate">
-                                            <div *ngIf="Entity.ParentAccountId">
-                                                <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentAccountId)">{{Entity.ParentAccountName}} </a>({{'GLAccounts.O.Parent' | TextCodeTranslationPipe}})
-                                            </div>
-
-                                            <div *ngIf="Entity.GLAccountChildren.length == 1">
-                                                <a href="javascript:;" (click)="OpenGLAccount(Entity.GLAccountChildren[0].Id)">{{Entity.GLAccountChildren[0].LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
-                                            </div>
-
-                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="isRTL ? 'right' : 'left'" *ngIf="Entity.GLAccountChildren.length > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
-                                                        [mode]="'Info'">
-                                                <div *ngFor="let item of Entity.GLAccountChildren">
-                                                    <a href="javascript:;" (click)="OpenGLAccount(item.Id)">{{item.LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
-                                                </div>
-                                            </LogToolTip>
-                                        </div>
-                                    </div>
-
-                                    <div *ngIf="FieldName == 'ParentName'">
-                                        <div *ngIf="IsHeaderScreenTemplate">
-                                            <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentCurrencyId)">{{FieldValue}}</a>
-                                        </div>
-                                    </div>
-                                    <div class="TextTrimming" *ngIf="FieldName && FieldName.includes('CalculatedAgingPeriod')" style="text-align: right; padding: 0px 2px;direction: ltr;">
-                                        {{ GetCalculatedAgingPeriod() | NumbersPipe:'N2'  }}
-                                    </div>
+                    <div *ngIf="FieldName == 'SplitCurrencyAccount'">
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="'left'" *ngIf="Entity.GLAccountCurrencies && Entity.GLAccountCurrencies.length > 0 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
+                                        [mode]="'Info'">
+                                <div *ngFor="let item of Entity.GLAccountCurrencies">
+                                    {{item.CurrencyCode}} <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
                                 </div>
+                            </LogToolTip>
+                        </div>
+                    </div>
+
+                    <div *ngIf="FieldName == 'RelatedGLAccount'">
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div *ngIf="Entity.ParentAccountId">
+                                <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentAccountId)">{{Entity.ParentAccountName}} </a>({{'GLAccounts.O.Parent' | TextCodeTranslationPipe}})
+                            </div>
+
+                            <div *ngIf="Entity.GLAccountChildren.length == 1">
+                                <a href="javascript:;" (click)="OpenGLAccount(Entity.GLAccountChildren[0].Id)">{{Entity.GLAccountChildren[0].LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
+                            </div>
+
+                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="isRTL ? 'right' : 'left'" *ngIf="Entity.GLAccountChildren.length > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
+                                        [mode]="'Info'">
+                                <div *ngFor="let item of Entity.GLAccountChildren">
+                                    <a href="javascript:;" (click)="OpenGLAccount(item.Id)">{{item.LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
+                                </div>
+                            </LogToolTip>
+                        </div>
+                    </div>
+
+                    <div *ngIf="FieldName == 'ParentName'">
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentCurrencyId)">{{FieldValue}}</a>
+                        </div>
+                    </div>
+                    <div class="TextTrimming" *ngIf="FieldName && FieldName.includes('CalculatedAgingPeriod')" style="text-align: right; padding: 0px 2px;direction: ltr;">
+                        {{ GetCalculatedAgingPeriod() | NumbersPipe:'N2'  }}
+                    </div>
+                </div>
 
                 <!-- Journal -->
                 <div *ngIf="ObjectTableName == 'Journal'">
@@ -428,14 +427,14 @@
 
                     <div *ngIf="FieldName == 'ARInvoiceNumber'">
 
-                   <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"
-                        [style.text-align]="isRTL ? 'right' : 'left'">
-                        <a href="#" (click)="OpenARInvoice(Entity.ARinvoiceId)">{{FieldValue}}</a>
-                   </div>
-                   <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"
-                        [style.text-align]="isRTL ? 'right' : 'left'">
-                        {{FieldValue}}
-                   </div>
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"
+                             [style.text-align]="isRTL ? 'right' : 'left'">
+                            <a href="#" (click)="OpenARInvoice(Entity.ARinvoiceId)">{{FieldValue}}</a>
+                        </div>
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"
+                             [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{FieldValue}}
+                        </div>
 
                     </div>
 
@@ -446,7 +445,7 @@
                             FieldValue
                             }}
                         </div>
-                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"[style.color]="textColor"
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.color]="textColor"
                              [style.text-align]="isRTL ? 'right' : 'left'">
                             {{
                             FieldValue
@@ -480,7 +479,7 @@
 
                     <div *ngIf="FieldName == 'APPaymentNo'">
                         <div *ngIf="IsHeaderScreenTemplate">
-                            <a  href="#" (click)="OpenAPPayment(Entity.APPaymentId)">{{Entity.APPaymentNo}}</a>
+                            <a href="#" (click)="OpenAPPayment(Entity.APPaymentId)">{{Entity.APPaymentNo}}</a>
                         </div>
                     </div>
 
@@ -576,19 +575,19 @@
                 <!-- Tax Report -->
                 <!--<div *ngIf="ObjectTableName == 'TaxReport'">
 
-        <div *ngIf="FieldName == 'StatusEnglishName'">
-            <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                {{
-                FieldValue
-                }}
-            </div>
-            <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                {{
-                FieldValue
-                }}
-            </div>
-        </div>
-    </div>-->
+                    <div *ngIf="FieldName == 'StatusEnglishName'">
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                        <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{
+                            FieldValue
+                            }}
+                        </div>
+                    </div>
+                </div>-->
             </div>
         </td>
     </tr>
