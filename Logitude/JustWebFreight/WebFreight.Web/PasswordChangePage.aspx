@@ -437,13 +437,12 @@
 
 
          var x =  window.sessionStorage.getItem("PasswordChange");
-         var LoginLogo = "images/LoginScreen/header.jpg"; 
+         var LoginLogo = ""; //"images/LoginScreen/header.jpg"; 
          var IsLogitude = window.location.href.indexOf("logitudeworld") > -1
 
-        if (IsLogitude == false) {
-            $("#loginlogo").attr("src", ""); 
-        } else 
-            $("#loginlogo").attr("src", LoginLogo);
+        if (IsLogitude == true) {
+          $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
+        }  
 
          if (x == "ShowLink") {
              window.sessionStorage.setItem("PasswordChange", "");
