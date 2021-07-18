@@ -168,7 +168,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     if (!entityPM.MarkFollowUpsAsDone)
                     {
                         string notes = null;
-                        if (entityPM.IsStandalonePickupDelivery)
+                        if (!entityPoco.IsStandalonePickupDelivery && entityPM.IsStandalonePickupDelivery)
                         {
                             notes = this.GetStandaloneShipmentNotes("Conncted To ");
                         }

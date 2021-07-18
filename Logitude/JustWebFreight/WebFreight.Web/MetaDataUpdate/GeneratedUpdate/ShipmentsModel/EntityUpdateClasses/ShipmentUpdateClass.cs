@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "1076607e38fe91b9d173f897ee5045cc";
+		public const string HashString = "fc490e8d6e2be3688e1166ec46b04a57";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -48358,8 +48358,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "SADT",
-                EnglishName =  "Disconnecting Standalone Shipment",
-                LocalName =  "Disconnecting Standalone Shipment",
+                EnglishName =  "Standalone shipment is disconnected",
+                LocalName =  "Standalone shipment is disconnected",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

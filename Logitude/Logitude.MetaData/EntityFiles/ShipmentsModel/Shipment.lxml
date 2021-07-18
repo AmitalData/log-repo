@@ -95798,8 +95798,8 @@
     <EventType
       Code="&quot;SADT&quot;"
       ObjectTableName="&quot;Shipment&quot;"
-      EnglishName="&quot;Disconnecting Standalone Shipment&quot;"
-      LocalName="&quot;Disconnecting Standalone Shipment&quot;"
+      EnglishName="&quot;Standalone shipment is disconnected&quot;"
+      LocalName="&quot;Standalone shipment is disconnected&quot;"
       IsManualEntry="false"
       ShortView="true"
       IsAgentView="false"
