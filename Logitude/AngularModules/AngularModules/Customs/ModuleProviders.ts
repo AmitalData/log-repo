@@ -413,6 +413,7 @@ import { DeclarationAmendmentSharedDataService } from './Services/DataChange/Dec
 import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServices/DeclarationMenuButtonService';
 import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
 import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
+import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -696,6 +697,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
 
                 
              //#endregion                

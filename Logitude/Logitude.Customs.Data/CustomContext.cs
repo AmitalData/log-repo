@@ -278,6 +278,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomerIdentifyTypeMap());
 	
+            modelBuilder.Configurations.Add(new CustomerIndicationTypeMap());
+	
             modelBuilder.Configurations.Add(new CustomerRoleTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerTypeGeneralMap());
@@ -1962,6 +1964,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomerIdentifyType> CustomerIdentifyTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomerIndicationType> CustomerIndicationTypes 
 	 {
 	      get; set;
 	 

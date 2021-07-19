@@ -122,6 +122,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomerClassificationType> CustomerClassificationTypes { get; }
 		 IDbSet<CustomerIdentificationType> CustomerIdentificationTypes { get; }
 		 IDbSet<CustomerIdentifyType> CustomerIdentifyTypes { get; }
+		 IDbSet<CustomerIndicationType> CustomerIndicationTypes { get; }
 		 IDbSet<CustomerRoleType> CustomerRoleTypes { get; }
 		 IDbSet<CustomerTypeGeneral> CustomerTypeGenerals { get; }
 		 IDbSet<CustomMetaDataType> CustomMetaDataTypes { get; }

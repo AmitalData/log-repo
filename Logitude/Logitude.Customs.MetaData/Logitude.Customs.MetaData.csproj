@@ -255,6 +255,7 @@
     <None Include="DBTables\CustomerClassificationType.dxml" />
     <None Include="DBTables\CustomerIdentificationType.dxml" />
     <None Include="DBTables\CustomerIdentifyType.dxml" />
+    <None Include="DBTables\CustomerIndicationType.dxml" />
     <None Include="DBTables\CustomerRoleType.dxml" />
     <None Include="DBTables\CustomerTypeGeneral.dxml" />
     <None Include="DBTables\CustomMetaDataType.dxml" />
@@ -508,6 +509,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
