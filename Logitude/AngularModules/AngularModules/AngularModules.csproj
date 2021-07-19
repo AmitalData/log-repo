@@ -1399,6 +1399,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomerClassificationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomerIdentificationTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CustomerIndicationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAutonomyKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
@@ -1476,6 +1477,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomerClassificationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomerIdentificationTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CustomerIndicationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAutonomyKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
@@ -1536,6 +1538,9 @@
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransportMeansTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
+    <TypeScriptCompile Include="Customs\MetaDataServices\HeaderScreenServices\DeclarationHeaderScreenService.ts" />
+    <TypeScriptCompile Include="Customs\MetaDataServices\MenuButtonServices\DeclarationMenuButtonService.ts" />
+    <TypeScriptCompile Include="Customs\MetaDataServices\TabsServices\DeclarationTabsService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\DeclarationAmendmentSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
@@ -1584,6 +1589,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CurrencyTypeTenantListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomerClassificationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomerIdentificationTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomerIndicationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAutonomyKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />

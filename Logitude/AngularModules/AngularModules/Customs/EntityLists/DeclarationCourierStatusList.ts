@@ -82,6 +82,7 @@ export class DeclarationCourierStatusList {
 	DistributionArea: string;
 	CrateNumber: string;
 	AmendmentDontDisplayInList: boolean;
+	TruckerName: string;
 	
 }
  

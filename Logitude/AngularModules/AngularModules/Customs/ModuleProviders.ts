@@ -410,6 +410,10 @@ import { CustomerClassificationTypeListService } from './Services/StandardLists/
 import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
 import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
+import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServices/DeclarationMenuButtonService';
+import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
+import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
+import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -693,6 +697,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
 
                 
              //#endregion                
@@ -788,6 +793,11 @@ export class ModuleProviders {
             case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
 
             //#endregion
+
+            //MetaData
+            case "DeclarationMenuButtonService": { myResult = new DeclarationMenuButtonService(); break; }
+            case "DeclarationHeaderScreenService": { myResult = new DeclarationHeaderScreenService(); break; }
+            case "DeclarationTabsService": { myResult = new DeclarationTabsService(); break; }
 
             //#region WebServices
             case "ClientMessagesService": { myResult = new ClientMessagesService(); break; }

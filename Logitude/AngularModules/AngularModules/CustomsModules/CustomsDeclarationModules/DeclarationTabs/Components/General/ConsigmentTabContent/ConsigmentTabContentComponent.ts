@@ -35,6 +35,7 @@ import { DeclarationCourierStatusListService } from '../../../../../../Customs/S
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 import { CargoIdentifireTypeListService } from '../../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { CargoIdentifireTypePM } from '../../../../../../Customs/EntityPMs/CargoIdentifireTypePM';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -60,6 +61,7 @@ export class ConsigmentTabContentComponent
     entityResourceService: EntityResourceService = new EntityResourceService();
     _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     public LoadingPortFilterItems: ApiQueryFilters;//38388
+    _CargoIdentifireTypePM: CargoIdentifireTypePM = new CargoIdentifireTypePM();
 
     // Edit grid array
     ConsimentPackages: ObservableCollection;
@@ -76,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.ConsimentPackages = new ObservableCollection([]);
@@ -172,7 +174,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -428,7 +430,12 @@ export class ConsigmentTabContentComponent
 
 
     public get ThirdCargoID() { return this.EntityPM ? this.EntityPM.ThirdCargoID : null; }
-    public set ThirdCargoID(newValue: string) { this.EntityPM.ThirdCargoID = newValue; }
+    public set ThirdCargoID(newValue: string) {
+        this.EntityPM.ThirdCargoID = newValue;
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
+    }
 
     public get UnloadDate() { return this.EntityPM ? this.EntityPM.UnloadDate : null; }
     public set UnloadDate(newValue: Date) { this.EntityPM.UnloadDate = newValue; }
@@ -447,6 +454,10 @@ export class ConsigmentTabContentComponent
     public get SecondCargoID() { return this.EntityPM ? this.EntityPM.SecondCargoID : null; }
     public set SecondCargoID(newValue: string) {
         this.EntityPM.SecondCargoID = newValue;
+
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
     }
 
 
@@ -481,6 +492,10 @@ export class ConsigmentTabContentComponent
     public set ManifestNumber(newValue: string) {
         this.EntityPM.ManifestNumber = newValue;
         this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
+
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
     }
 
     //public get IsLastReleaseFromWarehous() { return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; }
@@ -617,7 +632,31 @@ export class ConsigmentTabContentComponent
     }
     //#endregion
 
+    setRequired() {
+        if (this.declarationPM.Direction == 'E') {
+            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
+            if (this.ManifestNumber != null) {
+                this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, false);
+            }
 
+            if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
+                if (this.SecondCargoID != null) {
+                    this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+            }
+            if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
+                if (this.ThirdCargoID != null) {
+                    this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+            }
+        }
+    }
     SetTipsInsideCargoIdentifires(value: string) {
 
          if (this.declarationPM.Direction == 'E') {
@@ -627,6 +666,8 @@ export class ConsigmentTabContentComponent
                         this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
                         this.SecondCargoIDPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
                         this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
+                        this._CargoIdentifireTypePM = Response.Result;
+                        this.setRequired();
                     }
                 });
         }

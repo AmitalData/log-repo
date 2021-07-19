@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             );
 
 
-            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
+            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable.Include("Trucker")
 
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
@@ -181,7 +181,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,
-                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList
+                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList,
+                                                                  TruckerName = a.Trucker.Card.LocalName,
                                                               });
 
 
