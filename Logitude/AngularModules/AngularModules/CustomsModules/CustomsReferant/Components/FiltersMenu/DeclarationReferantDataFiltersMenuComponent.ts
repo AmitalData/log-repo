@@ -87,7 +87,6 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var DepartmentNameFromFilters = this.DepartmentNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
-
         var DepartmentNameList;
         if (DepartmentNameFromFilters.length > 0 && DepartmentNameFromFilters[0] != null)
          DepartmentNameList = DepartmentNameFromFilters[0].split("%2C");
@@ -424,7 +423,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שאילתא ל - OCR");
+                " הצגת מסך : שםילתם ל - OCR");
         }
         else {
             alert("ShowOCRQuery");
