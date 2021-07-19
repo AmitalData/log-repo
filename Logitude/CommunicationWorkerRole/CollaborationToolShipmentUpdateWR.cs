@@ -10,6 +10,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -114,6 +115,17 @@ namespace CommunicationWorkerRole
                     PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
                     Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
                     object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
+                    if (entry.Key == "OBLTypeCode")
+                    {
+                        OBLTypeRepository myOBLRepo = new OBLTypeRepository(shipment.Tenant);
+                        var myOBL = myOBLRepo.GetSingleOBLType(entry.Value);
+                        if (myOBL == null)
+                        {
+                            myOBL = myOBLRepo.GetAll().FirstOrDefault();
+                        }
+                        safeValue = myOBL.Code;
+                    }
+                   
                     propertyInfo.SetValue(shipment, safeValue, null);
                 }
 
