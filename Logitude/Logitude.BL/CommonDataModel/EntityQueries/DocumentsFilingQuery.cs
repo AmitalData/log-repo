@@ -28,6 +28,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Text.RegularExpressions;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.Args;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
@@ -2231,7 +2232,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            List<FollowUp> FollowUps=null;
+
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+            Logitude.Customs.BL.EntityPMs.CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+            var resMode = new { DefaultValue = "" };
+            if (setting.IsConnectedToUniFreight)
+            {
+                FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+
+            }
+
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
