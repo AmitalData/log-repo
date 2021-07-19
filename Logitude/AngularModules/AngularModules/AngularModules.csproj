@@ -1429,6 +1429,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\PartyRelationshipTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\PoaAuthorizationTypeLookupList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PoaStatusTypeLookUpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantExceptionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ReferantTeamList.ts" />
@@ -1514,6 +1515,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\PartyRelationshipTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\PoaAuthorizationTypeLookupPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PoaStatusTypeLookUpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantExceptionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ReferantTeamPM.ts" />
@@ -1634,6 +1636,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\MAWBTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingByKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\PoaAuthorizationTypeLookupListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PoaStatusTypeLookUpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ProceduralFaultsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantExceptionListService.ts" />

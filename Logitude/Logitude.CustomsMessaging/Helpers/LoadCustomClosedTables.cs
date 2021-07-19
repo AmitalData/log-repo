@@ -519,6 +519,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(DeliveryTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaAuthorizationTypeLookupeTable = closedSystemTables.Where(d => d.id == "1595").FirstOrDefault();
+            ObjectTable PoaAuthorizationTypeLookupObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaAuthorizationTypeLookup", 0, false);
+            InsertClosedTableRecord(PoaAuthorizationTypeLookupeTable, PoaAuthorizationTypeLookupObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PoaAuthorizationTypeLookupeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CoolingReportingMethodTable = closedSystemTables.Where(d => d.id == "23799").FirstOrDefault();
             ObjectTable CoolingReportingMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.CoolingReportingMethod", 0, false);
             InsertClosedTableRecord(CoolingReportingMethodTable, CoolingReportingMethodObjectTable, customsClosedTables, customsClosedTableRepository);

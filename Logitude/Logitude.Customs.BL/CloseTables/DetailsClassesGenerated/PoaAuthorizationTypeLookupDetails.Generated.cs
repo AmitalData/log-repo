@@ -16,19 +16,19 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL
 {
-   public class CustomerIndicationTypeDetails : CustomerIndicationType, ICloseTable<CustomerIndicationType, CustomerIndicationTypeDetails>
+   public class PoaAuthorizationTypeLookupDetails : PoaAuthorizationTypeLookup, ICloseTable<PoaAuthorizationTypeLookup, PoaAuthorizationTypeLookupDetails>
    {
-       public List<CustomerIndicationTypeDetails> GetAll()
+       public List<PoaAuthorizationTypeLookupDetails> GetAll()
        {
-		    var all = new List<CustomerIndicationTypeDetails>(); 
+		    var all = new List<PoaAuthorizationTypeLookupDetails>(); 
             return all;
        }
 
-	    public void MapPoco(CustomerIndicationType newPoco)
+	    public void MapPoco(PoaAuthorizationTypeLookup newPoco)
         {    
         }
 
-		public string GetSearchFields(CustomerIndicationType rec)
+		public string GetSearchFields(PoaAuthorizationTypeLookup rec)
         {   
            return string.Empty;
         }

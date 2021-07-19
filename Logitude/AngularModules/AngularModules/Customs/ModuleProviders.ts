@@ -414,6 +414,7 @@ import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServi
 import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
 import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
 import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
+import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/PoaAuthorizationTypeLookupListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -698,6 +699,7 @@ export class ModuleProviders {
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
+            case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
 
                 
              //#endregion                

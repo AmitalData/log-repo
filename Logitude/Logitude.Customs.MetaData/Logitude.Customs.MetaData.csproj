@@ -413,6 +413,7 @@
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
+    <None Include="DBTables\PoaAuthorizationTypeLookup.dxml" />
     <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
     <None Include="DBTables\PointerLevel.dxml" />
     <None Include="DBTables\ProceduralFault.dxml" />
@@ -509,6 +510,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />

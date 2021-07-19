@@ -282,6 +282,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }
+		 IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups { get; }
 		 IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps { get; }
 		 IDbSet<PointerLevel> PointerLevels { get; }
 		 IDbSet<ProceduralFault> ProceduralFaults { get; }

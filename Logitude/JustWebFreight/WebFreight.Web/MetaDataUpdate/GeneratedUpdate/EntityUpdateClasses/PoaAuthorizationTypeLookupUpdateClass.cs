@@ -77,20 +77,20 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class CustomerIndicationTypeUpdateClass
+   public class PoaAuthorizationTypeLookupUpdateClass
    {  		
-		public const string HashString = "cc8e755ab9f30630033c2b8b97ea771a";
+		public const string HashString = "e69d73962cd9e58a447c3fda9334088a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.CustomerIndicationType",
+	             				    ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
 			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.CustomerIndicationTypes",
-			      				    ObjectTableSingular =  "Customer Indication Type",
-			      				    ObjectTablePlural =  "Customer Indication Types",
+			      				    DBTableName =  "Customs.PoaAuthorizationTypeLookups",
+			      				    ObjectTableSingular =  "PoaAuthorizationTypeLookup",
+			      				    ObjectTablePlural =  "PoaAuthorizationTypeLookups",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -99,7 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
-			      				    LookUp2 =  "Code",
+			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
-			      				    InActive =  false,
+			      				    InActive =  true,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
@@ -120,10 +120,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "סוג אינדיקצית לקוח",
-			      				    DefaultText =  "Customer Indication Type",
-			      				    Code =  "MMTG",
-			      				    Name =  "Customs.CustomerIndicationType",
+			      				    LocalDefaultText =  "סוג הרשאה בכתב הרשאה",
+			      				    DefaultText =  "Poa Authorization Type Lookup",
+			      				    Code =  "545d",
+			      				    Name =  "Customs.PoaAuthorizationTypeLookup Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  CustomerIndicationTypeUpdateClass.HashString,
+			      				    HashString =  PoaAuthorizationTypeLookupUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -149,7 +149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.CustomerIndicationType",
+					  						ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
@@ -166,7 +166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
@@ -177,7 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomerIndicationType",
+					  						ValidForQuerySection1 =  "Customs.PoaAuthorizationTypeLookup",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -210,14 +210,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.CustomerIndicationType",
+					 						FieldName =  "LocalName",
+					  						ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  120,
+					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -228,69 +228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EnglishName",
-					  						ListPropertyPath =  "EnglishName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomerIndicationType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
-					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.CustomerIndicationType",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  120,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  120,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
 					  						DisplayInLookUpIndex =  1,
@@ -301,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomerIndicationType",
+					  						ValidForQuerySection1 =  "Customs.PoaAuthorizationTypeLookup",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -335,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.CustomerIndicationType",
+					  						ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -343,12 +281,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -362,6 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PoaAuthorizationTypeLookup",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -371,9 +311,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search",
+					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search",
+					  						ListLableDefaultText =  "Search ...",
+					  						IsMaxLength =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EnglishName",
+					  						ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EnglishName",
+					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PoaAuthorizationTypeLookup",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EnglishName",
+					  						DefaultText =  "English Name",
+					  						FullLocalDefaultText =  "שם אנגלית",
+					  						ListFieldLable =  "EnglishNameListLable",
+					  						ListLableDefaultText =  "English Name",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -393,7 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.CustomerIndicationType",
+					  						ObjectTableName =  "Customs.PoaAuthorizationTypeLookup",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -421,7 +423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomerIndicationType",
+					  						ValidForQuerySection1 =  "Customs.PoaAuthorizationTypeLookup",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -431,7 +433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive ",
+					  						DefaultText =  "Inactive",
 					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
@@ -456,15 +458,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup CustomerIndicationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MMTG", Name = "Customs.CustomerIndicationType" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup CustomerIndicationTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5fe9", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup PoaAuthorizationTypeLookupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "545d", Name = "Customs.PoaAuthorizationTypeLookup Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PoaAuthorizationTypeLookupQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fc06", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
-	        ObjectTable CustomerIndicationTypeObjectTable = objectTables.ContainsKey("Customs.CustomerIndicationType") ? objectTables["Customs.CustomerIndicationType"] : null;
-            if (CustomerIndicationTypeObjectTable == null)
+	        ObjectTable PoaAuthorizationTypeLookupObjectTable = objectTables.ContainsKey("Customs.PoaAuthorizationTypeLookup") ? objectTables["Customs.PoaAuthorizationTypeLookup"] : null;
+            if (PoaAuthorizationTypeLookupObjectTable == null)
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-                CustomerIndicationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIndicationType" && d.Tenant == 0).FirstOrDefault();
+                PoaAuthorizationTypeLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PoaAuthorizationTypeLookup" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
@@ -475,22 +477,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomerIndicationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomerIndicationType.Q.CustomerIndicationTypeQuery", DefaultText = @"Customer Indication Type",LocalDefaultText = "סוג אינדיקצית לקוח", ObjectTableId = CustomerIndicationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerIndicationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerIndicationTypeQUERY", ObjectTableId = CustomerIndicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerIndicationType.Features.CustomerIndicationType", NameTextCodeDefaultText = "Morning Message Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerIndicationTypeObjectTable, addedFeatures, addedTextCodes);
+			   TextCode PoaAuthorizationTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PoaAuthorizationTypeLookup.Q.PoaAuthorizationTypeLookup", DefaultText = @"PoaAuthorizationTypeLookupQuery",LocalDefaultText = "סוג הרשאה בכתב הרשאה", ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PoaAuthorizationTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PoaAuthorizationTypeLookup.Q.PoaAuthorizationTypeLookup", ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "PoaAuthorizationTypeLookup.Features.PoaAuthorizationTypeLookup", NameTextCodeDefaultText = "PoaAuthorizationTypeLookup", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,PoaAuthorizationTypeLookupObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomerIndicationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerIndicationTypeTextCode_0.Id, NameTextCodeCode = CustomerIndicationTypeTextCode_0.Code, ObjectTableName = "Customs.CustomerIndicationType", Code = "CustomerIndicationType",  QueryGroupCode = "MMTG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerIndicationTypeObjectTable.Id, QuerySection = "Customs.CustomerIndicationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerIndicationTypeFeature_0.Id,FeatureUniqeCode= CustomerIndicationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query PoaAuthorizationTypeLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PoaAuthorizationTypeLookupTextCode_0.Id, NameTextCodeCode = PoaAuthorizationTypeLookupTextCode_0.Code, ObjectTableName = "Customs.PoaAuthorizationTypeLookup", Code = "PoaAuthorizationTypeLookup",  QueryGroupCode = "5d5d", IndexOrder = 0, Tenant = 0, ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id, QuerySection = "Customs.PoaAuthorizationTypeLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PoaAuthorizationTypeLookupFeature_0.Id,FeatureUniqeCode= PoaAuthorizationTypeLookupFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomerIndicationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerIndicationTypeQuery.Id,QueryCode = CustomerIndicationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomerIndicationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PoaAuthorizationTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PoaAuthorizationTypeLookupQuery.Id,QueryCode = PoaAuthorizationTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PoaAuthorizationTypeLookup.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CustomerIndicationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerIndicationTypeQuery.Id,QueryCode = CustomerIndicationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomerIndicationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PoaAuthorizationTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PoaAuthorizationTypeLookupQuery.Id,QueryCode = PoaAuthorizationTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PoaAuthorizationTypeLookup.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomerIndicationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerIndicationTypeQuery.Id,QueryCode = CustomerIndicationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomerIndicationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn CustomerIndicationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerIndicationTypeQuery.Id,QueryCode = CustomerIndicationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomerIndicationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PoaAuthorizationTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PoaAuthorizationTypeLookupQuery.Id,QueryCode = PoaAuthorizationTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PoaAuthorizationTypeLookup.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -502,15 +502,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable CustomerIndicationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIndicationType" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> CustomerIndicationTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomerIndicationType").ToList();
+		   ObjectTable PoaAuthorizationTypeLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PoaAuthorizationTypeLookup" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> PoaAuthorizationTypeLookupObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PoaAuthorizationTypeLookup").ToList();
 		       
 	      
 
-	         Screen CustomerIndicationTypeCustomsCustomerIndicationTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerIndicationType.HeaderScreen", Name = "Customs.CustomerIndicationTypeHeaderScreen", ObjectTableId = CustomerIndicationTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen PoaAuthorizationTypeLookupCustomsPoaAuthorizationTypeLookupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PoaAuthorizationTypeLookup.HeaderScreen", Name = "Customs.PoaAuthorizationTypeLookupHeaderScreen", ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    CustomerIndicationTypeObjectTable.HeaderScreenId = CustomerIndicationTypeCustomsCustomerIndicationTypeHeaderScreenScreen0.Id;
-		    CustomerIndicationTypeObjectTable.HeaderScreenCode = CustomerIndicationTypeCustomsCustomerIndicationTypeHeaderScreenScreen0.Code;
+		    PoaAuthorizationTypeLookupObjectTable.HeaderScreenId = PoaAuthorizationTypeLookupCustomsPoaAuthorizationTypeLookupHeaderScreenScreen0.Id;
+		    PoaAuthorizationTypeLookupObjectTable.HeaderScreenCode = PoaAuthorizationTypeLookupCustomsPoaAuthorizationTypeLookupHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -527,7 +527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable CustomerIndicationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIndicationType" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable PoaAuthorizationTypeLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PoaAuthorizationTypeLookup" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -542,7 +542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomerIndicationTypeObjectTable.Id,
+                ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -561,7 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = CustomerIndicationTypeObjectTable.Id,
+                ObjectTableId = PoaAuthorizationTypeLookupObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
