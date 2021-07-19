@@ -239,7 +239,7 @@
                                             </ul>
                                         </td>
 
-                                       <td style="width: 20px;"></td>
+                                        <td style="width: 20px;"></td>
 
                                         <!-- LevelSelection Filters-->
                                         <td style="width: 30px;">
@@ -262,7 +262,12 @@
                                             <ComboBox *ngIf="LevelSelectionFilterSelectedValue=='Invoice'" style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                       (SelectedItemChanged)="InvoicesSelectionChanged($event)" [Binding]="'InvoiceNumber'"></ComboBox>
                                         </td>
-                                        <td></td>
+                                        <td style="width:5px"></td>
+
+                                        <td>
+                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור גורף</button>
+                                        </td>
+
                                         <td style="width: 30px;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
                                         </td>
@@ -290,10 +295,7 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td colspan="2">
-                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור גורף</button>
-                                        </td>
-
+                                       
                                     </tr>
                                 </table>
                             </div>
