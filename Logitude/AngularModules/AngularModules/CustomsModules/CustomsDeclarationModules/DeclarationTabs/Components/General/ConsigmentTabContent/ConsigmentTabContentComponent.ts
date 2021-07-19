@@ -167,9 +167,7 @@ export class ConsigmentTabContentComponent
                 this.ParentIsDisplayOnly = IsDisplayOnly;
 
                 this.SetScreenFieldsEditability();
-                if (this.declarationPM.TransportModeId != 'O') {
-                    this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
-                }
+         
                 this.UIProperties.SetEnabled("CrateNumber", "Customs.DeclarationCourierStatus", false);
                 this.BuildSitesList();
                 this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
@@ -226,9 +224,11 @@ export class ConsigmentTabContentComponent
                 this.ConsimentPackages.Insert(item);
             }
         }
-        if (this.IsDisplayOnly) {
-            this.SetScreenFieldsEditability();
-        }
+        //if (this.IsDisplayOnly) {
+        //    this.SetScreenFieldsEditability();
+        //}
+
+        this.SetScreenFieldsEditability();
 
         //**
         //this.SetDateVisibilty(); // this make entity dirty on tab loaded, the following should solve it
@@ -314,6 +314,9 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("ManifestDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeliveryPlaceName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValue", this.ObjectTableName, !this.IsDisplayOnly);
+        if (this.declarationPM.TransportModeId != 'O') {
+            this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
+        }
     }
 
     LoadCouriersVat() {
