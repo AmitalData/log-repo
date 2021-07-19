@@ -15,6 +15,8 @@ export class GLAccountMoreDataList {
 	NextDueDate: Date;
 	TotalOpenChequesInLocalCur: number;
 	TotFutureOpenChequesInLocalCur: number;
+	BalanceInForeignCurrency: number;
+	ForeignBalanceInDue: number;
 	
 }
  

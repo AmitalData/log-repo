@@ -25,8 +25,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 IWebFreightContext freightContext = WebFreightContext.GetContext(tenant);
                 FollowUpRepository followUpsRepository = new FollowUpRepository(freightContext);
-                List<FollowUp> allFollowupLists = null;
-                List<FollowUp> followupLists = null;
+                List<FollowUp> allFollowupLists = new List<FollowUp>();
+                List<FollowUp> followupLists = new List<FollowUp>();
 
                 allFollowupLists = followUpsRepository.GetFollowUpsByQuoteId(entityPM.Id, entityPM.Tenant);
                 followupLists = allFollowupLists.Where(d => !string.IsNullOrEmpty(d.DateFieldName)).ToList();

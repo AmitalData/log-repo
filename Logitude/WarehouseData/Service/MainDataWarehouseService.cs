@@ -141,6 +141,12 @@ namespace WarehouseData.Helper
         }
 
 
+        public void ExecuteFixedDimensionScripts( string connectionString)
+        {
+            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", connectionString);
+            ExecuteScript("BuildWarehouse", "BuildInvoiceMainTypesDimensionsTable", connectionString);
+        }
+
         #region Service Method
         public void BuildDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
@@ -149,8 +155,8 @@ namespace WarehouseData.Helper
             if (!isPrivateDB) CreateWaterMarksTable("WaterMarks", sourceConnectionString);
 
             List<TableClass> tableNameLists = BulidDataWarehouseTableLists(sourceConnectionString);
-
-            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
+            TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
+            Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable).ToList(), (table) =>
             {
                 if (table.TableName != "WaterMark")
                 {
@@ -161,6 +167,7 @@ namespace WarehouseData.Helper
 
                     if (table.HasConstraint) this.dWDataWarehouseService.AddConstraint(table, destinationConnectionString);
                     if (table.HasNotSpecifiedValue) this.dWDataWarehouseService.InSertNotSpecifiedValueToDW(table, destinationConnectionString, privateTenant);
+                    this.dWDataWarehouseService.CopyDataBase(null, table, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
                 }
                 else
                 {
@@ -172,26 +179,22 @@ namespace WarehouseData.Helper
                         this.dWDataWarehouseService.CreateIndex(table, "LastUpdateDate", destinationConnectionString);
                     }
                 }
-
-
-                this.dWDataWarehouseService.CopyDataBase(null, table, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
                 this.dWDataWarehouseService.UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString, privateTenant);
-            }
+            });
 
-            ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+            this.dWDataWarehouseService.CopyDataBase(null, waterMark, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
 
+            // ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
+            ExecuteFixedDimensionScripts(destinationConnectionString);
             RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
-
-            foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
-            {
+            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) => {
                 this.BuildDimensionTable(destinationConnectionString, table);
-            }
+            });
 
-            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
-            {
+            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
                 this.BuildFactTable(destinationConnectionString, table);
-            }
+            });
 
 
             FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
@@ -200,30 +203,27 @@ namespace WarehouseData.Helper
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
             List<TableClass> tableNameLists = this.BulidDataWarehouseTableLists(sourceConnectionString);
-            foreach (TableClass table in tableNameLists.Where(d => !d.HasFactTable))
+            Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable).ToList(), (table) =>
             {
                 if (table.DBTableName != "WaterMarks")
                 {
                     UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
-
                 }
-            }
+            });
 
             RunAdditionalScripte(destinationConnectionString, tableNameLists, true);
 
             #region Update Dimensions Table
-            foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
-            {
+            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) => {
                 this.UpdateDimensionTable(destinationConnectionString, table);
-            }
+            });
             #endregion
 
             #region Update Fact Table
 
-            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
-            {
+            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
                 this.UpdateFactTable(destinationConnectionString, table);
-            }
+            });
 
             #endregion
 
@@ -254,7 +254,7 @@ namespace WarehouseData.Helper
                 }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
-                foreach (DataRow row in dWHSettingsTable.Rows)
+                Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
@@ -273,12 +273,12 @@ namespace WarehouseData.Helper
                         if (type == "Build")
                         {
                             BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false , IsParentTenant = isParentTenant });
+                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
 
                         }
                         else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
-                }
+                });
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");
    

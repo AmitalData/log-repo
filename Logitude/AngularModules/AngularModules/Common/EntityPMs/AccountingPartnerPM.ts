@@ -382,6 +382,11 @@ export class AccountingPartnerPM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private collectorId: string;
+    public get CollectorId() { return this.collectorId; }
+    public set CollectorId(newValue: string) { if (this.collectorId != newValue) { this.collectorId = newValue; this.MarkAsDirty("CollectorId"); } }
+       
+	 
 
     public OldEntityPM: AccountingPartnerPM;
 		

@@ -7,13 +7,12 @@ import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/co
 import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {JournalList} from '../../EntityLists/JournalList';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
-    
+
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
 })
 export class GlAccountLedgerTransactionsListTemplate {
@@ -24,6 +23,14 @@ export class GlAccountLedgerTransactionsListTemplate {
     public IconCode: string;
     public ColorCode: string;
     public TenantCurrencySign: string;
+    public ChequeStatusColor = "black";
+    public ChequeStatusColorDictionary = {
+        'הופקד- טרם נפרע': 'orange',
+        'בקופה': 'orange',
+        'משמרת': 'orange',
+        'הוחזר ללקוח' : 'red',
+        'נפרע': 'green', };
+
 
     public _JournalExtendedListService = new JournalExtendedListService();
     public _ARPaymentExtendedListService = new ARPaymentExtendedListService();
@@ -114,7 +121,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
 
-        
+
         ReconcileEventManager.CheckBoxChecked.emit({
             line: this.rowData,
             isChecked: checked,
@@ -205,4 +212,12 @@ export class GlAccountLedgerTransactionsListTemplate {
             });
         });
     }
+
+    GetChequeStatusColor(chequeStatus) {
+
+        this.ChequeStatusColor = this.ChequeStatusColorDictionary[chequeStatus];
+
+        return this.ChequeStatusColor;
+    }
+
 }

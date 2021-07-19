@@ -1,4 +1,4 @@
-﻿
+
 
 import {Injectable} from '@angular/core';
 
@@ -10,5 +10,5 @@ export class AutomationSetValue {
     public Value: string;
     public FieldName: string;
     public DataTypeCode: string;
-
+    public IsCustomField: boolean;
 }

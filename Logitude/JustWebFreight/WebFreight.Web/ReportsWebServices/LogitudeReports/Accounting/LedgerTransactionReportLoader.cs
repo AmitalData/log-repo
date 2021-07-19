@@ -241,10 +241,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             foreach (LedgerTransactionList transaction in transactions)
             {
                 ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
-                FillReportTransactionGLAccountFields(glaccountPM, transactionsAccounts, reportTransaction);
+                FillReportTransactionGLAccountFields(transactionsAccounts, reportTransaction);
 
                 transactionsDataProvider.Transactions.Add(reportTransaction);
             }
+
+            transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count > 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
         }
 
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
@@ -255,25 +257,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return glaccounts;
         }
 
-        private void FillReportTransactionGLAccountFields(GLAccountPM glaccountPM, List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
+        private void FillReportTransactionGLAccountFields(List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
         {
-            if (glaccountPM != null)
-            {
-                reportTransaction.GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode;
-                reportTransaction.AccountNumber = glaccountPM.DisplayNumber;
-                reportTransaction.AccountEnglishName = glaccountPM.EnglishName;
-                reportTransaction.AccountLocalName = glaccountPM.LocalName;
-            }
-            else
-            {
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
                 reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
                 reportTransaction.AccountNumber = account.DisplayNumber;
                 reportTransaction.AccountEnglishName = account.EnglishName;
                 reportTransaction.AccountLocalName = account.LocalName;
-
-            }
-            
         }
 
         private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)

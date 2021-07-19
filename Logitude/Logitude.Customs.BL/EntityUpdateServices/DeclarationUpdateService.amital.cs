@@ -53,7 +53,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(DeclarationPM dirtyDeclarationPM)
         {
-            DateTime stopLogAt = DateTime.MinValue; 
+            DateTime stopLogAt = DateTime.MinValue;
+
+            bool fromAmendment = false;
+
+            if (string.IsNullOrEmpty(dirtyDeclarationPM.DeclarationNumber)) fromAmendment = true; 
+
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
@@ -65,7 +70,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string logData = "";
 
             if (dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update &&
-                dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert) //Yuval Chalup 02.06.2015 AMI-53891 (Update CCUFILEM on creating a new Declaration)
+                dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert &&  !fromAmendment
+                ) //Yuval Chalup 02.06.2015 AMI-53891 (Update CCUFILEM on creating a new Declaration)
             {
                 LogitudeSettings.HandleLogMe("ChangeSetOperation == " + dirtyDeclarationPM.ChangeSetOp, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
                 return;
@@ -164,10 +170,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (eventContextTagModel2 != null)
                 {
                     if (eventContextTagModel2.CallProccessID != EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
-                    {
-                        doTask = false;
+                     {
 
                     }
+                    doTask = false;
+
+                    if (fromAmendment) doTask = true;
+
                     //if (dirtyDeclarationPM.HatraDate != dbOccDeclarationPM.HatraDate)
                     //{
                     //  //  doTask = true;

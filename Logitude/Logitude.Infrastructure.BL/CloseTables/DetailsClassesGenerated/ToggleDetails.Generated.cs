@@ -143,14 +143,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "CRM Customer Quick Search", 
-                Code = "CQS", 
-                SearchFields = "CQS,CRM Customer Quick Search,CRM Customer Quick Search", 
-                Description = "CRM Customer Quick Search", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "Charges Types Direction Restrictions", 
                 Code = "CTR", 
                 SearchFields = "CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions", 
@@ -179,14 +171,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Export Query Data Via WorkerRole", 
                 Description = "Export Query Data to Excel Via WorkerRole", 
                 SearchFields = "EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Name = " Improved Search in Customers Views", 
-                Code = "SCV", 
-                SearchFields = "SCV, Improved Search in Customers Views, Improved Search in Customers Views", 
-                Description = "Improved Search in Customers Views", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -244,7 +228,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPH,Consequent Pickup/Delivery", 
                 Description = "Consequent Pickup/Delivery", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "PRE", 
@@ -252,7 +236,73 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "PRE,Master Pre/On Carriage", 
                 Description = "Master Pre/On Carriage", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BIF", 
+                Name = "Invoices DWH", 
+                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAS", 
+                Name = "Standalone Shipment", 
+                SearchFields = "SAS,Standalone Shipment", 
+                Description = "Standalone Shipment", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Quotes Request Activated In Shared Logistic", 
+                Code = "QRA", 
+                SearchFields = "QRA, Quotes Request Activated In Shared Logistic", 
+                Description = "Quotes Request Activated In Shared Logistic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Containers", 
+                Code = "OIC", 
+                SearchFields = "OIC,Ocean Insights Containers", 
+                Description = "Ocean Insights Containers", 
+			});
+			 
+          
 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Reports in Shared Logistics", 
+                Code = "RSL", 
+                SearchFields = "RSL,Reports in Shared Logistics", 
+                Description = "Reports in Shared Logistics", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTL", 
+                Name = "CollaborationTool", 
+                SearchFields = "CTL,CollaborationTool", 
+                Description = "Collaboration Tool", 
+			});
+			 
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SDE", 
+                Name = "Solve Duplicated Events Code", 
+                SearchFields = "SDE,Duplicated Events code", 
+                Description = "Solve Duplicated Events Code", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Lock Counter Procedure", 
+                SearchFields = "LCP,Lock Counter Procedure", 
+                Description = "Lock Counter Procedure", 
+                Code = "LCP", 
+			});
 			
             return all;
        }

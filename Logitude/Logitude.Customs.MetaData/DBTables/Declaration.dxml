@@ -1234,4 +1234,6 @@
     Columns="IsClose" />
   <Index
     Columns="ExternalDeclarationNumber" />
+  <Index
+    Columns="VersionId" />
 </Table>

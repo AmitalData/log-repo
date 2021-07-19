@@ -212,7 +212,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg req = new DF_NG_5002_MSG14001_DeclarationCancellationRequestMsg();
             req.GeneralData = new DF_NG_5002_MSG14001_DeclarationCancellationRequestMsgGeneralData();
             dec.CancelRequestNumber = GetNextCancelRequestNumber(dec);
-
+            dec.CancelRequestRejectionReason = null;
             req.GeneralData.FunctionalReferenceID = Convert.ToInt32(dec.CancelRequestNumber);
             req.GeneralData.DeclarationID = dec.DeclarationNumber;
             req.GeneralData.DeclarationType = 1;

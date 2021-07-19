@@ -12,6 +12,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
     {
         const int ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments = 1;
         const int ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments = 2;
+        const string defaultShipperId = "DF-SHIPPER";
+        const string defaultConsigneeId = "DF-CONSIGNE";
+        const string exportDirection = "E";
+        const string importDirection = "I";
+        const string customsDirection = "C";
+
         public static void SetTableLogic(DataRow tableRow, int conditionNumber)
         {
 
@@ -27,10 +33,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
             SetShipmentTypeCode(tableRow);
-            SetPackagesQuantity(tableRow);
+            SetExceptionDescription(tableRow);
+
         }
 
-       
+        private static void SetDefaultFields(DataRow tableRow)
+        {
+            SetDefaultShipper(tableRow);
+            SetDefaultConsignee(tableRow);
+        }
+
 
         private static void SetCreateDate(DataRow tableRow)
         {
@@ -213,7 +225,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
 
             }
- 
+
         }
         private static void SetForwardingShipmentHeaderId(DataRow tableRow)
         {
@@ -225,7 +237,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             if (tableRow["ShipmentLevelCode"].Equals("A"))
             {
-                tableRow.SetField("EntityType", "C");
+                tableRow.SetField("EntityType", customsDirection);
                 tableRow.SetField("EntityId", tableRow["Id"]);
                 tableRow.SetField("IsMainRecord", true);
             }
@@ -268,7 +280,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("FromWarehouseDone", false);
 
-            if (tableRow["DirectionId"].Equals("E"))
+            if (tableRow["DirectionId"].Equals(exportDirection))
             {
                 if (!IsFieldNullOrEmpty(tableRow, "WarehouseLegActualEntryDate"))
                 {
@@ -318,7 +330,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetToWarehouseDone(DataRow tableRow)
         {
             tableRow.SetField("ToWarehouseDone", false);
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals(importDirection))
             {
                 if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDate"))
                 {
@@ -408,7 +420,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetFromWarehouseDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("E"))
+            if (tableRow["DirectionId"].Equals(exportDirection))
             {
                 tableRow.SetField("FromWarehouseDate", tableRow["WarehouseLegActualEntryDate"]);
             }
@@ -419,7 +431,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetFromWarehouseEstimationDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("E"))
+            if (tableRow["DirectionId"].Equals(exportDirection))
             {
                 tableRow.SetField("FromWarehouseEstimationDate", tableRow["WarehouseLegExpectedEntryDate"]);
             }
@@ -429,7 +441,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetToWarehouseDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals(importDirection) || tableRow["DirectionId"].Equals(customsDirection))
             {
                 tableRow.SetField("ToWarehouseDate", tableRow["WarehouseLegActualEntryDate"]);
             }
@@ -440,7 +452,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetToWarehouseEstimationDate(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals(importDirection) || tableRow["DirectionId"].Equals(customsDirection))
             {
                 tableRow.SetField("ToWarehouseEstimationDate", tableRow["WarehouseLegExpectedEntryDate"]);
             }
@@ -452,7 +464,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetToWarehouseNotes(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("I"))
+            if (tableRow["DirectionId"].Equals(importDirection))
             {
                 tableRow.SetField("ToWarehouseNotes", tableRow["WarehouseLegRemarks"]);
             }
@@ -462,7 +474,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetFromWarehouseNotes(DataRow tableRow)
         {
-            if (tableRow["DirectionId"].Equals("E"))
+            if (tableRow["DirectionId"].Equals(exportDirection))
             {
                 tableRow.SetField("FromWarehouseNotes", tableRow["WarehouseLegRemarks"]);
             }
@@ -487,10 +499,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("ShipmentTypeCode", tableRow["ShipmentTypeId"]);
         }
-
-        private static void SetPackagesQuantity(DataRow tableRow)
+        private static void SetExceptionDescription(DataRow tableRow)
         {
-            tableRow.SetField("PackagesQuantity", tableRow["NumberOfPackages"]);
+            tableRow.SetField("CurrentMilestoneExceptions", tableRow["ExceptionDate"] + "\n" + tableRow["ExceptionDescription"]);
         }
+        private static void SetDefaultShipper(DataRow tableRow)
+        {
+            var shipperId = tableRow["ShipperId"]?.ToString();
+            if (string.IsNullOrWhiteSpace(shipperId))
+                tableRow.SetField("ShipperId", defaultShipperId);
+        }
+        private static void SetDefaultConsignee(DataRow tableRow)
+        {
+            var consigneeId = tableRow["ConsigneeId"]?.ToString();
+            if (string.IsNullOrWhiteSpace(consigneeId))
+                tableRow.SetField("ConsigneeId", defaultConsigneeId);
+        }
+
     }
 }

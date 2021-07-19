@@ -119,7 +119,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
                         this.Listen();
-                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO";
+                        this.IsOldAmendment = this.entityArgs.EditComponent.SelectedTab.Code == "DCCO" || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT");
                         console.log("Declaration", this.EntityPM);
                         this.BuildTabs();
 
@@ -1019,6 +1019,18 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
             return item.Field;
         }
         return translation;
+    }
+
+    ExpandComment(entity: any, $event: any) {
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
+        logitudeWindow.ShowCloseButton = true;
+        windowArgs.remarks = entity.Remarks;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.Remarks");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
     }
 
 }

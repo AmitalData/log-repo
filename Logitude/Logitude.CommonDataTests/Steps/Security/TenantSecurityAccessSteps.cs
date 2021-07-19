@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Logitude.CommonDataTests.Services;
 using Logitude.CommonTests.Models;
 using Logitude.Test.Base.Context;
 using Logitude.Test.Base.Models.Shared;
@@ -13,10 +14,12 @@ namespace Logitude.CommonTests.Steps.Security
     public class TenantSecurityAccessSteps
     {
         private SecurityAccessStepsContext<TenantPM> Context;
+        private TenantServices tenantServices;
 
         public TenantSecurityAccessSteps( SecurityAccessStepsContext<TenantPM> context)
         {
             Context = context;
+            tenantServices = new TenantServices();
         }
 
         #region Step Region
@@ -25,7 +28,7 @@ namespace Logitude.CommonTests.Steps.Security
         [When(@"get information for user's tenant")]
         public void WhenGetInformationForUsersTenant()
         {
-            Context.FirstUserPMData = GetUserTenant(UserTenant.Token);
+            Context.FirstUserPMData = tenantServices.GetByToken(UserTenant.Token);
         }
 
         [Then(@"tenant information should available")]
@@ -39,26 +42,17 @@ namespace Logitude.CommonTests.Steps.Security
         [When(@"get information for other tenant")]
         public void WhenGetInformationForOtherTenant()
         {
-            Context.act = () => GetUserTenant(UserOtherTenant.Token);
+            Context.act = () => tenantServices.GetByToken(UserOtherTenant.Token);
         }
 
         [Then(@"should receive error message say not authenticated to view company info")]
         public void ThenShouldReceiveErrorMessageSayNotAuthenticatedToViewCompanyInfo()
         {
             Context.act.Should().ThrowExactly<AggregateException>()
-                .And.InnerExceptions[0].Message.Contains("Sorry you’re not authenticated to view company info");
+                .And.InnerExceptions[0].Message.Should().Contain("Sorry you’re not authenticated to view company info");
         }
         #endregion
 
-        #endregion
-
-        #region Private Function Region
-        private TenantPM GetUserTenant(string token)
-        {
-            string TenantUrl = Urls.TenantsGetSingle(UserTenant.Tenant);
-            var tenant = APICaller.CallGet<TenantPM>(TenantUrl, token);
-            return tenant.Data;
-        }
         #endregion
     }
 }

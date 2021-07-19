@@ -227,6 +227,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationStatusCode = "COL";
                     responseToMessage = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
+                case 19:
+                    notificationDefinitionCode = "5119A";
+                    assigneToNotificationTypeCode = "I";
+
+                    AgentTalkBackTypeQueryService agentTalkBackTypeQueryService = new AgentTalkBackTypeQueryService(requestParams.Tenant);
+                    AgentTalkBackTypePM agentTalkBackTypePM = agentTalkBackTypeQueryService.GetSingle(customResponse.MessageToAgent.msgCode.ToString(), false, true);
+                    if (agentTalkBackTypePM != null)
+                    {
+                        notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
+                    }
+                    break;
+
                 default:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
@@ -234,18 +246,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationStatusCode = "VAN";
                     break;
             }
+             
 
-            if (customResponse.MessageToAgent.msgCode == 19)
-            {
-                AgentTalkBackTypeQueryService agentTalkBackTypeQueryService = new AgentTalkBackTypeQueryService(requestParams.Tenant);
-                AgentTalkBackTypePM agentTalkBackTypePM = agentTalkBackTypeQueryService.GetSingle(customResponse.MessageToAgent.msgCode.ToString(), false, true);
-                if (agentTalkBackTypePM != null)
-                {
-                    notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
-                }
-            }
 
-            if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
+
+
+            //if (customResponse.MessageToAgent.msgCode == 19)
+            //{
+            //    AgentTalkBackTypeQueryService agentTalkBackTypeQueryService = new AgentTalkBackTypeQueryService(requestParams.Tenant);
+            //    AgentTalkBackTypePM agentTalkBackTypePM = agentTalkBackTypeQueryService.GetSingle(customResponse.MessageToAgent.msgCode.ToString(), false, true);
+            //    if (agentTalkBackTypePM != null)
+            //    {
+            //        notificationDescription = agentTalkBackTypePM.LocalName + "\n" + notificationDescription;
+            //    }
+            //}
+
+                if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
             {
                 try
                 {

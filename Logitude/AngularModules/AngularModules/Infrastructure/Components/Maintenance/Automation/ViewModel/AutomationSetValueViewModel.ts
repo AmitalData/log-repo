@@ -133,7 +133,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
 
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
-        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", false, false, false, "boolean");
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", true, false, false, "boolean");
 
 
     }
@@ -206,6 +206,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         if (item) {
             var oldObjectFieldCode: string = this.SelectedCustomField ? this.SelectedCustomField.FieldCode : "";
             if (item.FieldCode != oldObjectFieldCode) {
+                this.CurrentEntityPM.IsCustomField = item.IsCustom;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
                 this.CustomObjectFieldCode = "";

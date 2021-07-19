@@ -314,7 +314,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return null;
         }
-
+        public List<Customer> GetCustomersByCardsIds(List<string> cardsIds, int tenant)
+        {
+            return (from a in context.Customers
+                      where a.Tenant == tenant && cardsIds.Contains(a.Id)
+                      select a).ToList();
+        }
         public IQueryable<CustomersDataView> GetCustomersDataViews(int tenant)
         {
             ICustomersDataViewContext customersViewContext = CustomersDataViewContext.GetContext(tenant);

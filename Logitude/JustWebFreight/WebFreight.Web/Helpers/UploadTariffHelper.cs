@@ -209,7 +209,7 @@ namespace WebFreight.Web.Helpers
                 var StepLength = rowData.Length;
                 if (!string.IsNullOrEmpty(priceSteps))
                 {
-                    StepLength = priceSteps.Split(',').Length + 3;
+                    StepLength = priceSteps.Split(',').Length + 4 ;
                 }
 
                 String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();

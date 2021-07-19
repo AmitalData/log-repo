@@ -79,6 +79,7 @@ namespace WebFreight.Web.DataProviders
         public double? AmountInLocalCurrency { get; set; }
 
         public List<InvoicePayments> PaidInvoicesList { get; set; }
+        public List<ARPaymentCheque> ARPaymentCheques { get; set; }
 
         public string ARPaymentField1 { get; set; }
         public string ARPaymentField2 { get; set; }
@@ -128,6 +129,20 @@ namespace WebFreight.Web.DataProviders
 
         }
 
+        public class ARPaymentCheque
+        {
+            public string ChequeOrPaymentRef { get; set; }
+            public string Bank { get; set; }
+            public string Branch { get; set; }
+            public string Account { get; set; }
+            public string ValueDate { get; set; }
+            public string CurrencyCode { get; set; }
+            public decimal LocalAmount { get; set; }
+            public decimal ForeignAmount { get; set; }
+            public string StatusName { get; set; }
+
+        }
+
 
 
         public double? PaymentExchangeRate { get; set; }
@@ -135,6 +150,10 @@ namespace WebFreight.Web.DataProviders
         public string DepositBankAccountNumber { get; set; }
         public string SATTransferStatus { get; set; }
         public string BankName { get; set; }
+        public string FullAccountingBankEnglishName { get; set; }
+        public string FullAccountingBankLocalName { get; set; }
+        public string FullAccountingBankName { get; set; }
+
         public string BankAccountNumber { get; set; }
         //        BillToAddress
         //PaymentExchangeRate

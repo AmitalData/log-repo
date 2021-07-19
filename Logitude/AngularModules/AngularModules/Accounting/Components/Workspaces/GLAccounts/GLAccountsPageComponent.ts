@@ -228,7 +228,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
                     {
                         displayTitle = "Open Masters";
                         displayTitle = TextCodeTranslator.Translate("GLAccount.Q.OpenMasters");
-                        filters.addAdditionalFilter("BalanceInLocalCurrencyNotNull", "4", null, null, "Equals", true, false, false, "string", false, false);
+                        filters.addAdditionalFilter("BalanceInLocalCurrencyNotNull", true, null, null, "Equals", true, false, false, "string", false, false);
 
                         break;
                     }

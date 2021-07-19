@@ -58,22 +58,29 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     constructor() {
         super();
         this.SessionIndex = this.CurrentSession.SessionIndex;
-        this.InitializeServices();
-        
+        this.InitializeServices();        
         this.InitializeAllowAgentInCustomersLOVFilters();
+    }
+
+    private myPortListService: PortListService;
+    private myQuotePMService: QuotePMService;
+    private myCardListService: CardListService;
+    private myAddressListService: AddressListService;
+    private myPartnersDomainService: PartnersDomainService;
+    private myShipmentSubTypeListService: ShipmentSubTypeListService;
+    private InitializeServices() {
+        this.myPortListService = new PortListService();
+        this.myQuotePMService = new QuotePMService();
+        this.myCardListService = new CardListService();
+        this.myAddressListService = new AddressListService();
+        this.myPartnersDomainService = new PartnersDomainService();
+        this.myShipmentSubTypeListService = new ShipmentSubTypeListService();
     }
 
     private InitializeAllowAgentInCustomersLOVFilters() {
         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
             this.CardDependencyProperty1 = "CS,PO,AG";
             this.IsAddAgentVisible = true;
-        }
-    }
-
-    private CreateNewQuote() {
-        if (this.EntityPM == null) {
-            this.EntityPM = this.myQuotePMService.GetNewEntityPM();
-            QuotePMInitService.InitValues(this.EntityPM, true);
         }
     }
 
@@ -115,25 +122,17 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
     }
 
+    private CreateNewQuote() {
+        if (this.EntityPM == null) {
+            this.EntityPM = this.myQuotePMService.GetNewEntityPM();
+            QuotePMInitService.InitValues(this.EntityPM, true);
+        }
+    }
+
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
             this.GeneratedComponent.SetEnabled(this.IsScreenEnabled);
         }
-    }
-
-    private myPortListService: PortListService;
-    private myQuotePMService: QuotePMService;
-    private myCardListService: CardListService;
-    private myAddressListService: AddressListService;
-    private myPartnersDomainService: PartnersDomainService;
-    private myShipmentSubTypeListService: ShipmentSubTypeListService;
-    InitializeServices() {
-        this.myPortListService = new PortListService();
-        this.myQuotePMService = new QuotePMService();
-        this.myCardListService = new CardListService();
-        this.myAddressListService = new AddressListService();
-        this.myPartnersDomainService = new PartnersDomainService();
-        this.myShipmentSubTypeListService = new ShipmentSubTypeListService();
     }
 
     LoadAllowedAirline() {
@@ -179,7 +178,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.EntityPM = args.Quote;
             this.ConvertTransportMode = args.ConvertTransportMode; 
         }
+
         else {
+            if (args.OpportunityId && !this.EntityPM) {
+                this.CreateNewQuote();
+            }
+
             this.sourceEntityPM = args.Quote;
             this.IsCopyFromQuote = args.IsCopyFromQuote;
             this.DefaultCustomerId = args.DefaultCustomerId;
@@ -187,9 +191,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IsCreatedFromTicket = args.IsCreatedFromTicket;
             this.TicketCreateDate = args.TicketCreateDate;
         }
+
         this.BuildFiltersLists();
         this.SetUIProperties();
-
         this.Clone();
     }
 
@@ -414,6 +418,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
             this.EntityPM.FromPortId = null;
             this.EntityPM.ToPortId = null;
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
+            this.CustomerDependencyProperty1 = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+            this.CustomerDependencyProperty1IsList = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? true : this.CustomerDependencyProperty1IsList ; 
+
         }
 
         else {
@@ -982,13 +990,16 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     private ComputeCustomerDependency() {
         switch (this.QuoteCustomerTypeCode) {
             case "SHI":
+                this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH" : "CS";
+                this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
+                break;
             case "CON":
                 {
-                    this.CustomerDependencyProperty1 = "CS,PO";
+                    this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,PO,WH":"CS,PO";
                     this.CustomerDependencyProperty1IsList = true;
 
                     if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-                        this.CustomerDependencyProperty1 = "CS,PO,AG";
+                        this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,PO,AG,WH" : "CS,PO,AG";
                         this.CustomerDependencyProperty1IsList = true;
                     }
 
@@ -2650,6 +2661,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             this.IncludeDelivery = false;
             this.FromPortId = null;
             this.ToPortId = null;
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
         }
     }
     private SetPickupDeliveryOnFinish() {

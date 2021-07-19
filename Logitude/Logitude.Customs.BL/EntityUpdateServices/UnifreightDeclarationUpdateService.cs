@@ -103,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
         }
 
-        internal void Update(Boolean doTask)//eitan h 12/3/15 task 11788
+        internal void Update(Boolean doTask  )//eitan h 12/3/15 task 11788
         //internal void Update()
         {
             DateTime stopLogAt = DateTime.MinValue;
@@ -120,9 +120,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             this._CreateCCUTAXFor105Feature = true; ///ConfigurationManager.AppSettings["20180121.CreateCCUTAXFor105"] == "1";///todo
             this._NoRaiseLD2ULogicFeature = true; ///ConfigurationManager.AppSettings["20180204.NoRaiseLD2ULogicFeature"] == "1";
             var cntxt = RequestSheetContext.Current.GetContextOrDefault();
-            if (cntxt.MainInterfaceCode == "2715")
+            if (//cntxt.MainInterfaceCode == "2715"
+                Environment.StackTrace.ToString().Contains("D_NG_2716_MSG22001_AddAttachmentResponseService"))
             {
-                LogMessagingUtil.Instance.AppendLine("While in 2715 (Batch Mode) do not update CCUFILEM !!! ");
+                LogMessagingUtil.Instance.AppendLine("While in 2715 , StackTrace D_NG_2716_MSG22001_AddAttachmentResponseService (Batch Mode) do not update CCUFILEM !!! ");
+                if (cntxt != null && cntxt.MainInterfaceCode != null) LogMessagingUtil.Instance.AppendLine("cntxt.MainInterfaceCode " + cntxt.MainInterfaceCode + ")");
                 return;
             }
 
@@ -168,6 +170,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
                     }
+                }
+                if(this._DirtyDeclarationPM.Consignments == null || this._DirtyDeclarationPM.Consignments.Count() < 1)
+                {
+                    ConsignmentQueryService consignmentService = new ConsignmentQueryService(this._Context);
+                    this._DirtyDeclarationPM.Consignments = consignmentService.GetMulti(new DeclarationKeys() { Id = this._DirtyDeclarationPM.Id, }, true);
                 }
                 // moran 22.2.16 - Task 19654 - enter into 'if', not save changes always
                 if (_DirtyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst ||
@@ -1175,7 +1182,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return mytransmission;
         }
 
-        private void DoCustomFile()
+        private void DoCustomFile(bool fromAmendment = false )
         {
             var clientRepository = new ClientRepository(_DirtyDeclarationPM.Tenant);
             var cardRepository = new CardRepository(_DirtyDeclarationPM.Tenant);
@@ -1203,6 +1210,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 LogMessagingUtil.Instance.AppendLine("DoCustomFile3: _CCUFILEMPM record exist, file: " + _CCUFILEMPM.CUSTOMFILENO);
                 _CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
+            }
+
+
+            if(fromAmendment)
+            {
+
             }
 
             _CCUFILEM4L2UPM_Before = CCUFILEM_4L2U_Mapping(_CCUFILEMPMwithCCUMSHGRP);

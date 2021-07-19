@@ -22,7 +22,7 @@ namespace WebFreight.Web.Helpers
         public string CaptchaKey { get; set; }
         public string CaptchaCode { get; set; }
         public bool GetInvalidDocumentToken { get; set; }
-        
+        public bool IsCargoTracking { get; set; }
 
     }
 }

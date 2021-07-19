@@ -5,6 +5,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShippingDeclarationDataProvider : BaseDataProvider
     {
+        public DateTime ShipmentCreationDate { get; set; }
         public string MasterAMSBL { get; set; }
         public string CopyNumber { get; set; }
         public string CopyName { get; set; }
@@ -503,5 +504,22 @@ namespace WebFreight.Web.DataProviders
         public string FirstPickupLoadNumber { get; set; }
         public string LastDeliveryLoadNumber { get; set; }
         public string MainCarriageLoadNumber { get; set; }
+        public string SCI { get; set; }
+
+
+        public string CustomerAddress1 { get; set; }
+        public string CustomerAddress2 { get; set; }
+        public string CustomerCity { get; set; }
+        public string CustomerTel { get; set; }
+        public string CustomerFax { get; set; }
+        public string CustomerZipCode { get; set; }
+        public string CustomerCountry { get; set; }
+        public string CustomerContactEmail { get; set; }
+        public string CustomerContactMobile { get; set; }
+        public string CustomerContactPhone { get; set; }
+
+        public DateTime? MasterDate { get; set; }
+        public string UserDepartment { get; set; }
+
     }
 }

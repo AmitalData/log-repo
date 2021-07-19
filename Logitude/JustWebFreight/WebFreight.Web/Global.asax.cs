@@ -521,6 +521,9 @@ namespace WebFreight.Web
             LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
             LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
             LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+            LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+            LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+            LogitudeSettings.OITenantNumber = setting.OITenantNumber;
         }
 
         private void StartSignalRTopicThread()

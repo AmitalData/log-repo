@@ -1,4 +1,4 @@
-@release @dev @all 
+@release @stable @all 
 Feature: Commodity Create, Edit and Inactivate in Maintenance Module
     The user creates a commodity, edits and inactivates it from the Maintenance Module.
 

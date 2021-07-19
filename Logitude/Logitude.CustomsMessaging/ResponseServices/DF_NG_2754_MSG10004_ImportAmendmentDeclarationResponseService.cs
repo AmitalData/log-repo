@@ -102,7 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false, bool isCopy =false)
         {
             error = "";
             try
@@ -177,6 +177,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Consignments = GetConsignments(declaration, tenant, null,context),
 
 
+
+
                 };
 
 
@@ -195,11 +197,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
+                    declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    if (declarationOrg.IsCourierDeclaration)
+                    {
+
+                        declarationPM.IsCourierDeclaration = true;
+                        declarationPM.CasualSupplierName = declarationOrg.CasualSupplierName;
+                        declarationPM.CasualSupplierAddress = declarationOrg.CasualSupplierAddress;
+                        declarationPM.ManifestCargoStatusCode = declarationOrg.ManifestCargoStatusCode;
+                        declarationPM.ManifestErrorXml = declarationOrg.ManifestErrorXml;
+                        declarationPM.CourierHAWB = declarationOrg.CourierHAWB;
+                        declarationPM.CourierCustomStatusCode = declarationOrg.CourierCustomStatusCode;
+                        declarationPM.CourierSuspentionReasonCode = declarationOrg.CourierSuspentionReasonCode;
+                        declarationPM.DealValueWithFactor = declarationOrg.DealValueWithFactor;
+                        declarationPM.WeightValue = declarationOrg.WeightValue;
+                        declarationPM.CasualImporterAddress1 = declarationOrg.CasualImporterAddress1;
+                        declarationPM.CasualImporterAddress2 = declarationOrg.CasualImporterAddress2;
+                        declarationPM.CasualImporterCity = declarationOrg.CasualImporterCity;
+                        declarationPM.CasualImporterZipCode = declarationOrg.CasualImporterZipCode;
+                        declarationPM.CasualImporterFax = declarationOrg.CasualImporterFax;
+                        declarationPM.CasualImporterEmail = declarationOrg.CasualImporterEmail;
+                        declarationPM.CasualImporterTel = declarationOrg.CasualImporterTel;
+                        declarationPM.CasualImporterContact = declarationOrg.CasualImporterContact;
+                        declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
+                        declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
+ 
+       
+                    }
+
+
+
 
                     if (isFromAmendment)
                     {
-                        declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
-                       declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
+                        if(!isCopy)
+                        {
+                            declarationPM.ReplacingRepairRequest = declarationOrg.AmendmentRequestNumber;
+
+                        }
+                        declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
                         //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
                     }
                     else
@@ -277,8 +313,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.DeclarationDocumentTypeCode = GetValueCodeType(declaration.DMExtensions.PreviousDocument.TypeCode);
 
                     }
-                    declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
-                }
+ 
+                    if (declaration.DMExtensions.ExpenseLoadingFactor != null)
+                        declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
+                 }
 
 
                 if (declaration.Importer != null)
@@ -291,10 +329,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
  
                     declarationUpdateService.Update(declarationPM, true);
-                
+
+                if(declarationPM.IsCourierDeclaration)
+                {
+
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+
+                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
+
+                    DeclarationCourierStatusPM declarationCourierStatusPMNew = declarationCourierStatusPM;
+
+                    declarationCourierStatusPMNew.DeclarationId = declarationPM.Id;
+
+                    declarationCourierStatusPMNew.ChangeSetOp = ChangeSetOperation.Update;
+                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                    declarationCourierStatusUpdateService.Update(declarationCourierStatusPMNew, true);
 
 
- 
+                }
+
+
+
                 string declarationId;
                 if (declarationOrg != null)
                     declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
@@ -748,8 +804,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
+                //
+                //_OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
 
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0, 0);
+ 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
 
@@ -794,6 +853,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     SupplierInvoicePMOrg = null;
                 }
+
+                supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
+
 
                 supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item, declaration, declarationId, tenant, supplierInvoicePM, context, SupplierInvoicePMOrg);
 
@@ -862,7 +924,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemPM.SequenceNumeric = (int)governmentAgencyGoodsItem.SequenceNumeric;
                     supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
                     if (item.Invoice.DMExtensions.InvoiceAmount != null) supplierInvoiceItemPM.ItemPriceCurrencyCode = item.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
-
+                      
                     supplierInvoiceItemPM.Tenant = tenant;
                     if (governmentAgencyGoodsItem.Commodity.DMExtensions != null)
                     {
@@ -1055,14 +1117,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(context);
 
                             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
-                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.SequenceNumeric), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
-                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
 
-                            supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
-                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                            var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
+                         if(invoiceItem!= null)
                             {
-                                supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
+       
+                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles  =supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+
+                               // supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+
+                                foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                                {
+                                    supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
+                                }
+
+
+                                supplierInvoiceItemPM.CatalogNumber = invoiceItem.CatalogNumber;
+                                supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
+                                supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
+                            supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
+                            supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
+
                             }
+
+
+                           
                         }
                         else
                         {

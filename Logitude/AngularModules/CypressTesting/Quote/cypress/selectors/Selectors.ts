@@ -9,6 +9,7 @@ export class QuoteSelectors {
      public static readonly QuoteToPort = '#Quote_ToPortId';
      public static readonly QuoteCustomerType = '#Quote_QuoteCustomerTypeCode';
      public static readonly QuoteAddCharges = '#AddCharges';
+     public static readonly LogLovQuoteCustomerType="#LogLov_Quote_QuoteCustomerTypeCode"
      //#endregion
      //#region Quick Search
      public static readonly QuoteSearch = '#Quote_Search';
@@ -41,7 +42,6 @@ export class QuoteSelectors {
      public static readonly SaveQuotation = '#Savee';
      public static readonly SendOption = '#SendOption';
      public static readonly SendToCustomer = '#SendToCustomer';
-     public static readonly EmailSearchTextBox = 'input[id^=EmailSearchTextBox_TextArea]';
      public static readonly SendMessageButton = '#SendMessagebtn';
      public static readonly QuoteEventNote = '#Quote_EventNote';
      //#endregion

@@ -256,9 +256,9 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
 
-                    List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();
+                    List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();   
 
-                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").Include("LocationPort")
+                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").DefaultIfEmpty().Include("LocationPort").DefaultIfEmpty().Include("ContainerStatus").DefaultIfEmpty().Include("ContainerStatusSource").DefaultIfEmpty()
                                 where d.Tenant == tenant
                                 && d.ShipmentId == ShipmentId
                                 && d.ContainerId == ContainerId
@@ -282,12 +282,13 @@ namespace WebFreight.Web.Controllers.WebServices
                                     StatusCode = d.StatusCode,
                                     TimeOfArrivalInfo = d.TimeOfArrivalInfo,
                                     TimeOfDepartureInfo = d.TimeOfDepartureInfo,
-                                    StatusName = d.INTTRAStatus == null ? null : d.INTTRAStatus.Name,
+                                    Location = d.Location,
+                                    StatusSource = d.StatusSource,
+                                    StatusSourceName = d.ContainerStatusSource == null ? "" : d.ContainerStatusSource.Name,
+                                    StatusName = d.INTTRAStatus == null ? (d.ContainerStatus == null? null: d.ContainerStatus.Name) : d.INTTRAStatus.Name,
                                     LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
-                                    Location = d.Location,
                                 }).ToList();
-
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(o => o.EventDate));
@@ -299,6 +300,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetSendEBooking(string myShipmentId)
         {
             try

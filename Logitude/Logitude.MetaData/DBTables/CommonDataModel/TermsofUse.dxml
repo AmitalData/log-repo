@@ -5,9 +5,10 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Version"
-    ShortName="Version_"
-    Type="int">
+    Name="Id"
+    OldNames="Version"
+    Type="int"
+	  Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -19,4 +20,38 @@
     <Constraints
       Nullable="false" />
   </Column>
+
+    <Column
+    Name="VersionNumber"
+    ShortName="VersionNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+      <Column
+    Name="Tenant"
+    ShortName="Tenant"
+  DefaultValue="0" 
+  Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
+	<Column
+    Name="VersionDocumentId"
+    ShortName="VersionDocumentId" 
+ Type="varchar"
+   Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+Name="PrivateLabelId"
+ShortName="PrivateLabelId"
+ Type="varchar"
+   Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
 </Table>

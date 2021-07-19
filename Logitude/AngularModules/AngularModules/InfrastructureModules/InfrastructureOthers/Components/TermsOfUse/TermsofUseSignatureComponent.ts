@@ -81,32 +81,33 @@ export class TermsofUseSignatureComponent implements OnInit {
 
 
     ViewFile(item: TermsofUseSignaturePMViewModel) {
-  
-        if (SessionLocator.PrivateLableSettings) {
-            var documentName = SessionLocator.PrivateLableSettings.PrivateLabelShortName + "-" + item.TermsofUseVersion + "_termsofuses";// +"." + CurrentDocument.Extension;
-            DownloadManager.DownloadPage(documentName);
-            
-        }
-        else {
-            var documentName = item.TermsofUseVersion + "_termsofuses";// +"." + CurrentDocument.Extension;
-            DownloadManager.DownloadPage(documentName);
-        } 
 
+        if (item.VersionDocumentId == null) {
+            // Tenant 0 terms of use
+            var documentId = item.TermsOfUseId + "_termsofuses";
+            DownloadManager.DownloadPage(documentId);
+        } else {
+            DownloadManager.DownloadPage(item.VersionDocumentId);
+        }
+        }  
     }
 
-
-
-}
+ 
 
 
 class TermsofUseSignaturePMViewModel {
-
+      
 
     SignedDatetime: Date;
     TermsofUseVersion: number;
+    VersionDocumentId: string;
+    TermsOfUseId: number;
+
     constructor(item: TermsofUseSignaturePM) {
         this.SignedDatetime = item.SignedDatetime;
-        this.TermsofUseVersion = item.TermsofUseVersion;
+        this.TermsofUseVersion = item.VersionNumber;
+        this.VersionDocumentId = item.VersionDocumentId;
+        this.TermsOfUseId = item.TermsofUseId;
     }
 
 }

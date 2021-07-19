@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "5746046270be2b5c8afb1804454e634f";
+		public const string HashString = "0f08f54cb48fba698628197d28b4e328";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -185,12 +185,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						FullLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						ShortFieldLable =  "SearchFields",
-					  						ShortFieldLableDefaultText =  "תיק יצוא / מזהה מטען",
-					  						ShortLocalDefaultText =  "תיק יצוא / מזהה מטען",
+					  						ShortFieldLableDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
+					  						ShortLocalDefaultText =  "מספר המכלה/תיק יצוא/מזהה מטען/לקוח",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

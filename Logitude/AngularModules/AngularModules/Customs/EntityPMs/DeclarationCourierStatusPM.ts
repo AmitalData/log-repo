@@ -374,6 +374,11 @@ export class DeclarationCourierStatusPM {
     public set CrateNumber(newValue: string) { if (this.crateNumber != newValue) { this.crateNumber = newValue; this.MarkAsDirty("CrateNumber"); } }
        
 	 
+    private truckerName: string;
+    public get TruckerName() { return this.truckerName; }
+    public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

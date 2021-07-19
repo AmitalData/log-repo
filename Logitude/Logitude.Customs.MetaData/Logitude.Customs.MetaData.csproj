@@ -109,6 +109,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
     <None Include="DBScripts\Post\202103251635_AddFCLLCL.sxml" />
     <None Include="DBScripts\Post\202105252040_AddAmendmentStatuses.sxml" />
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
@@ -121,6 +122,7 @@
     <None Include="DBScripts\Post\2021011719372_UpdateREQUESTEDCUSTOMSDOCID2.sxml" />
     <None Include="DBScripts\Post\2021022202_UpdatephysicalcheckDeclaration.sxml" />
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
+    <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -250,8 +252,10 @@
     <None Include="DBTables\CustomDocumentType.dxml" />
     <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
     <None Include="DBTables\CustomerActivityType.dxml" />
+    <None Include="DBTables\CustomerClassificationType.dxml" />
     <None Include="DBTables\CustomerIdentificationType.dxml" />
     <None Include="DBTables\CustomerIdentifyType.dxml" />
+    <None Include="DBTables\CustomerIndicationType.dxml" />
     <None Include="DBTables\CustomerRoleType.dxml" />
     <None Include="DBTables\CustomerTypeGeneral.dxml" />
     <None Include="DBTables\CustomMetaDataType.dxml" />
@@ -409,6 +413,7 @@
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
+    <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
     <None Include="DBTables\PointerLevel.dxml" />
     <None Include="DBTables\ProceduralFault.dxml" />
     <None Include="DBTables\ProceduralFaultInProcessType.dxml" />
@@ -504,8 +509,13 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\CustomerIndicationType.lxml" />
+    <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
+    <None Include="EntityFiles\CustomerClassificationType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\ExportReference.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />

@@ -141,7 +141,9 @@
     <Compile Include="EntityKeys\CourierPendingReasonKeys.cs" />
     <Compile Include="EntityKeys\CourierStatusKeys.cs" />
     <Compile Include="EntityKeys\CurrencyTypeTenantKeys.cs" />
+    <Compile Include="EntityKeys\CustomerClassificationTypeKeys.cs" />
     <Compile Include="EntityKeys\CustomerIdentificationTypeKeys.cs" />
+    <Compile Include="EntityKeys\CustomerIndicationTypeKeys.cs" />
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsAutonomyKeywordKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
+    <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
     <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
@@ -261,7 +264,9 @@
     <Compile Include="EntityListQueryServices\CourierPendingReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CurrencyTypeTenantListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomerClassificationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomerIdentificationTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomerIndicationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAutonomyKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
@@ -338,7 +343,9 @@
     <Compile Include="EntityListQueryServices\Generated\CourierPendingReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CurrencyTypeTenantListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomerClassificationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomerIdentificationTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomerIndicationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAutonomyKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
@@ -389,6 +396,7 @@
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
@@ -432,6 +440,7 @@
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PoaStatusTypeLookUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
@@ -501,7 +510,9 @@
     <Compile Include="EntityLists\Generated\CourierPendingReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CurrencyTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomerClassificationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomerIdentificationTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomerIndicationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAutonomyKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
@@ -552,6 +563,7 @@
     <Compile Include="EntityLists\Generated\PartyRelationshipTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PoaStatusTypeLookUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReferantExceptionList.Generated.cs" />
@@ -622,7 +634,9 @@
     <Compile Include="EntityMapping\CourierPendingReasonMap.cs" />
     <Compile Include="EntityMapping\CourierStatusMap.cs" />
     <Compile Include="EntityMapping\CurrencyTypeTenantMap.cs" />
+    <Compile Include="EntityMapping\CustomerClassificationTypeMap.cs" />
     <Compile Include="EntityMapping\CustomerIdentificationTypeMap.cs" />
+    <Compile Include="EntityMapping\CustomerIndicationTypeMap.cs" />
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsAutonomyKeywordMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
@@ -673,6 +687,7 @@
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
+    <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
     <Compile Include="EntityMapping\ReferantTeamMap.cs" />
@@ -742,7 +757,9 @@
     <Compile Include="EntityPOCOs\CourierPendingReason.cs" />
     <Compile Include="EntityPOCOs\CourierStatus.cs" />
     <Compile Include="EntityPOCOs\CurrencyTypeTenant.cs" />
+    <Compile Include="EntityPOCOs\CustomerClassificationType.cs" />
     <Compile Include="EntityPOCOs\CustomerIdentificationType.cs" />
+    <Compile Include="EntityPOCOs\CustomerIndicationType.cs" />
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsAutonomyKeyword.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
@@ -793,6 +810,7 @@
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
+    <Compile Include="EntityPOCOs\PoaStatusTypeLookUp.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
     <Compile Include="EntityPOCOs\ReferantException.cs" />
@@ -863,7 +881,9 @@
     <Compile Include="Repsitories\CourierPendingReasonRepository.cs" />
     <Compile Include="Repsitories\CourierStatusRepository.cs" />
     <Compile Include="Repsitories\CurrencyTypeTenantRepository.cs" />
+    <Compile Include="Repsitories\CustomerClassificationTypeRepository.cs" />
     <Compile Include="Repsitories\CustomerIdentificationTypeRepository.cs" />
+    <Compile Include="Repsitories\CustomerIndicationTypeRepository.cs" />
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsAutonomyKeywordRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
@@ -940,7 +960,9 @@
     <Compile Include="Repsitories\Generated\CourierPendingReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CurrencyTypeTenantRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomerClassificationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomerIdentificationTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomerIndicationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAutonomyKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
@@ -991,6 +1013,7 @@
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
@@ -1034,6 +1057,7 @@
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
+    <Compile Include="Repsitories\PoaStatusTypeLookUpRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
     <Compile Include="Repsitories\ReferantTeamRepository.cs" />

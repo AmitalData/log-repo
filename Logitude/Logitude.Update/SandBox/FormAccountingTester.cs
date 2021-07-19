@@ -1,7 +1,10 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+using Logitude.Accounting.BL.CoreBL.Fix;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.CoreBL.Testers;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.Resolvers;
@@ -110,10 +113,15 @@ namespace Logitude.Update.SandBox
 
         private void tESTADHOKToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ///RevaluationBatch revaluationBatch = new RevaluationBatch();
+            //revaluationBatch.RunAllOpenRevaluations(28);
+            //return;
 
-            
+            var myGateWayTester = new GateWayTester();
+            myGateWayTester.ImmediateYearTransferthod(16, 4);
+            return;
             List<string> Last_journalBufferKeys = new List<string>();
-            JournalApproveService.WorkWithoutQueue(74, "1-7797384", ref Last_journalBufferKeys);
+            JournalApproveService.WorkWithoutQueue(18, "1-12164556", ref Last_journalBufferKeys);
 
             return;
             GLaccountCreateTester();
@@ -172,6 +180,12 @@ namespace Logitude.Update.SandBox
                 service.Update(entityPM, true);
                 scope.Complete();
             }
+        }
+
+        private void fixJournalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fixJournaRecolService = new FixJournaRecolService();
+            fixJournaRecolService.FixByJournalNumber("19698", 28);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.LocalSecondLine).HasColumnName("LocalSecondLine").HasMaxLength(25).IsUnicode(true);
 
-            this.Property(t => t.LocalStreetName).HasColumnName("LocalStreetName").HasMaxLength(20).IsUnicode(true);
+            this.Property(t => t.LocalStreetName).HasColumnName("LocalStreetName").HasMaxLength(50).IsUnicode(true);
 
             this.Property(t => t.LocalHouseLetter).HasColumnName("LocalHouseLetter").HasMaxLength(1).IsUnicode(true);
 

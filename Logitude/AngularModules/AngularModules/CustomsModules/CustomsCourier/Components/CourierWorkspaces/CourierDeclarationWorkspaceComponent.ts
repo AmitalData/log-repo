@@ -63,14 +63,14 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
                 {
                     _declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                        (data:any) => {
-                             this.counters = data.Result;
-                            this.isScreenLoaded = true;
+                       (data:any) => {
+                            this.counters = data.Result;
                             this.CurrentSession.StopBusyIndicator();
+                            this.isScreenLoaded = true;
                             this.BuildColumns();
                             this.RefreshList();
                         });
-                
+
                 }
             });
         });
@@ -86,6 +86,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                 }
 
                 this.LoadAllScreenData();
+     
 
             });
 
@@ -436,10 +437,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         this.BuildFiltersForCourierMasterQuery(filters);
-
-        var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
-
-        return myout;
+         var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
+         return myout;
     }
 
     RefreshList() {

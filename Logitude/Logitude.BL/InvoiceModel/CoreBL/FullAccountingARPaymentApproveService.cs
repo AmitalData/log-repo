@@ -548,7 +548,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 Reference2 = paymentPM.ChequeOrPaymentRef,
                 DebitAccountId = GetGLAccountIdByPaymentMethodCode(paymentPM),
                 CreditAccountId = paymentGLAccount != null ? paymentGLAccount.Id : null,
-                ChangeSetOp = ChangeSetOperation.Insert
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Notes = paymentPM.PrintNotes,
             };
             journal.JournalLines.Add(debitLine);
             return counter;

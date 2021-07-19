@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -34,6 +35,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
 
             return result;
+        }
+
+        public AddressTypePM GetSinglePM(string Id)
+        {
+            AddressTypePM entityPM = (from a in repository.context.AddressTypes
+                                     where a.Id == Id
+                                     select new AddressTypePM()
+                                     {
+                                         Id = a.Id,
+                                         Name = a.Name
+                                     }).FirstOrDefault();
+            return entityPM;
+        }
+        public AddressTypePM GetSinglePM(string Id,int tenant)
+        {
+            AddressTypePM entityPM = (from a in repository.context.AddressTypes
+                                      where a.Id == Id
+                                      select new AddressTypePM()
+                                      {
+                                          Id = a.Id,
+                                          Name = a.Name
+                                      }).FirstOrDefault();
+            return entityPM;
         }
     }
 }

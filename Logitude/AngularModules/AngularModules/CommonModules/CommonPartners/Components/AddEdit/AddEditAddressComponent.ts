@@ -142,6 +142,7 @@ export class AddEditAddressComponent implements OnInit {
     }
 
     private ValidateAddress() {
+      if (this.DataContext.fatherComponent.Customer != null) {
         var newPotentialAddressCity = this.EntityPM.City;
         if (AppTool.IsNullOrEmpty(this.EntityPM.City) && this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
             this.EntityPM.City = (AppTool.IsNullOrEmpty(this.EntityPM.City) ? " Potential city " : this.EntityPM.City);
@@ -152,6 +153,7 @@ export class AddEditAddressComponent implements OnInit {
         if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
             this.EntityPM.City = newPotentialAddressCity;
         }
+      }
     }
 
     private LoadCompletedEvent: any = null;

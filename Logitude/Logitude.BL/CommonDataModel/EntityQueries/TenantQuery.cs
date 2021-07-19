@@ -171,6 +171,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 LCLRatio = a.LCLRatio,
                                                 FTLRatio = a.FTLRatio,
                                                 LTLRatio = a.LTLRatio,
+                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -349,6 +350,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LCLRatio = tt.LCLRatio,
                         FTLRatio = tt.FTLRatio,
                         LTLRatio = tt.LTLRatio,
+                        IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
+
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -517,6 +520,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LCLRatio = tt.LCLRatio,
                     FTLRatio = tt.FTLRatio,
                     LTLRatio = tt.LTLRatio,
+                    IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -667,6 +672,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LCLRatio = a.LCLRatio,
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
+                                           IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -813,6 +820,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LCLRatio = a.LCLRatio,
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
+                                       IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -971,6 +980,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                LCLRatio = a.LCLRatio,
                                                FTLRatio = a.FTLRatio,
                                                LTLRatio = a.LTLRatio,
+                                               IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1131,6 +1142,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LCLRatio = a.LCLRatio,
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
+                                           IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1279,6 +1292,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LCLRatio = a.LCLRatio,
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
+                                       IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1446,6 +1461,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LCLRatio = myPOCO.LCLRatio,
                     FTLRatio = myPOCO.FTLRatio,
                     LTLRatio = myPOCO.LTLRatio,
+                    IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1564,6 +1581,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+
                                             };
             return result;
         }

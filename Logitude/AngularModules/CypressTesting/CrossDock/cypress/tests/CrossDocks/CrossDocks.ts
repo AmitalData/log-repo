@@ -13,7 +13,8 @@ import { LinkedShipmentDetails } from "../../models/LinkedShipmentDetails";
 import { CrossdockSelectors } from "../../selectors/Selectors";
 import { CrossDockContext } from "../../models/CrossDockContext";
 import { LinkedReleaseDetails } from "../../models/LinkedReleaseDetails"
-import * as Baseactions from "../../../../Base/cypress/actions/Actions"
+import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
+import { URLs } from '../../../../Shipment/cypress/constants/URLs';
 import { DeliveryDetails } from "../../models/DeliveryDetails";
 let shipmentDetails: ShipmentDetails;
 let crossdockDetails: CrossDockDetails;
@@ -39,7 +40,6 @@ Then("the shipment should create successfully", () => {
         CrossDockContext.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
-
 //#endregion
 
 //#region Add packages
@@ -65,7 +65,9 @@ Then("the direct shipment should save successfully", () => {
 
 //#region Add cross dock entry/release
 Given("the user in Connected Entities tab", () => {
-    cy.Navigate(ShipmentSelectors.ConnectionsTab,true);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetShipmentConnectedEntities, RequestAliases.GetShipmentConnectedEntities)
+    cy.Navigate(ShipmentSelectors.ConnectionsTab, true);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetShipmentConnectedEntities, 200);
 });
 
 Given("a corss dock {string} with the following details", (crossDockType, dataTable) => {
@@ -83,6 +85,7 @@ When("create cross dock release", () => {
 });
 
 Then("the cross dock entry should create successfully", () => {
+    Actions.DefineUpdateShipment()
     Actions.AssertCreateCrossdockEntry();
 });
 
@@ -99,7 +102,12 @@ Then("the cross dock {string} should contain the linked shipment details", (cros
 });
 
 Then("the cross dock release should create successfully", () => {
+    Actions.DefineUpdateShipment()
     Actions.AssertCreateCrossdockRelease();
+});
+
+Then("the shipment should update successfully", () => {
+    Actions.AssertUpdateShipment()
 });
 
 Then("shipment should contain the linked release details", (dataTable) => {
@@ -135,7 +143,9 @@ Then("entry fields should be disable", () => {
 });
 
 Then("linked entry status should be {string}", (status) => {
+    Actions.DefineUpdateShipment()
     cy.BackButton(BaseSelectors.ContainsShipment);
+    Actions.AssertUpdateShipment()
     BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.EntryNumber), status)
 });
 //#endregion
@@ -179,7 +189,7 @@ When("cancel the release", () => {
 
 Then("the release should cancel successfully", () => {
     Actions.AssertCancleRelease()
-    
+
 });
 
 Then("release status should be {string}", (ReleaseStatus) => {
@@ -191,7 +201,9 @@ Then("release fields should be disabled", () => {
 });
 
 Then("linked release status should be {string}", (status) => {
+    Actions.DefineUpdateShipment()
     cy.BackButton(BaseSelectors.ContainsShipment);
+    Actions.AssertUpdateShipment()
     BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.ReleaseNumber), status)
     Actions.NavigateToShipmentConnectedEntities();
     BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.ReleaseNumber), status)
@@ -201,7 +213,7 @@ Then("linked release status should be {string}", (status) => {
 
 //#region Edit release
 Given("the user open the created release", () => {
-    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null,true)
+    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null, true)
 });
 
 Given("fill the release with the following details", (dataTable) => {

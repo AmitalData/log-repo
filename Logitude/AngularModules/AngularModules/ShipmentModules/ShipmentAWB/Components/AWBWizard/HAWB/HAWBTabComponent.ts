@@ -275,6 +275,7 @@ export class HAWBTabComponent implements OnDestroy {
     }
 
     private isReloadRequested: boolean = false;
+    public IsHouseConnectedOrDisconnected: boolean = false;
     private Listen() {
         if (this.Wizard != null) {
             this.Wizard.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -307,6 +308,13 @@ export class HAWBTabComponent implements OnDestroy {
                         this.isReloadRequested = false;
                         this.LoadAllHouses();
                     }
+
+                    if (this.IsHouseConnectedOrDisconnected) {
+                        this.IsHouseConnectedOrDisconnected = false;
+                        this.ItemsSource1 = [];
+                        this.ItemsSource2 = [];
+                        this.LoadItemsSource1();
+                    }
                 }
 
                 this.StopListenFlags();
@@ -323,7 +331,7 @@ export class HAWBTabComponent implements OnDestroy {
         this.Wizard.ReloadEntity();
     }
 
-    public Save() {
+    public Save() {        
         this.isReloadRequested = true;
         this.Wizard.SaveClicked();
     }
@@ -387,6 +395,7 @@ class HAWBItem {
                 itemPM.ShipmentNumber = this.fatherComponent.EntityPM.ShipmentNumber;
                 itemPM.MasterShipmentDataId = this.fatherComponent.EntityPM.Id;
                 this.fatherComponent.EntityPM.AddConsoleShipment(itemPM);
+                this.fatherComponent.IsHouseConnectedOrDisconnected = true;
                 this.fatherComponent.Save();
             }
         }
@@ -395,6 +404,7 @@ class HAWBItem {
             var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
             if (itemPM != null) {
                 this.fatherComponent.EntityPM.RemoveConsoleShipment(itemPM);
+                this.fatherComponent.IsHouseConnectedOrDisconnected = true;
                 this.fatherComponent.Save();
             }
         }

@@ -187,6 +187,16 @@
                                 </div>
                             </li>
 
+                            <li [class.Selected]="SelectedTabCode == 'TOU'" (click)="SelectedTabCode = 'TOU'">
+                                <div class="InnerChild" style="color:black;width:100px">
+
+                                    <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                        <!--<span>{{'TenantManagmentPrivateLabels.S.TermsOfUse' | TextCodeTranslationPipe}} </span> -->
+                                        <span>Terms Of Use </span>
+                                    </div>
+                                </div>
+                            </li>
+
 
                         </ul>
                     </div>
@@ -362,7 +372,7 @@
                                                     <td>
 
                                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadMainLogo()">Upload</button>
-                                                        <input [attr.id]="LogoMainFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileMain($event)" style="display:none" class="upload" />
+                                                        <input [attr.id]="LogoMainFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.PNG" type="file" (change)="UploadogoFileMain($event)" style="display:none" class="upload" />
 
                                                     </td>
 
@@ -377,7 +387,7 @@
 
                                                                 <td>
                                                                     <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px; left: 55px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
-                                                                    <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
+                                                                    <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.PNG" type="file" (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
 
                                                                 </td>
 
@@ -665,31 +675,111 @@
                             </div>
                         </div>
 
+
+                        <!--   Tab 3 Label-->
+                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'TOU'">
+                            <div style="margin:10px" class="TabBody MediaFillAbsolute">
+                                <h3 style="color: #1B90CB;position: relative;margin: 8px;">Terms Of Use</h3> 
+                                <button  style="width:55px;position: relative; bottom: 30px; left: 180px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
+                                <!--accept=".xml,.XML"-->
+                                <input [attr.accept]="'.PDF'" [attr.id]="VersionDocumentId" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+
+                                <table>
+
+                                    <tr style="height:90%">
+                                        <td class="CellStretch">
+                                            <div class="SimpleGridView">
+                                                <div class="SimpleGridViewHeader">
+
+                                                    <table>
+                                                        <tr>
+
+                                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">Upload Date</td>
+                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Version Number</td>
+                                                            <td style="width: 60px; min-width: 60px; max-width: 60px;"></td>
+
+
+                                                            <td class="LastChild" style="min-width: 20px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+
+                                                <div class="SimpleGridViewBody">
+                                                    <table>
+                                                        <tr (click)="TermsofUseSelectedViewModel=item" [class.RowSelected]="item === TermsofUseSelectedViewModel" class="SimpleGridViewRow RowHover" *ngFor="let item of TermsofUsePMLists">
+
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                                                <div style="display:inline-block">
+
+                                                                    <span>{{item.Date | DateTimeToDatePipe}}</span>
+                                                                    <span style="margin-left:5px">{{item.Date | DateTimeToTimePipe}}</span>
+
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                {{item.VersionNumber}}
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                                <div style="font-size:11px;text-align:left"><a (click)="ViewFile(item)" style="margin-left:0px;color:#0094ff;font-size:12px;text-align:left">View File</a></div>
+                                                            </td>
+
+
+                                                            <td class="LastChild" style="min-width: 20px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+
+                            </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </td>
-    </tr>
+            </td>
+        </tr>
 
 
-    <tr style="min-height: 40px;max-height:40px;height:40px">
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;vertical-align: bottom;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 10px;"><div></div></td>
-                    <td style="width: 50px;vertical-align: bottom;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+        <tr style="min-height: 40px;max-height:40px;height:40px">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 57px;vertical-align: bottom;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+                        <td style="width: 10px;"><div></div></td>
+                        <td style="width: 50px;vertical-align: bottom;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
-</table>
+    </table>

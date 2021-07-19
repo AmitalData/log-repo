@@ -31,6 +31,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
+        public IQueryable<ShipmentPickUpDeliveryPackage> GetPickUpDeliveryPackagesByIdsList(List<string> ids, int tenant)
+        {
+            return (from a in context.ShipmentPickUpDeliveryPackages
+                    where ids.Contains(a.ShipmentPickUpDeliveryId) && a.Tenant == tenant
+                    select a);
+        }
 
         public void Add(ShipmentPickUpDeliveryPackage entity)
         {
@@ -77,6 +83,18 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentPickUpDeliveryPackage> GetPackagesByDeliveryId(string deliveryId, int tenant)
         {
             return context.ShipmentPickUpDeliveryPackages.Where(d => d.Tenant == tenant && d.ShipmentPickUpDeliveryId == deliveryId);
+        }
+        public List<ShipmentPickUpDeliveryPackage> GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(string containerId, int tenant)
+        {
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = null;
+            if (!string.IsNullOrEmpty(containerId))
+            {
+                shipmentPickUpDeliveryPackages = (from record in context.ShipmentPickUpDeliveryPackages
+                                                  where record.Tenant == tenant && record.ContainerEntityId == containerId
+                                                  select record).ToList();
+            }
+
+            return shipmentPickUpDeliveryPackages;
         }
     }
 }

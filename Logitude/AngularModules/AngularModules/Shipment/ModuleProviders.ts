@@ -33,6 +33,8 @@ import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTr
 import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/AWBAdditionalHandlingInfoListService';
 import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSubTypeListService';
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
+import { ContainerListService } from './Services/StandardLists/ContainerListService';
+import { ContainerPMService } from './Services/StandardPMs/ContainerPMService';
 
 //import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
 //import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
@@ -82,6 +84,8 @@ export class ModuleProviders {
             case "FBLStockExtenedPMService": { myResult = new FBLStockExtenedPMService(); break; }
             case "CustomsTransferHeaderPMService": { myResult = new CustomsTransferHeaderPMService(); break; }
             case "ShipmentSubTypePMService": { myResult = new ShipmentSubTypePMService(); break; }
+            case "ContainerListService": { myResult = new ContainerListService(); break; }
+            case "ContainerPMService": { myResult = new ContainerPMService(); break; }
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }

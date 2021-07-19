@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="TicketClassifications"
+  Name="TicketClassifications"   
   Schema="dbo"
   DBType="Main"
   Module="CRM">
@@ -60,7 +60,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ManagerUserId"
+    Name="ManagerUserId"     
     Type="varchar"
     Size="15">
     <Constraints

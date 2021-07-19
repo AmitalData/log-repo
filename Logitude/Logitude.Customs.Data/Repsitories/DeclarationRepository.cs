@@ -56,8 +56,6 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
-
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 
@@ -65,7 +63,20 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
-                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id &&    a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
+                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
+                    && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+
+        public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
+        {
+
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return (from a in context.Declarations
+                    where (a.CustomFileNo == customFileNo && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null)
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
@@ -411,7 +422,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         
 
-        public Declaration GetDeclarationByFunctionalReferenceID( string functionalReferenceID)
+        public Declaration GetDeclarationByFunctionalReferenceID( string functionalReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -419,7 +430,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
             Declaration declaration = (from a in context.Declarations
-                                              where functionalReferenceID ==a.AmendmentRequestNumber
+                                              where functionalReferenceID ==a.AmendmentRequestNumber && a.Tenant== tenant
                                        select a).FirstOrDefault();
 
             return declaration;
@@ -629,6 +640,22 @@ namespace Logitude.Customs.Data.Repsitories
             return dec != null ? dec.CustomFileNo : null;
         }
 
+        public Declaration GetDeclarationByDecNoAndVersion(string decNo,string version ,  int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(decNo)) return null;
+            if (String.IsNullOrWhiteSpace(version)) return null;
+
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == decNo && rec.VersionId == version && rec.Tenant == tenant
+                  select rec
+                  )
+                  .FirstOrDefault();
+        }
+
         public Declaration GetDeclarationByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
@@ -642,8 +669,6 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-
-
         public Declaration GetLastDeclarationByDeclarationId(string id, int tenant)
         {
             if (String.IsNullOrWhiteSpace(id)) return null;

@@ -131,10 +131,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public JournalAdditionalDataList GetSingle(string journalid)
+        public JournalAdditionalDataList GetSingle(string journalid, int journallinenumber)
         {
             IQueryable<JournalAdditionalData> JournalAdditionalDataQuery = (from a in context.JournalAdditionalDatas
-                                                       where a.JournalId == journalid
+                                                       where a.JournalId == journalid && a.JournalLineNumber == journallinenumber
                                                        select a);
 
              

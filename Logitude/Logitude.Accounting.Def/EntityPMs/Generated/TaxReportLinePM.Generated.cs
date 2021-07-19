@@ -643,6 +643,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int journalLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int JournalLineNumber  
+	   {
+	    
+	     get
+		{
+		   return journalLineNumber;
+		 }
+		 set
+		 {
+		   if(journalLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalLineNumber",OldValue=journalLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   journalLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string previousReference ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PreviousReference  
+	   {
+	    
+	     get
+		{
+		   return previousReference;
+		 }
+		 set
+		 {
+		   if(previousReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PreviousReference",OldValue=previousReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   previousReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

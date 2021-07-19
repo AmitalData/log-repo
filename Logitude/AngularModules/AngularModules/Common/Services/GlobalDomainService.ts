@@ -471,10 +471,58 @@ export class GlobalDomainService {
         myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
+
+    GetOceanInsightGlobalSetting() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetOceanInsightGlobalSetting';
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var iResultJson = response;
+                var iResultMapped: OceanInsightGlobalSetting;
+                if (iResultJson) {
+                    iResultMapped = this.MapOceanInsightGlobalSetting(iResultJson);
+                }
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = iResultMapped;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    MapOceanInsightGlobalSetting(jsonList: any) {
+        var entityList: OceanInsightGlobalSetting = new OceanInsightGlobalSetting();
+        var jsonListKeys = Object.keys(jsonList);
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+        return entityList;
+    }
+
+    UpdateOceanInsightGlobalSetting(oITenantNumber: number, amitalCloudEnvironmentURL: string, amitalCloudLogitudeTenantPrimaryKey: string ) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetUpdateOceanInsightGlobalSetting?oITenantNumber=' + oITenantNumber + "&amitalCloudEnvironmentURL=" + amitalCloudEnvironmentURL + "&amitalCloudLogitudeTenantPrimaryKey=" + amitalCloudLogitudeTenantPrimaryKey;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var itemJason: Boolean = response.body;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = itemJason;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class UploadFileArgs {
     Tenant: number;
     FileData: string;    
     FileName: string;
+}
+
+export class OceanInsightGlobalSetting {
+    OITenantNumber: number;
+    AmitalCloudEnvironmentURL: string;
+    AmitalCloudLogitudeTenantPrimaryKey: string;
 }

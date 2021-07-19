@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -44,7 +45,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public PayableBuilder ChargesTypeIdByCode(string chargesTypeCode)
         {
-            _payablesPM.ChargesTypeId = chargesTypeCode == "AFT" ? ShipmentData.ChargeTypeAFTId : null;
+            _payablesPM.ChargesTypeId = chargesTypeCode == "AFT" ? BillingData.ChargeTypeAFTId : null;
             return this;
         }
 
@@ -80,7 +81,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public PayableBuilder CurrencyIdByCode(string currencyCode)
         {
-            _payablesPM.CurrencyId = currencyCode == "EUR" ? ShipmentData.CurrencyEURId : null;
+            _payablesPM.CurrencyId = currencyCode == "EUR" ? BillingData.CurrencyEURId : null;
             return this;
         }
 
@@ -98,7 +99,7 @@ namespace Logitude.ShipmentTests.Models.Builders
 
         public PayableBuilder MeasurementIdByCode(string measurementCode)
         {
-            _payablesPM.MeasurementId = measurementCode == "GRWT" ? ShipmentData.MeasurementGRWTId : null;
+            _payablesPM.MeasurementId = measurementCode == "GRWT" ? BillingData.MeasurementGRWTId : null;
             return this;
         }
 

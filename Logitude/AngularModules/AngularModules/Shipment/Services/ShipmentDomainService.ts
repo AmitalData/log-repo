@@ -944,6 +944,75 @@ export class ShipmentDomainService extends BaseService  {
                     catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetNumberOfShipmentPackages(shipmentId: string) {
+
+        var url = this._apiUrl + '/GetNumberOfShipmentPackages?shipmentId=' + shipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+                  
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId: string) {
+
+        var url = this._apiUrl + '/GetIfShipmentPackageConnectedToPickUpDeliveryPackage?containerId=' + containerId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId: string) {
+
+        var url = this._apiUrl + '/GetIfShipmentPackagesConnectedToStandAloneShipmentPackage?shipmentId=' + shipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var result = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetPickupDeliveryValidForInlandDomestic(pickupDeliveryId: string) {
+        var url = this._apiUrl + '/GetPickupDeliveryValidForInlandDomestic?pickupDeliveryId=' + pickupDeliveryId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetFilteredForwarderShipmentPackages(shipmentId: string, stanAloneShipmentId: string) {
+        var url = this._apiUrl + '/GetFilteredForwarderShipmentPackages?shipmentId=' + shipmentId + "&stanAloneShipmentId=" + stanAloneShipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ShipmentsSummary {

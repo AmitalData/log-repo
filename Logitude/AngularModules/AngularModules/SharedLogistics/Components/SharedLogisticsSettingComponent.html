@@ -162,7 +162,7 @@
 
 
                                     <!-- DisplayDocumentsAndEvents -->
-                                    <tr style="height:100px;vertical-align:top">
+                                    <tr style="height:80px;vertical-align:top">
                                         <td>
                                             <table style="text-align:left">
                                                 <tr style="height:30px;">
@@ -221,6 +221,40 @@
                                         </td>
 
                                     </tr>
+
+
+                                    <tr *ngIf="IsShowQuotesRequestActivatedInSharedLogistics" style="height:80px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <CheckBox [IsEnabled]="IsSharedLogisticsActivated" [IsChecked]="IsQuotesRequestActivatedInSharedLogistics" (Checked)="IsQuotesRequestActivatedInSharedLogistics = $event"></CheckBox>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Quotes Requests in Shared Logistics</div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </td>
+
+                                    </tr>
+
+
+
+
+
                                     <tr>
                                         <td>
                                             <div></div>

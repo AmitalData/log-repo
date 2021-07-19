@@ -244,11 +244,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             if (!this.IsDisplayOnly) {
                                 if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null  ) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X' || this.EntityPM.CourierManifestStatusCode == 'M' )
-                                )){
-
-                                    button.IsDisabled = true;
+                                )) {
+                               
+                                     button.IsDisabled = true;
                                 }
                             }
+
+
+                            if (this.EntityPM.AmendmentDontDisplayInList == true)
+                                button.IsDisabled = true;
+
                         }
                         else {
                             button.IsHidden = true;
@@ -265,6 +270,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.IsHidden = false;
                         button.Width = 120;
 
+                        if (this.EntityPM.Direction == "E")
+                        {
+                            button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+                        } 
                     }
                     if (button.EventCode == "Forms") {
                         button.Width = 60;

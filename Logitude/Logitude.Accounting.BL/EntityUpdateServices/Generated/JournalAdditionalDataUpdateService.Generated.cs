@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(JournalAdditionalDataPM entityPM)
         {
-            JournalAdditionalDataKeys entityKeys = new JournalAdditionalDataKeys() { JournalId = entityPM.JournalId };
+            JournalAdditionalDataKeys entityKeys = new JournalAdditionalDataKeys() { JournalId = entityPM.JournalId, JournalLineNumber = entityPM.JournalLineNumber };
             return entityKeys;
         }
 

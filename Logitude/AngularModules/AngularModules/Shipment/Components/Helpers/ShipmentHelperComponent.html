@@ -32,6 +32,14 @@
             <button class="Button" (click)="ShippingInstructionsClicked()">Send Shipping Instructions</button>
         </td>
 
+        <td style="padding-right: 5px;" *ngIf="IsShipmentContainersSimulatorVisible">
+            <button class="Button" (click)="ShipmentContainersSimulatorClicked()">Containers Statuses Simulator</button>
+        </td>
+
+        <td style="padding-right: 5px;" *ngIf="IsShipmentContainersSimulatorVisible">
+            <button class="Button" (click)="ContainersRequestStatusClicked()">Containers Request Status</button>
+        </td>
+
         <td *ngIf="IsAWBWizardButtonVisible">
             <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
         </td>

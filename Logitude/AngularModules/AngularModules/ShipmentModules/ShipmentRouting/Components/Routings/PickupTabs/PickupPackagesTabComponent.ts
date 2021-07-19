@@ -12,6 +12,12 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureToggleList } from '../../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { ShipmentPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
+import { PackagesTabComponent, ShipmentPackageItem } from '../../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
+import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     
@@ -26,7 +32,9 @@ export class PickupPackagesTabComponent {
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: PickupPackageItem[] = [];
-    public DataContext = this;    
+    public IsAddContainerVisible: boolean = false;
+    public IsAddContainerEnabled: boolean = false;
+    public DataContext = this;
     constructor() {
 
     }
@@ -53,7 +61,29 @@ export class PickupPackagesTabComponent {
 
     public IsEditingEnabled: boolean = true;
     SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            this.IsEditingEnabled = false;
+        }
+
+        else {
+            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
+        }
+
+        this.IsAddContainerVisible = false;
+        if (this.IsFCLEntity) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            if (featureToggle) {
+                this.IsAddContainerVisible = true;
+                this.IsEditingEnabled = false;
+            }
+        }
+
+        this.IsAddContainerEnabled = false;
+        if (this.IsAddContainerVisible) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+                this.IsAddContainerEnabled = true;
+            }
+        }
     }
 
     public SelectedItem: PickupPackageItem = null;
@@ -82,11 +112,30 @@ export class PickupPackagesTabComponent {
 
     CopyfromShipmentPackagesButtonClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Copy from Shipment Packages";//TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.ChoosePickUpPackages");
+        logWindow.Title = "Copy from Shipment Packages";
         logWindow.WindowArgs = this;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesChooseComponent");
     }
+
     AddButtonClicked() {
+        if (this.IsAddContainerVisible) {
+            this.ValidateNumberOfStandAloneShipmentPackages()
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ValidateNumberOfStandAloneShipmentPackages() {
+        var numberOfAllowedPackages = 1;
+        if (this.EntityPM.ShipmentPickUpDeliveryPackages.length >= numberOfAllowedPackages && !AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Can't Add Another Container Since Pickup is Connected to a Stand Alone Shipment");
+        } else {
+            this.ViewAddPickupPackagesWindow();
+        }
+    }
+
+    ViewAddPickupPackagesWindow() {
         var itemPM = new ShipmentPickUpDeliveryPackagePM(null);
         itemPM.Tenant = this.EntityPM.Tenant;
         itemPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;
@@ -97,13 +146,22 @@ export class PickupPackagesTabComponent {
         logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.AddPickUpPackage");
         logWindow.DataContext = itemComponent;
         logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesAddEditComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.SetUIProperties();
+        });
     }
+
     EditPackageClicked(itemComponent: PickupPackageItem) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.EditPickUpPackage");
-        logWindow.DataContext = itemComponent;
-        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesAddEditComponent");
+        if (this.IsAddContainerVisible) {
+            this.EditContainerClicked(itemComponent);
+        } else {
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.O.EditPickUpPackage");
+            logWindow.DataContext = itemComponent;
+            logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesAddEditComponent");
+        }
     }
+
     DeleteButtonClicked(itemComponent: PickupPackageItem) {
         if (itemComponent) {
             var confirmWindow = new ConfirmWindow();
@@ -112,10 +170,103 @@ export class PickupPackagesTabComponent {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
+                    this.SetUIProperties();
                 }
             });
         }
     }
+
+    AddContainerClicked() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ShipmentPM = this.ShipmentPM;
+        windowArgs.IsLCLEntity = this.IsLCLEntity;
+        windowArgs.IsFCLEntity = this.IsFCLEntity;
+        windowArgs.TransportModeId = this.TransportModeId;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Add Container";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s) {
+                this.BuildItemsSource();
+            }
+        });
+    }
+
+    EditContainerClicked(pickupItemComponent: PickupPackageItem) {
+
+        var shipmentPackage = this.MapShipmentPackageFromPickupDeliveryPackage(pickupItemComponent);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = this.GetEditPackageWindowTitle();
+        var entityArgs: EntityArgs = new EntityArgs();
+        entityArgs.EntityPM = this.ShipmentPM;
+        entityArgs.ObjectTableName = "Shipment";
+
+        var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
+        packagesTabComponent.ngOnInit();
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
+        var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
+        logWindow.Width = 940;
+        logWindow.Height = 610;
+        logWindow.DataContext = itemComponent;
+        logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent');
+        logWindow.ComponentLoaded.subscribe(component => {
+            logWindow.WindowClosed.subscribe(result => {
+                if (result) {
+                    pickupItemComponent.Quantity = component.DataContext.Quantity;
+                    pickupItemComponent.Volume = component.DataContext.Volume;
+                    pickupItemComponent.Width = component.DataContext.Width;
+                    pickupItemComponent.Height = component.DataContext.Height;
+                    pickupItemComponent.Weight = component.DataContext.Weight;
+                    pickupItemComponent.PackageTypeId = component.DataContext.PackageTypeId;
+                    pickupItemComponent.PackageTypeName = component.DataContext.PackageTypeName;
+                    pickupItemComponent.ContainerNumber = component.DataContext.ContainerNumber;
+                    pickupItemComponent.Description = component.DataContext.Description;
+                    pickupItemComponent.ShipperSeal = component.DataContext.ShipperSeal;
+                    this.BuildItemsSource();
+                    packagesTabComponent.BuildItemsSource();
+                }
+            });
+        });
+    }
+
+    MapShipmentPackageFromPickupDeliveryPackage(pickupItemComponent: PickupPackageItem) {
+        var shipmentPackage = new ShipmentPackagePM(null);
+        shipmentPackage.NonActiveContainer = false;
+        shipmentPackage.Quantity = pickupItemComponent.Quantity;
+        shipmentPackage.IsContainer = true;
+        shipmentPackage.Tenant = SessionLocator.Tenant;
+        shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+        shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+        shipmentPackage.IsPackageCheckedInLeg = true;
+        shipmentPackage.Volume = pickupItemComponent.Volume;
+        shipmentPackage.Width = pickupItemComponent.Width;
+        shipmentPackage.Height = pickupItemComponent.Height;
+        shipmentPackage.Weight = pickupItemComponent.Weight;
+        shipmentPackage.PackageTypeId = pickupItemComponent.PackageTypeId;
+        shipmentPackage.PackageTypeName = pickupItemComponent.PackageTypeName;
+        shipmentPackage.ContainerNumber = pickupItemComponent.ContainerNumber;
+        shipmentPackage.Description = pickupItemComponent.Description;
+        shipmentPackage.ShipperSeal = pickupItemComponent.ShipperSeal;
+        return shipmentPackage;
+    }
+
+    GetEditPackageWindowTitle() {
+        var logWindowTitle = "";
+        if (this.IsLCLEntity) {
+            logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditPackage");
+        }
+
+        else {
+            logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditContainer");
+            if (this.ShipmentPM.TransportModeId == "I")
+                logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditFullTruckLoad");
+        }
+        return logWindowTitle;
+    }
+
 }
 export class PickupPackageItem extends BaseComponent {
     public EntityPM: ShipmentPickUpDeliveryPackagePM;
@@ -144,8 +295,11 @@ export class PickupPackageItem extends BaseComponent {
 
     public IsContainer: boolean = false;
     public IsEditingEnabled: boolean = true;
+    public IsAddContainerEnabled: boolean = false;
+
     SetUIProperties() {
-        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;        
+        this.IsAddContainerEnabled = this.fatherComponent.IsAddContainerEnabled;
+        this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
         this.SetUIProperties_IsContainer();
         this.SetUIProperties_Harmonize();
 
@@ -167,7 +321,9 @@ export class PickupPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
-      
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
+
     }
     private SetUIPropertiesOfCars(isEnabled: boolean) {
         this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);

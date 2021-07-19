@@ -175,8 +175,8 @@
                                         <tr>
                                             <td>
                                                 <div *ngIf="EntityPm.HasFile == true">
-                                                    <div style="float:left;">
-                                                        <button class="Button" [ngClass] = "AgentLabelClass" title="Share With {{AgentLable}}" style="margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
+                                                    <div style="float:left;" title="{{ShipmentList.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : ''}}">
+                                                        <button class="Button" [ngClass] = "AgentLabelClass" title="Share With {{AgentLable}}" style="margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled || ShipmentList.StatusName == 'In Progress'" [class.Disable]="EntityPm.SignRequestByUserEmail">
                                                             <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
                                                             <div class="AgentNameText" *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
                                                             <div class="AgentNameText" *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>

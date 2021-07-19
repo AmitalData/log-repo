@@ -286,6 +286,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                             .Include("ShipmentAdditionalCloudData")
                                             .Include("WarehouseLegCard")
                                             .Include("ShipmentType")
+                                            .Include("ShipperCard")
+                                            .Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm")
+                                            .Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg")
+                                            .Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
                     where shipment.Id == id && shipment.Tenant == tenant
                     select shipment)
                     .FirstOrDefault();
@@ -932,7 +936,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<Shipment> GetAllShipmentsByHouseNumber(string house, int tenant)
         {
             return (from a in context.Shipments
-                    where a.House == house && a.Tenant == tenant
+                    where a.Tenant == tenant && a.House == house
                     select a).ToList();
         }
     }

@@ -239,7 +239,7 @@
                                             </ul>
                                         </td>
 
-                                       <td style="width: 20px;"></td>
+                                        <td style="width: 20px;"></td>
 
                                         <!-- LevelSelection Filters-->
                                         <td style="width: 30px;">
@@ -262,13 +262,18 @@
                                             <ComboBox *ngIf="LevelSelectionFilterSelectedValue=='Invoice'" style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                       (SelectedItemChanged)="InvoicesSelectionChanged($event)" [Binding]="'InvoiceNumber'"></ComboBox>
                                         </td>
-                                        <td></td>
+                                        <td style="width:5px"></td>
+
+                                        <td>
+                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור גורף</button>
+                                        </td>
+
                                         <td style="width: 30px;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
                                         </td>
                                     </tr>
                                     <tr style="height:5px"></tr>
-                                    <tr >
+                                    <tr>
                                         <td colspan="2">
                                             <table>
                                                 <tr>
@@ -282,15 +287,15 @@
                                                                 (SelectedItemChanged)="ConfirmationType = $event"
                                                                 [HideColumns]="true"
                                                                 [SelectedValue]="ConfirmationTypeCode"
-                                                                 [QueryFilterItems]= "ConfirmationTypesFilterItems">
-                                                            
+                                                                [QueryFilterItems]="ConfirmationTypesFilterItems">
+
                                                         </LogLov>
                                                     </td>
 
                                                 </tr>
                                             </table>
                                         </td>
-                                        
+                                       
                                     </tr>
                                 </table>
                             </div>

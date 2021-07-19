@@ -6,6 +6,9 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -363,6 +366,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
+                        }
+
+                        if ((IsShipmentHasPickup(entityPM) || IsShipmentHasDelivery(entityPM)) && IsOceanInsightFeatureToggleExistInTenant(authToken.Tenant))
+                        {
+                            ValidatePickupDeliveryPackages(entityPM);
                         }
 
                         APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
@@ -1032,6 +1040,69 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
             return currency;
+        }
+
+        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
+        {
+            string ocaenInsightFeatureToggleCode = "OIC";
+            IInfrastructureContext context = InfrastructureContext.GetContext(0);
+            FeatureToggleRepository repository = new FeatureToggleRepository(context);
+            IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
+            List<FeatureToggle> featureTogglesList = featureToggles.ToList();
+            if (featureTogglesList != null)
+            {
+                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode), tenant);
+            }
+            return false;
+        }
+
+        private bool IsFeatureToggleExistInMultiOrSingleTenant(FeatureToggle ocaenInsightFeatureToggle, int tenant)
+        {
+            if (ocaenInsightFeatureToggle == null)
+                return false;
+
+            if (ocaenInsightFeatureToggle.IsMultiTenant)
+            {
+                return ((tenant >= ocaenInsightFeatureToggle.FromTenantNumber) && (ocaenInsightFeatureToggle.ToTenantNumber <= tenant));
+            }
+            else
+            {
+                return (tenant == ocaenInsightFeatureToggle.TenantNumber);
+            }
+        }
+
+        private void ValidatePickupDeliveryPackages(ShipmentPM shipmentPM)
+        {
+            if (IsShipmentHasPickup(shipmentPM))
+            {
+                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
+                {
+                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
+                    }
+                }
+            }
+            if (IsShipmentHasDelivery(shipmentPM))
+            {
+                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
+                {
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
+                    }
+                }
+            }
+        }
+
+        private bool IsShipmentHasPickup(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
+        }
+
+        private bool IsShipmentHasDelivery(ShipmentPM shipmentPM)
+        {
+            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
         }
     }
 }

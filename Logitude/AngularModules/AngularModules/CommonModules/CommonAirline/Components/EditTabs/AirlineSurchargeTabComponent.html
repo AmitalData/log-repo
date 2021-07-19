@@ -43,7 +43,7 @@
                     <tr>
                         <td colspan="2"> <div> </div> </td>
                         <td style="width: 1px;">
-                            <button class="Button" (click)="AddSurchargeTariff()">
+                            <button [attr.data-cy]="'AddSurchargeTariff'" class="Button" (click)="AddSurchargeTariff()">
                                 {{AddSurchargeTarrif}}
                             </button>
                         </td>

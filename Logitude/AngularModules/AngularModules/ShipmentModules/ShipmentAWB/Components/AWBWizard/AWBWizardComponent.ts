@@ -2682,7 +2682,7 @@ export class AWBWizardComponent implements AfterViewInit{
         });
     }
     private OnSaveCompletedSuccessfully() {
-        this.CurrentSession.FireEvent("RefreshPackagesTabFromAWBWizard");
+        this.CurrentSession.FireEvent("RefreshShipmentsTabFromAWBWizard");
 
         if (this.isReloadingOnSave) {
             this.isReloadingOnSave = false;

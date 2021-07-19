@@ -57,9 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
- 
       <HintPath>..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\System.Windows.Interactivity.dll</HintPath>
- 
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -133,7 +131,11 @@
     </EmbeddedResource>
     <None Include="DIM_QuoteStatges.dwml" />
     <None Include="Files\DIM_Countries.dwml" />
+    <None Include="Files\DIM_InvoiceMainTypes.dwml" />
+    <None Include="Files\DIM_InvoiceStatus.dwml" />
+    <None Include="Files\DIM_InvoiceTypes.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />
+    <None Include="Files\DIM_PaymentTerms.dwml" />
     <None Include="Files\DIM_QuoteClosingReasons.dwml" />
     <None Include="Files\DIM_QuoteStages.dwml" />
     <None Include="Files\DIM_ShipmentReceivableStatuses.dwml">
@@ -165,6 +167,7 @@
     <None Include="Files\DIM_Types.dwml" />
     <None Include="Files\DIM_Users.dwml" />
     <None Include="Files\Fact_Charges.dwml" />
+    <None Include="Files\Fact_Invoices.dwml" />
     <None Include="Files\Fact_MasterCharges.dwml" />
     <None Include="Files\Fact_Masters.dwml" />
     <None Include="Files\Fact_Quotes.dwml" />

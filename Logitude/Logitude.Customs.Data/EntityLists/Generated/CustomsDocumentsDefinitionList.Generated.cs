@@ -39,6 +39,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool Inactive  { get; set; }
        [DataMember]
+       public string DeclarationTypeCode  { get; set; }
+       [DataMember]
        public string DeclarationTypeName  { get; set; }
    }
 

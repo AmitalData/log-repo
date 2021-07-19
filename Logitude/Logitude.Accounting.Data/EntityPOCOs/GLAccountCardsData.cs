@@ -46,6 +46,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string VatNumber { get; set; }
         [Column("TotalOpenShipments")]
 	    public decimal? TotalOpenShipments { get; set; }
+        [Column("InsuredcreditLimit")]
+	    public double? InsuredcreditLimit { get; set; }
     }
 }
 	 

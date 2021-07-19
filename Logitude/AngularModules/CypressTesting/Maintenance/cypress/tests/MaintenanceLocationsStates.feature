@@ -11,15 +11,15 @@ Feature: Create State, Inactivate and activate it from Maintenance
     Scenario: Add state
         Given a state with the following details
             | StateCode      | random        |
-            | StateName      | random        |
-            | StateLocalName | random        |
+            | StateName      | TestState     |
+            | StateLocalName | TestState     |
             | Country        | United States |
             | InactiveState  | Yes           |
             | Notes          | TestNote      |
         When add state
         Then the state should add successfully
 
-    Scenario: Search for the state by name
+    Scenario: Search for the state by code
         When search for state
         Then the state should appear successfully
 
@@ -28,7 +28,7 @@ Feature: Create State, Inactivate and activate it from Maintenance
         Then the state should open successfully
 
     Scenario: Edit the state
-        Given a "random" as stateLocalName
+        Given a "EditTestState" as stateLocalName
         And the user activate state
         When edit state
         Then the state should update successfully

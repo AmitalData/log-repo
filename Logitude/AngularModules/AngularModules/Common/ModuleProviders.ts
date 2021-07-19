@@ -208,7 +208,8 @@ import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLa
 import { AddressTypeListService } from './Services/StandardLists/AddressTypeListService';
 import { ReportExecutionLogListService } from './Services/StandardLists/ReportExecutionLogListService';
 import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
-
+import { ProductItemListService } from './Services/StandardLists/ProductItemListService';
+import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -420,6 +421,9 @@ export class ModuleProviders {
             case "LogitudeGridExportToExcelExtendedPMService": { myResult = new LogitudeGridExportToExcelExtendedPMService(); break; }
             case "ReportExecutionLogListService": { myResult = new ReportExecutionLogListService(); break; }
             case "ReportExecutionLogPMService": { myResult = new ReportExecutionLogPMService(); break; }
+            case "ProductItemListService": { myResult = new ProductItemListService(); break; }
+            case "DocumentFileService": { myResult = new DocumentFileService(); break; }
+                 
         }
 
         return myResult;

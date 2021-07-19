@@ -306,6 +306,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="APPaymentTransferStartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Tenants"

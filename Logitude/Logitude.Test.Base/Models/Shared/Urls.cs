@@ -23,14 +23,39 @@
         public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
 
+        public static string SpecialServicesTypesController = "SpecialServicesTypes";
+        public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
+
+        public static string QuoteController = "Quotes";
+        public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
+
+        public static string CrossDockController = "warehouseentries";
+        public static string CrossReleaseGetController = "warehousereleases";
+        public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
+        public static string ActivitiesController = "Activities";
+        //public static string QuotesGetSingle(string id)
+        //{
+        //    return "Quotes/GetSingle?id=" + id;
+        //}
+
+        public static string APInvoicesController = "APInvoices";
+        public static string ARInvoicesController = "ARInvoices";
+        //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
+        public static string CargoTrackingSearchController = "CargoTrackingSearch";
+
+
 
         #region Shipment Prepare Data URls
+        //locations
         public static string VesselsController = "Vessels";
         public static string IncotermsController = "Incoterms";
+        public static string CreditCardController = "creditcardtypes";
         public static string MoveTypesController = "MoveTypes";
         public static string PackageTypesController = "PackageTypes";
+        public static string ShipmentSubTypesController = "ShipmentSubTypes";
         public static string CurrencyViewsGetByFilters = "CurrencyViews/GetByFilters";
         public static string IncotermViewsGetByFilters = "IncotermViews/GetByFilters";
+        public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
@@ -39,8 +64,9 @@
         public static string QuoteStageViewsGetByFilters = "QuoteStageViews/GetByFilters";
         public static string VesselViewsGetByFilters = "VesselViews/GetByFilters";
         public static string MoveTypeViewsGetByFilters = "MoveTypeViews/GetByFilters";
-        #endregion
+        public static string ShipmentSubTypeViewsGetByFilters = "ShipmentSubTypeViews/GetByFilters";
 
+        //partners
         public static string PartnersDomainController = "PartnersDomain/PostPartnerAddress";
         public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";
         public static string AgentViewsGetByFilters = "AgentViews/GetByFilters";
@@ -56,11 +82,16 @@
         public static string CountryCities = "CountryCities";
         public static string ChargesTypes = "ChargesTypes";
         public static string Airlines = "airlines";
-        
+        #endregion
 
         public static string TenantsGetSingle(int id)
         {
             return "Tenants/GetSingle?id=" + id.ToString();
+        }
+
+        public static string TenantsUpdate(int id)
+        {
+            return "Tenants/" + id.ToString();
         }
 
         public static string ContactsGetSingle(string id)
@@ -122,5 +153,40 @@
         {
             return "CommonDomain/GetCopyCurrencyToTenant?currencyId=" + currencyId + "&CurrencyRate=4&RateDate=2019-6-24%2015:2:53.564";
         }
+
+        public static string QuoteGetSingle(string id)
+        {
+            return "Quotes/GetSingle?id=" + id;
+        }
+        public static string QuoteGetSingleList(string id)
+        {
+            return "Quoteviews/getsingle/?id=" + id;
+        }
+
+        public static string CrossDockGetSingle(string id)
+        {
+            return "warehouseentries/GetSingle?id=" + id;
+        }
+
+        public static string CargoTrackingShipmentGetSingleList(string securityKey, int tenant)
+        {
+            return "CargoTrackingSearch/GetSingleShipmentList?SecurityKey=" + securityKey + "&tenant=" + tenant;
+        }
+
+        public static string CrossDockReleaseGetSingle(string id)
+        {
+            return "warehousereleases/getsingle?id=" + id;
+        }
+
+        public static string VesselGetSingle(string id)
+        {
+            return "vessels/getsingle?id=" + id;
+        }
+
+        public static string ActivitySingle(string id)
+        {
+            return "activities/GetSingle?id=" + id;
+        }
+
     }
 }

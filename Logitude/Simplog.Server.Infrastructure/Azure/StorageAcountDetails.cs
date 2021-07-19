@@ -379,6 +379,11 @@ namespace Simplog.Server.Infrastructure.Azure
                         break;
                     }
 
+                case "termsOfUse":
+                    {
+                        blobName = "termsOfUse/" + blobname; 
+                        break;
+                    }
                 case "others":
                 default:
                     blobName = "others/" + blobname;

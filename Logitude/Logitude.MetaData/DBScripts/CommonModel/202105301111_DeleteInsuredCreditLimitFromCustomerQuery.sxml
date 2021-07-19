@@ -1,0 +1,10 @@
+﻿<Script DBType="Main"   Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+
+  delete from QueryColumns where ObjectFieldId=(select id from ObjectFields where FieldName='InsuredcreditLimit' and ObjectTableId = (select id from ObjectTables where name = 'customer'))
+     
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>

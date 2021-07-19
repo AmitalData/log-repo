@@ -34,6 +34,8 @@ import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLi
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 import { CargoIdentifireTypeListService } from '../../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
+import { DeclarationExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { CargoIdentifireTypePM } from '../../../../../../Customs/EntityPMs/CargoIdentifireTypePM';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -57,8 +59,9 @@ export class ConsigmentTabContentComponent
     IsCourierDeclaration: boolean = false;
     _DeclarationCourierStatus: DeclarationCourierStatusList;
     entityResourceService: EntityResourceService = new EntityResourceService();
-
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     public LoadingPortFilterItems: ApiQueryFilters;//38388
+    _CargoIdentifireTypePM: CargoIdentifireTypePM = new CargoIdentifireTypePM();
 
     // Edit grid array
     ConsimentPackages: ObservableCollection;
@@ -97,6 +100,36 @@ export class ConsigmentTabContentComponent
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
+
+    openKanamDeclaration()
+    {
+        this._declarationExtendedListService.GetSingleDeclarationByNumber(this.ManifestNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var entity = mm.Result;
+                if (entity != null)
+                {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת שחמ" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                DeclarationEventManager.DisplayModeChanged.emit(null);
+                            });
+                        });
+                }
+                else
+                {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 250;
+                    messageWindow.Height = 150;
+                    messageWindow.RTL = true;
+                    messageWindow.Show("לם נמצםה הצהרה");
+                }
+            }
+        });
+    }
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
@@ -304,16 +337,22 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ReceiverWarehouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("UnloadPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportUnloadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ManifestNumber", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsLastReleaseFromWarehous", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportLoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CargoDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ManifestDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeliveryPlaceName", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValue", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportRecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
+        
         if (this.declarationPM.TransportModeId != 'O') {
             this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
         }
@@ -394,7 +433,12 @@ export class ConsigmentTabContentComponent
 
 
     public get ThirdCargoID() { return this.EntityPM ? this.EntityPM.ThirdCargoID : null; }
-    public set ThirdCargoID(newValue: string) { this.EntityPM.ThirdCargoID = newValue; }
+    public set ThirdCargoID(newValue: string) {
+        this.EntityPM.ThirdCargoID = newValue;
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
+    }
 
     public get UnloadDate() { return this.EntityPM ? this.EntityPM.UnloadDate : null; }
     public set UnloadDate(newValue: Date) { this.EntityPM.UnloadDate = newValue; }
@@ -413,6 +457,10 @@ export class ConsigmentTabContentComponent
     public get SecondCargoID() { return this.EntityPM ? this.EntityPM.SecondCargoID : null; }
     public set SecondCargoID(newValue: string) {
         this.EntityPM.SecondCargoID = newValue;
+
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
     }
 
 
@@ -447,6 +495,10 @@ export class ConsigmentTabContentComponent
     public set ManifestNumber(newValue: string) {
         this.EntityPM.ManifestNumber = newValue;
         this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
+
+        if (this._CargoIdentifireTypePM != null) {
+            this.setRequired();
+        }
     }
 
     //public get IsLastReleaseFromWarehous() { return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; }
@@ -583,7 +635,31 @@ export class ConsigmentTabContentComponent
     }
     //#endregion
 
+    setRequired() {
+        if (this.declarationPM.Direction == 'E') {
+            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
+            if (this.ManifestNumber != null) {
+                this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, false);
+            }
 
+            if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
+                if (this.SecondCargoID != null) {
+                    this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+            }
+            if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
+                if (this.ThirdCargoID != null) {
+                    this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                }
+            } else {
+                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+            }
+        }
+    }
     SetTipsInsideCargoIdentifires(value: string) {
 
          if (this.declarationPM.Direction == 'E') {
@@ -593,6 +669,8 @@ export class ConsigmentTabContentComponent
                         this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
                         this.SecondCargoIDPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
                         this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
+                        this._CargoIdentifireTypePM = Response.Result;
+                        this.setRequired();
                     }
                 });
         }
@@ -602,7 +680,7 @@ export class ConsigmentTabContentComponent
                 case '1':
                     {
                         this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ רםשי";
                         this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
@@ -615,7 +693,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
+                        this.ManifestNumberPlaceholder = "הזן הצהרת םחסנה";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -631,12 +709,12 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
                         break;
                     }
                 case '20':
                     {
-                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלא";
+                        this.ManifestNumberPlaceholder = "הזן מזהה עסקה מלם";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -1124,7 +1202,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
 
     }
 
-
+   
 
 }
 

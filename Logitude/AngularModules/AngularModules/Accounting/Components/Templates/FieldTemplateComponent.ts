@@ -9,7 +9,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -119,7 +119,7 @@ export class FieldTemplateComponent {
             }
         }
 
-        if (this.ObjectTableName == "InterestReport") {  
+        if (this.ObjectTableName == "InterestReport") {
            if(this.FieldName == "InterestReportStatusName"){
             if (SessionLocator.LoggedUserPM.DontShowLocal) {
                 this.FieldValue = this.Entity.InterestReportStatusName;
@@ -134,7 +134,7 @@ export class FieldTemplateComponent {
              else if (this.Entity.InterestReportStatusCode == "6") {
                 this.textColor = "red";
             }
-            
+
            }
           else if(this.FieldName == "InterestReportStatusLocalName"){
             if (this.Entity.InterestReportStatusCode == "5") {
@@ -200,7 +200,7 @@ export class FieldTemplateComponent {
         }
     }
 
-    
+
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -297,5 +297,35 @@ export class FieldTemplateComponent {
         }
 
         return color;
+    }
+
+
+    GetCalculatedAgingPeriod(){
+
+        var periodsNames = this.GetAgingPeriodsNames();
+
+        if(!periodsNames)
+            return 0;
+
+        return this.CalculatePeriodTotalByPeriodsNames(periodsNames);
+    }
+
+    private CalculatePeriodTotalByPeriodsNames(periodsNames: string[])
+    {
+        var periodTotal = 0;
+        periodsNames.forEach(periodName =>
+        {
+            periodTotal += this.Entity[periodName];
+        });
+        return periodTotal;
+    }
+
+    GetAgingPeriodsNames() : string[]{
+        var periodNumber = Number(this.FieldName[this.FieldName.length-1]);
+        switch (periodNumber) {
+            case 1: return this.Entity.FirstPeriodsMonths?.split(',');
+            case 2: return this.Entity.SecondPeriodsMonths?.split(',');
+            case 3: return this.Entity.ThirdPeriodsMonths?.split(',');
+        }
     }
 }
