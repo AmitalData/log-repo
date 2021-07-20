@@ -361,6 +361,7 @@
     <Compile Include="EntityDataMappings\ClientDrivingLicenseDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientDrivingLicenseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsAddressCommTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClientsPoaDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClosedTableStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerTypeDataMapping.cs" />
@@ -563,6 +564,7 @@
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsAddressCommTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClientsPoaDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClosedTableStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerTypeDataMapping.Generated.cs" />
@@ -1049,6 +1051,7 @@
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClientsPoaQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationStatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerTypeQueryService.Generated.cs" />
@@ -1585,6 +1588,7 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClientsPoaUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationStatusCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerTypeUpdateService.Generated.cs" />

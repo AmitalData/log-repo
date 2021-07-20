@@ -126,6 +126,7 @@
     <Compile Include="EntityKeys\ClassificationTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
+    <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationStatusCodeKeys.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="EntityListQueryServices\ClassificationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationStatusCodeListQueryService.cs" />
@@ -329,6 +331,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClassificationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationStatusCodeListQueryService.Generated.cs" />
@@ -498,6 +501,7 @@
     <Compile Include="EntityLists\Generated\ClassificationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationStatusCodeList.Generated.cs" />
@@ -623,6 +627,7 @@
     <Compile Include="EntityMapping\ClassificationTypeMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
+    <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
     <Compile Include="EntityMapping\ContainerizationStatusCodeMap.cs" />
@@ -747,6 +752,7 @@
     <Compile Include="EntityPOCOs\ClassificationType.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
+    <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
     <Compile Include="EntityPOCOs\ContainerizationStatusCode.cs" />
@@ -872,6 +878,7 @@
     <Compile Include="Repsitories\ClassificationTypeRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
+    <Compile Include="Repsitories\ClientsPoaRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
     <Compile Include="Repsitories\ContainerizationStatusCodeRepository.cs" />
@@ -951,6 +958,7 @@
     <Compile Include="Repsitories\Generated\ClassificationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationStatusCodeRepository.Generated.cs" />
