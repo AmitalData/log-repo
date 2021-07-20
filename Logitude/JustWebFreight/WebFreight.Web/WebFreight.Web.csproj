@@ -1000,6 +1000,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CargoTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientsPoaViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationStatusCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerTypeViewsController.Generated.cs" />
@@ -1020,6 +1021,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticsReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceInputTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientsPoaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ContainerizationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorgeController.Generated.cs" />
@@ -3044,6 +3046,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClassificationTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationUpdateClass.cs" />

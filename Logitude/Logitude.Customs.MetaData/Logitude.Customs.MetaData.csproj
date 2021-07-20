@@ -210,6 +210,7 @@
     <None Include="DBTables\ClientDrivingLicense.dxml" />
     <None Include="DBTables\ClientDrivingLicenseType.dxml" />
     <None Include="DBTables\ClientsAddressCommType.dxml" />
+    <None Include="DBTables\ClientsPoa.dxml" />
     <None Include="DBTables\ClosedTableStatus.dxml" />
     <None Include="DBTables\CollateralAnswerStatus.dxml" />
     <None Include="DBTables\CollateralAnswerType.dxml" />
@@ -510,6 +511,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />

@@ -1390,6 +1390,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CargoTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClassificationTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ClientsPoaList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerizationList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerizationStatusCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerTypeList.ts" />
@@ -1468,6 +1469,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClassificationTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ClientsPoaPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ConsignmentPackDangerPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContainerizationPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContainerizationStatusCodePM.ts" />
@@ -1578,6 +1580,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClassificationTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ClientsPoaListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerizationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerizationStatusCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerTypeListService.ts" />
@@ -1662,6 +1665,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\AutonomyRegionTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CancelRequestRejectReasonTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CargoSealIdentifierPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ClientsPoaPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ContainerizationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierDeclarationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />

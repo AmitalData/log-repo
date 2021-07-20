@@ -186,6 +186,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClientsAddressCommTypeMap());
 	
+            modelBuilder.Configurations.Add(new ClientsPoaMap());
+	
             modelBuilder.Configurations.Add(new ClosedTableStatusMap());
 	
             modelBuilder.Configurations.Add(new CollateralAnswerStatusMap());
@@ -1690,6 +1692,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClientsAddressCommType> ClientsAddressCommTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClientsPoa> ClientsPoas 
 	 {
 	      get; set;
 	 
