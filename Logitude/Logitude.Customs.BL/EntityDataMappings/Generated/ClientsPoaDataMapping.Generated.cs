@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.poaID))
             {
-				entityPOCO.poaID = entityPM.poaID;
+				entityPOCO.poaID = entityPM.PoaID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorizedExternalId))
@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.poaID))
             {
-					entityPM.poaID = entityPOCO.poaID;
+					entityPM.PoaID = entityPOCO.poaID;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AuthorizedExternalId))
@@ -228,7 +228,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.poaID))
             {
-                oldEntityPM.poaID = entityPM.poaID;
+                oldEntityPM.PoaID = entityPM.PoaID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorizedExternalId))

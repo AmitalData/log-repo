@@ -117,7 +117,7 @@ namespace Logitude.Customs.Def.EntityPMs
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string poaID  
+       public string PoaID  
 	   {
 	    
 	     get
