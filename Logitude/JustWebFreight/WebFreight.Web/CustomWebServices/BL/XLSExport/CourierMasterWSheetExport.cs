@@ -243,5 +243,66 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
 
         }
+
+        public byte[] ExportCourierSuspentionReport(string courierMasterId, int tenant)
+        {
+            ICustomContext MyContext = CustomContext.GetContext(tenant);
+            DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
+            declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
+            var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
+                .Where(x=>x.CourierCustomStatusCode == "2")
+                .Select(r => new
+                {
+                    r.CourierHawb,
+                    r.ImporterName,
+                    r.ImporterCode,
+                    TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
+                    r.CourierCustomStatusName,
+                    r.CourierSuspentionReasonName,
+                    r.DeclarationStatusTypeName,
+                });
+            DataTable dt = null;
+            var settingCol = new BITabularViewSettings() { Columns = new List<Column>() };
+            dt = new DataTable("Courier Master");
+            
+            settingCol.Columns.Add(new Column() { Index = 9, Code = "CourierHawb", Name = "CourierHawb", DataTypeCode = "String", Width = 100, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierHawb", tenant, true), ColumnName = "CourierHawb", DataType = System.Type.GetType("System.String") });
+
+            settingCol.Columns.Add(new Column() { Index = 11, Code = "ImporterName", Name = "ImporterName", DataTypeCode = "String", Width = 200, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CustomerName", tenant, true), ColumnName = "ImporterName", DataType = "".GetType() });
+
+            settingCol.Columns.Add(new Column() { Index = 12, Code = "ImporterCode", Name = "ImporterCode", DataTypeCode = "String", Width = 90, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.ImporterCode", tenant, true), ColumnName = "ImporterCode", DataType = "".GetType() });
+
+            settingCol.Columns.Add(new Column() { Index = 13, Code = "TotalInvoiceAmountInUSD", Name = "TotalInvoiceAmountInUSD", DataTypeCode = "Decimal", Width = 100, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.TotalInvoiceAmountInUSD", tenant, true), ColumnName = "TotalInvoiceAmountInUSD", DataType = typeof(Decimal) });
+            
+            settingCol.Columns.Add(new Column() { Index = 19, Code = "CourierCustomStatusName", Name = "CourierCustomStatusName", DataTypeCode = "String", Width = 90, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierCustomStatusName", tenant, true), ColumnName = "CourierCustomStatusName", DataType = "".GetType() });
+
+            settingCol.Columns.Add(new Column() { Index = 20, Code = "CourierSuspentionReasonName", Name = "CourierSuspentionReasonName", DataTypeCode = "String", Width = 100, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierSuspentionReasonName", tenant, true), ColumnName = "CourierSuspentionReasonName", DataType = "".GetType() });
+
+            settingCol.Columns.Add(new Column() { Index = 23, Code = "DeclarationStatusTypeName", Name = "DeclarationStatusTypeName", DataTypeCode = "String", Width = 200, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName", tenant, true), ColumnName = "DeclarationStatusTypeName", DataType = "".GetType() });
+
+            var l = q.ToList();
+            l.ForEach(r =>
+            {
+                var newrow = dt.NewRow();
+                newrow[0] = r.CourierHawb;
+                newrow[1] = r.ImporterName;
+                newrow[2] = r.ImporterCode;
+                newrow[3] = r.TotalInvoiceAmountInUSD;
+                newrow[4] = r.CourierCustomStatusName;
+                newrow[5] = r.CourierSuspentionReasonName;
+                newrow[6] = r.DeclarationStatusTypeName;
+                dt.Rows.Add(newrow);
+            });
+            var xls = new ExportToExcelHelper();
+            var res = xls.ExportDataTableToExcel(dt, tenant, settingCol);
+            return res;
+        }
+
     }
 }

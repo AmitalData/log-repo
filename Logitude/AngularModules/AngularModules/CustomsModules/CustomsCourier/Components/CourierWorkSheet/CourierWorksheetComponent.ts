@@ -1972,6 +1972,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         window.open(url);
 
     }
+
+    ExportCourierSuspention2Excel() {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierSuspention2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+        window.open(url);
+    }
+
+    
     UpdateIsReadyForInvoice() {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
