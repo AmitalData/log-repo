@@ -131,6 +131,14 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? NumberOfAgingMonths { get; set; }
         [Column("AllowMultiRatesInInvoiceLines")]
 	    public bool AllowMultiRatesInInvoiceLines { get; set; }
+        [Column("NumberofPeriods")]
+	    public int? NumberofPeriods { get; set; }
+        [Column("FirstPeriodsMonths")]
+	    public string FirstPeriodsMonths { get; set; }
+        [Column("SecondPeriodsMonths")]
+	    public string SecondPeriodsMonths { get; set; }
+        [Column("ThirdsPeriodsMonths")]
+	    public string ThirdsPeriodsMonths { get; set; }
     }
 }
 	 

@@ -16,6 +16,7 @@
       <xs:element minOccurs="0" name="CardPMId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CollectorId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ComputedLocalName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Contacts" nillable="true" type="tns:ArrayOfContactPM" />
       <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
@@ -151,6 +152,7 @@
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedByPartner" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditLimitAmount" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="CustomAgent" nillable="true" type="tns:CustomAgentPM" />
       <xs:element minOccurs="0" name="Customer" nillable="true" type="tns:CustomerPM" />
       <xs:element minOccurs="0" name="CustomerStatusCode" nillable="true" type="xs:string" />
@@ -163,6 +165,7 @@
       <xs:element minOccurs="0" name="GLAccountDisplayNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GLAccountId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IBANNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ICAO" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
@@ -187,6 +190,7 @@
       <xs:element minOccurs="0" name="PartnerTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PayablesAccountingCard" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PaymentTermId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Prefix" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PrimaryContactId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RankId" nillable="true" type="xs:string" />
@@ -248,6 +252,7 @@
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageDetailId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
       <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsCreditLimitEnabled" type="xs:boolean" />
@@ -562,6 +567,7 @@
       <xs:element minOccurs="0" name="InactiveDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IndustryId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IndustryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InsuredcreditLimit" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="InvitationDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsActiveForMobile" type="xs:boolean" />
@@ -601,6 +607,7 @@
       <xs:element minOccurs="0" name="PaymentMethodCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PaymentTermId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PendingAirlines" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PhoneNumber_Potential" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PrimaryContactEmail" nillable="true" type="xs:string" />
@@ -941,6 +948,7 @@
       <xs:element minOccurs="0" name="IRSNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IRSPlace" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageDetailId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
       <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsExternal" type="xs:boolean" />

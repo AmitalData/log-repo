@@ -24,7 +24,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool showLocals = false;
         private int tenant;
 
-
         public AgingReportDataProviderLoader(int _tenant)
         {
             tenant = _tenant;
@@ -51,7 +50,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             List<PeriodMExtended> filteredPeriods = FilterPeriods(resultedPeriods);
 
             AccountingAgingDataProvider dataProvider = new AccountingAgingDataProvider();
-
             dataProvider.Month = GetFilterValue<DateTime>("AgingForDate");
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
@@ -69,9 +67,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
-
+            
             return dataProvider;
         }
+
         private void EnsureSalesmanIdIfSalesmanRestricted(AgingReportParam args)
         {
             bool isSalsmanRestrictionsEnabled = SecurityUtility.CheckFeature("GLAccount", "SalesmanAging", tenant);
@@ -184,6 +183,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                 d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,                    
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -223,6 +223,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -272,6 +273,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -312,6 +314,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
                                   d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -350,6 +353,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountCurrencyCode = d.First().AccountCurrencyCode,
                     AccountDisplayNumber = d.First().AccountDisplayNumber,
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
+                    InsuredCreditLimit = d.First().InsuredCreditLimit,
                     CustomerVatNumber = d.First().CustomerVatNumber,
                     CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
@@ -415,7 +419,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
 
         }
-
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
@@ -539,6 +542,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
                     record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.InsuredCreditLimit = item.InsuredCreditLimit;
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
@@ -584,6 +588,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountDisplayNumber = item.AccountDisplayNumber;
                     record.AccountCurrencyCode = item.AccountCurrencyCode;
                     record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                    record.InsuredCreditLimit = item.InsuredCreditLimit;
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;

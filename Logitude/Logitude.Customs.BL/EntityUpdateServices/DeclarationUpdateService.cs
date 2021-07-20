@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             CardRepository cardRep = new CardRepository(entityPM.Tenant);
             Card card = cardRep.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-            if (card != null)
+            if (card != null && entityPM.IsAmendment!=true)
             {
                 // moran 31.5.15 - Task 13325 -->
                 //entityPM.ImporterCode = card.VatNumber;
@@ -333,6 +333,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
                 //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
                 //if (setting.IsConnectedToUniFreight)
+                var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
+
+
+                if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                {
+                    var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
+                    var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
+                    entityPMOrg.CurrentContextTag = eventContextTagModel;
+                    entityPMOrg.HatraDate = entityPM.HatraDate;
+                    UpdateUnifreight(entityPMOrg);
+
+
+                }
+
                 if (entityPM.IsConnectedToUnifreight)
                 {
                     UpdateUnifreight(entityPM);

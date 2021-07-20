@@ -97,7 +97,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
 	         ForwardingShipmentNumber, 
-	         ShipmentTypeCode,
+	         ShipmentTypeCode, 
+	         CurrentMilestoneExceptions,
 	      }
 
 
@@ -192,7 +193,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CustomerLocalName, 
 	         FromPortCode, 
 	         ToPortCode, 
-	         NumberOfPackages,
+	         NumberOfPackages, 
+	         CurrentMilestoneExceptions,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -574,6 +576,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeCode))
             {
 				entityPOCO.ShipmentTypeCode = entityPM.ShipmentTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneExceptions))
+            {
+				entityPOCO.CurrentMilestoneExceptions = entityPM.CurrentMilestoneExceptions;
 			}
 			}
 
@@ -960,6 +967,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ShipmentTypeCode = entityPOCO.ShipmentTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrentMilestoneExceptions))
+            {
+					entityPM.CurrentMilestoneExceptions = entityPOCO.CurrentMilestoneExceptions;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1341,6 +1353,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ShipmentTypeCode = entityPM.ShipmentTypeCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneExceptions))
+            {
+                oldEntityPM.CurrentMilestoneExceptions = entityPM.CurrentMilestoneExceptions;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -1385,6 +1402,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.DeliveryExceptionReason)) //T4 find type == nText 
             {
                 entityPM.DeliveryExceptionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DeliveryExceptionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CurrentMilestoneExceptions)) //T4 find type == nText 
+            {
+                entityPM.CurrentMilestoneExceptions = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CurrentMilestoneExceptions));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

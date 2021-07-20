@@ -686,7 +686,7 @@
                       <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'" >
                           <ng-template let-item>
                               <log-cell-template [IgnoreMods]="true">
-                                  <IconButton *ngIf="Approved" float-start [Name]="'Edit'" [IsSmall]="true" (click)="EditJournalLineNotes(item)"
+                                  <IconButton *ngIf="IsJournalEditableAfterApproval" float-start [Name]="'Edit'" [IsSmall]="true" (click)="EditJournalLine(item)"
                                               style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
                               </log-cell-template>
                           </ng-template>

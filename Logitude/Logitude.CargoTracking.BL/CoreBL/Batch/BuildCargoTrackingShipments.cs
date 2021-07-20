@@ -26,7 +26,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         string sourceConnectionString = string.Empty;
         string destinationConnectionString = string.Empty;
         CargoTrackingMainService cargoTrackingMainService;
-        CargoTrackingArgs CargoTrackingArguments;
+        CargoTrackingXMLParameters CargoTrackingArguments;
 
         public BuildCargoTrackingShipments(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
@@ -62,12 +62,12 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         }
 
 
-        private CargoTrackingArgs GetCargoTrackingArgs()
+        private CargoTrackingXMLParameters GetCargoTrackingArgs()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(CargoTrackingArgs));
-            CargoTrackingArgs  Args = serializer.Deserialize(stringReader) as CargoTrackingArgs;
+            XmlSerializer serializer = new XmlSerializer(typeof(CargoTrackingXMLParameters));
+            CargoTrackingXMLParameters  Args = serializer.Deserialize(stringReader) as CargoTrackingXMLParameters;
             return Args;
         }
 
@@ -160,7 +160,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
     
 
-    public class CargoTrackingArgs
+    public class CargoTrackingXMLParameters
     {
         public DateTime? FromDate;
         public DateTime? ToDate;

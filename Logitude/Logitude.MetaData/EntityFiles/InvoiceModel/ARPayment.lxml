@@ -3304,7 +3304,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -3335,6 +3335,9 @@
     FullFieldLable="&quot;Bank&quot;"
     DefaultText="&quot;Bank&quot;"
     FullLocalDefaultText="&quot;בנק&quot;"
+    ListFieldLable="&quot;BankListLable&quot;"
+    ListLableDefaultText="&quot;Bank&quot;"
+    ListLocalDefaultText="&quot;Bank&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -11113,6 +11116,12 @@
       Code="&quot;ARPayment.O.AllPaymentsReconciliation&quot;"
       DefaultText="&quot;Two Payments cannot be reconciled with each other alone&quot;"
       LocalDefaultText="&quot;לא ניתן להתאים שתי קבלות בלבד ללא חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.CantPerformReconciliation&quot;"
+      DefaultText="&quot;Can't Perform ARPayment Reconciliation from this screen in multiple Cheques case &quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע התאמות בקבלה עם ריבוי המחאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

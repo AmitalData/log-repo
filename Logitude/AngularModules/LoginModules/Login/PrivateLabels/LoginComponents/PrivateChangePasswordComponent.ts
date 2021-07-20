@@ -2,7 +2,7 @@
 import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
 import { LoginService } from '../../LoginService';
 import { PasswordChangeService } from '../../PasswordChangeService';  
-import { BrandingDataService } from '../Services/BrandingDataService'; 
+import { BrandingDataService } from '../Services/BrandingDataService';  
 
 @Component({
     selector: 'PrivateChangePasswordComponent',
@@ -15,6 +15,7 @@ export class PrivateChangePasswordComponent extends ChangePasswordComponent {
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = ""; 
     public MainLogo: string = "";   
+    public MainColor: string = null;
 
     constructor(public ss: PasswordChangeService, public ll: LoginService) {
         super(ss, ll); 
@@ -29,6 +30,7 @@ export class PrivateChangePasswordComponent extends ChangePasswordComponent {
     GetPrivateLabelsData() {     
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
-        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");  
-    }
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");   
+        this.MainColor = BrandingDataService.GetColor("MainColor");  
+    } 
 }

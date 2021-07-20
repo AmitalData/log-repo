@@ -61,7 +61,7 @@
                         <td [style.width]="isRTL? '570px': '580px'" >
                             <table>
                                 <tr>
-                                    <td>
+                                    <td style="width:230px">
                                         <table>
                                                 <!-- LocalName -->
                                                 <tr class="FormFieldRow">
@@ -203,11 +203,11 @@
                                     <td style="width:20px;">
                                         <div></div>
                                     </td>
-                                    <td>
+                                    <td style="width:300px">
                                         <table>
                                              <tr class="FormFieldRow">
 
-                                                <td  [style.width]="isRTL? '130px': '140px'">
+                                                <td  [style.width]="isRTL? '100px': '140px'">
                                                     <table>
                                                         <tr style="height:15px;">
                                                             <td>
@@ -236,7 +236,7 @@
                                                                        [ObjectTableName]="ObjectTableName"
                                                                        [DataContext]="ThisDataContext"
                                                                        [LookUpTableName]="'ChartOfAccountsType'"
-                                                                       [HideColumns]="true" 
+                                                                       [HideColumns]="false" 
                                                                        (SelectedItemChanged)="ChartOfAccountsType = $event"
                                                                        [DisplayMemberPath]="isRTL ? 'LocalName' : 'EnglishName'"
                                                                        [RunToggleMode]="true"
@@ -268,7 +268,7 @@
                                           
                                             <tr class="FormFieldRow">
 
-                                                <td style="width: 130px;">
+                                                <td [style.width]="isRTL? '100px': '140px'">
                                                     <table>
                                                         <tr style="height:15px;">
                                                             <td>
@@ -313,7 +313,7 @@
                                     <td style="width:20px;">
                                         <div></div>
                                     </td>
-                                    <td>
+                                    <td >
                                         <table>
                                              <tr class="FormFieldRow">
 

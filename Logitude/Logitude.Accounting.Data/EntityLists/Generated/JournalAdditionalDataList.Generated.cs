@@ -22,6 +22,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TaxReportId  { get; set; }
        [DataMember]
        public string TaxReportTransmitStatusCode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int JournalLineNumber  { get; set; }
    }
 
 }

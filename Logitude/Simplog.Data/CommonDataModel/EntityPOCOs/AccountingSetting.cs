@@ -30,6 +30,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? ARInvoiceTransferStartDate { get; set; }
         public DateTime? APInvoiceTransferStartDate { get; set; }
         public DateTime? ARPaymentTransferStartDate { get; set; }
+        public DateTime? APPaymentTransferStartDate { get; set; }
         public string QBOrealMeID { get; set; }
         public bool AllowMinusInvoicelines { get; set; }
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }

@@ -77,12 +77,14 @@
     <Compile Include="EntityPMs\Generated\ClaimReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
+    <Compile Include="EntityPMs\Generated\ClientsPoaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PoaAuthorizationTypeLookupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PoaStatusTypeLookUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />

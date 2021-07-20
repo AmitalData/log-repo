@@ -914,7 +914,7 @@ namespace Logitude.CRM.BL.WorkRoles
 
             var workingHoursInMinutes = (getTotalMinutes(date)) * 60;
 
-            while (minutes > workingHoursInMinutes)
+            while (workingHoursInMinutes != 0 && minutes > workingHoursInMinutes)
             {
                 date = getStartOfDay(date.AddDays(1));
                 date = nextOpenDay(date);

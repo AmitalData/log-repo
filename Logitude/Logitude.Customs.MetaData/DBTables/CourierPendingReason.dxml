@@ -14,7 +14,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

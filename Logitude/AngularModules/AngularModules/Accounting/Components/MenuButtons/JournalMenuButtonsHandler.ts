@@ -65,20 +65,7 @@ export class JournalMenuButtonsHandler {
                     //  3- Voided
 
                     switch (button.EventCode) {
-                        case "JournalSaveButton":
-                            {
-                                if (this.EntityPM.StatusCode == "2") {
-                                    button.IsDisabled = false;
-                                    button.IsHidden = false;
-                                }
-
-                                else {
-                                    button.IsDisabled = true;
-                                    button.IsHidden = true;
-                                }
-                                break;
-                    
-                            }
+                   
 
                         case "JournalSave": // save and close
                             {
@@ -199,10 +186,6 @@ export class JournalMenuButtonsHandler {
         //this.copyAccountingDates();
 
         switch (menuButton.EventCode) {
-            case "JournalSaveButton": {
-                this.SaveChenges();
-                break;
-            }
             case "JournalSave": // save and close
                 {
                     this.EntityPM.StatusCode = "1"; // Waiting

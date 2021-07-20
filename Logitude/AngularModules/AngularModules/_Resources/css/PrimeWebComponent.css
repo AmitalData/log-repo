@@ -1,11 +1,4 @@
-/*
-    .p-datatable-scrollable-header {
-    overflow: inherit !important;
-}
-
-*/
-
-.prime-web-component .cdk-virtual-scroll-content-wrapper, p-dynamicdialog .cdk-virtual-scroll-content-wrapper {
+.prime-web-component .cdk-virtual-scroll-content-wrapper, .p-dialog .cdk-virtual-scroll-content-wrapper {
     contain: unset !important;
 }
 
@@ -25,15 +18,11 @@ p-dropdown {
     margin-bottom: 0 !important;
 }
 
-.prime-web-component .PrimaryButton, p-dynamicdialog .PrimaryButton {
+.prime-web-component .PrimaryButton, .p-dialog .PrimaryButton {
     max-width: 100px !important;
 }
 
-.prime-web-component .content-wrapper, p-dynamicdialog .content-wrapper {
-    padding-top: 1.2rem !important;
-}
-
-.prime-web-component .mb-0, p-dynamicdialog .mb-0 {
+.prime-web-component .mb-0, .p-dialog .mb-0 {
     margin-bottom: 0 !important;
 }
 
@@ -59,17 +48,39 @@ p-dropdown {
 
 .p-button {
     display: inline-flex !important;
-    height: unset !important;
+    height: auto !important;
 }
 
 .p-button:not(.p-button-icon-only) {
-    width: unset;
+    width: auto;
+    height: auto !important;
 }
 
-.prime-web-component *, p-dynamicdialog * {
+.p-button.p-button-icon-only.p-button-rounded {
+    height: 2.357rem !important;
+}
+
+.prime-web-component *, .p-dialog * {
     white-space: initial !important;
+    font-size: 12px !important;
 }
 
 .p-button:not(.p-button-sm) {
     padding: 0.5rem 1rem !important;
+}
+
+.p-button.p-button-icon-only {
+    padding: 0.5rem 0 !important;
+}
+
+.AddLabel {
+    padding-bottom: 0.54rem !important;
+}
+
+.QueryColumnOrFiltersContainer br {
+    display: none !important;
+}
+
+.p-checkbox {
+    margin-bottom: 3px !important;
 }

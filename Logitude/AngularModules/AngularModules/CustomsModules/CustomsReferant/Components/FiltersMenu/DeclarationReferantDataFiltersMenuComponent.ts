@@ -80,13 +80,16 @@ export class DeclarationReferantDataFiltersMenuComponent
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var UserNameListFromFilters = this.UserNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
 
-        var UserNameList = UserNameListFromFilters[0].split("%2C");
+        var UserNameList;
+        if (UserNameListFromFilters.length > 0 && UserNameListFromFilters[0] != null)
+            UserNameList = UserNameListFromFilters[0].split("%2C");
 
 
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var DepartmentNameFromFilters = this.DepartmentNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
-
-        var DepartmentNameList = DepartmentNameFromFilters[0].split("%2C");
+        var DepartmentNameList;
+        if (DepartmentNameFromFilters.length > 0 && DepartmentNameFromFilters[0] != null)
+         DepartmentNameList = DepartmentNameFromFilters[0].split("%2C");
 
      var  i = 0;
         var myService: UserListService = new UserListService();
@@ -420,7 +423,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שאילתא ל - OCR");
+                " הצגת מסך : שםילתם ל - OCR");
         }
         else {
             alert("ShowOCRQuery");

@@ -266,23 +266,40 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                       }).FirstOrDefault();
 
-            entity.MondayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.MondayFromHour);
-            entity.TuesdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.TuesdayFromHour);
-            entity.WednesdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.WednesdayFromHour);
-            entity.ThursdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.ThursdayFromHour);
-            entity.FridayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.FridayFromHour);
-            entity.SaturdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SaturdayFromHour);
-            entity.SundayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SundayFromHour);
-            entity.MondayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.MondayToHour);
-            entity.TuesdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.TuesdayToHour);
-            entity.WednesdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.WednesdayToHour);
-            entity.ThursdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.ThursdayToHour);
-            entity.FridayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.FridayToHour);
-            entity.SaturdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SaturdayToHour);
-            entity.SundayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SundayToHour);
-
+            this.MapBusinessHourDatesFields(entity);
             return entity;
+        }
 
+        private void MapBusinessHourDatesFields(BusinessHourPM entity)
+        {
+            if (entity.MondayFromHour != null)
+                entity.MondayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.MondayFromHour);
+            if (entity.TuesdayFromHour != null)
+                entity.TuesdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.TuesdayFromHour);
+            if (entity.WednesdayFromHour != null)
+                entity.WednesdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.WednesdayFromHour);
+            if (entity.ThursdayFromHour != null)
+                entity.ThursdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.ThursdayFromHour);
+            if (entity.FridayFromHour != null)
+                entity.FridayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.FridayFromHour);
+            if (entity.SaturdayFromHour != null)
+                entity.SaturdayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SaturdayFromHour);
+            if (entity.SundayFromHour != null)
+                entity.SundayFromHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SundayFromHour);
+            if (entity.MondayToHour != null)
+                entity.MondayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.MondayToHour);
+            if (entity.TuesdayToHour != null)
+                entity.TuesdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.TuesdayToHour);
+            if (entity.WednesdayToHour != null)
+                entity.WednesdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.WednesdayToHour);
+            if (entity.ThursdayToHour != null)
+                entity.ThursdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.ThursdayToHour);
+            if (entity.FridayToHour != null)
+                entity.FridayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.FridayToHour);
+            if (entity.SaturdayToHour != null)
+                entity.SaturdayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SaturdayToHour);
+            if (entity.SundayToHour != null)
+                entity.SundayToHourDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant).Date.Add((TimeSpan)entity.SundayToHour);
         }
     }
 }

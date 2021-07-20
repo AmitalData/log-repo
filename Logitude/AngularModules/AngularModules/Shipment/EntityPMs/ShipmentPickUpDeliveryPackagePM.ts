@@ -198,6 +198,11 @@ export class ShipmentPickUpDeliveryPackagePM {
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
+    private containerEntityId: string;
+    public get ContainerEntityId() { return this.containerEntityId; }
+    public set ContainerEntityId(newValue: string) { if (this.containerEntityId != newValue) { this.containerEntityId = newValue; this.MarkAsDirty("ContainerEntityId"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPickUpDeliveryPackagePM;
 	    

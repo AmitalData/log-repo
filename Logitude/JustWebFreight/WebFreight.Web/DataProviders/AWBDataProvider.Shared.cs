@@ -232,6 +232,7 @@ namespace WebFreight.Web.DataProviders
         public string OpenedBy { get; set; }
         public byte[] AirlineLogo { get; set; }
         public byte[] CustomerLogo { get; set; }
+        public byte[] UserSignatureImage { get; set; }
         public string HouseReferenceNumber { get; set; }
         public string Notify2NameAddress { get; set; }
         public string SpecialHandlingCodes { get; set; }

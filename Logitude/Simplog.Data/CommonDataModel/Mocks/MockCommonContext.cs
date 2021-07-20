@@ -1148,8 +1148,8 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 if (termOfUses == null)
                 {
                     termOfUses = new List<TermsofUse>() {
-                        new TermsofUse() {Version=1,Date=DateTime.Now.Date, },
-                        new TermsofUse() { Version=2} };
+                        new TermsofUse() {VersionNumber=1,Date=DateTime.Now.Date, },
+                        new TermsofUse() { VersionNumber=2} };
                     termOfUsesObjectSet = new MockObjectSet<TermsofUse>(termOfUses);
                 }
                 return termOfUsesObjectSet;
@@ -2750,6 +2750,29 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<ProductItem> ProductItems
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<HTSCode> HTSCodes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
             set
             {
                 throw new NotImplementedException();

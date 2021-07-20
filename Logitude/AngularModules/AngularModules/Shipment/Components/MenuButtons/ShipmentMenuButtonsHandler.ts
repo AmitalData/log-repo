@@ -62,6 +62,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsDisabled = false;
                             }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
+                            }
                         }
                         else {
                             button.IsDisabled = true;
@@ -179,10 +182,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsDisabled = true;
                             }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
+                            }
                         }
                         else {
                             button.IsDisabled = true;
                         }
+
                     }
                     if (button.EventCode == "SendRequest") {
                         if (buttonEnabled) {
@@ -229,6 +236,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsHidden = true;
                         }
+                        if (this.IsStandAloneFeatureShipment() || this.IsForwarderShipmentConnectedWithStandAlone()) {
+                            button.IsDisabled = true;
+                        }
                     }
 
                     if (button.EventCode == "ConvertShipmentToLTL") {
@@ -237,16 +247,18 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
-
+     
                                 else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                            }
-
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
+                            }       
                             else {
                                 button.IsHidden = true;
-                            }
+                            }                  
                         }
 
                         else {
@@ -265,8 +277,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
-
+                 
                             else {
                                 button.IsHidden = true;
                             }
@@ -287,11 +302,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
-
+                  
                             else {
                                 button.IsHidden = true;
-                            }                           
+                            }
                         }
 
                         else {
@@ -310,11 +328,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
+                                if (this.IsStandAloneFeatureShipment()) {
+                                    button.IsDisabled = true;
+                                }
                             }
 
                             else {
                                 button.IsHidden = true;
-                            } 
+                            }
                         }
                         else {
                             button.IsHidden = true;
@@ -330,6 +351,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             else {
                                 button.IsHidden = false;
                                 button.IsDisabled = false;
+                            }
+                            if (this.IsStandAloneFeatureShipment()) {
+                                button.IsDisabled = true;
                             }
 
                             button.IsHidden = false;
@@ -874,7 +898,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         if (ShipmentTool.IsInlandDomestic(this.EntityPM)) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Converting Shipment";
-            messageWindow.Show("Converting inland domestic house to direct is not allowed");
+            messageWindow.Show("Converting inland domestic direct to house is not allowed");
         }
 
         else {
@@ -1661,7 +1685,25 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             }
 
         }
-    }    
+    }
+    private IsStandAloneFeatureShipment() {
+        return this.EntityPM.IsStandalonePickupDelivery;
+    }
+
+    private IsForwarderShipmentConnectedWithStandAlone() {
+        var result = false;
+        if (this.EntityPM.ShipmentPickUps != null && this.EntityPM.ShipmentPickUps.length != 0) {
+            result = (this.EntityPM.ShipmentPickUps.filter(pickup =>
+                !AppTool.IsNullOrEmpty(pickup.StandaloneShipmentId)).length != 0 ? true : result
+            );
+        }
+        if (this.EntityPM.ShipmentDeliveries != null && this.EntityPM.ShipmentDeliveries.length != 0) {
+            result = (this.EntityPM.ShipmentDeliveries.filter(delivery =>
+                !AppTool.IsNullOrEmpty(delivery.StandaloneShipmentId)).length != 0 ? true : result
+            );
+        }
+        return result;
+    }
 }
 export class ActionValidationArgs {
     public EnttiyPM: any;

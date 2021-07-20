@@ -634,7 +634,7 @@ using <#=myspacestring#>
 <#+
 }
 private bool CheckIsMulty(XElement Mainentity,string FieldName,string ObjectTableName){
-				    	if(ObjectTableName == "ShipmentPickUp" || ObjectTableName == "ShipmentDelivery"){
+				    	if(ObjectTableName == "ShipmentPickUp" || ObjectTableName == "ShipmentDelivery" || ObjectTableName == "ShipmentPickUpDeliveryPackage" ){
 							return true;
 						}
 						 

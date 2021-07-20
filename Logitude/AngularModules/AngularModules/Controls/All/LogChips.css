@@ -1,0 +1,36 @@
+.log-chips::after{
+    content: " ";
+    display: flex;
+    clear: both;
+}
+.log-chips > div{
+    float: left;
+}
+.log-chips.rtl > div{
+    float: inherit;
+    float: right;
+}
+.chips-selected-item{
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: #e4ebf0;
+    cursor: pointer;
+    margin: 0 2px 4px;
+    display: inline-block;
+    user-select: none;
+}
+    .chips-selected-item:hover {
+        background: #ebf1f5;
+    }
+    .chips-selected-item:active{
+        background: rgb(156, 177, 190);
+    }
+.chips-selected-item .close-icon{
+    display: inline;
+    padding: 0 2px;
+    cursor: pointer;
+
+}
+.chips-combobox{
+    width: 110px;
+}

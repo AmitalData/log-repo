@@ -271,7 +271,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     BuildShipmentSubTypes() {
         this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId  || d.ShipmentTypeCode == null).forEach(item => {
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
 

@@ -3,11 +3,11 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'IconButton',
-    inputs: ['Name', 'IsSmall', 'Width', 'Height', 'IsEnabled', 'disabled', 'IsIconOnly', 'TopIndent', 'Left', 'Top', 'Title','ExternalId'],    
+    inputs: ['Name', 'IsSmall', 'Width', 'Height', 'IsEnabled', 'disabled', 'IsIconOnly', 'TopIndent', 'Left', 'Top', 'Title', 'ExternalId', 'DataCy'],    
     changeDetection: ChangeDetectionStrategy.OnPush,
     template:
     `
-    <button id="{{ Name+ExternalId | IdGeneratorPipe}}"   title="{{Title}}" *ngIf="!IsIconOnly" 
+    <button [attr.data-cy]="DataCy" id="{{ Name+ExternalId | IdGeneratorPipe}}"   title="{{Title}}" *ngIf="!IsIconOnly" 
             class="LogitudeIconButton" 
             [style.width.px]="Width" 
             [style.height.px]="Height" 
@@ -116,6 +116,7 @@ export class IconButton implements OnInit {
     LayoutDirection: string = 'ltr';
     public Title: string;
     public ExternalId: string = "";
+    public DataCy: string;
     constructor() {
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;

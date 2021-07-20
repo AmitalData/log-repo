@@ -36,10 +36,12 @@ import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs
 import { GenericRequestParams } from "../../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
  import { DeclarationEventManager } from "../../../../../Customs/Utilities/DeclarationEventManager";
+import { DeclarationAmendmentSharedDataService } from "../../../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService";
 
 @Component({    
     templateUrl: './DeclarationAmendmentComponent.html',
-    providers: [DeclarationExtendedListService, DeclarationWebService]
+    providers: [DeclarationExtendedListService, DeclarationWebService, DeclarationAmendmentSharedDataService]
+
 })
 
 export class DeclarationAmendmentComponent extends BaseComponent implements OnInit  {
@@ -58,19 +60,21 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     filterAgrs: ApiQueryFilters;
     private _entityListService: EntityListService = new EntityListService();
     _stratSearch: boolean = true;
-     CanOpenNewAmendment: boolean;
+     //CanOpenNewAmendment: boolean;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationAmendmentComponent = this;
     DeclarationAmendmentCancelledEVENT: any;
     public CurrentEditComponentId: string;
+   // declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService = new DeclarationAmendmentSharedDataService();
 
-    constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,
+    constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService,
         private entityArgs: EntityArgs, private _declarationWebService: DeclarationWebService) {
         super();
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
-                this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
+
+                this.declarationAmendmentSharedDataService.CanOpenNewAmendment =   (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
                 this.Listen();
@@ -119,8 +123,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
- 
-        this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
+         this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
         this.LoadDeclarationAmendmentsList();
 
 
@@ -247,6 +250,16 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
         });
         this.columns.push({
+            FieldName: "CopyAmendment",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '135px' },
+            //IsCheckBox: true,
+            HtmlListComponentName: 'DeclarationAmendmentListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
+        });
+        this.columns.push({
             FieldName: "Delete",
             DataTypeCode: 'String',
             Display: '',
@@ -276,8 +289,9 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
           
                 item.LineNumber = i;
                 i++;
-                if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment)
-                 this.CanOpenNewAmendment = false;
+                if ((item.AmendmentStatus == "1" || item.AmendmentStatus == "2" || item.AmendmentStatus == null) && item.IsAmendment) {
+                     this.declarationAmendmentSharedDataService.CanOpenNewAmendment = false;
+                }
                  this.amendmentObslist.Insert(item);
             });
              
@@ -285,7 +299,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     }
 
 
-    public OpenNewAmendment(id, declarationNumber) {
+    public OpenNewAmendment(id, declarationNumber, copy: boolean =false) {
 
         if (id == null) id = this.EntityPM.Id;//  !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.AmendmentOriginalDeclartation :  this.EntityPM.Id;
         if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
@@ -302,7 +316,8 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         searchParams.ResponseName = "Declaration Response";
         searchParams.RequestVIA = SendRequestVIA.DCABatch;
         searchParams.ForcePersonalSign = false;
-        this.CurrentSession.StartBusyIndicatorCreating();
+        searchParams.LoggingEntityId2 = copy==true ? "True" : "False";
+         this.CurrentSession.StartBusyIndicatorCreating();
 
         this._declarationWebService
             .GetNewAmendmentDeclaration(searchParams)

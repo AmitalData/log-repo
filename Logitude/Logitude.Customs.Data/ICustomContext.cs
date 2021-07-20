@@ -76,6 +76,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClientDrivingLicense> ClientDrivingLicenses { get; }
 		 IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseTypes { get; }
 		 IDbSet<ClientsAddressCommType> ClientsAddressCommTypes { get; }
+		 IDbSet<ClientsPoa> ClientsPoas { get; }
 		 IDbSet<ClosedTableStatus> ClosedTableStatus { get; }
 		 IDbSet<CollateralAnswerStatus> CollateralAnswerStatus { get; }
 		 IDbSet<CollateralAnswerType> CollateralAnswerTypes { get; }
@@ -122,6 +123,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomerClassificationType> CustomerClassificationTypes { get; }
 		 IDbSet<CustomerIdentificationType> CustomerIdentificationTypes { get; }
 		 IDbSet<CustomerIdentifyType> CustomerIdentifyTypes { get; }
+		 IDbSet<CustomerIndicationType> CustomerIndicationTypes { get; }
 		 IDbSet<CustomerRoleType> CustomerRoleTypes { get; }
 		 IDbSet<CustomerTypeGeneral> CustomerTypeGenerals { get; }
 		 IDbSet<CustomMetaDataType> CustomMetaDataTypes { get; }
@@ -281,6 +283,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }
+		 IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups { get; }
 		 IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps { get; }
 		 IDbSet<PointerLevel> PointerLevels { get; }
 		 IDbSet<ProceduralFault> ProceduralFaults { get; }

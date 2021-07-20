@@ -111,6 +111,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\AddressProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\AgentProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,6 +157,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\ExternalTasksQueueProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\HybridTenantStateProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -308,6 +318,28 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ActivityProxy\HypredTest.ActivityProxy.GetActivityPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService.wsdl" />
+    <None Include="Service References\AddressProxy\AddressWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\AddressWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AddressProxy\HypredTest.AddressProxy.AddressPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AddressProxy\HypredTest.AddressProxy.GetAddressByExternalIdResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AgentProxy\AgentWcfService.wsdl" />
@@ -545,6 +577,22 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.wsdl" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\InsertCommTaskProxy\InsertCommTaskWcfService.wsdl" />
@@ -904,6 +952,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\AddressProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AddressProxy\configuration.svcinfo" />
+    <None Include="Service References\AddressProxy\configuration91.svcinfo" />
+    <None Include="Service References\AddressProxy\AddressWcfService.disco" />
+    <None Include="Service References\HybridTenantStateProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\HybridTenantStateProxy\configuration.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\configuration91.svcinfo" />
+    <None Include="Service References\HybridTenantStateProxy\HybridTenantStateWcfService.disco" />
     <None Include="Service References\AccountingPartnerProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1076,6 +1138,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AccountingPartnerProxy\" />
     <WCFMetadataStorage Include="Service References\ActivityProxy\" />
+    <WCFMetadataStorage Include="Service References\AddressProxy\" />
     <WCFMetadataStorage Include="Service References\AgentProxy\" />
     <WCFMetadataStorage Include="Service References\AirlineProxy\" />
     <WCFMetadataStorage Include="Service References\BranchProxy\" />
@@ -1085,6 +1148,7 @@
     <WCFMetadataStorage Include="Service References\DepartmentProxy\" />
     <WCFMetadataStorage Include="Service References\DocumentInProxy\" />
     <WCFMetadataStorage Include="Service References\ExternalTasksQueueProxy\" />
+    <WCFMetadataStorage Include="Service References\HybridTenantStateProxy\" />
     <WCFMetadataStorage Include="Service References\InsertCommTaskProxy\" />
     <WCFMetadataStorage Include="Service References\LoginProxy\" />
     <WCFMetadataStorage Include="Service References\PaymentTermProxy\" />

@@ -124,7 +124,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CumulativeForeignAmountSign, 
 	         CalculatedLocalAmount, 
 	         CalculatedForeignAmount, 
-	         AccountDisplayNumber,
+	         AccountDisplayNumber, 
+	         PaymentValueDate, 
+	         PaymentChequeStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

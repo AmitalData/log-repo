@@ -509,10 +509,20 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomerIdentificationTypeTable, CustomerIdentificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomerIdentificationTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerIndicationTypeTable = closedSystemTables.Where(d => d.id == "98").FirstOrDefault();
+            ObjectTable CustomerIndicationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerIndicationType", 0, false);
+            InsertClosedTableRecord(CustomerIndicationTypeTable, CustomerIndicationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomerIndicationTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DeliveryTypeTable = closedSystemTables.Where(d => d.id == "23675").FirstOrDefault();
             ObjectTable DeliveryTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliveryType", 0, false);
             InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(DeliveryTypeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaAuthorizationTypeLookupeTable = closedSystemTables.Where(d => d.id == "1595").FirstOrDefault();
+            ObjectTable PoaAuthorizationTypeLookupObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaAuthorizationTypeLookup", 0, false);
+            InsertClosedTableRecord(PoaAuthorizationTypeLookupeTable, PoaAuthorizationTypeLookupObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PoaAuthorizationTypeLookupeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CoolingReportingMethodTable = closedSystemTables.Where(d => d.id == "23799").FirstOrDefault();
             ObjectTable CoolingReportingMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.CoolingReportingMethod", 0, false);

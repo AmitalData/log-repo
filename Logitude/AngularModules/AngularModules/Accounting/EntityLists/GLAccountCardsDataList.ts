@@ -17,6 +17,7 @@ export class GLAccountCardsDataList {
 	Phone: string;
 	VatNumber: string;
 	TotalOpenShipments: number;
+	InsuredcreditLimit: number;
 	
 }
  

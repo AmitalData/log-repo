@@ -72,6 +72,8 @@
       <LastGenOutput>WarehouseClassesGenerated.cs</LastGenOutput>
     </None>
     <None Include="DBScripts\202007151230_FixNULLChargeableWeightForWarehouseEntries.sxml" />
+    <None Include="DBScripts\202104221001_FillMasterShipmentNumberForWarehouseReleases.sxml" />
+    <None Include="DBScripts\202104220958_FillMasterShipmentNumberForWarehouseEntries.sxml" />
     <None Include="DBTables\WarehouseEntry.dxml" />
     <None Include="DBTables\WarehouseEntryPackage.dxml" />
     <None Include="DBTables\WarehouseEntryPackagesRelease.dxml" />

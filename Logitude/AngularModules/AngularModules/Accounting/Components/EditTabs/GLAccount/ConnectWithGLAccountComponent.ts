@@ -10,6 +10,8 @@ import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
+import { GLAccountPMService } from '../../../Services/StandardPMs/GLAccountPMService';
+import { GLAccountList } from '../../../EntityLists/GLAccountList';
 
 @Component({
     templateUrl: './ConnectWithGLAccountComponent.html',
@@ -29,7 +31,9 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
     private gLAccountExtendedPMService = new GLAccountExtendedPMService();
     gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
     public GLAccountCurrencyFilterItems: ApiQueryFilters;
+    gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private selectedGLAccountPM: GLAccountPM;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -40,11 +44,11 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
          this.GLAccountCurrencyPM.GLAccountId = value;
      }
 
-     public selectedGLAccount:GLAccountPM;
-     public get SelectedGLAccount() { return this.selectedGLAccount; }
-     public set SelectedGLAccount(value: GLAccountPM) {
-         this.selectedGLAccount = value;
-     }
+    public selectedGLAccount: GLAccountList;
+    public get SelectedGLAccount() { return this.selectedGLAccount; }
+    public set SelectedGLAccount(value: GLAccountList) {
+    this.selectedGLAccount = value;    
+      }
 
      GetRequierdFieldErrorText(fieldName) {
         var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate(fieldName));
@@ -135,7 +139,7 @@ private CreateNewGLAccountCurrency(){
             if (!response.HasError)
             {
                   this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+             
             }
             else {
                   this.CurrentSession.StopBusyIndicator();
@@ -161,9 +165,37 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
        this.ValidateGLAccountCurrency();
        if (this.ValidationErrorsList.length == 0) {
            this.CreateNewGLAccountCurrency();
+           this.GetSelectedGLAccountPM();   
        }
     }
+    GetSelectedGLAccountPM() {
+        this.gLAccountPMService.get(this.selectedGLAccount.Id)
+            .subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        this.selectedGLAccountPM = response.Result;
+                        this.UpdateSelectedGLAccountPM();
+                    }
+                    else {
+                        this.CurrentSession.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                    }
+            });
+    }
 
+    UpdateSelectedGLAccountPM() {
+        this.selectedGLAccountPM.CardsDataId = this.entityPM.CardsDataId;
+        this.gLAccountPMService.update(this.selectedGLAccountPM)
+            .subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+                        this.CurrentSession.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                    }
+            });
+    }
 
     CancelButtonClicked() {
          this.CurrentSession.CloseCurrentWindow();

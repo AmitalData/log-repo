@@ -115,6 +115,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference1 { get; set; }
         public string ShipperContactName { get; set; }
         public string ShipperContactMobileNumber { get; set; }
         public int? TotalNumberOfPackages { get; set; }

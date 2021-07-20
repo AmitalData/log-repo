@@ -47,5 +47,6 @@ export class DocumentTypeTemplateList {
 		BCC: string;
 		To: string;
 		AutomationId: string;
+		AttachedExternalDocumentsIds: string;
 	
 }

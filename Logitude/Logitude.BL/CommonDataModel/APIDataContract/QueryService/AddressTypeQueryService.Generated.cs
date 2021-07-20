@@ -36,25 +36,6 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public AddressType GetAddressTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
-        { 
-		    try
-            {
-
-				
-				var temp = query.GetSinglePM(Code,Tenant);				
-				 if (temp == null)
-                    throw new ApplicationException("AddressType with Code " + Code + " doesn't exist");
-
-				return AddressTypeDataMapping(temp,Tenant,ComputingPartnerName);
-			}
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-		
 		public AddressType GetAddressTypeById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
@@ -80,7 +61,6 @@ using Simplog.Data.CommonDataModel;
             {
 				   
 				   var temp = new AddressType(); 
-				   temp.Code = MyEntityPM.Code;
 				   temp.Name = MyEntityPM.Name;
 				   temp.Id = MyEntityPM.Id;					
 				   return temp;
@@ -96,11 +76,7 @@ using Simplog.Data.CommonDataModel;
         {
 		    try
             {
-				   					var temp = new AddressTypePM();
-					if (!string.IsNullOrEmpty(MyEntity.Code))
-					{
-						temp = query.GetSinglePM(MyEntity.Code);
-					} 								  
+				   					var temp = new AddressTypePM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id);
@@ -111,20 +87,6 @@ using Simplog.Data.CommonDataModel;
 					    throw new ApplicationException("AddressType with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
-					}
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
 					{							//throw new ApplicationException("Name Can't be update"); 

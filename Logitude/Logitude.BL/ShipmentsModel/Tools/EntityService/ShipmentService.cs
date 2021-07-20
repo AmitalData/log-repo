@@ -1,59 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EmailAlerts;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Logitude.SystemLogs;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.SystemLogs;
-using System.Web;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using System.Text;
-using Logitude.BL.CommonDataModel.DataContracts;
-using Simplog.Data.InfrastructureModel;
-using System.Reflection;
-using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.CRM.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours;
-using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data.EntityPOCOs;
-using Logitude.Server.Tools.EntityChanges;
-using Logitude.BL.ShipmentsModel.Tools.Initializers;
-using Logitude.BL.ShipmentsModel.EntityOtherServices;
+using System.Transactions;
+using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -99,20 +95,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContactPM loggedContact;
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
+        private ShipmentProductItemRepository shipmentProductItemRepository;
 
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         HybridPartnerPM CurrentHybridPartner;
         public ShipmentComputedFields UpdatedShipmentComputedFields;
-
         private ShipmentServiceInitializer initializer;
-
+        string UpdateByEmail;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
+            UpdateByEmail = serviceContextUser;
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
-
             this.tenant = initializer.Tenant;
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
@@ -142,11 +138,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.myAddressRepository = new AddressRepository(myCommonContext);
             this.myPortRepository = new PortRepository(myCommonContext);
             this.aWBOCIRepository = new AWBOCIRepository(objectContext);
-            //this.documentsFilingRepository = new DocumentsFilingRepository(myCommonContext);
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
+            this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
 
             this.SetHybridPartner(this.tenant);
         }
@@ -158,7 +154,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
 
-        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet)
+        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet, List<ShipmentProductItemPM> shipmentProductItemsChangeSet)
         {
             // this was for the old silverlight system
             this.initializer.ShipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -175,6 +171,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentCommoditiesChangeSet = shipmentCommoditiesChangeSet;
             this.initializer.ShipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
             this.initializer.ShipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
+            this.initializer.ShipmentProductItemsChangeSet = shipmentProductItemsChangeSet;
         }
 
         public void Create()
@@ -211,7 +208,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
-                this.initializer.HandleComposition();
 
                 foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
                 {
@@ -273,6 +269,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CreateShipmentStoragePricing(itemPM);
                 }
 
+                foreach (ShipmentProductItemPM itemPM in entityPM.ShipmentProductItems)
+                {
+                    this.CreateShipmentProductItem(itemPM);
+                }
+
+                this.initializer.HandleComposition();
+                this.initializer.HandleStandalone();                
+
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
                 entityPM.CalculateReceivables = calculateReceivables;
@@ -281,13 +285,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     shipmentTracing.BeginTracing();
                 }
-                //if (entityPM.IsHybrid)
-                //{
-                //    shipmentTracing.TraceTerminalData();
-                //}
-
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
+                this.ComputeIsHTSMissingField();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
@@ -295,11 +295,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
-
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-                //shipmentBehaviourFacade.Trace(shipmentTracing);
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -314,16 +312,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         this.RunRegistryDateProcedure(houseShipment.Id);
                         this.RunFirstApprovalDateProcedure(houseShipment.Id);
-
-                        //ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
-                        //ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(houseShipment.Id, this.tenant);
-                        //{
-                        //    if (iHousePM != null)
-                        //    {
-                        //        ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.serviceContextUser);
-                        //        iShipmentService.Update();
-                        //    }
-                        //}
 
                         calculateProfit = true;
                         calculatePayables = true;
@@ -349,6 +337,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
                 RunAutomation("OnCreate");
+
+                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                {
+                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
+                }
 
                 scope.Complete();
             }
@@ -402,8 +395,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
-                    this.initializer.HandleComposition();
-
+                    this.UpdateShipmentProductItems();
+                    this.UpdateShipmentProductItems();
+                    this.ComputeIsHTSMissingField();
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
@@ -417,9 +411,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentCommoditiesCollection();
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
+                    this.UpdateShipmentProductItemsCollection();                    
+                    this.initializer.HandleComposition();
+                    this.initializer.HandleStandalone();
                     this.InitializeBookingData();
-
                     this.RemoveDeletedItemsFromEntityPM();
+
+                    //if (this.initializer.PackageContainerIdUpdated)
+                    //{
+                    //    //this.UpdateShipmentPackagesCollection();
+
+                    //    ShipmentPickUpPM shipmentPickUp = entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).FirstOrDefault();
+                    //    if(shipmentPickUp != null)
+                    //    {
+                    //        this.UpdateShipmentPickUp(shipmentPickUp);
+                    //    }
+
+                    //    else
+                    //    {
+                    //        ShipmentDeliveryPM shipmentDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).FirstOrDefault();
+                    //        if (shipmentDelivery != null)
+                    //        {
+                    //            this.UpdateShipmentDelivery(shipmentDelivery);
+                    //        }
+                    //    }
+                    //}
 
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
                     {
@@ -461,10 +477,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeIsAssemblyField();
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
+                    this.ComputeIsHTSMissingField();
 
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
-                    //shipmentBehaviourFacade.Trace(shipmentTracing);
 
                     if (shipmentBehaviourFacade.ReceivablePricingUpdated_CrossDoc)
                     {
@@ -501,22 +517,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-                    this.UpdateShipmentFollowUpsCollection();
+                    this.UpdateShipmentFollowUpsCollection();                    
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
-
                     this.ComputeAgentComputed(entityPM, entityPoco);
+                    //this.CopyForwarderShipmentPackagesFromStandalone();
                     entityRepository.Update(entityPoco);
                     entityRepository.SubmitChanges();
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-
+                    if (entityPM.IsStandalonePickupDelivery) {
+                        this.CopyForwarderShipmentPackagesFromStandalone();
+                    }
                     UpdateMasterHouses();
                     RunStoredProcedures();
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    UpdatePayablesLinesVatAmounts();                    
                     #endregion
                 }
 
@@ -557,8 +576,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.RefreshFollowUpDate();
                 this.UpdateExtendedTasksDueDate();
 
+                // Produce shipment update msg
+                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                {
+                    AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
+                }
+                 
                 scope.Complete();
                 #endregion
+            }
+        }
+        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(queueName);
+        }
+
+        private void AddKafkaQueueMessage(string queueName)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue(queueName, 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ShipmentId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage,tenant); 
+        }
+
+        private void UpdatePayablesLinesVatAmounts()
+        {
+            if (initializer.ShipmentPayablesChangeSet != null && initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).Any())
+            {
+                var allPayablesIds = (from d in entityPM.ShipmentPayables select d.Id).ToList();
+                var allPayables = shipmentPayableRepository.GetShipmentPayablesFromIdList(allPayablesIds, tenant);
+                PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
+                payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
             }
         }
 
@@ -900,6 +954,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.DeleteShipmentStoragePricing(pm);
             }
 
+            foreach (ShipmentProductItemPM pm in entityPM.ShipmentProductItems)
+            {
+                this.DeleteShipmentProductItem(pm);
+            }
+
             entityRepository.Remove(this.entityPoco);
             entityRepository.SubmitChanges();
         }
@@ -1090,6 +1149,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
                         }
                     }
+
+                    OpenForwarderShipmentQueue();
                 }
                 catch (Exception ex)
                 {
@@ -1165,18 +1226,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                     }
-                    EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
-                    EntityStatus myStatus = entityStatusRep.GetSingleEntityStatusByCode("INPS", tenant);//"in progress"
-                    if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && (myStatus != null && (entityPM.StatusId == myStatus.Id && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
-                    {
-                        if (IsPrivateLabelTenant(entityPM.Tenant))
-                        {
-                            IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
-                        }
+                    OpenForwarderShipmentQueue();
 
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -1192,6 +1243,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
                 }
+            }
+        }
+
+        private void OpenForwarderShipmentQueue()
+        {
+            EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
+            EntityStatus myStatus = entityStatusRep.GetSingleEntityStatusByCode("INPS", tenant);//"in progress"
+            if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && (myStatus != null && (entityPM.StatusId == myStatus.Id && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
+            {
+                if (IsPrivateLabelTenant(entityPM.Tenant))
+                {
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);
+                }
+
             }
         }
 
@@ -1304,7 +1371,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
-                    UpdateShipmentProfitClass.UpdateShipmentHousesPayablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -1322,7 +1388,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.Id, entityPM.Tenant, false);
-                    UpdateShipmentProfitClass.UpdateShipmentHousesReceivablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -1482,7 +1547,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1513,7 +1578,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                         
+                }
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1544,7 +1609,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                             
+                }
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1577,7 +1642,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }                
+                }
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -1908,6 +1973,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteShipmentStoragePricing(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void UpdateShipmentProductItemsCollection()
+        {
+            if (initializer.ShipmentProductItemsChangeSet != null)
+            {
+                foreach (ShipmentProductItemPM itemPM in initializer.ShipmentProductItemsChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentProductItem(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentProductItem(itemPM);
                                 break;
                             }
 
@@ -3185,7 +3281,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (entityPM.TransportModeId == "A")
                 {
                     this.ComputeFreightChargesFromFreightPayableLine();
-                  
+
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3295,7 +3391,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (entityPM.AWBChargeRate == null)
             {
                 var airFreightCode = "AFT";
-                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                var airFreightCharge = entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
                 if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
                 {
                     this.SetAWBFreightChargeFields(airFreightCharge);
@@ -3324,9 +3420,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
             entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-            entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
-            SetAWBFrieghtAmountCollectAndPrepaid();
+            if (!string.IsNullOrEmpty(airFreightCharge.PrepaidCollectId))
+            {
+                entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
+                entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
+                SetAWBFrieghtAmountCollectAndPrepaid();
+            }
         }
 
         public string SetAWBChargesCodeCode()
@@ -3388,14 +3487,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             double? myResult = null;
             var myRateClassCode = entityPM.RateClassCode;
-            var myChargeRate =  entityPM.AWBChargeRate;
+            var myChargeRate = entityPM.AWBChargeRate;
             var chargeAmount = entityPM.ChargeableWeight;
             var groupCode = this.GetRateClassGroupCode(myRateClassCode);
             if (entityPM.RateClassCode == "K")
             {
                 chargeAmount = entityPM.ChargeableWeightInKG;
             }
-           
+
             if (groupCode == "M")
             {
                 myResult = myChargeRate;
@@ -4302,6 +4401,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         this.initializer.IsUpdatingHouses = true;
                     }
+                    //else if (entityPM.ShipmentConsoleShipments != null && entityPM.ShipmentConsoleShipments.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+                    //{
+                    //    this.initializer.IsUpdatingHouses = true;
+                    //}
                 }
             }
         }
@@ -4341,10 +4444,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         public Dictionary<string, string> DummyIdGuidPackages { get; set; }
-        private void CreateShipmentPackage(ShipmentPackagePM itemPM)
+        private void CreateShipmentPackage(ShipmentPackagePM itemPM,string shipmentId = null)
         {
+            if(entityPM.IsStandalonePickupDelivery)
+            {
+                initializer.IsPackageCreatedFromStandaloneShipment = true;
+                initializer.StandalonePackage = itemPM;
+            }
+
             itemPM.Id = IdCounter.GetNumber("ShipmentPackage", tenant).ToString();
-            itemPM.ShipmentId = entityPM.Id;
+            itemPM.ShipmentId = shipmentId == null ? entityPM.Id: shipmentId;
             itemPM.Tenant = tenant;
 
             if (initializer.IsFCLEntity && itemPM.Quantity == null)
@@ -4359,7 +4468,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ShipmentId = itemPM.ShipmentId,
             };
 
-            this.UpdateShipmentDeliveryFromPackage(itemPM, itemPoco);
+            this.UpdateShipmentDeliveryFromPackage(itemPM, itemPoco);            
 
             ShipmentMapping.MapPcakge(itemPM, itemPoco, true, this.loggedTenant);
             shipmentPackageRepository.Add(itemPoco);
@@ -4414,7 +4523,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 DummyIdGuidPackages.Add(itemPM.Id, itemPM.DummyIdGuid);
             }
         }
-
         private void UpdateShipmentPackage(ShipmentPackagePM itemPM)
         {
             ShipmentPackage itemPoco = shipmentPackageRepository.GetSingleShipmentPackage(itemPM.Id, tenant);
@@ -4544,6 +4652,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
+            }
+            if(!(IsInlandDomesticShipment(entityPM) && !entityPM.IsStandalonePickupDelivery))
+            {
+                UpdateConnectedPackages(itemPM);
             }
 
             calculateProfit = true;
@@ -4849,7 +4961,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
             {
                 ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
-                if(parent != null)
+                if (parent != null)
                 {
                     if (parent.ChildPickUpIndex == null)
                     {
@@ -4870,7 +4982,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 entityPM.ShipmentPickUpIndex += 1;
                 itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentPickUpIndex;
-            }            
+            }
 
             ShipmentPickUpDelivery itemPoco = new ShipmentPickUpDelivery()
             {
@@ -4898,10 +5010,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             AddressValidating.ValidatePickUp(itemPM);
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
-
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
+            }
+
+            if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
+            {
+                itemPM.IsConnectedToStandalone = true;
             }
 
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
@@ -4943,7 +5059,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TraceDeletedPickUp(itemPM, itemPoco);
-            }
+            }            
 
             ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
 
@@ -5032,6 +5148,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TraceDelivery(itemPM, itemPoco);
+            }
+
+            if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
+            {
+                itemPM.IsConnectedToStandalone = true;
             }
 
             this.UpdateShipmentPackageFromDelivery(itemPM);
@@ -5363,43 +5484,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        private void CreateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM, string pickUpDeliveryId)
+        private void CreateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM, string pickUpDeliveryId)
         {
-            insideItemPM.Id = IdCounter.GetNumber("ShipmentPickUpDeliveryPackage", tenant).ToString();
-            insideItemPM.ShipmentPickUpDeliveryId = pickUpDeliveryId;
-            insideItemPM.Tenant = tenant;
+            pickUpDeliveryPackagePM.Id = IdCounter.GetNumber("ShipmentPickUpDeliveryPackage", tenant).ToString();
+            pickUpDeliveryPackagePM.ShipmentPickUpDeliveryId = pickUpDeliveryId;
+            pickUpDeliveryPackagePM.Tenant = tenant;
 
             ShipmentPickUpDeliveryPackage insideItemPoco = new ShipmentPickUpDeliveryPackage()
             {
-                Id = insideItemPM.Id,
+                Id = pickUpDeliveryPackagePM.Id,
             };
 
-            ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, true);
+            ShipmentMapping.MapPickUpDeliveryPackage(pickUpDeliveryPackagePM, insideItemPoco, true);
             shipmentPickUpDeliveryPackageRepository.Add(insideItemPoco);
 
-            if (insideItemPM.PickUpDeliveryPackageHarmonizes != null)
+            if (pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizes != null)
             {
-                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizes)
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizes)
                 {
-                    this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                    this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, pickUpDeliveryPackagePM.Id);
                 }
             }
         }
-        private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
+        private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
-            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
-            ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, false);
+            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(pickUpDeliveryPackagePM.Id);
+            ShipmentMapping.MapPickUpDeliveryPackage(pickUpDeliveryPackagePM, insideItemPoco, false);
             shipmentPickUpDeliveryPackageRepository.Update(insideItemPoco);
 
-            if (insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet != null)
+            if (pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizesChangeSet != null)
             {
-                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet)
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in pickUpDeliveryPackagePM.PickUpDeliveryPackageHarmonizesChangeSet)
                 {
                     switch (itemHarmonizePM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:
                             {
-                                this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                                this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, pickUpDeliveryPackagePM.Id);
                                 break;
                             }
 
@@ -5420,12 +5541,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
+        private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM pickUpDeliveryPackagePM)
         {
-            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
+            ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(pickUpDeliveryPackagePM.Id);
 
             PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
-            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(pickUpDeliveryPackagePM.Id, tenant);
             foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
             {
                 PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
@@ -5525,7 +5646,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;                
+                calculatePayables = true;
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
@@ -5763,7 +5884,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        
         private void CreateConsoleShipment(ConsoleShipmentPM itemPM)
         {
             Shipment houseShipment = entityRepository.GetSingleShipment(itemPM.Id, tenant);
@@ -5773,6 +5893,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.MasterShipmentDataId = itemPM.MasterShipmentDataId;
                 houseShipment.ComputedShipmentNumber = itemPM.ShipmentNumber;
                 houseShipment.AgentComputed = houseShipment.AgentId == null ? entityPM.AgentId : houseShipment.AgentId;
+                this.UpdateHouseRoutingFieldsWhenConnectedToMaster(houseShipment);
                 entityRepository.Update(houseShipment);
                 entityRepository.SubmitChanges();
 
@@ -6108,6 +6229,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void CreateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentProductItem", tenant).ToString();
+            itemPM.ShipmentId = entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ShipmentProductItem itemPoco = new ShipmentProductItem()
+            {
+                Id = itemPM.Id,
+            };
+
+            ShipmentMapping.MapProductItem(itemPM, itemPoco, true);
+            shipmentProductItemRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                ShipmentMapping.MapProductItem(itemPM, itemPoco, false);
+                shipmentProductItemRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentProductItem(ShipmentProductItemPM itemPM)
+        {
+            ShipmentProductItem itemPoco = shipmentProductItemRepository.GetSingleShipmentProductItem(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                shipmentProductItemRepository.Remove(itemPoco);
+            }
+        }
         private void ComputeShipmentStatus()
         {
             if (isNewEntity)
@@ -6704,10 +6856,241 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 tariffRepository.Update(tariff);
                 tariffRepository.SubmitChanges();
-
             }
         }
+        
+        private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
+        {
+            if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.PreForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.PreForwardingToPortId))
+            {
+                houseShipment.PreForwardingToPortId = entityPM.PreCarriageFromPortId;
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OnCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.OnCarriageToPortId)
+                && !string.IsNullOrEmpty(houseShipment.OnForwardingFromPortId) && !string.IsNullOrEmpty(houseShipment.OnForwardingToPortId))
+            {
+                houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
+            }
+        }
+
+        private void UpdateShipmentProductItems()
+        {
+            if (entityPM.IsProductItemsUpdated)
+            {
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
+                foreach (ShipmentProductItemPM productItem in this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    productItem.ChangeSetOp = ChangeSetOperation.Update;
+                    HTSCodePM hTSCodePM = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItem.ProductItemId, entityPM.ToCountryId, tenant);
+                    if (hTSCodePM != null)
+                    {
+                        productItem.HTSCode = hTSCodePM.Code;
+                        productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                    }
+                    else
+                    {
+                        productItem.HTSCode = null;
+                        productItem.ApprovedByCustomer = false;
+                    }
+                }
+
+                entityPM.IsProductItemsUpdated = false;
+            }
+        }
+        private void ComputeIsHTSMissingField()
+        {
+            List<ShipmentProductItemPM> shipmentProductItem = this.entityPM.ShipmentProductItems.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            entityPM.IsHTSMissing = false;
+
+            if (shipmentProductItem.Count > 0 && shipmentProductItem.Where(d => string.IsNullOrEmpty(d.HTSCode)).Any())
+            {
+                entityPM.IsHTSMissing = true;
+            }
+        }
+        private void CopyForwarderShipmentPackagesFromStandalone()
+        {
+            if (initializer.IsPackageCreatedFromStandaloneShipment)
+            {
+                string forwarderShipmentId = shipmentPickUpDeliveryRepository.GetSingleShipmentPIdByStandaloneShipmentId(entityPM.Id, tenant);
+                if (!string.IsNullOrEmpty(forwarderShipmentId))
+                {
+                    ShipmentPM forwarderShipment = this.GetShipmentPM(forwarderShipmentId);
+
+                    if(forwarderShipment != null)
+                    {
+                        this.ValidateUpdatingInsertStandAloneShipmentPackages(initializer.StandalonePackage.ContainerNumber, initializer.StandalonePackage.ContainerEntityId, forwarderShipmentId);
+                        this.CreateOrUpdateForwarderShipmentPackage(forwarderShipment);
+                        this.UpdateForwarderShipmentPickUpDelivery(forwarderShipment);
+                        this.UpdateForwarderShipment(forwarderShipment);
+
+                    }
+                }
+            }
+        }
+        private void ValidateUpdatingInsertStandAloneShipmentPackages(string containerNumber, string ContainerEntityId,string forwarderShipmentId)
+        {
+            List<ShipmentPackage> shipmentPackages = this.initializer.ShipmentPackageRepository.GetShipmentPackagesForShipmentTenant(forwarderShipmentId, tenant).ToList();
+            if (shipmentPackages != null)
+            {
+                bool isContainerNumberExist = shipmentPackages.Any(d => d.ContainerNumber == containerNumber && d.ContainerEntityId != ContainerEntityId);
+                if (isContainerNumberExist)
+                {
+                    throw new ApplicationException("Cannot have 2 containers with same number");
+                }
+            }
+        }
+
+        private void UpdateForwarderShipment(ShipmentPM forwarderShipment)
+        {
+            ShipmentService shipmentService = new ShipmentService(objectContext, forwarderShipment, "");
+            shipmentService.Update(true);
+        }                
+        private void UpdateForwarderShipmentPickUpDelivery(ShipmentPM forwarderShipment)
+        {
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(entityPM.Id, tenant);
+            if(shipmentPickUpDelivery != null)
+            {
+                if(shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK")
+                {
+                    ShipmentPickUpPM forwarderShipmentPickup = forwarderShipment.ShipmentPickUps.Where(d => d.Id == shipmentPickUpDelivery.Id).FirstOrDefault();
+                    this.CreatePickUpPackage(forwarderShipmentPickup);
+                }
+
+                else
+                {
+                    ShipmentDeliveryPM forwarderShipmentDelivery = forwarderShipment.ShipmentDeliveries.Where(d => d.Id == shipmentPickUpDelivery.Id).FirstOrDefault();
+                    this.CreateDliveryPackage(forwarderShipmentDelivery);                    
+                }
+
+                forwarderShipment.StandaloneShipmentId = shipmentPickUpDelivery.StandaloneShipmentId;
+            }
+        }
+        private void CreatePickUpPackage(ShipmentPickUpPM forwarderShipmentPickup)
+        {
+            ShipmentPickUpDeliveryPackagePM package = new ShipmentPickUpDeliveryPackagePM()
+            {
+                Tenant = tenant,
+                ContainerNumber = initializer.StandalonePackage.ContainerNumber,
+                Description = initializer.StandalonePackage.Description,
+                PackageTypeId = initializer.StandalonePackage.PackageTypeId,
+                ContainerEntityId = initializer.StandalonePackage.ContainerEntityId,
+                Quantity = initializer.StandalonePackage.Quantity,
+                Volume = initializer.StandalonePackage.Volume,
+                Weight = initializer.StandalonePackage.Weight,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+
+            this.CreateShipmentPickUpDeliveryPackage(package, forwarderShipmentPickup.Id);
+        }
+        private void CreateDliveryPackage(ShipmentDeliveryPM forwarderShipmentDelivery)
+        {
+            ShipmentPickUpDeliveryPackagePM package = new ShipmentPickUpDeliveryPackagePM()
+            {
+                Tenant = tenant,
+                ContainerNumber = initializer.StandalonePackage.ContainerNumber,
+                Description = initializer.StandalonePackage.Description,
+                PackageTypeId = initializer.StandalonePackage.PackageTypeId,
+                Quantity = initializer.StandalonePackage.Quantity,
+                ContainerEntityId = initializer.StandalonePackage.ContainerEntityId,
+                Volume = initializer.StandalonePackage.Volume,
+                Weight = initializer.StandalonePackage.Weight,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+
+            this.CreateShipmentPickUpDeliveryPackage(package, forwarderShipmentDelivery.Id);
+        }
+        private void CreateOrUpdateForwarderShipmentPackage(ShipmentPM forwarderShipment)
+        {
+            ShipmentPackagePM forwarderShipmentPackage = forwarderShipment.ShipmentPackages.Where(d => d.ContainerNumber == initializer.StandalonePackage.ContainerNumber).FirstOrDefault();
+
+            if(forwarderShipmentPackage != null)
+            {
+                if(string.IsNullOrEmpty(forwarderShipmentPackage.ContainerEntityId))
+                {
+                    forwarderShipmentPackage.ChangeSetOp = ChangeSetOperation.Update;
+                }
+            }
+
+            else
+            {
+                this.CreateForwarderShipmentPackage(forwarderShipment);
+            }
+        }
+        private void CreateForwarderShipmentPackage(ShipmentPM forwarderShipment)
+        {
+            ShipmentPackagePM forwarderShipmentPackage = new ShipmentPackagePM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = tenant,
+                Description = initializer.StandalonePackage.Description,
+                PackageTypeId = initializer.StandalonePackage.PackageTypeId,
+                Quantity = initializer.StandalonePackage.Quantity,
+                Volume = initializer.StandalonePackage.Volume,
+                Weight = initializer.StandalonePackage.Weight,
+                ContainerNumber = initializer.StandalonePackage.ContainerNumber,
+                ShipmentId = forwarderShipment.Id,
+            };
+
+            //this.CreateShipmentPackage(forwarderShipmentPackage, forwarderShipment.Id);
+            forwarderShipment.ShipmentPackages.Add(forwarderShipmentPackage);
+        }
+        private ShipmentPM GetShipmentPM(string forwarderShipmentId)
+        {
+            ShipmentQuery shipmenQuery = new ShipmentQuery(initializer.Repository);
+            return shipmenQuery.GetSinglePM(forwarderShipmentId, tenant);
+        }
+
+        private void UpdateConnectedPackages(ShipmentPackagePM itemPM)
+        {
+            List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
+            if (shipmentPackages != null)
+            {
+                foreach(ShipmentPackage shipmentPackage in shipmentPackages)
+                {
+                    if (shipmentPackage != null)
+                        UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
+                }
+            }
+            List<ShipmentPickUpDeliveryPackage> shipmentPickUpDeliveryPackages = this.shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(itemPM.ContainerEntityId, tenant);
+            if(shipmentPickUpDeliveryPackages != null)
+            {
+                foreach(ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage in shipmentPickUpDeliveryPackages)
+                {
+                    if (shipmentPickUpDeliveryPackage != null )
+                        UpdateConnectedPickupDeliveryPackages(itemPM, shipmentPickUpDeliveryPackage);
+                }
+            }
+        }
+        private void UpdateConnectedStanadAloneShipmentPackages(ShipmentPackagePM itemPM, ShipmentPackage shipmentPackage)
+        {
+            shipmentPackage.ContainerNumber = itemPM.ContainerNumber;
+            shipmentPackage.Description = itemPM.Description;
+            shipmentPackage.PackageTypeId = itemPM.PackageTypeId;
+            shipmentPackage.Quantity = itemPM.Quantity;
+            shipmentPackage.Volume = itemPM.Volume;
+            shipmentPackage.Weight = itemPM.Weight;
+            shipmentPackage.ShipperSeal = itemPM.ShipperSeal;
+            this.shipmentPackageRepository.Update(shipmentPackage);
+        }
+        private void UpdateConnectedPickupDeliveryPackages(ShipmentPackagePM itemPM, ShipmentPickUpDeliveryPackage shipmentPickUpDeliveryPackage)
+        {
+            shipmentPickUpDeliveryPackage.ContainerNumber = itemPM.ContainerNumber;
+            shipmentPickUpDeliveryPackage.Description = itemPM.Description;
+            shipmentPickUpDeliveryPackage.PackageTypeId = itemPM.PackageTypeId;
+            shipmentPickUpDeliveryPackage.Quantity = itemPM.Quantity;
+            shipmentPickUpDeliveryPackage.Volume = itemPM.Volume;
+            shipmentPickUpDeliveryPackage.Weight = itemPM.Weight;
+            shipmentPickUpDeliveryPackage.ShipperSeal = itemPM.ShipperSeal;
+            this.shipmentPickUpDeliveryPackageRepository.Update(shipmentPickUpDeliveryPackage);
+        }
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
     }
+
 
     public class NumberOfInsidePackagesHelper
     {

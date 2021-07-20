@@ -39,6 +39,8 @@ using DeclarationGoodsShipment = UnifreightIIG.Common.MessageLib.ID.DeclarationG
 using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipmentCustomsValuation;
 using UnifreightIIG.Common.MessageLib.Ransom;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -125,10 +127,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     else if(customResponse.Response.Declaration!= null)
                     {
+                        _MyDeclarationPM = myDeclarationQueryService.GetSingleByDecNoAndVersion(customResponse.Response.Declaration.ID.Value, customResponse.Response.Declaration.DMExtensions.VersionID.Value,requestParams.Tenant);
 
-                        string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
+                        if(_MyDeclarationPM!= null)
+                        {
+                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true);
+
+                        }
+
+                        else
+                        {
+                            string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+
+                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
+
+                        }
                         fromMehes = true;
                     }
 
@@ -269,6 +283,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     if (additionalInformation.Content != null)
                                         _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
+                                    if(!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
+                                    {
+                                        _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
+                                    }
                                     break;
                                 }
                             case "27":
@@ -292,7 +310,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
+                                                if(_MyDeclarationPM.AmendmentOriginalDeclartation!= declarationParent.AmendmentOriginalDeclartation)
+                                                {
+                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
+
+                                                }
                                                 var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
@@ -387,9 +409,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
 
                                                  declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                                if (_MyDeclarationPM.AmendmentOriginalDeclartation != declarationParent.AmendmentOriginalDeclartation)
+                                                {
+                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
 
-                                                UpdateParentDec(myDeclarationUpdateService, declarationParent);
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+                                                }
+                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
 
 
                                                 var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
@@ -683,6 +708,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
+                if(_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="6" || _MyDeclarationPM.AmendmentStatus == "3" ) && _MyDeclarationPM.HatraDate ==null)
+
+                {
+                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
+
+
+                    SendManifest(_MyDeclarationPM, requestParams); 
+
+                }
+
+
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
@@ -855,6 +892,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
             }
+        }
+
+
+        public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)  
+        {
+
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+            var requestParams1170 = new MANIFESTRequestRequestParams()
+            {
+                Tenant = requestParams.Tenant,
+                LoggingEnabled = true,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = declarationPM.Id,
+                LoggingObjectTableId2 = objectTableIdCourierMaster,
+                LoggingEntityId2 = declarationPM.CourierMasterId,
+                InterfaceTypeCode = "1170",
+                LoggingUserId = requestParams.LoggingUserId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                DeclarationId = declarationPM.Id,
+                LoggingEntityReference = declarationPM.Id,
+
+            };
+            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
         }
 
         private void UpdateParentDec(DeclarationUpdateService myDeclarationUpdateService, DeclarationPM declarationParent)

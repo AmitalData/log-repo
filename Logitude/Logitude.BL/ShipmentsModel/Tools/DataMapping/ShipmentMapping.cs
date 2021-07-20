@@ -466,6 +466,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.TruckerId = entityPM.TruckerId;
             entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
             entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
+            entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
+            entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
+            entityPoco.StandalonePickupDeliveryId = entityPM.StandalonePickupDeliveryId;
+            entityPoco.ForwarderPickUpDeliveryType = entityPM.ForwarderPickUpDeliveryType;
+            entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
+            entityPoco.HandlerUserId = entityPM.HandlerUserId;
+            entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
+            entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate;
+
+            entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
+            entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
+            entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
+            entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -647,6 +660,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         }
                     }
 
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(preCrriageFromPortCode))
+                        {
+                            myRoutingField = preCrriageFromPortCode + " , " + myRoutingField;
+                        }
+                    }
+
                     if (!string.IsNullOrEmpty(onForwardingToPortCode))
                     {
                         if (!string.IsNullOrEmpty(onCarriageToPortCode))
@@ -657,6 +678,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         else
                         {
                             myRoutingField = myRoutingField + " , " + onForwardingToPortCode;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(onCarriageToPortCode))
+                        {
+                            myRoutingField = myRoutingField + " , " + onCarriageToPortCode;
                         }
                     }
                 }
@@ -2843,6 +2872,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field38 = houseShipment.Field38;
             shipmentPM.Field39 = houseShipment.Field39;
             shipmentPM.Field30 = houseShipment.Field30;
+            shipmentPM.HandlerUserId = houseShipment.HandlerUserId;
+            shipmentPM.PlannedCargoReadyDate = houseShipment.PlannedCargoReadyDate;
+            shipmentPM.ApprovedCargoReadyDate = houseShipment.ApprovedCargoReadyDate;
 
             if (masterShipment != null)
             {

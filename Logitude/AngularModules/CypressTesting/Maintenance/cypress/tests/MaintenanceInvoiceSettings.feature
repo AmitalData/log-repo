@@ -1,5 +1,5 @@
-@release @stable  @all 
-Feature: Disable Then Enable Voiding Invoice from Maintenance 
+@release @stable  @all
+Feature: Disable Then Enable Voiding Invoice from Maintenance
     The user disables voiding invoices from Invoice Settings, creates AR invoice,
     tries to void it but gets an error, goes back to invoice settings in maintenance,
     enables voiding invoices, goes back to the same invoice and void it successfully
@@ -10,6 +10,11 @@ Feature: Disable Then Enable Voiding Invoice from Maintenance
             | VoidInvoice | Not Allowed |
         When update invoice settings
         Then the invoice setting should update successfully
+
+    Scenario: Update Accounting System
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace

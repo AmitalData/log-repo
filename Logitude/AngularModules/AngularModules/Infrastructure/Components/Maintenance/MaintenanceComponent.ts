@@ -131,6 +131,12 @@ export class MaintenanceComponent {
                     }
                 }
 
+                else if (item.Code == "MTRP") {
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor) {
+                        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                    }
+                }
+
                 else {
                     if (item.Code != "MTHT") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -289,6 +295,15 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Support Management";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.OceanInsightsSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "OISG";
+                item.ObjectTableName = "Ocean Insights Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemUserPassword")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -1252,6 +1267,15 @@ export class MaintenanceComponent {
                     logitudeWindow.Width = 300;
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/SupportManagementComponent');
+                    break;
+                }
+                case "OISG": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Ocean Insights Settings";
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 400;
+                    logitudeWindow.Width = 500;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/OceanInsightsSetting/OceanInsightsSettingsComponent');
                     break;
                 }
                 case "HYTT": {

@@ -409,6 +409,14 @@ import { ContainerizationExtendedListService } from './Services/ExtendedLists/Co
 import { CustomerClassificationTypeListService } from './Services/StandardLists/CustomerClassificationTypeListService';
 import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
+import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
+import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServices/DeclarationMenuButtonService';
+import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
+import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
+import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
+import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/PoaAuthorizationTypeLookupListService';
+import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
+
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
@@ -691,6 +699,9 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
+            case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
+            case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
 
                 
              //#endregion                
@@ -787,6 +798,11 @@ export class ModuleProviders {
 
             //#endregion
 
+            //MetaData
+            case "DeclarationMenuButtonService": { myResult = new DeclarationMenuButtonService(); break; }
+            case "DeclarationHeaderScreenService": { myResult = new DeclarationHeaderScreenService(); break; }
+            case "DeclarationTabsService": { myResult = new DeclarationTabsService(); break; }
+
             //#region WebServices
             case "ClientMessagesService": { myResult = new ClientMessagesService(); break; }
             case "CustDocMetaDataValuesWebService": { myResult = new CustDocMetaDataValuesWebService(); break; }
@@ -825,7 +841,8 @@ export class ModuleProviders {
             case "VehicleEditComponentController": { myResult = new VehicleEditComponentController(); break; }
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
-          
+            case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+
                 
 
         }

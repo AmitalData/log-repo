@@ -41,6 +41,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ToAddressCountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TransportModeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ParentPickUpDeliveryId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.StandaloneShipmentId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.StandaloneShipmentNumber).HasMaxLength(20).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPickUpDeliveries");
@@ -83,6 +85,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentPickUpDeliveryId).HasColumnName("ParentPickUpDeliveryId");
             this.Property(t => t.ChildPickUpIndex).HasColumnName("ChildPickUpIndex");
             this.Property(t => t.ChildDeliveryIndex).HasColumnName("ChildDeliveryIndex");
+            this.Property(t => t.StandaloneShipmentId).HasColumnName("StandaloneShipmentId");
+            this.Property(t => t.StandaloneShipmentNumber).HasColumnName("StandaloneShipmentNumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -115,6 +119,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.EmptyDeliveryContainerPartner).WithMany().HasForeignKey(d => d.EmptyDeliveryContainerPartnerId);
             this.HasOptional(t => t.TransportMode).WithMany().HasForeignKey(d => d.TransportModeCode);
             this.HasOptional(t => t.ParentPickUpDelivery).WithMany().HasForeignKey(d => d.ParentPickUpDeliveryId);
+            this.HasOptional(t => t.StandaloneShipment).WithMany().HasForeignKey(d => d.StandaloneShipmentId);
         }
     }
 }

@@ -1,5 +1,6 @@
 export class URLs
 {
+    public static readonly GetShipmentConnectedEntities = '**/GetShipmentConnectedEntities?**';
     public static readonly Shipment = '**/shipment';
     public static readonly SplitShipment = '**/SplitShipment';
     public static readonly CardViews = '**/cardviews/**';
@@ -27,4 +28,5 @@ export class URLs
         return "**/shipmentviews/getbyfilters?**" + ShipmentNumber + "**";
     }
     public static readonly GetAll = "**/getall"
+    public static readonly ShipmentViews = "**/shipmentviews/getbyfilters?**"
 }

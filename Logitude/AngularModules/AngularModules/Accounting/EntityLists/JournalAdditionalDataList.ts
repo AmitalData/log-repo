@@ -12,6 +12,7 @@ export class JournalAdditionalDataList {
 	JournalId: string;
 	TaxReportId: string;
 	TaxReportTransmitStatusCode: string;
+	JournalLineNumber: number;
 	
 }
  

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
-    [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
+    
     public class ReportExecutionLogPM
     {
         [Key]
@@ -27,7 +27,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool DisablePreview { get; set; }
 
         public string StatusName { get; set; }
-        public string CreatedByUserName { get; set; } 
+        public string CreatedByUserName { get; set; }
         public string SearchFields { get; set; }
         public string ReportName { get; set; }
 

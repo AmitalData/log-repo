@@ -1,0 +1,47 @@
+
+
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+              
+                <table>
+
+                    <!-- Transactions Grid -->
+                    <tr>
+                        <td colspan="5" style="height: 100%;">
+                            <div class="GeneratedGridContainer">
+                                <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                                  [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                                  [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                                  [IsCustomTemplate]="true">
+                                </logitude-grid-v2>
+                                <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                                  [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                                                  [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                                  [IsCustomTemplate]="true">
+                                </logitude-grid>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td ></td>
+                        <td style="width: 80px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>
+

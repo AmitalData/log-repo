@@ -22,7 +22,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int Tenant { get; set; }
      [Key]
         [ForeignKey("Journal")]
-        [Column("JournalId")]
+        [Column("JournalId" ,Order = 1)]
 	    public string JournalId { get; set; }
 	      
         public virtual Journal Journal { get; set; }
@@ -36,6 +36,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TaxReportTransmitStatusCode { get; set; }
 	      
         public virtual TaxReportLineTransmitStatus TaxReportLineTransmitStatus { get; set; }
+     [Key]
+        [Column("JournalLineNumber" ,Order = 2)]
+	    public int JournalLineNumber { get; set; }
     }
 }
 	 

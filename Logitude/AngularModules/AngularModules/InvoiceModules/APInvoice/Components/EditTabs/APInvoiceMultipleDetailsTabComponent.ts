@@ -20,10 +20,19 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { Output, EventEmitter } from '@angular/core';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
+import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { VatTypePercentageList } from '../../../../Common/EntityLists/VatTypePercentageList';
+import { APInvoiceLinePM } from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
+import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
+import { APInvoiceMultipleShortPM } from '../../../../Invoice/EntityPMs/APInvoiceMultipleShortPM';
 
-
-@Component({
-    
+@Component({    
     templateUrl: './APInvoiceMultipleDetailsTabComponent.html',
 })
 
@@ -39,7 +48,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public isRTL: boolean = false;
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    private invoiceDomainService: InvoiceDomainService;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -69,9 +78,19 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     if (this.editingShipmentRequested) {
                         this.RunEditShipment();
                     }
+
+                    else if (this.loadShipmentsRequested) {
+                        this.StartLoadingShipments();
+                    }
+
+                    else if (this.addPayablesRequested) {
+                        this.StartAddingPayables();
+                    }
                 }
 
                 this.editingShipmentRequested = false;
+                this.loadShipmentsRequested = false;
+                this.addPayablesRequested = false;
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -91,6 +110,14 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     private myPaymentTermListService: PaymentTermListService;
     InitializeServices() {
         this.myPaymentTermListService = new PaymentTermListService();
+        this.invoiceDomainService = new InvoiceDomainService();
+    }
+
+    SetShipmentSearchApiQueryFilter(shipmentsLevelCods: string) {
+        this.apiQueryFilters = new ApiQueryFilters();
+        this.apiQueryFilters.PageIndex = 0;
+        this.apiQueryFilters.PageSize = 10;
+        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", shipmentsLevelCods, null, null, "InList", true, true, false, "string");
     }
 
     public IsEditingEnabled: boolean = false;
@@ -710,21 +737,16 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
-
+            var shipmentsLevelCods = "";
             if (itemValue == "All") {
                 this.apiQueryFilters = null;
-            } else {
-                this.apiQueryFilters = new ApiQueryFilters();
-                this.apiQueryFilters.PageIndex = 0;
-                this.apiQueryFilters.PageSize = 10;
-
-                if (itemValue == "MasterAndDirect") {   
-                    this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,C", null, null, "InList", true, true, false, "string");
-                } else if (itemValue == "HouseAndDirect") {
-                        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", true, true, false, "string");
-                } 
-            }
-            
+            } else if (itemValue == "MasterAndDirect") {
+                shipmentsLevelCods = "D,C";
+                this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
+            } else if (itemValue == "HouseAndDirect") {
+                shipmentsLevelCods = "D,H";
+                this.SetShipmentSearchApiQueryFilter(shipmentsLevelCods);
+            }           
         }
     }
 
@@ -751,7 +773,271 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
             }
         });
 
+        if (shipmentsNumbers.length > 1000) {
+            shipmentsNumbers = shipmentsNumbers.substring(0, 1000);
+        }
+
         this.EntityPM.ShipmentsNumbers = shipmentsNumbers;
+    }
+
+    private loadShipmentsRequested: boolean = false;
+    AddShipmentsButtonClicked() {
+        if (this.EntityPM.IsDirty) {
+            this.loadShipmentsRequested = true;
+            this.SaveChanges();
+        }
+
+        else {
+            this.StartLoadingShipments();
+        }        
+    }
+    private StartLoadingShipments() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.invoiceDomainService.GetShipmentsForMultipleAPInvoice(this.EntityPM.Id, this.VendorId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var shipments: ShipmentList[] = myResponse.Result;
+                if (shipments.length > 0) {
+                    shipments.forEach(item => {
+                        this.AddShipment(item);
+                    });
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    private addPayablesRequested: boolean = false;
+    AddPayablesButtonClicked(item: MultipleShipmentLine) {
+        this.editingShipmentId = item.ShipmentId;
+
+        if (this.EntityPM.IsDirty) {            
+            this.addPayablesRequested = true;
+            this.SaveChanges();
+        }
+
+        else {
+            this.StartAddingPayables();
+        } 
+    }
+
+    private StartAddingPayables() {
+        if (this.editingShipmentId) {
+            this.LoadEntity();
+        }
+    }
+
+    public APInvoiceMultipleShortEntity: APInvoiceMultipleShortPM = null;
+    private LoadEntity() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.invoiceDomainService.GetSingleAPInvoiceShortPM(this.EntityPM.Id, this.editingShipmentId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.APInvoiceMultipleShortEntity = myResponse.Result;
+
+                if (this.APInvoiceMultipleShortEntity) {
+                    this.LoadOpenPayables();
+                }
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    private invoiceLinesAdded: boolean = false;
+    private myOpenPayables: ShipmentPayablePM[] = [];
+    private missingVATPayables: APInvoiceLinePM[] = [];
+    private LastRatesList: LastRate[] = [];
+    private VatTypePercentagesList: VatTypePercentageList[] = [];
+    private LoadOpenPayables() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.missingVATPayables = [];
+        this.invoiceDomainService.GetInvoiceOpenAmountPayables(this.editingShipmentId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.myOpenPayables = myResponse.Result;
+            }
+
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
+            }
+
+            var currencyRatesService: CurrencyRatesService = new CurrencyRatesService();    
+            currencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.AccountingCurrencyId, loadingDate).subscribe((myResponse1: ServiceResponse) => {
+                this.LastRatesList = myResponse1.Result;
+
+                var commonDomainService: CommonDomainService = new CommonDomainService();
+                commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
+                    this.VatTypePercentagesList = myResponse2.Result;
+                    this.AddInvoiceLines();
+                    this.CurrentSession.StopBusyIndicator();
+
+                    if (this.invoiceLinesAdded) {
+                        this.invoiceLinesAdded = false;
+                        this.SaveAPInvoiceMultipleShortEntity();
+                    }
+                });
+            });
+        });
+    }
+    private AddInvoiceLines() {
+        var chargesTypeListService: ChargesTypeListService = new ChargesTypeListService();
+        var vatTypeListService: VatTypeListService = new VatTypeListService();;
+
+        this.myOpenPayables = this.myOpenPayables.filter(f => f.ShipmentPayableParentId == null && f.VendorId == this.VendorId);
+        this.myOpenPayables.forEach(item => {
+            if (this.APInvoiceMultipleShortEntity.InvoiceLines.filter(f => f.EntityPayableId == item.Id).length == 0) {
+                var line = new APInvoiceLinePM(null);
+                line.APInvoiceId = this.EntityPM.Id;
+                line.Tenant = item.Tenant;
+                line.ChargesTypeId = item.ChargesTypeId;
+                line.ChargesTypeCode = item.ChargesTypeCode;
+                line.ChargesTypeName = item.ChargesTypeName;
+                line.EntityPayableId = item.Id;
+                line.EntityId = item.ShipmentId;
+                line.EntityReference = item.ShipmentNumber;
+                line.VendorId = item.VendorId;
+                line.VendorName = item.VendorName;
+                line.ExpectedAmount = item.ExpectedAmount;
+                line.OtherInvoicesAmounts = item.AccountedAmount;
+                line.CorrectionAmount = item.CorrectionAmount;
+                line.CorrectionNote = item.CorrectionNote;
+                line.CorrectionByUserId = item.CorrectionByUserId;
+                line.CorrectionDate = item.CorrectionDate;
+                line.AmountTypeCode = item.ShipmentPayableAmountTypeCode;
+                line.ForiegnCurrencyId = item.CurrencyId;
+                line.ForiegnCurrencyCode = item.CurrencyCode;
+                line.VatPercentage = this.GetVatTypePercentage(item.VatTypeId);
+                line.ForiegnExchangeRate = this.GetCurrencyRate(item.CurrencyId);
+                line.ForiegnCurrencyAmount = item.OpenAmount;
+                line.LocalCurrencyAmount = line.ForiegnCurrencyAmount * line.ForiegnExchangeRate;
+                line.OpenAmount = this.ComputeOpenAmount(item);
+                
+                if (line.ForiegnCurrencyId == this.ProfitCurrencyId) {
+                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                }
+
+                else {
+                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / this.EntityPM.ProfitCurrencyExchangeRate;
+                }
+
+                var invoiceAmount: number = 0;
+                if (line.ForiegnCurrencyId == this.EntityPM.InvoiceCurrencyId) {
+                    invoiceAmount = line.ForiegnCurrencyAmount;
+                }
+
+                else {
+                    invoiceAmount = line.LocalCurrencyAmount / this.EntityPM.InvoiceCurrencyExchangeRate;
+                }
+
+                line.InvoiceCurrencyAmount = AppTool.Round(invoiceAmount, 2);
+
+                chargesTypeListService.getSingleFromCache(line.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: ChargesTypeList = myResponse.Result;
+                        if (list) {
+                            line.Description = list.EnglishName;
+                            line.LocalDescription = list.LocalName;
+
+                            if (AppTool.IsNullOrEmpty(line.VatTypeId)) {
+                                line.VatTypeId = list.VatTypeId;
+                            }
+                        }
+                    }
+                });
+
+                if (!AppTool.IsNullOrEmpty(line.VatTypeId)) {
+                    vatTypeListService.getSingleFromCache(line.VatTypeId).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list_VAT: VatTypeList = myResponse.Result;
+                            if (list_VAT) {
+                                line.VatTypeName = list_VAT.EnglishName;
+                                line.VatIsMultiPercentage = list_VAT.IsMultiPercentage;
+
+                                if (!list_VAT.IsMultiPercentage) {
+                                    line.VatPercentage = this.GetVatTypePercentage(line.VatTypeId);
+                                }
+                            }
+                        }
+                    });
+                }
+
+                if (AppTool.IsNullOrEmpty(line.VatTypeId)) {
+                    this.missingVATPayables.push(line);
+                }
+
+                else {
+                    this.APInvoiceMultipleShortEntity.AddInvoiceLinePM(line);
+                    this.invoiceLinesAdded = true;
+                }
+            }
+        });
+    }
+    private GetVatTypePercentage(myVatTypeId: string) {
+        var myResult: number = null;
+
+        var vatTypePercentage = this.VatTypePercentagesList.filter(d => d.VatTypeId == myVatTypeId)[0];
+        if (vatTypePercentage != null) {
+            myResult = vatTypePercentage.Percentage;
+        }
+
+        return myResult;
+    }
+    private GetCurrencyRate(myCurrencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(myCurrencyId)) {
+            if (myCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == myCurrencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
+    }
+    private SaveAPInvoiceMultipleShortEntity() {
+        this.invoiceDomainService.PutSingleAPInvoiceShortPM(this.APInvoiceMultipleShortEntity).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                if (this.missingVATPayables.length > 0) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Some of the payables in this shipment don't have a VAT type and will not be added.");
+                    window.WindowClosed.subscribe(s => {
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        }
+                    });
+                }
+
+                else {
+                    if (this.CurrentSession.CurrentEditComponent) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                } 
+            }
+
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;                
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    ComputeOpenAmount(payable: ShipmentPayablePM): number {
+        var expect: number = payable.ExpectedAmount;
+        var amount: number = payable.OpenAmount == null ? 0 : payable.OpenAmount;
+        var others: number = payable.AccountedAmount == null ? 0 : payable.AccountedAmount;
+        var corre: number = payable.CorrectionAmount == null ? 0 : payable.CorrectionAmount;
+        var open: number = expect - others - amount - corre;
+
+        return AppTool.Round(open, 2);
     }
 }
 

@@ -159,6 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                                   IsCreditLimitEnabled = a.IsCreditLimitEnabled,
                                   CreditLimitAmount = a.CreditLimitAmount,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
                                   CreditLimitOpenBalance = a.CreditLimitOpenBalance,
                                   CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
                                   ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
@@ -320,6 +321,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                               IsCreditLimitEnabled = a.IsCreditLimitEnabled,
                               CreditLimitAmount = a.CreditLimitAmount,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
                               CreditLimitOpenBalance = a.CreditLimitOpenBalance,
                               CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
                               ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
@@ -375,6 +377,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -385,6 +388,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -396,6 +400,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
@@ -693,6 +698,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
+
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -826,6 +833,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
+
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -859,6 +868,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -869,6 +879,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -880,6 +891,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
@@ -1180,6 +1192,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
                                       IsAutonomy = a.Card.IsAutonomy,
+                                      InsuredcreditLimit = a.InsuredcreditLimit,
+
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1314,6 +1328,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
+
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1435,6 +1451,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
+
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1643,6 +1661,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
                                       IsAutonomy = a.Card.IsAutonomy,
+                                      InsuredcreditLimit = a.InsuredcreditLimit,
+
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1777,6 +1797,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
+
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1903,6 +1925,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
+
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -2113,6 +2137,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CreatedByPartner = a.Card.CreatedByPartner,
                                                    EORInumber = a.EORInumber,
                                                    IsAutonomy = a.Card.IsAutonomy,
+                                                   InsuredcreditLimit = a.InsuredcreditLimit,
+
                                                    Card = new CardPM()
                                                    {
                                                        Id = a.Id,
@@ -2242,6 +2268,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             CreatedByPartner = a.Card.CreatedByPartner,
                             EORInumber = a.EORInumber,
                             IsAutonomy = a.Card.IsAutonomy,
+                            InsuredcreditLimit = a.InsuredcreditLimit,
+
                             Card = new CardPM()
                             {
                                 Id = a.Id,
@@ -2450,6 +2478,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    StateName = customer.StateName,
                                                    GLAccountNumber = customer.GLAccountDisplayNumber,
                                                    IsAutonomy = customer.IsAutonomy,
+
                                                });
 
 
@@ -2588,9 +2617,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              GLAccountNumber = customer.Card.GLAccountDisplayNumber,
                                              IsAutonomy = customer.Card.IsAutonomy,
+
                                          }).FirstOrDefault();
 
             return customerList;
+        }
+        public List<CustomerPM> GetCustomersByCardsIds(List<string> cardsIds, int tenant)
+        {
+
+            List<Customer> customers = repository.GetCustomersByCardsIds(cardsIds, tenant);
+            return (from a in customers
+
+                    select new CustomerPM()
+                    {
+                        Id = a.Id,
+                        InsuredcreditLimit = a.InsuredcreditLimit,
+                        Tenant = a.Tenant,
+
+                    }).ToList();
+
+
+
         }
 
         public CustomerList GetSingleCustomerListById(string id, int tenant)
@@ -2758,6 +2805,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              IsAutonomy = customer.Card.IsAutonomy,
+
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2879,6 +2927,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              IsAutonomy = customer.Card.IsAutonomy,
+
                                          }).FirstOrDefault();
 
             return customerList;
@@ -3013,6 +3062,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UsoCFDICode = a.Card.UsoCFDICode,
                         CreatedByPartner = a.Card.CreatedByPartner,
                         IsAutonomy = a.Card.IsAutonomy,
+
                     };
 
                     entityList.Add(list);
@@ -3701,6 +3751,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
+
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -3849,6 +3901,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
+
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -3879,6 +3933,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductRepository customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(repository.context);
                 CustomerMediatorByProductRepository customerMediatorByProductRepository = new CustomerMediatorByProductRepository(repository.context);
                 CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+                ProductItemRepository productItemRepository = new ProductItemRepository(repository.context);
 
                 CustomerProductQuery customerProductQuery = new CustomerProductQuery(customerProductRepository);
                 CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(customerCompetitorRepository);
@@ -3889,6 +3944,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 CustomerCustomsAgentByProductQuery customerCustomsAgentByProductQuery = new CustomerCustomsAgentByProductQuery(customerCustomsAgentByProductRepository);
                 CustomerMediatorByProductQuery customerMediatorByProductQuery = new CustomerMediatorByProductQuery(customerMediatorByProductRepository);
                 CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+                ProductItemQuery productItemQuery = new ProductItemQuery(productItemRepository);
 
                 entity.CustomerProducts = customerProductQuery.GetCustomerProductPMsByCustomerId(entity.Id, entity.Tenant).ToList();
                 entity.CustomerCompetitors = customerCompetitorQuery.GetCustomerCompetitorsByCustomerId(entity.Id, entity.Tenant).ToList();
@@ -3900,6 +3956,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 entity.CustomerCustomsAgentByProducts = customerCustomsAgentByProductQuery.GetCustomerCustomsAgentByProductPMs(entity.Tenant, entity.Id);
                 entity.CustomerMediatorByProducts = customerMediatorByProductQuery.GetCustomerMediatorByProductPMs(entity.Tenant, entity.Id);
                 entity.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(entity.Id, entity.Tenant);
+                entity.CustomerProductItems = productItemQuery.GetProductItemPMsByCustomerId(entity.Id, entity.Tenant);
 
                 CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(repository.context);
                 CustomerSalesNoteQuery salesNoteQuery = new CustomerSalesNoteQuery(salesNoteRepository);
@@ -4187,6 +4244,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
                                      IsAutonomy = a.Card.IsAutonomy,
+                                     InsuredcreditLimit = a.InsuredcreditLimit,
+
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,
@@ -4414,6 +4473,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  InsuredcreditLimit = a.InsuredcreditLimit,
+
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -4564,6 +4625,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
                               IsAutonomy = a.Card.IsAutonomy,
+                              InsuredcreditLimit = a.InsuredcreditLimit,
+
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4684,6 +4747,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
                                      IsAutonomy = a.Card.IsAutonomy,
+                                     InsuredcreditLimit = a.InsuredcreditLimit,
+
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,

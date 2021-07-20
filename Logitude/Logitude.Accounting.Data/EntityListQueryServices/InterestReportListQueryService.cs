@@ -73,7 +73,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
                                               EnableInvoiceing = a.InterestReportStatusCode =="8"? false :true,
 
-											  CalCreditAllotmentCommission = a.CalCreditAllotmentCommission
+											  CalCreditAllotmentCommission = a.CalCreditAllotmentCommission,
+
+											 CalculatedPostponedChequesCommision = a.CalculatedPostponedChequesCommision,
 
 											});
             return query;

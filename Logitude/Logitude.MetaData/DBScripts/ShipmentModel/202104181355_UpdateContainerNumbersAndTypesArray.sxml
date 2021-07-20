@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentComputedFields">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       update ShipmentComputedFields set ContainersNumbersandTypesArray = null where ContainersNumbersandTypesArray = '[]'

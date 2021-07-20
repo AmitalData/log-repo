@@ -28,18 +28,18 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("PeriodPast")]
 	    public decimal? PeriodPast { get; set; }
-        [Column("Period0")]
-	    public decimal? Period0 { get; set; }
-        [Column("Period1")]
-	    public decimal? Period1 { get; set; }
-        [Column("Period2")]
-	    public decimal? Period2 { get; set; }
-        [Column("Period3")]
-	    public decimal? Period3 { get; set; }
-        [Column("Period4")]
-	    public decimal? Period4 { get; set; }
         [Column("Period5")]
 	    public decimal? Period5 { get; set; }
+        [Column("Period4")]
+	    public decimal? Period4 { get; set; }
+        [Column("Period3")]
+	    public decimal? Period3 { get; set; }
+        [Column("Period2")]
+	    public decimal? Period2 { get; set; }
+        [Column("Period1")]
+	    public decimal? Period1 { get; set; }
+        [Column("Period0")]
+	    public decimal? Period0 { get; set; }
         [Column("PeriodFuture")]
 	    public decimal? PeriodFuture { get; set; }
         [Column("TotalOpenTransactions")]

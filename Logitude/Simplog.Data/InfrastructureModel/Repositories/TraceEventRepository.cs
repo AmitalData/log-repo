@@ -60,6 +60,28 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return iQueryable;
         }
 
+        public IQueryable<TraceEvent> GetEntityStatusTraceEvents(int tenant, string entityId, string objectTableId)
+        {
+            return (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                 where a.Tenant == tenant
+                                                 && a.EntityId == entityId
+                                                 && a.ObjectTableId == objectTableId
+                                                 && a.EventType.EntityStatusId != null
+                                                 && a.Deleted == false
+                                                 select a).OrderBy(a => a.EventDateTime);
+        }
+
+        public TraceEvent GetLatestEntityStatusTraceEvent(int tenant, string entityId, string objectTableId)
+        {
+            return (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                    where a.Tenant == tenant
+                    && a.EntityId == entityId
+                    && a.ObjectTableId == objectTableId
+                    && a.EventType.EntityStatusId != null
+                    && a.Deleted == false
+                    select a).OrderByDescending(a => a.EventDateTime).FirstOrDefault();
+        }
+
         public IQueryable<TraceEvent> GetAllTraceEventsByEventType(string entityId, string eventTypeId, int tenant)
         {
             IQueryable<TraceEvent> iQueryable = from a in context.TraceEvent

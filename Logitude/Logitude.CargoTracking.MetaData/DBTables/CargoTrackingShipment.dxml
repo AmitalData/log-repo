@@ -494,6 +494,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CurrentMilestoneExceptions"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
@@ -508,6 +515,8 @@
     Columns="EntityId" />
   <Index
     Columns="Tenant,SecurityKey" />
+  <Index
+    Columns="CustomerId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>

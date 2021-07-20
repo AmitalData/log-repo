@@ -186,6 +186,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClientsAddressCommTypeMap());
 	
+            modelBuilder.Configurations.Add(new ClientsPoaMap());
+	
             modelBuilder.Configurations.Add(new ClosedTableStatusMap());
 	
             modelBuilder.Configurations.Add(new CollateralAnswerStatusMap());
@@ -277,6 +279,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomerIdentificationTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerIdentifyTypeMap());
+	
+            modelBuilder.Configurations.Add(new CustomerIndicationTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerRoleTypeMap());
 	
@@ -595,6 +599,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
+	
+            modelBuilder.Configurations.Add(new PoaAuthorizationTypeLookupMap());
 	
             modelBuilder.Configurations.Add(new PoaStatusTypeLookUpMap());
 	
@@ -1691,6 +1697,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ClientsPoa> ClientsPoas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ClosedTableStatus> ClosedTableStatus 
 	 {
 	      get; set;
@@ -1962,6 +1974,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomerIdentifyType> CustomerIdentifyTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomerIndicationType> CustomerIndicationTypes 
 	 {
 	      get; set;
 	 
@@ -2916,6 +2934,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups 
 	 {
 	      get; set;
 	 

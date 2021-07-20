@@ -34,6 +34,7 @@ import {SharedDocumentsPermissionsComponent} from './Components/SharedDocument/S
 import {SharedDocumentComponent} from './Components/SharedDocument/SharedDocumentComponent';
 import { DocumentsFilingGeneralTabComponent } from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
 import { DocumentDefultAttachmentsComponent } from './Components/DocumentComponent/DocumentDefultAttachmentsComponent';
+import { DocumentDefaultExternalAttachmentsComponent } from './Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent';
 
 
 
@@ -79,6 +80,7 @@ export const Components =
         SharedDocumentComponent,
         DocumentsFilingGeneralTabComponent,
         DocumentDefultAttachmentsComponent,
+        DocumentDefaultExternalAttachmentsComponent
 
     ];
 
@@ -123,8 +125,8 @@ export class ModuleDeclarations {
             case "SharedDocumentComponent": { myResult = SharedDocumentComponent; break; }
             case "DocumentsFilingGeneralTabComponent": { myResult = DocumentsFilingGeneralTabComponent; break; }
             case "DocumentDefultAttachmentsComponent": { myResult = DocumentDefultAttachmentsComponent; break; }
-
-
+            case "DocumentDefaultExternalAttachmentsComponent": { myResult = DocumentDefaultExternalAttachmentsComponent; break; }
+                 
                 
 
 

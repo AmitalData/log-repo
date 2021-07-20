@@ -136,7 +136,7 @@ namespace WebFreight.Web.Helpers
 
                         if (tenantCompany.IsWebAccessActivated && !tenantCompany.IsMobileActivated)
                         {
-                            string password =  newPassword + "  (you will need to change the password on you first login)";
+                            string password =  newPassword + "  (you will need to change the password on your first login)";
                            
                             emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, password, ref messageArgs);
                             subject = tenantCompany.Company + " invites you to “Shared Logistics” with Logitude";
@@ -154,7 +154,7 @@ namespace WebFreight.Web.Helpers
 
                             else
                             {
-                                string password = newPassword + "  (you will need to change the password on you first login)";
+                                string password = newPassword + "  (you will need to change the password on your first login)";
                                 emailMessage = GetEmailMessageFroMobile(contact, logedContact, tenantCompany, password, ref messageArgs);
                                 subject = tenantCompany.Company + " invites you to “Logitude Moblie";
                             }
@@ -173,7 +173,7 @@ namespace WebFreight.Web.Helpers
                             else
                             {
 
-                                string password = newPassword + "  (you will need to change the password on you first login)";
+                                string password = newPassword + "  (you will need to change the password on your first login)";
                                 emailMessage = GetEmailMessageFroShardLogisticsAndMobile(contact, logedContact, tenantCompany, password, ref messageArgs);
                                 subject = tenantCompany.Company + " invites you to “Shared Logistics and Logitude Mobile” with Logitude.";
                             }
@@ -199,7 +199,7 @@ namespace WebFreight.Web.Helpers
 
                             if (LogitudeSettings.WorkEnvironment == "cloud") passwordString = newPassword;
 
-                            else passwordString =  newPassword + "  (you will need to change the password on you first login)";
+                            else passwordString =  newPassword + "  (you will need to change the password on your first login)";
 
                         }
                         else
@@ -306,12 +306,13 @@ namespace WebFreight.Web.Helpers
                         Subject = subject,
                         From = from,
                         To = contact.Email,
-                        CC = null,
-                        BCC = null,
+                        CC = messageArgs.CC,
+                        BCC = messageArgs.BCC,
                         EmailBody = emailMessage,
                         Tenant = sharedLogisticsContact.Tenant,
                         LoggingUserId = contact.Id,
                         IsBodySecured = true,
+                        
                     };
                     Communications.AddEmailCommunicationLogQueue(emailParams, sharedLogisticsContact.Tenant);
 

@@ -266,7 +266,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                 }
             }
         });
-
+           
         if (!isValidGreaterStartNumber) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("The new start number must be greater than current start number!");
@@ -282,7 +282,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                     isValidUniquePrefix = false;
                 }
             }
-
+             
             if (!isValidUniquePrefix) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Some Prefix values are invalid (Prefix should be unique)");
@@ -290,8 +290,14 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+
+                if (this.HasEmptyCounterSize())
+                {
+                    errors.push("Size field is mandatory!");
+                }  
+
                 if (this.UniquePerPrefix == true) {
-                    this.APIHelper.CounterDefinitions.forEach(item => {
+                    this.APIHelper.CounterDefinitions.forEach(item => {     
                         if (item.CounterSize > 20) {
                             errors.push("Maximum size allowed for counter is 20");
                         }
@@ -343,6 +349,11 @@ export class CounterInvoiceComponent extends BaseComponent {
     }
 
     public SampleValue: string;
+
+    private HasEmptyCounterSize() {
+        return this.ItemsSource.some(item => AppTool.IsNullOrEmpty(item.CounterSize));
+    }
+
     CalculateSampleValue() {
 
         this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, this.Suffix, this.CounterSize);

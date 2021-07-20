@@ -25,7 +25,8 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-
+using Logitude.CRM.Data.Repsitories;
+using Logitude.CRM.Data.EntityPOCOs;
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class DocumentsFilingQueryService
@@ -54,22 +55,39 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             temp.ReceivedDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             temp.Received = true;
             temp.ReceivedByUserId = loggedContact.Id;
+            temp.EntityId = GetEntityId(MyEntity, Tenant);
 
-            if (MyEntity.EntityType.Name == "Shipment" && !string.IsNullOrEmpty(MyEntity.EntityNumber))
-            {
-                ShipmentRepository shipmentRepository = new ShipmentRepository(Tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipmentByNumberWithOutIncludes(MyEntity.EntityNumber, Tenant);
-                if (shipment != null)
-                    temp.EntityId = shipment.Id;
-                else
-                    throw new ApplicationException("Entity with Number " + MyEntity.EntityNumber + " doesn't exist");
-            }
-
-
-
-
+            ValidateEntityId(MyEntity, temp);
             return temp;
 
+        }
+        private void ValidateEntityId(DocumentsFiling MyEntity, DocumentsFilingPM temp)
+        {
+            if (!string.IsNullOrEmpty(MyEntity.EntityNumber) &&
+                !string.IsNullOrEmpty(MyEntity.EntityType.Name) &&
+                string.IsNullOrEmpty(temp.EntityId))
+            {
+                throw new ApplicationException("Entity with Number " + MyEntity.EntityNumber + " doesn't exist");
+            }
+        }
+
+        public string GetEntityId(DocumentsFiling MyEntity, int Tenant)
+        {
+            if (string.IsNullOrEmpty(MyEntity.EntityNumber))
+                return null;
+
+            if (MyEntity.EntityType.Name == "Shipment")
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(Tenant);
+                return shipmentRepository.GetShipmentIdByShipmentNumber(MyEntity.EntityNumber, Tenant);
+            }
+            if (MyEntity.EntityType.Name == "Ticket")
+            {
+                TicketRepository ticketRepository = new TicketRepository(Tenant);
+                return ticketRepository.GetTicketId(MyEntity.EntityNumber, Tenant);
+            }
+
+            return null;
         }
     }
 }

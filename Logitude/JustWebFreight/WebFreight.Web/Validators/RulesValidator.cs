@@ -30,7 +30,7 @@ using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.InfrastructureModel;
 using Logitude.BL.Interfaces;
-
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Validators
 {
@@ -45,7 +45,7 @@ namespace WebFreight.Web.Validators
         private QuotesDomainService quotesDomainService;
         private ShipmentsDomainService shipmentsDomainService;
         private InvoiceDomainService invoiceDomainService;
-
+        private EntityPropertyValueService entityPropertyValueService;
         private List<ObjectTableRule> blockRules = new List<ObjectTableRule>();
         private List<ObjectTableRule> entityLevelRules = new List<ObjectTableRule>();
         private List<ObjectTableRule> requiredFieldRules = new List<ObjectTableRule>();
@@ -308,7 +308,8 @@ namespace WebFreight.Web.Validators
 
             string objectTableId = table.Id;
             Dictionary<string, object> conditionFieldsDic = new Dictionary<string, object>();
-            List<ObjectTableRule> entityTableRules = duplicationRules.Where(r => r.ObjectTableId == objectTableId && (r.Tenant == tenant || r.Tenant == 0) && r.RuleTypeCode == "DUPL").ToList();
+            entityPropertyValueService = new EntityPropertyValueService(entity);
+            List<ObjectTableRule> entityTableRules = GetEntityObjectTableRule(tenant, objectTableId);
 
             if (entityTableRules.Count > 0)
             {
@@ -317,7 +318,7 @@ namespace WebFreight.Web.Validators
                 foreach (ObjectTableRule rule in entityTableRules)
                 {
                     List<ObjectTableRuleField> ruleFields = GetRuleFields(rule, tenant);
-                    List<RuleConditionField> RuleConditionFields = AllRulesConditionFields.Where(f=>f.ObjectTableRuleId == rule.Id).ToList();
+                    List<RuleConditionField> RuleConditionFields = AllRulesConditionFields.Where(f => f.ObjectTableRuleId == rule.Id).ToList();
                     bool enableRun = true;
                     if (rule.TriggerTypeCode == "COND")
                     {
@@ -418,6 +419,28 @@ namespace WebFreight.Web.Validators
             }
 
             return isValid;
+        }
+
+        private List<ObjectTableRule> GetEntityObjectTableRule(int tenant, string objectTableId)
+        {
+            List<ObjectTableRule> entityTableRules = duplicationRules.Where(r => r.ObjectTableId == objectTableId && (r.Tenant == tenant || r.Tenant == 0) && r.RuleTypeCode == "DUPL").ToList();
+            if (FeatureToggleHelper.HasFeatureToggle("SDE", tenant) && entityPropertyValueService.GetPropertyInfo("Id") != null)
+            {
+                entityTableRules = FilterEntityTableRuleBasedOnEntityId(entityTableRules);
+            }
+
+            return entityTableRules;
+        }
+
+        private List<ObjectTableRule> FilterEntityTableRuleBasedOnEntityId(List<ObjectTableRule> entityTableRules)
+        {
+            object propertyValue = entityPropertyValueService.Get("Id");
+
+            if (propertyValue == null ||  string.IsNullOrEmpty(propertyValue.ToString()))
+            {
+                return entityTableRules.Where(d => d.ActiveForNew).ToList();
+            }
+            return entityTableRules.Where(d => d.ActiveForUpdate).ToList();
         }
 
         private EntityMethodInfo GetEntityMethodInfo(string methodName, int tenant)
@@ -666,7 +689,7 @@ namespace WebFreight.Web.Validators
                 propertyInf = type1.GetProperty(condfield.ObjectField.FieldName);
                 if (propertyInf != null)
                 {
-                    string value = FieldValueResolver.GetFieldStringValue(condfield.ObjectField, propertyInf.GetValue(entity, null));
+                    string value = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldStringValue(condfield.ObjectField, propertyInf.GetValue(entity, null));
 
                     if (condfield.Value != value)
                     {

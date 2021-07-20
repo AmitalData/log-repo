@@ -18,7 +18,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
     templateUrl: './AccountingMainTesterComponent.html',
 })
-
+    //using gatewaytest
 export class AccountingMainTesterComponent extends BaseComponent {
     public DataContext: AccountingMainTesterComponent = this;
     public ObjectTableName: string = "GLAccount";
@@ -177,6 +177,8 @@ export class AccountingMainTesterComponent extends BaseComponent {
             GroupByDate_Options: 'DueDate;AccountingDate',
             Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
             BuildPivot: true,
+            SuppressFromGLAccountAgingData: false,
+            FroceFromGLAccountAgingData:true,
         };
         
         let opr = "Aging_Click";
@@ -195,7 +197,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     RebuildFIXGLAccountAgingData_Click() {
         let opr = "RebuildFIXGLAccountAgingData_Click";
         let obj = { /*MyTenant: SessionLocator.Tenant,*/ Aging4AccountTypeCode: 'Customer2', MyGLAccId: "1-152", Aging4AccountTypeCode_Options: 'Customer2;Vendor3',};
-        this.StrandartOp(opr, obj, () => { });
+        //this.StrandartOp(opr, obj, () => { });
 
         this.StrandartOp(opr, obj, () => {
             let resObj = JSON.parse(this.JsonOut);
@@ -231,6 +233,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
             IsReconciled: null,
             ChartOfAccountsTypeCode: "",
             SalesmanId: "",
+            IncludeRelatedCurrenciesAccount:false
 
         };
         let opr = "CardIndexNew_Click";
@@ -609,6 +612,31 @@ Line4
 `;
         this.PostOp(opr, str, () => { });
     }
+
+    ButtonLoadJournals_ISL_Click() {
+        let opr = "ButtonLoadJournals_ISL_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Headers - this line will be deleted
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
+    ButtonLoadChargeTypes_Click() {
+        let opr = "ButtonLoadChargeTypes_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Headers - this line will be deleted
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
 
     SetJournalExample() {
         let journal = {

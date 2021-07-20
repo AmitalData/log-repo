@@ -41,6 +41,8 @@
   NewWizardControlName="&quot;NewBankAccountComponent&quot;"
   LocalDefaultText="&quot;חשבון בנק&quot;"
   DefaultText="&quot;Bank Account&quot;"
+  NewButtonLocalDefaultText="&quot;חשבון בנק חדש&quot;"
+  NewButtonDefaultText="&quot;New Bank Account&quot;"
   Code="&quot;9b17&quot;"
   Name="&quot;BankAccount Query Group&quot;"
   GenerateDomainService="true"
@@ -2994,6 +2996,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BankCodeEnglishName&quot;"
     ListPropertyPath="&quot;BankCodeEnglishName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3062,6 +3065,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BankCodeLocalName&quot;"
     ListPropertyPath="&quot;BankCodeLocalName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3441,6 +3445,12 @@
       Code="&quot;BankAccount.O.Bank_and_GL_Account_must_be_same_currency&quot;"
       DefaultText="&quot;Bank currency and GL Account currency must be the same&quot;"
       LocalDefaultText="&quot;מטבע הבנק ומטבע הכרטיס חייב להיות זהים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccount.O.NewBankAccount&quot;"
+      DefaultText="&quot;New Bank Account&quot;"
+      LocalDefaultText="&quot;חשבון בנק חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

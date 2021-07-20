@@ -46,6 +46,8 @@ namespace Logitude.Accounting.BL.DataContract
         List<GLAccountList> transactionsOppositGLAccounts;
         DateTime? reportMonth;
         TaxDeductionReportPM taxDeductionReport;
+        List<GLAccountList> mainGLAccounts;
+        List<GLAccountCurrency> accountCurrencies;
         public TaxDeductionReportDataProvider(TaxDeductionReportPM  report,int tenant)
         {
             Tenant = tenant;
@@ -64,6 +66,8 @@ namespace Logitude.Accounting.BL.DataContract
             gLAccounts = new List<GLAccountList>();
             addresses = new List<Address>();
             transactionsOppositGLAccounts = new List<GLAccountList>();
+            mainGLAccounts = new List<GLAccountList>();
+            accountCurrencies = new List<GLAccountCurrency>();
         }
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
@@ -154,10 +158,11 @@ namespace Logitude.Accounting.BL.DataContract
 
         private List<LedgerTransaction> GetOppositeTransactions(List<LedgerTransaction> transactions)
         {
-            List<string> oopositeAccountIds = transactions.Select(d => d.OppositeAccountId).ToList();
-            return (from a in accountingContext.LedgerTransactions                  
+            List<string> oopositeAccountIds = transactions.Where(d => d.OppositeAccountId != null).Select(d => d.OppositeAccountId).ToList();
+            return (from a in accountingContext.LedgerTransactions
+                    join journal in accountingContext.Journals on a.JournalId equals journal.Id
                     where oopositeAccountIds.Contains(a.AccountId)
-                    && a.Tenant == Tenant                  
+                    && a.Tenant == Tenant && (a.AccountingDate >= startDate && a.AccountingDate <= endDate) && journal.ExternalSystem != null
                     select a).ToList();
 
         }
@@ -175,8 +180,8 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<string> vendorIds = payments.Select(d => d.VendorId).ToList();
           
-            List<CardList> vendors= (from a in commoncontext.Cards
-                    where vendorIds.Contains(a.Id) && a.CountryCode == "IL"
+            List<CardList> vendors= (from a in commoncontext.Cards 
+                                     where vendorIds.Contains(a.Id) && a.CountryCode == "IL"
                     && a.Tenant == Tenant
                     select new CardList()
                     {
@@ -202,8 +207,8 @@ namespace Logitude.Accounting.BL.DataContract
         private List<CardList> GetAccountsVendors(List<string> accountIds)
         {
             List<CardList> vendors = (from a in commoncontext.Cards
-                                      where accountIds.Contains(a.GLAccountId) && a.CountryCode == "IL"
-                                      && a.Tenant == Tenant
+                                      where accountIds.Contains(a.GLAccountId)
+                                      && a.Tenant == Tenant && a.CountryCode == "IL"
                                       select new CardList()
                                       {
                                           Id = a.Id,
@@ -224,7 +229,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<CardList> vendors = (from a in commoncontext.Cards
                                       where accountIds.Contains(a.GLAccountId)
-                                      && a.Tenant == Tenant && a.CountryCode =="IL"
+                                      && a.Tenant == Tenant 
                                       select new CardList()
                                       {
                                           Id = a.Id,
@@ -303,7 +308,7 @@ namespace Logitude.Accounting.BL.DataContract
                         Occupation = a.Occupation,
                         LocalName = a.LocalName,
                         DeductionTypeId = a.AccountingCompanyType != null ? a.AccountingCompanyType.Code : null,
-
+                        IsMultiCurrency =a.IsMultiCurrency,
                         DeductionFileTypeCode = a.WithholdingTaxDeductionType != null ? a.WithholdingTaxDeductionType.Code : null,
                         DeductionFileTypeName = a.WithholdingTaxDeductionType != null ? a.WithholdingTaxDeductionType.LocalName : null,
                         AssessingOfficeCode = a.TaxWithholdingAssessOffice != null ? a.TaxWithholdingAssessOffice.Code : null,
@@ -317,33 +322,55 @@ namespace Logitude.Accounting.BL.DataContract
         }
         List<GLAccountList> transactionsGLAccounts;
         FullAccountingSettingPM setting;
+        List<LedgerTransaction> createdLines;
         public List<TaxDeductionReportLine> FillTaxDeductionReportUsingLedgerTransactions()
         {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
             transactions = GetTransactions();
             transactionsOppositGLAccounts = GetTransactionsOppositeGLAccounts(transactions);
-           
+            accountCurrencies = GetGLAccountCurrenciesForOppositeAccounts(transactionsOppositGLAccounts);
+            mainGLAccounts = GetGLAccountsByIds(accountCurrencies.Select(d => d.MainGLAccountId).ToList());
             transactionsGLAccounts = GetTransactionsGLAccounts(transactions);
-       
-        //    transactions = transactions.Where(d => d.AccountId == setting.TaxWithholdingGLAccountId).ToList();// == a.AccountId
+
+            //    transactions = transactions.Where(d => d.AccountId == setting.TaxWithholdingGLAccountId).ToList();// == a.AccountId
+            createdLines = new List<LedgerTransaction>();
             foreach (LedgerTransaction transaction in transactions)
             {
-                TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
-                string vendorId = GetVendorId(transaction);              
-                taxDeductionReportLine.VendorId = vendorId; 
-                taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
-                List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
-                if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
+                bool LineCreated = CheckIfLineCreated(transaction);
+                if (!LineCreated)
                 {
-                    taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit);
+                    UpdateCreatedLinesList(transaction);
+                    TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
+                    string vendorId = GetVendorId(transaction);
+                    taxDeductionReportLine.VendorId = vendorId;
+                    taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
+                    List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
+                    if (oppositeTransactions != null && oppositeTransactions.Count > 0)
+                    {
+                        taxDeductionReportLine.AmountInLocalCurrency = (double?)oppositeTransactions.Sum(d => d.LocalAmountDebit);
+                    }
+                    taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
+                    taxDeductionReportLine.TaxDeductionPercentage = (int?)(transaction.LocalAmountCredit == 0 ? 0 : Math.Round(((transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency)) * 100, 2));
+                    GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
+                    taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
+                    if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
                 }
-                taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
-                taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round(( (transaction.LocalAmountCredit / (decimal)taxDeductionReportLine.AmountInLocalCurrency))*100,2));
-                GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
-                taxDeductionReportLine.DeductionType = account != null ? account.DeductionFileTypeCode : null;
-                lines.Add(taxDeductionReportLine);
-              }
+            }
             return lines;
+        }
+   
+        private bool CheckIfLineCreated(LedgerTransaction transaction)
+        {
+            LedgerTransaction ledgerTransaction = createdLines.Where(d => d.JournalId == transaction.JournalId && d.OppositeAccountId ==transaction.OppositeAccountId&& d.Reference1 == transaction.Reference1).FirstOrDefault();
+            if (ledgerTransaction == null)
+            {
+                return false;
+            }
+            else return true;           
+        }
+        private void UpdateCreatedLinesList(LedgerTransaction transaction)
+        {
+            createdLines.Add(transaction);
         }
         private string GetVendorId(LedgerTransaction transaction)
         {
@@ -351,28 +378,53 @@ namespace Logitude.Accounting.BL.DataContract
             string vendorId = null;
             if (transaction.OppositeAccountId != null)
             {
+
                 vendor = transactionsVendors.Where(d => d.GLAccountId == transaction.OppositeAccountId).FirstOrDefault();
-            }
-            if (vendor == null)
-            {
-                List<JournalLine> selectedJournalLines = journalLines.Where(d => d.JournalId == transaction.JournalId &&  d.Reference1 == transaction.Reference1).ToList();
-                List<string> debitAccountIds = selectedJournalLines.Select(d => d.DebitAccountId).ToList();
-                GLAccountList gLAccount = transactionsGLAccounts.Where(d => d.ChartOfAccountsTypeCode != "5" && debitAccountIds.Contains(d.Id) && d.Id != setting.TaxWithholdingGLAccountId && !d.ExcludeFromDeductionReport).FirstOrDefault();
-                if (gLAccount != null)
+
+                if (vendor == null)
                 {
-                    vendorId= gLAccount.Id;// vendors.Where(d => d.GLAccountId == gLAccount.Id).FirstOrDefault();
+                    List<JournalLine> selectedJournalLines = journalLines.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference1).ToList();
+                    List<string> debitAccountIds = selectedJournalLines.Select(d => d.DebitAccountId).ToList();
+                    GLAccountList gLAccount = transactionsGLAccounts.Where(d => d.ChartOfAccountsTypeCode != "5" && debitAccountIds.Contains(d.Id) && d.Id != setting.TaxWithholdingGLAccountId && !d.ExcludeFromDeductionReport).FirstOrDefault();
+                    if (gLAccount != null)
+                    {
+                        vendorId = gLAccount.Id;// vendors.Where(d => d.GLAccountId == gLAccount.Id).FirstOrDefault();
+                    }
+                    else
+                    {
+                        vendorId = GetVendorIdByMainAccount(transaction.OppositeAccountId);
+                    }
                 }
+                else vendorId = vendor.GLAccountId;
             }
-            else vendorId= vendor.GLAccountId;
             return vendorId;
         }
-
-        private JournalPM GetJournalPMById(LedgerTransaction transaction)
+        private string GetVendorIdByMainAccount(string accountId)
         {
-            JournalQueryService journalQuery = new JournalQueryService(transaction.Tenant);
-            return journalQuery.GetSingle(transaction.JournalId, false ,false);
+            GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == accountId).FirstOrDefault(); 
+            if (account == null || account.IsMultiCurrency == true) return null;         
+            return GetVendorIdForSingleCurrencyAccount(account);
+
 
         }
+        private string GetVendorIdForSingleCurrencyAccount(GLAccountList account)
+        {
+            GLAccountCurrency accountCurrency = accountCurrencies.Where(d => d.GLAccountId == account.Id).FirstOrDefault();
+            if (accountCurrency == null)
+            {
+                return null;
+            }
+            return accountCurrency.MainGLAccountId;          
+        }
+      
+        private List<GLAccountCurrency> GetGLAccountCurrenciesForOppositeAccounts(List<GLAccountList> accounts)
+        {
+            List<string> accountsIds = accounts.Where(d => d.IsMultiCurrency == false).Select(d => d.Id).ToList();
+            return (from accountCurrency in accountingContext.GLAccountCurrencies
+                    where accountsIds.Contains(accountCurrency.GLAccountId)
+                    select accountCurrency).ToList();          
+        }
+                     
         private List<APPayment> getAPPaymentsWithGLAccountsAndVendor(List<APPayment> payments)
         {
             vendors = vendors.Concat(GetVendorsByIds(payments)).ToList();
@@ -399,9 +451,10 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<ByVendorList> byVendorList = new List<ByVendorList>();
             List<TaxDeductionReportLine> groupeddeductionLines = GroupDeductionLinesByVendorAndPercentage(deductionLines);
-            vendors = vendors.Concat(transactionsVendors).ToList();
-            gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).ToList();
-            
+            List<CardList> mainCards = GetMainAccountsCards();
+            vendors = vendors.Concat(transactionsVendors).Concat(mainCards).ToList();
+            gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).Concat(mainGLAccounts).ToList();
+
             foreach (TaxDeductionReportLine item in groupeddeductionLines)
             {
                
@@ -422,36 +475,20 @@ namespace Logitude.Accounting.BL.DataContract
                     ValidateGLAccountVendors(selectedVendors, gLAccount);
                     groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
                     groupedbyVendor = SetVendorVatNumberAndAddress(selectedVendors, groupedbyVendor);
-                 
-                    //if (selectedVendors[0].VatNumber != null)
-                    //{
-                    //    groupedbyVendor.VATNumber = selectedVendors[0].VatNumber;
-                    //}
-                    //else
-                    //{
-                    //    taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code;
-                    //}
+                    if (selectedVendors.Count > 0)
+                    {
                         groupedbyVendor.VendorName = selectedVendors[0].EnglishName;
-                    //    Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
-                    //    if (address != null)
-                    //    {
-                    //        groupedbyVendor.VendorAddress = address.Name ;
-                    //        groupedbyVendor.VendorCity =  address.City ;// selectedVendor.CityName;
-                    //    }
-                    //    else
-                    //    {
-                    //    taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine +(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant)) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code;
-                    //}
                         groupedbyVendor.IsAutonomy = selectedVendors[0].IsAutonomy;
                         groupedbyVendor.IsInternationlPartner = selectedVendors[0].IsInternationalPartner;
                         groupedbyVendor.VendorLocalName = selectedVendors[0].LocalName;
+                    }
                         groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value, 0);
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value, 0);
                     if (groupedbyVendor.SumOfAmountInLocalCurrency > 0)
                     {
                         byVendorList.Add(groupedbyVendor);
                     }
-                    else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
+                  //  else { DeleteVendorFromTaxDeductionReportLines(item.VendorId); }
                       
                 }
                 else
@@ -466,7 +503,11 @@ namespace Logitude.Accounting.BL.DataContract
             }
             return byVendorList;
         }
-
+        private List<CardList> GetMainAccountsCards()
+        {
+            List<string> mainAccountsIds = mainGLAccounts.Select(d => d.Id).ToList();
+            return GetVendorsByAccountsIds(mainAccountsIds);
+        }
         private ByVendorList SetVendorVatNumberAndAddress(List<CardList> selectedVendors, ByVendorList groupedbyVendor) {
             string cardsCodes = "";
             if (selectedVendors.Count > 1)

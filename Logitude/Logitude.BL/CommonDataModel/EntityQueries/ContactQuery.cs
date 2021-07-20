@@ -1997,5 +1997,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  }).FirstOrDefault();
             return contact;
         }
+        
+
     }
 }

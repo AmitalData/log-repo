@@ -21,7 +21,7 @@
   <Column
     Name="CourierPendingReasonCode"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

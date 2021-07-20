@@ -230,12 +230,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
                     {
                         customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
+                        customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                    customsDocumentPM.IsSendToQueue = true;
-                    myCustomsDocumentUpdateService.IgnoreSendFailure = true;
-                    AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
-                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                    if (customsDocumentPM.ChangeSetOp == ChangeSetOperation.Update || String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                    {
+                        if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                        {
+                            customsDocumentPM.IsSendToQueue = true;
+                            myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                            AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
+                            if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                    }
 
                     AppendLogLine("after Update Document");
                 }

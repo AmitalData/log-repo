@@ -85,10 +85,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
+    <Compile Include="Models\Api\ApiQueryFiltersBuilder.cs" />
+    <Compile Include="Models\BillingsPreparation\BillingData.cs" />
+    <Compile Include="Models\BillingsPreparation\BillingVariables.cs" />
+    <Compile Include="Models\BillingsPreparation\ChargeType.cs" />
+    <Compile Include="Models\BillingsPreparation\CreditCardTypePM.cs" />
+    <Compile Include="Models\BillingsPreparation\Currency.cs" />
+    <Compile Include="Models\BillingsPreparation\Incoterm.cs" />
+    <Compile Include="Models\BillingsPreparation\Measurement.cs" />
+    <Compile Include="Models\BillingsPreparation\PaymentTerm.cs" />
+    <Compile Include="Models\BillingsPreparation\VATType.cs" />
     <Compile Include="Models\Infrastructure\Configurations.cs" />
+    <Compile Include="Models\Infrastructure\RandomGeneratorService.cs" />
     <Compile Include="Models\LocationsPreparation\City.cs" />
     <Compile Include="Models\LocationsPreparation\GlobalZone.cs" />
     <Compile Include="Models\LocationsPreparation\Country.cs" />
+    <Compile Include="Models\LocationsPreparation\SpecialServicesTypePM.cs" />
     <Compile Include="Models\PartnersPreparation\Address.cs" />
     <Compile Include="Models\PartnersPreparation\Contact.cs" />
     <Compile Include="Models\PartnersPreparation\PartnerParameters.cs" />

@@ -138,6 +138,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     Location = this.EventLocationPortId,
                     TimeOfArrivalInfo = ArrivalDateIndicator,
                     TimeOfDepartureInfo = DepartureDateIndicator,
+                    StatusSource = "INT",
                 };
 
                 iShipmentContainerStatusRepository.Add(iStatus);
@@ -192,6 +193,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                         Location = EventLocationPortId,
                                         TimeOfArrivalInfo = ArrivalDateIndicator,
                                         TimeOfDepartureInfo = DepartureDateIndicator,
+                                        StatusSource = "INT",
                                     };
 
                                     iShipmentContainerStatusRepository.Add(iHouseStatus);
@@ -718,6 +720,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         }
         private void UpdateLastStatus(string lastStatusCode, DateTime? lastStatusDate, DateTime iLogDate, ShipmentPackagePM iContainer)
         {
+            string inttraSource = "INT";
             if (lastStatusDate == null)
             {
                 lastStatusDate = iLogDate;
@@ -727,6 +730,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
+                iContainer.ContainerStatusSourceCode = inttraSource;
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
@@ -734,11 +738,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
+                iContainer.ContainerStatusSourceCode = inttraSource;
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
         }
         private void UpdateContainerFields()
         {
+            string inttraSource = "INT";
+            iContainer.ContainerStatusSourceCode = inttraSource;
             if (this.DepartureDateIndicator == "E")
             {
                 iContainer.ETD = this.DepartureDate;
