@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         SearchFields, 
 	         ClientId, 
-	         poaID, 
+	         PoaID, 
 	         AuthorizedExternalId, 
 	         AuthorizerExternalId, 
 	         AuthorizerPassportNumber, 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         SearchFields, 
 	         ClientId, 
-	         poaID, 
+	         PoaID, 
 	         AuthorizedExternalId, 
 	         AuthorizerExternalId, 
 	         AuthorizerPassportNumber, 
@@ -79,9 +79,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ClientId = entityPM.ClientId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.poaID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))
             {
-				entityPOCO.poaID = entityPM.poaID;
+				entityPOCO.PoaID = entityPM.PoaID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorizedExternalId))
@@ -155,9 +155,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ClientId = entityPOCO.ClientId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.poaID))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PoaID))
             {
-					entityPM.poaID = entityPOCO.poaID;
+					entityPM.PoaID = entityPOCO.PoaID;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AuthorizedExternalId))
@@ -226,9 +226,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ClientId = entityPM.ClientId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.poaID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))
             {
-                oldEntityPM.poaID = entityPM.poaID;
+                oldEntityPM.PoaID = entityPM.PoaID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorizedExternalId))

@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;Clients Power Of Attorney&quot;"
   DefaultText="&quot;Clients Power Of Attorney&quot;"
-  Code="&quot;f03c&quot;"
+  Code="&quot;9558&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -92,6 +92,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -163,6 +164,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -234,6 +236,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -305,6 +308,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ClientId&quot;"
     ListPropertyPath="&quot;ClientId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -348,8 +352,8 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;411bdf3f-bb10-48b7-96a8-b0dc662b0089&quot;"
-    FieldName="&quot;poaID&quot;"
-    OldNames="poaID"
+    FieldName="&quot;PoaID&quot;"
+    OldNames="poaID,PoaID"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -371,8 +375,9 @@
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;poaID&quot;"
-    ListPropertyPath="&quot;poaID&quot;"
+    PMPropertyPath="&quot;PoaID&quot;"
+    ListPropertyPath="&quot;PoaID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -388,7 +393,7 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;poaID&quot;"
+    FullFieldLable="&quot;PoaID&quot;"
     DefaultText="&quot;poaID&quot;"
     FullLocalDefaultText="&quot;זיהוי כתב הרשאה&quot;"
     IsNullable="false"
@@ -442,6 +447,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorizedExternalId&quot;"
     ListPropertyPath="&quot;AuthorizedExternalId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -511,6 +517,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorizerExternalId&quot;"
     ListPropertyPath="&quot;AuthorizerExternalId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -580,6 +587,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorizerPassportNumber&quot;"
     ListPropertyPath="&quot;AuthorizerPassportNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -650,6 +658,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorizerPassportCountry&quot;"
     ListPropertyPath="&quot;AuthorizerPassportCountry&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -722,6 +731,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorizerPassportType&quot;"
     ListPropertyPath="&quot;AuthorizerPassportType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -793,6 +803,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StartDate&quot;"
     ListPropertyPath="&quot;StartDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -862,6 +873,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EndDate&quot;"
     ListPropertyPath="&quot;EndDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -932,6 +944,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PoaStatus&quot;"
     ListPropertyPath="&quot;PoaStatus&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1004,6 +1017,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PoaAuthorizationType&quot;"
     ListPropertyPath="&quot;PoaAuthorizationType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1048,6 +1062,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.ClientsPoaHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.ClientsPoa&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1076,6 +1099,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

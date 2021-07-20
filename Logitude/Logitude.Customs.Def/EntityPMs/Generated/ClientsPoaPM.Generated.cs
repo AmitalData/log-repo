@@ -117,7 +117,7 @@ namespace Logitude.Customs.Def.EntityPMs
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string poaID  
+       public string PoaID  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(poaID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="poaID",OldValue=poaID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PoaID",OldValue=poaID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   poaID=value;
 		   }

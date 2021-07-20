@@ -45,8 +45,8 @@ export class ClientsPoaPM {
        
 	 
     private poaID: string;
-    public get poaID() { return this.poaID; }
-    public set poaID(newValue: string) { if (this.poaID != newValue) { this.poaID = newValue; this.MarkAsDirty("poaID"); } }
+    public get PoaID() { return this.poaID; }
+    public set PoaID(newValue: string) { if (this.poaID != newValue) { this.poaID = newValue; this.MarkAsDirty("PoaID"); } }
        
 	 
     private authorizedExternalId: string;

@@ -27,8 +27,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("ClientId")]
 	    public string ClientId { get; set; }
-        [Column("poaID")]
-	    public string poaID { get; set; }
+        [Column("PoaID")]
+	    public string PoaID { get; set; }
         [Column("AuthorizedExternalId")]
 	    public string AuthorizedExternalId { get; set; }
         [Column("AuthorizerExternalId")]

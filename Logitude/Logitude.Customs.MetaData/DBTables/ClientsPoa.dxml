@@ -33,7 +33,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="poaID"
+    Name="PoaID"
     Type="varchar"
     Size="9">
     <Constraints
