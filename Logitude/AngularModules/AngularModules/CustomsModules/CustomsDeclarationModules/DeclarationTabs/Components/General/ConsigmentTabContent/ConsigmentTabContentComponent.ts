@@ -637,26 +637,26 @@ export class ConsigmentTabContentComponent
 
     setRequired() {
         if (this.declarationPM.Direction == 'E') {
-            this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, true);
+            this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, true);
             if (this.ManifestNumber != null) {
-                this.UIProperties.SetRequired("ManifestNumber", this.ObjectTableName, false);
+                this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, false);
             }
 
             if (this._CargoIdentifireTypePM.IsKey2Mandatory) {
-                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, true);
+                this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, true);
                 if (this.SecondCargoID != null) {
-                    this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                    this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
                 }
             } else {
-                this.UIProperties.SetRequired("SecondCargoID", this.ObjectTableName, false);
+                this.UIProperties.SetWarning("SecondCargoID", this.ObjectTableName, false);
             }
             if (this._CargoIdentifireTypePM.IsKey3Mandatory) {
-                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, true);
+                this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, true);
                 if (this.ThirdCargoID != null) {
-                    this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                    this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
                 }
             } else {
-                this.UIProperties.SetRequired("ThirdCargoID", this.ObjectTableName, false);
+                this.UIProperties.SetWarning("ThirdCargoID", this.ObjectTableName, false);
             }
         }
     }
