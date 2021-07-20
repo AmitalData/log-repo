@@ -1,0 +1,8 @@
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_DECLARATIONS_CUSTOMFILENO, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Declaration.dxml, The Found Index On DB Is IX_DECLARATIONS_DECLNUMBER, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DeclarationPending.dxml, The Found Index On DB Is IX_1253673434, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CommunicationLog.dxml, The Found Index On DB Is IX_COMMILOGS_CREATE_STC, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File CommunicationLog.dxml, The Found Index On DB Is IX_COMMILOGS_CREATE, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DOCFILINGS_EXTERNALENTITYN, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is DOCFILINGS_EXTENTITYREF, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File TermsofUse.dxml, The Found Index On DB Is SYS_C00156160, The Index Should Added To The DXML File
