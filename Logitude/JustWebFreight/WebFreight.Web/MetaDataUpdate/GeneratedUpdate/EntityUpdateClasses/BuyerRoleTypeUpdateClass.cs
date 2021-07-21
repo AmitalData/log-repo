@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BuyerRoleTypeUpdateClass
    {  		
-		public const string HashString = "b4474497a00dbb42b0339d4716201a7e";
+		public const string HashString = "7078d16ea22ff728d35973e198718522";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -477,7 +477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode BuyerRoleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.BuyerRoleType.Q.BuyerRoleTypeQuery", DefaultText = @"Buyer Role Type",LocalDefaultText = "תפקיד קונה", ObjectTableId = BuyerRoleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature BuyerRoleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BuyerRoleType", ObjectTableId = BuyerRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.BuyerRoleType.Features.BuyerRoleTypes", NameTextCodeDefaultText = "PoaStatus Type LookUp", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BuyerRoleTypeObjectTable, addedFeatures, addedTextCodes);
+			   Feature BuyerRoleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BuyerRoleType", ObjectTableId = BuyerRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.BuyerRoleType.Features.BuyerRoleTypes", NameTextCodeDefaultText = "Buyer Role Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BuyerRoleTypeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    

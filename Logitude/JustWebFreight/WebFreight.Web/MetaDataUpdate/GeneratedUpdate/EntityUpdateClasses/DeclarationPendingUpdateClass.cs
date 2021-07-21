@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationPendingUpdateClass
    {  		
-		public const string HashString = "39ee0cb0d9e831a68c6955dc6f93963c";
+		public const string HashString = "2e42341eced935bedd59739f40064f1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "Pending",
 			      				    DefaultText =  "Declaration Pending",
-			      				    Code =  "e45d",
+			      				    Code =  "14f1",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

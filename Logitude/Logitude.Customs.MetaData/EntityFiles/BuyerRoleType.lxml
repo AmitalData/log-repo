@@ -453,7 +453,7 @@
     TextCodeCode="&quot;Customs.BuyerRoleType.Q.BuyerRoleTypeQuery&quot;"
     FeatureCode="&quot;BuyerRoleType&quot;"
     FeatureTextCodeCode="&quot;Customs.BuyerRoleType.Features.BuyerRoleTypes&quot;"
-    FeatureDefaultText="&quot;PoaStatus Type LookUp&quot;"
+    FeatureDefaultText="&quot;Buyer Role Type&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
