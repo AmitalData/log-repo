@@ -416,6 +416,7 @@ import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenS
 import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
 import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/PoaAuthorizationTypeLookupListService';
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
+import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -702,6 +703,7 @@ export class ModuleProviders {
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
+            case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
 
                 
              //#endregion                

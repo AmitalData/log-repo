@@ -174,6 +174,7 @@
     <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
+    <None Include="DBTables\BuyerRoleType.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
     <None Include="DBTables\CancellationRequestStatus.dxml" />
     <None Include="DBTables\CancelRequestRejectReasonType.dxml" />
@@ -514,6 +515,7 @@
     <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
+    <None Include="EntityFiles\BuyerRoleType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
