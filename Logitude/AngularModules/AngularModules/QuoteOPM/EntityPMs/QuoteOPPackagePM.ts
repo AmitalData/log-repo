@@ -15,7 +15,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class QuoteopPackagePM {
+export class QuoteOPPackagePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -98,7 +98,7 @@ export class QuoteopPackagePM {
        
 	 
 
-    public OldEntityPM: QuoteopPackagePM;
+    public OldEntityPM: QuoteOPPackagePM;
 	
     private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
@@ -121,13 +121,13 @@ export class QuoteopPackagePM {
         }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteopPackage");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteOPPackage");
            
         }
        }
     }
 
-    private MyClone: QuoteopPackagePM;
+    private MyClone: QuoteOPPackagePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

@@ -3,7 +3,7 @@
   Name="QuoteOPTemplateSectionTypes"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="Code"
     Type="varchar"

@@ -14,12 +14,12 @@ using Amital.QuoteOPM.Data;
 namespace Amital.QuoteOPM.Data.EntityMapping
 {
  
-    public class QuoteopPackageMap : EntityTypeConfiguration<QuoteopPackage>
+    public class QuoteOPPackageMap : EntityTypeConfiguration<QuoteOPPackage>
     {
 	    string dbms;
-        public QuoteopPackageMap()
+        public QuoteOPPackageMap()
         { 
-				this.ToTable("QuoteopPackages");
+				this.ToTable("QuoteOPPackages");
 		
 		    this.HasKey(t => new { t.Id });
 	 

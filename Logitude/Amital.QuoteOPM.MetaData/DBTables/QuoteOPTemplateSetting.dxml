@@ -3,7 +3,7 @@
   Name="QuoteOPTemplateSettings"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="Id"
     Type="varchar"
@@ -1192,17 +1192,17 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageHeaderArea1FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageHeaderArea2FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageHeaderArea3FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1222,107 +1222,107 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageFooterArea1FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageFooterArea2FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageFooterArea3FreeTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PackagesTableDesignId"
-    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedTable="QuoteOPTemplateTableDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ContainserTableDesignId"
-    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedTable="QuoteOPTemplateTableDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalsPackagesLabelDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalsContainsersLabelDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalsPackagesValueDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalsContainsersValueDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="GroupByPackagesLabelDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="GroupByPackagesValueDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="GroupByContainsersLabelDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="GroupByContainsersValueDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DetailsTableDesignId"
-    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedTable="QuoteOPTemplateTableDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="HeaderTableDesignId"
-    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedTable="QuoteOPTemplateTableDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DetailsTitleDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PricingPackagesTitleDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PricingContainsersTitleDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalPerContainersAdditionalTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TotalPerContainersTableDesignId"
-    ReferencedTable="QuoteTemplateTableDesigns"
+    ReferencedTable="QuoteOPTemplateTableDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PageNumberingTextDesignId"
-    ReferencedTable="QuoteTemplateTextDesigns"
+    ReferencedTable="QuoteOPTemplateTextDesigns"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -16,7 +16,7 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 {
    [CustomValidation(typeof(QuoteOPMClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class QuoteopPackagePM : EntityPM
+   public partial class QuoteOPPackagePM : EntityPM
    {
    	  private string id ;
 	  

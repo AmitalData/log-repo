@@ -4,7 +4,7 @@
   OldNames="Quotes"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="Id"
     Type="varchar"
@@ -1514,17 +1514,19 @@
     ForeignKeyColumn="QuoteHTMLDocumentId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="QuoteClosingReasonId"
-    ReferencedTable="QuoteClosingReasons"
+    ReferencedTable="QuoteOPClosingReasons"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ShipmentSubTypeId"
     ReferencedTable="ShipmentSubTypes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="RegionalTaxId"
     ReferencedTable="VatTypes"

@@ -27,7 +27,7 @@ namespace Amital.QuoteOPM.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
-            this.Property(t => t.QuoteId).HasColumnName("QuoteId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteOPId).HasColumnName("QuoteOPId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

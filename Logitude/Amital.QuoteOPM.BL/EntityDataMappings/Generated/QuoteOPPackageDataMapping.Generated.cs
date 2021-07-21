@@ -17,7 +17,7 @@ using Amital.QuoteOPM.Data;
 namespace Amital.QuoteOPM.BL.EntityDataMappings
 {
    
-   public partial class QuoteopPackageDataMapping: IMapping<QuoteopPackagePM, QuoteopPackage>,IMappingEncodeBase64NVARCHARFields<QuoteopPackagePM>
+   public partial class QuoteOPPackageDataMapping: IMapping<QuoteOPPackagePM, QuoteOPPackage>,IMappingEncodeBase64NVARCHARFields<QuoteOPPackagePM>
    {
           public enum POCOPropertyNames
           { 
@@ -58,7 +58,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(QuoteopPackagePM entityPM, QuoteopPackage entityPOCO)
+	    public void PMToPOCO(QuoteOPPackagePM entityPM, QuoteOPPackage entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -112,7 +112,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(QuoteopPackagePM entityPM, QuoteopPackage entityPOCO)
+		public void POCOToPM(QuoteOPPackagePM entityPM, QuoteOPPackage entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -172,7 +172,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(QuoteopPackagePM entityPM, QuoteopPackagePM oldEntityPM)
+		public void PMToOldPM(QuoteOPPackagePM entityPM, QuoteOPPackagePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -228,7 +228,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(QuoteopPackagePM entityPM)
+	    public void EncodeBase64NVARCHARFields(QuoteOPPackagePM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

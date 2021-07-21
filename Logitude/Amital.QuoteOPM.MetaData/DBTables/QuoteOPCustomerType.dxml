@@ -3,7 +3,7 @@
   Name="QuoteOPCustomerTypes"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="SearchFields"
     Type="nvarchar"

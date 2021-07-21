@@ -17,48 +17,48 @@ using Amital.QuoteOPM.Data;
 using Simplog.Server.Infrastructure;
 namespace Amital.QuoteOPM.BL.EntityQueryServices
 { 
-   public partial class QuoteopPackageQueryService: EntityQueryService<QuoteopPackage,QuoteopPackageKeys,QuoteopPackagePM,QuoteOPPM,QuoteOPKeys>
+   public partial class QuoteOPPackageQueryService: EntityQueryService<QuoteOPPackage,QuoteOPPackageKeys,QuoteOPPackagePM,QuoteOPPM,QuoteOPKeys>
    {
    
-        QuoteopPackageRepository repository;
+        QuoteOPPackageRepository repository;
 		IQuoteOPMContext  context;
-        public QuoteopPackageQueryService(int tenant)
+        public QuoteOPPackageQueryService(int tenant)
         {
 		    context = QuoteOPMContext.GetContext(tenant);
             MainContext = context;
-            repository = new QuoteopPackageRepository(context);
+            repository = new QuoteOPPackageRepository(context);
             Repository = repository;
-            mapping = new QuoteopPackageDataMapping();
+            mapping = new QuoteOPPackageDataMapping();
         }
 
-        public QuoteopPackageQueryService(QuoteopPackageRepository repository)
+        public QuoteOPPackageQueryService(QuoteOPPackageRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new QuoteopPackageDataMapping();
+            mapping = new QuoteOPPackageDataMapping();
         }
 
-        public QuoteopPackageQueryService(IQuoteOPMContext context)
+        public QuoteOPPackageQueryService(IQuoteOPMContext context)
         {
-            this.repository = new QuoteopPackageRepository(context);
+            this.repository = new QuoteOPPackageRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new QuoteopPackageDataMapping();
+            mapping = new QuoteOPPackageDataMapping();
         }
 		 
-		public  QuoteopPackagePM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  QuoteOPPackagePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new QuoteopPackageKeys(){ Id = id };
+             EntityKeys = new QuoteOPPackageKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(QuoteopPackage entityPOCO)
+	    protected override EntityKeyFields GetKeys(QuoteOPPackage entityPOCO)
         {
-            QuoteopPackageKeys entityKeys = new QuoteopPackageKeys() { Id = entityPOCO.Id,  };
+            QuoteOPPackageKeys entityKeys = new QuoteOPPackageKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

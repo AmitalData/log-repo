@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPChargeUpdateClass
    {  		
-		public const string HashString = "8b1176705bd2d2c28103334cd21645b4";
+		public const string HashString = "f882753f7a66103c1dc4b66994341035";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,10 +124,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Charge",
-			      				    Code =  "f6e9",
+			      				    Code =  "19d1",
 			      				    Name =  "QuoteOPCharge",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "QuoteOP",
+			      				    ClientModuleName =  "QuoteOPM",
 			      				    ServerModuleName =  "",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,

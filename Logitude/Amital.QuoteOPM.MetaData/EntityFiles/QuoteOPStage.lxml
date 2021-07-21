@@ -40,7 +40,7 @@
   Code="&quot;QSQG&quot;"
   Name="&quot;Quote Stage&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;QuoteOP&quot;"
+  ClientModuleName="&quot;QuoteOPM&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"

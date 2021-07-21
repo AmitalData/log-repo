@@ -38,9 +38,9 @@ export class QuoteOPChargePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private quoteId: string;
-    public get QuoteId() { return this.quoteId; }
-    public set QuoteId(newValue: string) { if (this.quoteId != newValue) { this.quoteId = newValue; this.MarkAsDirty("QuoteId"); } }
+    private quoteOPId: string;
+    public get QuoteOPId() { return this.quoteOPId; }
+    public set QuoteOPId(newValue: string) { if (this.quoteOPId != newValue) { this.quoteOPId = newValue; this.MarkAsDirty("QuoteOPId"); } }
        
 	 
     private updatedByUserId: string;

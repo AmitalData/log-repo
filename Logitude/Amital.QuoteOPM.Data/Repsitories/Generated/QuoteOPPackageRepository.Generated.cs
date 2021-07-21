@@ -12,68 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Amital.QuoteOPM.Data.Repsitories
 {
-   public partial class QuoteopPackageRepository:IRepository<QuoteopPackage>
+   public partial class QuoteOPPackageRepository:IRepository<QuoteOPPackage>
    {
    
         private IQuoteOPMContext currentContext;
-        public QuoteopPackageRepository(int tenant)
+        public QuoteOPPackageRepository(int tenant)
         {
             currentContext = QuoteOPMContext.GetContext(tenant);
         }
 
-        public QuoteopPackageRepository(IQuoteOPMContext context)
+        public QuoteOPPackageRepository(IQuoteOPMContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  QuoteopPackage GetSingle(string id, int tenant)
+		public  QuoteOPPackage GetSingle(string id, int tenant)
         {
-            return (from a in context.QuoteopPackages
+            return (from a in context.QuoteOPPackages
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<QuoteopPackage> GetAll(int tenant)
+        public IQueryable<QuoteOPPackage> GetAll(int tenant)
         {
-            return from a in context.QuoteopPackages  
+            return from a in context.QuoteOPPackages  
                    where a.Tenant == tenant
                    select a;
         }
 				 
-        public QuoteopPackage GetSingle(EntityKeyFields entityKeys)
+        public QuoteOPPackage GetSingle(EntityKeyFields entityKeys)
         {
-            QuoteopPackageKeys keys = entityKeys as QuoteopPackageKeys;
-            return (from a in context.QuoteopPackages
+            QuoteOPPackageKeys keys = entityKeys as QuoteOPPackageKeys;
+            return (from a in context.QuoteOPPackages
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(QuoteopPackage entity)
+        public void Add(QuoteOPPackage entity)
         {
             onAdd();
-            context.QuoteopPackages.Add(entity);
+            context.QuoteOPPackages.Add(entity);
         }
 
-        public void Remove(QuoteopPackage entity)
+        public void Remove(QuoteOPPackage entity)
         {
-            context.QuoteopPackages.Attach(entity);
-            context.QuoteopPackages.Remove(entity);
+            context.QuoteOPPackages.Attach(entity);
+            context.QuoteOPPackages.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(QuoteopPackage entity)
+        public void Update(QuoteOPPackage entity)
         {
             onUpdate();
-            context.QuoteopPackages.Attach(entity);
+            context.QuoteOPPackages.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<QuoteopPackage> All()
+        public List<QuoteOPPackage> All()
         {
-            return context.QuoteopPackages.ToList();
+            return context.QuoteOPPackages.ToList();
         }
 
         private IQuoteOPMContext context

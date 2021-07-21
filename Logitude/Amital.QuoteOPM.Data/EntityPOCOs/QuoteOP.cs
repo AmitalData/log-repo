@@ -531,11 +531,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string QuoteHTMLDocumentId { get; set; }
 	      
         public virtual Document QuoteHTMLDocument { get; set; }
-        [ForeignKey("QuoteClosingReason")]
+        [ForeignKey("QuoteOPClosingReason")]
         [Column("QuoteClosingReasonId")]
 	    public string QuoteClosingReasonId { get; set; }
 	      
-        public virtual QuoteClosingReason QuoteClosingReason { get; set; }
+        public virtual QuoteOPClosingReason QuoteOPClosingReason { get; set; }
         [ForeignKey("ShipmentSubType")]
         [Column("ShipmentSubTypeId")]
 	    public string ShipmentSubTypeId { get; set; }

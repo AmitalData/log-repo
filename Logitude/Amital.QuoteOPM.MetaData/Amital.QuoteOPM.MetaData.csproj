@@ -81,6 +81,7 @@
     <None Include="DBTables\QuoteOPClosingReason.dxml" />
     <None Include="DBTables\QuoteOPComputedField.dxml" />
     <None Include="DBTables\QuoteOPCustomerType.dxml" />
+    <None Include="DBTables\QuoteOPPackage.dxml" />
     <None Include="DBTables\QuoteOPPriceSteps.dxml" />
     <None Include="DBTables\QuoteOPRating.dxml" />
     <None Include="DBTables\QuoteOPSetting.dxml" />

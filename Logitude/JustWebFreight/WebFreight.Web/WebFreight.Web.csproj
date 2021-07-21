@@ -1075,12 +1075,9 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
-
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />
-
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
-
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
@@ -7061,7 +7058,6 @@
     <Folder Include="images\ToolBar\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
-    <Folder Include="MetaDataUpdate\GeneratedUpdate\QuoteOPModel\EntityUpdateClasses\" />
     <Folder Include="MobileApplication\Views\CurrencyType\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />

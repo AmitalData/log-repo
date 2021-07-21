@@ -77,8 +77,8 @@
     <Compile Include="EntityPMs\Generated\QuoteOPTotalVatPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPVATsTotalPM.Generated.cs" />
-    <Compile Include="EntityPMs\QuoteDocumentVersionPM.cs" />
-    <Compile Include="EntityPMs\QuoteFollowUpPM.cs" />
+    <Compile Include="EntityPMs\QuoteOPDocumentVersionPM.cs" />
+    <Compile Include="EntityPMs\QuoteOPFollowUpPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\QuoteOPMValidationClass.cs" />
     <Compile Include="Validators\QuoteOPMValidationClass.Shared.cs" />

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Amital.QuoteOPM.Def.EntityPMs
 {
     //[CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class QuoteFollowUpPM
+    public class QuoteOPFollowUpPM
     {
         [Key]
         public string Id { get; set; }

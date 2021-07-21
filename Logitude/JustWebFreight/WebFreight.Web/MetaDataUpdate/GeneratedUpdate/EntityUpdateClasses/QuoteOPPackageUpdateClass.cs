@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class QuoteopPackageUpdateClass
+   public class QuoteOPPackageUpdateClass
    {  		
-		public const string HashString = "ca0c80c2ffeb473364d1b58e56f73cf7";
+		public const string HashString = "dfe3f03d853dd7d469569a38c5119ade";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "QuoteopPackage",
+	             				    ObjectTableName =  "QuoteOPPackage",
 			      				    IsNew =  false,
-			      				    DBTableName =  "QuoteopPackages",
-			      				    ObjectTableSingular =  "QuoteopPackage",
-			      				    ObjectTablePlural =  "Quote Packages",
+			      				    DBTableName =  "QuoteOPPackages",
+			      				    ObjectTableSingular =  "QuoteOPPackage",
+			      				    ObjectTablePlural =  "QuoteOPPackages",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -123,11 +123,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "QuoteopPackage",
-			      				    Code =  "6a2e",
+			      				    DefaultText =  "QuoteOPPackage",
+			      				    Code =  "60dc",
 			      				    Name =  "QuoteopPackage",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "QuoteOP",
+			      				    ClientModuleName =  "QuoteOPM",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "QuoteopPackage,QuoteopPackages,,Id,",
-			      				    HashString =  QuoteopPackageUpdateClass.HashString,
+			      				    HashString =  QuoteOPPackageUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -149,7 +149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PackageTypeId",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
 					  						MinLength =  0,
@@ -211,7 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PackageTypeName",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  250,
@@ -274,7 +274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Quantity",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -337,7 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GrossWeight",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Volume",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -463,7 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Height",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -524,7 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Width",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -585,7 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Length",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -646,7 +646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VolumetricWeight",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -709,7 +709,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Dimensions",
-					  						ObjectTableName =  "QuoteopPackage",
+					  						ObjectTableName =  "QuoteOPPackage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -776,15 +776,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable QuoteopPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteopPackage" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> QuoteopPackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteopPackage").ToList();
+		   ObjectTable QuoteOPPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteOPPackage" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> QuoteOPPackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteOPPackage").ToList();
 		       
 	      
 
-	         Screen QuoteopPackageQuoteopPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteopPackage.HeaderScreen", Name = "QuoteopPackageHeaderScreen", ObjectTableId = QuoteopPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen QuoteOPPackageQuoteopPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteOPPackage.HeaderScreen", Name = "QuoteopPackageHeaderScreen", ObjectTableId = QuoteOPPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    QuoteopPackageObjectTable.HeaderScreenId = QuoteopPackageQuoteopPackageHeaderScreenScreen0.Id;
-		    QuoteopPackageObjectTable.HeaderScreenCode = QuoteopPackageQuoteopPackageHeaderScreenScreen0.Code;
+		    QuoteOPPackageObjectTable.HeaderScreenId = QuoteOPPackageQuoteopPackageHeaderScreenScreen0.Id;
+		    QuoteOPPackageObjectTable.HeaderScreenCode = QuoteOPPackageQuoteopPackageHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -801,7 +801,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable QuoteopPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteopPackage" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable QuoteOPPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteOPPackage" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -815,7 +815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = QuoteopPackageObjectTable.Id,
+                ObjectTableId = QuoteOPPackageObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -833,7 +833,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = QuoteopPackageObjectTable.Id,
+                ObjectTableId = QuoteOPPackageObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

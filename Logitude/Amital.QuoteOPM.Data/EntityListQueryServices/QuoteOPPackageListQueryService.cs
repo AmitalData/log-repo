@@ -17,12 +17,12 @@ using Amital.QuoteOPM.Data.EntityLists;
 namespace Amital.QuoteOPM.Data.EntityListQueryServices
 { 
 
-    public partial class QuoteopPackageListQueryService
+    public partial class QuoteOPPackageListQueryService
     {
-	    private IQueryable<QuoteopPackageList> GetIqueryableList(IQueryable<QuoteopPackage> iQueryable)
+	    private IQueryable<QuoteOPPackageList> GetIqueryableList(IQueryable<QuoteOPPackage> iQueryable)
         {
-		IQueryable<QuoteopPackageList> query = (from a in iQueryable
-                                            select new QuoteopPackageList()
+		IQueryable<QuoteOPPackageList> query = (from a in iQueryable
+                                            select new QuoteOPPackageList()
 											{
                      
 					                          Id = a.Id,
@@ -49,11 +49,11 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<QuoteopPackage> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<QuoteopPackage> iQueryable, int tenant)
+		private IQueryable<QuoteOPPackage> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<QuoteOPPackage> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<QuoteopPackage> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<QuoteopPackage> iQueryable, int tenant)
+				private IQueryable<QuoteOPPackage> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<QuoteOPPackage> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

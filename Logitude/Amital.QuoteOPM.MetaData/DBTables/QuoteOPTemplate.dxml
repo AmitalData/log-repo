@@ -3,7 +3,7 @@
   Name="QuoteOPTemplates"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="Id"
     Type="varchar"
@@ -161,7 +161,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TemplateTypeCode"
-    ReferencedTable="QuoteTypes"
+    ReferencedTable="QuoteOPTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

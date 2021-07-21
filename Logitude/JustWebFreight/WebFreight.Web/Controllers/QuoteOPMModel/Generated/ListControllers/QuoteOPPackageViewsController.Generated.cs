@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class QuoteopPackageViewsController : ApiController
+    public partial class QuoteOPPackageViewsController : ApiController
     {
 	  
        
@@ -59,13 +59,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteopPackage", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteOPPackage", "READ", authToken.Tenant);
 	                IQuoteOPMContext MyContext = QuoteOPMContext.GetContext(authToken.Tenant);
-                QuoteopPackageListQueryService quoteopPackageQuery = new QuoteopPackageListQueryService(MyContext);
-                QuoteopPackageList quoteopPackageList = quoteopPackageQuery.GetSingle(id);
+                QuoteOPPackageListQueryService quoteOPPackageQuery = new QuoteOPPackageListQueryService(MyContext);
+                QuoteOPPackageList quoteOPPackageList = quoteOPPackageQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  quoteopPackageList);
+                return Request.CreateResponse(HttpStatusCode.OK,  quoteOPPackageList);
             }
             catch (Exception ex)
             {
@@ -82,10 +82,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteopPackage", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteOPPackage", "READ", authToken.Tenant);
 	                IQuoteOPMContext MyContext = QuoteOPMContext.GetContext(authToken.Tenant);
-                QuoteopPackageListQueryService quoteopPackageQuery = new QuoteopPackageListQueryService(MyContext);
-                List<QuoteopPackageList> result = quoteopPackageQuery.GetList(authToken.Tenant);
+                QuoteOPPackageListQueryService quoteOPPackageQuery = new QuoteOPPackageListQueryService(MyContext);
+                List<QuoteOPPackageList> result = quoteOPPackageQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -105,23 +105,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteopPackage", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteOPPackage", "READ", authToken.Tenant);
 	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "QuoteopPackage",
+                    ObjectTableName = "QuoteOPPackage",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "QuoteopPackages",
+                    QuerySection = "QuoteOPPackages",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> QuoteopPackageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QuoteopPackage",tenant);
+				List<ObjectField> QuoteOPPackageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QuoteOPPackage",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = QuoteopPackageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = QuoteOPPackageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,7 +172,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = QuoteopPackageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = QuoteOPPackageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -195,14 +195,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IQuoteOPMContext MyContext = QuoteOPMContext.GetContext(tenant);
-				QuoteopPackageListQueryService quoteopPackageQuery = new QuoteopPackageListQueryService(MyContext);
+				QuoteOPPackageListQueryService quoteOPPackageQuery = new QuoteOPPackageListQueryService(MyContext);
 
-                List<QuoteopPackageList> entityLists = quoteopPackageQuery.GetList(queryOperations, tenant);
+                List<QuoteOPPackageList> entityLists = quoteOPPackageQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = quoteopPackageQuery.GetListCount(queryOperations, tenant);
+                    int count = quoteOPPackageQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

@@ -2,7 +2,8 @@
 <Table
   Name="MarkUpOPTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="QuoteOPM">
   <Column
     Name="SearchFields"
     Type="nvarchar"

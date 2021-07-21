@@ -76,19 +76,13 @@ namespace Amital.QuoteOPM.Data
 	
             modelBuilder.Configurations.Add(new QuoteOPComputedFieldMap());
 	
-            modelBuilder.Configurations.Add(new QuoteOPCostChargeMap());
-	
             modelBuilder.Configurations.Add(new QuoteOPCustomerTypeMap());
 	
-            modelBuilder.Configurations.Add(new QuoteopPackageMap());
+            modelBuilder.Configurations.Add(new QuoteOPPackageMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPPriceStepsMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPRatingMap());
-	
-            modelBuilder.Configurations.Add(new QuoteOPSaleChargeMap());
-	
-            modelBuilder.Configurations.Add(new QuoteOPSalesTotalMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPSettingMap());
 	
@@ -111,8 +105,6 @@ namespace Amital.QuoteOPM.Data
             modelBuilder.Configurations.Add(new QuoteOPTotalVATMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPTypeMap());
-	
-            modelBuilder.Configurations.Add(new QuoteOPVATsTotalMap());
 	
 						  #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -423,7 +415,7 @@ namespace Amital.QuoteOPM.Data
 	      get; set;
 	 
 	 }
-		 public IDbSet<QuoteopPackage> QuoteopPackages 
+		 public IDbSet<QuoteOPPackage> QuoteOPPackages 
 	 {
 	      get; set;
 	 

@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Amital.QuoteOPM.Data.EntityLists
 {
    [DataContract]
-   public partial class QuoteopPackageList
+   public partial class QuoteOPPackageList
    {
    
        [Key]

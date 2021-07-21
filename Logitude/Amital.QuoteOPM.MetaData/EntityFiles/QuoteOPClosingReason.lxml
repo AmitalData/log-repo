@@ -44,7 +44,7 @@
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;QuoteOP&quot;"
+  ClientModuleName="&quot;QuoteOPM&quot;"
   ServerModuleName="&quot; &quot;"
   NoViewController="false"
   NoPMController="false"

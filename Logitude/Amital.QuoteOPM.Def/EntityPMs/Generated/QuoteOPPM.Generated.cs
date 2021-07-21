@@ -2297,30 +2297,42 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string quoteCharges ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QuoteCharges  
-	   {
+
+	   private List<QuoteOPChargePM> quoteCharges;
 	    
-	     get
-		{
-		   return quoteCharges;
-		 }
-		 set
-		 {
-		   if(quoteCharges != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteCharges",OldValue=quoteCharges,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   quoteCharges=value;
-		   }
-			
-		 }
-	   }
-	  private string quoteTypeCode ;
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("QuoteOPCharge", "Id","QuoteOPId")]
+	   [DataMember]
+	   public virtual List<QuoteOPChargePM> QuoteCharges  
+	   {
+	        get
+             {
+                 if (quoteCharges == null)
+                 {
+                     quoteCharges = new List<QuoteOPChargePM>();
+                 }
+                 return quoteCharges;
+              }
+             set { quoteCharges = value; }
+	    }
+		   
+	   private List<QuoteOPChargePM>  deletedQuoteCharges;
+	   public virtual List<QuoteOPChargePM> DeletedQuoteCharges  
+	   {
+	        get
+             {
+                 if ( deletedQuoteCharges == null)
+                 {
+                      deletedQuoteCharges = new List<QuoteOPChargePM>();
+                 }
+                 return  deletedQuoteCharges;
+              }
+             set {  deletedQuoteCharges = value; }
+	    }
+	  	  private string quoteTypeCode ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
@@ -3079,30 +3091,42 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string quotePackages ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QuotePackages  
-	   {
+
+	   private List<QuoteOPPackagePM> quotePackages;
 	    
-	     get
-		{
-		   return quotePackages;
-		 }
-		 set
-		 {
-		   if(quotePackages != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuotePackages",OldValue=quotePackages,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   quotePackages=value;
-		   }
-			
-		 }
-	   }
-	  private string customerReference1 ;
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("QuoteOPPackage", "Id","QuoteOPId")]
+	   [DataMember]
+	   public virtual List<QuoteOPPackagePM> QuotePackages  
+	   {
+	        get
+             {
+                 if (quotePackages == null)
+                 {
+                     quotePackages = new List<QuoteOPPackagePM>();
+                 }
+                 return quotePackages;
+              }
+             set { quotePackages = value; }
+	    }
+		   
+	   private List<QuoteOPPackagePM>  deletedQuotePackages;
+	   public virtual List<QuoteOPPackagePM> DeletedQuotePackages  
+	   {
+	        get
+             {
+                 if ( deletedQuotePackages == null)
+                 {
+                      deletedQuotePackages = new List<QuoteOPPackagePM>();
+                 }
+                 return  deletedQuotePackages;
+              }
+             set {  deletedQuotePackages = value; }
+	    }
+	  	  private string customerReference1 ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
@@ -4874,74 +4898,39 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 		 }
 	   }
 
-	   private List<QuoteFollowUpPM> followUps;
+	   private List<QuoteOPFollowUpPM> followUps;
 	    
        [Composition]
  
 		     
 	   [Include]
-	   [Association("FollowUpQuote", "Id","QuoteId")]
+	   [Association("FollowOPUpQuote", "Id","QuoteId")]
 	   [DataMember]
-	   public virtual List<QuoteFollowUpPM> FollowUps  
+	   public virtual List<QuoteOPFollowUpPM> FollowUps  
 	   {
 	        get
              {
                  if (followUps == null)
                  {
-                     followUps = new List<QuoteFollowUpPM>();
+                     followUps = new List<QuoteOPFollowUpPM>();
                  }
                  return followUps;
               }
              set { followUps = value; }
 	    }
 		   
-	   private List<QuoteFollowUpPM>  deletedFollowUps;
-	   public virtual List<QuoteFollowUpPM> DeletedFollowUps  
+	   private List<QuoteOPFollowUpPM>  deletedFollowUps;
+	   public virtual List<QuoteOPFollowUpPM> DeletedFollowUps  
 	   {
 	        get
              {
                  if ( deletedFollowUps == null)
                  {
-                      deletedFollowUps = new List<QuoteFollowUpPM>();
+                      deletedFollowUps = new List<QuoteOPFollowUpPM>();
                  }
                  return  deletedFollowUps;
               }
              set {  deletedFollowUps = value; }
-	    }
-	  
-	   private List<QuoteDocumentVersionPM> quoteDocumentVersions;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("QuoteTemplateQuoteDocumentVersion", "Id","QuoteId")]
-	   [DataMember]
-	   public virtual List<QuoteDocumentVersionPM> QuoteDocumentVersions  
-	   {
-	        get
-             {
-                 if (quoteDocumentVersions == null)
-                 {
-                     quoteDocumentVersions = new List<QuoteDocumentVersionPM>();
-                 }
-                 return quoteDocumentVersions;
-              }
-             set { quoteDocumentVersions = value; }
-	    }
-		   
-	   private List<QuoteDocumentVersionPM>  deletedQuoteDocumentVersions;
-	   public virtual List<QuoteDocumentVersionPM> DeletedQuoteDocumentVersions  
-	   {
-	        get
-             {
-                 if ( deletedQuoteDocumentVersions == null)
-                 {
-                      deletedQuoteDocumentVersions = new List<QuoteDocumentVersionPM>();
-                 }
-                 return  deletedQuoteDocumentVersions;
-              }
-             set {  deletedQuoteDocumentVersions = value; }
 	    }
 	  	  private bool markFollowUpsAsDone ;
 	  	  

@@ -14,15 +14,15 @@ using Amital.QuoteOPM.Data;
 namespace Amital.QuoteOPM.BL.EntityDataMappings
 {
    
-   public partial class QuoteopPackageDataMapping: IMapping<QuoteopPackagePM, QuoteopPackage>
+   public partial class QuoteOPPackageDataMapping: IMapping<QuoteOPPackagePM, QuoteOPPackage>
    {
 
-        public void CustomPMToPOCO(QuoteopPackagePM entityPM, QuoteopPackage entityPOCO)
+        public void CustomPMToPOCO(QuoteOPPackagePM entityPM, QuoteOPPackage entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(QuoteopPackagePM entityPM, QuoteopPackage entityPOCO)
+        public void CustomPOCOToPM(QuoteOPPackagePM entityPM, QuoteOPPackage entityPOCO)
         {
             //throw new NotImplementedException();
         }

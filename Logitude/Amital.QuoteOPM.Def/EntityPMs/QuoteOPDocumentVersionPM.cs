@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Amital.QuoteOPM.Def.EntityPMs
 {
-    public class QuoteDocumentVersionPM
+    public class QuoteOPDocumentVersionPM
     {
 
         [Key]

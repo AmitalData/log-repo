@@ -17,20 +17,20 @@ using Amital.QuoteOPM.Data.EntityLists;
 namespace Amital.QuoteOPM.Data.EntityListQueryServices
 { 
 
-    public partial class QuoteopPackageListQueryService
+    public partial class QuoteOPPackageListQueryService
     {
          private IQuoteOPMContext context;
-        public QuoteopPackageListQueryService(IQuoteOPMContext context)
+        public QuoteOPPackageListQueryService(IQuoteOPMContext context)
         {
             this.context = context;
         }
 
-        public List<QuoteopPackageList> GetList(QueryOperations queryOperations, int tenant)
+        public List<QuoteOPPackageList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<QuoteopPackage> iQueryable = (from a in context.QuoteopPackages
+            IQueryable<QuoteOPPackage> iQueryable = (from a in context.QuoteOPPackages
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -41,20 +41,20 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<QuoteopPackage>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<QuoteOPPackage>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<QuoteopPackageList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<QuoteOPPackageList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<QuoteopPackageList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<QuoteOPPackageList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(QuoteopPackageList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> QuoteopPackageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QuoteopPackage",tenant).ToList();
+                PropertyInfo propInfo = typeof(QuoteOPPackageList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> QuoteOPPackageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QuoteOPPackage",tenant).ToList();
 
-                ObjectField objectField = (from a in QuoteopPackageObjectFields
+                ObjectField objectField = (from a in QuoteOPPackageObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -62,7 +62,7 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<QuoteopPackageList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<QuoteOPPackageList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -71,36 +71,36 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<QuoteopPackageList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<QuoteOPPackageList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -126,21 +126,21 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
     
         }
 
-         public List<QuoteopPackageList> GetList(int tenant)
+         public List<QuoteOPPackageList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public QuoteopPackageList GetSingle(string id)
+        public QuoteOPPackageList GetSingle(string id)
         {
-            IQueryable<QuoteopPackage> QuoteopPackageQuery = (from a in context.QuoteopPackages
+            IQueryable<QuoteOPPackage> QuoteOPPackageQuery = (from a in context.QuoteOPPackages
                                                        where a.Id == id
                                                        select a);
 
              
-            IQueryable<QuoteopPackageList> QuoteopPackageListQuery = GetIqueryableList( QuoteopPackageQuery);
-            QuoteopPackageList QuoteopPackageList = QuoteopPackageListQuery.FirstOrDefault();
-            return QuoteopPackageList;
+            IQueryable<QuoteOPPackageList> QuoteOPPackageListQuery = GetIqueryableList( QuoteOPPackageQuery);
+            QuoteOPPackageList QuoteOPPackageList = QuoteOPPackageListQuery.FirstOrDefault();
+            return QuoteOPPackageList;
            
         }
 
@@ -149,7 +149,7 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<QuoteopPackage> iQueryable = (from a in context.QuoteopPackages 
+            IQueryable<QuoteOPPackage> iQueryable = (from a in context.QuoteOPPackages 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
@@ -160,11 +160,11 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<QuoteopPackage>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<QuoteOPPackage>(nonListQueryOperation, iQueryable);
 
-            IQueryable<QuoteopPackageList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<QuoteOPPackageList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<QuoteopPackageList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<QuoteOPPackageList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

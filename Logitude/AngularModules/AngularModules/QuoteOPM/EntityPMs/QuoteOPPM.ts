@@ -7,14 +7,13 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {QuoteCostChargePM} from './QuoteCostChargePM';
-import {QuoteSaleChargePM} from './QuoteSaleChargePM';
-import {QuoteChargePM} from './QuoteChargePM';
-import {QuotePackagePM} from './QuotePackagePM';
-import {QuoteSalesTotalPM} from './QuoteSalesTotalPM';
-import {QuoteVATsTotalPM} from './QuoteVATsTotalPM';
-import {QuoteFollowUpPM} from './QuoteFollowUpPM';
-import {QuoteDocumentVersionPM} from './QuoteDocumentVersionPM';
+import {QuoteOPCostChargePM} from './QuoteOPCostChargePM';
+import {QuoteOPSaleChargePM} from './QuoteOPSaleChargePM';
+import {QuoteOPChargePM} from './QuoteOPChargePM';
+import {QuoteOPPackagePM} from './QuoteOPPackagePM';
+import {QuoteOPSalesTotalPM} from './QuoteOPSalesTotalPM';
+import {QuoteOPVATsTotalPM} from './QuoteOPVATsTotalPM';
+import {QuoteOPFollowUpPM} from './QuoteOPFollowUpPM';
 import {QuoteOPTotalVATPM} from './QuoteOPTotalVATPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -254,7 +253,7 @@ export class QuoteOPPM {
        
 	 
      
-	private quoteCostCharges: QuoteCostChargePM[];
+	private quoteCostCharges: QuoteOPCostChargePM[];
     get  QuoteCostCharges() {
         if (this.quoteCostCharges == null) {
             this.quoteCostCharges = [];
@@ -262,13 +261,13 @@ export class QuoteOPPM {
 
         return this.quoteCostCharges;
     }
-    set  QuoteCostCharges(newValue: QuoteCostChargePM[]) {
+    set  QuoteCostCharges(newValue: QuoteOPCostChargePM[]) {
         if (this.quoteCostCharges != newValue) {
             this.quoteCostCharges = newValue;
         }
     }
      
-	private quoteSaleCharges: QuoteSaleChargePM[];
+	private quoteSaleCharges: QuoteOPSaleChargePM[];
     get  QuoteSaleCharges() {
         if (this.quoteSaleCharges == null) {
             this.quoteSaleCharges = [];
@@ -276,7 +275,7 @@ export class QuoteOPPM {
 
         return this.quoteSaleCharges;
     }
-    set  QuoteSaleCharges(newValue: QuoteSaleChargePM[]) {
+    set  QuoteSaleCharges(newValue: QuoteOPSaleChargePM[]) {
         if (this.quoteSaleCharges != newValue) {
             this.quoteSaleCharges = newValue;
         }
@@ -547,7 +546,7 @@ export class QuoteOPPM {
        
 	 
      
-	private quoteCharges: QuoteChargePM[];
+	private quoteCharges: QuoteOPChargePM[];
     get  QuoteCharges() {
         if (this.quoteCharges == null) {
             this.quoteCharges = [];
@@ -555,12 +554,32 @@ export class QuoteOPPM {
 
         return this.quoteCharges;
     }
-    set  QuoteCharges(newValue: QuoteChargePM[]) {
+    set  QuoteCharges(newValue: QuoteOPChargePM[]) {
         if (this.quoteCharges != newValue) {
             this.quoteCharges = newValue;
         }
     }
-    private quoteTypeCode: string;
+    public AddQuoteOPCharge(item: QuoteOPChargePM) {
+        if (item != null) {
+            var index = this. QuoteCharges.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. QuoteCharges.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveQuoteOPCharge(item: QuoteOPChargePM) {
+        if (item != null) {
+            var index = this. QuoteCharges.indexOf(item);
+            if (index > -1) {
+                this. QuoteCharges.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public QuoteCharges: Array<QuoteOPChargePM>= [];
+     private quoteTypeCode: string;
     public get QuoteTypeCode() { return this.quoteTypeCode; }
     public set QuoteTypeCode(newValue: string) { if (this.quoteTypeCode != newValue) { this.quoteTypeCode = newValue; this.MarkAsDirty("QuoteTypeCode"); } }
        
@@ -726,7 +745,7 @@ export class QuoteOPPM {
        
 	 
      
-	private quotePackages: QuotePackagePM[];
+	private quotePackages: QuoteOPPackagePM[];
     get  QuotePackages() {
         if (this.quotePackages == null) {
             this.quotePackages = [];
@@ -734,12 +753,32 @@ export class QuoteOPPM {
 
         return this.quotePackages;
     }
-    set  QuotePackages(newValue: QuotePackagePM[]) {
+    set  QuotePackages(newValue: QuoteOPPackagePM[]) {
         if (this.quotePackages != newValue) {
             this.quotePackages = newValue;
         }
     }
-    private customerReference1: string;
+    public AddQuoteOPPackage(item: QuoteOPPackagePM) {
+        if (item != null) {
+            var index = this. QuotePackages.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. QuotePackages.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveQuoteOPPackage(item: QuoteOPPackagePM) {
+        if (item != null) {
+            var index = this. QuotePackages.indexOf(item);
+            if (index > -1) {
+                this. QuotePackages.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public QuotePackages: Array<QuoteOPPackagePM>= [];
+     private customerReference1: string;
     public get CustomerReference1() { return this.customerReference1; }
     public set CustomerReference1(newValue: string) { if (this.customerReference1 != newValue) { this.customerReference1 = newValue; this.MarkAsDirty("CustomerReference1"); } }
        
@@ -925,7 +964,7 @@ export class QuoteOPPM {
        
 	 
      
-	private quoteSalesTotals: QuoteSalesTotalPM[];
+	private quoteSalesTotals: QuoteOPSalesTotalPM[];
     get  QuoteSalesTotals() {
         if (this.quoteSalesTotals == null) {
             this.quoteSalesTotals = [];
@@ -933,7 +972,7 @@ export class QuoteOPPM {
 
         return this.quoteSalesTotals;
     }
-    set  QuoteSalesTotals(newValue: QuoteSalesTotalPM[]) {
+    set  QuoteSalesTotals(newValue: QuoteOPSalesTotalPM[]) {
         if (this.quoteSalesTotals != newValue) {
             this.quoteSalesTotals = newValue;
         }
@@ -954,7 +993,7 @@ export class QuoteOPPM {
        
 	 
      
-	private totalVATPerQuote: QuoteVATsTotalPM[];
+	private totalVATPerQuote: QuoteOPVATsTotalPM[];
     get  TotalVATPerQuote() {
         if (this.totalVATPerQuote == null) {
             this.totalVATPerQuote = [];
@@ -962,7 +1001,7 @@ export class QuoteOPPM {
 
         return this.totalVATPerQuote;
     }
-    set  TotalVATPerQuote(newValue: QuoteVATsTotalPM[]) {
+    set  TotalVATPerQuote(newValue: QuoteOPVATsTotalPM[]) {
         if (this.totalVATPerQuote != newValue) {
             this.totalVATPerQuote = newValue;
         }
@@ -1143,7 +1182,7 @@ export class QuoteOPPM {
        
 	 
      
-	private followUps: QuoteFollowUpPM[];
+	private followUps: QuoteOPFollowUpPM[];
     get  FollowUps() {
         if (this.followUps == null) {
             this.followUps = [];
@@ -1151,12 +1190,12 @@ export class QuoteOPPM {
 
         return this.followUps;
     }
-    set  FollowUps(newValue: QuoteFollowUpPM[]) {
+    set  FollowUps(newValue: QuoteOPFollowUpPM[]) {
         if (this.followUps != newValue) {
             this.followUps = newValue;
         }
     }
-    public AddQuoteFollowUp(item: QuoteFollowUpPM) {
+    public AddQuoteOPFollowUp(item: QuoteOPFollowUpPM) {
         if (item != null) {
             var index = this. FollowUps.indexOf(item);
             if (index == -1) {
@@ -1166,7 +1205,7 @@ export class QuoteOPPM {
             }
         }
     }
-    public RemoveQuoteFollowUp(item: QuoteFollowUpPM) {
+    public RemoveQuoteOPFollowUp(item: QuoteOPFollowUpPM) {
         if (item != null) {
             var index = this. FollowUps.indexOf(item);
             if (index > -1) {
@@ -1175,41 +1214,7 @@ export class QuoteOPPM {
             }
         }
     }
-    //public FollowUps: Array<QuoteFollowUpPM>= [];
-      
-	private quoteDocumentVersions: QuoteDocumentVersionPM[];
-    get  QuoteDocumentVersions() {
-        if (this.quoteDocumentVersions == null) {
-            this.quoteDocumentVersions = [];
-        }
-
-        return this.quoteDocumentVersions;
-    }
-    set  QuoteDocumentVersions(newValue: QuoteDocumentVersionPM[]) {
-        if (this.quoteDocumentVersions != newValue) {
-            this.quoteDocumentVersions = newValue;
-        }
-    }
-    public AddQuoteDocumentVersion(item: QuoteDocumentVersionPM) {
-        if (item != null) {
-            var index = this. QuoteDocumentVersions.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. QuoteDocumentVersions.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveQuoteDocumentVersion(item: QuoteDocumentVersionPM) {
-        if (item != null) {
-            var index = this. QuoteDocumentVersions.indexOf(item);
-            if (index > -1) {
-                this. QuoteDocumentVersions.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public QuoteDocumentVersions: Array<QuoteDocumentVersionPM>= [];
+    //public FollowUps: Array<QuoteOPFollowUpPM>= [];
      private markFollowUpsAsDone: boolean;
     public get MarkFollowUpsAsDone() { return this.markFollowUpsAsDone; }
     public set MarkFollowUpsAsDone(newValue: boolean) { if (this.markFollowUpsAsDone != newValue) { this.markFollowUpsAsDone = newValue; this.MarkAsDirty("MarkFollowUpsAsDone"); } }

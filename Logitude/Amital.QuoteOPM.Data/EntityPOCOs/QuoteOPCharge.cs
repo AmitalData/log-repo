@@ -24,8 +24,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [ForeignKey("QuoteOP")]
-        [Column("QuoteId")]
-	    public string QuoteId { get; set; }
+        [Column("QuoteOPId")]
+	    public string QuoteOPId { get; set; }
 	      
         public virtual QuoteOP QuoteOP { get; set; }
         [ForeignKey("UpdatedByUser")]

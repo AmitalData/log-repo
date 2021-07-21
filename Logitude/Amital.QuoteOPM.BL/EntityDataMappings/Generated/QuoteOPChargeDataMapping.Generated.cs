@@ -24,7 +24,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         QuoteId, 
+	         QuoteOPId, 
 	         UpdatedByUserId, 
 	         UpdateDate, 
 	         ValueDate, 
@@ -99,7 +99,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         QuoteId, 
+	         QuoteOPId, 
 	         UpdatedByUserId, 
 	         UpdateDate, 
 	         ValueDate, 
@@ -216,9 +216,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteOPId))
             {
-				entityPOCO.QuoteId = entityPM.QuoteId;
+				entityPOCO.QuoteOPId = entityPM.QuoteOPId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
@@ -565,9 +565,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QuoteId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QuoteOPId))
             {
-					entityPM.QuoteId = entityPOCO.QuoteId;
+					entityPM.QuoteOPId = entityPOCO.QuoteOPId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
@@ -911,9 +911,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuoteOPId))
             {
-                oldEntityPM.QuoteId = entityPM.QuoteId;
+                oldEntityPM.QuoteOPId = entityPM.QuoteOPId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))

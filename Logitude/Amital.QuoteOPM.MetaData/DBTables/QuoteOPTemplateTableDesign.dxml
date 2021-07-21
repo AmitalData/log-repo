@@ -3,7 +3,7 @@
   Name="QuoteOPTemplateTableDesigns"
   Schema="dbo"
   DBType="Main"
-  Module="QuoteOP">
+  Module="QuoteOPM">
   <Column
     Name="Id"
     Type="varchar"

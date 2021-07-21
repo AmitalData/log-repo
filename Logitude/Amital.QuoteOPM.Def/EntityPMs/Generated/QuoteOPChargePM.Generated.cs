@@ -66,25 +66,25 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string quoteId ;
+	  private string quoteOPId ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string QuoteId  
+       public string QuoteOPId  
 	   {
 	    
 	     get
 		{
-		   return quoteId;
+		   return quoteOPId;
 		 }
 		 set
 		 {
-		   if(quoteId != value)
+		   if(quoteOPId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteId",OldValue=quoteId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteOPId",OldValue=quoteOPId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   quoteId=value;
+		   quoteOPId=value;
 		   }
 			
 		 }

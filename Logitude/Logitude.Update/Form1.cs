@@ -4713,6 +4713,13 @@ User/Pass",
         {
 
         }
+
+        private void UpdateQuoteOPM_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "QuoteOPM", lblUQuote));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
     public class TenantMailBox

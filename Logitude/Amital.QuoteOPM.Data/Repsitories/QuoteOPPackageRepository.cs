@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Amital.QuoteOPM.Data.Repsitories
 {
-   public partial class QuoteopPackageRepository:IRepository<QuoteopPackage>
+   public partial class QuoteOPPackageRepository:IRepository<QuoteOPPackage>
    {
         
-		public List<QuoteopPackage> GetMulti(EntityKeyFields entityKeys)
+		public List<QuoteOPPackage> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

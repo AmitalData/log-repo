@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Amital.QuoteOPM.Data.EntityPOCOs
 {
    
-    public class QuoteopPackage
+    public class QuoteOPPackage
     {
 	 string dbms;
 

@@ -22,44 +22,44 @@ using Amital.QuoteOPM.Data;
 
 namespace Amital.QuoteOPM.BL.EntityUpdateServices
 { 
-   public partial class QuoteopPackageUpdateService:EntityUpdateService<QuoteopPackage,QuoteopPackagePM,QuoteOPPM>
+   public partial class QuoteOPPackageUpdateService:EntityUpdateService<QuoteOPPackage,QuoteOPPackagePM,QuoteOPPM>
    {
    
-        QuoteopPackageRepository entityRepository;
-        public QuoteopPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        QuoteOPPackageRepository entityRepository;
+        public QuoteOPPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IQuoteOPMContext  context = mainContext as QuoteOPMContext;
             context = context ??mainContext as IQuoteOPMContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new QuoteopPackageDataMapping();
-            Repository = new QuoteopPackageRepository(context);
+            Mapping = new QuoteOPPackageDataMapping();
+            Repository = new QuoteOPPackageRepository(context);
         }
 
        
         private IQuoteOPMContext currentContext;
-        public QuoteopPackageUpdateService(int tenant)
+        public QuoteOPPackageUpdateService(int tenant)
         {
             currentContext = QuoteOPMContext.GetContext(tenant);
         }
 
-        public QuoteopPackageUpdateService(IQuoteOPMContext context)
+        public QuoteOPPackageUpdateService(IQuoteOPMContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(QuoteopPackagePM entityPM)
+		protected override EntityKeyFields GetKeys(QuoteOPPackagePM entityPM)
         {
-            QuoteopPackageKeys entityKeys = new QuoteopPackageKeys() { Id = entityPM.Id };
+            QuoteOPPackageKeys entityKeys = new QuoteOPPackageKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(QuoteopPackagePM entityPM)
+	    protected override void FillDefaultValuesOnCreate(QuoteOPPackagePM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(QuoteopPackagePM entityPM)
+		protected override void FillDefaultValuesOnUpdate(QuoteOPPackagePM entityPM)
 		{
  
 		}

@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Amital.QuoteOPM.Data.EntityKeys
 {
-   public partial class QuoteopPackageKeys : EntityKeyFields
+   public partial class QuoteOPPackageKeys : EntityKeyFields
    {
    	  public string Id  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Amital.QuoteOPM.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "QuoteopPackagePM";
+          return "QuoteOPPackagePM";
       }
 	 
    }
