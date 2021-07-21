@@ -33,19 +33,19 @@ export class BuyerRoleTypeListService {
     }
 
 	getSingle(code: string) {
-
+	   
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
+				.pipe(			
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                    
+						var list = response.body;                   
 						var entity: BuyerRoleTypeList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}
+						}   
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
 						serviceResponse.Result = entity;  
@@ -56,7 +56,7 @@ export class BuyerRoleTypeListService {
 
 						return serviceResponse;
 					}),
-					
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,43 +73,43 @@ export class BuyerRoleTypeListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<BuyerRoleTypeList> = [];
 						if (allLists) {
-							for (var key in allLists) {			
+							for (var key in allLists) {				
 								var entity: BuyerRoleTypeList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = _mappedListsArray;  
+						serviceResponse.Result = _mappedListsArray;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();       
+		var callTime = new Date();		                        
 		var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
+		var mykeys = Object.keys(filters);
+		var addtionalFiltersValues = null;
 
-        for (var i in mykeys) {
+		for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
+				urlparameters = urlparameters.concat('&');
             }
 
-			if (!ignoreFilter) {
+            if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
@@ -119,9 +119,9 @@ export class BuyerRoleTypeListService {
 			}
         }
 
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
+		if (addtionalFiltersValues) {
+			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+		}
 
 		var callUrl = this._apiUrl.concat(urlparameters);
         		
@@ -140,137 +140,216 @@ export class BuyerRoleTypeListService {
 							}
 						}   
 
-						serviceResponse.Result = _mappedListsArray;      
+						serviceResponse.Result = _mappedListsArray;       
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 								            
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});        
 	}
 
 	getSingleFromCache(code: string) {
 
-		var callTime = new Date(); 	    
+		var callTime = new Date();
 
 		if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
+	    
+		var exists = BuyerRoleTypeListService.CachedData.filter(a => a.Code === code).length;
 
-        var serviceResponse: ServiceResponse = new ServiceResponse();
+        var serviceResponse: ServiceResponse = new ServiceResponse(); 
 
-		if (BuyerRoleTypeListService.CachedData.length > 0) {
+        if (exists === 0) {
 			return defer(() => {
-				var filteredData = BuyerRoleTypeListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
-                return of(serviceResponse);
-            });
-        }
+				var cacheKey = "BuyerRoleType_CachedData_" + SessionLocator.Tenant;
+				var _mappedListsArray: Array<BuyerRoleTypeList> = [];
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
 
-        else {
-            return CachedDataManager.GetClosedTableData("Customs.BuyerRoleType").pipe(
-				map((cachedJson:any) => {
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+                    for (var key in cachedJson) {
+                        var entity: BuyerRoleTypeList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
 
-					var _mappedListsArray: Array<BuyerRoleTypeList> = [];
-
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: BuyerRoleTypeList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
-
-					BuyerRoleTypeListService.CachedData = _mappedListsArray;
-
-					var filteredData = BuyerRoleTypeListService.CachedData.filter(a => a.Code === code)[0];
-					serviceResponse.Result = filteredData; 
+                    BuyerRoleTypeListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+                    
+                    var filteredData = BuyerRoleTypeListService.CachedData.filter(a => a.Code === code)[0];
+                    serviceResponse.Result = filteredData;
 					serviceResponse.CallTime = callTime;
-			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BuyerRoleType", "GetSingleListFromCache", 'code=' + code); 
+ 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BuyerRoleType", "GetSingleListFromCache", 'code=' + code); 
 
-					return serviceResponse;
-				}),
+                    return of(serviceResponse);                    
+                }
 
-				catchError(ServiceHelper.HandleServiceError));
-        }
-    }
+				else {
+					return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+							var list = response.body;
+                    
+							var entity: BuyerRoleTypeList;
+							if (list)
+							{
+								entity = this.MapJsonToEntityList(list);
+							}   
 
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+							serviceResponse.Result = entity;
+							serviceResponse.CallTime = callTime;
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetSingleList", 'code=' + code); 
+                                      
+							return serviceResponse;
+						}), 
+						
+						catchError(ServiceHelper.HandleServiceError));
+				}
+			});
+		}
+
+		else {
+		   var filteredData = BuyerRoleTypeListService.CachedData.filter(a => a.Code === code)[0];
+		    serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+		   return of(serviceResponse);
+		}
+	}
+
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
 		var callTime = new Date();
 
 		if (!SessionLocator.UseCachedData) {
 			return this.getByFilters(filters);
-        }
+		}
 
+		var exists = BuyerRoleTypeListService.CachedData.length;
+		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            if (!ignoreFilter) {
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
+
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
 			}
         }
 
-        var serviceResponse: ServiceResponse = new ServiceResponse();
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
 
-        if (BuyerRoleTypeListService.CachedData.length > 0) {
-            return defer(() => {
-                if (filters.GetAll) {
-					serviceResponse.Result = BuyerRoleTypeListService.CachedData; 
-				}
+        var callUrl = this._apiUrl.concat(urlparameters);       
+       
+        if (exists === 0 || filters.ForceCacheRefresh) {
+            var cacheKey = "BuyerRoleType_CachedData_" + filters.Tenant;
+            var _mappedListsArray: Array<BuyerRoleTypeList> = [];
+            var serviceResponse: ServiceResponse;
 
-				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(BuyerRoleTypeListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
+            if (!filters.ForceCacheRefresh) {
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
+
+                    for (var key in cachedJson) {
+                        var entity: BuyerRoleTypeList = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+                    }
+
+                    BuyerRoleTypeListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+
+                     if (!filters.GetAll) {
+                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                    }
+
+                    serviceResponse.Result = _mappedListsArray;
 					serviceResponse.CallTime = callTime;
-				}
+                    
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BuyerRoleType", "GetAllFromCache", "");                     
+                }
+            }
 
+            if (serviceResponse) {
                 return of(serviceResponse);
-            });
+            }
+
+            else {
+                return defer(() => {
+                    return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+						.pipe(
+							map((response: HttpResponse<any>) => {
+
+								var serviceResponse: ServiceResponse;
+								serviceResponse = response.body;
+                        
+								if (serviceResponse.Result) {
+									for (var key in serviceResponse.Result) {
+										var entity: BuyerRoleTypeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+										_mappedListsArray.push(entity);
+									}
+								}
+
+								if (filters.GetAll) {
+									LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
+									BuyerRoleTypeListService.CachedData = _mappedListsArray;
+								}
+
+								else {
+							
+									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+								}
+
+								serviceResponse.Result = _mappedListsArray;
+								serviceResponse.CallTime = callTime;
+						
+								var servertime = response.headers.get('ServerExecutionTime');
+								PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BuyerRoleType", "GetAll", ""); 
+
+								return serviceResponse;
+							}),
+							
+							catchError(ServiceHelper.HandleServiceError));
+                });
+            }
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.BuyerRoleType").pipe(
-				map((cachedJson:any) => {
+            var filteredData = BuyerRoleTypeListService.CachedData;
+            if (!filters.GetAll) {
+	
+                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
+            }
 
-					var _mappedListsArray: Array<BuyerRoleTypeList> = [];
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: BuyerRoleTypeList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
-
-					BuyerRoleTypeListService.CachedData = _mappedListsArray;
-
-					if (filters.GetAll) {
-						serviceResponse.Result = _mappedListsArray; 
-					}
-
-					else {
-
-						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BuyerRoleType", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-						serviceResponse.Result = _mappedListsArray; 
-						serviceResponse.CallTime = callTime;
-					}
-
-					return serviceResponse;
-				}),
-			
-				catchError(ServiceHelper.HandleServiceError));
-        }		 
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+            return of(serviceResponse);
+        }
     }
 	
 	    MapJsonToEntityList(jsonList: any) {
