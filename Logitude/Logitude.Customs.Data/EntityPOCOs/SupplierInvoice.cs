@@ -134,7 +134,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("BuyerRoleCode")]
 	    public string BuyerRoleCode { get; set; }
 	      
-        public virtual CustomerRoleType BuyerRole { get; set; }
+        public virtual BuyerRoleType BuyerRole { get; set; }
         [ForeignKey("PartyRelationship")]
         [Column("PartyRelationshipCode")]
 	    public string PartyRelationshipCode { get; set; }
