@@ -257,7 +257,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.ImporterName,
                     r.ImporterCode,
                     TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
-                    r.CourierCustomStatusName,
+                    CourierCustomStatus = "מעוכב",
                     r.CourierSuspentionReasonName,
                     r.DeclarationStatusTypeName,
                 });
@@ -294,7 +294,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 newrow[1] = r.ImporterName;
                 newrow[2] = r.ImporterCode;
                 newrow[3] = r.TotalInvoiceAmountInUSD;
-                newrow[4] = r.CourierCustomStatusName;
+                newrow[4] = r.CourierCustomStatus;
                 newrow[5] = r.CourierSuspentionReasonName;
                 newrow[6] = r.DeclarationStatusTypeName;
                 dt.Rows.Add(newrow);
