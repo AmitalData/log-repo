@@ -330,7 +330,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
  
                     declarationUpdateService.Update(declarationPM, true);
 
-                if(declarationPM.IsCourierDeclaration)
+                if(declarationPM.IsCourierDeclaration && !isUpdateAfterAccept)
                 {
 
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
