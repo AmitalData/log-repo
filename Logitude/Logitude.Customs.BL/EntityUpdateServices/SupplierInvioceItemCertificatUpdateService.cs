@@ -758,35 +758,79 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public int UpdateAllCertificateWithoutResponse(string declarationId, int tenant)
         {
+            SupplierInvioceItemCertificatQueryService supplierInvoiceItemRepository = new SupplierInvioceItemCertificatQueryService(tenant);
+            var res = supplierInvoiceItemRepository.GetSupplierInvoiceItemsCertificateWithoutResponse(tenant, declarationId);
+
             int count = 0;
+            if (string.IsNullOrWhiteSpace(res.certificateKeys)) return count;
+            string whereInCertificateKeys = "";
+            string whereInInvoiceItemKeys = "";
+            int i = 0;
+            if (res.certificateKeys.Split(',').Count() > 990)
+            {
+                var certificateKeysList = res.certificateKeys.Split(',');
+                var invoiceItemKeysList = res.InvoiceItemKeys.Split(',');
+                for (i = 0; i < certificateKeysList.Length; )
+                {
+                    var certificateKeyItem = certificateKeysList[i];
+                    var invoiceItemKeyItem = invoiceItemKeysList[i];
+                    if (i < 990)
+                    {
+                        whereInCertificateKeys += certificateKeyItem + ',';
+                        whereInInvoiceItemKeys += invoiceItemKeyItem + ',';
+                        i++;
+                    }
+                    else
+                    {
+                        whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
+                        whereInCertificateKeys += ") OR  SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey IN (" + certificateKeyItem + ',';
+                        i = 0;
+
+                        whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
+                        whereInInvoiceItemKeys += ") OR  s.CounterKey || ' ' || s.LineNumber IN (" + invoiceItemKeyItem + ',';
+
+                    }
+                }
+                whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
+                whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
+            }
+            else
+            {
+                whereInCertificateKeys = res.certificateKeys;
+                whereInInvoiceItemKeys = res.InvoiceItemKeys;
+            }
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(tenant);
             if (dbms == "oracle")
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
-                    string cmd = @"Update (
-                                    select * from SupplierInvioceItemCertificats SIIC 
-                                    INNER JOIN supplierInvoiceItems s ON s.DeclarationId = SIIC.DeclarationId and s.CounterKey = SIIC.InvoiceCounterKey and s.LineNumber = SIIC.LineNumber 
-                                    where SIIC.DeclarationId ='" + declarationId + "' and s.IsParent = 0 and (SIIC.AttachmentTypeCode is null or (SIIC.CertificateExemptionTypeCode is null and SIIC.CertificateNumber is null))) SIIC " +
-                                    "set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'";
+                   string cmd = @"Update SupplierInvioceItemCertificats SIIC 
+                                  set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' 
+                                  where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
+
+                    string cmd1 = @"
+                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
+                                where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
-
+                    OracleCommand sqlCommand1 = new OracleCommand(cmd1, con);
                     con.Open();
                     count = sqlCommand.ExecuteNonQuery();
+                    sqlCommand1.ExecuteNonQuery();
                     con.Close();
                 }
-
             }
             else
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = @"Update SIIC set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
-                                   from  Customs.SupplierInvioceItemCertificats SIIC 
-                                   INNER JOIN Customs.supplierInvoiceItems s ON s.DeclarationId = SIIC.DeclarationId and s.CounterKey = SIIC.InvoiceCounterKey and s.LineNumber = SIIC.LineNumber 
-                                   where SIIC.DeclarationId ='" + declarationId + "' and s.IsParent = 0 and (i.AttachmentTypeCode is null or (i.CertificateExemptionTypeCode is null and i.CertificateNumber is null))";
+                    string cmd = @"Update Customs.SupplierInvioceItemCertificats SIIC
+                                   set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
+                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey + ' ' + SIIC.LineNumber + ' ' + SIIC.ItemCertificateCounterKey  in (" + res.certificateKeys + ") ";
+                    cmd +=  Environment.NewLine + "Update supplierInvoiceItems s set s.CertificatesStatusCode = '1' " +
+                        "where s.DeclarationId = '" + declarationId + "' and s.CounterKey + ' ' + s.LineNumber in (" + res.InvoiceItemKeys + ")";
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 
