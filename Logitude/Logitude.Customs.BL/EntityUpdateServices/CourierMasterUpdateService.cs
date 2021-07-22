@@ -341,7 +341,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var myGGGQPM = new GGGQPM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
+                        ORIGINQUE = "LQ", //Legacy Queue
                         STATUS = "1",
                         EXPTASKTIME = 5,
                         EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
@@ -349,7 +349,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIORITY = 8,
 
                         ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = "-1",
+                        PRIMARYNUM = entityPM.Id,
                         FORMID = "A1468",
                         GSTRING1 = "A1468",
                         GSTRING2 = "NONE",
@@ -358,7 +358,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DEBUG = "F",
                         DONEOPERATION = "D",
                         QUEUEMANAGEMENT = true,
-
+                        
 
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };

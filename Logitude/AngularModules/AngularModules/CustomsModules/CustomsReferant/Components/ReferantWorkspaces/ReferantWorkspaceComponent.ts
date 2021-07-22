@@ -108,6 +108,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         });
     }
 
+    public IsQueryVisible_MyViewsGroup: boolean = true;
+
     BarClicking() {
         if (BarClick() != null) {
             this.OnBarClick(BarClick());
@@ -457,6 +459,11 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     ReloadUsersQuery() {
         this.ReloadUserQueries.emit();
     }
+
+    onUserQueriesBackComplete(event) {
+        this.LoadAllScreenData();
+    }
+
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
         filters = new ApiQueryFilters();
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");

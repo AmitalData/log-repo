@@ -224,6 +224,7 @@
     <Compile Include="MessagingServices\DCAInUCBCTML_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBStorageSite_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUD2LT_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCUDO_UpdateOpenDeclarationsMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniCustomTableZip_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUniDebug01_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
+    <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />

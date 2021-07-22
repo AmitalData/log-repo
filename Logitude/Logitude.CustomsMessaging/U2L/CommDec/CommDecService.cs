@@ -63,6 +63,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         private bool _IsNewDeclaration = false;
         public bool IsAutonomy = false;
         private decimal _SupplierInvoiceAmount;
+        private string mode;
 
         public CommDecService()
             : base(
@@ -84,7 +85,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         {
             string customFileNo = "";
             string decId = "";
-
+            string courierMasterID = "";
             MessageOut = "";
             _tenant = ResolvedTenant();
             var user = AuthenticationUtil.ResolveUserId(_tenant);
@@ -117,7 +118,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId);
+                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
             }
 
 
@@ -131,12 +132,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, int tenant, string Curruser,
               ref string MoreParams,
-              out string MessageOut, out string customFileNo, out string decId)
+              out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
             _tenant = tenant;
             customFileNo = "";
             MessageOut = "";
             decId = "";
+            courierMasterID = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
@@ -153,6 +155,40 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             ICustomContext dbContext = CustomContext.GetContext(_tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
+
+            if (!String.IsNullOrWhiteSpace(MoreParams))
+            {
+                AppendLogLine("MoreParams: " + MoreParams);
+                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
+                AppendLogLine("mode: " + mode);
+                if (mode == "UPDATE_MASTER_COURIER")
+                {
+                    MyGenericResponseObj.Stage = "GetSingleB4Upsert";
+                    if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
+                    {
+                        string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
+                        if (!String.IsNullOrWhiteSpace(existId))
+                        {
+                            this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
+                            AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                            if (this._MyDeclarationPM != null)
+                            {
+                                CheckMasterToUpdate(MoreParams);
+                                AppendLogLine("Updated declaration " + this._MyDeclarationPM.CustomFileNo );
+                                
+                            }
+                        }
+                    }
+                    AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                    MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
+                    if (this._MyDeclarationPM != null) MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
+                    MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                    return;
+                }
+            }
 
             MyGenericResponseObj.Stage = "GetSingleB4Upsert";
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
@@ -367,6 +403,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
             }
 
+
+            if(_CourierMasterPM!= null)
+            {
+                courierMasterID = _CourierMasterPM.Id;
+            }
             if (this._LogitudeCommDecFile.INVOICE != null)
             {
                 if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
@@ -1195,7 +1236,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         {
 
-                            DateTime stopLogAt = new DateTime(2021, 06, 01);
+                            DateTime stopLogAt = new DateTime(2021, 11, 01);
 
                             string logData = "";
 
