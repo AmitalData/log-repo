@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPTemplateUpdateClass
    {  		
-		public const string HashString = "31a90c53fe1a6321a85611a32d8bd671";
+		public const string HashString = "69d14c78ca94c200d2d3633c55fdba1d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    Name =  "QuoteOPTemplates",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "QuoteOPM",
-			      				    NewWizardComponentPath =  "./QuoteModules/QuoteOPTemplates/Components/NewQuoteOPTemplateComponent",
+			      				    NewWizardComponentPath =  "./QuoteOPMModules/QuoteOPTemplates/Components/NewQuoteOPTemplateComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,

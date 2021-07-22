@@ -1480,7 +1480,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return table.HashString != updateClassHashString;
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false, bool includeQuoteOPM = false)
         {
 
             ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
@@ -1491,6 +1491,13 @@ namespace WebFreight.Web.MetaDataUpdate
             if (includeCustoms)
             {
                 ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.Name.Contains("Customs.")).ToList();
+            }
+            else if (includeQuoteOPM)
+            {
+                ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => 
+                t.Name.Contains("QuoteOP") 
+                || t.Name.Contains("BorderOPType")
+                || t.Name.Contains("MarkUpOPType")).ToList();
             }
             else
             {

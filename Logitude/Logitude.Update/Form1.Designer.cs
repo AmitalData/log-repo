@@ -160,6 +160,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonQuoteOPMZIP = new System.Windows.Forms.Button();
+            this.UpdateQuoteOPM = new System.Windows.Forms.Button();
             this.UpdateCargoTrackingLabel = new System.Windows.Forms.Label();
             this.button50 = new System.Windows.Forms.Button();
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
@@ -218,7 +220,6 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
-            this.UpdateQuoteOPM = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1467,6 +1468,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.buttonQuoteOPMZIP);
             this.tabPage1.Controls.Add(this.UpdateQuoteOPM);
             this.tabPage1.Controls.Add(this.UpdateCargoTrackingLabel);
             this.tabPage1.Controls.Add(this.button50);
@@ -1528,11 +1530,31 @@
             this.tabPage1.Controls.Add(this.button5);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(850, 622);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // buttonQuoteOPMZIP
+            // 
+            this.buttonQuoteOPMZIP.Location = new System.Drawing.Point(329, 175);
+            this.buttonQuoteOPMZIP.Name = "buttonQuoteOPMZIP";
+            this.buttonQuoteOPMZIP.Size = new System.Drawing.Size(114, 23);
+            this.buttonQuoteOPMZIP.TabIndex = 103;
+            this.buttonQuoteOPMZIP.Text = "QuoteOPMZIP";
+            this.buttonQuoteOPMZIP.UseVisualStyleBackColor = true;
+            this.buttonQuoteOPMZIP.Click += new System.EventHandler(this.buttonQuoteOPMZIP_Click);
+            // 
+            // UpdateQuoteOPM
+            // 
+            this.UpdateQuoteOPM.Location = new System.Drawing.Point(329, 147);
+            this.UpdateQuoteOPM.Name = "UpdateQuoteOPM";
+            this.UpdateQuoteOPM.Size = new System.Drawing.Size(114, 23);
+            this.UpdateQuoteOPM.TabIndex = 102;
+            this.UpdateQuoteOPM.Text = "UpdateQuoteOPM";
+            this.UpdateQuoteOPM.UseVisualStyleBackColor = true;
+            this.UpdateQuoteOPM.Click += new System.EventHandler(this.UpdateQuoteOPM_Click);
             // 
             // UpdateCargoTrackingLabel
             // 
@@ -1783,8 +1805,8 @@
             this.tabPage2.Controls.Add(this.UpdateAutomationMetadataButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(850, 623);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(850, 622);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
@@ -2058,7 +2080,7 @@
             this.tabPage3.Controls.Add(this.button46);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(850, 623);
+            this.tabPage3.Size = new System.Drawing.Size(850, 622);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2140,8 +2162,8 @@
             this.tabPage4.Controls.Add(this.button51);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(850, 623);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(850, 622);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2175,16 +2197,6 @@
             this.button51.Text = "Verify Redeemed Cheques";
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
-            // 
-            // UpdateQuoteOPM
-            // 
-            this.UpdateQuoteOPM.Location = new System.Drawing.Point(206, 175);
-            this.UpdateQuoteOPM.Name = "UpdateQuoteOPM";
-            this.UpdateQuoteOPM.Size = new System.Drawing.Size(114, 23);
-            this.UpdateQuoteOPM.TabIndex = 102;
-            this.UpdateQuoteOPM.Text = "UpdateQuoteOPM";
-            this.UpdateQuoteOPM.UseVisualStyleBackColor = true;
-            this.UpdateQuoteOPM.Click += new System.EventHandler(this.UpdateQuoteOPM_Click);
             // 
             // Form1
             // 
@@ -2431,6 +2443,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button UpdateQuoteOPM;
+        private System.Windows.Forms.Button buttonQuoteOPMZIP;
     }
 }
 

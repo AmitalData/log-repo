@@ -1851,6 +1851,13 @@ User/Pass",
                 SetControlPropertyValue(CustZibFilesLbl, "Text", "Building...");
                 generalLabel = CustZibFilesLbl; // timer
             }
+            else if (this.buildQuoteOPMZIPFiles)
+            {
+                SetControlPropertyValue(CustZibFilesLbl, "Text", "Building...");
+                generalLabel = CustZibFilesLbl; // timer
+
+
+            }
             else
             {
                 SetControlPropertyValue(BuildZipFileslbl, "Text", "Building...");
@@ -1864,7 +1871,7 @@ User/Pass",
             timer1.Enabled = true;
             timer1.Start();
 
-            TenantsUpdateClass.BuildObjectTablesZipFilesData(checkBox1.Checked, buildCustomsZipFiles);
+            TenantsUpdateClass.BuildObjectTablesZipFilesData(checkBox1.Checked, buildCustomsZipFiles, buildQuoteOPMZIPFiles);
 
             // timer
             globalStopwatch = null;
@@ -4660,6 +4667,8 @@ User/Pass",
         }
 
         private int packagesTypesCount = 0;
+        private bool buildQuoteOPMZIPFiles;
+
         private void AddPackagesTypesByTenant(List<dynamic> allPackagesTypes, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -4717,6 +4726,14 @@ User/Pass",
         private void UpdateQuoteOPM_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => UpdateModule(0, "QuoteOPM", lblUQuote));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void buttonQuoteOPMZIP_Click(object sender, EventArgs e)
+        {
+            this.buildQuoteOPMZIPFiles = true;
+            Thread thread = new Thread(UpdateZipFiles);
             thread.IsBackground = true;
             thread.Start();
         }

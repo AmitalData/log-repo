@@ -43,7 +43,7 @@
   Name="&quot;QuoteOPTemplates&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;QuoteOPM&quot;"
-  NewWizardComponentPath="&quot;./QuoteModules/QuoteOPTemplates/Components/NewQuoteOPTemplateComponent&quot;"
+  NewWizardComponentPath="&quot;./QuoteOPMModules/QuoteOPTemplates/Components/NewQuoteOPTemplateComponent&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
