@@ -58,7 +58,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  //})
                  //.FirstOrDefault().CourierPendingReason.LocalName
 
-                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null
+                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
+                 //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
+                 CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
 
 
              }
@@ -143,6 +145,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierPendingReasonName = errorPlaceOuterJoinNullable != null ?
                                                                   errorPlaceOuterJoinNullable.CourierPendingReason1stName
                                                                   : null,
+
+                                                                  CourierPendingReasonNameList = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReasonNameList : null,
                                                                   //CourierPendingReasonName = string.Join(",", pendingListNamesOuterJoin.Select(p => p.ToString())),
 
 
@@ -250,6 +254,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         public bool ErrorPlace { get; set; }
     public string CourierPendingReason1stName { get;  set; }
+    public string CourierPendingReasonNameList { get;  set; }
     internal string DeclarationId { get; set; }
     }
 }
