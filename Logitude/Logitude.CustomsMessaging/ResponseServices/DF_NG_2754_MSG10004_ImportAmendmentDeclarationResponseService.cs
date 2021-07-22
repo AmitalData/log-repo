@@ -330,7 +330,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
  
                     declarationUpdateService.Update(declarationPM, true);
 
-                if(declarationPM.IsCourierDeclaration)
+                if(declarationPM.IsCourierDeclaration && !isUpdateAfterAccept)
                 {
 
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
@@ -1121,10 +1121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
                          if(invoiceItem!= null)
                             {
-       
-                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles  =supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
-
-                               // supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+                                supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
 
                                 foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
                                 {
