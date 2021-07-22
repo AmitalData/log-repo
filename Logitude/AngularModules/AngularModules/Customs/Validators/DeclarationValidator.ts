@@ -125,7 +125,7 @@ export class DeclarationValidator {
         // Levies
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemLevies) {
             if (AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {
-                errors.push("יש למלם קוד פטור או זיהוי");
+                errors.push("יש למלא קוד פטור או זיהוי");
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
