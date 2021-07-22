@@ -35,6 +35,20 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Code == code && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public Boolean IsActive(string code,int tenant)
+        {
+            var status = (from a in context.CourierPendingReasons
+                          where a.Code == code && a.Tenant == tenant
+                          select a).FirstOrDefault();
+            if(status.Inactive)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
     }
 
