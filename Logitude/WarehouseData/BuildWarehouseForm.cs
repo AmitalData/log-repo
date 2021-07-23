@@ -22,9 +22,9 @@ namespace WarehouseData
 {
     public partial class BuildWarehouseForm : Form
     {
-        string dbSourceConnection = "2021R1_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
-        string dbDestinationConnection = "2021R1_Global,sa,Saas256,.";
+        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
 
 
         public BuildWarehouseForm()
