@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string clientid)
         {
 		  try
             {
@@ -62,7 +62,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("Customs.ClientsPoa", "READ", authToken.Tenant);
 	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ClientsPoaListQueryService clientsPoaQuery = new ClientsPoaListQueryService(MyContext);
-                ClientsPoaList clientsPoaList = clientsPoaQuery.GetSingle(id);
+                ClientsPoaList clientsPoaList = clientsPoaQuery.GetSingle(id, clientid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  clientsPoaList);

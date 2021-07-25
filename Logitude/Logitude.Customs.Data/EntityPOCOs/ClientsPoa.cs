@@ -25,8 +25,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+     [Key]
+        [ForeignKey("Client")]
         [Column("ClientId")]
 	    public string ClientId { get; set; }
+	      
+        public virtual Client Client { get; set; }
         [Column("PoaID")]
 	    public string PoaID { get; set; }
         [Column("AuthorizedExternalId")]

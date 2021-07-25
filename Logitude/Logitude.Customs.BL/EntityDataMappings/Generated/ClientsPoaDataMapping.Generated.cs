@@ -74,11 +74,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
-            {
-				entityPOCO.ClientId = entityPM.ClientId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))
             {
 				entityPOCO.PoaID = entityPM.PoaID;
@@ -219,11 +214,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
-            {
-                oldEntityPM.ClientId = entityPM.ClientId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))

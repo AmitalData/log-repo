@@ -16,11 +16,15 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
+	  public string ClientId  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
+                 return Id+'_'+ClientId ;
                  
       }
 
