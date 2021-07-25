@@ -360,8 +360,8 @@ namespace WebFreight.Web.InfrastructureModel
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods=null;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
-                List<QuoteClosingReason> tenantZeroQuoteClosingReasons;
-                List<ShipmentSubType> tenantZeroShipmentSubTypes;
+                List<QuoteClosingReason> tenantZeroQuoteClosingReasons= null;
+                List<ShipmentSubType> tenantZeroShipmentSubTypes= null;
 
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
@@ -410,8 +410,8 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     if (setting.WorkEnvironment != "customs") tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
-                    tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
-                    tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
 
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
@@ -498,8 +498,8 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
-                AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
-                AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
+                if (setting.WorkEnvironment != "customs")  AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
+                if (setting.WorkEnvironment != "customs") AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
                 if (setting.WorkEnvironment != "customs") AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
