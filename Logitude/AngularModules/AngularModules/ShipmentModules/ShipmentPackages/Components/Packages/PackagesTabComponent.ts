@@ -676,12 +676,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     private ComputeGrossWeight_PerStorageDays() {
         var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var freeDays = this.EntityPM.WarehouseStorageFreeDays;
+        if (freeDays == null) freeDays = 0;
+
         var weightPerStorageDays;
         if (this.EntityPM.TransportModeId != "A") {
-            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - freeDays);
         }
         else {
-            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - freeDays);
         }
 
         this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;

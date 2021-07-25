@@ -1765,6 +1765,12 @@
       LocalDefaultText="&quot;שערוך חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.O.NotOpen&quot;"
+      DefaultText="&quot;Revaluation is not open&quot;"
+      LocalDefaultText="&quot;שערוך אינו פתוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
