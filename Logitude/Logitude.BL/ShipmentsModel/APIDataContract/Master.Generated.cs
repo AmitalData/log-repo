@@ -143,6 +143,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? ActualFinalArrivalDate { get; set; }
     
     public bool IsHTSMissing { get; set; }
+    
+    public DateTime? PlannedCargoReadyDate { get; set; }
+    
+    public DateTime? ApprovedCargoReadyDate { get; set; }
+    
+    public User HandlerUser { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

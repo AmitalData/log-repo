@@ -308,6 +308,9 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
                 myDataProvider.ConfirmationNotes = shipment.BookingConfirmationNotes;
                 myDataProvider.MainCarriageATD = shipment.MainCarriageATD;
+                myDataProvider.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
+                myDataProvider.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
+                myDataProvider.Handler = shipment.HandlerUserId;
 
                 if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                 {
