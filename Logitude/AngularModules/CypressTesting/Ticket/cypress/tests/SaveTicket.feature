@@ -21,12 +21,12 @@ Feature: Save Ticket Test
     Scenario: Save as close the ticket
         Given the user in the ticket's main page
         When save as close
-        Then the ticket should save successfully
+        Then the "Closed" ticket should save successfully
 
     Scenario: Save as open the ticket
         When save as open
-        Then the ticket should save successfully
+        Then the "Open" ticket should save successfully
 
     Scenario: Save as resolved the ticket
         When save as resolve
-        Then the ticket should save successfully
+        Then the "Resolved" ticket should save successfully
