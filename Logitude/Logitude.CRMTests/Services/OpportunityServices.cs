@@ -28,7 +28,7 @@ namespace Logitude.CRMTests.Services
                 .Build();
         }
 
-        private string GetOpportunityTypeIdByName(string opportunityTypeName)
+        public string GetOpportunityTypeIdByName(string opportunityTypeName)
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
                 .Filter1Name("Name")
@@ -39,7 +39,7 @@ namespace Logitude.CRMTests.Services
             return response.Data?.FirstOrDefault()?["Id"];
         }
 
-        private string GetStageIdByName(string stageName)
+        public string GetStageIdByName(string stageName)
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
                 .Filter1Name("Name")
