@@ -40,7 +40,6 @@ Feature: Branch fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the Branch
         Given add "external" to External ID in Accounting Tab
-        Given the user Inactivate the Branch
         When save branch
         Then the branch should update successfully
         And the following event should appear in events tab
