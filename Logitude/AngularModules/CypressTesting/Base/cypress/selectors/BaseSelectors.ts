@@ -20,6 +20,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly AccountingSettings = "#MaintenanceItemACSE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
+    public static readonly MessageErrorRedButton = 'button[id^=MessageWindow_Ok]'
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
