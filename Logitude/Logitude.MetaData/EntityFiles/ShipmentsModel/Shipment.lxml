@@ -91464,7 +91464,7 @@
     FullFieldLable="&quot;ApprovedCargoReadyDate&quot;"
     DefaultText="&quot;Approved Cargo Ready Date&quot;"
     ListFieldLable="&quot;ApprovedCargoReadyDateListLable&quot;"
-    ListLableDefaultText="&quot;Planned Cargo Ready Date&quot;"
+    ListLableDefaultText="&quot;Approved Cargo Ready Date&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

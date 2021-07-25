@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "34fcb8d8e321f7c06ec24bfa2b10acb1";
+		public const string HashString = "4ba1d10d41a270e6bbf5df60bcbb1ae3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -44740,7 +44740,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "ApprovedCargoReadyDate",
 					  						DefaultText =  "Approved Cargo Ready Date",
 					  						ListFieldLable =  "ApprovedCargoReadyDateListLable",
-					  						ListLableDefaultText =  "Planned Cargo Ready Date",
+					  						ListLableDefaultText =  "Approved Cargo Ready Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
