@@ -11140,6 +11140,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DangerousUnNumber = view.DangerousUnNumber,
                         IsStandalonePickupDelivery = view.IsStandalonePickupDelivery,
                         IsHTSMissing = view.IsHTSMissing,
+                        PlannedCargoReadyDate = view.PlannedCargoReadyDate,
+                        ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
+                        HandlerUserId = view.HandlerUserId,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12349,6 +12352,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                PreForwardingETD = f.PreForwardingETD,
                                IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                IsHTSMissing = f.IsHTSMissing,
+                               PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                               ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                               HandlerUserId = f.HandlerUserId,
                            };
             return myResult;
         }
@@ -12712,6 +12718,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PreForwardingETD = f.PreForwardingETD,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                     IsHTSMissing = f.IsHTSMissing,
+                    PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                    ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                    HandlerUserId = f.HandlerUserId,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12976,6 +12985,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     BookingConfirmationNumber = f.BookingConfirmationNumber,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                     IsHTSMissing = f.IsHTSMissing,
+                    PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                    ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                    HandlerUserId = f.HandlerUserId,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

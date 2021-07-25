@@ -732,5 +732,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPartnerId { get; set; }
         public string FreightLocationId { get; set; }
         public bool IsHTSMissing { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+
     }
 }
