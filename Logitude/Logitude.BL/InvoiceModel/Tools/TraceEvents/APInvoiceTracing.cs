@@ -24,15 +24,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
             var isCreatedAPInvoiceCopied = isNewState && entityPM.IsNew && entityPM.IsCopied;
             if (isCreatedAPInvoiceCopied)
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "CPIN",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "APInvoice",
-                    Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant, showLocals), ' ', entityPM.CopiedFrom)
-                });
+                CreateEventForCopyInvoice(entityPM, loggedContact, showLocals);
             }
             if (isNewState && !isCreatedAPInvoiceCopied)
             {
@@ -102,6 +94,19 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     });
                 }
             }
+        }
+
+        private static void CreateEventForCopyInvoice(APInvoicePM entityPM, ContactPM loggedContact, bool showLocals)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = "CPIN",
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "APInvoice",
+                Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant, showLocals), ' ', entityPM.CopiedFrom)
+            });
         }
     }
 }

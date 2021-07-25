@@ -158,19 +158,22 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             if (!response.HasError) {
                 this.LastRatesList = response.Result;
                 this.SetCurrencyRateData();
-
-                commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((response2: ServiceResponse) => {
-                    if (!response2.HasError) {
-                        this.VatTypePercentagesList = response2.Result;
-                    }
-
-                    this.CurrentSession.StopBusyIndicator();
-                });
+                this.SetVatTypePercentages(commonDomainService, loadingDate);
             }
 
             else {
                 this.CurrentSession.StopBusyIndicator();
             }
+        });
+    }
+
+    private SetVatTypePercentages(commonDomainService: CommonDomainService, loadingDate: Date) {
+        commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                this.VatTypePercentagesList = serviceResponse.Result;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -612,26 +615,34 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     public ComputeAPInvoiceDueDate() {
         if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
-            this.DueDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
+            this.ComputeDueDateWithoutPaymentTerm();
         }
 
         else {
-            var service = new PaymentTermListService();
-            service.getSingleFromCache(this.PaymentTermId).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var list: PaymentTermList = response.Result;
-                    if (list != null) {
-                        if (list.IsManuallySet) {
-                            this.DueDate = null;
-                        }
+            this.ComputeDueDateWithPaymentTerm();
+        }
+    }
 
-                        else {
-                            this.SetDueDateAccordingToPaymentTerm(list);
-                        }
+    private ComputeDueDateWithoutPaymentTerm() {
+        this.DueDate = DateTool.GetDateParts(this.InvoiceDate).DateObject;
+    }
+
+    private ComputeDueDateWithPaymentTerm() {
+        var service = new PaymentTermListService();
+        service.getSingleFromCache(this.PaymentTermId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var list: PaymentTermList = response.Result;
+                if (list != null) {
+                    if (list.IsManuallySet) {
+                        this.DueDate = null;
+                    }
+
+                    else {
+                        this.SetDueDateAccordingToPaymentTerm(list);
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     private SetDueDateAccordingToPaymentTerm(list: PaymentTermList) {
@@ -862,6 +873,13 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     private InitializeProfitCurrency(entityPM) {
+        this.SetProfitCurrencyId(entityPM);
+        this.SetProfitCurrencyCode(entityPM);
+
+        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
+    }
+
+    private SetProfitCurrencyId(entityPM: any) {
         if (this.EntityPM.IsMultipleEntities) {
             entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         }
@@ -869,7 +887,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         else if (AppTool.IsNullOrEmpty(this.EntityPM.ProfitCurrencyId)) {
             entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
         }
+    }
 
+    private SetProfitCurrencyCode(entityPM: any) {
         this.currencyListService.getSingleFromCache(this.EntityPM.ProfitCurrencyId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var list: CurrencyList = response.Result;
@@ -879,8 +899,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
                 }
             }
         });
-
-        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
     }
 
     GetCurrencyRate(currencyId: string) {
