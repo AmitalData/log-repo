@@ -46,7 +46,9 @@ namespace WebFreight.Web.Helpers
             string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
              
 
-            if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+            if (LogitudeSettings.DeploymentStage != null && 
+                (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                && !IsCargoTrackingDomain())
             {
                 privatelabel = GetPrivateLabelByLoggedDomain();
                 BuildEmailMessageParams(emailMessageParams, privatelabel);
