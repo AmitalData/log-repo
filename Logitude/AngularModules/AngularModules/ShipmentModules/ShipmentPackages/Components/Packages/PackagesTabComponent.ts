@@ -57,7 +57,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsCommodityNameVisible: boolean = false;
     public IsShowReleaseNumber: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
-    public IsShippingInstructionsVisible: boolean = false;
+    public IsLastStatusVisible: boolean = false;
     public IsDeletePackagesButtonVisible: boolean = false;
     public IsDownloadUploadPackagesVisible: boolean = false;
     public IsContainerFeatureToggleVisible: boolean = false;
@@ -292,15 +292,23 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
 
+        this.SetIsLastStatusVisible();
+    }
+
+    SetIsLastStatusVisible() {
         if (this.IsFCLEntity) {
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            if (featureToggle)
+                this.IsLastStatusVisible = true;
+
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
                 if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "I")) {
                     if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
-                        this.IsShippingInstructionsVisible = true;
+                        this.IsLastStatusVisible = true;
                     }
 
                     else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null) {
-                        this.IsShippingInstructionsVisible = true;
+                        this.IsLastStatusVisible = true;
                     }
                 }
             }
