@@ -91648,6 +91648,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Notify1Reference2&quot;"
     ListPropertyPath="&quot;Notify1Reference2&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -97223,6 +97224,36 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference&quot;"
+        FieldName="&quot;Notify1Reference&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference2&quot;"
+        FieldName="&quot;Notify1Reference2&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
     <DataContract
       Name="&quot;Direct&quot;"
@@ -98554,6 +98585,36 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference&quot;"
+        FieldName="&quot;Notify1Reference&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference2&quot;"
+        FieldName="&quot;Notify1Reference2&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
@@ -99180,6 +99241,36 @@
         IsMulti="false"
         FieldsDataType="&quot;DateTime&quot;"
         IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference&quot;"
+        FieldName="&quot;Notify1Reference&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference2&quot;"
+        FieldName="&quot;Notify1Reference2&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
@@ -100149,6 +100240,36 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference&quot;"
+        FieldName="&quot;Notify1Reference&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference2&quot;"
+        FieldName="&quot;Notify1Reference2&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

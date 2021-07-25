@@ -385,7 +385,9 @@ using Simplog.Data.ShipmentsModel;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
+				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1211,6 +1213,22 @@ using Simplog.Data.ShipmentsModel;
 							temp.IsHTSMissing = MyEntity.IsHTSMissing;
 
 					 
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference))
+					{							//throw new ApplicationException("Notify1Reference Can't be update"); 
+							temp.Notify1Reference = MyEntity.Notify1Reference;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference2))
+					{							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
+							temp.Notify1Reference2 = MyEntity.Notify1Reference2;
+
+										}  
 
 										   
 					return temp;

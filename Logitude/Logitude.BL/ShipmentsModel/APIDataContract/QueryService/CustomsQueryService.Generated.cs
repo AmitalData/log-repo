@@ -258,7 +258,9 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.ShipperName = MyEntityPM.ShipperName;
 				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;
-				   temp.DeclarationDate = MyEntityPM.DeclarationDate;					
+				   temp.DeclarationDate = MyEntityPM.DeclarationDate;
+				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -822,6 +824,22 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)// && MyEntity.DeclarationDate != null)
 					{							//throw new ApplicationException("DeclarationDate Can't be update"); 
 							temp.DeclarationDate = MyEntity.DeclarationDate;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference))
+					{							//throw new ApplicationException("Notify1Reference Can't be update"); 
+							temp.Notify1Reference = MyEntity.Notify1Reference;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference2))
+					{							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
+							temp.Notify1Reference2 = MyEntity.Notify1Reference2;
 
 										}  
 

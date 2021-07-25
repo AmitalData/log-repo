@@ -178,6 +178,22 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public bool IsHTSMissing { get; set; }
     
+    public Card MainCarriageFromPartner { get; set; }
+    
+    public Card MainCarriageToPartner { get; set; }
+    
+    public DateTime? MainCarriageETA { get; set; }
+    
+    public DateTime? MainCarriageETD { get; set; }
+    
+    public string TruckNumber { get; set; }
+    
+    public bool IsHTSMissing { get; set; }
+    
+    public string Notify1Reference { get; set; }
+    
+    public string Notify1Reference2 { get; set; }
+
     public  string  ComputingPartnerCode { get; set; }
 
     }
