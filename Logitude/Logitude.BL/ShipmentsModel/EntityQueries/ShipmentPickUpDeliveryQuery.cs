@@ -573,7 +573,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                select a.CarrierId).FirstOrDefault();
             return entityId;
 
-        }      
-
+        }
+        
     }
 }
