@@ -968,6 +968,16 @@ export class QuotePM {
     public set ToLocation(newValue: string) { if (this.toLocation != newValue) { this.toLocation = newValue; this.MarkAsDirty("ToLocation"); } }
        
 	 
+    private fromLocationIncludeCountry: string;
+    public get FromLocationIncludeCountry() { return this.fromLocationIncludeCountry; }
+    public set FromLocationIncludeCountry(newValue: string) { if (this.fromLocationIncludeCountry != newValue) { this.fromLocationIncludeCountry = newValue; this.MarkAsDirty("FromLocationIncludeCountry"); } }
+       
+	 
+    private toLocationIncludeCountry: string;
+    public get ToLocationIncludeCountry() { return this.toLocationIncludeCountry; }
+    public set ToLocationIncludeCountry(newValue: string) { if (this.toLocationIncludeCountry != newValue) { this.toLocationIncludeCountry = newValue; this.MarkAsDirty("ToLocationIncludeCountry"); } }
+       
+	 
     private isPotentialShipper: boolean;
     public get IsPotentialShipper() { return this.isPotentialShipper; }
     public set IsPotentialShipper(newValue: boolean) { if (this.isPotentialShipper != newValue) { this.isPotentialShipper = newValue; this.MarkAsDirty("IsPotentialShipper"); } }

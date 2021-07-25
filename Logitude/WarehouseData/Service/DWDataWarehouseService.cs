@@ -319,14 +319,14 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT -1 FOR SalesmanUserId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrintByUserId DEFAULT -1 FOR PrintByUserId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId"
-                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerId DEFAULT -1 FOR PartnerId";
-
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerId DEFAULT -1 FOR PartnerId"
+                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PaymentTermId DEFAULT -1 FOR PaymentTermId";
                     break;
 
                 case "APInvoices":
 
-                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId";
-
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ApprovedByUserId DEFAULT -1 FOR ApprovedByUserId"
+                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PaymentTermId DEFAULT -1 FOR PaymentTermId";
                     break;
 
                 case "ShipmentPayables":

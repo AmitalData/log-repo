@@ -292,6 +292,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BQF", 
+                Name = "Quotes DWH", 
+                SearchFields = "BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Quotes Fact on the BI Report Screen", 
+			});
 			
             return all;
        }
