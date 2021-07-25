@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.BuildTenant;
+﻿using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
@@ -28,6 +29,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             LogMessagingUtil.Instance.Clear();
             switch (operationId)
             {
+                
+                case "BatchYearlyFIX_Click":
+                    {
+                        return BatchYearlyFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "_ButtonReverseTotal_Click":
                     {
                        return _ButtonReverseTotal_Click(tenant, _TextBoxParam);
@@ -145,6 +152,8 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
             }
         }
+
+       
 
         private GateWayTesterResult RebuildFIXGLAccountAgingData_Click(int tenant, string textBoxParam)
         {
@@ -657,6 +666,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+        private GateWayTesterResult BatchYearlyFIX_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+
+                var myBatchYearTransferService = new BatchYearlyFIXService(null);
+                var myBatchYearlyFIXParams = new BatchYearlyFIXParams()
+                {
+                    Tenant = tenant,
+                    Year = param.MyDate.Year,
+                    MyFixType = param.MyFixType
+                };
+                string subj = $"BatchYearly{param.MyFixType}({param.MyDate.Year})";
+                var taskExeId = myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearlyFIXParams>(myBatchYearlyFIXParams,
+                    tenant,subj, false);
+
+
+                gateWayTesterResult.JsonOut = $"taskExeId={taskExeId}";
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
         private GateWayTesterResult _ButtonReverseTotalFIXControl_Click(int tenant, string textBoxParam)
         {
 
@@ -965,5 +1012,6 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
         public bool ChangeSupplier2Customer { get; set; }
 
+        public string MyFixType { get; set; }
     }
 }
