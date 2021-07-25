@@ -19,6 +19,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.NotifyReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.NotifyReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastVersionNumber).IsRequired();
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(true);
@@ -331,7 +333,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
             this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
             this.Property(t => t.DescriptionRightToLeft).HasColumnName("DescriptionRightToLeft");
-
+            this.Property(t => t.NotifyReference1).HasColumnName("NotifyReference1");
+            this.Property(t => t.NotifyReference2).HasColumnName("NotifyReference2");
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
             this.HasOptional(t => t.ToPartnerAddress).WithMany().HasForeignKey(d => d.ToPartnerAddressId);

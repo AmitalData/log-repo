@@ -94,6 +94,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.ReleasingAgentId,
 						 dbo.Shipments.ContainerLastStatusDate,
 						 dbo.Shipments.Notify1Reference,
+             dbo.Shipments.Notify1Reference2,
 						 dbo.Shipments.Notify2Reference,
 						 dbo.Shipments.ShipperNotExporterReference,
 						 dbo.Shipments.ConsigneeNotImporterReference,

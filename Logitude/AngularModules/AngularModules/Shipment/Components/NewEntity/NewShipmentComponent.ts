@@ -3255,6 +3255,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.Notify1Note = !value ? null : this.SourceEntityPM.Notify1Note;
             this.EntityPM.Notify1AddressId = !value ? null : this.SourceEntityPM.Notify1AddressId;
             this.EntityPM.Notify1ContactId = !value ? null : this.SourceEntityPM.Notify1ContactId;
+            this.EntityPM.Notify1Reference = !value ? null : this.SourceEntityPM.Notify1Reference;
+            this.EntityPM.Notify1Reference2 = !value ? null : this.SourceEntityPM.Notify1Reference2;
         }
     }
 

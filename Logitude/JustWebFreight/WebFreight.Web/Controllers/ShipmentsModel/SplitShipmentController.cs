@@ -520,6 +520,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.Notify1Name = oldEntity.Notify1Name;
             entityPM.Notify1Note = oldEntity.Notify1Note;
             entityPM.Notify1Reference = oldEntity.Notify1Reference;
+            entityPM.Notify1Reference2 = oldEntity.Notify1Reference2;
             entityPM.Notify1Address1 = oldEntity.Notify1Address1;
             entityPM.Notify1Address2 = oldEntity.Notify1Address2;
             entityPM.Notify1City = oldEntity.Notify1City;

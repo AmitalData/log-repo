@@ -585,6 +585,8 @@ export class QuoteUtilities {
         shipmentPM.Notify1Name = entityPM.NotifyName;
         shipmentPM.Notify1AddressId = entityPM.NotifyAddressId;
         shipmentPM.Notify1ContactId = entityPM.NotifyContactId;
+        shipmentPM.Notify1Reference = entityPM.NotifyReference1;
+        shipmentPM.Notify1Reference2 = entityPM.NotifyReference2;
 
         //Routing
         shipmentPM.MainCarriageFromPartnerId = entityPM.FromPartnerId;

@@ -869,6 +869,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "AGENT":
             case "CSTMR":
+            case "NOTFY":
                 {
                     myResult = true;
                 }
@@ -882,6 +883,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return "ConsigneeReference1"; }
             case "AGENT": { return "AgentReference1"; }
             case "CSTMR": { return "CustomerReference1"; }
+            case "NOTFY": { return "NotifyReference1"; }
             default: { return null; }
         }
     }
@@ -891,6 +893,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return this.ConsigneeReference1; }
             case "AGENT": { return this.AgentReference1; }
             case "CSTMR": { return this.CustomerReference1; }
+            case "NOTFY": { return this.NotifyReference1; }
             default: { return null; }
         }
     }
@@ -900,6 +903,16 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.ConsigneeReference1 = newValue; break; }
             case "AGENT": { this.AgentReference1 = newValue; break; }
             case "CSTMR": { this.CustomerReference1 = newValue; break; }
+            case "NOTFY": { this.NotifyReference1 = newValue; break; }
+        }
+    }
+
+    get NotifyReference1() {
+        return this.EntityPM.NotifyReference1;
+    }
+    set NotifyReference1(newValue: string) {
+        if (this.EntityPM.NotifyReference1 != newValue) {
+            this.EntityPM.NotifyReference1 = newValue;
         }
     }
 
@@ -948,6 +961,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "AGENT":
             case "CSTMR":
+            case "NOTFY":
                 {
                     myResult = true;
                 }
@@ -961,6 +975,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return "ConsigneeReference2"; }
             case "AGENT": { return "AgentReference2"; }
             case "CSTMR": { return "CustomerReference2"; }
+            case "NOTFY": { return "NotifyReference2"; }
             default: { return null; }
         }
     }
@@ -970,6 +985,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { return this.ConsigneeReference2; }
             case "AGENT": { return this.AgentReference2; }
             case "CSTMR": { return this.CustomerReference2; }
+            case "NOTFY": { return this.NotifyReference2; }
             default: { return null; }
         }
     }
@@ -979,6 +995,16 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.ConsigneeReference2 = newValue; break; }
             case "AGENT": { this.AgentReference2 = newValue; break; }
             case "CSTMR": { this.CustomerReference2 = newValue; break; }
+            case "NOTFY": { this.NotifyReference2 = newValue; break; }
+        }
+    }
+
+    get NotifyReference2() {
+        return this.EntityPM.NotifyReference2;
+    }
+    set NotifyReference2(newValue: string) {
+        if (this.EntityPM.NotifyReference2 != newValue) {
+            this.EntityPM.NotifyReference2 = newValue;
         }
     }
 

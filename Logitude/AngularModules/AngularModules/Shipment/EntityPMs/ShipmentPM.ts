@@ -4152,6 +4152,16 @@ export class ShipmentPM {
         }
     }
 
+    private notify1Reference2: string;
+    public get Notify1Reference2() { return this.notify1Reference2; }
+    public set Notify1Reference2(newValue: string) {
+        if (this.notify1Reference2 != newValue) {
+            this.notify1Reference2 = newValue;
+            this.MarkAsDirty("Notify1Reference2");
+        }
+    }
+
+
     private notify2Reference: string;
     public get Notify2Reference() { return this.notify2Reference; }
     public set Notify2Reference(newValue: string) {

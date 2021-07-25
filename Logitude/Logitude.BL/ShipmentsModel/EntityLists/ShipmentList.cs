@@ -511,6 +511,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
        
 
         public string Notify1Reference { get; set; }
+        public string Notify1Reference2 { get; set; }
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }
         public string ConsigneeNotImporterReference { get; set; }

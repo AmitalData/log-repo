@@ -190,6 +190,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string NotifyContactId { get; set; }
         public string NotifyName { get; set; }
         public string NotifyNote { get; set; }
+        public string NotifyReference1 { get; set; }
+        public string NotifyReference2 { get; set; }
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
 

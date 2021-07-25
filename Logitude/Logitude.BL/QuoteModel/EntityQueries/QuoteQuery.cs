@@ -272,6 +272,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                NotifyContactId = f.NotifyContactId,
                                                NotifyName = f.NotifyCard == null ? null : f.NotifyCard.EnglishName,
                                                NotifyNote = f.NotifyCard == null ? null : f.NotifyCard.Notes,
+                                               NotifyReference1 = f.NotifyReference1,
+                                               NotifyReference2 = f.NotifyReference2,
                                                NumberOfFollowUps = f.NumberOfFollowUps,
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
@@ -1671,6 +1673,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.NotifyId = entityPOCO.NotifyId;
             entityPM.NotifyAddressId = entityPOCO.NotifyAddressId;
             entityPM.NotifyContactId = entityPOCO.NotifyContactId;
+            entityPM.NotifyReference1 = entityPOCO.NotifyReference1;
+            entityPM.NotifyReference2 = entityPOCO.NotifyReference2;
             if (!string.IsNullOrEmpty(entityPOCO.NotifyId))
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.NotifyId, entityPOCO.Tenant, true);
