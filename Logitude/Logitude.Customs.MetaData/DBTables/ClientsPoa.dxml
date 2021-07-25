@@ -30,6 +30,7 @@
     Type="varchar"
     Size="15">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -100,6 +101,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="ClientId"
+    ReferencedTable="Clients"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="AuthorizerPassportCountry"
     ReferencedTable="CustomsCountries"

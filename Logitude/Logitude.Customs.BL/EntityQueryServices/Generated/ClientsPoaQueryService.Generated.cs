@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ClientsPoaQueryService: EntityQueryService<ClientsPoa,ClientsPoaKeys,ClientsPoaPM,object,ClientsPoaKeys>
+   public partial class ClientsPoaQueryService: EntityQueryService<ClientsPoa,ClientsPoaKeys,ClientsPoaPM,ClientPM,ClientKeys>
    {
    
         ClientsPoaRepository repository;
@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ClientsPoaDataMapping();
         }
 		 
-		public  ClientsPoaPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  ClientsPoaPM GetSingle(string id, string clientid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ClientsPoaKeys(){ Id = id };
+             EntityKeys = new ClientsPoaKeys(){ Id = id, ClientId = clientid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ClientsPoa entityPOCO)
         {
-            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPOCO.Id,  };
+            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPOCO.Id, ClientId = entityPOCO.ClientId,  };
             return entityKeys;
         }
      

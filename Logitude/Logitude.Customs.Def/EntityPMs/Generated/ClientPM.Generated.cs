@@ -895,7 +895,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<ClientsPoaPM> clientPoas;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClientClientPoas", "Id","ClientId")]
+	   [DataMember]
+	   public virtual List<ClientsPoaPM> ClientPoas  
+	   {
+	        get
+             {
+                 if (clientPoas == null)
+                 {
+                     clientPoas = new List<ClientsPoaPM>();
+                 }
+                 return clientPoas;
+              }
+             set { clientPoas = value; }
+	    }
+		   
+	   private List<ClientsPoaPM>  deletedClientPoas;
+	   public virtual List<ClientsPoaPM> DeletedClientPoas  
+	   {
+	        get
+             {
+                 if ( deletedClientPoas == null)
+                 {
+                      deletedClientPoas = new List<ClientsPoaPM>();
+                 }
+                 return  deletedClientPoas;
+              }
+             set {  deletedClientPoas = value; }
+	    }
+	     }
    
 }
 	 
