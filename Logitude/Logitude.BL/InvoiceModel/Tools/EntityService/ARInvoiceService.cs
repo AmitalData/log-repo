@@ -929,6 +929,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 foreach (ARInvoiceLine item in lines)
                 {
                     this.DisconnectReceivable(item.ReceivableId);
+                    item.ReceivableId = null;
                 }
             }
 

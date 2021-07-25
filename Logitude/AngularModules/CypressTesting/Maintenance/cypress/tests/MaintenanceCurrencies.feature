@@ -30,7 +30,6 @@ Feature: Currency fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the Currency
         Given fill "new Notes" as notes currency
-        And  the user Check the InActive Currency CheckBox
         And fill "externalId" as Accounting External ID
         When edit currency
         Then the currency should update successfully

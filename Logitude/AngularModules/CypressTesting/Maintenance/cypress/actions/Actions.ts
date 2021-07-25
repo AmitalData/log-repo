@@ -1839,6 +1839,7 @@ export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
 }
 export function FillShippingAgentGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, Notes)
 }
 export function FillShippingAgentBillingTab(shippingAgentBillingTabDetails: CardBillingTabDetails) {
@@ -1997,6 +1998,7 @@ export function AssertTruckerContact(conatactDetails: ContactDetails) {
 }
 export function FillTruckerGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, Notes)
 }
 export function FillTruckerBillingTab(truckerBillingTabDetails: CardBillingTabDetails) {
