@@ -109,6 +109,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsAddInsideButtonEnabled = false;
 
                     this.SetUIProperties();
                     this.SetGenerateData();
