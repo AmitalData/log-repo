@@ -339,5 +339,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VendorVatNumber { get; set; }
 
         public DateTime? PaidDate { get; set; }
+        public Boolean IsNew { get; set; }
+        public Boolean IsCopied { get; set; }
+        public string CopiedFrom { get; set; }
     }
 }
