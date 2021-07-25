@@ -59,12 +59,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             PackageRepository packageRepository = new PackageRepository(0);
             List<Package> packages = packageRepository.GetPackages().ToList();
 
+
             string packageCode = "BUSN";
+
+            SettingRepository settingRepository = new SettingRepository();
+            Setting setting = settingRepository.GetSingleSetting("1");
+
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -139,7 +142,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.LBtenantsettingPoco.Id = this.entityPM.Id;
             this.InitializeComponent();
 
-            TenantValidating.Validate(theEntityPm);
+            if (!(setting.WorkEnvironment == "customs"))
+
+            {
+                TenantValidating.Validate(theEntityPm);
+            }
             TenantTracing.Trace(theEntityPm, Poco, isNewEntity);
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
 
