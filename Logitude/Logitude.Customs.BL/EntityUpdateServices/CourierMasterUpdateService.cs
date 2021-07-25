@@ -359,7 +359,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DONEOPERATION = "D",
                         QUEUEMANAGEMENT = true,
 
-
+                         
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);
