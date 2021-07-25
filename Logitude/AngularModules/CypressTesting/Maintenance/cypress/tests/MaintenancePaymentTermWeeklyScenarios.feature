@@ -36,6 +36,7 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
         Given the user edit the following payment term details
             | Description      | New Description       |
             | LocalDescription | New Local Description |
+            | InactiveCheckBox | Yes                   |
         And fill the following payment term Accounting External ID
             | AccountingExternalID | External1 |
         When save payment term
