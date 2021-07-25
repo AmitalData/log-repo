@@ -624,10 +624,10 @@ namespace Logitude.Accounting.BL.CoreBL
         List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
-            LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,args.TransferGLAccountId, tenant);
-            IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
-                                                            select new MyLedgerTransaction()
+            LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(accountingContext);
+            List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenLedgerTransactions(args.TransactionQueryOperations, args.GLAccountId, args.TransferGLAccountId, tenant);
+            List<MyLedgerTransaction> linesDTO = (from a in openReconciliation
+                                                        select new MyLedgerTransaction()
                                                             {
                                                                 Id = a.Id,
                                                                 DocumentDate = a.DocumentDate,
@@ -638,8 +638,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                                                 Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
                                                                 ForeignAmountCredit = a.ForeignAmountCredit,
                                                                 ForeignAmountDebit = a.ForeignAmountDebit,
-                                                            });
-            return linesDTO.ToList();
+                                                            }).ToList();
+            return linesDTO;
         }
 
 
