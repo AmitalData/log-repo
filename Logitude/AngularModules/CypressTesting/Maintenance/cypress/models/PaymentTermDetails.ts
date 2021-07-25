@@ -6,6 +6,7 @@ export interface PaymentTermDetails {
     FromDate: string,
     Days: string,
     Description: string,
+    InactiveCheckBox: string,
     LocalDescription: string,
     AccountingExternalID: string
 }
