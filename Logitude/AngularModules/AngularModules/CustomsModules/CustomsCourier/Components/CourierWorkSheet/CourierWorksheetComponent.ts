@@ -897,7 +897,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '120px' },
+            Styles: { width: '118px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ProcedureCurrentName'
@@ -919,7 +919,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '175px' },
+            Styles: { width: '174px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ImporterName'
@@ -929,7 +929,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '95px' },
+            Styles: { width: '94px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
