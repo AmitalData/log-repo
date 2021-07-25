@@ -915,6 +915,7 @@
     <None Include="DBTables\InvoiceModel\APPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\APPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoice.dxml" />
+    <None Include="DBTables\InvoiceModel\ARInvoiceChargesConstraint.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceEntity.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLine.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLineAction.dxml" />

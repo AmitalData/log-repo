@@ -20,7 +20,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Simplog.Data.InvoiceModel
 {
-    public class InvoiceContext : DbContextBase,IInvoiceContext
+    public class InvoiceContext : DbContextBase, IInvoiceContext
     {
         public InvoiceContext()
             : base("LogitudeStr")
@@ -30,7 +30,7 @@ namespace Simplog.Data.InvoiceModel
         }
 
         public InvoiceContext(DbConnection conn)
-            : base(conn,true)
+            : base(conn, true)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
@@ -44,18 +44,18 @@ namespace Simplog.Data.InvoiceModel
         }
 
         public static IInvoiceContext GetContext(int tenant)
-        {            
+        {
             GlobalDB currentDb;
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             //{              
-                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;/*"Logitude2-4_Main,sa,Saas256,.";*/
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             InvoiceContext context = new InvoiceContext(connection);
-            return context;            
+            return context;
         }
         public override LogitudeDBSchema LogitudeDBSchema
         {
@@ -177,7 +177,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
-         
+
             modelBuilder.Configurations.Add(new MarkUpTypeMap());
             modelBuilder.Configurations.Add(new MAWBStackMap());
             modelBuilder.Configurations.Add(new MeasurementMap());
@@ -201,7 +201,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new PackageTypeMap());
             modelBuilder.Configurations.Add(new PartnerTypeMap());
             modelBuilder.Configurations.Add(new PasswordPolicyMap());
-           
+
             modelBuilder.Configurations.Add(new PaymentTermMap());
             modelBuilder.Configurations.Add(new PermissionTypeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryFromToTypeMap());
@@ -402,7 +402,7 @@ namespace Simplog.Data.InvoiceModel
             get; set;
         }
 
-       
+
 
         public IDbSet<APInvoice> APInvoices
         {
@@ -438,7 +438,7 @@ namespace Simplog.Data.InvoiceModel
         {
             get; set;
         }
-        
+
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
             get; set;
@@ -468,25 +468,19 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ARInvoiceLineAction> ARInvoiceLineActions { get; set; }
         public IDbSet<ARPaymentTransferStatus> ARPaymentTransferStatuses { get; set; }
         public IDbSet<APPaymentTransferStatus> APPaymentTransferStatuses { get; set; }
-
         public IDbSet<SATInterface> SATInterfaces { get; set; }
-
         public IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; set; }
-
         public IDbSet<SATPaymentMethod> SATPaymentMethods { get; set; }
-
         public IDbSet<BankAccountLite> BankAccountLites { get; set; }
-
         public IDbSet<SATTransferStatus> SATTransferStatus { get; set; }
-
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
-
         public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
-
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; set; }
-       public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
+        public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
+        public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; set; }
+
         public void DetectChanges()
         {
             this.ChangeTracker.DetectChanges();
@@ -498,12 +492,12 @@ namespace Simplog.Data.InvoiceModel
             //try
             //{
             return base.SaveChanges();
-        //}
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-            
+            //}
+            //    catch (Exception e)
+            //    {
+            //        throw;
+            //    }
+
         }
         public DbConnection GetConnection()
         {
@@ -513,8 +507,5 @@ namespace Simplog.Data.InvoiceModel
         {
             return this;
         }
-
-
-      
     }
 }
