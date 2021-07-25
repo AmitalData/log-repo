@@ -4,10 +4,10 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     
-    templateUrl: './QuoteFiltersMenuComponent.html',
+    templateUrl: './QuoteOPFiltersMenuComponent.html',
 })
 
-export class QuoteFiltersMenuComponent {   
+export class QuoteOPFiltersMenuComponent {   
     @Output() SelectedValueChanged = new EventEmitter();
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
 

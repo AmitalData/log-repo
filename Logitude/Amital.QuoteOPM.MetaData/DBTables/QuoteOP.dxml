@@ -1256,7 +1256,7 @@
   </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
-    ReferencedTable="QuoteTemplates"
+    ReferencedTable="QuoteOPTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
@@ -1327,7 +1327,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="QuoteCustomerTypeCode"
-    ReferencedTable="QuoteCustomerTypes"
+    ReferencedTable="QuoteOPCustomerTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1407,7 +1407,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="QuoteTypeCode"
-    ReferencedTable="QuoteTypes"
+    ReferencedTable="QuoteOPTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1447,12 +1447,12 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="StageId"
-    ReferencedTable="QuoteStages"
+    ReferencedTable="QuoteOPStages"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="RatingCode"
-    ReferencedTable="QuoteRatings"
+    ReferencedTable="QuoteOPRatings"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation

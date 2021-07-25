@@ -23,11 +23,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("QuoteTemplate")]
+        [ForeignKey("QuoteOPTemplate")]
         [Column("QuoteTemplateId")]
 	    public string QuoteTemplateId { get; set; }
 	      
-        public virtual QuoteTemplate QuoteTemplate { get; set; }
+        public virtual QuoteOPTemplate QuoteOPTemplate { get; set; }
         [Column("ConcurrencyGUID")]
 	    public string ConcurrencyGUID { get; set; }
         [Column("LastVersionNumber")]
@@ -159,11 +159,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string ShipmentTypeId { get; set; }
 	      
         public virtual ShipmentType ShipmentType { get; set; }
-        [ForeignKey("QuoteCustomerType")]
+        [ForeignKey("QuoteOPCustomerType")]
         [Column("QuoteCustomerTypeCode")]
 	    public string QuoteCustomerTypeCode { get; set; }
 	      
-        public virtual QuoteCustomerType QuoteCustomerType { get; set; }
+        public virtual QuoteOPCustomerType QuoteOPCustomerType { get; set; }
         [ForeignKey("CustomerCard")]
         [Column("CustomerId")]
 	    public string CustomerId { get; set; }
@@ -291,11 +291,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public int? PackageType4Quantity { get; set; }
         [Column("PackageType5Quantity")]
 	    public int? PackageType5Quantity { get; set; }
-        [ForeignKey("QuoteType")]
+        [ForeignKey("QuoteOPType")]
         [Column("QuoteTypeCode")]
 	    public string QuoteTypeCode { get; set; }
 	      
-        public virtual QuoteType QuoteType { get; set; }
+        public virtual QuoteOPType QuoteOPType { get; set; }
         [Column("GrossWeightUnitCode")]
 	    public string GrossWeightUnitCode { get; set; }
         [Column("ChargeableWeightUnitCode")]
@@ -375,14 +375,14 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
         [Column("StageId")]
 	    public string StageId { get; set; }
 	      
-        public virtual QuoteStage Stage { get; set; }
+        public virtual QuoteOPStage Stage { get; set; }
         [Column("StageDueDate")]
 	    public DateTime? StageDueDate { get; set; }
         [ForeignKey("Rating")]
         [Column("RatingCode")]
 	    public string RatingCode { get; set; }
 	      
-        public virtual QuoteRating Rating { get; set; }
+        public virtual QuoteOPRating Rating { get; set; }
         [Column("LastActivityDate")]
 	    public DateTime? LastActivityDate { get; set; }
         [Column("LastActivitySubject")]

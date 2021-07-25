@@ -197,6 +197,7 @@ export class QuoteOPList {
 	PickupDeliveryChargeableWeight: number;
 	PickupDeliveryVolumetricWeight: number;
 	RegionalTaxId: string;
+	RegionalTaxPercentage: number;
 	IsMultiCurrency: boolean;
 	
 }

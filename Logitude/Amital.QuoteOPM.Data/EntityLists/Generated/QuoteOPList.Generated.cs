@@ -393,6 +393,8 @@ namespace Amital.QuoteOPM.Data.EntityLists
        [DataMember]
        public string RegionalTaxId  { get; set; }
        [DataMember]
+       public double? RegionalTaxPercentage  { get; set; }
+       [DataMember]
        public bool IsMultiCurrency  { get; set; }
    }
 

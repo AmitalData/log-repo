@@ -331,7 +331,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
-    <Content Include="QuoteOPM\Components\FiltersMenu\QuoteFiltersMenuComponent.html" />
+    <Content Include="QuoteOPM\Components\FiltersMenu\QuoteOPFiltersMenuComponent.html" />
     <Content Include="QuoteOPM\Components\Helpers\QuoteHelperComponent.html" />
     <Content Include="QuoteOPM\Components\MenuButtons\ApproveBuildShipmentComponent.html" />
     <Content Include="QuoteOPM\Components\MenuButtons\QuoteEventNotesComponent.html" />
@@ -4687,7 +4687,7 @@
     <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\EditQuoteTemplateComponent - Copy.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTemplates\Components\QuoteTemplatePricingSettingComponent - Copy.ts" />
     <TypeScriptCompile Include="QuoteOPM\Args.ts" />
-    <TypeScriptCompile Include="QuoteOPM\Components\FiltersMenu\QuoteFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\FiltersMenu\QuoteOPFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\Helpers\QuoteHelperComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\MenuButtons\ApproveBuildShipmentComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\MenuButtons\QuoteEventNotesComponent.ts" />

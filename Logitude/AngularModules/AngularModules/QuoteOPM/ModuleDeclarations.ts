@@ -5,7 +5,7 @@ import {QuoteDimensionsComponent} from './Components/NewEntity/QuoteDimensionsCo
 import {NewQuoteAddEditDimensionsComponent} from './Components/NewEntity/NewQuoteAddEditDimensionsComponent'
 import {QuoteShortTitleComponent} from './Components/ShortTitles/QuoteShortTitleComponent';
 import {QuoteHelperComponent} from './Components/Helpers/QuoteHelperComponent';
-import {QuoteFiltersMenuComponent} from './Components/FiltersMenu/QuoteFiltersMenuComponent';
+import {QuoteOPFiltersMenuComponent} from './Components/FiltersMenu/QuoteOPFiltersMenuComponent';
 import {ApproveBuildShipmentComponent} from './Components/MenuButtons/ApproveBuildShipmentComponent';
 import {QuoteEventNotesComponent} from './Components/MenuButtons/QuoteEventNotesComponent';
 
@@ -20,8 +20,9 @@ export const Components =
         NewQuoteAddEditDimensionsComponent,        
         QuoteShortTitleComponent,
         QuoteHelperComponent, 
-        QuoteFiltersMenuComponent,  
+        QuoteOPFiltersMenuComponent,  
         ApproveBuildShipmentComponent,
+
         QuoteEventNotesComponent,
     ];
 
@@ -43,7 +44,7 @@ export class ModuleDeclarations {
             case "NewQuoteAddEditDimensionsComponent": { myResult = NewQuoteAddEditDimensionsComponent; break; }            
             case "QuoteShortTitleComponent": { myResult = QuoteShortTitleComponent; break; } 
             case "QuoteHelperComponent": { myResult = QuoteHelperComponent; break; }
-            case "QuoteFiltersMenuComponent": { myResult = QuoteFiltersMenuComponent; break; }
+            case "QuoteOPFiltersMenuComponent": { myResult = QuoteOPFiltersMenuComponent; break; }
             case "ApproveBuildShipmentComponent": { myResult = ApproveBuildShipmentComponent; break; }  
             case "QuoteEventNotesComponent": { myResult = QuoteEventNotesComponent; break; }                       
         }
