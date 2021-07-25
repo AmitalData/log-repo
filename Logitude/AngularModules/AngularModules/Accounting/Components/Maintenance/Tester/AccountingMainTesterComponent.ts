@@ -511,6 +511,7 @@ Line3
         //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
+
     ButtonReconcileStageCBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -583,6 +584,57 @@ Line3
             );
 
     }
+
+    ButtonAllOpenRevaluationsNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _RevaluationOpUrl = ServiceHelper.GetLogitudeURL() + '/api/RevaluationOp';
+        let myUrl = _RevaluationOpUrl + "?tenant=" + objToCheck1.Tenant;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator();},
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+    ButtonRunOneRevaluationNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.RevaluationId = "RevaluationId, must be open";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _RevaluationOpUrl = ServiceHelper.GetLogitudeURL() + '/api/RevaluationOp';
+        let myUrl = _RevaluationOpUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&revaluationId=" + objToCheck1.RevaluationId;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator();},
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+
     ButtonCardGLAccountConnect_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
