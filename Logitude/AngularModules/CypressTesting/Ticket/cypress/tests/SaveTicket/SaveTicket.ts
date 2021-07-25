@@ -17,12 +17,12 @@ Given("the user logged in and navigated to ticket workspace", () => {
 
 Given("a ticket with the following details", (dataTable) => {
     TicketData = Assists.CreateInstance<TicketDetails>(dataTable, true);
-    cy.Click(BaseSelectors.Button,TicketSelectors.ContainsNew);
+    cy.Click(BaseSelectors.Button, TicketSelectors.ContainsNew);
     Actions.FillTicketFields(TicketData);
 });
 
 When("create ticket", () => {
-Actions.CreateTicket()
+    Actions.CreateTicket()
 });
 
 Then("the ticket should create successfully", () => {
@@ -38,7 +38,7 @@ Given("the user in the ticket's main page", () => {
 
 When("save as close", () => {
     Actions.SaveTicket(TicketSelectors.ContainsSaveAsClosed)
-    cy.Click(BaseSelectors.RedButton , TicketSelectors.ContainsOk);
+    cy.Click(BaseSelectors.RedButton, TicketSelectors.ContainsOk);
 });
 
 When("save as open", () => {
@@ -47,9 +47,12 @@ When("save as open", () => {
 
 When("save as resolve", () => {
     Actions.SaveTicket(TicketSelectors.ContainsSaveAsResolved);
-    cy.Click(BaseSelectors.RedButton , TicketSelectors.ContainsOk);
+    cy.Click(BaseSelectors.RedButton, TicketSelectors.ContainsOk);
 });
 
-Then("the ticket should save successfully", () => {
+Then("the {string} ticket should save successfully", (stageValue) => {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTicket, 200);
+    cy.get(".HeaderScreenValue").eq(5).invoke('text').then((text) => {
+        assert.equal(stageValue, text.trim())
+    })
 });

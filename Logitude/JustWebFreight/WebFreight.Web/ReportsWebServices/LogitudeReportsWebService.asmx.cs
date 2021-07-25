@@ -7893,8 +7893,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (iQueryable.Count() > 0)
             {
-                allPayables = context.ShipmentPayables.Where(d => d.Tenant == tenant).Include("ChargesType");
-                allReceivables = context.ShipmentReceivables.Where(d => d.Tenant == tenant).Include("ChargesType");
+                allPayables = context.ShipmentPayables.Where(d => d.Tenant == tenant).Include("ChargesType").Include("ChargesType.ChargesGroup");
+                allReceivables = context.ShipmentReceivables.Where(d => d.Tenant == tenant).Include("ChargesType").Include("ChargesType.ChargesGroup");
 
                 myResult = ((from myShipment in iQueryable
                              join myPayable in allPayables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
@@ -7933,6 +7933,8 @@ namespace WebFreight.Web.ReportsWebServices
                                  Payables_ACCT = isProfitCurrecny ? myItem.AccountedAmountInProfitCurrency : myItem.AccountedAmountInLocalCurrency,
                                  Receivables_OPEN = 0,
                                  Receivables_ACCT = 0,
+                                 ChargeGroupCode = myItem.ChargesType == null ? null : myItem.ChargesType.ChargesGroupCode,
+                                 ChargeGroupName = myItem.ChargesType == null ? null : (myItem.ChargesType.ChargesGroup == null ? null : myItem.ChargesType.ChargesGroup.Name),
                              }).ToList()
 
                             .Union
@@ -7974,6 +7976,8 @@ namespace WebFreight.Web.ReportsWebServices
                                  Payables_ACCT = 0,
                                  Receivables_OPEN = myItem.ShipmentReceivableLineStatusCode == "OAMT" || myItem.ShipmentReceivableLineStatusCode == "EMPT" ? (isProfitCurrecny ? myItem.AmountInProfitCurrency : myItem.TotalAmountLocal) : 0,
                                  Receivables_ACCT = myItem.ShipmentReceivableLineStatusCode == "ACCT" || myItem.ShipmentReceivableLineStatusCode == "DRFT" ? (isProfitCurrecny ? myItem.AmountInProfitCurrency : myItem.TotalAmountLocal) : 0,
+                                 ChargeGroupCode = myItem.ChargesType == null ? null : myItem.ChargesType.ChargesGroupCode,
+                                 ChargeGroupName = myItem.ChargesType == null ? null : (myItem.ChargesType.ChargesGroup == null ? null : myItem.ChargesType.ChargesGroup.Name),
                              }).ToList())
 
                             .GroupBy(d => new
@@ -8004,6 +8008,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.TransportMode,
                                 d.ValueOfGoods,
                                 d.FlightNumber,
+                                d.ChargeGroupCode,
+                                d.ChargeGroupName
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -8039,6 +8045,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 Payables_ACCT = s.Sum(k => k.Payables_ACCT),
                                 Receivables_OPEN = s.Sum(k => k.Receivables_OPEN),
                                 Receivables_ACCT = s.Sum(k => k.Receivables_ACCT),
+                                ChargeGroupCode = s.Key.ChargeGroupCode,
+                                ChargeGroupName = s.Key.ChargeGroupName,
                             }).ToList();
             }
 
@@ -8318,6 +8326,8 @@ namespace WebFreight.Web.ReportsWebServices
                     record.TransportMode = a.TransportMode;
                     record.ValueOfGoods = a.ValueOfGoods;
                     record.FlightNumber = a.FlightNumber;
+                    record.ChargeGroupCode = a.ChargeGroupCode;
+                    record.ChargeGroupName = a.ChargeGroupName;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }
