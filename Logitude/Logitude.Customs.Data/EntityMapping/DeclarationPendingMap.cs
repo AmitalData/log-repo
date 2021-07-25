@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationID).HasColumnName("DeclarationID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CourierPendingReasonCode).HasColumnName("CourierPendingReasonCode").IsRequired().HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.CourierPendingReasonCode).HasColumnName("CourierPendingReasonCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PendingRemarks).HasColumnName("PendingRemarks").HasMaxLength(1024).IsUnicode(true);
 

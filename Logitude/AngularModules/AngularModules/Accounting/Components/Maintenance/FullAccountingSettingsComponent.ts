@@ -31,7 +31,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 
 @Component({
-    
+
     selector: 'FullAccountingSettingsComponent',
     templateUrl: './FullAccountingSettingsComponent.html',
     providers: [ServiceArgs]
@@ -58,20 +58,29 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
-        this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
-            });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) =>
+        {
+            this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting").subscribe((response1: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+                    });
 
+                });
             });
         });
+
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
             //this.ImageId = this.EntityPM.PaymentChequesLogoId;
             //this.EntityId = this.EntityPM.Id;
+
+            this.BuildTabs();
 
             if (this.EntityPM == null || this.EntityPM == undefined) {
                 this.InsertIfNotExist();
@@ -84,6 +93,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
                 this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
                 this.SetUIProperties();
+                this.SetSelectedAgingPeriods();
             }
 
         });
@@ -124,11 +134,11 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
     ngOnInit() {
-        this.BuildTabs();
     }
 
     ngAfterViewInit() {
         //this.SetUIProperties();
+
     }
     ReloadTenantPM(): any {
 
@@ -184,9 +194,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             } else if (value == false) {
                 this.AccountingActivationDate = null;
             }
+
+            this.ToggleAgingDefinitionTab(value);
+
             this.ReloadTenantPM();
             this.SetUIProperties();
         }
+    }
+
+    private ToggleAgingDefinitionTab(value: boolean)
+    {
+        if (value)
+            this.AddAgingDefinitionTab();
+        else
+            this.RemoveAgingDefinitionTab();
     }
 
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
@@ -492,6 +513,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 SubmitChanges(ControlAccountId:string) {
     //console.log("EntityPM: ", this.EntityPM);
+
+    this.SetAgingPeriodsFields();
+
     this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
         var mm: ServiceResponse = myResult;
@@ -515,6 +539,55 @@ SubmitChanges(ControlAccountId:string) {
             this.ValidationErrorsList.push('Server Error!');
         });
     }
+
+    SetAgingPeriodsFields(){
+        this.EntityPM.FirstPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods1);
+        this.EntityPM.SecondPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods2);
+        this.EntityPM.ThirdsPeriodsMonths = this.JoinCodesOfPeriods(this.SelectedPeriods3);
+    }
+
+    ResetAgingPeriodsFields(){
+        const thirdPeriodIsNotSelected = this.NumberOfPeriods <= 2;
+        if(thirdPeriodIsNotSelected)
+            this.ResetThirdPeriod();
+
+        const secondPeriodIsNotSelected = this.NumberOfPeriods == 1;
+        if(secondPeriodIsNotSelected)
+            this.ResetSecondPeriod();
+    }
+
+    private ResetSecondPeriod()
+    {
+        this.EntityPM.SecondPeriodsMonths = null;
+        this.SelectedPeriods2 = [];
+    }
+
+    private ResetThirdPeriod()
+    {
+        this.EntityPM.ThirdsPeriodsMonths = null;
+        this.SelectedPeriods3 = [];
+    }
+
+    SetSelectedAgingPeriods(){
+
+        this.SelectedPeriods1 = this.SetSelectedPeriods(this.EntityPM.FirstPeriodsMonths);
+        this.SelectedPeriods2 = this.SetSelectedPeriods(this.EntityPM.SecondPeriodsMonths);
+        this.SelectedPeriods3 = this.SetSelectedPeriods(this.EntityPM.ThirdsPeriodsMonths);
+    }
+
+    JoinCodesOfPeriods(periods: any[]){
+        if(periods)
+            return periods.map(d=>d.Code)?.join(',');
+    }
+
+    SetSelectedPeriods(joinedPeriodsCodes: string){
+        if(joinedPeriodsCodes){
+            var codes = joinedPeriodsCodes.split(',');
+            return this.Periods.filter(d=>codes.includes(d.Code));
+        }
+        return [];
+    }
+
 
     ValidateMulticurrencyAccounts() {
         console.log("ValidateMulticurrencyAccounts");
@@ -562,8 +635,21 @@ SubmitChanges(ControlAccountId:string) {
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
         this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
-
+        if(this.AccountingActivated)
+            this.AddAgingDefinitionTab();
     }
+
+    RemoveAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex > 0)
+        this.TabsSource.splice(tabIndex,1);
+    }
+    AddAgingDefinitionTab(){
+        var tabIndex = this.TabsSource.findIndex(d=>d.Name == "AgingDefinition");
+        if(tabIndex < 0)
+            this.TabsSource.push({ Name: "AgingDefinition", isSelected: false, Header: TextCodeTranslator.Translate("FullAccountingSetting.O.AgingDefinition") });
+    }
+
     SelectionChanged(tab: any) {
 
         this.TabsSource.forEach(item => { // reset selection
@@ -619,5 +705,34 @@ SubmitChanges(ControlAccountId:string) {
 
     }
 
+
+    public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
+
+
+    public get NumberOfPeriods() : number {
+        return this.EntityPM.NumberofPeriods;
+    }
+    public set NumberOfPeriods(value : number) {
+        this.EntityPM.NumberofPeriods = value;
+
+        this.ResetAgingPeriodsFields();
+    }
+
+    Periods: any[] = [
+        {EnglishName: 'Period 0', LocalName: 'תקופה גיול 0', Code: 'Period0'},
+        {EnglishName: 'Period 1', LocalName: 'תקופה גיול 1', Code: 'Period1'},
+        {EnglishName: 'Period 2', LocalName: 'תקופה גיול 2', Code: 'Period2'},
+        {EnglishName: 'Period 3', LocalName: 'תקופה גיול 3', Code: 'Period3'},
+        {EnglishName: 'Period 4', LocalName: 'תקופה גיול 4', Code: 'Period4'},
+        {EnglishName: 'Period 5', LocalName: 'תקופה גיול 5', Code: 'Period5'},
+        {EnglishName: 'Period Past', LocalName: 'לפני התקופה', Code: 'PeriodPast'}
+        // {EnglishName: 'Period Future', LocalName: 'xxxx התקופה', Code: 'PeriodFuture'}
+    ];
+
+    // fill these arrays from database
+    SelectedPeriods1: any[] = [];
+    SelectedPeriods2: any[] = [];
+    SelectedPeriods3: any[] = [];
 
 }

@@ -355,7 +355,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
-    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment == null ? null : this.paymentPM.AutomaticPayment; }
     public set AutomaticPayment(newValue: number) {
         this.paymentPM.AutomaticPayment = newValue;
     }
@@ -1346,7 +1346,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             item.Line = line;
             item.SequenceNumeric = seq;
             this.paymentPM.AddDeclarationPaymentMethod(item);
-            if (this.BetweenMinAndMax && isLoad) {
+            if (this.BetweenMinAndMax && isLoad && !(this.sumBtl != null && this.sumBtl > 0)) {
                 this.paymentMethodModelMax = new PaymentMethodModel(item, this);
             }
             else {

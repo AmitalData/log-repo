@@ -155,6 +155,15 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CalculatedPostponedChequesCommision"
+    OldNames="CalculatedPostponedCheques"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

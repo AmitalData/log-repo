@@ -5,6 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -14,7 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-    
+using System.Xml;
+
 namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
 {
     public class RatesUpdateService
@@ -45,6 +47,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             ratesUpdate.ComputingPartnerCode = !string.IsNullOrEmpty(ratesUpdate.ComputingPartnerCode) ?
                                                 Regex.Replace(ratesUpdate.ComputingPartnerCode, @"\s+", "") : ratesUpdate.ComputingPartnerCode;
         }
+       
         public void ValidateRatesDataMapping()
         {
             this.ValidateMandatoryFields();

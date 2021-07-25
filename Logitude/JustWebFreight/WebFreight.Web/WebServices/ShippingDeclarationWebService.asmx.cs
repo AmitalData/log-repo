@@ -49,6 +49,7 @@ namespace WebFreight.Web.WebServices
         private IWebFreightContext webfreightContext;
         private ShipmentPM shipment;
         private AddressRepository addressRepository;
+        private ContactRepository contactRepository;
         private CountryRepository countryRepository;
         
         [WebMethod]
@@ -87,7 +88,7 @@ namespace WebFreight.Web.WebServices
 
             PortRepository portRepository = new PortRepository(commonContext);
             addressRepository = new AddressRepository(commonContext);
-            ContactRepository contactRepository = new ContactRepository(commonContext);
+            contactRepository = new ContactRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(commonContext);
             countryRepository = new CountryRepository(commonContext);
             CardQuery cardQuery = new CardQuery(tenant);
@@ -417,6 +418,7 @@ namespace WebFreight.Web.WebServices
                     }
                 }
 
+                myDataProvider.ShipmentCreationDate = shipment.CreateDateTime;
                 myDataProvider.Date = todayDate.ToShortDateString();
                 myDataProvider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
                 myDataProvider.Branch = shipment.BranchName != null ? shipment.BranchName : "";
@@ -452,13 +454,15 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
-                myDataProvider.TrailerNumber = shipment.TrailerNumber;
-                myDataProvider.OriginCountryName = shipment.FromCountryId;
+                myDataProvider.TrailerNumber = shipment.TrailerNumber;             
                 myDataProvider.MasterPreCarriageCarrierNumber = shipment.MasterPreCarriageCarrierNumber;
                 myDataProvider.MasterPreCarriageVesselName = shipment.MasterPreCarriageVesselName;
                 myDataProvider.MasterPreCarriageFromPortName = shipment.MasterPreCarriageFromPortName;
                 myDataProvider.MasterProjectNumber = shipment.MasterProjectNumber;
                 myDataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
+
+                Country OriginCountry = CountryRepository.GetSingleCountry(shipment.FromCountryId, tenant, false);
+                myDataProvider.OriginCountryName = OriginCountry != null ? OriginCountry.EnglishName : "" ;
 
                 myDataProvider.Transshipment1ETA_String = shipment.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETA) : "";
                 myDataProvider.Transshipment1ETD_String = shipment.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipment.Transshipment1ETD) : "";
@@ -466,6 +470,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
                 myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
+                myDataProvider.SCI = shipment.SCI;
+                myDataProvider.MasterDate = shipment.MAWBOBLDate;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -1118,9 +1124,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
-                    Contact currentContact = (from a in commonContext.Contacts
-                                              where a.Email == contactEmail && a.Tenant == tenant
-                                              select a).FirstOrDefault();
+                    Contact currentContact = contactRepository.GetSingleContactByEmailAndTenant(contactEmail, tenant);
 
                     if (currentContact != null)
                     {
@@ -1128,9 +1132,15 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                         myDataProvider.UserMobileNumber = currentContact.Mobile;
+
+                        myDataProvider.UserDepartment = (from user in commonContext.Users
+                                                         join department in commonContext.Departments
+                                                         on user.DepartmentId equals department.Id into userDepartments
+                                                         from userDepartment in userDepartments.DefaultIfEmpty()
+                                                         where user.Id == currentContact.Id
+                                                         select userDepartment.EnglishName).FirstOrDefault();
                     }
                 }
-
                 #endregion
 
                 #region Agent
@@ -2657,48 +2667,7 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(shipment.CustomerId))
                 {
-                    myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1: "";
-
-                    Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
-                    if (customer != null)
-                    {
-                        myDataProvider.CustomerVat = customer.VatNumber;
-                        myDataProvider.IRSPlace = customer.IRSPlace;
-                        myDataProvider.IRSNumber = customer.IRSNumber;
-                        myDataProvider.CustomerName = customer.EnglishName;
-                    }
-
-                    Address customerAddress = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
-                    if (customerAddress != null)
-                    {
-                        myDataProvider.CustomerAddress = DataProviders.General.GetAddress(customerAddress);
-
-                        if (customerAddress.PhoneNumber != null || customerAddress.FaxNumber != null)
-                        {
-                            myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (customerAddress.PhoneNumber != null ? "Tel: " + customerAddress.PhoneNumber + " " : "") + (customerAddress.FaxNumber != null ? "Fax: " + customerAddress.FaxNumber + " " : "");
-                        }
-                    }
-
-                    Contact customerContact = contactRepository.GetSingleContact(shipment.CustomerContactId, tenant);
-                    if (customerContact != null)
-                    {
-                        myDataProvider.ContactDetails = customerContact.EnglishName;
-
-                        if (!string.IsNullOrEmpty(customerContact.Email))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Email;
-                        }
-
-                        if (!string.IsNullOrEmpty(customerContact.Mobile))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Mobile;
-                        }
-
-                        if (!string.IsNullOrEmpty(customerContact.Fax))
-                        {
-                            myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Fax;
-                        }
-                    }
+                    SetCustomerDetails(myDataProvider);
                 }
 
                 #endregion
@@ -3253,6 +3222,9 @@ namespace WebFreight.Web.WebServices
                         insidePackage.Reference3 = insideItem.Reference3;
                         insidePackage.CommodityNumber = insideItem.CommodityNumber;
 
+                        // Horse 
+                        this.SetHorseDetails(insidePackage, insideItem);
+                        
                         #region Car Details
                         insidePackage.Make = insideItem.Make;
                         insidePackage.Model = insideItem.Model;
@@ -3847,6 +3819,111 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
+
+        private void SetHorseDetails(InsidePackageLine insidePackage, InsideShipmentPackage insideItem)
+        {
+            if (!string.IsNullOrEmpty(insideItem.HorseId))
+            {
+                Horse horse = (from h in commonContext.Horses
+                               where h.Id == insideItem.HorseId
+                               select h).FirstOrDefault();
+
+                if (horse != null)
+                {
+                    insidePackage.HorseName = horse.Name;
+                    insidePackage.HorseYearOfBirth = horse.YearOfBirth;
+                    insidePackage.HorseColor = horse.Color;
+                    insidePackage.HorseGender = horse.Gender;
+                    insidePackage.HorseBreed = horse.Breed;
+                    insidePackage.HorseDiscipline = horse.Discipline;
+                    insidePackage.HorseTravelBehavior = horse.TravelBehavior;
+                    insidePackage.HorseMicochipNumber = horse.MicochipNumber;
+                    insidePackage.HorsePassportNumber = horse.PassportNumber;
+                    insidePackage.HorseCurrentStable = horse.CurrentStable;
+                    insidePackage.HorseOwner = horse.Owner;
+                    insidePackage.HorseRemarks = horse.Remarks;
+
+                    if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                    {
+                        Country country = (from pa in commonContext.Countries
+                                           where pa.Id == horse.CountryOfBirthId
+                                           select pa).FirstOrDefault();
+
+                        if (country != null)
+                        {
+                            insidePackage.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SetCustomerDetails(ShippingDeclarationDataProvider myDataProvider)
+        {
+            myDataProvider.CustomerReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
+
+            Card customer = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
+            if (customer != null)
+            {
+                myDataProvider.CustomerVat = customer.VatNumber;
+                myDataProvider.IRSPlace = customer.IRSPlace;
+                myDataProvider.IRSNumber = customer.IRSNumber;
+                myDataProvider.CustomerName = customer.EnglishName;
+            }
+
+            Address address = addressRepository.GetSingleAddress(shipment.CustomerAddressId, tenant);
+            if (address != null)
+            {
+                myDataProvider.CustomerAddress1 = address.Address1;
+                myDataProvider.CustomerAddress2 = address.Address2;
+                myDataProvider.CustomerCity = address.City;
+                myDataProvider.CustomerTel = address.PhoneNumber;
+                myDataProvider.CustomerFax = address.FaxNumber;
+                myDataProvider.CustomerZipCode = address.ZipCode;
+
+                if (address.CountryId != null)
+                {
+                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                    if (country != null)
+                    {
+                        myDataProvider.CustomerCountry = country.EnglishName;
+                    }
+                }
+
+                myDataProvider.CustomerAddress = DataProviders.General.GetAddress(address);
+
+                if (address.PhoneNumber != null || address.FaxNumber != null)
+                {
+                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (address.FaxNumber != null ? "Fax: " + address.FaxNumber + " " : "");
+                }
+            }
+
+            Contact customerContact = contactRepository.GetSingleContact(shipment.CustomerContactId, tenant);
+            if (customerContact != null)
+            {
+                myDataProvider.CustomerContactEmail = customerContact.Email;
+                myDataProvider.CustomerContactMobile = customerContact.Mobile;
+                myDataProvider.CustomerContactPhone = customerContact.BusinessPhone;
+
+                myDataProvider.ContactDetails = customerContact.EnglishName;
+
+                if (!string.IsNullOrEmpty(customerContact.Email))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Email;
+                }
+
+                if (!string.IsNullOrEmpty(customerContact.Mobile))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Mobile;
+                }
+
+                if (!string.IsNullOrEmpty(customerContact.Fax))
+                {
+                    myDataProvider.ContactDetails = myDataProvider.ContactDetails + ", " + customerContact.Fax;
+                }
+            }
+        }
+
         private void ComputeLastToField(ShippingDeclarationDataProvider myDataProvider, ShipmentPickUpDelivery myLastDelivery)
         {
             if (myLastDelivery != null)
@@ -4261,6 +4338,42 @@ namespace WebFreight.Web.WebServices
             line.PackageGrossWeight = weight.ToString() + " " + String.Format("{0:#0.00}", package.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "");
             line.PackageVolume = volume.ToString() + String.Format("{0:#0.00}", package.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "");
             line.PackageVolumetricWeight = Volumetricweight.ToString() + " " + String.Format("{0:#0.00}", package.VolumetricWeight.Value) + " " + (shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "");
+
+            #region Horse 
+            if (!string.IsNullOrEmpty(package.HorseId))
+            {
+                Horse horse = (from h in commonContext.Horses
+                               where h.Id == package.HorseId
+                               select h).FirstOrDefault();
+
+                if (horse != null)
+                {
+                    line.HorseName = horse.Name;
+                    line.HorseYearOfBirth = horse.YearOfBirth;
+                    line.HorseColor = horse.Color;
+                    line.HorseGender = horse.Gender;
+                    line.HorseBreed = horse.Breed;
+                    line.HorseDiscipline = horse.Discipline;
+                    line.HorseTravelBehavior = horse.TravelBehavior;
+                    line.HorseMicochipNumber = horse.MicochipNumber;
+                    line.HorsePassportNumber = horse.PassportNumber;
+                    line.HorseCurrentStable = horse.CurrentStable;
+                    line.HorseOwner = horse.Owner;
+                    line.HorseRemarks = horse.Remarks;
+
+                    if (!string.IsNullOrEmpty(horse.CountryOfBirthId))
+                    {
+                        Country country = (from pa in commonContext.Countries
+                                           where pa.Id == horse.CountryOfBirthId
+                                           select pa).FirstOrDefault();
+                        if (country != null)
+                        {
+                            line.HorseCountryOfBirthName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+            #endregion
 
             #region Car Details
             line.Make = package.Make;

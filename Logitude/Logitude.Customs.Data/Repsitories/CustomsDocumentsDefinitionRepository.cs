@@ -21,11 +21,13 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<CustomsDocumentsDefinition> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, int tenant)
+        public List<CustomsDocumentsDefinition> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, string declarationTypeCode, int tenant)
         {
             return (from a in context.CustomsDocumentsDefinitions
-                    where (a.CargoTypeCode == cargoTypeCode || a.CargoTypeCode == null) && (a.ProcessTypeCode == processTypeCode || a.ProcessTypeCode == null) && 
-                    (a.TransportationTypeCode == transportTypeCode || a.TransportationTypeCode == null) && a.Inactive == false && a.Tenant == tenant
+                    where (a.CargoTypeCode == cargoTypeCode || a.CargoTypeCode == null) && 
+                          (a.ProcessTypeCode == processTypeCode || a.ProcessTypeCode == null) && 
+                          (a.TransportationTypeCode == transportTypeCode || a.TransportationTypeCode == null) &&
+                          (a.DeclarationTypeCode == declarationTypeCode || a.DeclarationTypeCode == null) && a.Inactive == false && a.Tenant == tenant
                     orderby a.DocumentTypeCode, a.ProcessTypeCode , a.CargoTypeCode , a.TransportationTypeCode 
                     select a).ToList();
         }

@@ -7646,6 +7646,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Declaration features
             //Feature DeclarationFeature = tenantFeatures.Where(d => d.Code == "DECLARATION" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature DeclarationFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature DeclarationExportFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSEXPORTDECLARATION" && d.FeatureTypeCode == "QUE1").FirstOrDefault();
+
             #endregion
 
             #region CustomsVendor features
@@ -15014,12 +15016,18 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature exportStorageFeature = tenantFeatures.Where(d => d.Code == "ExportStorage" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             Feature containerizationFeature = tenantFeatures.Where(d => d.Code == "Containerization" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature exportDeclarationFeature = tenantFeatures.Where(d => d.Code == "ExportDeclaration" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
 
             Feature CUSTOMSDECLARATIONFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature CUSTOMSExportDECLARATIONFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSEXPORTDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
-            #region Menus
+
+            #region MenusCUSTOMSDECLARATIONFeature
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 4, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = CUSTOMSDECLARATIONFeature.Id,FeatureUniqeCode= CUSTOMSDECLARATIONFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SSTT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 5, CategoryTypeCode = null, TextCode = "Customs.MH.ExportDeclaration", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id, FeatureId = exportDeclarationFeature.Id, FeatureUniqeCode = exportDeclarationFeature.FeatureUniqeCode, QuerySection = "Customs.ExportDeclaration" }, MenusTablesRepository, tenantMenusTables);
+
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", Code = "CSRS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 9, CategoryTypeCode = null, TextCode = "General.MH.CustomsRequestsSheets", Icon = "ReportsPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 6, CategoryTypeCode = null, TextCode = "General.MH.PhysicalChecks", Icon = "CustomersPath", FeatureId = customFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PhysicalCheck").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
@@ -15640,6 +15648,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature GeneralReferantWorkspaceFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REFERANTWORKSPACE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.REFERANTWORKSPACE", NameTextCodeDefaultText = "Referant Data Workspace", FullLocalDefaultText = "רפרנט מסך עבודה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralExportStorageFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExportStorage", NameTextCodeDefaultText = "ExportStorage", FullLocalDefaultText = "אחסנה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralContainerizationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Containerization", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Containerization", NameTextCodeDefaultText = "Containerization", FullLocalDefaultText = "המכלה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature GeneralExportDeclarationFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeclaration", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Declaration", NameTextCodeDefaultText = "ExportDeclaration", FullLocalDefaultText = "הצהרות יצוא", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
             Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CPARTNERFTP", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsPartnerFtp",
                 NameTextCodeDefaultText = "הגדרות תקשורת", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -17835,6 +17845,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
             //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
             //courierPendingReasonRepository.SubmitChanges();
+        }
+        public void FillContainerizationStatusCodeTable()
+        {
+            var repo = new ContainerizationStatusCodeRepository(0);
+            var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
+            this.FillCloseTable<
+                                Logitude.Customs.Data.EntityPOCOs.ContainerizationStatusCode,
+                                Logitude.Customs.BL.ClosedTable.ContainerizationStatusCodeDetails,
+                                Logitude.Customs.Data.Repsitories.ContainerizationStatusCodeRepository>(repo, dic);
         }
 
         public void FillMamanSpecialActionTable()

@@ -20,8 +20,16 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
+        public IQueryable<GLAccountAgingData> GetByIds(int tenant , IQueryable<string> idS)
+        {
 
-   }
+            var q=(from agingDataRow in GetAll(tenant)
+             join accountId in idS on agingDataRow.AccountId equals accountId
+             select agingDataRow
+                 );
+            return q;//.ToList();
+        }
+    }
 
 }
    

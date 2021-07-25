@@ -25,9 +25,24 @@ namespace Logitude.Customs.BL.Messaging.Maman
     public class FTPOutMaman2470ReleaseGoodService///using  by FTPCommunicationWorkerRole
     {
 
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string FileName, bool sendIsMust)
+        {
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_Ftp2Maman2470, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
+            var ftpOutService = new FtpOutService();
+            ftpOutService.BuildCommunicationLog(tenant, new FtpOutParams()
+            {
+                bytearray = bytearray,
+                tablename = "Customs.Declaration",
+                entityId = declarationId,
+                MyFileName = new FtpOutParams.FileName(FileName),
+                sendIsMust = sendIsMust,
+                MyCustomsPartnerFtpPM = pmCustomsPartnerFtp,
+            });
+        }
 
         //private string communicationSubject = "שידור פנימיים מסוכנים לממן";
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string FileName,bool sendIsMust)
+        public void BuildCommunicationLogOld(byte[] bytearray, int tenant, string declarationId, string FileName,bool sendIsMust)
         {
 
             ObjectTableRepository repo = new ObjectTableRepository(tenant);

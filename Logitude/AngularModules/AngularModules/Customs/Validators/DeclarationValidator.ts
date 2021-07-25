@@ -125,7 +125,7 @@ export class DeclarationValidator {
         // Levies
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemLevies) {
             if (AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {
-                errors.push("יש למלם קוד פטור או זיהוי");
+                errors.push("יש למלא קוד פטור או זיהוי");
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
@@ -209,7 +209,10 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.PaymentDate) {
+            if ((this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate)
+                ||
+                (this._DeclarationPM.Direction == "E" && this._DeclarationPM.IsSubmitDeclaration))
+            {
                 errorMessage = "Customs.General.O.NoPaymentDate";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);

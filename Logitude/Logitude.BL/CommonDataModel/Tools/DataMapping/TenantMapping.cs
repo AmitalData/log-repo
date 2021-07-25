@@ -141,7 +141,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 poco.TransferQuotationsToUnifreightTrigger = entityPM.TransferQuotationsToUnifreightTrigger;
             }
-           
+
+            poco.IsQuotesRequestActivatedInShared = entityPM.IsQuotesRequestActivatedInShared;
 
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);

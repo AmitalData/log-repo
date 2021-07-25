@@ -244,11 +244,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             if (!this.IsDisplayOnly) {
                                 if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null  ) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X' || this.EntityPM.CourierManifestStatusCode == 'M' )
-                                )){
-
-                                    button.IsDisabled = true;
+                                )) {
+                               
+                                     button.IsDisabled = true;
                                 }
                             }
+
+
+                            if (this.EntityPM.AmendmentDontDisplayInList == true)
+                                button.IsDisabled = true;
+
                         }
                         else {
                             button.IsHidden = true;
@@ -265,6 +270,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.IsHidden = false;
                         button.Width = 120;
 
+                        if (this.EntityPM.Direction == "E")
+                        {
+                            button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+                        } 
                     }
                     if (button.EventCode == "Forms") {
                         button.Width = 60;
@@ -1336,11 +1345,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
-        logWindow.Height = 700;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        if (this.EntityPM.Direction == "E")
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
+            logWindow.Height = 400;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
+        }
+        else
+        {
+            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+            logWindow.Height = 700;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        }
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });

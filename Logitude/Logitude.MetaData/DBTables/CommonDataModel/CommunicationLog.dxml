@@ -303,6 +303,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+   <Column
+    Name="AdditionalFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentsFilingId"
     ReferencedTable="DocumentsFilings"

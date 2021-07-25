@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Logitude.ShipmentTests.Models
 {
@@ -24,7 +25,20 @@ namespace Logitude.ShipmentTests.Models
         public string MainCarriageFromPortId { get; set; }
         public int? PackagesQuantity { get; set; }
         public string ConcurrencyGUID { get; set; }
+        public DateTime CreateDateTime { get; set; }//
+        public string StatusId { get; set; }
+        public int ShipmentPickUpIndex { get; set; }
+        public int ShipmentDeliveryIndex { get; set; }
+        public string AgentAddressCountryCode { get; set; }
+        public string AgentAddressId { get; set; }
+        public string AgentName { get; set; }
+        public string AgentId { get; set; }
+        public string AgentComputed { get; set; }
         public List<PackagePM> ShipmentPackages { get; set; }
         public List<PayablesPM> ShipmentPayables { get; set; }
+        public List<ShipmentReceivablePM> ShipmentReceivable { get; set; }
+        public string ShipmentReceivableStatusName { get; set; }
+        public string ShipmentReceivableStatusCode { get; set; }
+        public double? GrossWeight { get; set; }
     }
 }

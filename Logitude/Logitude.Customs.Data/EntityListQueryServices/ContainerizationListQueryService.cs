@@ -32,7 +32,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("DeclarationStatusType")
 													  join d in declarations
-													  on a.Id equals d.Key.ExportContainerizationID
+													  on a.Id equals d.Key.ExportContainerizationID into EmpCont
+													  from ed in EmpCont.DefaultIfEmpty()
+						
 
 
 													  select new ContainerizationList()
@@ -50,17 +52,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 														  ContainerizationNumber = a.ContainerizationNumber,
 
-														  ContainerizationStatus = a.ContainerizationStatus,
+														  ContainerizationStatus = a.ContainerizationStatusCode.Code,
 
 														  HataraStatus = a.HataraStatus,
-
+														  OpenContainerization= a.ContainerizationStatusCode.Code != "3" && a.ContainerizationStatusCode.Code != "4",
 														  OperationMode = a.OperationMode,
 
 														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,
-											              ExportFile = d.Key.ExportFile,
+											              ExportFile = ed.Key.ExportFile,
 														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
-														  ImporterName = d.Key.ImporterName,
-														  TransportModeForExport = d.Key.TransportModeId ,
+														  ImporterName = ed.Key.ImporterName,
+														  TransportModeForExport = ed.Key.TransportModeId ,
 														  HataraStatusIsNull = a.HataraStatus != null ? false :true
 													  }); ;
             return query;

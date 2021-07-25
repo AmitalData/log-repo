@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="59a8f5dc-fb99-4c2d-98d6-72b4c4f1eee8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OceanInsightsTestWcfService.xsd" MetadataType="Schema" ID="c42702ac-f428-4ef6-b5a5-529130ce4c32" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OceanInsightsTestWcfService1.xsd" MetadataType="Schema" ID="5355021a-fab4-4d97-877f-5b61296ca9c1" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OceanInsightsTestWcfService2.xsd" MetadataType="Schema" ID="35340e1d-6021-482d-b588-fca6fd97cb78" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OceanInsightsTestWcfService3.xsd" MetadataType="Schema" ID="39895a5d-998b-4ddb-b4e3-ac6473c87b2a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OceanInsightsTestWcfService.disco" MetadataType="Disco" ID="fc9fbcb6-0226-4ac2-ba12-4eead4b11bf2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?disco" />
+    <MetadataFile FileName="OceanInsightsTestWcfService.wsdl" MetadataType="Wsdl" ID="c84193c0-2bea-4266-8466-c154e72555c1" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/OceanInsightsTestWcfService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -146,6 +146,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BuyerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationReasonRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
@@ -154,7 +155,9 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationStatusCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CoolingReportingMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomerClassificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIndicationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DeliveryTypeDetails.Generated.cs" />
@@ -167,6 +170,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
@@ -318,6 +323,7 @@
     <Compile Include="EntityDataMappings\AutonomyRegionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutonomyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BuyerRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationReasonRequestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancelRequestRejectReasonTypeDataMapping.cs" />
@@ -357,6 +363,7 @@
     <Compile Include="EntityDataMappings\ClientDrivingLicenseDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientDrivingLicenseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientsAddressCommTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClientsPoaDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClosedTableStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CollateralAnswerTypeDataMapping.cs" />
@@ -400,8 +407,10 @@
     <Compile Include="EntityDataMappings\CustomDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomDocumentTypeMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerActivityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerClassificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerIdentificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerIdentifyTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerIndicationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerTypeGeneralDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomMetaDataTypeDataMapping.cs" />
@@ -518,6 +527,7 @@
     <Compile Include="EntityDataMappings\Generated\AutonomyRegionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutonomyTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BuyerRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationReasonRequestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancelRequestRejectReasonTypeDataMapping.Generated.cs" />
@@ -557,6 +567,7 @@
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientsAddressCommTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClientsPoaDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClosedTableStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CollateralAnswerTypeDataMapping.Generated.cs" />
@@ -600,8 +611,10 @@
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomDocumentTypeMetaDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerActivityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerClassificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerIdentificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerIdentifyTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerIndicationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerTypeGeneralDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomMetaDataTypeDataMapping.Generated.cs" />
@@ -762,6 +775,8 @@
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckStatusMessageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PoaAuthorizationTypeLookupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PoaStatusTypeLookUpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PointerLevelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultInProcessTypeDataMapping.Generated.cs" />
@@ -927,6 +942,8 @@
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckStatusMessageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PoaAuthorizationTypeLookupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PoaStatusTypeLookUpDataMapping.cs" />
     <Compile Include="EntityDataMappings\PointerLevelDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultInProcessTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultInSourceTypeDataMapping.cs" />
@@ -1034,14 +1051,18 @@
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BuyerRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClientsPoaQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationStatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CoolingReportingMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerClassificationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIdentificationTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerIndicationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
@@ -1056,6 +1077,8 @@
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PoaAuthorizationTypeLookupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PoaStatusTypeLookUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceInputTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceStatusQueryService.Generated.cs" />
@@ -1563,17 +1586,21 @@
     <Compile Include="EntityUpdateServices\Generated\AmendmentFieldStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BuyerRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancelRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClientsPoaUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationStatusCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CoolingReportingMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomerClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIdentificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomerIndicationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeliveryTypeUpdateService.Generated.cs" />
@@ -1591,6 +1618,8 @@
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PoaAuthorizationTypeLookupUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PoaStatusTypeLookUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceInputTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceStatusUpdateService.Generated.cs" />
@@ -2061,6 +2090,7 @@
     <Compile Include="Messaging\Customs\CustomsStateMachineProcess.cs" />
     <Compile Include="Messaging\Customs\SendSheetSignModel.cs" />
     <Compile Include="Messaging\Customs\SignQueue.cs" />
+    <Compile Include="Messaging\FtpOutService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageRequestService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSECTHMessageResponseService.cs" />
     <Compile Include="Messaging\ILOVS\CourierOVSSpecialActionRequestService.cs" />

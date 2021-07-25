@@ -398,6 +398,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ThirdCargoID  { get; set; }
        [DataMember]
        public int RowNumber  { get; set; }
+       [DataMember]
+       public bool? IsSubmitDeclaration  { get; set; }
    }
 
 }

@@ -1245,6 +1245,10 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
             }
         });
 
+        if (shipmentsNumbers.length > 1000) {
+            shipmentsNumbers = shipmentsNumbers.substring(0, 1000);
+        }
+
         this.EntityPM.ShipmentsNumbers = shipmentsNumbers;         
     }
 }

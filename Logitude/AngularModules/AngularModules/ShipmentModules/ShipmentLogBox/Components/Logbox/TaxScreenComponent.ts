@@ -37,12 +37,13 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 export class TaxScreenComponent implements OnInit, AfterViewInit {
 
     DataContext: TaxScreenComponent = this;
-   
+    IsDSV: boolean = false;
     AdditionalData: any;
     Language: string = 'HB';
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.Language = SessionLocator.TenantPM.Language;
+        this.IsDSV = SessionLocator?.PrivateLableSettings?.PrivateLabelDomain?.toLowerCase()?.indexOf("dsv") > -1;
 
     }
     ngOnInit() {

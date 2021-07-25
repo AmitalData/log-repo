@@ -84,6 +84,16 @@ export class CustomsDocumentsDefinitionPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+       
+	 
+    private declarationTypeName: string;
+    public get DeclarationTypeName() { return this.declarationTypeName; }
+    public set DeclarationTypeName(newValue: string) { if (this.declarationTypeName != newValue) { this.declarationTypeName = newValue; this.MarkAsDirty("DeclarationTypeName"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentsDefinitionPM;
 		

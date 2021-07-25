@@ -59,6 +59,16 @@ export class GLAccountMoreDataPM {
     public set TotFutureOpenChequesInLocalCur(newValue: number) { if (this.totFutureOpenChequesInLocalCur != newValue) { this.totFutureOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotFutureOpenChequesInLocalCur"); } }
        
 	 
+    private balanceInForeignCurrency: number;
+    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
+    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
+       
+	 
+    private foreignBalanceInDue: number;
+    public get ForeignBalanceInDue() { return this.foreignBalanceInDue; }
+    public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
+       
+	 
 
     public OldEntityPM: GLAccountMoreDataPM;
 		

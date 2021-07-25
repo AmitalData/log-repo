@@ -108,6 +108,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new BankMap());
 	
+            modelBuilder.Configurations.Add(new BuyerRoleTypeMap());
+	
             modelBuilder.Configurations.Add(new CancellationReasonRequestTypeMap());
 	
             modelBuilder.Configurations.Add(new CancellationRequestStatusMap());
@@ -185,6 +187,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ClientDrivingLicenseTypeMap());
 	
             modelBuilder.Configurations.Add(new ClientsAddressCommTypeMap());
+	
+            modelBuilder.Configurations.Add(new ClientsPoaMap());
 	
             modelBuilder.Configurations.Add(new ClosedTableStatusMap());
 	
@@ -272,9 +276,13 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomerActivityTypeMap());
 	
+            modelBuilder.Configurations.Add(new CustomerClassificationTypeMap());
+	
             modelBuilder.Configurations.Add(new CustomerIdentificationTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerIdentifyTypeMap());
+	
+            modelBuilder.Configurations.Add(new CustomerIndicationTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerRoleTypeMap());
 	
@@ -593,6 +601,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
+	
+            modelBuilder.Configurations.Add(new PoaAuthorizationTypeLookupMap());
+	
+            modelBuilder.Configurations.Add(new PoaStatusTypeLookUpMap());
 	
             modelBuilder.Configurations.Add(new PointerLevelMap());
 	
@@ -1453,6 +1465,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<BuyerRoleType> BuyerRoleTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes 
 	 {
 	      get; set;
@@ -1682,6 +1700,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClientsAddressCommType> ClientsAddressCommTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClientsPoa> ClientsPoas 
 	 {
 	      get; set;
 	 
@@ -1945,6 +1969,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomerClassificationType> CustomerClassificationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomerIdentificationType> CustomerIdentificationTypes 
 	 {
 	      get; set;
@@ -1952,6 +1982,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomerIdentifyType> CustomerIdentifyTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomerIndicationType> CustomerIndicationTypes 
 	 {
 	      get; set;
 	 
@@ -2906,6 +2942,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps 
 	 {
 	      get; set;
 	 

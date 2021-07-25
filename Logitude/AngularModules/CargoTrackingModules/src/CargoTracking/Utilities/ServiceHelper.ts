@@ -8,7 +8,8 @@ export  class ServiceHelper{
 
 
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
-
+    private static testDomain: string;
+    
     constructor(){
 
     }
@@ -39,7 +40,7 @@ export  class ServiceHelper{
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
 
-        BrandingDataRequest.Domain = baseUrl;
+        BrandingDataRequest.Domain = this.testDomain || baseUrl;
         return BrandingDataRequest;
     }
 
@@ -189,5 +190,9 @@ export  class ServiceHelper{
         };
        
         return httpOptions;
+    }
+
+    public static GetLDocumentDownloadToken() {
+        return SessionInfo.DocumentDownloadToken;
     }
 }

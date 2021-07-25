@@ -254,6 +254,64 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CardsDataId  { get; set; }
        [DataMember]
        public string PaymentTermName  { get; set; }
+       [DataMember]
+       public decimal? Period0  { get; set; }
+       [DataMember]
+       public decimal? Period1  { get; set; }
+       [DataMember]
+       public decimal? Period2  { get; set; }
+       [DataMember]
+       public decimal? Period3  { get; set; }
+       [DataMember]
+       public decimal? Period4  { get; set; }
+       [DataMember]
+       public decimal? Period5  { get; set; }
+       [DataMember]
+       public decimal? PeriodPast  { get; set; }
+       [DataMember]
+       public decimal? PeriodFuture  { get; set; }
+       [DataMember]
+       public int? TotalOpenTransactions  { get; set; }
+       [DataMember]
+       public string LastReconciledBy  { get; set; }
+       [DataMember]
+       public DateTime? LastReconcileDate  { get; set; }
+       [DataMember]
+       public double? CreditLimit  { get; set; }
+       [DataMember]
+       public string PaymentTerm  { get; set; }
+       [DataMember]
+       public decimal? TotalOpenShipments  { get; set; }
+       [DataMember]
+       public string Phone  { get; set; }
+       [DataMember]
+       public string Salesman  { get; set; }
+       [DataMember]
+       public string Collector  { get; set; }
+       [DataMember]
+       public DateTime? FollowupDate  { get; set; }
+       [DataMember]
+       public string FollowupNotes  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod1  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod2  { get; set; }
+       [DataMember]
+       public decimal? CalculatedAgingPeriod3  { get; set; }
+       [DataMember]
+       public string FirstPeriodsMonths  { get; set; }
+       [DataMember]
+       public string SecondPeriodsMonths  { get; set; }
+       [DataMember]
+       public string ThirdPeriodsMonths  { get; set; }
+       [DataMember]
+       public double? InsuredCreditLimit  { get; set; }
+       [DataMember]
+       public decimal? PostponedChequesCommission  { get; set; }
+       [DataMember]
+       public decimal? BalanceInForeignCurrency  { get; set; }
+       [DataMember]
+       public decimal? ForeignBalanceInDue  { get; set; }
    }
 
 }

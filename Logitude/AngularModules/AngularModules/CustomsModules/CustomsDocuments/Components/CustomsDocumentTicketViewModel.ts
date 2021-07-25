@@ -452,32 +452,32 @@ export class CustomsDocumentTicketViewModel {
                                     customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
                                     customsDocumentPM.Tenant = SessionLocator.Tenant;
                                     isExport = relatedDocumentViewModel.DocumentCategoryCode == 'E' ? true : false;
-                                    if (isExport && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
-                                        if (!AppTool.IsNullOrEmpty(res.Result)) {
-                                            customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
-                                            this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
+                                    //if (isExport && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+                                    //    if (!AppTool.IsNullOrEmpty(res.Result)) {
+                                    //        customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
+                                    //        this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
 
-                                        }
-                                        else {
-                                            customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                                    //    }
+                                    //    else {
+                                    //        customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
 
-                                        }
-                                    }
-                                    else {
+                                    //    }
+                                    //}
+                                    //else {
                                         customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
 
-                                    }
+                                    //}
                                     customsDocumentPM.DeclarationId = this.EntityPM.Id;
                                     customsDocumentPM.IsPartOfDeclaration = true;
                                     relatedDocumentViewModel.CustomDocument = customsDocumentPM;
                                     customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
                                         if (!resp.HasError) {
                                             this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
-                                            if (isExport) {
-                                                var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+                                            //if (isExport) {
+                                            //    var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
 
-                                                customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe();
-                                            }
+                                            //    customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe();
+                                            //}
                                         }
                                         else {
                                             SessionLocator.SelectedSession.StopBusyIndicator();

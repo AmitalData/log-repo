@@ -1735,7 +1735,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    //case "Customs.CourierPendingReason":
+                    case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
@@ -3050,6 +3050,22 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
             }
 
+            if (this.ObjectTableName == "TaxReport") {
+                str = TextCodeTranslator.Translate("TaxReport.O.NewTaxReport");
+            }
+
+            if (this.ObjectTableName == "BankAccount") {
+                str = TextCodeTranslator.Translate("BankAccount.O.NewBankAccount");
+            }
+
+            if (this.ObjectTableName == "Revaluation") {
+                str = TextCodeTranslator.Translate("Revaluation.O.NewRevaluation");
+            }
+
+            if (this.ObjectTableName == "InterestBasesType") {
+                str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }
@@ -3586,14 +3602,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     IsUseCardSearchMechanism() {
         var result: boolean = false;
-        if (this.ObjectTableName == "Customer") {
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV")[0];
-            if (featureToggle) {
+        if (this.ObjectTableName == "Customer" && ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             result = true;
-            }
         }
         return result;
-
     }
 
     private currentFilters: ApiQueryFilters;

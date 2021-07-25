@@ -110,6 +110,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool ExportQuotationsToIntegratedSystem { get; set; }
 
+        public bool IsQuotesRequestActivatedInShared { get; set; }
+
         public virtual AccountingSetting AccountingSetting { get; set; }
 
         [Include]

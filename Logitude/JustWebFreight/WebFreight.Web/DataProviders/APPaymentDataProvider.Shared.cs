@@ -11,6 +11,8 @@ namespace WebFreight.Web.DataProviders
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string PaymentCurrencyName { get; set; }
+        public string APPaymentBankAddress { get; set; }
+
 
         public string PaidBy { get; set; } // custom
         public string PrintNotes { get; set; }

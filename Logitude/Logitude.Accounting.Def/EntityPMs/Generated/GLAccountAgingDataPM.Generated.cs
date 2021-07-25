@@ -89,94 +89,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? period0 ;
+	  private decimal? period5 ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? Period0  
+       public decimal? Period5  
 	   {
 	    
 	     get
 		{
-		   return period0;
+		   return period5;
 		 }
 		 set
 		 {
-		   if(period0 != value)
+		   if(period5 != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period0",OldValue=period0,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period5",OldValue=period5,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
-		   period0=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? period1 ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? Period1  
-	   {
-	    
-	     get
-		{
-		   return period1;
-		 }
-		 set
-		 {
-		   if(period1 != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period1",OldValue=period1,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   period1=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? period2 ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? Period2  
-	   {
-	    
-	     get
-		{
-		   return period2;
-		 }
-		 set
-		 {
-		   if(period2 != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period2",OldValue=period2,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   period2=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? period3 ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? Period3  
-	   {
-	    
-	     get
-		{
-		   return period3;
-		 }
-		 set
-		 {
-		   if(period3 != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period3",OldValue=period3,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   period3=value;
+		   period5=value;
 		   }
 			
 		 }
@@ -204,25 +135,94 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? period5 ;
+	  private decimal? period3 ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? Period5  
+       public decimal? Period3  
 	   {
 	    
 	     get
 		{
-		   return period5;
+		   return period3;
 		 }
 		 set
 		 {
-		   if(period5 != value)
+		   if(period3 != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period5",OldValue=period5,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period3",OldValue=period3,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
-		   period5=value;
+		   period3=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? period2 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Period2  
+	   {
+	    
+	     get
+		{
+		   return period2;
+		 }
+		 set
+		 {
+		   if(period2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period2",OldValue=period2,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   period2=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? period1 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Period1  
+	   {
+	    
+	     get
+		{
+		   return period1;
+		 }
+		 set
+		 {
+		   if(period1 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period1",OldValue=period1,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   period1=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? period0 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Period0  
+	   {
+	    
+	     get
+		{
+		   return period0;
+		 }
+		 set
+		 {
+		   if(period0 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Period0",OldValue=period0,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   period0=value;
 		   }
 			
 		 }

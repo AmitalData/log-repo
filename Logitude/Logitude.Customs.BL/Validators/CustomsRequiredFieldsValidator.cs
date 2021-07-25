@@ -732,52 +732,55 @@ namespace Logitude.Customs.BL.Validators
 
             #endregion
 
-
-            #region DeclarationPaymentMethod
-            ObjectTable declarationPaymentMethodTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPaymentMethod", 0, false);
-            List<CustomsRequiredFieldPM> declarationPaymentMethodRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentMethodTable.Id, tenant);
-            List<PropertyInfo> DeclarationPaymentMethodProperties = GetPropertiesForEntity("DeclarationPaymentMethodPM");
-            foreach (DeclarationPaymentMethodPM method in payment.DeclarationPaymentMethods)
+            if(declaration.Direction!="E")
             {
-                foreach (PropertyInfo info in DeclarationPaymentMethodProperties)
+                #region DeclarationPaymentMethod
+                ObjectTable declarationPaymentMethodTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPaymentMethod", 0, false);
+                List<CustomsRequiredFieldPM> declarationPaymentMethodRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentMethodTable.Id, tenant);
+                List<PropertyInfo> DeclarationPaymentMethodProperties = GetPropertiesForEntity("DeclarationPaymentMethodPM");
+                foreach (DeclarationPaymentMethodPM method in payment.DeclarationPaymentMethods)
                 {
-                    bool required = (from a in declarationPaymentMethodRequiredFields
-                                     where a.ObjectFieldName == info.Name
-                                     select a).Any();
-                    if (required)
+                    foreach (PropertyInfo info in DeclarationPaymentMethodProperties)
                     {
-                        if (info.GetValue(method) == null)
+                        bool required = (from a in declarationPaymentMethodRequiredFields
+                                         where a.ObjectFieldName == info.Name
+                                         select a).Any();
+                        if (required)
                         {
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = method.AccountNumber, FieldName = info.Name, TableName = "Customs.DeclarationPaymentMethod" });
+                            if (info.GetValue(method) == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = method.AccountNumber, FieldName = info.Name, TableName = "Customs.DeclarationPaymentMethod" });
+                            }
                         }
                     }
                 }
-            }
 
-            #endregion
+                #endregion
 
-            #region DeclarationPaymentProtest
-            ObjectTable declarationPaymentProtestTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPaymentProtest", 0, false);
-            List<CustomsRequiredFieldPM> declarationPaymentProtestRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentProtestTable.Id, tenant);
-            List<PropertyInfo> DeclarationPaymentProtestProperties = GetPropertiesForEntity("DeclarationPaymentProtestPM");
-            foreach (DeclarationPaymentProtestPM protest in payment.DeclarationPaymentProtests)
-            {
-                foreach (PropertyInfo info in DeclarationPaymentProtestProperties)
+                #region DeclarationPaymentProtest
+                ObjectTable declarationPaymentProtestTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPaymentProtest", 0, false);
+                List<CustomsRequiredFieldPM> declarationPaymentProtestRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentProtestTable.Id, tenant);
+                List<PropertyInfo> DeclarationPaymentProtestProperties = GetPropertiesForEntity("DeclarationPaymentProtestPM");
+                foreach (DeclarationPaymentProtestPM protest in payment.DeclarationPaymentProtests)
                 {
-                    bool required = (from a in declarationPaymentProtestRequiredFields
-                                     where a.ObjectFieldName == info.Name
-                                     select a).Any();
-                    if (required)
+                    foreach (PropertyInfo info in DeclarationPaymentProtestProperties)
                     {
-                        if (info.GetValue(protest) == null)
+                        bool required = (from a in declarationPaymentProtestRequiredFields
+                                         where a.ObjectFieldName == info.Name
+                                         select a).Any();
+                        if (required)
                         {
-                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = protest.ProtestTypeCode, FieldName = info.Name, TableName = "Customs.DeclarationPaymentProtest" });
+                            if (info.GetValue(protest) == null)
+                            {
+                                requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = protest.ProtestTypeCode, FieldName = info.Name, TableName = "Customs.DeclarationPaymentProtest" });
+                            }
                         }
                     }
                 }
+
+                #endregion
             }
 
-            #endregion
 
             // moran 6.4.16 - AMI-55700 -->
             decimal? TotalAmount = payment.DeclarationPaymentMethods.Sum(s => s.Amount);

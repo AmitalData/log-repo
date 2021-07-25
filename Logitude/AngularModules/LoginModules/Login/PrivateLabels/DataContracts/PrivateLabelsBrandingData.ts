@@ -6,6 +6,7 @@
      
     public static Tenant: number 
     public static MainColor: string 
+    public static SecondaryColor: string 
 
     public static MainLogo: any
     public static MainLogoId: string; 

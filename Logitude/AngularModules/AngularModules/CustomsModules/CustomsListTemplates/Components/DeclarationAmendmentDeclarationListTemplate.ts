@@ -17,10 +17,12 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent';
 import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
  import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
+import { DeclarationAmendmentSharedDataService } from '../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './DeclarationAmendmentListTemplate.html',
-})
+ })
 
 export class DeclarationAmendmentListTemplate {
 
@@ -34,25 +36,31 @@ export class DeclarationAmendmentListTemplate {
     public ObjectTableName: string = "Customs.Declaration";
     filterAgrs: ApiQueryFilters;
     @Output() MenuHeaderchangeevent = new EventEmitter();
+   // declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService = new DeclarationAmendmentSharedDataService();
 
     public IsDisplayOnly: boolean = false;
     public color: string;
     public allowCancel: boolean;
-     constructor(private CD: ChangeDetectorRef,
+    public CanOpenNewAmendment: boolean;
+
+
+    constructor(private CD: ChangeDetectorRef, 
         private _declarationWebService: DeclarationWebService,
         private EntityResourceService: EntityResourceService,
-        private comp: DeclarationAmendmentComponent,
+        private comp: DeclarationAmendmentComponent, public declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService
           ) {
         
     }
 
-    setVariables(DeclarationListRecord: DeclarationList, fieldName: string, additionalData: any)
+    setVariables(DeclarationListRecord: DeclarationList, fieldName: string, additionalData: any )
     {
         this.EntityResourceService.getEntityResourceByTableName("General").subscribe(response => {
              this.rowData = DeclarationListRecord;
             this.fieldName = fieldName;
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as DeclarationPM;
             this.allowCancel = AppTool.IsNullOrEmpty(this.rowData.AmendmentStatus) && this.rowData.IsAmendment == true;
+             this.CanOpenNewAmendment = this.declarationAmendmentSharedDataService.CanOpenNewAmendment;
+
             this.CD.detectChanges();
         });
     }
@@ -70,8 +78,8 @@ export class DeclarationAmendmentListTemplate {
                 declarationPMService.update(dec).subscribe(
                     data => {
                         this.CurrentSession.StopBusyIndicator();
-                         DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
-                     });
+                        DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
+                      });
 
         });
 
@@ -79,9 +87,25 @@ export class DeclarationAmendmentListTemplate {
     }
 
     ChangeAmendment(id: string) {
-         this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
+        this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
+ 
     }
  
+
+    CopyAmendment(id: string) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Show("נא‌ ‌אשר‌ ‌פתיחת‌ ‌תיקון‌ ‌והעתקת‌ ‌נתונים‌ ‌מתיקון‌ ‌הצהרה");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber, true);
+
+            }
+        });
+
+     }
+
+  
 
     openNewDeclaration(id: string) {
          SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

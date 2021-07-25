@@ -19,6 +19,7 @@ import { ContainerizationMessagesService } from '../../../../Customs/Services/We
 import { GenericRequestParams } from '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
+import { CustomMessageProgressComponent } from '../../../CustomsControls/Components/CustomMessageProgressComponent';
 
 
 @Component({
@@ -230,7 +231,7 @@ export class NewContainerizationComponent extends BaseComponent {
             FieldName: 'MyConnectedCheckBox',
             DataTypeCode: 'String',//'Number',
             Display: '',
-            Styles: { width: '25px'},
+            Styles: { width: '25px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsContainerizationListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
@@ -339,13 +340,15 @@ export class NewContainerizationComponent extends BaseComponent {
             Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
+            SortByName: 'DeclarationStatusTypeName',
+            HtmlListComponentName: 'CustomsContainerizationListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsContainerizationListTemplate',
 
         });
 
         this.columns.push({
 
-            FieldName: 'PaymentDate',
+            FieldName: 'IsSubmitDeclaration',
             DataTypeCode: 'String',//'Number',
             Display: "הגשה",
             Styles: { width: '50px' },
@@ -433,87 +436,96 @@ export class NewContainerizationComponent extends BaseComponent {
             this.CurrentSession.CurrentWindow.Close("0");
         } else {
             var windowArgs: any = {};
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Height = 200;
-            logitudeWindow.Width = 250;
-            logitudeWindow.ShowCloseButton = true;
-            logitudeWindow.Title = "הצהרת סוכן";
-            logitudeWindow.WindowArgs = windowArgs;
-            logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe((event:any) => {
-                    if (event != null) {
-                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                        this.entityPM.AgentDeclaration = true;
-                        this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                        this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
-                            this.CurrentSession.CurrentWindow.Close("0");
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({
-                                        EntityId: response.Result.Id,
-                                        ObjectTableName: "Customs.Containerization"
-                                    });
-                                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                    });
-                                });
-                            if (!response.HasError) {
-                                this.containerizationMessagesService.SendContainerization(this.getParams(response,event))
-                                    .subscribe(res1 => {
-                                    });
-                            }
-                        });
-                    }
-                });
-            });
-            logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
-        }
-    }
-
-    getParams(response: ServiceResponse,event:any) {
-        var params: GenericRequestParams = new GenericRequestParams();
-        params.Tenant = SessionLocator.Tenant;
-        params.RequestVIA = event.RequestVIA;
-        params.ForcePersonalSign = event.ForcePersonalSign;
-        params.LoggingEnabled = true;
-        params.LoggingEntityId = this.EntityPM.Id;
-        params.LoggingUserId = SessionLocator.LoggedUserId;
-        params.RequestName = "המכלה";
-        params.ResponseName = "המכלה תשובה"
-        return params
-    }
-    private timerToken: any;
-    TextChanged(searchtext: any) {
-        if (searchtext != null || searchtext != undefined) {
-
-            this.timerToken = setTimeout(() => {
-                this.SearchFieldsFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
-                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-            }, 700);
-
-        } else {
-            this.SearchFieldsFilter = null;
-            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-        }
-    }
-    CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("cancel");
-    }
-
-
-    SetWindowArgs(windowArgs) {
-        if (windowArgs.EntityPM != null) {
-            if (windowArgs.EntityIsDeclarationPM == "true") {
-                this.declarationPM = windowArgs.EntityPM;
-                this.ExportFile = this.declarationPM.ExportFile;
-                this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
-                this.containerizationExtendedListService.SelectedDeclarations = true;
-            } else {
-                this.entityPM = windowArgs.EntityPM;
+            if (this.declarationPM != null && this.declarationPM.ProcedureCurrentName != null && this.declarationPM.ProcedureCurrentName.includes("טעינה ישירה")) {
+                windowArgs.IsDirectCharging = true;
             }
-        } 
+            if (this.containerizationExtendedListService.IsDirectCharging != "") {
+                windowArgs.IsDirectCharging = true;
+            }
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 200;
+        logitudeWindow.Width = 250;
+        logitudeWindow.ShowCloseButton = true;
+        logitudeWindow.Title = "הצהרת סוכן";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe((event: any) => {
+                if (event != null) {
+                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                    this.entityPM.AgentDeclaration = true;
+                    this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                    this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                        this.CurrentSession.CurrentWindow.Close("0");
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({
+                                    EntityId: response.Result.Id,
+                                    ObjectTableName: "Customs.Containerization"
+                                });
+                                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                });
+                            });
+                        if (!response.HasError) {
+                            var params = this.getParams(response, event);
+                            CustomMessageProgressComponent.ShowProgressBar(params.PBId, "שליחת המכלה", false).then((res) => { });
+                            this.containerizationMessagesService.SendContainerization(params)
+                                .subscribe(res1 => {
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                });
+                        }
+                    });
+                }
+            });
+        });
+        logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
     }
+}
+
+getParams(response: ServiceResponse, event: any) {
+    var params: GenericRequestParams = new GenericRequestParams();
+    params.Tenant = SessionLocator.Tenant;
+    params.RequestVIA = event.RequestVIA;
+    params.ForcePersonalSign = event.ForcePersonalSign;
+    params.LoggingEnabled = true;
+    params.LoggingEntityId = response.Result.Id;
+    params.LoggingUserId = SessionLocator.LoggedUserId;
+    params.RequestName = "המכלה";
+    params.ResponseName = "המכלה תשובה"
+    return params
+}
+    private timerToken: any;
+TextChanged(searchtext: any) {
+    if (searchtext != null || searchtext != undefined) {
+
+        this.timerToken = setTimeout(() => {
+            this.SearchFieldsFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+        }, 700);
+
+    } else {
+        this.SearchFieldsFilter = null;
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+    }
+}
+CancelButtonClicked() {
+    this.CurrentSession.CloseCurrentWindowEmit("cancel");
+}
+
+
+SetWindowArgs(windowArgs) {
+    if (windowArgs.EntityPM != null) {
+        if (windowArgs.EntityIsDeclarationPM == "true") {
+            this.declarationPM = windowArgs.EntityPM;
+            this.ExportFile = this.declarationPM.ExportFile;
+            this.containerizationExtendedListService.ConnectedDeclarations = this.declarationPM.Id + ",";
+            this.containerizationExtendedListService.SelectedDeclarations = true;
+        } else {
+            this.entityPM = windowArgs.EntityPM;
+        }
+    }
+}
 
 
 

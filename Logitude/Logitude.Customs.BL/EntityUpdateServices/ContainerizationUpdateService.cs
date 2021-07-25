@@ -32,8 +32,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     foreach (var declaration in pms)
                     {
-                        declaration.ExportContainerizationID = entityPM.Id;
-                        declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        if (declaration.ExportContainerizationID != entityPM.Id)
+                        {
+                            declaration.ExportContainerizationID = entityPM.Id;
+                            declaration.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        }
                     }
                 }
 
@@ -73,6 +76,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             entityPM.OperationMode = "1";
 
+        }
+        protected override void OnUpdating(ContainerizationPM entityPM, Containerization entityPOCO)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
+            {
+                entityPM.IsChange = false;
+                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            }
+            base.OnUpdating(entityPM, entityPOCO);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.CompositionBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
@@ -61,10 +62,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsUpdatingProfitFromConversion { get; set; }
         public bool IsUpdatingHouses { get; set; }
         public bool IsUpdatingHousesFinalArrivalDate { get; set; }
+        public bool IsPackageCreatedFromStandaloneShipment { get; set; }
+        public bool PackageContainerIdUpdated { get; set; }
+        public ShipmentPackagePM StandalonePackage { get; set; }
         public List<string> DeletedHousesIds { get; set; }
         public List<string> ConnectedHousesIds { get; set; }
 
-        public List<ShipmentPackagePM> ShipmentPackagesChangeSet;
+        public List<ShipmentPackagePM> ShipmentPackagesChangeSet { get; set; }
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
         public List<ShipmentPickUpPM> ShipmentPickUpsChangeSet;
         public List<ShipmentDeliveryPM> ShipmentDeliveriesChangeSet;
@@ -78,7 +82,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<ShipmentCommodityPM> ShipmentCommoditiesChangeSet;
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
-
+        public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)
@@ -106,7 +110,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);
-
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
 
@@ -184,7 +187,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             serviceBehaviours.Add(new ShipmentQuoteBehaviour());
             serviceBehaviours.Add(new ShipmentConversionBehaviour());
             serviceBehaviours.Add(new ShipmentOperationalDateBehaviour());
-
+            serviceBehaviours.Add(new UpdateDocumentFilingBehaviour());
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {
                 behaviour.Handle(this);
@@ -196,7 +199,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
 
             behaviours.Add(new OrderPackagesBehaviour());
-
+            behaviours.Add(new ShipmentContainersEntityBehaviour());
             foreach (IServiceBehaviour behaviour in behaviours)
             {
                 behaviour.Handle(this);
@@ -210,11 +213,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             if (!LoggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
             {
                 validators.Add(new ShipmentMasterIsUsedValidator());
+                validators.Add(new ShipmentPartnersValidator());
             }
 
             foreach (IServiceValidator behaviour in validators)
             {
                 behaviour.Validate(this);
+            }
+        }
+
+        public void HandleStandalone()
+        {
+            List<IServiceBehaviour> behaviours = new List<IServiceBehaviour>();
+            behaviours.Add(new StandaloneShipmentBehaviour());
+
+            foreach (IServiceBehaviour behaviour in behaviours)
+            {
+                behaviour.Handle(this);
             }
         }
 

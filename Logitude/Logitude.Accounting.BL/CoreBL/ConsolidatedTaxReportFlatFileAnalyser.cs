@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (!ptenant.HasValue)
                 {
-                    throw new Exception("unable to find tenantFromPage4Tester ");
+                    throw new ApplicationException("unable to find tenantFromPage4Tester ");
                 }
                 int tenant = ptenant.Value;
 
@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (String.IsNullOrWhiteSpace(pTaxReportId))
                 {
-                    throw new Exception("unable to find taxReportIdFromPage4Tester ");
+                    throw new ApplicationException("unable to find taxReportIdFromPage4Tester ");
                 }
                 string taxReportId = pTaxReportId.Trim();
                 _contactRep = new ContactRepository(tenant);
@@ -80,13 +80,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotFound", 0, useLocal);
                     string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxReportId", 0, useLocal);
-                    throw new Exception($"{text_2} {taxReportId} {text_44} ");
+                    throw new ApplicationException($"{text_2} {taxReportId} {text_44} ");
                 }
                 if (MyTaxReportPM.StatusCode != "D" && MyTaxReportPM.StatusCode != "E")
                 {
                     string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StatusError", 0, useLocal);
                     string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxReportId", 0, useLocal);
-                    throw new Exception($"{text_2} {taxReportId} {text_44} ");
+                    throw new ApplicationException($"{text_2} {taxReportId} {text_44} ");
                 }
                 int maxLine = 0;
                 TaxReportLineListQueryService taxReportLineListQueryService = new TaxReportLineListQueryService(MyContext);
@@ -110,17 +110,21 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             case "S":
                                 v_total = taxLineDTO.VatableInvoiceAmount;
+                                if (taxLineDTO.VatAmount != 0m) v_vatable = taxLineDTO.VatableInvoiceAmount;
                                 break;
                             case "M":
                             case "I":
-                                v_vatable = taxLineDTO.VatableInvoiceAmount;
-                                v_total = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount;
+                               // v_vatable = taxLineDTO.VatableInvoiceAmount;
+                               // v_total = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount;
+                                v_total = taxLineDTO.VatableInvoiceAmount;
+                                if (taxLineDTO.VatAmount != 0m) v_vatable = taxLineDTO.VatableInvoiceAmount;
                                 break;
-
                             default:
                                 v_total = taxLineDTO.VatableInvoiceAmount;
                                 break;
                         }
+                        if (!v_vatable.HasValue) v_vatable = 0m;
+                        if (!v_total.HasValue) v_total = 0m;
                         var taxReportLine = new TaxReportLinePM()
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -152,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (newLines.Count == 0)
                     {
                         string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NoLinesProcessed", 0, useLocal);
-                        throw new Exception($"{text_44}");
+                        throw new ApplicationException($"{text_44}");
                     }
                     TaxReportLineQueryService taxReportLineQueryService = new TaxReportLineQueryService(MyContext);
                     List<TaxReportLinePM> externalLines = taxReportLineQueryService.GetAllExternalLines(tenant, taxReportId);
@@ -175,12 +179,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (MyFlatFileLoadResult.ErrorRowList.Count > 0)
                     {
                         string text = MyFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                        throw new Exception($"{text}");
+                        throw new ApplicationException($"{text}");
                     }
                     //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
                     //    {
                     //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                    //        throw new Exception($"{text}");
+                    //        throw new ApplicationException($"{text}");
                     //    }
                     scope.Complete();
 
@@ -192,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new Exception($"{text} ", e);
+                throw new ApplicationException($"{text} ", e);
             }
 
 
@@ -275,7 +279,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 string text_3 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxLineRowType", 0, useLocal);
                                 string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.AppearsBefore", 0, useLocal);
                                 string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowType", 0, useLocal);
-                                throw new Exception($"{text_3} {rowtype} {text_44} {text_2} {OpeningLineDTO.RowType} ");
+                                throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {OpeningLineDTO.RowType} ");
                             }
                             TaxReportLineDTO taxLine = TaxReportLineDTO.Create(rawLine);
                             TaxReportLines.Add(taxLine);
@@ -284,7 +288,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotValidRowType", 0, useLocal);
-                            throw new Exception($"{text}  {rawLine}");
+                            throw new ApplicationException($"{text}  {rawLine}");
                         }
                         break;
                 }
@@ -325,13 +329,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             //if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             //{
             //    text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DeductionFileNumber", 0, useLocal);
             //    // Deduction File Number is undefined.
-            //    throw new Exception(text);
+            //    throw new ApplicationException(text);
             //}
             return myFullAccountingSettingPM;
         }
@@ -346,13 +350,13 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.FinishingRowType", 0, useLocal);
                 text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotEncountered", 0, useLocal);
-                throw new Exception($"{text} {OpeningLineDTO.RowType} {text_2}  ");
+                throw new ApplicationException($"{text} {OpeningLineDTO.RowType} {text_2}  ");
             }
             if (ClosingLine == null)
             {
                 text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowType", 0, useLocal);
                 text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotEncountered", 0, useLocal);
-                throw new Exception($"{text} {ClosingLineDTO.RowType} {text_2}  ");
+                throw new ApplicationException($"{text} {ClosingLineDTO.RowType} {text_2}  ");
             }
 
             //if (ClosingLine.DeductionFileNum != OpeningLine.DeductionFileNum)
@@ -360,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.FinishingRowDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {ClosingLine.DeductionFileNum} {text_44}{text_2} {OpeningLine.DeductionFileNum} ");
+            //    throw new ApplicationException($"{text} {ClosingLine.DeductionFileNum} {text_44}{text_2} {OpeningLine.DeductionFileNum} ");
             //}
             //string myDeduc = _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
             //if (ClosingLine.DeductionFileNum != myDeduc)
@@ -368,13 +372,13 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.OurDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {ClosingLine.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
+            //    throw new ApplicationException($"{text} {ClosingLine.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
             //}
 
             //if (OpeningLine.TotalInvalidRecords + OpeningLine.TotalValidRecords != OpeningLine.TotalVendorNumber)
             //{
             //    text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.FinishingRowTotals", 0, useLocal);
-            //    throw new Exception($"{text} {OpeningLine.TotalInvalidRecords} + {OpeningLine.TotalValidRecords} != {OpeningLine.TotalVendorNumber} ");
+            //    throw new ApplicationException($"{text} {OpeningLine.TotalInvalidRecords} + {OpeningLine.TotalValidRecords} != {OpeningLine.TotalVendorNumber} ");
             //}
 
             //if (OpeningLine.TotalValidRecords != _VendorLinesDTO.Count)
@@ -382,7 +386,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.FinishingRowTotalVendors", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.CountVendorRows", 0, useLocal);
-            //    throw new Exception($"{text} {OpeningLine.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
+            //    throw new ApplicationException($"{text} {OpeningLine.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
             //}
 
 
@@ -480,7 +484,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new OpeningLineDTO();
@@ -522,7 +526,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new ClosingLineDTO();
@@ -584,7 +588,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{text} {RowType.ToString()} ");
+                throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
 
             var rec = new TaxReportLineDTO();

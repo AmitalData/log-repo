@@ -200,6 +200,7 @@ export class DeclarationList {
 	SecondCargoID: string;
 	ThirdCargoID: string;
 	RowNumber: number;
+	IsSubmitDeclaration: boolean;
 	
 }
  

@@ -66,11 +66,8 @@
                     <tr>
                         <td colspan="2" style="width: 1200px;">
                             <table style="table-layout: fixed;">
-                                <tr class="FormFieldRow">
-                                    <td colspan="6">
-                                        <button style="width: 100px; float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
-                                    </td>
-
+                                <tr>
+                                    <td><div></div></td>
                                 </tr>
                                 <tr class="FormFieldRow">
                                     <td style="height:26px; ">
@@ -167,21 +164,21 @@
 
                     <!-- footer -->
                     <tr style="height: 30px;">
-                        <td>
-                            <div></div>
-                        </td>
-
+                        <td><div></div></td>
                         <td style="width: 57px;">
                             <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
                         </td>
-
-                        <!--<td style="width: 5px;">
-                            <div></div>
-                        </td>
-
+                        <td style="width:5px"><div></div></td>
                         <td style="width: 57px;">
-                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                        </td>-->
+                            <button style="float: left; " class="GreenButton" [disabled]="!containerizationExtendedListService.SelectedDeclarations" (click)="SendButtonClicked()">המשך</button>
+                        </td>
+                        <!--<td style="width: 5px;">
+        <div></div>
+    </td>
+
+    <td style="width: 57px;">
+        <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+    </td>-->
                     </tr>
                 </table>
             </div>

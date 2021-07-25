@@ -755,5 +755,92 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             return context.Database.Connection.ConnectionString;
         }
+
+        public int UpdateAllCertificateWithoutResponse(string declarationId, int tenant)
+        {
+            SupplierInvioceItemCertificatQueryService supplierInvoiceItemRepository = new SupplierInvioceItemCertificatQueryService(tenant);
+            var res = supplierInvoiceItemRepository.GetSupplierInvoiceItemsCertificateWithoutResponse(tenant, declarationId);
+
+            int count = 0;
+            if (string.IsNullOrWhiteSpace(res.certificateKeys)) return count;
+            string whereInCertificateKeys = "";
+            string whereInInvoiceItemKeys = "";
+            int i = 0;
+            if (res.certificateKeys.Split(',').Count() > 990)
+            {
+                var certificateKeysList = res.certificateKeys.Split(',');
+                var invoiceItemKeysList = res.InvoiceItemKeys.Split(',');
+                for (i = 0; i < certificateKeysList.Length; )
+                {
+                    var certificateKeyItem = certificateKeysList[i];
+                    var invoiceItemKeyItem = invoiceItemKeysList[i];
+                    if (i < 990)
+                    {
+                        whereInCertificateKeys += certificateKeyItem + ',';
+                        whereInInvoiceItemKeys += invoiceItemKeyItem + ',';
+                        i++;
+                    }
+                    else
+                    {
+                        whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
+                        whereInCertificateKeys += ") OR  SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey IN (" + certificateKeyItem + ',';
+                        i = 0;
+
+                        whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
+                        whereInInvoiceItemKeys += ") OR  s.CounterKey || ' ' || s.LineNumber IN (" + invoiceItemKeyItem + ',';
+
+                    }
+                }
+                whereInCertificateKeys = whereInCertificateKeys.TrimEnd(',');
+                whereInInvoiceItemKeys = whereInInvoiceItemKeys.TrimEnd(',');
+            }
+            else
+            {
+                whereInCertificateKeys = res.certificateKeys;
+                whereInInvoiceItemKeys = res.InvoiceItemKeys;
+            }
+
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                   string cmd = @"Update SupplierInvioceItemCertificats SIIC 
+                                  set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' 
+                                  where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
+
+                    string cmd1 = @"
+                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
+                                where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+                    OracleCommand sqlCommand1 = new OracleCommand(cmd1, con);
+                    con.Open();
+                    count = sqlCommand.ExecuteNonQuery();
+                    sqlCommand1.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = @"Update Customs.SupplierInvioceItemCertificats SIIC
+                                   set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92'
+                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey + ' ' + SIIC.LineNumber + ' ' + SIIC.ItemCertificateCounterKey  in (" + res.certificateKeys + ") ";
+                    cmd +=  Environment.NewLine + "Update supplierInvoiceItems s set s.CertificatesStatusCode = '1' " +
+                        "where s.DeclarationId = '" + declarationId + "' and s.CounterKey + ' ' + s.LineNumber in (" + res.InvoiceItemKeys + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    count = sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+            return count;
+        }
+
     }
 }

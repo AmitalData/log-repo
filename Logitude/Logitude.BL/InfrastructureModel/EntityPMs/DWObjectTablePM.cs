@@ -28,6 +28,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableName { get; set; }
         public int MaxNumberOfCustomFields { get; set; }
         public bool HasCustomFields { get; set; }
+        public string AdditionalFactRelationType { get; set; }
 
     }
 }

@@ -37,7 +37,7 @@ export class CourierDeclarationWorkspaceListTemplate {
         today.setHours(0, 0, 0, 0);
         
         var estimatedArrivalDate = DateTool.GetDateFromDate(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
-        estimatedArrivalDate.setHours(0, 0, 0, 0);
+        if (!AppTool.IsNullOrEmpty(estimatedArrivalDate)) { estimatedArrivalDate.setHours(0, 0, 0, 0) };
 
         this.colorDate = this._CourierMasterList.EstimatedArrivalColor;
         //if (this._CourierMasterList.EstimatedArrivalColor) {

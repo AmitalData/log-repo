@@ -267,6 +267,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                             tenant.IsTestTenant = ten.IsTestTenant;
+                            tenant.IsHybrid = ten.IsHybrid;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -466,6 +467,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                         tenant1.IsTestTenant = ten.IsTestTenant;
+                        tenant1.IsHybrid = ten.IsHybrid;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -772,6 +774,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
                     LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
+
                 };
             }
 

@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CoreBL.Reports.Aging;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Infrastructure.BL.EntityPMs;
@@ -74,6 +75,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
                 LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                RebuildAgingData(accountingIntegrityInParam, myAccountingIntegrityResult);
 
             }
             catch
@@ -100,7 +102,41 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return myAccountingIntegrityResult;
         }
 
-       
+        private static void RebuildAgingData(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
+        {
+            var sw = Stopwatch.StartNew();
+            string ExceptionMessage = "";
+            int badRows = 0;
+
+            try
+            {
+                var dailyRebuildAgingService = new DailyRebuildAgingService();
+                dailyRebuildAgingService.ReBuild(accountingIntegrityInParam.Tenant);
+            }
+            catch (Exception ee)
+            {
+                ExceptionMessage = ee.ToString();
+                //throw;
+            }
+            finally
+            {
+
+                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
+                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
+                {
+                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    //Month = currentMonth,
+                    ExceptionMessage = ExceptionMessage,
+                    BadRows = badRows,
+                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
+                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
+                });
+            }
+
+
+
+        }
+
 
         public void FixDBIntegrity(int tenant, List<AccountingIntegrityStep> MyAccountingIntegrityStep)
         {

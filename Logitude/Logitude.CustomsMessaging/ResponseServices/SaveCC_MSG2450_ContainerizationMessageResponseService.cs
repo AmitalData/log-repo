@@ -47,21 +47,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
         {
-            if (customResponse.ResponseContentHeader.Exception == null)
-            {
-                ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-                var myContainerizationQueryService = new ContainerizationQueryService(dbContext);
-                ContainerizationPM _ContainerizationPM;
-                string containerizationID = requestParams.LoggingEntityId;
+            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            var myContainerizationQueryService = new ContainerizationQueryService(dbContext);
+            ContainerizationPM _ContainerizationPM;
+            string containerizationID = requestParams.LoggingEntityId;
 
-                _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
+            _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
+            if (customResponse.ResponseContentHeader.Exception == null || !customResponse.ResponseContentHeader.Exception.Any(x=>x.ExceptionLevel == 3))
+            {
                 if (_ContainerizationPM.OperationMode == "3")
                 {
                     _ContainerizationPM.ContainerizationStatus = "3";
-                    _ContainerizationPM.ChangeSetOp = ChangeSetOperation.Update;
-                     var ContainerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
-                    ContainerizationUpdateService.Update(_ContainerizationPM, true);
-                    
                     var myDeclarationQueryService = new DeclarationQueryService(dbContext);
                     var declarationPMs = myDeclarationQueryService.GetDeclarationsByExportContainerizationId(containerizationID);
                     foreach (var item in declarationPMs)
@@ -72,16 +68,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationUpdateService.Update(item, true);
                     }
                 }
+                else
+                {
+                    _ContainerizationPM.ContainerizationStatus = "1";
+                }
+
                 this.MyResponseData = new INF_MSG_GenericResponseData()
                 {
                     ApplicationID = requestParams.AppicationId,
                     Succeeded = true,
                     HasException = false,
-                    UserMessage = "המכלה נשלחה בהצלחה"
+                    UserMessage = "המכלה נשלחה בהצלחה" + Environment.NewLine + customResponse.ResponseContentHeader.Remark
                 };
             }
             else
             {
+                if (string.IsNullOrEmpty(_ContainerizationPM.ContainerizationStatus))
+                    _ContainerizationPM.ContainerizationStatus = "4";
+                
+                if (_ContainerizationPM.ContainerizationStatus == "1")
+                    _ContainerizationPM.ContainerizationStatus = "2";
+                
                 var ExeptionDescription = "";
                 foreach (var rec in customResponse.ResponseContentHeader.Exception)
                 {
@@ -98,6 +105,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
             }
 
+            _ContainerizationPM.ChangeSetOp = ChangeSetOperation.Update;
+            var ContainerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+            ContainerizationUpdateService.Update(_ContainerizationPM, true);
         }
     }
 }

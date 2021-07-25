@@ -82,6 +82,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {
+            if (string.IsNullOrEmpty(token))
+                return null;
 
             if (!string.IsNullOrEmpty(token) && !token.Contains("+"))
             {

@@ -35,6 +35,7 @@ export class TaxReportLineList {
 	TotalInvoiceAmount: number;
 	OriginalReference: string;
 	UpdatedBUserName: string;
+	PreviousReference: string;
 	
 }
  

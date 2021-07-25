@@ -17,7 +17,7 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
         Then the quote template should update successfully
 
     Scenario: Edit the quote template's Quote Header
-        Given drag and drop the following details in "Quote Header" settings
+        Given drag and drop the following details in quote header settings
             | Field           | Column  |
             | Expiration Date | Column1 |
             | Customer        | Column1 |
@@ -32,15 +32,15 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
         Then the quote template should update successfully
 
     Scenario: Edit the quote template's Quote Details
-        Given drag and drop the following details in "Quote Details" settings
+        Given drag and drop the following details in quote details settings
             | Field           | Column  |
             | Expiration Days | Column1 |
             | Shipper Name    | Column1 |
             | Consignee Name  | Column2 |
             | Shipper Address | Column2 |
         And edit "Shipper Name" field in label tab to "Shipper Name Test"
-        When save quote header
-        Then the quote header template should update successfully
+        When save quote details
+        Then the quote template details should update successfully
 
     Scenario: Edit the quote template's Pricing Packages
         Given the user reopen the quote template

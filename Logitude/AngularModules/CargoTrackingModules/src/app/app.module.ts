@@ -32,6 +32,9 @@ import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHel
 import { CommonModule, DatePipe } from '@angular/common';
 import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
+import { DocumentDownloadService } from '../CargoTracking/Services/Others/DocumentDownloadService';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MessageWindowComponent } from '../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 
 
 export function getBaseUrl() {
@@ -59,6 +62,7 @@ export function getBaseUrl() {
         LoginComponent,
         ResetPasswordComponent,
         ChangePasswordComponent,
+        MessageWindowComponent,
 
 
         //Erros
@@ -71,6 +75,7 @@ export function getBaseUrl() {
         CommonModule,
         HttpClientModule,
         AppRoutingModule,
+        MatDialogModule,
         ReactiveFormsModule,
         ScrollingModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
@@ -81,6 +86,7 @@ export function getBaseUrl() {
         LoginExtendedService,
         CargoTrackingPortService,
         CargoTrackingShipmentService,
+        DocumentDownloadService,
         CommonDataExtendedService,
         CargoTrackingMilestoneService,
         AuthGuardService,

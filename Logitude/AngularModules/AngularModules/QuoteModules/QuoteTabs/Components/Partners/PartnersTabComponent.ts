@@ -285,6 +285,9 @@ export class PartnerItem extends BaseComponent {
         this.SetRemoveButtonVisibility();
         this.GetPartnerAddress();
         this.GetPartnerContact();
+        if (this.EntityPM != null) {
+            this.IsInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
+        }
     }
 
     public EditPartnerIsEnabled: boolean = false;
@@ -378,7 +381,11 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {
             case "SHIPR":
+                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
+                break;
             case "CONSI":
+                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
+                break;
             case "CSTMR":
                 {
                     myResult = "CS,PO";
@@ -418,7 +425,11 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {   
             case "SHIPR":
+                myResult = this.IsInlandDomestic ? true : myResult;
+                break;
             case "CONSI":
+                myResult = this.IsInlandDomestic ? true : myResult;
+                break;
             case "CSTMR":
             case "NOTFY":
                 {

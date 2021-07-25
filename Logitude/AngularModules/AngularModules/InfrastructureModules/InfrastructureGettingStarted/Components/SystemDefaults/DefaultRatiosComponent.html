@@ -60,14 +60,24 @@
                         <LogLabel [ObjectFieldName]="'FTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td>
-                        <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'FTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </td>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width: 94px;">
+                                    <LogTextBox [HideColumns]="true" [DigitsAfterPoint]="3" [ObjectFieldName]="'FTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
 
-                    <td>
-                        <div>
-                            <label *ngIf="IsHybrid" style="color: gray; font-size: 10px;">This ratio will also be used for the pickup/delivery ratio logic.</label>
-                        </div>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        <HelpIcon *ngIf="IsHybrid" [Header]="'FTL Ratio'" [Text]="'This ratio will also be used for the pickup/delivery ratio logic.'"></HelpIcon>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
@@ -77,14 +87,24 @@
                         <LogLabel [ObjectFieldName]="'LTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td>
-                        <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'LTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </td>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width: 94px;">
+                                    <LogTextBox [HideColumns]="true" [DigitsAfterPoint]="3" [ObjectFieldName]="'LTLRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
 
-                    <td>
-                        <div>
-                            <label *ngIf="IsHybrid" style="color: gray; font-size: 10px;">This ratio will also be used for the pickup/delivery ratio logic.</label>
-                        </div>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        <HelpIcon *ngIf="IsHybrid" [Header]="'LTL Ratio'" [Text]="'This ratio will also be used for the pickup/delivery ratio logic.'"></HelpIcon>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 

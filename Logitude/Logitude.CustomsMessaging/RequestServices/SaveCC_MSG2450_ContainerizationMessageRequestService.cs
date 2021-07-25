@@ -33,13 +33,15 @@ namespace Logitude.CustomsMessaging.RequestServices
           
 
             req.ContainerizationDetails = new AV_MSG2_ContainerizationMessageContainerizationDetails();
-
-
-            req.ContainerizationDetails.operationCode =Convert.ToInt32( containerization.OperationMode);
+            req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
+            if (containerization.ContainerizationStatus == "4")
+            {
+                req.ContainerizationDetails.operationCode = 1;
+            }
             req.ContainerizationDetails.operationType = 2;
             req.ContainerizationDetails.CustomsAgentID = Convert.ToInt32(settings.CustomsAgentId);
             req.ContainerizationDetails.CustomsAgentIDSpecified = true;
-            req.ContainerizationDetails.AgentDeclaration =true ;
+            req.ContainerizationDetails.AgentDeclaration = containerization.AgentDeclaration;
             req.ContainerizationDetails.AgentDeclarationSpecified = true;
             req.ContainerizationDetails.containerizationDate = containerization.ContainerizationDate;
                 List<AV_MSG2_ContainerizationMessageDeclaration> connectedDeclarations = new List<AV_MSG2_ContainerizationMessageDeclaration>();
@@ -58,7 +60,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             foreach (var dec in declarations)
             {
                 AV_MSG2_ContainerizationMessageDeclaration aV_MSG2_ContainerizationMessageDeclaration = new AV_MSG2_ContainerizationMessageDeclaration();
-                aV_MSG2_ContainerizationMessageDeclaration.DeclarationID = dec.DeclarationNumber;
+                aV_MSG2_ContainerizationMessageDeclaration.DeclarationID = dec.DeclarationNumber ?? "";
                 aV_MSG2_ContainerizationMessageDeclaration.LeadDocumentType = Convert.ToInt32(dec.DeclarationTypeCode);
                 connectedDeclarations.Add(aV_MSG2_ContainerizationMessageDeclaration);
              }

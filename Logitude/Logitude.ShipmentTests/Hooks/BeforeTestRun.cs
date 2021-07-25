@@ -16,19 +16,16 @@ namespace Logitude.ShipmentTests.Hooks
 
         private static void ShipmentDataMap(ShipmentVariables shipmentVariables)
         {
-            ShipmentData.CurrencyEURId = shipmentVariables.CurrencyEURId;
-            ShipmentData.IncotermLDEId = shipmentVariables.IncotermLDEId;
-            ShipmentData.ChargeTypeAFTId = shipmentVariables.ChargeTypeAFTId;
             ShipmentData.VesselPTId = shipmentVariables.VesselPTId;
             ShipmentData.PackageTypePC1Id = shipmentVariables.PackageTypePC1Id;
             ShipmentData.PackageTypePC2Id = shipmentVariables.PackageTypePC2Id;
             ShipmentData.PackageTypePP1Id = shipmentVariables.PackageTypePP1Id;
             ShipmentData.PackageTypePP2Id = shipmentVariables.PackageTypePP2Id;
-            ShipmentData.PaymentTermCashId = shipmentVariables.PaymentTermCashId;
-            ShipmentData.VATTypeZeroId = shipmentVariables.VATTypeZeroId;
             ShipmentData.QuoteStageQTDRId = shipmentVariables.QuoteStageQTDRId;
             ShipmentData.MoveTypeMTAId = shipmentVariables.MoveTypeMTAId;
+            ShipmentData.MoveTypeTSMId = shipmentVariables.MoveTypeTSMId;
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
+            ShipmentData.ShipmentSubTypeTSSTId = shipmentVariables.ShipmentSubTypeTSSTId;
         }
     }
 }

@@ -129,7 +129,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RankId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
+        [DataMember] 
         public string VatTypeId { get; set; }
 
         [DataMember]
@@ -926,6 +926,29 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
+        private List<ProductItemPM> customerProductItems;
+        [Include]
+        [Association("CustomerProductItemCustomer", "Id", "CustomerId")]
+        [Composition]
+        [DataMember]
+        public virtual List<ProductItemPM> CustomerProductItems
+        {
+            get
+            {
+                if (customerProductItems == null)
+                {
+                    customerProductItems = new List<ProductItemPM>();
+                }
+
+                return customerProductItems;
+            }
+
+            set
+            {
+                customerProductItems = value;
+            }
+        }
+
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsLogBox { get; set; }
@@ -939,6 +962,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public double? CreditLimitAmount { get; set; }
+
+        [DataMember]
+        public double? InsuredcreditLimit { get; set; }
 
         [DataMember]
         public double? CreditLimitOpenBalance { get; set; }

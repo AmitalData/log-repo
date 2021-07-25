@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -16,7 +17,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public CustomerOpenFilesAmount customerOpenFilesAmount { get; set; }
-
+        private  GLAccountCardDataService gLAccountCardDataService;
         public ICommonDataContext ObjectContext
         {
             get { return objectContext; }
@@ -41,6 +42,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerOpenFilesAmountMapping.MapEntity(customerOpenFilesAmountPM, customerOpenFilesAmount, isNewEntity);
             customerOpenFilesAmountRepository.Add(customerOpenFilesAmount);
             customerOpenFilesAmountRepository.SubmitChanges();
+            UpdateGLaccountCardsData(customerOpenFilesAmountPM);
+
+
         }
 
 
@@ -53,7 +57,32 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerOpenFilesAmountMapping.MapEntity(customerOpenFilesAmountPM, customerOpenFilesAmount, isNewEntity);
             customerOpenFilesAmountRepository.Update(customerOpenFilesAmount);
             customerOpenFilesAmountRepository.SubmitChanges();
-           
+            UpdateGLaccountCardsData(customerOpenFilesAmountPM);
+
+
+        }
+        private  void UpdateGLaccountCardsData(CustomerOpenFilesAmountPM customerOpenFilesAmountPM)
+        {
+            CustomerPM customer = GetCustomer(customerOpenFilesAmountPM);
+            gLAccountCardDataService = new GLAccountCardDataService(customer.Id, customer.GLAccountId, customer.Tenant);
+            bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
+            if (GlAccountCardDataExists)
+            {
+                gLAccountCardDataService.UpdateGLaccountCardsData();
+            }
+        }
+        private  bool CheckIfGlAccountCardDataExists()
+        {
+            if (gLAccountCardDataService.gLAccountCardsDataPM == null)
+            {
+                return false;
+            }
+            else return true;
+        }
+        private  CustomerPM GetCustomer(CustomerOpenFilesAmountPM customerOpenFilesAmountPM)
+        {
+            CustomerQuery customerQuery = new CustomerQuery(customerOpenFilesAmountPM.Tenant);
+            return customerQuery.GetSinglePM(customerOpenFilesAmountPM.CustomerId, customerOpenFilesAmountPM.Tenant);
         }
     }
 }

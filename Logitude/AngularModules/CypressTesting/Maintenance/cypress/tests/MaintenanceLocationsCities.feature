@@ -1,6 +1,6 @@
 @release @stable  @all
 Feature: Create City, Inactivate and activate it from Maintenance
-    The user creates a City, selects it to edit, 
+    The user creates a City, selects it to edit,
     selects it to edit again and Inactivates it from the Maintenance module.
 
     Scenario: Add CityCode with lenght more than 15
@@ -11,15 +11,15 @@ Feature: Create City, Inactivate and activate it from Maintenance
     Scenario: Add City
         Given a city with the following details
             | CityCode      | random   |
-            | CityName      | random   |
-            | CityLocalName | random   |
+            | CityName      | TestCity |
+            | CityLocalName | TestCity |
             | Country       | US       |
             | State         | AK       |
             | Notes         | TestNote |
         When add city
         Then the city should add successfully
 
-    Scenario: Search for the city by name
+    Scenario: Search for the city by code
         When search for city
         Then the city should appear successfully
 
@@ -28,7 +28,7 @@ Feature: Create City, Inactivate and activate it from Maintenance
         Then the city should open successfully
 
     Scenario: Edit the city
-        Given a "random" as cityLocalName
+        Given a "EditTestCity" as cityLocalName
         And the user inactivate the city
         When edit city
         Then the city should update successfully

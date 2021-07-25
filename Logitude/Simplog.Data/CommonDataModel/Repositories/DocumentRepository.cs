@@ -39,7 +39,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
-
+        public Document GetSingleDocument(string id)
+        {
+            Document d = (from a in context.Documents
+                          where a.Id == id
+                          select a).FirstOrDefault();
+            return d;
+        }
 
         public List<Document> GetDocumentsByDocumentIds(List<string>documentIds, int tenant )
         {

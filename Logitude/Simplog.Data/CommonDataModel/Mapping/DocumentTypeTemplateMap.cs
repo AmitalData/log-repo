@@ -97,7 +97,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
                  .HasMaxLength(15)
                 .IsUnicode(false);
 
-
+            this.Property(t => t.AttachedExternalDocumentsIds) 
+               .HasMaxLength(300)
+               .IsUnicode(false);
 
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -188,8 +190,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.AutomationId).HasColumnName("AutomationId");
 
+            this.Property(t => t.AttachedExternalDocumentsIds).HasColumnName("AttachedExternalDocumentsIds");
 
-            
 
 
             if (dbms == "oracle")

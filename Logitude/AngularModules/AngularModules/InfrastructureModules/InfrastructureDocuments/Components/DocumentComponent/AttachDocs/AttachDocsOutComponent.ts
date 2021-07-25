@@ -97,6 +97,8 @@ export class AttachDocsOutComponent implements OnInit {
             item.FileSize = doc.FileSize;
             item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeCopyNameWithDocumentTypeName;
             item.ShowRemoveLink = true;
+            item.DirectionCode = "O";
+
             this.AttachmentsLists.push(item);
            
         });

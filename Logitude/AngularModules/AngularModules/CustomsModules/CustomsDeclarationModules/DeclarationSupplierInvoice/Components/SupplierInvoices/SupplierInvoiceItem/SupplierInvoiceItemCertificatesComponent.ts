@@ -57,8 +57,18 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     }
     IKEAFeature: string = 'hidden';
     LineNumber: string;
+    public TypeCodeFilterItems: ApiQueryFilters;
     allowExport: boolean;
     SetWindowArgs(args: any) {
+        var decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+        this.TypeCodeFilterItems = new ApiQueryFilters();
+        debugger;
+        if (decPM.direction == "I") {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsImportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
+        }
+        if (decPM.direction == "E") {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsExportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
+        }
         var _entityResourceService: EntityResourceService = new EntityResourceService();
         _entityResourceService.getEntityResourceByTableName("Customs.CertificateExemptionType", 0).subscribe((res: any) => {
             var entityListService: CertificateExemptionTypeListService = new CertificateExemptionTypeListService();

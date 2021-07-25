@@ -42,6 +42,7 @@ using HypredTest.ShippingAgentProxy;
 using HypredTest.ShippingLineProxy;
 using HypredTest.AccountingPartnerProxy;
 using HypredTest.PaymentTermProxy;
+using HypredTest.HybridTenantStateProxy;
 
 namespace HypredTest
 {
@@ -1667,7 +1668,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            Response loginResponse = loginService.Login("admin@fnarsoft.com", "1");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("islam@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -2418,13 +2419,15 @@ namespace HypredTest
                 AccountingPartnerProxy.AccountingPartnerPM newAccountingPartner = new AccountingPartnerProxy.AccountingPartnerPM()
                 {
                     Code = "HEHYBRID6",
-                    EnglishName = "Test hybrid H",
+                    EnglishName = "H Test",
                     Tenant = 1,
                     PartnerTypeId = "AC", 
                     VatNumber = "199996",  
                     CountryCode = "IL",
                     PaymentTermId = paymentTermId,
-                    PrimaryContactName = "H TEst"
+                    PrimaryContactName = "H TEst",
+                    CollectorId = "test1"
+
                 };
                   
                 var response = accountingPartnerservice.Upsert(newAccountingPartner, false); 
@@ -3315,6 +3318,12 @@ namespace HypredTest
                 case "AccountingPartner":
                     response = SetAccountingPartnerTests(Token);
                     break;
+                case "Hybrid Tenant State":
+                    response = TestHybridTenantStateService();
+                    break;
+                case "Address":
+                    response =  TestAddressService();
+                    break;
                 default:
                     MessageBox.Show("select a service to test");
                     break;
@@ -3327,6 +3336,34 @@ namespace HypredTest
             }
 
             MessageBox.Show("Success " + response?.Result);
+
+        }
+
+        private Response TestAddressService()
+        {
+            AddressProxy.AddressWcfServiceClient addressService = new AddressProxy.AddressWcfServiceClient();
+            AddressProxy.AddressPM address = new AddressProxy.AddressPM()
+            {
+                ExternalId = "EXT1234",
+                Tenant = 1,
+                Address1 = "Al Beireh",
+                Address2 = "Jawwal",
+                AddressTypeId = "M", // M: main address, B: billing // O:Other
+                ATTN = "11111",
+                CardId = "70132",
+                City = "Ramallah",
+                CountryId = "PS",
+                Name = "Main Address",
+                ZipCode = "0972",
+                Description = "ramallah address updated",
+            };
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)addressService.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = addressService.Upsert(address, false);
+
+                return response;
+            }
 
         }
 
@@ -3362,7 +3399,7 @@ namespace HypredTest
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
 
                 Response resultResponse = new Response();
-               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "1002" }, 1, ref resultResponse);
+               AccountingPartnerProxy.AccountingPartnerPM accountingPartnerPM = accountingPartnerservice.GetAccountingPartnerPM(new AccountingPartnerApiFilters() { ByCode = true, SearchCode = "HEHYBRID6" }, 1, ref resultResponse);
 
               if(accountingPartnerPM != null)
                 {
@@ -3662,6 +3699,30 @@ namespace HypredTest
                     response = shipmentservice.Upsert(consolepm, false);
                 }
 
+                return response;
+            }
+        }
+         
+         private Response TestHybridTenantStateService()
+        {
+            HybridTenantStateProxy.HybridTenantStatePM consolepm = new HybridTenantStatePM()
+            { 
+                Tenant = 2,
+                WaitingQueue = 0,
+                FailedQueue = 0,
+                LastQueueDateTime = DateTime.Today,
+                LastUpdateDateTime = DateTime.Today, 
+                VersionDate = DateTime.Today,
+                VersionNumber = "10.10"
+            };
+
+
+            HybridTenantStateProxy.HybridTenantStateWcfServiceClient hybridTenantStateServiceservice = new HybridTenantStateProxy.HybridTenantStateWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)hybridTenantStateServiceservice.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = new Response();
+                response = hybridTenantStateServiceservice.Upsert(consolepm, false); 
                 return response;
             }
         }

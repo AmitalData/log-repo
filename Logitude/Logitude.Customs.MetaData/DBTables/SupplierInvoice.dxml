@@ -250,7 +250,7 @@
   <Column
     Name="BuyerRoleCode"
     Type="varchar"
-    Size="4">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -349,7 +349,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="BuyerRoleCode"
-    ReferencedTable="CustomerRoleTypes"
+    ReferencedTable="BuyerRoleTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

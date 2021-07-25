@@ -235,6 +235,16 @@ export class GLAccountPMService {
             entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
             }
 			   			   			   
+            entityPM.OldEntityPM.GLAccountChildren = [];
+            for (var item in entityPM.GLAccountChildren) {
+            var myGLAccountPM = entityPM.GLAccountChildren[item];
+            var newGLAccountPM: GLAccountPM = this.clone(myGLAccountPM);
+						
+                
+							 
+            entityPM.OldEntityPM.GLAccountChildren.push(newGLAccountPM);
+            }
+			   
 		}
         else {
 

@@ -79,7 +79,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         MinimumInterestInvoiceBilling, 
 	         ReportingAsAnotherDocument, 
 	         CreditAllotmentPercentage, 
-	         CardsDataId,
+	         CardsDataId, 
+	         PostponedChequesCommission,
 	      }
 
 
@@ -204,7 +205,35 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreditAllotmentPercentage, 
 	         RelatedGLAccount, 
 	         CardsDataId, 
-	         PaymentTermName,
+	         PaymentTermName, 
+	         Period0, 
+	         Period1, 
+	         Period2, 
+	         Period3, 
+	         Period4, 
+	         Period5, 
+	         PeriodPast, 
+	         PeriodFuture, 
+	         TotalOpenTransactions, 
+	         LastReconciledBy, 
+	         LastReconcileDate, 
+	         CreditLimit, 
+	         PaymentTerm, 
+	         TotalOpenShipments, 
+	         Phone, 
+	         Salesman, 
+	         Collector, 
+	         FollowupDate, 
+	         FollowupNotes, 
+	         GLAccountFollowUpDate, 
+	         GLAccountFollowUpRemarks, 
+	         CalculatedAgingPeriod1, 
+	         CalculatedAgingPeriod2, 
+	         CalculatedAgingPeriod3, 
+	         InsuredCreditLimit, 
+	         PostponedChequesCommission, 
+	         BalanceInForeignCurrency, 
+	         ForeignBalanceInDue,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -496,6 +525,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
             {
 				entityPOCO.CardsDataId = entityPM.CardsDataId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostponedChequesCommission))
+            {
+				entityPOCO.PostponedChequesCommission = entityPM.PostponedChequesCommission;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -794,6 +828,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CardsDataId = entityPOCO.CardsDataId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PostponedChequesCommission))
+            {
+					entityPM.PostponedChequesCommission = entityPOCO.PostponedChequesCommission;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1083,6 +1122,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
             {
                 oldEntityPM.CardsDataId = entityPM.CardsDataId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostponedChequesCommission))
+            {
+                oldEntityPM.PostponedChequesCommission = entityPM.PostponedChequesCommission;
             }
 			
 		}

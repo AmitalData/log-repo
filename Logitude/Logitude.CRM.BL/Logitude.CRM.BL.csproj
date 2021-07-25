@@ -264,6 +264,7 @@
     <Compile Include="EntityPMs\QuestionnaireQuestionPM.cs" />
     <Compile Include="EntityPMs\TicketPM.cs" />
     <Compile Include="EntityQueryServices\ActivityOwnerHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\TicketStageQueryService.cs" />
     <Compile Include="EntityQueryServices\ActivityQueryService.cs" />
     <Compile Include="EntityQueryServices\CorrespondenceQueryService.cs" />
     <Compile Include="EntityQueryServices\CorrespondencesAttachmentQueryService.cs" />

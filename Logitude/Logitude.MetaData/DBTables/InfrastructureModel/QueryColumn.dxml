@@ -10,7 +10,7 @@
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
+      Nullable="false"/>
   </Column>
   <Column
     Name="Tenant"
@@ -86,4 +86,6 @@
     Columns="Tenant" />
   <Index
     Columns="Tenant,UserId" />
+  <UniqueConstraint
+    Columns="Tenant,UserId,ObjectFieldCode,QueryId" />
 </Table>

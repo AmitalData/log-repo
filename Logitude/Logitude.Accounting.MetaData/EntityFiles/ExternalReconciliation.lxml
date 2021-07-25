@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;47bd&quot;"
+  Code="&quot;33b6&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1333,6 +1333,12 @@
       Code="&quot;ExternalReconciliation.O.CantAdjustLedgersOnly&quot;"
       DefaultText="&quot;Cant adjust only transaction lines&quot;"
       LocalDefaultText="&quot;לא ניתן לבצע התאמה עם שורות מהכרטיס בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.CantReconcileTransferTransactionsWithMultipleBankPages&quot;"
+      DefaultText="&quot;You can't Reconcile Transfer Transactions with multiple bank pages. Please select only one bank page&quot;"
+      LocalDefaultText="&quot;לא ניתן להתאים תנועה מכרטיס דחויים עם יותר משורה אחת מצד הבנק, נא לבחור שורה אחת בכל פעם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

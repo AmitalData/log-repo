@@ -360,8 +360,8 @@ namespace WebFreight.Web.InfrastructureModel
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods=null;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
-                List<QuoteClosingReason> tenantZeroQuoteClosingReasons;
-                List<ShipmentSubType> tenantZeroShipmentSubTypes;
+                List<QuoteClosingReason> tenantZeroQuoteClosingReasons= null;
+                List<ShipmentSubType> tenantZeroShipmentSubTypes= null;
 
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
@@ -410,8 +410,8 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     if (setting.WorkEnvironment != "customs") tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
-                    tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
-                    tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
 
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
@@ -498,8 +498,8 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
-                AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
-                AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
+                if (setting.WorkEnvironment != "customs")  AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
+                if (setting.WorkEnvironment != "customs") AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
                 if (setting.WorkEnvironment != "customs") AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
@@ -531,6 +531,8 @@ namespace WebFreight.Web.InfrastructureModel
                 if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
                 AddReportFromTenantZero(tenant);
+
+                AddGeneralBIReportFolder(tenant);
 
                 AddTenantLoginPolicy(tenant);
 
@@ -2095,6 +2097,7 @@ namespace WebFreight.Web.InfrastructureModel
                         IsFollowUp = eventType.IsFollowUp,
                         IsManualEntry = eventType.IsManualEntry,
                         ObjectTableId = tenantZeroObject.Id,
+                        EventTypeCategoryCode = eventType.EventTypeCategoryCode,
                         LocalName = eventType.LocalName,
                         ShortView = eventType.ShortView,
                         SearchFields = eventType.SearchFields,
@@ -2751,6 +2754,38 @@ namespace WebFreight.Web.InfrastructureModel
         {
             ReportHelper reportHelper = new ReportHelper();
             reportHelper.UpdateReports(theTenant);
+        }
+
+        public static void AddGeneralBIReportFolder(int tenant)
+        {
+            User systemUser = GetTenantSystemUser(tenant);
+            BIReportFolderRepository bIReportFolderRepository = new BIReportFolderRepository(tenant);
+            BIReportFolder bIReportFolder = new BIReportFolder()
+            {
+                Id = IdCounter.GetNumber("BIReportFolder", tenant),
+                Tenant = tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = systemUser?.Id,
+                UpdateDate = DateTime.Now,
+                UpdatedByUserId = systemUser?.Id,
+                SearchFields = "General",
+                Name = "General",
+                Description = null,
+                Index = 0,
+                PermissionForAll = true,
+                PermittedByUserId = null,
+            };
+
+            bIReportFolderRepository.Add(bIReportFolder);
+            bIReportFolderRepository.SubmitChanges();
+        }
+
+        private static User GetTenantSystemUser(int tenant)
+        {
+            string systemUserEmail = "system@tenant" + tenant + ".com";
+            UserRepository userRepository = new UserRepository(tenant);
+            User systemUser = userRepository.GetSingleUserByEmail(systemUserEmail, tenant, false);
+            return systemUser;
         }
 
         public static void AddTenantLoginPolicy(int theTenant)

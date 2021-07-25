@@ -144,6 +144,34 @@ var InvoiceListClass = function () {
 
 }
 
+
+var QuotesRequest = function () {
+
+    this.Id = "";
+    this.QuoteNumber = "";
+    this.CreateDate = "";
+    this.QuotationUpdateDate = "";
+    this.QuotationPreparedTickVisibility = "";
+    this.DocumentSecurityId = "";
+    this.Feedback = "";
+    this.Comments = "";
+    this.DocumentId = "";
+    this.IsRejected = false;
+    this.IsApproved = false;
+    this.CommentsReadOnlyProperty = "";
+    this.OptionDisabledProperty = "";
+    this.ContactName = "";
+    this.OwnerName = "";
+    this.Subject = "";
+    this.Status = "";
+    this.ReferenceNumber = "";
+    this.PONumber = "";
+    this.Brand = "";
+
+}
+
+
+
 var CustomerListClass = function () {
 
     this.EntityId = "";
@@ -1687,6 +1715,54 @@ function BuildInvoicesList(invoices, TenantDateTimeFormat) {
 
     return InvoicesList;
 }
+
+
+function BuildQuotesRequests(quotesRequests, tenantDateTimeFormat) {
+    var results = [];
+    $.each(quotesRequests, function (index, quotesRequest) {
+        var newQuotesRequest = GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat);
+        results.push(newQuotesRequest);
+    });
+
+    return results;
+
+ 
+}
+
+function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
+
+    var newQuotesRequest = new QuotesRequest();
+    newQuotesRequest.Id = quotesRequest.Id;
+    newQuotesRequest.Feedback = quotesRequest.Feedback;
+    newQuotesRequest.Comments = quotesRequest.Comments == null ? "" : quotesRequest.Comments;
+    newQuotesRequest.CommentsReadOnlyProperty = quotesRequest.Comments == null ? "" : "readonly";
+    newQuotesRequest.OptionDisabledProperty = quotesRequest.Comments == null ? "" : "disabled";
+    newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved" ? "selected" : "";
+    newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected" ? "selected" : "";
+    newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
+    newQuotesRequest.QuoteNumber = $.trim(quotesRequest.QuoteNumber);
+    newQuotesRequest.ContactName = quotesRequest.ContactName;
+    newQuotesRequest.OwnerName = quotesRequest.OwnerName;
+    newQuotesRequest.Subject = quotesRequest.Subject;
+    newQuotesRequest.Status = quotesRequest.Status;
+    newQuotesRequest.ReferenceNumber = quotesRequest.ReferenceNumber;
+    newQuotesRequest.PONumber = quotesRequest.PONumber;
+    newQuotesRequest.Brand = quotesRequest.Brand;
+    if (quotesRequest.QuotationDocumentFiling) {
+        newQuotesRequest.QuotationDocumentFiling = quotesRequest.QuotationDocumentFiling;
+        newQuotesRequest.QuotationPreparedTickVisibility = "visible";
+        newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationDocumentFiling.CreateDate, tenantDateTimeFormat);
+        newQuotesRequest.DocumentSecurityId = quotesRequest.QuotationDocumentFiling.SecurityId;
+        newQuotesRequest.DocumentId = quotesRequest.QuotationDocumentFiling.DocumentId;
+    }
+    else
+    {
+        newQuotesRequest.QuotationPreparedTickVisibility = "collapse";
+    }
+
+    return newQuotesRequest;
+}
+
 
 function BuildCustomersList(entities, TenantDateTimeFormat) {
 

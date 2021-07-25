@@ -2067,6 +2067,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string currentMilestoneExceptions ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrentMilestoneExceptions  
+	   {
+	    
+	     get
+		{
+		   return currentMilestoneExceptions;
+		 }
+		 set
+		 {
+		   if(currentMilestoneExceptions != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentMilestoneExceptions",OldValue=currentMilestoneExceptions,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currentMilestoneExceptions=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -87,18 +87,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if(customsRequestsSheetPMList== null || customsRequestsSheetPMList.Count==0)
                 {
-                    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                    customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUW2L", "", "", null, null, courierMasterID, true);
+                    customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != requestParams.PBId).ToList();
+                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0 )
                     {
 
-                        LoggingUserId = requestParams.LoggingUserId,
-                        Tenant = requestParams.Tenant,
-                        LoggingEntityId = courierMasterID,
+                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                        UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                        {
 
-                    };
+                            LoggingUserId = requestParams.LoggingUserId,
+                            Tenant = requestParams.Tenant,
+                            LoggingEntityId = courierMasterID,
 
-                    string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+                        };
 
+                        string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+                    }
                 }
 
                 this.MyResponseData.ApplicationID = customFileNo;

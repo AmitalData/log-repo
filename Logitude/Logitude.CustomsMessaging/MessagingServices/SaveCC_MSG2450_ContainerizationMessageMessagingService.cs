@@ -13,6 +13,10 @@ using Logitude.CustomsMessaging.FakeMessagingServices;
 using UnifreightIIG.Common.ContainerizationMessageServiceReference;
 using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.TheGateway;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -66,6 +70,24 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     ref this._IIGGatewayMoreParams,
                     out response);
             }
+            
+            if (response.ResponseContentHeader.Exception != null && response.ResponseContentHeader.Exception.Any(x => x.ExceptionLevel == 3))
+            {
+                ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+                var myContainerizationQueryService = new ContainerizationQueryService(dbContext);
+                string containerizationID = requestParams.LoggingEntityId;
+                var _ContainerizationPM = myContainerizationQueryService.GetSingle(containerizationID, true, false);
+                if (string.IsNullOrEmpty(_ContainerizationPM.ContainerizationStatus))
+                    _ContainerizationPM.ContainerizationStatus = "4";
+
+                if (_ContainerizationPM.ContainerizationStatus == "1")
+                    _ContainerizationPM.ContainerizationStatus = "2";
+
+                _ContainerizationPM.ChangeSetOp = ChangeSetOperation.Update;
+                var containerizationUpdateService = new ContainerizationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                containerizationUpdateService.Update(_ContainerizationPM, true);
+            }
+
             return response;
         }
 

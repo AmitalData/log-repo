@@ -310,6 +310,27 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
     }
 
+
+    UpdateAllCertificateWithoutResponse() {
+
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.multiCertificatesService.UpdateAllCertificateWithoutResponse(this.DeclarationPM.Id).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError) {
+                let messageWindow = new MessageWindow();
+                messageWindow.Show(response.ErrorsArray[0]);
+            }
+            else {
+                let messageWindow = new MessageWindow();
+                messageWindow.RTL = true;
+                let message = "עידכון בוצע בהצלחה, " + response.Result+" אישורים עודכנו ";
+                messageWindow.Show(message);
+
+                this.ReloadCertificateTickets(false);
+            }
+        });
+    }
+
     LoadConnectedItems(message: string) {
         this.preventSelect = false;
         if (message == "ok" || message == null) {

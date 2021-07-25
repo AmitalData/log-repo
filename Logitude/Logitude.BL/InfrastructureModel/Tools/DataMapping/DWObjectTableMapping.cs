@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.ObjectTableName = entityPM.ObjectTableName;
             entityPOCO.MaxNumberOfCustomFields = entityPM.MaxNumberOfCustomFields;
             entityPOCO.HasCustomFields = entityPM.HasCustomFields;
+            entityPOCO.AdditionalFactRelationType = entityPM.AdditionalFactRelationType;
 
 
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://test.logitudeworld.com/test/WcfApi/LoginWcfService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" />
+  <xs:import schemaLocation="http://test.logitudeworld.com/test/WcfApi/LoginWcfService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WebFreight.Web.Helpers" />
+  <xs:element name="Login">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="LoginResult" nillable="true" type="q1:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginByCredential">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WebFreight.Web.Helpers" minOccurs="0" name="apiCredentialsParam" nillable="true" type="q2:APICredentialsParameters" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginByCredentialResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="LoginByCredentialResult" nillable="true" type="q3:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserTenants">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="response" nillable="true" type="q4:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserTenantsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WebFreight.Web.Helpers" minOccurs="0" name="GetUserTenantsResult" nillable="true" type="q5:ArrayOfTenantInfo" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" minOccurs="0" name="response" nillable="true" type="q6:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

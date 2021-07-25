@@ -910,6 +910,11 @@ export class TenantManagementPM {
     public set ScheduledTasksLimitPerReport(newValue: number) { if (this.scheduledTasksLimitPerReport != newValue) { this.scheduledTasksLimitPerReport = newValue; this.MarkAsDirty("ScheduledTasksLimitPerReport"); } }
        
 	 
+    private isHybrid: boolean;
+    public get IsHybrid() { return this.isHybrid; }
+    public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

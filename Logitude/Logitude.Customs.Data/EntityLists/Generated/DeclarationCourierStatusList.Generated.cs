@@ -160,6 +160,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string DistributionArea  { get; set; }
        [DataMember]
        public string CrateNumber  { get; set; }
+       [DataMember]
+       public bool AmendmentDontDisplayInList  { get; set; }
+       [DataMember]
+       public string TruckerName  { get; set; }
    }
 
 }

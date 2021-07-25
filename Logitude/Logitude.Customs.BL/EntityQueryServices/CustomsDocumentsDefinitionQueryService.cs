@@ -28,14 +28,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         */
         
-        public List<CustomsDocumentsDefinitionPM> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, int tenant)
+        public List<CustomsDocumentsDefinitionPM> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, string declarationTypeCode, int tenant)
         {
             if(String.IsNullOrWhiteSpace(cargoTypeCode) || String.IsNullOrWhiteSpace(processTypeCode) || String.IsNullOrWhiteSpace(transportTypeCode))
             {
                 return new List<CustomsDocumentsDefinitionPM>();
             }
             
-            List <CustomsDocumentsDefinition> CustomsDocumentsDefinitions = repository.GetCustomsDocumentsDefinitionsForDeclaration(cargoTypeCode, processTypeCode, transportTypeCode, tenant);
+            List <CustomsDocumentsDefinition> CustomsDocumentsDefinitions = repository.GetCustomsDocumentsDefinitionsForDeclaration(cargoTypeCode, processTypeCode, transportTypeCode, declarationTypeCode, tenant);
             List<CustomsDocumentsDefinitionPM> CustomsDocumentsDefinitionPMs = new List<CustomsDocumentsDefinitionPM>();
             string docType = null;
             foreach (CustomsDocumentsDefinition definition in CustomsDocumentsDefinitions)

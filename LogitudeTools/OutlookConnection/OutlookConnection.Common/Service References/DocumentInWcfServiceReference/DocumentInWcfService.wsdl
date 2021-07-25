@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DocumentInWcfService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/DocumentInWcfService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDocumentInWcfService_Upsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:Upsert" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_Upsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_GetDocumentDataByExternalId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentDataByExternalId" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_GetDocumentDataByExternalId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentDataByExternalIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_UpsertDocumentData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpsertDocumentData" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_UpsertDocumentData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpsertDocumentDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_UploadDocumentFileData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadDocumentFileData" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_UploadDocumentFileData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadDocumentFileDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_GetDocumentDataByExternalIdWithoutBinaray_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentDataByExternalIdWithoutBinaray" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentInWcfService_GetDocumentDataByExternalIdWithoutBinaray_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentDataByExternalIdWithoutBinarayResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDocumentInWcfService">
+    <wsdl:operation name="Upsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentInWcfService/Upsert" message="tns:IDocumentInWcfService_Upsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentInWcfService/UpsertResponse" message="tns:IDocumentInWcfService_Upsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentDataByExternalId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalId" message="tns:IDocumentInWcfService_GetDocumentDataByExternalId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdResponse" message="tns:IDocumentInWcfService_GetDocumentDataByExternalId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpsertDocumentData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentInWcfService/UpsertDocumentData" message="tns:IDocumentInWcfService_UpsertDocumentData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentInWcfService/UpsertDocumentDataResponse" message="tns:IDocumentInWcfService_UpsertDocumentData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDocumentFileData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileData" message="tns:IDocumentInWcfService_UploadDocumentFileData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileDataResponse" message="tns:IDocumentInWcfService_UploadDocumentFileData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentDataByExternalIdWithoutBinaray">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdWithoutBinaray" message="tns:IDocumentInWcfService_GetDocumentDataByExternalIdWithoutBinaray_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdWithoutBinarayResponse" message="tns:IDocumentInWcfService_GetDocumentDataByExternalIdWithoutBinaray_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IDocumentInWcfService" type="tns:IDocumentInWcfService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Upsert">
+      <soap:operation soapAction="http://tempuri.org/IDocumentInWcfService/Upsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentDataByExternalId">
+      <soap:operation soapAction="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpsertDocumentData">
+      <soap:operation soapAction="http://tempuri.org/IDocumentInWcfService/UpsertDocumentData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDocumentFileData">
+      <soap:operation soapAction="http://tempuri.org/IDocumentInWcfService/UploadDocumentFileData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentDataByExternalIdWithoutBinaray">
+      <soap:operation soapAction="http://tempuri.org/IDocumentInWcfService/GetDocumentDataByExternalIdWithoutBinaray" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentInWcfService">
+    <wsdl:port name="BasicHttpBinding_IDocumentInWcfService" binding="tns:BasicHttpBinding_IDocumentInWcfService">
+      <soap:address location="http://localhost:9996/WcfApi/DocumentInWcfService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

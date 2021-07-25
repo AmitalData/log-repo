@@ -126,17 +126,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                //CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-                //CustomsSettingPM setting = settingService.GetSettingByTenantN(authToken.Tenant);
-                //var resMode = new { DefaultValue = "" };
-                //if (setting.IsConnectedToUniFreight)
-                //{
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(authToken.Tenant);
+                var resMode = new { DefaultValue = "" };
+                if (setting.IsConnectedToUniFreight)
+                {
                     string DefaultValue = GetDefaultPrivate(DISTRID, DEFID, BRANCHID, CARDID, tenant);
-                   var  resMode = new { DefaultValue = DefaultValue };
-                //}
-                
-                //return insurancePercent;
-            
+                      resMode = new { DefaultValue = DefaultValue };
+                }
+
+              
 
                 return Request.CreateResponse(HttpStatusCode.OK, resMode);
             }

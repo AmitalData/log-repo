@@ -41,20 +41,21 @@
             <td>
                 <ScrollViewer>
                     <table>
+                        <tr class="TabTitleRow">
+                            <td>{{'Opportunity.TH.General' | TextCodeTranslationPipe}}</td>
+                        </tr>
 
-                        <tr class="FormFieldRow">
+                        <tr style="height: 1px;">
                             <td>
-                                <table>
-                                    <tr class="TabTitleRow">
-                                        <td>{{'Opportunity.TH.General' | TextCodeTranslationPipe}}</td>
-                                    </tr>
+                                <table class="FixedTable">
 
+                                    <!-- OpportunityTypeId -->
                                     <tr class="FormFieldRow">
-                                        <td style="width: 150px;">
+                                        <td [style.width.px]="LabelWidth">
                                             <LogLabel [ObjectFieldName]="'OpportunityTypeId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
                                         </td>
 
-                                        <td style="width:260px">
+                                        <td [style.width.px]="ControlWidth">
                                             <table>
                                                 <tr *ngIf="ResetOpportunitiy">
                                                     <td>
@@ -62,25 +63,21 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
                                                                 [LookUpTableName]="'OpportunityType'"
-                                                                [SelectedValue]="OpportunityTypeId"
-                                                                [HideColumns]="true">
+                                                                [SelectedValue]="OpportunityTypeId">
                                                         </LogLov>
                                                     </td>
-                                                    <td style="width:54px"></td>
                                                 </tr>
                                             </table>
-
-
                                         </td>
 
                                         <td>
                                             <div></div>
                                         </td>
-
                                     </tr>
 
+                                    <!-- Subject -->
                                     <tr class="FormFieldRow">
-                                        <td>
+                                        <td [style.width.px]="LabelWidth">
                                             <LogLabel [ObjectFieldName]="'Subject'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
                                         </td>
 
@@ -88,7 +85,7 @@
                                             <table>
                                                 <tr>
                                                     <td style="width:640px">
-                                                        <LogTextBox [ObjectFieldName]="'Subject'" [ObjectTableName]="ObjectTableName" [Text]="Subject" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'Subject'" [ObjectTableName]="ObjectTableName" [Text]="Subject" [InputType]="'ntext'" [DataContext]="DataContext"></LogTextBox>
                                                     </td>
 
                                                     <td>
@@ -97,24 +94,21 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td></td>
-
-
                                     </tr>
 
+                                    <!-- CustomerId -->
                                     <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'CustomerId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                        </td>
+
                                         <td colspan="2">
                                             <table>
-
-                                                <tr class="FormFieldRow">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'CustomerId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
+                                                <tr>
+                                                    <td style="width:640px">
                                                         <table>
                                                             <tr>
-                                                                <td style="width:206px">
+                                                                <td [style.width.px]="ControlWidth">
                                                                     <LogLov [ObjectFieldName]="'CustomerId'"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
@@ -123,324 +117,225 @@
                                                                             [HideAddLink]="true"
                                                                             [HideAdd]="true"
                                                                             [HideEdit]="true"
-                                                                            [HideColumns]="true"
                                                                             [RunToggleMode]="true">
                                                                     </LogLov>
                                                                 </td>
-                                                                <td style="width:36px"></td>
 
                                                                 <td>
                                                                     <div></div>
                                                                 </td>
 
+                                                                <td [style.width.px]="LabelWidth">
+                                                                    <LogLabel [ObjectFieldName]="'EstimatedClosingDate'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                </td>
 
-
-
+                                                                <td [style.width.px]="ControlWidth">
+                                                                    <LogDatePicker [ObjectFieldName]="'EstimatedClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                </td>
                                                             </tr>
                                                         </table>
-
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr class="FormFieldRow" *ngIf="ContactIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'ContactId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
                                                     </td>
 
                                                     <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- ContactId -->
+                                    <tr class="FormFieldRow" *ngIf="ContactIdVisibility">
+                                        <td [style.width.px]="LabelWidth">
+                                            <LogLabel [ObjectFieldName]="'ContactId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                        </td>
+
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:640px">
                                                         <table>
                                                             <tr>
-                                                                <td>
+                                                                <td [style.width.px]="ControlWidth">
                                                                     <LogLov [ObjectFieldName]="'ContactId'"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
                                                                             [LookUpTableName]="'Contact'"
-                                                                            [SelectedValue]="ContactId"
-                                                                            [HideColumns]="true">
-                                                                    </LogLov>
-
-                                                                </td>
-
-                                                                <td style="width:54px"></td>
-
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-
-                                                <tr class="TabTitleRow">
-                                                    <td colspan="2">
-                                                        Lead Details
-                                                    </td>
-                                                </tr>
-
-
-                                                <tr class="FormFieldRow" *ngIf="LeadSourceIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'LeadSourceId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLov [ObjectFieldName]="'LeadSourceId'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'LeadSource'"
-                                                                            [SelectedValue]="LeadSourceId"
-                                                                            [HideColumns]="true">
-                                                                    </LogLov>
-
-                                                                </td>
-
-                                                                <td style="width:54px"></td>
-
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr class="FormFieldRow" *ngIf="LeadDescriptionVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'LeadDescription'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td style="width:54px"></td>
-
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr class="FormFieldRow" *ngIf="LeadUserIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'LeadUserId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLov [ObjectFieldName]="'LeadUserId'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'User'"
-                                                                            [SelectedValue]="LeadUserId"
-                                                                            [HideColumns]="true">
+                                                                            [SelectedValue]="ContactId">
                                                                     </LogLov>
                                                                 </td>
-                                                                <td style="width:54px"></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr class="FormFieldRow" *ngIf="LeadPartnerIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'LeadPartnerId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLov [ObjectFieldName]="'LeadPartnerId'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'Card'"
-                                                                            [SelectedValue]="LeadPartnerId"
-                                                                            [HideColumns]="false"
-                                                                            [HideAddLink]="true"
-                                                                            [HideAdd]="true">
-                                                                    </LogLov>
-                                                                </td>
-                                                                <td style="width:18px"></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-
-                                                <tr class="FormFieldRow" *ngIf="AgentIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'AgentId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLov [ObjectFieldName]="'AgentId'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'Card'"
-                                                                            [SelectedValue]="AgentId"
-                                                                            [HideColumns]="false">
-                                                                    </LogLov>
-                                                                </td>
-                                                                <td style="width:18px"></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-                                                <tr class="FormFieldRow" *ngIf="ForeignClientIdVisibility">
-                                                    <td style="width:150px">
-                                                        <LogLabel [ObjectFieldName]="'ForeignClientId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLov [ObjectFieldName]="'ForeignClientId'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"
-                                                                            [LookUpTableName]="'Card'"
-                                                                            [SelectedValue]="ForeignClientId"
-                                                                            [HideColumns]="false">
-                                                                    </LogLov>
-                                                                </td>
-                                                                <td style="width:18px"></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </td>
-
-                                                </tr>
-
-
-
-
-
-
-
-                                                <tr>
-
-                                                    <td colspan="2"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-
-
-                                        <td>
-
-                                            <table>
-                                                <tr>
-                                                    <td style="width:30px;padding-top:140px"></td>
-                                                    <td>
-                                                        <table>
-                                                            <tr style="height:5px">
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:150px">
-                                                                    <LogLabel [ObjectFieldName]="'EstimatedClosingDate'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
-                                                                </td>
 
                                                                 <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:200px">
-                                                                                <LogDatePicker [ObjectFieldName]="'EstimatedClosingDate'" [ObjectTableName]="ObjectTableName"
-                                                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                            </td>
-
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-
+                                                                    <div></div>
                                                                 </td>
 
-                                                            </tr>
-
-                                                            <tr class="FormFieldRow">
-                                                                <td style="width:150px">
+                                                                <td [style.width.px]="LabelWidth">
                                                                     <LogLabel [ObjectFieldName]="'OwnerId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
                                                                 </td>
 
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:200px">
-                                                                                <LogLov [ObjectFieldName]="'OwnerId'"
-                                                                                        [ObjectTableName]="ObjectTableName"
-                                                                                        [DataContext]="DataContext"
-                                                                                        [LookUpTableName]="'User'"
-                                                                                        [SelectedValue]="OwnerId"
-                                                                                        [HideColumns]="true">
-                                                                                </LogLov>
-                                                                            </td>
-
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-
+                                                                <td [style.width.px]="ControlWidth">
+                                                                    <LogLov [ObjectFieldName]="'OwnerId'"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [LookUpTableName]="'User'"
+                                                                            [SelectedValue]="OwnerId">
+                                                                    </LogLov>
                                                                 </td>
                                                             </tr>
-
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
                                                         </table>
-
                                                     </td>
 
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
                                                 </tr>
                                             </table>
-
-
-                                            <div></div>
                                         </td>
+                                    </tr>
 
-                                        <td style="width:25px"></td>
+                                </table>
+                            </td>
+                        </tr>
 
+                        <!-- Lead Details -->
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr class="TabTitleRow">
+                                        <td>Lead Details</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="3">
+                                        <td>
                                             <table>
-                                                <tr class="TabTitleRow">
-                                                    <td>Additional Fields</td>
+
+                                                <!-- LeadSourceId -->
+                                                <tr class="FormFieldRow" *ngIf="LeadSourceIdVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'LeadSourceId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogLov [ObjectFieldName]="'LeadSourceId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'LeadSource'"
+                                                                [SelectedValue]="LeadSourceId">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
                                                 </tr>
 
-                                                <tr>
+                                                <!-- LeadDescription -->
+                                                <tr class="FormFieldRow" *ngIf="LeadDescriptionVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'LeadDescription'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogTextBox [ObjectFieldName]="'LeadDescription'" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'" [DataContext]="DataContext"></LogTextBox>
+                                                    </td>
                                                     <td>
-                                                        <div class="FillParent">
-                                                            <div class="LocationDirective" #Child></div>
-                                                        </div>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- LeadUserId -->
+                                                <tr class="FormFieldRow" *ngIf="LeadUserIdVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'LeadUserId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogLov [ObjectFieldName]="'LeadUserId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'User'"
+                                                                [SelectedValue]="LeadUserId">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- LeadPartnerId -->
+                                                <tr class="FormFieldRow" *ngIf="LeadPartnerIdVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'LeadPartnerId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogLov [ObjectFieldName]="'LeadPartnerId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Card'"
+                                                                [SelectedValue]="LeadPartnerId"
+                                                                [HideAddLink]="true"
+                                                                [HideAdd]="true">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- AgentId -->
+                                                <tr class="FormFieldRow" *ngIf="AgentIdVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'AgentId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogLov [ObjectFieldName]="'AgentId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Card'"
+                                                                [SelectedValue]="AgentId">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- ForeignClientId -->
+                                                <tr class="FormFieldRow" *ngIf="ForeignClientIdVisibility">
+                                                    <td [style.width.px]="LabelWidth">
+                                                        <LogLabel [ObjectFieldName]="'ForeignClientId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                    </td>
+                                                    <td [style.width.px]="ControlWidth">
+                                                        <LogLov [ObjectFieldName]="'ForeignClientId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Card'"
+                                                                [SelectedValue]="ForeignClientId">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </td>
                                     </tr>
                                 </table>
+                            </td>
+                        </tr>
 
+                        <!-- Additional Fields -->
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr class="TabTitleRow">
+                                        <td>Additional Fields</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="LocationDirective" #Child></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>

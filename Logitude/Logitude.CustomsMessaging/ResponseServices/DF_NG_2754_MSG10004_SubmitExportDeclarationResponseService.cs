@@ -134,6 +134,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     
                     //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
                     this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
+                    this._MyDeclarationPM.IsSubmitDeclaration = true;
+                    
                     if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
                     {
                         _MyDeclarationPM.UserNotes = "LoadTest";

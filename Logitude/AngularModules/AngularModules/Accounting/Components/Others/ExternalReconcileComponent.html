@@ -405,10 +405,15 @@
                          style="color: #439c47;text-decoration: underline;top: 3px;">
                         {{'Accounting.General.B.Close' | TextCodeTranslationPipe}}
                     </div>
-                    {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="ExternalRecoPM"
-                                                                                           href="#" (click)="OpenReco()"> {{ExternalRecoPM.ReconciliationNumber }}</a>
-                    {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
-                    {{GetAutoRecoMSG()}}
+                    <div *ngIf="CreatedReconciliationsCount == 1">
+                        {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="ExternalRecoPM"
+                                                                                               href="#" (click)="OpenReco()"> {{ExternalRecoPM.ReconciliationNumber }}</a>
+                        {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
+                    </div>
+                    <div *ngIf="CreatedReconciliationsCount > 1">
+                        <a *ngIf="ExternalRecoPM"  href="#" (click)="OpenReco()"> {{ExternalRecoPM.ReconciliationNumber }}</a>
+                        {{'Reconciliation.O.AdditionalReconciliationsHasBeenCreated' | TextCodeTranslationPipe}}
+                    </div>
                 </div>
             </td>
 

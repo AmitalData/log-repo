@@ -43,7 +43,8 @@
               border-radius: 25px;
               box-shadow: 0px 0px 8px 0px #00000025;
               color: rgb(66, 66, 66);
-              background: white;
+              background: var(--MainColor);
+              color: white;
               border: none;
               cursor: pointer;
 

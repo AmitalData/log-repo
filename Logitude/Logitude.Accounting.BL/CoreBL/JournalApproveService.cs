@@ -162,9 +162,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     myLedgerTransactionsWithCounters = _JournalApproveParser.LedgerTransactions
                         .OrderBy(rec => rec.JournalId).ThenBy(rec => rec.JournalLineNumber)
                         .ToList();
+                    if (this._SelectedQueue == JournalApproveService.K_AccountingJournalApproveWR)
+                    {
+                        var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
+                        gLAccountAgingDataPMs = ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
 
-                    var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
-                    gLAccountAgingDataPMs = ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
+                    }
 
 
                     //if (!_ExecAsSP)
@@ -229,6 +232,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (myCreateAutoReconcileWhileStreamingService.ReconciliationList != null &&
                         myCreateAutoReconcileWhileStreamingService.ReconciliationList.Count > 0)
                     {
+
+                        var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
+                        if (toUpdateInReconcileProgressToFalse)
+                        {
+                            UpdateInReconcileProgressToFalse();//Task 138958: לוגיקה בסרביס של התאמות כרטיס - התייחסות ל InRecocileProgress
+                        }
+
                         var myReconciliationUpdateService = new ReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                         myReconciliationUpdateService.SuppressResetDraftOpenReconciliation = true;
 
@@ -238,11 +248,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             _AccountingContext.SaveChanges();
                         }
 
-                        var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
-                        if (toUpdateInReconcileProgressToFalse)
-                        {
-                            UpdateInReconcileProgressToFalse();
-                        }
+                        //var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
+                        //if (toUpdateInReconcileProgressToFalse)
+                        //{
+                        //    UpdateInReconcileProgressToFalse();
+                        //}
                         UpdateJournalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
 
                     }
@@ -383,6 +393,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (listTransactionId.Count > 0)
             {
                 myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, _JournalPM.Tenant, false);
+                _AccountingContext.SaveChanges();// >>VALIDATION SHOULD NOT FAIL
             }
         }
 

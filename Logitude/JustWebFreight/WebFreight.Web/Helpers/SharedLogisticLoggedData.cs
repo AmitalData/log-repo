@@ -18,5 +18,10 @@ namespace WebFreight.Web.Helpers
         public bool IsShipperShared { get; set; }
         public bool IsConsigneeShared { get; set; }
         public bool DisplayDocumentsAndEvents { get; set; }
+        public bool IsQuotesRequestsMenuEnabled { get; set; }
+        public string ContactId { get; set; }
+        public bool IsReportsMenuEnabled { get; set; }
+
+        
     }
 }

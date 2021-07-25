@@ -896,7 +896,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         comments = "",
                     }
                 };
-                if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+                if (!dirtyDeclarationPM.IsConnectedToUnifreight &&  dirtyDeclarationPM.IsAmendment!=true) myAmitalEventTracerModel.NotConnectedToUniface = true;
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);

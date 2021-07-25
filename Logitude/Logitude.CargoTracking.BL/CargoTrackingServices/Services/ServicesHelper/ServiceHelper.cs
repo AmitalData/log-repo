@@ -252,10 +252,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
             if (!isClosed)
             {
-
-                    automaticLastUpdateDate = (DateTime)dataTable.Rows
-                                                     .Cast<DataRow>()
-                                                     .Max(d => d["AutomaticLastUpdateDate"]);
+                automaticLastUpdateDate = (DateTime)dataTable.Rows
+                                                    .Cast<DataRow>()
+                                                    .Max(d => d["AutomaticLastUpdateDate"]);
             }
 
 

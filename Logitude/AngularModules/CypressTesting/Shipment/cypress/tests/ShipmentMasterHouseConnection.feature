@@ -1,4 +1,4 @@
-@smoke @dev @all
+@smoke @stable @all
 Feature: Shipment Master House Connection
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     disconnects the House from the Master, creates a House Export Air shipment from outside the Master,
@@ -14,7 +14,7 @@ Feature: Shipment Master House Connection
             | MainCarriageFromPort | LHR       |
             | MainCarriageToPort   | MIA       |
         When create shipment
-        Then the master should create successfully 
+        Then the master should create successfully
 
     Scenario: Create house export air shipment inside the master
         Given the user in the master's Shipment tab
@@ -22,7 +22,12 @@ Feature: Shipment Master House Connection
         Then the house should create successfully
         And the house should connect successfully
 
+    Scenario: Routing main carriage leg should be dim inside the connected house
+        Given the user goes to the main carriage leg of the created house
+        Then all fields of the main carriage leg should be dim
+
     Scenario: Disconnect the house shipment
+        Given the user goes back to the master shipment
         When disconnect shipment
         Then the shipment should disconnect successfully
 

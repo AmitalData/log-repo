@@ -455,3 +455,4 @@ __pycache__/
 /Logitude/AngularModules/LoginModules/dist/build.js
 
 /Logitude/Logitude.CargoTrackingTests/Connections
+/Logitude/Logitude.CargoTrackingTests/Configurations/Configurations.xml

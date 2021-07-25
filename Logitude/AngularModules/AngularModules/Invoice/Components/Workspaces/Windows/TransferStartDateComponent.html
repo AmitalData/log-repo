@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -55,6 +55,22 @@
                     </td>
                 </tr>
 
+
+                <!-- APPaymentTransferStartDate -->
+                <tr class="FormFieldRow" *ngIf="Code == 'APPayment'">
+                    <td style="width: 90px;">
+                        <LogLabel [ObjectFieldName]="'APPaymentTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Start date'"></LogLabel>
+                    </td>
+
+                    <td style="width: 180px;">
+                        <LogDatePicker [ObjectFieldName]="'APPaymentTransferStartDate'" [SelectedDateValue]="APPaymentTransferStartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <tr>
                     <td colspan="3">
                         <table>
@@ -71,7 +87,7 @@
                         </table>
                     </td>
                 </tr>
-                
+
             </table>
         </td>
     </tr>

@@ -469,6 +469,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(vendorTypeTable, vendorTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(vendorTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaStatusTypeLookUpTable = closedSystemTables.Where(d => d.id == "1599").FirstOrDefault();
+            ObjectTable PoaStatusTypeLookUpObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaStatusTypeLookUp", 0, false);
+            InsertClosedTableRecord(PoaStatusTypeLookUpTable, PoaStatusTypeLookUpObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PoaStatusTypeLookUpTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerClassificationTypeTable = closedSystemTables.Where(d => d.id == "1055").FirstOrDefault();
+            ObjectTable CustomerClassificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerClassificationType", 0, false);
+            InsertClosedTableRecord(CustomerClassificationTypeTable, CustomerClassificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomerClassificationTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData SecurityClearenceTypeCodeTable = closedSystemTables.Where(d => d.id == "23674").FirstOrDefault();
             ObjectTable SecurityClearenceTypeCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SecurityClearenceTypeCode", 0, false);
             InsertClosedTableRecord(SecurityClearenceTypeCodeTable, SecurityClearenceTypeCodeObjectTable, customsClosedTables, customsClosedTableRepository);
@@ -499,10 +509,20 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomerIdentificationTypeTable, CustomerIdentificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomerIdentificationTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerIndicationTypeTable = closedSystemTables.Where(d => d.id == "98").FirstOrDefault();
+            ObjectTable CustomerIndicationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerIndicationType", 0, false);
+            InsertClosedTableRecord(CustomerIndicationTypeTable, CustomerIndicationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomerIndicationTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DeliveryTypeTable = closedSystemTables.Where(d => d.id == "23675").FirstOrDefault();
             ObjectTable DeliveryTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliveryType", 0, false);
             InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(DeliveryTypeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaAuthorizationTypeLookupeTable = closedSystemTables.Where(d => d.id == "1595").FirstOrDefault();
+            ObjectTable PoaAuthorizationTypeLookupObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaAuthorizationTypeLookup", 0, false);
+            InsertClosedTableRecord(PoaAuthorizationTypeLookupeTable, PoaAuthorizationTypeLookupObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PoaAuthorizationTypeLookupeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CoolingReportingMethodTable = closedSystemTables.Where(d => d.id == "23799").FirstOrDefault();
             ObjectTable CoolingReportingMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.CoolingReportingMethod", 0, false);
@@ -1098,6 +1118,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable ExporterRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExporterRoleType", 0, false);
             InsertClosedTableRecord(ExporterRoleType, ExporterRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(ExporterRoleType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData BuyerRoleTypeType = closedSystemTables.Where(d => d.id == "23784").FirstOrDefault();
+            ObjectTable BuyerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.BuyerRoleType", 0, false);
+            InsertClosedTableRecord(BuyerRoleTypeType, BuyerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(BuyerRoleTypeType);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AutonomyRegionType = closedSystemTables.Where(d => d.id == "1937").FirstOrDefault();
             ObjectTable AutonomyRegionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AutonomyRegionType", 0, false);

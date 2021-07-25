@@ -11,7 +11,7 @@ export class ARPaymentValidator {
     var validationResults = [];
 
     var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-    
+
     Validator.TryValidateObject(entityPm, null, validationResults);
 
 
@@ -50,7 +50,8 @@ export class ARPaymentValidator {
     }
 
     if (entityPm.AccountingPaymentMethodCode == "CH") {
-        this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
+        if(entityPm.IsFullAccounting)
+            this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
     }
 
 
