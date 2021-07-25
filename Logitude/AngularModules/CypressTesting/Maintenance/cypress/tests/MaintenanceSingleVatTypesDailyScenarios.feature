@@ -31,7 +31,6 @@ Feature: Single Vat Type fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the single vat type
         Given the user fill the following single vat type General details
-            | InActive         | YES                   |
             | Description      | New Description       |
             | LocalDescription | Local New Description |
         And add vat type percentage
