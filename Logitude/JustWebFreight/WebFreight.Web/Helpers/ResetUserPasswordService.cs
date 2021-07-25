@@ -35,8 +35,8 @@ namespace WebFreight.Web.Helpers
         {
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
-            if (!string.IsNullOrEmpty(brandingTenant))
-                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(brandingTenant));
+            if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
+                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(resetPasswordParameters.BrandingTenant));
 
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
