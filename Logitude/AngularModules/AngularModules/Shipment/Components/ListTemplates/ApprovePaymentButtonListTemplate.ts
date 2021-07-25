@@ -103,7 +103,7 @@ export class ApprovePaymentButtonListTemplate {
                             newWindow.RTL = false;
                         }
                         //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle");//"אישור היבואן להגשת הצהרת יבוא למכס";
+                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle") + " " + AdditionalResult.Result.CustomsFileNo;//"אישור היבואן להגשת הצהרת יבוא למכס";
                         var windowArgs: any = {};
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
