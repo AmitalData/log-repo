@@ -9,11 +9,9 @@ import { AddressDetails } from 'cypress/models/AddressDetails';
 import { AddressSelectors } from "../selectors/AddressSelectors";
 
 export function Search(searchFieldValue) {
-    cy.wait(3000)
     cy.get("body").then($body => {
-        if ($body.find(BaseSelectors.RedButton).length > 0) {
-            cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-
+        if ($body.find(".MessageWindow").length > 0) {
+            cy.Click(BaseSelectors.MessageErrorRedButton, null);
         }
     });
     DefineViewsGetByFiltersRequest(searchFieldValue);
