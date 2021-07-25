@@ -309,6 +309,11 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    BatchYearlyFIX_Click() {
+        let opr = "BatchYearlyFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyFixType:"ReverseEngineerTotalByMonthService", MyFixTypeOption:"ReverseEngineerTotalByMonthService,TODOMORE"};
+        this.StrandartOp(opr, obj, () => { });
+    }
     _ButtonReverseGLBalanceFIX_Click() {
         let opr = "_ButtonReverseGLBalanceFIX_Click";
         let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
