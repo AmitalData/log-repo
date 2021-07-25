@@ -31,7 +31,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContainerizationStatus, 
 	         HataraStatus, 
 	         OperationMode, 
-	         IsChange,
+	         IsChange, 
+	         IsMultiCustomers, 
+	         IsMultiExportFiles,
 	      }
 
 

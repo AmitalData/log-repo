@@ -71,6 +71,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsMultiCustomers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMultiExportFiles"
+    OldNames="IsMultiCustomers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ContainerizationStatus"
     ReferencedTable="ContainerizationStatusCodes"
