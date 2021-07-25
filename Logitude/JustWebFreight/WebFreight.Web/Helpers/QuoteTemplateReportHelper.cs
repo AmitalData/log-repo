@@ -2362,6 +2362,14 @@ namespace Logitude.BL.Helpers
             {
                 FieldValue = quotePM.FromPortName;
             }
+            else if (fieldname == "FROMLOCATIONINCLUDECOUNTRY")
+            {
+                FieldValue = quotePM.FromLocationIncludeCountry;
+            }
+            else if (fieldname == "TOLOCATIONINCLUDECOUNTRY")
+            {
+                FieldValue = quotePM.ToLocationIncludeCountry;
+            }
             else if (fieldname == "TOPORT" || fieldname == "TOLOCATION")
             {
                 FieldValue = quotePM.ToPortName;

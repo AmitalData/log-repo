@@ -1400,10 +1400,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.FromCountryId = fromAddress.CountryId;
 
                         string fromLocation = "";
+                        string fromLocationIncludeCountry = "";
 
                         if (!string.IsNullOrEmpty(fromAddress.City))
                         {
                             fromLocation = fromAddress.City;
+                            fromLocationIncludeCountry = fromAddress.City;
                         }
 
                         if (fromAddress.Country != null)
@@ -1413,15 +1415,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             if (string.IsNullOrEmpty(fromLocation))
                             {
                                 fromLocation = fromAddress.Country.Code;
+                                fromLocationIncludeCountry = fromAddress.Country.EnglishName;
                             }
 
                             else
                             {
                                 fromLocation += " " + fromAddress.Country.Code;
+                                fromLocationIncludeCountry += " " + fromAddress.Country.EnglishName;
                             }
                         }
 
                         entityPM.FromLocation = fromLocation;
+                        entityPM.FromLocationIncludeCountry = fromLocationIncludeCountry;
                     }
                 }
 
@@ -1433,10 +1438,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.ToCountryId = toAddress.CountryId;
 
                         string toLocation = "";
+                        string toLocationIncludeCountry = "";
 
                         if (!string.IsNullOrEmpty(toAddress.City))
                         {
                             toLocation = toAddress.City;
+                            toLocationIncludeCountry = toAddress.City;
                         }
 
                         if (toAddress.Country != null)
@@ -1446,15 +1453,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             if (string.IsNullOrEmpty(toLocation))
                             {
                                 toLocation = toAddress.Country.Code;
+                                toLocationIncludeCountry = toAddress.Country.EnglishName;
                             }
 
                             else
                             {
                                 toLocation += " " + toAddress.Country.Code;
+                                toLocationIncludeCountry += " " + toAddress.Country.EnglishName;
                             }
                         }
 
                         entityPM.ToLocation = toLocation;
+                        entityPM.ToLocationIncludeCountry = toLocationIncludeCountry;
                     }
                 }
             }
@@ -1468,6 +1478,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     entityPM.FromCountryId = fromPort.CountryId;
                     entityPM.FromLocation = fromPort.Code + " " + fromPort.EnglishName;
+                    entityPM.FromLocationIncludeCountry = fromPort.EnglishName + ", " + fromPort.CountryName;
 
                     entityPM.FromCountryIsEC = fromPort.CountryEC;
                 }
@@ -1477,6 +1488,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     entityPM.ToCountryId = toPort.CountryId;
                     entityPM.ToLocation = toPort.Code + " " + toPort.EnglishName;
+                    entityPM.ToLocationIncludeCountry = toPort.EnglishName + ", " + toPort.CountryName;
 
                     entityPM.ToCountryIsEC = toPort.CountryEC;
                 }
