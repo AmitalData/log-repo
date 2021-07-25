@@ -15,6 +15,7 @@ namespace Logitude.CRMTests.Steps.Opportunities
     {
         private readonly CRMContext crmContext;
         private readonly OpportunityServices opportunityServices;
+        private OpportunityPM updatedOportunity;
 
         public UpdateOpportunitySteps(CRMContext crmContext, OpportunityServices opportunityServices)
         {
@@ -31,20 +32,25 @@ namespace Logitude.CRMTests.Steps.Opportunities
         [Given(@"following opportunity properties")]
         public void GivenFollowingOpportunityProperties(Table table)
         {
-            crmContext.Opportunity = opportunityServices.UpdateInstance(table, crmContext.Opportunity);
+           opportunityServices.UpdateInstance(table, crmContext.Opportunity);
         }
         
         [When(@"update opportunity")]
         public void WhenUpdateOpportunity()
         {
-            crmContext.Opportunity = APICaller.CallPut<OpportunityPM>(crmContext.Opportunity, Urls.OpportunitiesController, UserTenant.Token)?.Data;
+            updatedOportunity = APICaller.CallPut<OpportunityPM>(crmContext.Opportunity, Urls.OpportunitiesController, UserTenant.Token)?.Data;
         }
         
         [Then(@"the opportunity should update successfully")]
         public void ThenTheOpportunityShouldUpdateSuccessfully()
         {
-            crmContext.Opportunity.Should().NotBeNull();
-            crmContext.Opportunity.Id.Should().NotBeNull();
+            updatedOportunity.Should().NotBeNull();
+            updatedOportunity.Id.Should().NotBeNull();
+            updatedOportunity.Subject.Should().Equals(crmContext.Opportunity.Subject);
+            updatedOportunity.OpportunityTypeId.Should().Equals(crmContext.Opportunity.OpportunityTypeId);
+            updatedOportunity.NumberOfShipments.Should().Equals(crmContext.Opportunity.NumberOfShipments);
+            updatedOportunity.StageId.Should().Equals(crmContext.Opportunity.StageId);
+            updatedOportunity.RatingCode.Should().Equals(crmContext.Opportunity.RatingCode);
         }
     }
 }
