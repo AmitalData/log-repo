@@ -37,6 +37,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SEARCHENG = entityPM.SEARCHENG;
             entityPOCO.LICENCESIV = entityPM.LICENCESIV;
             entityPOCO.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
+            entityPOCO.UNITID = entityPM.UNITID;
             entityPOCO.FACTOR = entityPM.FACTOR;
             entityPOCO.VERIFICATIONNUMBER = entityPM.VERIFICATIONNUMBER;
             entityPOCO.TARIFFID = entityPM.TARIFFID;
@@ -67,6 +68,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SEARCHENG = entityPOCO.SEARCHENG;
             entityPM.LICENCESIV = entityPOCO.LICENCESIV;
             entityPM.ORIGINCOUNTRY = entityPOCO.ORIGINCOUNTRY;
+            entityPM.UNITID = entityPOCO.UNITID;
             entityPM.FACTOR = entityPOCO.FACTOR;
             entityPM.VERIFICATIONNUMBER = entityPOCO.VERIFICATIONNUMBER;
             entityPM.TARIFFID = entityPOCO.TARIFFID;
