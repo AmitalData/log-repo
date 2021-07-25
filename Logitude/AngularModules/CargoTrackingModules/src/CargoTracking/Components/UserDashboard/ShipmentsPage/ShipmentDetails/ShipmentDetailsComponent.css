@@ -55,7 +55,7 @@ h1 {
 }
 
 .shipment-header {
-    padding: 10px 90px 0px 90px;
+    padding: 10px 90px 10px 90px;
     background: RGB(242, 244, 247);
 }
 
@@ -267,7 +267,7 @@ h1 {
 }
 
 .PanelsNavigator {
-    margin: 5px 75px;
+    margin: 11px 75px;
     /* width: 1000px;
     overflow: hidden; */
 }
