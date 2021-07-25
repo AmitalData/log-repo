@@ -413,8 +413,8 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.HandlerUserId != null)
 				   {
-					   HandlerUserQueryService HandlerUserService27 = new HandlerUserQueryService(Tenant);
-					   					   temp.HandlerUser = HandlerUserService27.GetHandlerUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
+					   UserQueryService UserService27 = new UserQueryService(Tenant);
+					   					   temp.HandlerUser = UserService27.GetUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -1340,10 +1340,10 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-					HandlerUserQueryService HandlerUserHandlerUserService = new HandlerUserQueryService(Tenant);
+					UserQueryService HandlerUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.HandlerUser != null)
 					{
-						var myHandlerUserPM = HandlerUserHandlerUserService.HandlerUserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
+						var myHandlerUserPM = HandlerUserUserService.UserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myHandlerUserPM != null)
 						{ 

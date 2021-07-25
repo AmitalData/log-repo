@@ -148,7 +148,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public DateTime? ApprovedCargoReadyDate { get; set; }
     
-    public HandlerUser HandlerUser { get; set; }
+    public User HandlerUser { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

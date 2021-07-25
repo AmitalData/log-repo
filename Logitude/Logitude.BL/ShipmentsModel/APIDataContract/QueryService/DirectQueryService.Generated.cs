@@ -454,28 +454,6 @@ using Simplog.Data.ShipmentsModel;
 				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
 				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
 				   temp.TruckNumber = MyEntityPM.TruckNumber;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing; 
-
-			  
-				   if(MyEntityPM.MainCarriageFromPartnerId != null)
-				   {
-					   CardQueryService CardService31 = new CardQueryService(Tenant);
-					   					   temp.MainCarriageFromPartner = CardService31.GetCardById(MyEntityPM.MainCarriageFromPartnerId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.MainCarriageToPartnerId != null)
-				   {
-					   CardQueryService CardService32 = new CardQueryService(Tenant);
-					   					   temp.MainCarriageToPartner = CardService32.GetCardById(MyEntityPM.MainCarriageToPartnerId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
-				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
-				   temp.TruckNumber = MyEntityPM.TruckNumber;
 				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
 				   temp.PlannedCargoReadyDate = MyEntityPM.PlannedCargoReadyDate;
 				   temp.ApprovedCargoReadyDate = MyEntityPM.ApprovedCargoReadyDate; 
@@ -483,8 +461,8 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.HandlerUserId != null)
 				   {
-					   HandlerUserQueryService HandlerUserService33 = new HandlerUserQueryService(Tenant);
-					   					   temp.HandlerUser = HandlerUserService33.GetHandlerUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
+					   UserQueryService UserService31 = new UserQueryService(Tenant);
+					   					   temp.HandlerUser = UserService31.GetUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -813,11 +791,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService34 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService32 = new AirPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService34.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = AirPackageService32.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -829,11 +807,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService34 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService32 = new OceanOrInlandPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService34.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = OceanOrInlandPackageService32.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -845,11 +823,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService34 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService32 = new ContainerQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService34.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = ContainerService32.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -988,9 +966,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService34 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService32 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService34.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService32.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1001,9 +979,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService34 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService32 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService34.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService32.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1115,11 +1093,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService34 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService32 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService34.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService32.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1131,11 +1109,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService34 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService32 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService34.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService32.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1374,9 +1352,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService34 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService32 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService34.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService32.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1511,66 +1489,6 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-					CardQueryService MainCarriageFromPartnerCardService = new CardQueryService(Tenant);
-					if(MyEntity.MainCarriageFromPartner != null)
-					{
-						var myMainCarriageFromPartnerPM = MainCarriageFromPartnerCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageFromPartner,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myMainCarriageFromPartnerPM != null)
-						{ 
-
-						 								//throw new ApplicationException("MainCarriageFromPartner Can't be update"); 
-								temp.MainCarriageFromPartnerId = myMainCarriageFromPartnerPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService MainCarriageToPartnerCardService = new CardQueryService(Tenant);
-					if(MyEntity.MainCarriageToPartner != null)
-					{
-						var myMainCarriageToPartnerPM = MainCarriageToPartnerCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageToPartner,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myMainCarriageToPartnerPM != null)
-						{ 
-
-						 								//throw new ApplicationException("MainCarriageToPartner Can't be update"); 
-								temp.MainCarriageToPartnerId = myMainCarriageToPartnerPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-                    							//throw new ApplicationException("MainCarriageETA Can't be update"); 
-							temp.MainCarriageETA = MyEntity.MainCarriageETA;
-
-					 
-
-					
-                    							//throw new ApplicationException("MainCarriageETD Can't be update"); 
-							temp.MainCarriageETD = MyEntity.MainCarriageETD;
-
-					 
-
-					
-                    							//throw new ApplicationException("TruckNumber Can't be update"); 
-							temp.TruckNumber = MyEntity.TruckNumber;
-
-					 
-
-					
-                    							//throw new ApplicationException("IsHTSMissing Can't be update"); 
-							temp.IsHTSMissing = MyEntity.IsHTSMissing;
-
-					 
-
-					
                     							//throw new ApplicationException("PlannedCargoReadyDate Can't be update"); 
 							temp.PlannedCargoReadyDate = MyEntity.PlannedCargoReadyDate;
 
@@ -1583,10 +1501,10 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-					HandlerUserQueryService HandlerUserHandlerUserService = new HandlerUserQueryService(Tenant);
+					UserQueryService HandlerUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.HandlerUser != null)
 					{
-						var myHandlerUserPM = HandlerUserHandlerUserService.HandlerUserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
+						var myHandlerUserPM = HandlerUserUserService.UserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myHandlerUserPM != null)
 						{ 
