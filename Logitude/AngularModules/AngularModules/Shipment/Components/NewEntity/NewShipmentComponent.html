@@ -256,11 +256,11 @@
                                                     <div *ngIf="!IsInlandDomestic">
                                                         <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
                                                         <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
-                                                        <CheckBox [Top]="5" [IsChecked]="IncludePickUp" (Checked)="IncludePickUp = $event" [Text]="'Shipment.S.NewShipment.IncludePickUp' | TextCodeTranslationPipe"></CheckBox>
-                                                        <CheckBox [Top]="5" [IsChecked]="IncludeDelivery" (Checked)="IncludeDelivery = $event" [Text]="'Shipment.S.NewShipment.IncludeDelivery' | TextCodeTranslationPipe"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A' && ShipmentLevelCode !='H'" [IsChecked]="IsCopyPreCarriage" (Checked)="IsCopyPreCarriage = $event" [Text]="'Pre carriage'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A' && ShipmentLevelCode !='H'" [IsChecked]="IsCopyOnCarriage" (Checked)="IsCopyOnCarriage = $event" [Text]="'On carriage'"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_IncludePickUp_CheckBox'" [IsChecked]="IncludePickUp" (Checked)="IncludePickUp = $event" [Text]="'Shipment.S.NewShipment.IncludePickUp' | TextCodeTranslationPipe"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_IncludeDelivery_CheckBox'" [IsChecked]="IncludeDelivery" (Checked)="IncludeDelivery = $event" [Text]="'Shipment.S.NewShipment.IncludeDelivery' | TextCodeTranslationPipe"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_IncludeFlights_CheckBox'" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_PreCarriage_CheckBox'" *ngIf="TransportModeId == 'A' && ShipmentLevelCode !='H'" [IsChecked]="IsCopyPreCarriage" (Checked)="IsCopyPreCarriage = $event" [Text]="'Pre carriage'"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_OnCarriage_CheckBox'" *ngIf="TransportModeId == 'A' && ShipmentLevelCode !='H'" [IsChecked]="IsCopyOnCarriage" (Checked)="IsCopyOnCarriage = $event" [Text]="'On carriage'"></CheckBox>
                                                         <CheckBox [Top]="5" *ngIf="TransportModeId == 'A' && ShipmentLevelCode =='H'" [IsChecked]="IsCopyPreForwarding" (Checked)="IsCopyPreForwarding = $event" [Text]="'Pre Forwarding'"></CheckBox>
                                                         <CheckBox [Top]="5" *ngIf="TransportModeId == 'A' && ShipmentLevelCode =='H'" [IsChecked]="IsCopyOnForwarding" (Checked)="IsCopyOnForwarding = $event" [Text]="'On Forwarding'"></CheckBox>
                                                         <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
@@ -269,8 +269,8 @@
                                                     <!-- OtherDetails -->
                                                     <div>
                                                         <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherDetails' | TextCodeTranslationPipe}}</div>
-                                                        <CheckBox [Top]="5" [IsChecked]="IsCopyDescription" (Checked)="IsCopyDescription = $event" [Text]="'Shipment.F.DescriptionOfGoods' | TextCodeTranslationPipe" [IsEnabled]="IsCopyDescriptionEnabled"></CheckBox>
-                                                        <CheckBox [Top]="5" [IsChecked]="IsCopyPackages" (Checked)="IsCopyPackages = $event" [Text]="'Shipment.S.NewShipment.IncludePackages' | TextCodeTranslationPipe" [IsEnabled]="IsCopyPackagesEnabled"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_Description_CheckBox'" [IsChecked]="IsCopyDescription" (Checked)="IsCopyDescription = $event" [Text]="'Shipment.F.DescriptionOfGoods' | TextCodeTranslationPipe" [IsEnabled]="IsCopyDescriptionEnabled"></CheckBox>
+                                                        <CheckBox [Top]="5" [DataCy] ="'Shipment_IncludePackages_CheckBox'" [IsChecked]="IsCopyPackages" (Checked)="IsCopyPackages = $event" [Text]="'Shipment.S.NewShipment.IncludePackages' | TextCodeTranslationPipe" [IsEnabled]="IsCopyPackagesEnabled"></CheckBox>
                                                     </div>
                                                 </td>
                                             </tr>                                            
