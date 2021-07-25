@@ -64,10 +64,6 @@ Given("fill {string} as notes currency", (localName) => {
     CurrencyActions.FillCurrencyNotes(localName)
 });
 
-Given("the user Check the InActive Currency CheckBox", () => {
-    CurrencyActions.CheckInActiveCurrencyCheckBox()
-});
-
 Given("fill {string} as Accounting External ID", (externalId) => {
     cy.Navigate(CurrencySelectors.AccountingTab)
     CurrencyActions.FillCurrencyAccountingExternalId(externalId)

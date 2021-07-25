@@ -46,7 +46,6 @@ Feature: Warehouse fake Create, Search and Edit from Maintenance
             | Notes               | edit warehouse |
             | Type                | Bonded         |
             | TerminalCode        | 1391           |
-            | InactiveCheckBox    | Yes            |
             | MyWarehouseCheckBox | Yes            |
         And fill the following warehouse Billing details
             | VatNumber   | Zero             |
