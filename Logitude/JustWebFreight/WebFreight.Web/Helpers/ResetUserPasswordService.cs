@@ -41,10 +41,9 @@ namespace WebFreight.Web.Helpers
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
-             
+
             string LogitudeURL = LogitudeSettings.LogitudeURL;
-            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
-             
+            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);           
 
             if (LogitudeSettings.DeploymentStage != null && 
                 (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
@@ -227,9 +226,9 @@ namespace WebFreight.Web.Helpers
         private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string siteUri, string reqNumber)
         {
             string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
-            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain)  + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
-            
-            if(!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
+            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain) + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
+
+            if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
                 path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
 
             return path;
@@ -324,7 +323,7 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName + emailBodyParams.EmailMessageParams.Environment + " ID to sign in to " + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName + emailBodyParams.EmailMessageParams.Environment + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");
