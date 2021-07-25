@@ -127,6 +127,7 @@
     <Compile Include="Steps\Activities\UpdateTaskSteps.cs" />
     <Compile Include="Steps\Opportunities\CreateOpportunitySteps.cs" />
     <Compile Include="Steps\Opportunities\GetOpportunitySteps.cs" />
+    <Compile Include="Steps\Opportunities\UpdateOpportunitySteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -141,6 +142,7 @@
     <None Include="Features\Activities\UpdateTask.feature" />
     <None Include="Features\Opportunities\CreateOpportunity.feature" />
     <None Include="Features\Opportunities\GetOpportunity.feature" />
+    <None Include="Features\Opportunities\UpdateOpportunity.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
