@@ -358,8 +358,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DEBUG = "F",
                         DONEOPERATION = "D",
                         QUEUEMANAGEMENT = true,
+                          GGGQCPMs = new List<GGGQCPM>() {
+                               new GGGQCPM(){ 
+                                    ChangeSetOp= ChangeSetOperation.Insert,
+                                     FIELDID= "TASK_PARAM",
+                                      FIELDVAL= "PROC=A1468"
+                               }
+                          }
                         
-
+                             
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.Update(myGGGQPM, true);

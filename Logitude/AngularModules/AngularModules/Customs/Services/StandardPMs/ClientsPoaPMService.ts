@@ -32,12 +32,12 @@ export class ClientsPoaPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientspoas';      
     }
 
-	get(id: string) {       
+	get(id: string, clientid: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id+'&'+'clientid=' + clientid, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class ClientsPoaPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientsPoa", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientsPoa", "GetSinglePM", 'id=' + id+'&'+'clientid=' + clientid);
 				 
 						return serviceResponse;
 
