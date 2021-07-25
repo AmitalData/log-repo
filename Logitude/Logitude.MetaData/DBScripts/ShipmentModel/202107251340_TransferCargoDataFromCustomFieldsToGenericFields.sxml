@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+
+       update Shipments set PlannedCargoReadyDate = Field4 , HandlerUserId = Field15 where Tenant = 570 And $LastCounterWhere$
+    
+    ]]>
+  </Sql>
+</Script>
