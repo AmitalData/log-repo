@@ -269,16 +269,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
-          
-
-            all.Add(new ToggleDetails()
-            {    
-                Name = "Reports in Shared Logistics", 
-                Code = "RSL", 
-                SearchFields = "RSL,Reports in Shared Logistics", 
-                Description = "Reports in Shared Logistics", 
-			});
-			 
             all.Add(new ToggleDetails()
             {    
                 Code = "CTL", 
@@ -286,7 +276,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTL,CollaborationTool", 
                 Description = "Collaboration Tool", 
 			});
-			 
 			 
             all.Add(new ToggleDetails()
             {    
@@ -302,6 +291,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LCP,Lock Counter Procedure", 
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BQF", 
+                Name = "Quotes DWH", 
+                SearchFields = "BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Quotes Fact on the BI Report Screen", 
 			});
 			
             return all;
