@@ -102,6 +102,7 @@ export function EditPaymentTermGeneralTab(paymentTermDetails: PaymentTermDetails
 }
 
 export function FillPaymentTermAccountingTab(paymentTermDetails: PaymentTermDetails) {
+    cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, " ");
     cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, paymentTermDetails.AccountingExternalID);
 }
 

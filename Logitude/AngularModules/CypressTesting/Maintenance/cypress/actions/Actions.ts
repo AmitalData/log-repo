@@ -1908,6 +1908,7 @@ export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
 }
 export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {

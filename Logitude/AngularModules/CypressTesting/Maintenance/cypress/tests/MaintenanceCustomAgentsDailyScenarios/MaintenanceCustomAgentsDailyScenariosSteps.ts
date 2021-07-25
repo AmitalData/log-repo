@@ -4,7 +4,6 @@ import * as MaintenanceActions from "../../actions/Actions";
 import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
-import {CardGeneralTabDetails} from "../../models/CardGeneralTabDetails";
 import { CardBillingTabDetails } from "../../models/CardBillingTabDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
@@ -12,7 +11,6 @@ import { Constants } from '../../constants/Constants'
 
 let customAgentDetails: CardDetails
 let contactDetails: ContactDetails
-let customAgentGeneralTabDetails:CardGeneralTabDetails
 let customAgentBillingTabDetails:CardBillingTabDetails
 //#region Create new custom agent
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
