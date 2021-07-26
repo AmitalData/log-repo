@@ -933,8 +933,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.EntityPM.DirectionId = "C";
                 this.EntityPM.ShipmentLevelCode = "A";
                 this.EntityPM.OrderIsDangerouseGoods = false;
-                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
-                //SessionLocator.TenantPM.CustomerId = '1-10001';
+                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc(); 
                 this.EntityPM.CustomerId =SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
