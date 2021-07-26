@@ -1,0 +1,51 @@
+﻿using System;
+using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
+using Logitude.Tariff.Models;
+using Logitude.Tariff.Services;
+using FluentAssertions;
+
+namespace Logitude.Tariff.Steps
+{
+    [Binding]
+    public class UpdateTariffAirFreightCostSteps
+    {
+        private readonly TariffContext tariffContext;
+        private readonly TariffAirFreightCostServices tariffAirFreightCostServices;
+        private TariffPM updatedTariff;
+
+        public UpdateTariffAirFreightCostSteps(TariffContext tariffContext, TariffAirFreightCostServices tariffAirFreightCostServices)
+        {
+            this.tariffContext = tariffContext;
+            this.tariffAirFreightCostServices = tariffAirFreightCostServices;
+        }
+
+        [Given(@"an air freight cost tariff")]
+        public void GivenAnAirFreightCostTariff()
+        {
+            tariffContext.TariffAirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffAirFreightCostId), UserTenant.Token).Data;
+        }
+
+        [Given(@"following air freight cost tariff properties")]
+        public void GivenFollowingAirFreightCostTariffProperties(Table table)
+        {
+            tariffAirFreightCostServices.UpdateInstance(table, tariffContext.TariffAirFreightCost);
+        }
+
+        [When(@"update air freight cost tariff")]
+        public void WhenUpdateAirFreightCostTariff()
+        {
+            updatedTariff = APICaller.CallPut<TariffPM>(tariffContext.TariffAirFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
+        }
+
+        [Then(@"the air freight cost tariff should update successfully")]
+        public void ThenTheAirFreightCostTariffShouldUpdateSuccessfully()
+        {
+            updatedTariff.Id.Should().NotBeNull();
+            updatedTariff.Name.Should().Equals(tariffContext.TariffAirFreightCost.Name);
+            updatedTariff.Notes.Should().Equals(tariffContext.TariffAirFreightCost.Notes);
+        }
+    }
+}

@@ -21,7 +21,7 @@ namespace Logitude.Tariff.Steps
         [When(@"get air freight cost tariff with TariffId")]
         public void WhenGetAirFreightCostTariffWithTariffId()
         {
-            tariffContext.TariffAirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffAirFreightCost.Id), UserTenant.Token).Data;
+            tariffContext.TariffAirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffAirFreightCostId), UserTenant.Token).Data;
         }
         
         [Then(@"air freight cost tariff should be avaliable")]

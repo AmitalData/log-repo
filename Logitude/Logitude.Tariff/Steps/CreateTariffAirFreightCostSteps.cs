@@ -21,7 +21,7 @@ namespace Logitude.Tariff.Steps
             this.tariffAirFreightCostServices = tariffAirFreightCostServices;
         }
 
-        [Given(@"a air freight cost tariff with the following properties")]
+        [Given(@"an air freight cost tariff with the following properties")]
         public void GivenATariffWithTheFollowingProperties(Table table)
         {
             tariffContext.TariffAirFreightCost = tariffAirFreightCostServices.CreateInstance(table);
@@ -38,7 +38,6 @@ namespace Logitude.Tariff.Steps
         {
             tariffContext.TariffAirFreightCost.Should().NotBeNull();
             tariffContext.TariffAirFreightCost.Id.Should().NotBeNull();
-            TariffData.TariffAirFreightCost = tariffContext.TariffAirFreightCost;
         }
     }
 }
