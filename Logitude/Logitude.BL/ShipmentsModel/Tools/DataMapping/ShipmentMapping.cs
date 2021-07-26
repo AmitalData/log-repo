@@ -435,6 +435,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OnForwardingAdditionalTransportModeCode = entityPM.OnForwardingAdditionalTransportModeCode;
             entityPoco.SplitOnForwarding = entityPM.SplitOnForwarding;
             entityPoco.Notify1Reference = entityPM.Notify1Reference;
+            entityPoco.Notify1Reference2 = entityPM.Notify1Reference2;
             entityPoco.Notify2Reference = entityPM.Notify2Reference;
             entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
             entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;

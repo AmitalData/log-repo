@@ -390,6 +390,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotifyNote { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string NotifyReference1 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string NotifyReference2 { get; set; }
 
         public string NotifyAddress1 { get; set; }
         public string NotifyAddress2 { get; set; }

@@ -1208,6 +1208,16 @@ export class QuotePM {
     public set NotifyNote(newValue: string) { if (this.notifyNote != newValue) { this.notifyNote = newValue; this.MarkAsDirty("NotifyNote"); } }
        
 	 
+    private notifyReference1: string;
+    public get NotifyReference1() { return this.notifyReference1; }
+    public set NotifyReference1(newValue: string) { if (this.notifyReference1 != newValue) { this.notifyReference1 = newValue; this.MarkAsDirty("NotifyReference1"); } }
+       
+	 
+    private notifyReference2: string;
+    public get NotifyReference2() { return this.notifyReference2; }
+    public set NotifyReference2(newValue: string) { if (this.notifyReference2 != newValue) { this.notifyReference2 = newValue; this.MarkAsDirty("NotifyReference2"); } }
+       
+	 
     private notifyAddress1: string;
     public get NotifyAddress1() { return this.notifyAddress1; }
     public set NotifyAddress1(newValue: string) { if (this.notifyAddress1 != newValue) { this.notifyAddress1 = newValue; this.MarkAsDirty("NotifyAddress1"); } }

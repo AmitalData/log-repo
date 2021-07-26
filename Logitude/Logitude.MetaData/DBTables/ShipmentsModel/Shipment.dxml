@@ -3218,6 +3218,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Notify1Reference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

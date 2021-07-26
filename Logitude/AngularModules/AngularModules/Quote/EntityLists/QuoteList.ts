@@ -173,6 +173,8 @@ export class QuoteList {
 		NotifyContactId: string;
 		NotifyName: string;
 		NotifyNote: string;
+		NotifyReference1: string;
+		NotifyReference2: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
 		QuoteHTMLDocumentId: string;
