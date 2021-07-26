@@ -54,6 +54,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; }
         IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; }
         IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; }
+        IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
