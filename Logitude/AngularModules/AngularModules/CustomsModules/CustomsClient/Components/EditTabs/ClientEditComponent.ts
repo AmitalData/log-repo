@@ -95,7 +95,7 @@ export class ClientEditComponent extends BaseComponent{
         this.TabsItemsSource.push(new TabItem("EVENTS", "General.O.Events"));
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.O.RequestSheets"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Client.TH.MoreData"));
-        this.TabsItemsSource.push(new TabItem("CLIENTPOA", "CLIENTPOA"));
+        this.TabsItemsSource.push(new TabItem("CLIENTPOA", "General.O.ClientPoas"));
 
         this.selectedTabCode = "GENERAL";
     }
