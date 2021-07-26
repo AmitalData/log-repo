@@ -97238,7 +97238,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
@@ -97253,7 +97253,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Direct&quot;"
@@ -98504,7 +98504,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
@@ -98519,7 +98519,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
@@ -99167,7 +99167,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
@@ -99182,7 +99182,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Master&quot;"
@@ -100159,7 +100159,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
@@ -100174,7 +100174,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

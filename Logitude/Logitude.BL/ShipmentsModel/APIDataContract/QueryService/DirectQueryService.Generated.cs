@@ -1480,20 +1480,16 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference))
-					{							//throw new ApplicationException("Notify1Reference Can't be update"); 
+                    							//throw new ApplicationException("Notify1Reference Can't be update"); 
 							temp.Notify1Reference = MyEntity.Notify1Reference;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notify1Reference2))
-					{							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
+                    							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
 							temp.Notify1Reference2 = MyEntity.Notify1Reference2;
 
-										}  
+					 
 
 										   
 					return temp;
@@ -1506,4 +1502,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
