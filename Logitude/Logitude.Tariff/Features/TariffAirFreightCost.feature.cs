@@ -134,17 +134,20 @@ this.ScenarioInitialize(scenarioInfo);
                             "2021-07-18"});
                 table1.AddRow(new string[] {
                             "Product",
-                            "General"});
+                            ""});
+                table1.AddRow(new string[] {
+                            "FreightCharge",
+                            ""});
                 table1.AddRow(new string[] {
                             "Notes",
                             "specflow note"});
 #line 5
  testRunner.Given("a air freight cost tariff with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 16
+#line 17
  testRunner.When("create air freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
+#line 18
  testRunner.Then("the air freight cost tariff should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
