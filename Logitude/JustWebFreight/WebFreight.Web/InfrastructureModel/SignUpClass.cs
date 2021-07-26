@@ -532,7 +532,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddReportFromTenantZero(tenant);
 
-                AddGeneralBIReportFolder(tenant);
+                if (setting.WorkEnvironment != "customs") AddGeneralBIReportFolder(tenant);
 
                 AddTenantLoginPolicy(tenant);
 
