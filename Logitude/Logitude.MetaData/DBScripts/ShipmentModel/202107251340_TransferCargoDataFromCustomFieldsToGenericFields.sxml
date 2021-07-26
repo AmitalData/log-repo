@@ -2,7 +2,10 @@
   <Sql Version="1">
     <![CDATA[
 
-       update Shipments set PlannedCargoReadyDate = Field4 , HandlerUserId = Field15 where Tenant = 570 And $LastCounterWhere$
+  Update Shipments
+  Set PlannedCargoReadyDate = DATETIMEFROMPARTS(SUBSTRING(Shipments.Field4,1,4),SUBSTRING(Shipments.Field4,5,2),SUBSTRING(Shipments.Field4,7,2),SUBSTRING(Shipments.Field4,9,2),SUBSTRING(Shipments.Field4,11,2),SUBSTRING(Shipments.Field4,13,2),0) ,
+  HandlerUserId = (Select Id from Contacts where EnglishName = (select value from CustomPickLists where Id = Shipments.Field15 And Tenant = 570) And Tenant = 570)
+  Where Tenant = 570  And (Field4 is not null or Field15 is not null) And $LastCounterWhere$
     
     ]]>
   </Sql>
