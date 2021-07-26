@@ -19,7 +19,7 @@ namespace Logitude.Tariff.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateAirFreightCostTariffFeature : object, Xunit.IClassFixture<CreateAirFreightCostTariffFeature.FixtureData>, System.IDisposable
+    public partial class CreateGetTariffAirFreightCostFeature : object, Xunit.IClassFixture<CreateGetTariffAirFreightCostFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.Tariff.Features
 #line 1 "TariffAirFreightCost.feature"
 #line hidden
         
-        public CreateAirFreightCostTariffFeature(CreateAirFreightCostTariffFeature.FixtureData fixtureData, Logitude_Tariff_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateGetTariffAirFreightCostFeature(CreateGetTariffAirFreightCostFeature.FixtureData fixtureData, Logitude_Tariff_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.Tariff.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Air Freight Cost Tariff", "\tWe want to create air freight cost tariff.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Get Tariff Air Freight Cost", "\tWe want to create, get air freight cost tariff.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace Logitude.Tariff.Features
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Create air freight cost tariff")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Air Freight Cost Tariff")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Get Tariff Air Freight Cost")]
         [Xunit.TraitAttribute("Description", "Create air freight cost tariff")]
         public virtual void CreateAirFreightCostTariff()
         {
@@ -122,7 +122,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "43242312"});
                 table1.AddRow(new string[] {
                             "Seller",
-                            ""});
+                            "American Airlines"});
                 table1.AddRow(new string[] {
                             "Currency",
                             "EUR"});
@@ -134,10 +134,10 @@ this.ScenarioInitialize(scenarioInfo);
                             "2021-07-18"});
                 table1.AddRow(new string[] {
                             "Product",
-                            ""});
+                            "General"});
                 table1.AddRow(new string[] {
                             "FreightCharge",
-                            ""});
+                            "Air Freight"});
                 table1.AddRow(new string[] {
                             "Notes",
                             "specflow note"});
@@ -154,6 +154,44 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Get air freight cost tariff")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Get Tariff Air Freight Cost")]
+        [Xunit.TraitAttribute("Description", "Get air freight cost tariff")]
+        public virtual void GetAirFreightCostTariff()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get air freight cost tariff", null, tagsOfScenario, argumentsOfScenario);
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 21
+ testRunner.When("get air freight cost tariff with TariffId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+ testRunner.Then("air freight cost tariff should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
@@ -161,12 +199,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateAirFreightCostTariffFeature.FeatureSetup();
+                CreateGetTariffAirFreightCostFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateAirFreightCostTariffFeature.FeatureTearDown();
+                CreateGetTariffAirFreightCostFeature.FeatureTearDown();
             }
         }
     }

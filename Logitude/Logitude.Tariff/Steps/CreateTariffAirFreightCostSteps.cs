@@ -24,21 +24,21 @@ namespace Logitude.Tariff.Steps
         [Given(@"a air freight cost tariff with the following properties")]
         public void GivenATariffWithTheFollowingProperties(Table table)
         {
-            tariffContext.Tariff = tariffAirFreightCostServices.CreateInstance(table);
+            tariffContext.TariffAirFreightCost = tariffAirFreightCostServices.CreateInstance(table);
         }
         
         [When(@"create air freight cost tariff")]
         public void WhenCreateTariff()
         {
-            tariffContext.Tariff = APICaller.CallPost<TariffPM>(tariffContext.Tariff, Urls.TariffsController, UserTenant.Token)?.Data;
+            tariffContext.TariffAirFreightCost = APICaller.CallPost<TariffPM>(tariffContext.TariffAirFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
         }
         
         [Then(@"the air freight cost tariff should create successfully")]
         public void ThenTheTariffShouldCreateSuccessfully()
         {
-            tariffContext.Tariff.Should().NotBeNull();
-            tariffContext.Tariff.Id.Should().NotBeNull();
-            TariffData.Tariff = tariffContext.Tariff;
+            tariffContext.TariffAirFreightCost.Should().NotBeNull();
+            tariffContext.TariffAirFreightCost.Id.Should().NotBeNull();
+            TariffData.TariffAirFreightCost = tariffContext.TariffAirFreightCost;
         }
     }
 }

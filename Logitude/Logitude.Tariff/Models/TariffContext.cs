@@ -8,6 +8,6 @@ namespace Logitude.Tariff.Models
 {
     public class TariffContext
     {
-        public TariffPM Tariff { get; set; }
+        public TariffPM TariffAirFreightCost { get; set; }
     }
 }
