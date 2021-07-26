@@ -310,6 +310,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ToPartnerName { get; set; }
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
+        public string FromLocationIncludeCountry { get; set; }
+        public string ToLocationIncludeCountry { get; set; }
         public bool IsPotentialShipper { get; set; }
         public bool IsPotentialConsignee { get; set; }
         public string IncotermCode { get; set; }

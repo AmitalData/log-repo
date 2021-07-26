@@ -341,6 +341,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                 if (this.QuotePM.DirectionId == "D") {
                     quoteFieldList.push("From Location");
                     quoteFieldList.push("To Location");
+                    quoteFieldList.push("From Location Include Country");
+                    quoteFieldList.push("To Location Include Country");
 
                 }
                 else {
@@ -352,6 +354,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                 quoteFieldList.push("AirLine");
                 quoteFieldList.push("From Location");
                 quoteFieldList.push("To Location");
+                quoteFieldList.push("From Location Include Country");
+                quoteFieldList.push("To Location Include Country");
                 quoteFieldList.push("Number Of Packages");
             }
 
@@ -653,7 +657,13 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         else if (fieldname == "FROMPORT") {
                 Field = "From Port";
-            }
+        }
+        else if (fieldname == "FROMLOCATIONINCLUDECOUNTRY") {
+            Field = "From Location Include Country";
+        }
+        else if (fieldname == "TOLOCATIONINCLUDECOUNTRY") {
+            Field = "To Location Include Country";
+        }
             else
                 if (fieldname == "FROMLOCATION") {
                     Field = "From Location";

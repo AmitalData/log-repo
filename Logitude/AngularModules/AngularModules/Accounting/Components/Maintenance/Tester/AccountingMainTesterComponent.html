@@ -33,7 +33,8 @@
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from  Ledger ***control**"</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonFixDueLocalBalance_Click()">FixDueLocalBalance</button></td>
                 <td style="width:200px"><button class="Button" (click)="RebuildFIXGLAccountAgingData_Click()">Rebuild FIX GLAccountAgingData</button></td>
-                
+                <td style="width:200px"><button class="Button" (click)="BatchYearlyFIX_Click()">Batch Yearly FIX </button></td>
+
 
             </tr>
         </table>
@@ -208,6 +209,16 @@
             <tr>
                 <td style="width:200px">
                     <button class="Button" (click)="ButtonLoadChargeTypes_Click()">Load Charge Types from .csv (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonRunOneRevaluationNoBatch_Click()">Run One Revaluation NoBatch</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonAllOpenRevaluationsNoBatch_Click()">All Open Revaluations NoBatch</button>
                 </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>

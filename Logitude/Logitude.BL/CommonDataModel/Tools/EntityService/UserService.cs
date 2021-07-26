@@ -8,6 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -129,7 +130,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            
+            AddUserKafkaQueueMessage();
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
@@ -265,8 +266,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
+            AddUserKafkaQueueMessage();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
+        }
+
+        private void AddUserKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Contact" },
+                { "EntityId", entityPm.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
 
         private void CheckNumberOfUsers()

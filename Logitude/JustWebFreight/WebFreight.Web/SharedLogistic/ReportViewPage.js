@@ -205,13 +205,18 @@ function SharedLogisticReportFilters() {
 function BuildQueryFilterItems() {
 
     let queryFilterItems = [];
+    let toDate = new Date(document.getElementById("ToDate").value);
+    if (toDate) toDate.setDate(toDate.getDate() + 1);
+
     queryFilterItems.push(new QueryFilterItem("CustomerId", $.CurrentCardId, "Equal"));
     queryFilterItems.push(new QueryFilterItem("CreateDateTime", new Date(document.getElementById("FromDate").value), "GreaterThanOrEqual"));
-    queryFilterItems.push(new QueryFilterItem("CreateDateTime", new Date(document.getElementById("ToDate").value), "LessThanOrEqual"));
+    queryFilterItems.push(new QueryFilterItem("CreateDateTime", toDate, "LessThan"));
     queryFilterItems.push(new QueryFilterItem("IsOperationalClosed", document.getElementById("OperationallyClosed").checked, "Equal"));
     return queryFilterItems;
 
 }
+
+
 function QueryFilterItem(fieldName, fieldValue, operator) {
     this.FieldName = fieldName;
     this.FieldValue = fieldValue;

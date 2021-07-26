@@ -391,7 +391,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions.trim().length > 1;
-                newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions?.split(',')[1] : null;
+                newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
                 return newCard;
             });

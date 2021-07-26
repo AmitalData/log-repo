@@ -884,6 +884,9 @@ namespace WebFreight.Web.Helpers
                 Stream stream = new MemoryStream(buffer);
                 stream.Read(mybytearray, 0, len);
 
+                var fileName = this.GetFileName(item.FileName);
+                var extention = this.GetFileExtention(item.FileName);
+
                 DocumentsFilingPM documentInPM = new DocumentsFilingPM()
                 {
                     DirectionCode = "I",
@@ -896,23 +899,13 @@ namespace WebFreight.Web.Helpers
                     OwnerId = updatedByUser.Id,
                     UpdatedByUserId = updatedByUser.Id,
                     UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
-                    //ExternalEntityName = documentDataPM.ExternalEntityName,
-                    //ExternalEntityReference = documentDataPM.ExternalEntityReference,
-                    //EntityReference = documentDataPM.EntityReference,
-                    //FileExtension = item.ContentType.Contains('/') == false ? item.ContentType : item.ContentType.Split('/')[1],
                     FileSize = Convert.ToInt32(mybytearray.Length),
                     Folder = "docsin",
                     HasFile = true,
-                    FileName = item.FileName.Contains('.') == false ? item.FileName : item.FileName.Split('.')[0],
-                    FileExtension = item.FileName.Contains('.') == false ? "" : item.FileName.Split('.')[1],
-                    //FileExtension = "" ,
+                    FileName = fileName,
+                    FileExtension = extention,
                     FileData = mybytearray,
                 };
-
-                //File.WriteAllText(@"C:\Log\attachname.txt", item.FileName);
-                //File.WriteAllText(@"C:\Log\attachextention.txt", item.ContentType);
-                //File.WriteAllText(@"C:\Log\getextention.txt", item.GetType().ToString());
-
                 DocumentsFilingService service = new DocumentsFilingService(commonContext, Tenant);
                 service.Create(documentInPM, mybytearray, updatedByUser.Id);
 
@@ -926,6 +919,29 @@ namespace WebFreight.Web.Helpers
 
                 attachmentRep.Add(attachment);
             }
+        }
+
+        private string GetFileName(string fileName)
+        {
+            int lastDotIndx = fileName.LastIndexOf('.');
+            var name = "";
+            if (lastDotIndx != -1)
+            {
+                name = fileName.Substring(0, lastDotIndx);
+            }
+            return name;
+        }
+
+        private string GetFileExtention(string fileName)
+        {
+            int lastDotIndx = fileName.LastIndexOf('.');
+            var extention = "";
+            if (lastDotIndx != -1)
+            {
+                extention = fileName.Substring(lastDotIndx + 1);
+            }
+
+            return extention;
         }
 
         private void CreateNewTicketWithInboundEmail(string contactId, string companyId, string objectTableId, TicketClassification classification, TicketStage stage)

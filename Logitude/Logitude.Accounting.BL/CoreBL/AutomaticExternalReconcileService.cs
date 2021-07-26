@@ -44,6 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public class AutomaticExternalReconcileService
     {
         public const int RESULT_LIMIT = 100;
+        public const bool AllowOnlySingleBankPageLineOnEachReconcileGroup = true;
         public int tenant;
         private List<MatchingLine> matchedLines = new List<MatchingLine>();
         List<MyPageLine> externalPageLines;
@@ -341,7 +342,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool haveNewItems = false;
 
                 haveNewItems = AddMatchedLedger(groupNumberCounter, groupedTransactionsDictionary_ref1, groupedTransactionsDictionary_ref2, groupedTransactionsDictionary_ref3, pageLine, pageLineReference, haveNewItems);
-                haveNewItems = AddSameReferencePageLines(groupNumberCounter, groupedPageLinesByReference, pageLineReference, haveNewItems);
+
+                if (AllowOnlySingleBankPageLineOnEachReconcileGroup)
+                {
+                    if (haveNewItems)
+                        AddMatchedPageLines(groupNumberCounter, new List<MyPageLine> { pageLine });
+                }
+                else
+                    haveNewItems = AddSameReferencePageLines(groupNumberCounter, groupedPageLinesByReference, pageLineReference, haveNewItems);
+
+                
 
                 if (haveNewItems == true) groupNumberCounter++;
                 if (matchedLines.Count >= RESULT_LIMIT) break;
@@ -574,6 +584,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void AddMatchedPageLines(int groupNumberCounter, List<MyPageLine> pageLines)
         {
+            //matchedLines.Add(new MatchingLine() { LedgerTransactionId = null, BankPageLineId = pageLines.FirstOrDefault().Id, GroupNumber = groupNumberCounter });
+
             pageLines.ForEach(pageLine =>
             {
                 matchedLines.Add(new MatchingLine() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
@@ -612,10 +624,10 @@ namespace Logitude.Accounting.BL.CoreBL
         List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
-            LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId,args.TransferGLAccountId, tenant);
-            IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
-                                                            select new MyLedgerTransaction()
+            LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(accountingContext);
+            List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenLedgerTransactions(args.TransactionQueryOperations, args.GLAccountId, args.TransferGLAccountId, tenant);
+            List<MyLedgerTransaction> linesDTO = (from a in openReconciliation
+                                                        select new MyLedgerTransaction()
                                                             {
                                                                 Id = a.Id,
                                                                 DocumentDate = a.DocumentDate,
@@ -626,8 +638,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                                                 Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
                                                                 ForeignAmountCredit = a.ForeignAmountCredit,
                                                                 ForeignAmountDebit = a.ForeignAmountDebit,
-                                                            });
-            return linesDTO.ToList();
+                                                            }).ToList();
+            return linesDTO;
         }
 
 
