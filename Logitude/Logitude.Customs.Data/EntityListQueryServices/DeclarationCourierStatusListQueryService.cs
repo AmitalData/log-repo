@@ -60,7 +60,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                  CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
                  //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
-                 CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
+                 //CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
 
 
              }
@@ -146,7 +146,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   errorPlaceOuterJoinNullable.CourierPendingReason1stName
                                                                   : null,
 
-                                                                  CourierPendingReasonNameList = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReasonNameList : null,
+                                                                  //CourierPendingReasonNameList = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReasonNameList : null,
                                                                   //CourierPendingReasonName = string.Join(",", pendingListNamesOuterJoin.Select(p => p.ToString())),
 
 

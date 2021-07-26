@@ -310,14 +310,15 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
             declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
             var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
-                .Where(x => !string.IsNullOrWhiteSpace(x.CourierPendingReasonList))
+                .Where(x => x.CourierPendingReasonList != null)
                 .Select(r => new
                 {
                     r.CourierHawb,
                     r.ImporterName,
                     r.ImporterCode,
                     TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
-                    r.CourierPendingReasonNameList
+                    //CourierPendingReasonNameList = r.CourierPendingReasonNameList
+                    CourierPendingReasonNameList = r.CourierPendingReasonName
                 });
             DataTable dt = null;
             var settingCol = new BITabularViewSettings() { Columns = new List<Column>() };
@@ -335,8 +336,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             settingCol.Columns.Add(new Column() { Index = 4, Code = "TotalInvoiceAmountInUSD", Name = "TotalInvoiceAmountInUSD", DataTypeCode = "Decimal", Width = 100, });
             dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.TotalInvoiceAmountInUSD", tenant, true), ColumnName = "TotalInvoiceAmountInUSD", DataType = typeof(Decimal) });
 
-            settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierPendingReasonNameList", Name = "CourierPendingReasonNameList", DataTypeCode = "String", Width = 200, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierPendingReasonNameList", tenant, true), ColumnName = "CourierPendingReasonNameList", DataType = "".GetType() });
+            //settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierPendingReasonNameList", Name = "CourierPendingReasonNameList", DataTypeCode = "String", Width = 200, });
+           // dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierPendingReasonNameList", tenant, true), ColumnName = "CourierPendingReasonNameList", DataType = "".GetType() });
 
             var l = q.ToList();
             l.ForEach(r =>
@@ -346,7 +347,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 newrow[1] = r.ImporterName;
                 newrow[2] = r.ImporterCode;
                 newrow[3] = r.TotalInvoiceAmountInUSD;
-                newrow[4] = r.CourierPendingReasonNameList;
+                //newrow[4] = r.CourierPendingReasonNameList;
                 dt.Rows.Add(newrow);
             });
             var xls = new ExportToExcelHelper();
