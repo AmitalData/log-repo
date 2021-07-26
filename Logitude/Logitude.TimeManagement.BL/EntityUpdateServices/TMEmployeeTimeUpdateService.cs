@@ -83,13 +83,12 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-                if (entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
+                if(IsSendingCompletedWorkQueueMessage(entityPM, entityPOCO))
                 {
                     if (entityPM.ProratedDuration == 0)
                     {
                         entityPM.FullDuration = entityPM.TimeInMinutes;
                     }
-
                     entityPM.NeedsProrating = true;
                     SendQueueMessage(entityPM.Id, entityPM.WINumber, entityPM.TimeInMinutes, entityPM.Tenant);
                 }
@@ -100,6 +99,17 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 entityPM.TimeInMinutes = 0;
                 SendQueueMessage(entityPM.Id, entityPM.WINumber,entityPM.TimeInMinutes, entityPM.Tenant);
             }
+        }
+
+        private bool IsSendingCompletedWorkQueueMessage(TMEmployeeTimePM entityPM, TMEmployeeTime entityPOCO)
+        {
+            if (entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
+                return true;
+
+            if (entityPM.WINumber != entityPOCO.WINumber)
+                return true;
+
+            return false;
         }
 
         protected override void AfterUpdating(TMEmployeeTimePM entityPM, Server.Tools.EntityPM entityParentPM)
