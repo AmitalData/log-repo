@@ -17,8 +17,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<ClientsPoa> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            ClientKeys clientKeys = entityKeys as ClientKeys;
+
+            return (from a in context.ClientsPoas
+                    where a.ClientId == clientKeys.Id
+                    select a).ToList();
         }
 
    }
