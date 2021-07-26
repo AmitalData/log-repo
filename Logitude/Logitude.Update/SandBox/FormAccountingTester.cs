@@ -1,7 +1,9 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
 using Logitude.Accounting.BL.CoreBL.Fix;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.CoreBL.Testers;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Utils;
@@ -117,6 +119,11 @@ namespace Logitude.Update.SandBox
             //revaluationBatch.RunAllOpenRevaluations(28);
             //return;
 
+            YearTest();
+            return;
+            var myReverseEngineerCashBook = new ReverseEngineerCashBook(69);
+            myReverseEngineerCashBook.CheckDbIntegrity();
+            return;
             var myGateWayTester = new GateWayTester();
             myGateWayTester.ImmediateYearTransferthod(16, 4);
             return;
@@ -128,7 +135,51 @@ namespace Logitude.Update.SandBox
 
             return;
         }
+        public  void YearTest()
+        {
+            var parameterArgs = new BatchYearlyFIXParams() { MyFixType="", Year=2015, Tenant=3 };
+            var accountingContext = AccountingContext.GetContext(parameterArgs.Tenant);
+            try
+            {
+                int maxMonth = 12;
+                if (false && parameterArgs.Year == DateTime.Now.Year)
+                {
+                    maxMonth = DateTime.Now.Month;
+                }
+                for (int month = 1; month <= maxMonth; month++)
+                {
+                    DateTime dateTime = new DateTime(parameterArgs.Year, month, 1);
+                    switch (parameterArgs.MyFixType)
+                    {
+                        case "ReverseEngineerTotalByMonthService":
+                        default:
+                            {
+                                try
+                                {
+                                    var s = new ReverseEngineerTotalByMonthService(dateTime, parameterArgs.Tenant, null);
+                                    s.FixDbIntegrityFromLedgeToTotal();
+                                }
+                                catch (Exception E) when  (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone )
+                                {
 
+                                    Debug.WriteLine("const_isokNothingDone");
+                                    //throw;
+                                }
+
+                            }
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatchYearlyFIXService", new DateTime(2021, 7, 1));
+                throw;
+
+            }
+
+        }
         private static void GLaccountCreateTester()
         {
             string json1 = "{'Id':null,'Tenant':'4','InternalNumber':'020700004','AccountTypeCode':'3','DisplayNumber':'020700004','ExternalDisplayNumber':'020700004','EncodeBase64NVARCHARFieldsBy':'windows-1255','LocalName':'4/fx+CD26fjp6iD55eXp9Q==','EnglishName':'Dachser Spedition Ag - swiss','IsMultiCurrency':false,'Inactive':null,'ChartOfAccountsId':'bla','ChartOfAccountsTypeCode':'4','CurrencyCode':'NIS','CurrencyId':null,'RevenueExpenseType':'3','IsControlAccount':0,'ChartOfAccountType':'4','ChartOfAccountsCode':'0207','ParentAccountByCurrency':null,'ReconcileMethodCode':'0','utomaticReconcileId':null,'PreviousLocalName':null,'PreviousLocalNameChangeDate':null,'PreviousEnglishName':null,'PreviousEnglishNameChangeDate':null,'PreviousNo':null,'PreviousNoChangeDate':null,'PreviousChartOfAccountId':null,'PreviousChartOfAccountChangeDate':null,'BalanceInLocCurrencyId':null,'RevaluationEnable':null,'SearchFields':null,'IsVATExempt':false}";
