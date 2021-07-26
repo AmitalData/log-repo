@@ -309,7 +309,7 @@ export class RulesValidator {
         if (value != undefined && value != null && (value instanceof CustomFieldClass)) {
             value = value.ResolvedValue;
         }
-        if (field !== null) {
+        if (field) {
             const textValue = value + '';
             if (value && field.MaxLength < textValue.length) {
                 value = textValue.substring(0, field.MaxLength);
