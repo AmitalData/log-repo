@@ -1121,7 +1121,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var invoiceItem = supplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(decIdOrg, Convert.ToInt32(supplierInvoicePM.InvoiceCounterKey), Convert.ToInt32(supplierInvoiceItemPM.SequenceNumeric));
                          if(invoiceItem!= null)
                             {
-                                supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
+                                //  supplierInvoiceItemPM.SupplierInvoiceItemVehicles = invoiceItem.SupplierInvoiceItemVehicles;
+
+
+                                supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+
+                                // supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceItem(invoiceItem.DeclarationId, Convert.ToInt32(invoiceItem.CounterKey), invoiceItem.LineNumber, tenant);
+
 
                                 foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
                                 {
