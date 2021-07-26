@@ -744,7 +744,7 @@ export function AssertUpdateQuoteTemplate() {
 
 export function AssertUpdateQuoteHeaderTemplate() {
     AssertQuoteTemplatetPutTextDesign();
-    //AssertQuoteTemplatetPutHeaderFields();
+    AssertQuoteTemplatetPutHeaderFields();
 }
 
 function AssertQuoteTemplatetPutTextDesign() {
