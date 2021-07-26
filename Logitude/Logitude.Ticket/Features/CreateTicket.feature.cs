@@ -19,7 +19,7 @@ namespace Logitude.TicketTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateGetUpdateTicketFeature : object, Xunit.IClassFixture<CreateGetUpdateTicketFeature.FixtureData>, System.IDisposable
+    public partial class CreateTicketFeature : object, Xunit.IClassFixture<CreateTicketFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.TicketTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Ticket.feature"
+#line 1 "CreateTicket.feature"
 #line hidden
         
-        public CreateGetUpdateTicketFeature(CreateGetUpdateTicketFeature.FixtureData fixtureData, Logitude_TicketTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateTicketFeature(CreateTicketFeature.FixtureData fixtureData, Logitude_TicketTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.TicketTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Get Update Ticket", "\tWe want to create, get and update ticket.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Ticket", "\tWe want to create ticket.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace Logitude.TicketTests.Features
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Create ticket")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Get Update Ticket")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Ticket")]
         [Xunit.TraitAttribute("Description", "Create ticket")]
         public virtual void CreateTicket()
         {
@@ -136,100 +136,6 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get ticket")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Get Update Ticket")]
-        [Xunit.TraitAttribute("Description", "Get ticket")]
-        public virtual void GetTicket()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ticket", null, tagsOfScenario, argumentsOfScenario);
-#line 14
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 15
- testRunner.When("get ticket with TicketId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 16
- testRunner.Then("ticket should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Update ticket")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Get Update Ticket")]
-        [Xunit.TraitAttribute("Description", "Update ticket")]
-        public virtual void UpdateTicket()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update ticket", null, tagsOfScenario, argumentsOfScenario);
-#line 18
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 19
- testRunner.Given("a ticket", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table2.AddRow(new string[] {
-                            "EntityType",
-                            "Quote"});
-                table2.AddRow(new string[] {
-                            "Subject",
-                            "updated specflow subject"});
-                table2.AddRow(new string[] {
-                            "Description",
-                            "updated specflow desc"});
-#line 20
- testRunner.And("following ticket properties", ((string)(null)), table2, "And ");
-#line hidden
-#line 25
- testRunner.When("update ticket", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 26
- testRunner.Then("the ticket should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
@@ -237,12 +143,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateGetUpdateTicketFeature.FeatureSetup();
+                CreateTicketFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateGetUpdateTicketFeature.FeatureTearDown();
+                CreateTicketFeature.FeatureTearDown();
             }
         }
     }

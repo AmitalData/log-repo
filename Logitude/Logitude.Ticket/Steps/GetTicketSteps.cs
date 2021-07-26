@@ -21,7 +21,7 @@ namespace Logitude.TicketTests.Steps
         [When(@"get ticket with TicketId")]
         public void WhenGetTicketWithTicketId()
         {
-            ticketContext.Ticket = APICaller.CallGet<TicketPM>(Urls.TicketSingle(TicketData.Ticket.Id), UserTenant.Token).Data;
+            ticketContext.Ticket = APICaller.CallGet<TicketPM>(Urls.TicketSingle(TicketData.TicketId), UserTenant.Token).Data;
         }
         
         [Then(@"ticket should be avaliable")]

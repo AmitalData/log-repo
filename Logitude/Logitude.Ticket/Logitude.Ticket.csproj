@@ -98,12 +98,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\TicketBuilder.cs" />
     <Compile Include="Models\TicketClassificationPM.cs" />
     <Compile Include="Models\TicketContext.cs" />
     <Compile Include="Models\TicketData.cs" />
     <Compile Include="Models\TicketPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TicketDataPreparation.cs" />
     <Compile Include="Services\TicketServices.cs" />
     <Compile Include="Steps\CreateTicketSteps.cs" />
     <Compile Include="Steps\GetTicketSteps.cs" />
@@ -111,12 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\Ticket.feature" />
+    <None Include="Features\CreateTicket.feature" />
+    <None Include="Features\GetTicket.feature" />
+    <None Include="Features\UpdateTicket.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Hooks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>

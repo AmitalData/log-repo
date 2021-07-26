@@ -25,7 +25,7 @@ namespace Logitude.TicketTests.Steps
         [Given(@"a ticket")]
         public void GivenATicket()
         {
-            ticketContext.Ticket = TicketData.Ticket;
+            ticketContext.Ticket = APICaller.CallGet<TicketPM>(Urls.TicketSingle(TicketData.TicketId), UserTenant.Token).Data;
         }
         
         [Given(@"following ticket properties")]
