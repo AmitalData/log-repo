@@ -49,15 +49,15 @@
                                     <div class="SimpleGridView">
                                         <div class="SimpleGridViewHeader">
                                             <table>
-                                                <tr>
-                                                    <td style="width: 20px;">
+                                                <tr class="SimpleGridHeaderRow">
+                                                    <td style="width: 20px;min-width: 20px; max-width: 20px">
                                                         <div></div>
                                                     </td>
-                                                    <td style="width: 120px;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 230px;">{{DimensionsColumnHeader}}</td>
-                                                    <td style="width: 120px;">{{VolumeColumnHeader}}</td>
-                                                    <td style="width: 160px;">{{VolumetricWeightColumnHeader}}</td>
-                                                    <td style="width: 120px;">{{WeightColumnHeader}}</td>
+                                                    <td style="width: 120px;min-width: 120px; max-width: 120px">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 230px;min-width: 230px; max-width: 230px">{{DimensionsColumnHeader}}</td>
+                                                    <td style="width: 120px;min-width: 120px; max-width: 120px">{{VolumeColumnHeader}}</td>
+                                                    <td style="width: 160px;min-width: 160px; max-width: 160px">{{VolumetricWeightColumnHeader}}</td>
+                                                    <td style="width: 120px;min-width: 120px; max-width: 120px">{{WeightColumnHeader}}</td>
                                                     <td class="LastChild">
                                                         <div></div>
                                                     </td>
@@ -68,18 +68,18 @@
                                         <div class="SimpleGridViewBody">
                                             <table>
                                                 <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource;let i = index">
-                                                    <td class="GridViewCell" style="width: 20px; position: relative;">
+                                                    <td class="GridViewCell" style="width: 20px; max-width: 20px; position: relative;">
                                                         <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
                                                     </td>
                                                     <!--(HasValue)="item.HasValue($event)"-->
-                                                    <td class="CellStretched" style="width: 120px;">
+                                                    <td class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px; vertical-align:top;">
                                                         <LogTextBox [ObjectFieldName]="'Quantity'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Quantity" (HasValue)="item.HasValue($event)"></LogTextBox>
                                                     </td>
 
-                                                    <td class="CellStretched" style="width: 230px;">
-                                                        <table style="height: 22px;">
+                                                    <td class="CellStretched" style="width: 230px;min-width: 230px; max-width: 230px; vertical-align:top;">
+                                                        <table style="height: 22px; vertical-align:top; ">
                                                             <tr>
-                                                                <td>
+                                                                <td style="vertical-align: top;">
                                                                     <LogTextBox [ObjectFieldName]="'Length'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Length" [DisableZeroPadding]="true"></LogTextBox>
                                                                 </td>
 
@@ -87,7 +87,7 @@
                                                                     <div></div>
                                                                 </td>
 
-                                                                <td>
+                                                                <td style="vertical-align: top;">
                                                                     <LogTextBox [ObjectFieldName]="'Width'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Width" [DisableZeroPadding]="true"></LogTextBox>
                                                                 </td>
 
@@ -95,26 +95,26 @@
                                                                     <div></div>
                                                                 </td>
 
-                                                                <td>
+                                                                <td style="vertical-align: top;">
                                                                     <LogTextBox [ObjectFieldName]="'Height'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Height" [DisableZeroPadding]="true"></LogTextBox>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
 
-                                                    <td class="CellStretched" style="width: 120px;">
+                                                    <td class="CellStretched" style="width: 120px;min-width: 120px; max-width: 120px; vertical-align:top;">
                                                         <LogTextBox [ObjectFieldName]="'Volume'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Volume"></LogTextBox>
                                                     </td>
 
-                                                    <td class="CellDisabled" style="width: 160px; text-align: right;">
+                                                    <td class="CellDisabled" style="width: 160px;min-width: 160px; max-width: 160px; text-align: right;">
                                                         {{item.VolumetricWeight | NumbersPipe:'N3'}}
                                                     </td>
 
-                                                    <td class="CellStretched" style="width: 120px;">
+                                                    <td class="CellStretched" style="width: 120px;min-width: 120px; max-width: 120px; vertical-align:top;">
                                                         <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [ObjectFieldName]="'Weight'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Weight"></LogTextBox>
                                                     </td>
 
-                                                    <td class="CellTools">
+                                                    <td class="LastChild">
                                                         <span class="CellSeparator"></span>
                                                         <IconButton [ExternalId]="'Package_'+i" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
                                                         <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
@@ -147,7 +147,7 @@
                                                             <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
                                                                 <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
                                                                     <table>
-                                                                        <tr>
+                                                                        <tr class="SimpleGridHeaderRow">
                                                                             <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
                                                                             <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{DimensionsColumnHeader}}</td>
                                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{VolumeColumnHeader}}</td>
