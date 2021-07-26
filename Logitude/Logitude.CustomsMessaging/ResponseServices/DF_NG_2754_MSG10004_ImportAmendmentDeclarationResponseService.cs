@@ -349,7 +349,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                       else
                     {
-                        declarationCourierStatusPMNew = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
+                        declarationCourierStatusPMNew = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                         declarationCourierStatusPMNew.IsClosedForFollowUp = declarationCourierStatusPM.IsClosedForFollowUp;
                         declarationCourierStatusPMNew.SpecialActionStatus = declarationCourierStatusPM.SpecialActionStatus;
                         declarationCourierStatusPMNew.FastIndividualProcessCode = declarationCourierStatusPM.FastIndividualProcessCode;
@@ -370,6 +370,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
  
                         var declarationPendings = declarationPendingQueryService.GetDeclarationPendingsByDeclarationId(declarationOrg.Id, tenant);
 
+                        foreach (var item in declarationCourierStatusPMNew.DeclarationPendings)
+                        {
+                            item.ChangeSetOp = ChangeSetOperation.Delete;
+                        }
+ 
+
                         foreach (var pending in declarationPendings)
                         {
                             DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
@@ -386,28 +392,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationMamanSpecialActionQueryService declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
 
                         DeclarationMamanSpecialActionRepository declarationMamanSpecialActionRepository = new DeclarationMamanSpecialActionRepository(tenant);
-                        var declarationMamanSpecialActionList = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPMNew.DeclarationId, declarationCourierStatusPMNew.Tenant);
+                        var declarationMamanSpecialActionList = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPM.DeclarationId, declarationCourierStatusPMNew.Tenant);
 
-                        foreach (var action in declarationMamanSpecialActionList)
-                        {
-                            DeclarationMamanSpecialActionPM declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
-                            declarationMamanSpecialActionPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
-                            declarationMamanSpecialActionPM.MamanLabelText1 = action.MamanLabelText1;
-                            declarationMamanSpecialActionPM.MamanLabelText2 = action.MamanLabelText2;
-                            declarationMamanSpecialActionPM.MamanLabelText3 = action.MamanLabelText3;
-                            declarationMamanSpecialActionPM.MamanLabelText4 = action.MamanLabelText4;
-                            declarationMamanSpecialActionPM.MamanLabelText5 = action.MamanLabelText5;
-                            declarationMamanSpecialActionPM.MamanSpecialActionCode = action.MamanSpecialActionCode;
-                            declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = action.MamanSpecialActionsErrorXml;
-                            declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = action.MamanSpecialActionStatusCode;
-                            declarationMamanSpecialActionPM.Tenant = action.Tenant;
-                            declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-                            DeclarationMamanSpecialActionUpdateService declarationMamanSpecialActionUpdateService = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                       var declarationMamanSpecialActionListOld = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPMNew.DeclarationId, declarationCourierStatusPMNew.Tenant);
 
-                            declarationMamanSpecialActionUpdateService.Update(declarationMamanSpecialActionPM, true);
+ 
+                         
+                        
 
-                        }
+                            foreach (var action in declarationMamanSpecialActionList)
+                            {
+                                DeclarationMamanSpecialActionPM declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
+                                declarationMamanSpecialActionPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
+                                declarationMamanSpecialActionPM.MamanLabelText1 = action.MamanLabelText1;
+                                declarationMamanSpecialActionPM.MamanLabelText2 = action.MamanLabelText2;
+                                declarationMamanSpecialActionPM.MamanLabelText3 = action.MamanLabelText3;
+                                declarationMamanSpecialActionPM.MamanLabelText4 = action.MamanLabelText4;
+                                declarationMamanSpecialActionPM.MamanLabelText5 = action.MamanLabelText5;
+                                declarationMamanSpecialActionPM.MamanSpecialActionCode = action.MamanSpecialActionCode;
+                                declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = action.MamanSpecialActionsErrorXml;
+                                declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = action.MamanSpecialActionStatusCode;
+                                declarationMamanSpecialActionPM.Tenant = action.Tenant;
+                                declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+
+                            if (declarationMamanSpecialActionListOld.FirstOrDefault(x => x.MamanSpecialActionCode == action.MamanSpecialActionCode) != null)
+                                declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                                DeclarationMamanSpecialActionUpdateService declarationMamanSpecialActionUpdateService = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+                                declarationMamanSpecialActionUpdateService.Update(declarationMamanSpecialActionPM, true);
+
+                            }
+                      
  
 
 
@@ -419,13 +437,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationCourierStatusUpdateService.Update(declarationCourierStatusPMNew, true);
 
                     CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(context);
+                    CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
                     var courierdeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationOrg.Id, tenant);
-
-                    courierdeclaration.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
-                    courierdeclaration.ChangeSetOp = ChangeSetOperation.Update;
-                    CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete
+                        ;
                     courierDeclarationUpdateService.Update(courierdeclaration, true);
+
+                    CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
+
+                    courierDeclarationPM.CourierMasterId = courierdeclaration.CourierMasterId;
+                    courierDeclarationPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
+                    courierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    courierDeclarationUpdateService.Update(courierDeclarationPM, true);
                 }
 
                 string declarationId;
