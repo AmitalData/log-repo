@@ -311,7 +311,9 @@ export class RulesValidator {
         }
         if (field) {
             const textValue = value + '';
-            if (value && field.MaxLength < textValue.length) {
+            if (value && field.MaxLength < textValue.length &&
+                (field.DataTypeCode === "Text" || field.DataTypeCode === "nText")
+            ) {
                 value = textValue.substring(0, field.MaxLength);
             }
             if (field.IsCustom) {
