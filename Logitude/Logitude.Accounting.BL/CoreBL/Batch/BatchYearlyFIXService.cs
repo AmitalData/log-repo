@@ -5,6 +5,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,10 +40,19 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         case "ReverseEngineerTotalByMonthService":
                         default:
                             {
-                                var s = new ReverseEngineerTotalByMonthService(dateTime, parameterArgs.Tenant, null);
-                                s.FixDbIntegrityFromLedgeToTotal();
+                                try
+                                {
+                                    var s = new ReverseEngineerTotalByMonthService(dateTime, parameterArgs.Tenant, null);
+                                    s.FixDbIntegrityFromLedgeToTotal();
+                                }
+                                catch (Exception E) when (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone)
+                                {
+
+                                    Debug.WriteLine("const_isokNothingDone");
+                                    //throw;
+                                }
+                                break;
                             }
-                            break;
                     }
                 }
             }
