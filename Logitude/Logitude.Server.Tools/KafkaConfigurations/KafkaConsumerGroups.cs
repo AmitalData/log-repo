@@ -9,6 +9,7 @@
         public static string UpdateShipment = "updateconsumer";
         public static string LogitudePorts = "ports";
         public static string LogitudeCountries = "countries";
+        public static string LogitudeVessels = "vessels";
         public static string LogitudeContacts = "contacts";
         public static string LogitudeCards = "cards";
         public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
