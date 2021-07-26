@@ -40,6 +40,7 @@
         public static string ActivitiesController = "Activities";
         public static string TicketsController = "tickets";
         public static string OpportunitiesController = "Opportunities";
+        public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
 
         //public static string QuotesGetSingle(string id)
