@@ -80,6 +80,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(ContainerizationPM entityPM, Containerization entityPOCO)
         {
+            entityPOCO.IsMultiExportFiles = false;
+            entityPOCO.IsMultiCustomers = false;
             if (String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
             {
                 entityPM.IsChange = false;
@@ -89,8 +91,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 ContainerizationRepository containerizationRepository = new ContainerizationRepository(entityPM.Tenant);
                 var containerizationExportFiles = containerizationRepository.GetContainerizationExportFiles(entityPM.Tenant, entityPM.ConnectedDeclarations);
-                entityPOCO.IsMultiExportFiles = false;
-                entityPOCO.IsMultiCustomers = false;
                 if (containerizationExportFiles.Count > 1)
                 {
                     entityPOCO.IsMultiExportFiles = true;
