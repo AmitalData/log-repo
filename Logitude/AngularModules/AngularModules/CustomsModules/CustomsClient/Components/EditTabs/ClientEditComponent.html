@@ -1,4 +1,4 @@
-﻿
+
 
 <style>
     .FlipImgHoriz {
@@ -85,9 +85,9 @@
 
                                             <!-- MOREDATA -->
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'MOREDATA'">
-                                                
+
                                                 <table style="vertical-align:top;height:40px">
-                                                    <tr >
+                                                    <tr>
                                                         <td class="FieldRow" style="width:150px">
                                                             <LogLabel [ObjectFieldName]="'FacilitationTypeCode'" [ObjectTableName]="'Customs.Client'" [DataContext]="DataContext"></LogLabel>
 
@@ -107,7 +107,11 @@
                                                         <td><div></div></td>
                                                     </tr>
                                                 </table>
-                                            
+
+                                            </div>
+                                            <!-- CLIENTPOA -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'CLIENTPOA'">
+                                                <div LocationDirective Code="CLIENTPOA"></div>
                                             </div>
 
                                         </div>

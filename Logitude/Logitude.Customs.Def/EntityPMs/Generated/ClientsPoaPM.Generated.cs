@@ -344,6 +344,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string poaStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PoaStatusName  
+	   {
+	    
+	     get
+		{
+		   return poaStatusName;
+		 }
+		 set
+		 {
+		   if(poaStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PoaStatusName",OldValue=poaStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   poaStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string poaAuthorizationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PoaAuthorizationTypeName  
+	   {
+	    
+	     get
+		{
+		   return poaAuthorizationTypeName;
+		 }
+		 set
+		 {
+		   if(poaAuthorizationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PoaAuthorizationTypeName",OldValue=poaAuthorizationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   poaAuthorizationTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

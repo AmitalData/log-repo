@@ -55,7 +55,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StartDate, 
 	         EndDate, 
 	         PoaStatus, 
-	         PoaAuthorizationType,
+	         PoaAuthorizationType, 
+	         PoaStatusName, 
+	         PoaAuthorizationTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
