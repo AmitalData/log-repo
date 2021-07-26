@@ -1,4 +1,4 @@
-@release @stable  @all
+@release @stable
 Feature: Disable Then Enable Voiding Invoice from Maintenance
     The user disables voiding invoices from Invoice Settings, creates AR invoice,
     tries to void it but gets an error, goes back to invoice settings in maintenance,
