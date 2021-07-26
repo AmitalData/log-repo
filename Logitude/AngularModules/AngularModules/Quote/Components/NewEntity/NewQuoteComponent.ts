@@ -79,8 +79,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
     private InitializeAllowAgentInCustomersLOVFilters() {
         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-            this.CardDependencyProperty1 = "CS,PO,AG";
             this.IsAddAgentVisible = true;
+        }
+
+        this.SetCardDependency();
+    }
+
+    private SetCardDependency() {
+        this.CardDependencyProperty1 = "CS,PO";
+
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",AG";
+        }
+
+        if (this.IsInlandDomestic) {
+            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
         }
     }
 
@@ -352,6 +365,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.SetLabels();
         this.SetUnits();
         this.SetPartners();
+
+        this.SetCardDependency();
+        this.ComputeCustomerDependency();
+        //this.CustomerDependencyProperty1 = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
+        //this.CustomerDependencyProperty1IsList = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? true : this.CustomerDependencyProperty1IsList; 
     }
     SetUIProperties() {
         this.SetUIProperties_Shipper();
@@ -376,21 +394,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.UIProperties.SetVisibility("ConsigneeReference2", this.ObjectTableName, isConsigneeFieldsVisible);
     }
     SetUIProperties_Customer() {
-        //var isFieldEnabled: boolean = true;
-
-        //if (this.ShipmentCustomerTypeCode == "SHI") {
-        //    if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
-        //        isFieldEnabled = false;
-        //    }
-        //}
-
-        //else if (this.ShipmentCustomerTypeCode == "CON") {
-        //    if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-        //        isFieldEnabled = false;
-        //    }
-        //}
-
-        //this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isFieldEnabled);
+        
     }
     private SetUIProperties_Domestic() {
         this.IsInlandDomestic = QuoteUtilities.IsInlandDomestic(this.EntityPM);
@@ -418,16 +422,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
             this.EntityPM.FromPortId = null;
             this.EntityPM.ToPortId = null;
-            this.CardDependencyProperty1 = this.CardDependencyProperty1 + ",WH";
-            this.CustomerDependencyProperty1 = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1;
-            this.CustomerDependencyProperty1IsList = ['SHI', 'CON'].includes(this.QuoteCustomerTypeCode) ? true : this.CustomerDependencyProperty1IsList ; 
-
         }
 
         else {
             this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, false);
             this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, false);
-        }
+        }        
     }
     private SetUIProperties_Containers() {
         if (this.EntityPM.QuoteTypeCode == "P") {
@@ -989,10 +989,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     public CustomerDependencyProperty1IsList: boolean = false;
     private ComputeCustomerDependency() {
         switch (this.QuoteCustomerTypeCode) {
-            case "SHI":
-                this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH" : "CS";
-                this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
-                break;
+            case "SHI":               
             case "CON":
                 {
                     this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,PO,WH":"CS,PO";
