@@ -12,6 +12,8 @@ export class ClientsPoaList {
 	Tenant: number;
 	SearchFields: string;
 	ClientId: string;
+	PoaStatusName: string;
+	PoaAuthorizationTypeName: string;
 	
 }
  

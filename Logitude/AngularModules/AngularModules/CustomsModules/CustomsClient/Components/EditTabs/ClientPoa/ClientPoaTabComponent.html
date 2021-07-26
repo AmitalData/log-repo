@@ -1,0 +1,90 @@
+<style>
+    .subTitle {
+        color: #1990d0;
+        font-size: 16px;
+        padding-left: 5px;
+    }
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    
+
+    .InnerGrid td, .InnerGrid li span{
+        color: #00338b;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+</style>
+<table>
+    <!-- subtitle -->
+    <tr style="height: 30px; padding-bottom: 3px;">
+        <td class="subTitle">{{'Customs.ClientsPoas' | TextCodeTranslationPipe}}</td>
+        <td width="10%"></td>
+    </tr>
+    <tr>
+        <td >
+            <div>
+                <logitude-edit-grid GridWidth="100%"
+                                    GridHeight="100%"
+                                    [IsReadOnly]="true"
+                                    [ItemSource]="PoaList">
+
+                    <log-column [header]="'Customs.ClientsPoa.F.PoaID' | TextCodeTranslationPipe"
+                                [binding]="'PoaID'" [width]="'100'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming" style="text-align:right">
+                                    <span>{{item.PoaID}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <log-column [header]="'Customs.ClientsPoa.F.PoaStatusName' | TextCodeTranslationPipe"
+                                [binding]="'PoaStatus'" [width]="'140'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming" style="text-align:right">
+                                    <span>{{item.PoaStatusName}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <log-column [header]="'Customs.ClientsPoa.F.PoaAuthorizationTypeName' | TextCodeTranslationPipe"
+                                [binding]="'PoaAuthorizationType'" [width]="'140'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming" style="text-align:right">
+                                    <span>{{item.PoaAuthorizationTypeName}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <log-column [header]="'Customs.ClientsPoa.F.StartDate' | TextCodeTranslationPipe"
+                                [binding]="'StartDate'" [width]="'150'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming" style="text-align:right">
+                                    <span>{{item.StartDate | DateTimePipe}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <log-column [header]="'Customs.ClientsPoa.F.EndDate' | TextCodeTranslationPipe"
+                                [binding]="'EndDate'" [width]="'150'" [Alignment]="'right'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div class="TextTrimming" style="text-align:right">
+                                    <span>{{item.EndDate | DateTimePipe}}</span>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+        <td width="10%"></td>
+    </tr>
+</table>

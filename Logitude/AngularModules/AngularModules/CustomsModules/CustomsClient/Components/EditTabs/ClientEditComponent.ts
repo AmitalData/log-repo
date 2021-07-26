@@ -95,6 +95,7 @@ export class ClientEditComponent extends BaseComponent{
         this.TabsItemsSource.push(new TabItem("EVENTS", "General.O.Events"));
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.O.RequestSheets"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Client.TH.MoreData"));
+        this.TabsItemsSource.push(new TabItem("CLIENTPOA", "CLIENTPOA"));
 
         this.selectedTabCode = "GENERAL";
     }
@@ -138,6 +139,7 @@ export class ClientEditComponent extends BaseComponent{
 
     private GENERAL: any = null;
     private ADDRESSES: any = null;
+    private CLIENTPOA: any = null;
     private LICENSE: any = null;
     private COMMUNICATION: any = null;
     private EVENTS: any = null;
@@ -238,7 +240,19 @@ export class ClientEditComponent extends BaseComponent{
                         break;
                     }
 
+                    case "CLIENTPOA": {
+                        if (this.CLIENTPOA == null) {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsPoa").subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/ClientPoa/ClientPoaTabComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.CLIENTPOA = cmpRef.instance;
+                                        this.CLIENTPOA.InitTab(this.CurrentEntity);
+                                    });
+                            });
+                        }
+                        break;
 
+                    }
                 }
             }
         }
