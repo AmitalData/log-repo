@@ -127,6 +127,11 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
                 connection.Open();
                 result=ExecuteGetMainDBConnectionStringCommand(command);
             }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw ex;
+            }
             finally
             {
                 connection.Close();
