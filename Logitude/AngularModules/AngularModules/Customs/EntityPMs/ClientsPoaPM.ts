@@ -97,6 +97,16 @@ export class ClientsPoaPM {
     public set PoaAuthorizationType(newValue: string) { if (this.poaAuthorizationType != newValue) { this.poaAuthorizationType = newValue; this.MarkAsDirty("PoaAuthorizationType"); } }
        
 	 
+    private poaStatusName: string;
+    public get PoaStatusName() { return this.poaStatusName; }
+    public set PoaStatusName(newValue: string) { if (this.poaStatusName != newValue) { this.poaStatusName = newValue; this.MarkAsDirty("PoaStatusName"); } }
+       
+	 
+    private poaAuthorizationTypeName: string;
+    public get PoaAuthorizationTypeName() { return this.poaAuthorizationTypeName; }
+    public set PoaAuthorizationTypeName(newValue: string) { if (this.poaAuthorizationTypeName != newValue) { this.poaAuthorizationTypeName = newValue; this.MarkAsDirty("PoaAuthorizationTypeName"); } }
+       
+	 
 
     public OldEntityPM: ClientsPoaPM;
 	

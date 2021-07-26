@@ -24,6 +24,10 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string ClientId  { get; set; }
+       [DataMember]
+       public string PoaStatusName  { get; set; }
+       [DataMember]
+       public string PoaAuthorizationTypeName  { get; set; }
    }
 
 }
