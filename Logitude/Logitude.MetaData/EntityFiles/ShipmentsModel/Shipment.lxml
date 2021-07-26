@@ -98614,7 +98614,36 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
-
+      <DCField
+        DCFieldName="&quot;Notify1Reference&quot;"
+        FieldName="&quot;Notify1Reference&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Notify1Reference2&quot;"
+        FieldName="&quot;Notify1Reference2&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
@@ -100240,7 +100269,6 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
-
       <DCField
         DCFieldName="&quot;PlannedCargoReadyDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -100289,7 +100317,6 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
-
       <DCField
         DCFieldName="&quot;Notify1Reference&quot;"
         FieldName="&quot;Notify1Reference&quot;"
@@ -100320,7 +100347,6 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
-
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
