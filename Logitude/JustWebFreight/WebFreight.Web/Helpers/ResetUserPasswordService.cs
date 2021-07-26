@@ -324,7 +324,7 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment + " Software.");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");
