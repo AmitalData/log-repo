@@ -98,9 +98,18 @@ namespace CommunicationWorkerRole
                     return GetCountryById(Tenant, EntityId);
                 case "Port":
                     return GetPortById(Tenant, EntityId);
+                case "Vessel":
+                    return GetVesselById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetVesselById(int Tenant, string Id)
+        {
+            VesselQuery vesselQuery = new VesselQuery(Tenant);
+            VesselPM vesselPM = vesselQuery.GetSinglePM(Id, Tenant);
+            return vesselPM;
         }
 
         private CardPM GetCardById(int Tenant, string Id)
@@ -144,6 +153,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.Country;
                 case "Port":
                     return KakaMessageTypes.Port;
+                case "Vessel":
+                    return KakaMessageTypes.Vessel;
                 default:
                     return 0;
             }
