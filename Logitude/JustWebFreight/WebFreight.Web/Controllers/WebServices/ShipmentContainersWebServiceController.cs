@@ -183,7 +183,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     }
                     else
                     {
-                        throw new ApplicationException("The ScacCode code or Container number are empty, please fill them first");
+                        throw new ApplicationException("The SCAC Code of the Shipping Line or the Container Number is empty, please make sure they are filled.");
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");
