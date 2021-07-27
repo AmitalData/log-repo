@@ -2979,7 +2979,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -3006,7 +3006,7 @@
         QueryCode="&quot;Clients&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="130" />     
+        ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Clients&quot;"
         IndexOrder="1"
@@ -3027,7 +3027,7 @@
         IndexOrder="4"
         ObjectFieldName="&quot;PassportCountryCode&quot;"
         ColumnWidth="130" />
-	  <QueryColumn
+      <QueryColumn
         QueryCode="&quot;Clients&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;IsExportPoaActive&quot;"
