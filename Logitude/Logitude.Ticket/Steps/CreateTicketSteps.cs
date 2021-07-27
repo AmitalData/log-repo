@@ -39,7 +39,6 @@ namespace Logitude.TicketTests.Steps
         {
             ticketContext.Ticket.Should().NotBeNull();
             ticketContext.Ticket.Id.Should().NotBeNull();
-            TicketData.Ticket = ticketContext.Ticket;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Logitude.TicketTests.Services
                 .Build();
         }
 
-        private TicketClassificationPM GetGeneralTicketClassification()
+        public TicketClassificationPM GetGeneralTicketClassification()
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
               .Filter1Name("ParentId")

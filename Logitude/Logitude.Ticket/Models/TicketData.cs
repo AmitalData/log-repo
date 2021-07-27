@@ -8,6 +8,6 @@ namespace Logitude.TicketTests.Models
 {
     public static class TicketData
     {
-        public static TicketPM Ticket { get; set; }
+        public static string TicketId { get; set; }
     }
 }
