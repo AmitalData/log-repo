@@ -635,9 +635,7 @@ export function ValidateWidthErrorMesseage() {
 
 export function DragAndDropFields(fieldDetails: QuoteTemplateDetails[]) {
     for (let i = 0; i < fieldDetails.length; i++) {
-        cy.wait(3000)
         cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
-        cy.wait(3000)
     }
 }
 
