@@ -51,7 +51,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExporter, 
 	         ConcurrencyGUID, 
 	         FacilitationTypeCode, 
-	         NationalIdentificationNumber,
+	         NationalIdentificationNumber, 
+	         IsExportPoaActive,
 	      }
 
 
@@ -92,7 +93,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ConcurrencyGUID, 
 	         NewConcurrencyGUID, 
 	         FacilitationTypeCode, 
-	         NationalIdentificationNumber,
+	         NationalIdentificationNumber, 
+	         IsExportPoaActive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -244,6 +246,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NationalIdentificationNumber))
             {
 				entityPOCO.NationalIdentificationNumber = entityPM.NationalIdentificationNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportPoaActive))
+            {
+				entityPOCO.IsExportPoaActive = entityPM.IsExportPoaActive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -402,6 +409,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.NationalIdentificationNumber = entityPOCO.NationalIdentificationNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExportPoaActive))
+            {
+					entityPM.IsExportPoaActive = entityPOCO.IsExportPoaActive;
+            }
+
 		}
 
 		public void PMToOldPM(ClientPM entityPM, ClientPM oldEntityPM)
@@ -551,6 +563,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NationalIdentificationNumber))
             {
                 oldEntityPM.NationalIdentificationNumber = entityPM.NationalIdentificationNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportPoaActive))
+            {
+                oldEntityPM.IsExportPoaActive = entityPM.IsExportPoaActive;
             }
 			
 		}

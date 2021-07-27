@@ -1119,6 +1119,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(ExporterRoleType, ExporterRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(ExporterRoleType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData BuyerRoleTypeType = closedSystemTables.Where(d => d.id == "23784").FirstOrDefault();
+            ObjectTable BuyerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.BuyerRoleType", 0, false);
+            InsertClosedTableRecord(BuyerRoleTypeType, BuyerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(BuyerRoleTypeType);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AutonomyRegionType = closedSystemTables.Where(d => d.id == "1937").FirstOrDefault();
             ObjectTable AutonomyRegionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AutonomyRegionType", 0, false);
             InsertClosedTableRecord(AutonomyRegionType, AutonomyRegionTypeObjectTable, customsClosedTables, customsClosedTableRepository);

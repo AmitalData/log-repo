@@ -33,6 +33,18 @@ namespace Logitude.Customs.Data.Repsitories
 
             return max+1;
         }
+        public List<string> GetContainerizationExportFiles(int tenant,string exportFiles)
+        {
+            return (from a in context.Declarations
+                    where a.Tenant == tenant && exportFiles.Contains(a.Id)
+                    select a.ExportFile).Distinct().ToList();
+        }
+        public List<string> GetContainerizationImporters(int tenant, string importers)
+        {
+            return (from a in context.Declarations
+                    where a.Tenant == tenant && importers.Contains(a.Id)
+                    select a.CustomerId).Distinct().ToList();
+        }
     }
 
 }

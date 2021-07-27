@@ -895,6 +895,64 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<ClientsPoaPM> clientPoas;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClientClientPoas", "Id","ClientId")]
+	   [DataMember]
+	   public virtual List<ClientsPoaPM> ClientPoas  
+	   {
+	        get
+             {
+                 if (clientPoas == null)
+                 {
+                     clientPoas = new List<ClientsPoaPM>();
+                 }
+                 return clientPoas;
+              }
+             set { clientPoas = value; }
+	    }
+		   
+	   private List<ClientsPoaPM>  deletedClientPoas;
+	   public virtual List<ClientsPoaPM> DeletedClientPoas  
+	   {
+	        get
+             {
+                 if ( deletedClientPoas == null)
+                 {
+                      deletedClientPoas = new List<ClientsPoaPM>();
+                 }
+                 return  deletedClientPoas;
+              }
+             set {  deletedClientPoas = value; }
+	    }
+	  	  private int? isExportPoaActive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? IsExportPoaActive  
+	   {
+	    
+	     get
+		{
+		   return isExportPoaActive;
+		 }
+		 set
+		 {
+		   if(isExportPoaActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportPoaActive",OldValue=isExportPoaActive,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   isExportPoaActive=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

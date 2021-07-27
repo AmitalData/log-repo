@@ -48,17 +48,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.CourierPendingReasonList = null;
                 foreach (var declarationPending in entityPM.DeclarationPendings)
                 {
-                    if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
+                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
+                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
+                    if (isActive)
                     {
-                        if (declarationPending.Status == "A")
+                        if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
                         {
-                            if (entityPM.CourierPendingReasonList == null)
+                            if (declarationPending.Status == "A")
                             {
-                                entityPM.CourierPendingReasonList = declarationPending.CourierPendingReasonCode;
-                            }
-                            else
-                            {
-                                entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
+                                if (entityPM.CourierPendingReasonList == null)
+                                {
+                                    entityPM.CourierPendingReasonList = declarationPending.CourierPendingReasonCode;
+                                }
+                                else
+                                {
+                                    entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
+                                }
                             }
                         }
                     }

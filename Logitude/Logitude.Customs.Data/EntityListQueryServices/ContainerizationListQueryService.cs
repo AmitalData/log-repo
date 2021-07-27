@@ -59,9 +59,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 														  OperationMode = a.OperationMode,
 
 														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,
-											              ExportFile = ed.Key.ExportFile,
+											              ExportFile = a.IsMultiExportFiles ? "List" : ed.Key.ExportFile,
 														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
-														  ImporterName = ed.Key.ImporterName,
+														  ImporterName = a.IsMultiCustomers ? "List" : ed.Key.ImporterName,
 														  TransportModeForExport = ed.Key.TransportModeId ,
 														  HataraStatusIsNull = a.HataraStatus != null ? false :true
 													  }); ;

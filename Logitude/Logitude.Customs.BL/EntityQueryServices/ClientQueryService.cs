@@ -21,9 +21,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ClientKeys clientKeys = entityKeys as ClientKeys;
             ClientAddressQueryService clientAddressQueryService = new ClientAddressQueryService(context);
             ClientDrivingLicenseQueryService clientDrivingLicenseQueryService = new ClientDrivingLicenseQueryService(context);
+            ClientsPoaQueryService clientsPoaQueryService = new ClientsPoaQueryService(context);
 
             entityPM.ClientAddresses = clientAddressQueryService.GetMulti(clientKeys, true);
             entityPM.ClientDrivingLicenses = clientDrivingLicenseQueryService.GetMulti(clientKeys, true);
+            entityPM.ClientPoas = clientsPoaQueryService.GetMulti(clientKeys, true);
         }
         public string GetIdByCode(string code, int tenant,bool insertIfNotFount = false)
         {

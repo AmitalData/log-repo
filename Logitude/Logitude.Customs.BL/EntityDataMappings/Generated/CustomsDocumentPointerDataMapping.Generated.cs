@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Child2EntityId, 
 	         Child3EntityCode, 
 	         Child3EntityId, 
-	         CustomsDocumentsTicketId,
+	         CustomsDocumentsTicketId, 
+	         OriginEntity,
 	      }
 
 
@@ -59,7 +60,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMetaDataReady, 
 	         CustomsDocumentsTicketId, 
 	         CustomsRequestsSheetId, 
-	         DocumentTypeCode,
+	         DocumentTypeCode, 
+	         OriginEntity,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -116,6 +118,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentsTicketId))
             {
 				entityPOCO.CustomsDocumentsTicketId = entityPM.CustomsDocumentsTicketId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginEntity))
+            {
+				entityPOCO.OriginEntity = entityPM.OriginEntity;
 			}
 			}
 
@@ -177,6 +184,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsDocumentsTicketId = entityPOCO.CustomsDocumentsTicketId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginEntity))
+            {
+					entityPM.OriginEntity = entityPOCO.OriginEntity;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsDocumentPointerPM entityPM, CustomsDocumentPointerPM oldEntityPM)
@@ -231,6 +243,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentsTicketId))
             {
                 oldEntityPM.CustomsDocumentsTicketId = entityPM.CustomsDocumentsTicketId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginEntity))
+            {
+                oldEntityPM.OriginEntity = entityPM.OriginEntity;
             }
 			
 		}

@@ -276,6 +276,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntReasonExpComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
+    <Content Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.html" />
@@ -394,6 +395,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.ts" />
@@ -1394,6 +1396,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\AmountTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ApprovedProfessionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AutonomyRegionTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\BuyerRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationReasonRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationRequestStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancelRequestRejectReasonTypeList.ts" />
@@ -1470,6 +1473,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\AmountTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ApprovedProfessionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AutonomyRegionTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\BuyerRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationReasonRequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationRequestStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CancelRequestRejectReasonTypePM.ts" />
@@ -1584,6 +1588,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmountTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ApprovedProfessionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AutonomyRegionTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\BuyerRoleTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationReasonRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationRequestStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancelRequestRejectReasonTypeListService.ts" />

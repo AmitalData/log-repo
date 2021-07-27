@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ClientsPoaUpdateService:EntityUpdateService<ClientsPoa,ClientsPoaPM,EntityPM>
+   public partial class ClientsPoaUpdateService:EntityUpdateService<ClientsPoa,ClientsPoaPM,ClientPM>
    {
    
         ClientsPoaRepository entityRepository;
@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(ClientsPoaPM entityPM)
         {
-            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPM.Id };
+            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPM.Id, ClientId = entityPM.ClientId };
             return entityKeys;
         }
 

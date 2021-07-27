@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Child3EntityId).HasColumnName("Child3EntityId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CustomsDocumentsTicketId).HasColumnName("CustomsDocumentsTicketId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.OriginEntity).HasColumnName("OriginEntity").HasMaxLength(9).IsUnicode(false);
         }
     }
 }

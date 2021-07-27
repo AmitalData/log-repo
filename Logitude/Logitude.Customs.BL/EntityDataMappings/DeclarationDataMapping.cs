@@ -588,6 +588,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //        }
             //    }
             // }
+            Card customerCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
+            if (customerCard != null)
+            {
+                var customerName = customerCard.LocalName != null ? customerCard.LocalName : customerCard.EnglishName;
+                result = string.IsNullOrEmpty(result) ? customerName : result + "," + customerName;
+            }
             if (entityPM.Direction == "E")
             {
                 if (!string.IsNullOrEmpty(entityPM.ExportFile))

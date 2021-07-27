@@ -629,7 +629,7 @@ export class FieldTemplateComponent {
                     ObjectTableName: "Customs.Declaration",
                     //BackButtonLabel: label
                 });
-
+                debugger;
                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;

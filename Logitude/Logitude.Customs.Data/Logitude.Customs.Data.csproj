@@ -112,6 +112,7 @@
     <Compile Include="EntityKeys\AmountTypeKeys.cs" />
     <Compile Include="EntityKeys\ApprovedProfessionKeys.cs" />
     <Compile Include="EntityKeys\AutonomyRegionTypeKeys.cs" />
+    <Compile Include="EntityKeys\BuyerRoleTypeKeys.cs" />
     <Compile Include="EntityKeys\CancellationReasonRequestTypeKeys.cs" />
     <Compile Include="EntityKeys\CancellationRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CancelRequestRejectReasonTypeKeys.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="EntityListQueryServices\AmountTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ApprovedProfessionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AutonomyRegionTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BuyerRoleTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CancellationReasonRequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CancellationRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CancelRequestRejectReasonTypeListQueryService.cs" />
@@ -317,6 +319,7 @@
     <Compile Include="EntityListQueryServices\Generated\AmountTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ApprovedProfessionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutonomyRegionTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BuyerRoleTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CancellationReasonRequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CancellationRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CancelRequestRejectReasonTypeListQueryService.Generated.cs" />
@@ -487,6 +490,7 @@
     <Compile Include="EntityLists\Generated\AmountTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ApprovedProfessionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AutonomyRegionTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BuyerRoleTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CancellationReasonRequestTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CancellationRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CancelRequestRejectReasonTypeList.Generated.cs" />
@@ -613,6 +617,7 @@
     <Compile Include="EntityMapping\AmountTypeMap.cs" />
     <Compile Include="EntityMapping\ApprovedProfessionMap.cs" />
     <Compile Include="EntityMapping\AutonomyRegionTypeMap.cs" />
+    <Compile Include="EntityMapping\BuyerRoleTypeMap.cs" />
     <Compile Include="EntityMapping\CancellationReasonRequestTypeMap.cs" />
     <Compile Include="EntityMapping\CancellationRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CancelRequestRejectReasonTypeMap.cs" />
@@ -738,6 +743,7 @@
     <Compile Include="EntityPOCOs\AmountType.cs" />
     <Compile Include="EntityPOCOs\ApprovedProfession.cs" />
     <Compile Include="EntityPOCOs\AutonomyRegionType.cs" />
+    <Compile Include="EntityPOCOs\BuyerRoleType.cs" />
     <Compile Include="EntityPOCOs\CancellationReasonRequestType.cs" />
     <Compile Include="EntityPOCOs\CancellationRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CancelRequestRejectReasonType.cs" />
@@ -864,6 +870,7 @@
     <Compile Include="Repsitories\AmountTypeRepository.cs" />
     <Compile Include="Repsitories\ApprovedProfessionRepository.cs" />
     <Compile Include="Repsitories\AutonomyRegionTypeRepository.cs" />
+    <Compile Include="Repsitories\BuyerRoleTypeRepository.cs" />
     <Compile Include="Repsitories\CancellationReasonRequestTypeRepository.cs" />
     <Compile Include="Repsitories\CancellationRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CancelRequestRejectReasonTypeRepository.cs" />
@@ -944,6 +951,7 @@
     <Compile Include="Repsitories\Generated\AmountTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ApprovedProfessionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AutonomyRegionTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BuyerRoleTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CancellationReasonRequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CancellationRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CancelRequestRejectReasonTypeRepository.Generated.cs" />

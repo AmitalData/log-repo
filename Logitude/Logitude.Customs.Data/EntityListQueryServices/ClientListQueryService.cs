@@ -58,7 +58,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          IsExporter = a.IsExporter,
                                                          FacilitationTypeCode = a.FacilitationTypeCode,
                                                          NationalIdentificationNumber = a.NationalIdentificationNumber,
-
+                                                         IsExportPoaActive = a.IsExportPoaActive,
 
                                                        });
             return query;

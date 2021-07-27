@@ -27,6 +27,7 @@ import {ClientsAddressCommTypePM} from '../../EntityPMs/ClientsAddressCommTypePM
 import {ClientDrivingLicensePM} from '../../EntityPMs/ClientDrivingLicensePM';
 
 import {ClientDrivingLicenseTypePM} from '../../EntityPMs/ClientDrivingLicenseTypePM';
+import {ClientsPoaPM} from '../../EntityPMs/ClientsPoaPM';
 
 @Injectable()
 
@@ -190,6 +191,7 @@ export class ClientPMService {
 			
                this.MapClientAddresses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapClientDrivingLicenses(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClientPoas(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -226,6 +228,15 @@ export class ClientPMService {
 					                 }
 							 
             entityPM.OldEntityPM.ClientDrivingLicenses.push(newClientDrivingLicensePM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClientPoas = [];
+            for (var item in entityPM.ClientPoas) {
+            var myClientsPoaPM = entityPM.ClientPoas[item];
+            var newClientsPoaPM: ClientsPoaPM = this.clone(myClientsPoaPM);
+						
+							 
+            entityPM.OldEntityPM.ClientPoas.push(newClientsPoaPM);
             }
 			   
 		}
@@ -647,6 +658,98 @@ export class ClientPMService {
         }
     }
  
+    MapClientPoas(entityPM: ClientPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClientPoas: ClientsPoaPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClientPoas = entityPM.OldEntityPM.ClientPoas;
+        }
+
+        entityPM.ClientPoas = new Array<ClientsPoaPM>();
+        for (var item in jsonPM.ClientPoas) {
+            var jItem = jsonPM.ClientPoas[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClientsPoaPM: ClientsPoaPM;
+	  
+            if (mapParent) {
+                newClientsPoaPM = new ClientsPoaPM(entityPM);
+            }
+            else
+            {
+                newClientsPoaPM = new ClientsPoaPM(null);
+            }
+ 			newClientsPoaPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClientsPoaPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClientsPoaPM.UniqueKey = Guid.newGuid();
+                newClientsPoaPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClientsPoaPM.OldEntityPM = this.clone(newClientsPoaPM);
+
+				
+            }
+            else {
+                if (newClientsPoaPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClientsPoaPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClientsPoaPM.ChangeSetOp = "Insert";
+                }
+ 
+                newClientsPoaPM.OldEntityPM = null;
+                newClientsPoaPM.EntityParentPM = null;
+            }
+			 newClientsPoaPM.DisableMarkAsDirty = false;
+			 newClientsPoaPM.IsDirty = false;
+            entityPM.ClientPoas.push(newClientsPoaPM);
+        }
+        if (oldClientPoas) {
+            
+            for (var itemKey in oldClientPoas) {
+                if (entityPM.ClientPoas.filter(p=> p.UniqueKey === oldClientPoas[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClientPoas[itemKey]) {
+                        //oldClientPoas[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClientPoas.push(oldClientPoas[itemKey]);
+						var oldItemJson = oldClientPoas[itemKey];
+                        var deletedPM: ClientsPoaPM = new ClientsPoaPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClientPoas.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

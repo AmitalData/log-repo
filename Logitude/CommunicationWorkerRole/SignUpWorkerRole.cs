@@ -127,7 +127,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("Password: " + (!string.IsNullOrEmpty(password) ? password : "your current password"));
             HtmlTemplate.Append("<br /><br />");
 
-            string emailbody = HtmlTemplate.ToString();
+             string emailbody = HtmlTemplate.ToString();
 
             Debug.WriteLine(emailbody);
             EmailCommunicationParams emailParams = new EmailCommunicationParams();
@@ -245,12 +245,20 @@ namespace CommunicationWorkerRole
 
             storageAccount = StorageAcountDetails.StorageAccount; //CloudStorageAccount.FromConfigurationSetting("DiagnosticsConnectionString");
             queueclient = storageAccount.CreateCloudQueueClient();
-            queue = queueclient.GetQueueReference("signupqueue");
-            queue.CreateIfNotExists();
-            if (!SuppressClearQ)
+            if (!(LogitudeSettings.WorkEnvironment == "customs"))
             {
-                queue.Clear();
-            }///itzik ask :why to .. 
+
+                queue = queueclient.GetQueueReference("signupqueue");
+          
+                queue.CreateIfNotExists();
+
+                if (!SuppressClearQ)
+                {
+                    queue.Clear();
+                }///itzik ask :why to .. 
+
+            }
+
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;

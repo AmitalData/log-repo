@@ -119,6 +119,7 @@ import { ReferenceStatusListService } from '../../Customs/Services/StandardLists
 import { ReferenceInputTypeListService } from '../../Customs/Services/StandardLists/ReferenceInputTypeListService';
 import { LogisticsReferenceTypeListService } from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
 import { CancelRequestRejectReasonTypeListService } from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
+import { BuyerRoleTypeListService } from '../../Customs/Services/StandardLists/BuyerRoleTypeListService';
 
 
 export class CachedDataManagerServices {
@@ -243,6 +244,7 @@ export class CachedDataManagerServices {
             case "Customs.LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
             case "Customs.ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
             case "Customs.ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
+            case "Customs.BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
 
 
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }

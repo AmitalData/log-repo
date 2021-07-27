@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
@@ -79,11 +80,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(ContainerizationPM entityPM, Containerization entityPOCO)
         {
+            entityPOCO.IsMultiExportFiles = false;
+            entityPOCO.IsMultiCustomers = false;
             if (String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
             {
                 entityPM.IsChange = false;
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
+            else
+            {
+                ContainerizationRepository containerizationRepository = new ContainerizationRepository(entityPM.Tenant);
+                var containerizationExportFiles = containerizationRepository.GetContainerizationExportFiles(entityPM.Tenant, entityPM.ConnectedDeclarations);
+                if (containerizationExportFiles.Count > 1)
+                {
+                    entityPOCO.IsMultiExportFiles = true;
+                }
+                var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
+                if (containerizationImporters.Count > 1)
+                {
+                    entityPOCO.IsMultiCustomers = true;
+                }
+            }
+
             base.OnUpdating(entityPM, entityPOCO);
         }
     }

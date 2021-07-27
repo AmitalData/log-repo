@@ -108,6 +108,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new BankMap());
 	
+            modelBuilder.Configurations.Add(new BuyerRoleTypeMap());
+	
             modelBuilder.Configurations.Add(new CancellationReasonRequestTypeMap());
 	
             modelBuilder.Configurations.Add(new CancellationRequestStatusMap());
@@ -1458,6 +1460,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<Bank> Banks 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BuyerRoleType> BuyerRoleTypes 
 	 {
 	      get; set;
 	 

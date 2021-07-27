@@ -146,6 +146,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BuyerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationReasonRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="EntityDataMappings\AutonomyRegionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutonomyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BankDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BuyerRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationReasonRequestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancellationRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CancelRequestRejectReasonTypeDataMapping.cs" />
@@ -525,6 +527,7 @@
     <Compile Include="EntityDataMappings\Generated\AutonomyRegionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutonomyTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BankDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BuyerRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationReasonRequestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancellationRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CancelRequestRejectReasonTypeDataMapping.Generated.cs" />
@@ -1048,6 +1051,7 @@
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BuyerRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
@@ -1582,6 +1586,7 @@
     <Compile Include="EntityUpdateServices\Generated\AmendmentFieldStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BuyerRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancelRequestRejectReasonTypeUpdateService.Generated.cs" />

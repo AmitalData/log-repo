@@ -20,6 +20,14 @@ namespace Logitude.Customs.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ClientId  { get; set; }
+       [DataMember]
+       public string PoaStatusName  { get; set; }
+       [DataMember]
+       public string PoaAuthorizationTypeName  { get; set; }
    }
 
 }

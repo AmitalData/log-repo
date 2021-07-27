@@ -322,7 +322,6 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
             else {
                 let messageWindow = new MessageWindow();
-                messageWindow.ShowSuccessIcon = true;
                 messageWindow.RTL = true;
                 let message = "עידכון בוצע בהצלחה, " + response.Result+" אישורים עודכנו ";
                 messageWindow.Show(message);
