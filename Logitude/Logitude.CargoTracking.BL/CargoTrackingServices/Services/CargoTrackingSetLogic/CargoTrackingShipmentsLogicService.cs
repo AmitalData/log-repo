@@ -330,7 +330,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetToWarehouseDone(DataRow tableRow)
         {
             tableRow.SetField("ToWarehouseDone", false);
-            if (tableRow["DirectionId"].Equals(importDirection))
+            if (tableRow["DirectionId"].Equals(importDirection) || tableRow["DirectionId"].Equals(customsDirection))
             {
                 if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDate"))
                 {
@@ -338,8 +338,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 }
 
             }
-
-
         }
 
         private static void SetClearanceDone(DataRow tableRow)
