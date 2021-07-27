@@ -304,7 +304,12 @@ export class ClientPM {
         }
     }
     //public ClientPoas: Array<ClientsPoaPM>= [];
- 
+     private isExportPoaActive: number;
+    public get IsExportPoaActive() { return this.isExportPoaActive; }
+    public set IsExportPoaActive(newValue: number) { if (this.isExportPoaActive != newValue) { this.isExportPoaActive = newValue; this.MarkAsDirty("IsExportPoaActive"); } }
+       
+	 
+
     public OldEntityPM: ClientPM;
 		
     public IsDirty: boolean;

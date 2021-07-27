@@ -208,6 +208,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsExportPoaActive"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ClientTypeSpecificCode"
     ReferencedTable="CustomerTypeGenerals"

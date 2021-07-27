@@ -930,7 +930,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClientPoas = value; }
 	    }
-	     }
+	  	  private int? isExportPoaActive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? IsExportPoaActive  
+	   {
+	    
+	     get
+		{
+		   return isExportPoaActive;
+		 }
+		 set
+		 {
+		   if(isExportPoaActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportPoaActive",OldValue=isExportPoaActive,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   isExportPoaActive=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
