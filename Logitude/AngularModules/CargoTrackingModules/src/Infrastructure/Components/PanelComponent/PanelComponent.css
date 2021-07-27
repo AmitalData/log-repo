@@ -20,7 +20,7 @@
       padding: 15px 30px 30px 30px;
   }
   .panel.transparent .header{
-    padding: 30px 0;
+    padding: 0px 0px 20px 0px;
   }
 
       .panel .header .title, .panel .details > .title{
