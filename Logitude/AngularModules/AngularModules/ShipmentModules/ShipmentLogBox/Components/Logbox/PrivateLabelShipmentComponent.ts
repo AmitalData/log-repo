@@ -1,7 +1,17 @@
 
-declare var window: any; 
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core'; 
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator'; 
+declare var window: any;
+
+import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
+import { TransportsFilter } from '../../../../Controls/TransportsFilter'; 
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SearchTextBox } from '../../../../Controls/SearchTextBox';
+import { IconButton } from '../../../../Controls/IconButton';
+import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
 import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
 import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -66,7 +76,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
 
-        this.IsDSVTenant =  SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
 
         if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
@@ -422,10 +432,6 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     UnAssignedPackageTypeId: string = '';
     SetWindowArgs(args: any) {
         //this.ShipmentList = args.SelectedShipment;
-        this.SetCustomsShipmentArgs(args);
-    }
-
-    public SetCustomsShipmentArgs(args: any) {
         this.IsNew = args.IsNew;
         this._PackageTypeListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
@@ -933,8 +939,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this.EntityPM.DirectionId = "C";
                 this.EntityPM.ShipmentLevelCode = "A";
                 this.EntityPM.OrderIsDangerouseGoods = false;
-                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc(); 
-                this.EntityPM.CustomerId =SessionLocator.TenantPM.CustomerId;
+                this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
+                this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;

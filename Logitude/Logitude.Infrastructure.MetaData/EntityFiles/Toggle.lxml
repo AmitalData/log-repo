@@ -567,6 +567,13 @@
       Name="&quot;Quotes DWH&quot;"
       SearchFields="&quot;BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen&quot;"
       Description="&quot;Allow Tenants to Show Quotes Fact on the BI Report Screen&quot;" />
+
+    <Record
+      Code="&quot;PLE&quot;"
+      Name="&quot;PL Export Shipments&quot;"
+      SearchFields="&quot;PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label&quot;"
+      Description="&quot;Allow to Create New Air Shipment From Private Label&quot;" />
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
