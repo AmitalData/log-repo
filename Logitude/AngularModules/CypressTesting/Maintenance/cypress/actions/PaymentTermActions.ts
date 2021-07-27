@@ -96,12 +96,14 @@ function AssertPaymentTermGetSingle() {
 }
 
 export function EditPaymentTermGeneralTab(paymentTermDetails: PaymentTermDetails) {
+    cy.FillLogTextBox(PaymentTermsSelectors.Description, "   ");
     cy.FillLogTextBox(PaymentTermsSelectors.Description, paymentTermDetails.Description);
     cy.FillLogTextBox(PaymentTermsSelectors.LocalDescription, paymentTermDetails.LocalDescription);
-    cy.ClickCheckBox(PaymentTermsSelectors.InActiveCheckBox)
+    Actions.FillCheckBoxProcess(PaymentTermsSelectors.InActiveCheckBox, paymentTermDetails.InactiveCheckBox)
 }
 
 export function FillPaymentTermAccountingTab(paymentTermDetails: PaymentTermDetails) {
+    cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, "   ");
     cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, paymentTermDetails.AccountingExternalID);
 }
 

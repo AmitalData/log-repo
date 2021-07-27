@@ -330,6 +330,7 @@
     </None>
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivablesOpenLines.sxml" />
@@ -520,6 +521,7 @@
     <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
     <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
@@ -916,6 +918,7 @@
     <None Include="DBTables\InvoiceModel\APPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\APPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoice.dxml" />
+    <None Include="DBTables\InvoiceModel\ARInvoiceChargesConstraint.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceEntity.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLine.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLineAction.dxml" />

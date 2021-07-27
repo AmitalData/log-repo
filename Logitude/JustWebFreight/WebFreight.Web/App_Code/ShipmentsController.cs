@@ -1620,6 +1620,7 @@ namespace WebFreight.Web
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
                     item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2;
                     item.PartnerType = "Notify 1";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2422,6 +2423,7 @@ namespace WebFreight.Web
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
                     item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2;
                     item.PartnerType = "Notify 1";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -3457,6 +3459,7 @@ namespace WebFreight.Web
                 AddressId = shipment.Notify1AddressId,
                 ContactId = shipment.Notify1ContactId,
                 Reference1 = shipment.Notify1Reference,
+                Reference2 = shipment.Notify1Reference2,
                 IsShared = setting.IsNotify1Shared
             });
 

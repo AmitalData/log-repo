@@ -577,10 +577,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.UpdateExtendedTasksDueDate();
 
                 // Produce shipment update msg
-                if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
-                {
+                //if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
+                //{
                     AddShipmentUpdateKafkaQueueMessage("CToolShipmentsUpdate");
-                }
+                //}
                  
                 scope.Complete();
                 #endregion

@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                     var listTransactionId = journalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                     if (listTransactionId.Count > 0)
                     {
-                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, false);
+                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, true);
                     }
 
                 }
@@ -79,14 +79,14 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                     var listTransactionId = journalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
                     if (listTransactionId.Count > 0)
                     {
-                        myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, journalPM.Tenant, false);
+                        myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, journalPM.Tenant, true);
                     }
 
                     var listReconcileExternalPageLineId = journalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
                     if (listReconcileExternalPageLineId.Count > 0)
                     {
                         var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
-                        reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, journalPM.Tenant, false);
+                        reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, journalPM.Tenant, true);
                     }
                 }
 
@@ -102,7 +102,7 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
 
                 }
                 var journalUpdateService= new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
-                journalUpdateService.Update(journalPM,false);
+                journalUpdateService.Update(journalPM,true);
                 accountingContext.SaveChanges();
                 scope.Complete();
 

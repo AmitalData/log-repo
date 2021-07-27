@@ -795,5 +795,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints => throw new NotImplementedException();
     }
 }

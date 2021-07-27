@@ -188,6 +188,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.SalesmanUserId)
                 .HasMaxLength(15);
 
+            this.Property(t => t.HandlerUserId)
+                .HasMaxLength(15);
+
             this.Property(t => t.IncotermId)
                 .HasMaxLength(15);
 
@@ -606,6 +609,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.MainCarriageToCity).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.LastFinalDestination).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Notify1Reference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.Notify1Reference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
@@ -1024,6 +1028,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ActualFinalArrivalDate).HasColumnName("ActualFinalArrivalDate");
             this.Property(t => t.INTTRALastStatusDate).HasColumnName("INTTRALastStatusDate");
             this.Property(t => t.Notify1Reference).HasColumnName("Notify1Reference");
+            this.Property(t => t.Notify1Reference2).HasColumnName("Notify1Reference2");
             this.Property(t => t.Notify2Reference).HasColumnName("Notify2Reference");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
@@ -1044,6 +1049,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnForwardingATA).HasColumnName("OnForwardingATA");
             this.Property(t => t.OnForwardingATD).HasColumnName("OnForwardingATD");
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
+            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
+            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
+            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
         }
     }
 }

@@ -96,6 +96,11 @@ using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using WebFreight.Web.Security;
 using Logitude.Accounting.Data.DataContract;
+using System.Xml.Serialization;
+using WebFreight.Web.Helpers.Analyzers;
+using Syncfusion.XlsIO;
+using System.Data;
+using System.ComponentModel;
 
 namespace Logitude.Update
 {
@@ -147,18 +152,18 @@ namespace Logitude.Update
             LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
             LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
 
-                //if (LogitudeSettings.IsCostomsDeploy) 
-                LogitudeSettings.ABMProductId = setting.ABMProductId;
-                LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                //if (LogitudeSettings.IsCostomsDeploy)
-                {
-                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
-                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-                }
-                string storageServiceMode = "fs";
-                string queueServiceMode = "azure";
-                Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
+            //if (LogitudeSettings.IsCostomsDeploy) 
+            LogitudeSettings.ABMProductId = setting.ABMProductId;
+            LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+            //if (LogitudeSettings.IsCostomsDeploy)
+            {
+                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+            }
+            string storageServiceMode = "fs";
+            string queueServiceMode = "azure";
+            Logitude.Server.Tools.ContainerAccessor.InitContainer();
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
@@ -455,13 +460,13 @@ User/Pass",
 
 
             //LoggedContactResolver.RegisterLoggedContactUtil();
-           
+
             //RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
             //    ratesUpdateService.ReadXML();
             //    ratesUpdateService.ValidateRatesDataMapping();
-           
+
             //ratesUpdateService.UpdateRatesData();
-            
+
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -845,7 +850,7 @@ User/Pass",
             }
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
 
-            
+
 
         }
 
@@ -2973,7 +2978,7 @@ User/Pass",
                             if (myCount == 1000)
                             {
                                 myCommonContext.SaveChanges();
-                                SaveCardSearches(cardIds , entityCard.Tenant);
+                                SaveCardSearches(cardIds, entityCard.Tenant);
                                 cardIds = new List<string>();
                                 myCount = 0;
                             }
@@ -2990,7 +2995,7 @@ User/Pass",
             }
         }
 
-        private void SaveCardSearches(List<string> cardIds , int tenant)
+        private void SaveCardSearches(List<string> cardIds, int tenant)
         {
             foreach (string cardId in cardIds)
             {
@@ -3756,7 +3761,7 @@ User/Pass",
                             select a).FirstOrDefault();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() },  }, item.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, }, item.Tenant);
             }
         }
 
@@ -4282,7 +4287,7 @@ User/Pass",
             }
         }
 
-        private void UploadCitiesMethod(StreamReader streamReader,int tenant)
+        private void UploadCitiesMethod(StreamReader streamReader, int tenant)
         {
             List<CityDataItem> AllDataLines = new List<CityDataItem>();
 
@@ -4298,7 +4303,7 @@ User/Pass",
                     string cityName = this.GetText(lineParts, 1);
                     string countryCode = this.GetText(lineParts, 2);
                     string stateCode = this.GetText(lineParts, 3);
-                   
+
                     if (cityCode != null)
                     {
                         cityCode = cityCode?.ToUpper();
@@ -4328,7 +4333,7 @@ User/Pass",
 
         string missedCountriesState = "";
         int countryCityCount = 0;
-        private void RunUploadCities(List<CityDataItem> allDataLines , int tenant)
+        private void RunUploadCities(List<CityDataItem> allDataLines, int tenant)
         {
             if (allDataLines.Count > 0)
             {
@@ -4338,9 +4343,9 @@ User/Pass",
                 stopWatch.Start();
 
                 //TenantRepository tenantRep = new TenantRepository(0);
-               // Tenant tenant = tenantRep.GetSingleByTenant(tenantNumber);
+                // Tenant tenant = tenantRep.GetSingleByTenant(tenantNumber);
                 this.AddCitiesByTenant(allDataLines, tenant);
-              
+
 
                 stopWatch.Stop();
                 if (!string.IsNullOrEmpty(missedCountriesState))
@@ -4396,8 +4401,8 @@ User/Pass",
             }
             myCommonContext.SaveChanges();
         }
-        
-        private void AddEditCounrtyCity(ICommonDataContext myCommonContext ,CityDataItem item, int tenant , string countryId , string stateId)
+
+        private void AddEditCounrtyCity(ICommonDataContext myCommonContext, CityDataItem item, int tenant, string countryId, string stateId)
         {
             CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == countryId && p.StateId == stateId).FirstOrDefault();
             if (newCity == null)
@@ -4443,7 +4448,7 @@ User/Pass",
                 myCommonContext.States.Add(state);
             }
 
-            state  = myCommonContext.States.Where(p => p.Code == "09" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            state = myCommonContext.States.Where(p => p.Code == "09" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
             if (state == null)
             {
                 state = new State()
@@ -4475,7 +4480,7 @@ User/Pass",
                 myCommonContext.States.Add(state);
             }
 
-            state  = myCommonContext.States.Where(p => p.Code == "30" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            state = myCommonContext.States.Where(p => p.Code == "30" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
             if (state == null)
             {
                 state = new State()
@@ -4519,14 +4524,14 @@ User/Pass",
         private void CargoTrackingTestBtn_Click(object sender, EventArgs e)
         {
             ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
-         }
+        }
 
         private void citiesTextBox_TextChanged(object sender, EventArgs e)
         {
-         
+
         }
 
-       
+
 
         private void button51_Click_1(object sender, EventArgs e)
         {
@@ -4615,7 +4620,7 @@ User/Pass",
                     {
                         packageName = packageName.Substring(0, 40);
                     }
-                    allPackagesTypes.Add(new { Code = packageCode, Name = packageName});
+                    allPackagesTypes.Add(new { Code = packageCode, Name = packageName });
                 }
             }
             allPackagesTypes.Remove(allPackagesTypes[0]);
@@ -4695,11 +4700,11 @@ User/Pass",
         }
 
         private void button6_Click_1(object sender, EventArgs e)
-        {            
+        {
             LoggedContactResolver.RegisterLoggedContactUtil();
-            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16( textBox2.Text));
+            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16(textBox2.Text));
             ratesUpdateService.UpdateRatesByExternalXML();
-         
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -4733,7 +4738,7 @@ User/Pass",
             timer2.Enabled = true;
             timer2.Start();
 
-             JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
+            JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
             journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("input");
             label13.Visible = true;
             timer2.Stop();
@@ -4748,6 +4753,180 @@ User/Pass",
             journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("output");
             label14.Visible = true;
 
+        }
+
+        List<ExcelOceanInsightStatistics> oceanInsightStatisticsSheet;
+        private void OIStatisticsButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => this.RunOIStatisticsStatistics());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void RunOIStatisticsStatistics()
+        {
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Reading...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            oceanInsightStatisticsSheet = new List<ExcelOceanInsightStatistics>();
+            ICommonDataContext context = CommonDataContext.GetContext(0);
+
+            var communications = (from a in context.CommunicationLogs
+                                  where a.Subject == "Ocean Insights Status"
+                                  select a).ToList();
+
+           
+            foreach (var communicationLog in communications)
+            {
+                DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant);
+            }
+
+            CreateWorkSheetHeaders_OceanInsightStatistics(sheet1);
+            workbook.SaveAs(@"C:\Users\DELL\OneDrive\Desktop\OIStatistics.xls");
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(OIStatisticslabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(OIStatisticslabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void CreateWorkSheetHeaders_OceanInsightStatistics(IWorksheet workSheet)
+        {
+            var range = "A1:F1";
+            workSheet.Name = "Ocean Insight Statistics";
+            workSheet.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            workSheet.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            workSheet.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            workSheet.Range[range].ColumnWidth = 25;
+            DataTable dataTable2 = this.ConvertToDataTable(oceanInsightStatisticsSheet);
+            workSheet.ImportDataTable(dataTable2, true, 1, 1);
+        }
+
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    if (table.Columns.Contains(prop.Name))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
+
+        public void DeserializeDocumentBody(string documentId, int tenant)
+        {
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
+            {
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+
+                byte[] fileData = storageservice.Read(fileInfo);
+                if (fileData != null)
+                {
+                    MemoryStream memorystream = new MemoryStream(fileData);
+                    XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
+                    var externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
+                    AnalyzeOceanInsightsParametersXML(externalTasksQueues);
+                }
+            }
+        }
+
+        private void AnalyzeOceanInsightsParametersXML(ArrayOfQueueTask externalTasksQueues)
+        {
+            var oceanInsightsQueueTask = externalTasksQueues.QueueTask.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
+            if (oceanInsightsQueueTask != null)
+            {
+                var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
+                if (oceanInsightsParameters != null)
+                {
+                    var value = oceanInsightsParameters.Value;
+                    this.ReadOceanInsightsParametersXMLFields(value);
+                }
+            }
+        }
+
+        private void ReadOceanInsightsParametersXMLFields(string value)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(value);
+            XmlNodeList xnList = xmlDoc.SelectNodes("//container");
+
+
+            foreach (XmlNode xn in xnList)
+            {
+                string createdDate = null;
+                string container_number = null;
+                string carrier_scac = null;
+                string departureLocation = null;
+                string destinationLocation = null;
+
+                foreach (XmlNode node in xn.ChildNodes)
+                {
+                    
+                    if (node.ChildNodes != null && node.Name == "event")
+                    {
+                        createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
+                    }
+
+                    if (node.ChildNodes != null && node.Name == "shipment")
+                    {
+                        container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+                        carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
+                        XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
+                        XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
+                        if (departureLocationElement != null)
+                        {
+                            departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+
+                        if (destinationLocationElement != null)
+                        {
+                            destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                    }
+
+                }
+
+                oceanInsightStatisticsSheet.Add(new ExcelOceanInsightStatistics()
+                {
+                    ContainerNumber = container_number,
+                    CarrierScac = carrier_scac,
+                    CreateDate = createdDate,
+                    DepartureLocation = departureLocation,
+                    DestinationLocation = destinationLocation
+                });
+            }
         }
     }
 
@@ -4821,5 +5000,15 @@ User/Pass",
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
         
+    }
+
+    public class ExcelOceanInsightStatistics
+    {
+        public string CreateDate { get; set; }
+        public string ContainerNumber { get; set; }
+        public string CarrierScac { get; set; }
+        public string DepartureLocation { get; set; }
+        public string DestinationLocation { get; set; }
+
     }
 }

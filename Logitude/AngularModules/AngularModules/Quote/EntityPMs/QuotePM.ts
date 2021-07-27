@@ -968,6 +968,16 @@ export class QuotePM {
     public set ToLocation(newValue: string) { if (this.toLocation != newValue) { this.toLocation = newValue; this.MarkAsDirty("ToLocation"); } }
        
 	 
+    private fromLocationIncludeCountry: string;
+    public get FromLocationIncludeCountry() { return this.fromLocationIncludeCountry; }
+    public set FromLocationIncludeCountry(newValue: string) { if (this.fromLocationIncludeCountry != newValue) { this.fromLocationIncludeCountry = newValue; this.MarkAsDirty("FromLocationIncludeCountry"); } }
+       
+	 
+    private toLocationIncludeCountry: string;
+    public get ToLocationIncludeCountry() { return this.toLocationIncludeCountry; }
+    public set ToLocationIncludeCountry(newValue: string) { if (this.toLocationIncludeCountry != newValue) { this.toLocationIncludeCountry = newValue; this.MarkAsDirty("ToLocationIncludeCountry"); } }
+       
+	 
     private isPotentialShipper: boolean;
     public get IsPotentialShipper() { return this.isPotentialShipper; }
     public set IsPotentialShipper(newValue: boolean) { if (this.isPotentialShipper != newValue) { this.isPotentialShipper = newValue; this.MarkAsDirty("IsPotentialShipper"); } }
@@ -1196,6 +1206,16 @@ export class QuotePM {
     private notifyNote: string;
     public get NotifyNote() { return this.notifyNote; }
     public set NotifyNote(newValue: string) { if (this.notifyNote != newValue) { this.notifyNote = newValue; this.MarkAsDirty("NotifyNote"); } }
+       
+	 
+    private notifyReference1: string;
+    public get NotifyReference1() { return this.notifyReference1; }
+    public set NotifyReference1(newValue: string) { if (this.notifyReference1 != newValue) { this.notifyReference1 = newValue; this.MarkAsDirty("NotifyReference1"); } }
+       
+	 
+    private notifyReference2: string;
+    public get NotifyReference2() { return this.notifyReference2; }
+    public set NotifyReference2(newValue: string) { if (this.notifyReference2 != newValue) { this.notifyReference2 = newValue; this.MarkAsDirty("NotifyReference2"); } }
        
 	 
     private notifyAddress1: string;

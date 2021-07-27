@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -22,7 +22,7 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
     templateUrl: './AWBPackagesTabComponent.html',
 })
 
-export class AWBPackagesTabComponent extends BaseComponent {
+export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
     public EntityPM: ShipmentPM;
     public Wizard: AWBWizardComponent;
     public DataContext: AWBPackagesTabComponent = this;
@@ -40,6 +40,10 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.DomainService = new ShipmentDomainService();
         this.ItemsSource = [];
         this.ItemsSourceOfCommodities = new ObservableCollection([]);      
+    }
+
+    ngOnDestroy() {
+
     }
 
     InitTab(wizard: AWBWizardComponent) {

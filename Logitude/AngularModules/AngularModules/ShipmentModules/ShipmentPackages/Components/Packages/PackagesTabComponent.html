@@ -619,7 +619,7 @@
                                     </log-column>
 
                                     <!-- Last Status -->
-                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsLastStatusVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="height: 100%; width: 100%;">
@@ -630,7 +630,7 @@
                                     </log-column>
 
                                     <!-- Icon:HasContainerException -->
-                                    <log-column [width]="'25'" *ngIf="IsShippingInstructionsVisible">
+                                    <log-column [width]="'25'" *ngIf="IsLastStatusVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers" />

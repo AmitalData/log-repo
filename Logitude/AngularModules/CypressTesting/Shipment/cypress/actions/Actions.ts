@@ -88,6 +88,13 @@ export function FillShipmentWizardsFields(shipmentDetails: ShipmentDetails) {
     }
 }
 
+export function FillShipmentCustomFields(shipmentDetails: ShipmentDetails) {
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePickUp)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludeDelivery)
+    cy.FillLogLov(ShipmentSelectors.ShipmentConsignee, shipmentDetails.Consignee, false)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentDescriptionOfGoods, shipmentDetails.DescriptionOfGoods)
+}
+
 export function CreateShipment(shipmentLevel: string) {
     let createSelector = Conditions.IsMaster(shipmentLevel) ? ShipmentSelectors.CreateMasterShipmentButton : ShipmentSelectors.CreateShipmentButton;
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
@@ -601,7 +608,17 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
 export function CopyShipment(shipmentLevel: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true)
     cy.Click(ShipmentSelectors.CopyShipmentButton, null)
+    CheckBoxesInCopyShipmentWizerd()
     CreateShipment(shipmentLevel);
+}
+
+export function CheckBoxesInCopyShipmentWizerd() {
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePickUpCheckBox)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludeDeliveryCheckBox)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludeFlightsCheckBox)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentPreCarriageCheckBox)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentOnCarriageCheckBox)
+    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePackagesCheckBox)
 }
 //#endregion
 //#region Update Closed Shipment

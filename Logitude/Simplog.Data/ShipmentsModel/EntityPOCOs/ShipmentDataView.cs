@@ -295,6 +295,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Notify1AddressId { get; set; }
         public string Notify1ContactId { get; set; }
         public string Notify1Reference { get; set; }
+        public string Notify1Reference2 { get; set; }
         public string Notify1Name { get; set; }
         public string Notify1Note { get; set; }
 
@@ -732,5 +733,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPartnerId { get; set; }
         public string FreightLocationId { get; set; }
         public bool IsHTSMissing { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+
     }
 }

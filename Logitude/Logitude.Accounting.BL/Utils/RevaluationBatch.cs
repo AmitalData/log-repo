@@ -75,6 +75,37 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
+        public void RunOneRevaluation(int tenant, string revaluationId)
+
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+
+
+            RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
+            List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(tenant);
+            if (revaluations != null)
+            {
+                bool no_open = true;
+                foreach (RevaluationList rev in revaluations)
+                {
+                    if (rev != null && rev.Id == revaluationId)
+                    {
+                        no_open = false;
+                        RunOneRevaluation(rev.Id, tenant);
+                        break;
+                    }
+                }
+                if (no_open)
+                {
+                    bool useLocal = true;
+                    string errorMessage = TranslateTextsClassTranslate("Revaluations.Q.NotOpen", 0, useLocal);
+                    if (String.IsNullOrEmpty(errorMessage)) errorMessage = "Revaluation is not open";
+                    _ResponseText = errorMessage;
+                    _StatusCode = HttpStatusCode.InternalServerError;
+                }
+            }
+        }
+
 
         public void RunOneRevaluation(string id, int tenant)
         {

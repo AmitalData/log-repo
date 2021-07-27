@@ -96,11 +96,6 @@ Given("add {string} to External ID in Accounting Tab", (accountingExternalID) =>
     BranchActions.FillAccountingExternalID(accountingExternalID)
 });
 
-Given("the user Inactivate the Branch", () => {
-    cy.Navigate(BranchSelectors.GeneralTab);
-    BranchActions.CheckInactiveBox()
-});
-
 When("save branch", () => {
     BranchActions.EditBranch();
 });

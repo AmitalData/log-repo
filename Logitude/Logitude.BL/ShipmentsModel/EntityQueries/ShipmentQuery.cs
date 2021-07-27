@@ -2520,6 +2520,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.INTTRABookingTransStatusName = iNTTRABookingTransStatusRepository.GetSingleINTTRABookingTransStatus(shipmentPM.INTTRABookingTransStatusCode).Name;
 
             shipmentPM.Notify1Reference = shipment.Notify1Reference;
+            shipmentPM.Notify1Reference2 = shipment.Notify1Reference2;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
@@ -11140,6 +11141,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DangerousUnNumber = view.DangerousUnNumber,
                         IsStandalonePickupDelivery = view.IsStandalonePickupDelivery,
                         IsHTSMissing = view.IsHTSMissing,
+                        PlannedCargoReadyDate = view.PlannedCargoReadyDate,
+                        ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
+                        HandlerUserId = view.HandlerUserId,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12317,6 +12321,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FirstPickupETD = f.FirstPickupETD,
                                INTTRALastStatusDate = f.INTTRALastStatusDate,
                                Notify1Reference = f.Notify1Reference,
+                               Notify1Reference2 = f.Notify1Reference2,
                                Notify2Reference = f.Notify2Reference,
                                ShipperNotExporterReference = f.ShipperNotExporterReference,
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
@@ -12349,6 +12354,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                PreForwardingETD = f.PreForwardingETD,
                                IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                                IsHTSMissing = f.IsHTSMissing,
+                               PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                               ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                               HandlerUserId = f.HandlerUserId,
                            };
             return myResult;
         }
@@ -12685,6 +12693,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FirstPickupETD = f.FirstPickupETD,
                     INTTRALastStatusDate = f.INTTRALastStatusDate,
                     Notify1Reference = f.Notify1Reference,
+                    Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
@@ -12712,6 +12721,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PreForwardingETD = f.PreForwardingETD,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                     IsHTSMissing = f.IsHTSMissing,
+                    PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                    ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                    HandlerUserId = f.HandlerUserId,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12956,6 +12968,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FirstPickupETD = f.FirstPickupETD,
                     INTTRALastStatusDate = f.INTTRALastStatusDate,
                     Notify1Reference = f.Notify1Reference,
+                    Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
@@ -12976,6 +12989,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     BookingConfirmationNumber = f.BookingConfirmationNumber,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                     IsHTSMissing = f.IsHTSMissing,
+                    PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                    ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                    HandlerUserId = f.HandlerUserId,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

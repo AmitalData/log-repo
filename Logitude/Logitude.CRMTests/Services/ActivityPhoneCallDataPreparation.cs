@@ -34,7 +34,7 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode("Normal")
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("CL")
-                .CallWithId(new ActivityPhoneCallServices().GetDefaultContact())
+                .CallWithId(UserTenant.UserId)
                 .Build();
         }
 

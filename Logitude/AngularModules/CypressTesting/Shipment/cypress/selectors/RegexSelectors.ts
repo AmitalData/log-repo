@@ -60,15 +60,15 @@ export class RegexSelectors {
     }
 
     public static BranchINTTRAId(branchName: string){
-        return "[data-cy='" + branchName + "_INTTRAId'] #Branch_INTTRAId";
+        return "[data-cy='" + branchName + "_INTTRAId'] input[id^='Branch_INTTRAId']";
     }
 
     public static BranchINTTRAAlias(branchName: string){
-        return "[data-cy='" + branchName + "_INTTRAAlias'] #Branch_INTTRAAlias";
+        return "[data-cy='" + branchName + "_INTTRAAlias'] input[id^='Branch_INTTRAAlias']";
     }
 
     public static BranchINTTRAContact(branchName: string){
-        return "[data-cy='" + branchName + "_INTTRAContact'] #Branch_INTTRAContactId";
+        return "[data-cy='" + branchName + "_INTTRAContact'] input[id^='Branch_INTTRAContactId']";
     }
 
     public static INTTRARegistrationCheckBox(branchName: string, registrationCode: string){

@@ -34,7 +34,6 @@ Feature: Multi Vat Type fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the multi vat type
         Given the user fill the following multi vat type General details
-            | InActive         | YES                   |
             | Description      | New Description       |
             | LocalDescription | Local New Description |
         And fill the following multi vat type Accounting details

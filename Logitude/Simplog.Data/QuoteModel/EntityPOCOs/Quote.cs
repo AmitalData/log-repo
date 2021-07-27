@@ -183,7 +183,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string NotifyAddressId { get; set; }
         public string NotifyContactId { get; set; }
         public int? NumberOfFollowUps { get; set; }
-        
+        public string NotifyReference1 { get; set; }
+        public string NotifyReference2 { get; set; }
         public string QuoteHTMLDocumentId { get; set; }
         
         public virtual Card NotifyCard { get; set; }

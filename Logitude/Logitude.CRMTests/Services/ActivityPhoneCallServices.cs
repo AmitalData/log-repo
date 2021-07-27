@@ -26,15 +26,8 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode((string)dataTable.Priority)
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("CL")
-                .CallWithId(GetDefaultContact())
+                .CallWithId(UserTenant.UserId)
                 .Build();
-        }
-
-        public string GetDefaultContact()
-        {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
-            ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
         }
 
         public ActivityPM UpdateInstance(Table appointmentTable, ActivityPM activity)

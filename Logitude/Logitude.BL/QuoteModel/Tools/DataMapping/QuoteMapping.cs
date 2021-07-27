@@ -174,6 +174,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.LastStageDate = entityPM.LastStageDate;
             entityPoco.QuotationSections = entityPM.QuotationSections;
             entityPoco.NotifyId = entityPM.NotifyId;
+            entityPoco.NotifyReference1 = entityPM.NotifyReference1;
+            entityPoco.NotifyReference2 = entityPM.NotifyReference2;
             entityPoco.NotifyAddressId = entityPM.NotifyAddressId;
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;

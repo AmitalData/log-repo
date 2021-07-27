@@ -524,5 +524,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MasterDate { get; set; }
         public string UserDepartment { get; set; }
 
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string Handler { get; set; }
+
     }
 }

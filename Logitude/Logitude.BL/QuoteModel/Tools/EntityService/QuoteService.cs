@@ -858,6 +858,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.NotifyContactId = null;
                 entityPM.NotifyAddressId = null;
                 entityPM.NotifyNote = null;
+                entityPM.NotifyReference1 = null;
+                entityPM.NotifyReference2 = null;
             }
 
             if (string.IsNullOrEmpty(entityPM.CustomerId))

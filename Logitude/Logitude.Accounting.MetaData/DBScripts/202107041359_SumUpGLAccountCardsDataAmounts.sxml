@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting" AOT="false">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
  
 

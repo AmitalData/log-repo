@@ -14,6 +14,7 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -37,6 +38,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         if (this.EntityPM) {
             this.ShowHideShippingInstructionsButton();
             this.ShowHideShipmentContainersSimulatorButton();
+            this.SetIsShipmentContainersVisible();
             this.ShowHideSendBookingButton();
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
@@ -238,6 +240,16 @@ export class ShipmentHelperComponent implements OnDestroy {
             if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
                 this.IsShipmentContainersSimulatorVisible = true;
             }
+        }
+    }
+
+    public IsShipmentContainersVisible: boolean = false;
+    private SetIsShipmentContainersVisible() {
+        this.IsShipmentContainersVisible = false;
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+        if (featureToggle && isFCLEntity && this.EntityPM.TransportModeId == "O") {
+            this.IsShipmentContainersVisible = true;
         }
     }
 

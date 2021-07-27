@@ -1929,6 +1929,13 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
+    get Notify1Reference2() { return this.EntityPM.Notify1Reference2; }
+    set Notify1Reference2(value: string) {
+        if (this.EntityPM.Notify1Reference2 != value) {
+            this.EntityPM.Notify1Reference2 = value;
+        }
+    }
+
     get Notify2Reference() { return this.EntityPM.Notify2Reference; }
     set Notify2Reference(value: string) {
         if (this.EntityPM.Notify2Reference != value) {
@@ -1960,6 +1967,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT":
             case "REAGT":
             case "CSTMR":
+            case "NOTF1":
                 {
                     myResult = true;
                 }
@@ -1974,6 +1982,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return "AgentReference2"; }
             case "CSTMR": { return "CustomerReference2"; }
             case "REAGT": { return "ReleasingAgentReference2"; }
+            case "NOTF1": { return "Notify1Reference2"; }
             default: { return null; }
         }
     }
@@ -1984,6 +1993,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return this.AgentReference2; }
             case "CSTMR": { return this.CustomerReference2; }
             case "REAGT": { return this.ReleasingAgentReference2; }
+            case "NOTF1": { return this.Notify1Reference2; }
             default: { return null; }
         }
     }
@@ -1994,6 +2004,7 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { this.AgentReference2 = newValue; break; }
             case "CSTMR": { this.CustomerReference2 = newValue; break; }
             case "REAGT": { this.ReleasingAgentReference2 = newValue; break; }
+            case "NOTF1": { this.Notify1Reference2 = newValue; break; }
         }
     }
 

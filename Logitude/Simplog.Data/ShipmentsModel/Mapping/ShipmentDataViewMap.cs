@@ -159,6 +159,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipmentTypeId).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DepartmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.HandlerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IncotermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
@@ -351,6 +352,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.MainCarriageToCity).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.LastFinalDestination).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Notify1Reference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.Notify1Reference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
@@ -815,6 +817,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");
             this.Property(t => t.INTTRALastStatusDate).HasColumnName("INTTRALastStatusDate");
             this.Property(t => t.Notify1Reference).HasColumnName("Notify1Reference");
+            this.Property(t => t.Notify1Reference2).HasColumnName("Notify1Reference2");
             this.Property(t => t.Notify2Reference).HasColumnName("Notify2Reference");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
@@ -854,6 +857,10 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.MainCarriageFromPartnerId).HasColumnName("MainCarriageFromPartnerId");
             this.Property(t => t.MainCarriageToPartnerId).HasColumnName("MainCarriageToPartnerId");
             this.Property(t => t.FreightLocationId).HasColumnName("FreightLocationId");
+            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
+            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
+            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
+
         }
     }
 }

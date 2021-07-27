@@ -635,9 +635,12 @@ export function ValidateWidthErrorMesseage() {
 
 export function DragAndDropFields(fieldDetails: QuoteTemplateDetails[]) {
     for (let i = 0; i < fieldDetails.length; i++) {
+        cy.wait(3000)
         cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
+        cy.wait(3000)
     }
 }
+
 export function EditLabelField(labelToEdit: string, newFieldValue: string) {
     if (labelToEdit == "Shipper Name") {
         EditShipperNameLabelField(labelToEdit, newFieldValue)
@@ -646,6 +649,7 @@ export function EditLabelField(labelToEdit: string, newFieldValue: string) {
         EditCustomerLabelField(labelToEdit, newFieldValue)
     }
 }
+
 export function EditCustomerLabelField(labelToEdit: string, newFieldValue: string) {
     cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
     cy.Click(MaintenanceSelectors.LabelDiv(labelToEdit), null);
@@ -1839,6 +1843,7 @@ export function AssertShippingAgentContact(conatactDetails: ContactDetails) {
 }
 export function FillShippingAgentGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.ShippingAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.ShippingAgentNotes, Notes)
 }
 export function FillShippingAgentBillingTab(shippingAgentBillingTabDetails: CardBillingTabDetails) {
@@ -1907,6 +1912,7 @@ export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
 }
 export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
@@ -1997,6 +2003,7 @@ export function AssertTruckerContact(conatactDetails: ContactDetails) {
 }
 export function FillTruckerGenaralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.TruckerGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.TruckerNotes, Notes)
 }
 export function FillTruckerBillingTab(truckerBillingTabDetails: CardBillingTabDetails) {

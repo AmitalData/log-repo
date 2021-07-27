@@ -423,6 +423,7 @@ export class ShipmentList {
 		INTTRABookingError: string;
 		INTTRALastBookingResponse: string;
 		Notify1Reference: string;
+		Notify1Reference2: string;
 		Notify2Reference: string;
 		ShipperNotExporterReference: string;
 		ConsigneeNotImporterReference: string;

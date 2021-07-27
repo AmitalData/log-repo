@@ -225,7 +225,7 @@
                     <tr style="height: 140px;">
                         <td></td>
                         <td style="width: 1024px; text-align: center; vertical-align: top;">
-                            <img id="loginlogo" width="290" height="114" style="margin-top: 50px;" src="images/LoginScreen/header.jpg" />
+                            <img id="loginlogo" width="290" height="114" style="margin-top: 50px;" [src]="LoginLogo" />
                         </td>
                         <td></td>
                     </tr>
@@ -435,7 +435,14 @@
 
     <script type="text/javascript">
 
+
          var x =  window.sessionStorage.getItem("PasswordChange");
+         var LoginLogo = ""; //"images/LoginScreen/header.jpg"; 
+         var IsLogitude = window.location.href.indexOf("logitudeworld") > -1
+
+        if (IsLogitude == true) {
+          $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
+        }  
 
          if (x == "ShowLink") {
              window.sessionStorage.setItem("PasswordChange", "");
@@ -443,12 +450,7 @@
            
          } else document.getElementById("BackToLogin").style.display = "none";
         var url = window.location.href;
-         
-        var IsLogitude = url.indexOf("logitudeworld") > -1
-
-        if (IsLogitude == false) {
-            $("#loginlogo").attr("src", "");
-        }
+        
 
 
         //var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;

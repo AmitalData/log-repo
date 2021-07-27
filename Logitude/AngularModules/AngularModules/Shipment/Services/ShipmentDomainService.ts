@@ -598,6 +598,18 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
+    DisconnectStandaloneShipment(shipmentId: string) {
+        var url = this._apiUrl + '/GetDisconnectStandaloneShipment?shipmentId=' + shipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapFlightSummary(jsonList: any) {
         var entityList: FlightSummary;
         entityList = new FlightSummary();

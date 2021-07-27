@@ -35,18 +35,19 @@ namespace WebFreight.Web.Helpers
         {
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
-            if (!string.IsNullOrEmpty(brandingTenant))
-                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(brandingTenant));
+            if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
+                tenantManagementPM = tenantManagementQuery.GetSinglePM(Int32.Parse(resetPasswordParameters.BrandingTenant));
 
             string reqNumber = GetResetRequestNumber();
             EmailMessageParams emailMessageParams = GetEmailMessageParams();
             TenantManagmentPrivateLabelsPM privatelabel = null;
-             
-            string LogitudeURL = LogitudeSettings.LogitudeURL;
-            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
-             
 
-            if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+            string LogitudeURL = LogitudeSettings.LogitudeURL;
+            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);           
+
+            if (LogitudeSettings.DeploymentStage != null && 
+                (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                && !IsCargoTrackingDomain())
             {
                 privatelabel = GetPrivateLabelByLoggedDomain();
                 BuildEmailMessageParams(emailMessageParams, privatelabel);
@@ -225,9 +226,9 @@ namespace WebFreight.Web.Helpers
         private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string siteUri, string reqNumber)
         {
             string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
-            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain)  + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
-            
-            if(!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
+            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain) + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
+
+            if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
                 path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);
 
             return path;
@@ -322,7 +323,7 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName + emailBodyParams.EmailMessageParams.Environment + " ID to sign in to " + emailBodyParams.EmailMessageParams.Environment + " Sofware.");
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment + " Software.");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");

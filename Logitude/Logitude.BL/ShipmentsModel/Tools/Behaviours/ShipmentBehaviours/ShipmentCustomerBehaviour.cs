@@ -314,7 +314,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.Notify1ContactId;
             entityPM.CustomerAddressId = entityPM.Notify1AddressId;
             entityPM.CustomerReference1 = entityPM.Notify1Reference;
-            entityPM.CustomerReference2 = null;
+            entityPM.CustomerReference2 = entityPM.Notify1Reference2;
         }
 
         private void MapNotify2()

@@ -81,6 +81,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private List<ShipmentReceivable> allReceivables;
         private ShipmentRepository shipmentRepository;
         private ShipmentReceivableRepository shipmentReceivableRepository;
+        private ARInvoiceChargesConstraintRepository ARInvoiceChargesConstraintRepository;
         SATInterfaceHelper sATInterfaceHelper;
         AccountingSetting accountingSetting;
         private Tenant TenantObject;
@@ -101,6 +102,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceEntityRepository = new ARInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
+            this.ARInvoiceChargesConstraintRepository = new ARInvoiceChargesConstraintRepository(objectContext);
 
             this.vatTypeRepository = new VatTypeRepository(myCommonContext);
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
@@ -132,6 +134,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceEntityRepository = new ARInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
+            this.ARInvoiceChargesConstraintRepository = new ARInvoiceChargesConstraintRepository(objectContext);
 
             this.vatTypeRepository = new VatTypeRepository(myCommonContext);
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
@@ -163,6 +166,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceEntityRepository = new ARInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
+            this.ARInvoiceChargesConstraintRepository = new ARInvoiceChargesConstraintRepository(objectContext);
 
             this.vatTypeRepository = new VatTypeRepository(commonMockContext);
             this.accountingSettingRepository = new AccountingSettingRepository(commonMockContext);
@@ -929,6 +933,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 foreach (ARInvoiceLine item in lines)
                 {
                     this.DisconnectReceivable(item.ReceivableId);
+                    this.DeleteARInvoiceChargesConstraint(item);
+
+                    item.ReceivableId = null;
+                    invoiceLineRepository.Update(item);
                 }
             }
 
@@ -1005,8 +1013,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
                         foreach (ARInvoiceLine line in lines)
                         {
+                            this.DeleteARInvoiceChargesConstraint(line);
+
                             line.ReceivableId = null;
-                            invoiceLineRepository.Update(line);
+                            invoiceLineRepository.Update(line);                            
                         }
                         #endregion
                     }
@@ -3165,7 +3175,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 CreateInterestTransactionLine(item, null);
             }
+
+            this.CreateARInvoiceChargesConstraint(item);
         }
+
         int invoiceLineNumber = 0;
         DateTime? dateForInterest;
         private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
@@ -3253,14 +3266,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void DeleteInvoiceLine(ARInvoiceLinePM item)
         {
             ARInvoiceLine invoiceLine = invoiceLineRepository.GetSingleInvoiceLine(item.Id);
-            invoiceLineRepository.Remove(invoiceLine);
+            if (invoiceLine != null)
+            {
+                this.DeleteARInvoiceChargesConstraint(invoiceLine);
+                invoiceLineRepository.Remove(invoiceLine);                
+            }
         }
         private void DisconnectInvoiceLine(ARInvoiceLinePM item)
         {
             ARInvoiceLine line = invoiceLineRepository.GetSingleInvoiceLine(item.Id);
-            line.ReceivableId = null;
-            item.ReceivableId = null;
-            invoiceLineRepository.Update(line);
+
+            if (line != null)
+            {
+                this.DeleteARInvoiceChargesConstraint(line);
+                line.ReceivableId = null;
+                item.ReceivableId = null;
+                invoiceLineRepository.Update(line);
+            }
         }
         #endregion
 
@@ -4335,6 +4357,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             ARInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsNumbersBehaviour(entityPM);
             invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
+        }
+
+        private void CreateARInvoiceChargesConstraint(ARInvoiceLinePM invoiceLine)
+        {
+            if (!string.IsNullOrEmpty(invoiceLine.ReceivableId))
+            {
+                ARInvoiceChargesConstraint aRInvoiceChargesConstraint = new ARInvoiceChargesConstraint();
+                aRInvoiceChargesConstraint.Id = IdCounter.GetNumber("ARInvoiceChargesConstraint", entityPM.Tenant).ToString();
+                aRInvoiceChargesConstraint.Tenant = tenant;
+                aRInvoiceChargesConstraint.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                aRInvoiceChargesConstraint.InvoiceLineId = invoiceLine.Id;
+                aRInvoiceChargesConstraint.ReceivableId = invoiceLine.ReceivableId;
+                ARInvoiceChargesConstraintRepository.Add(aRInvoiceChargesConstraint);
+            }
+        }
+        private void DeleteARInvoiceChargesConstraint(ARInvoiceLine invoiceLine)
+        {
+            ARInvoiceChargesConstraint aRInvoiceChargesConstraint = ARInvoiceChargesConstraintRepository.GetARInvoiceChargesConstraintByReceivableId(invoiceLine.ReceivableId, tenant);
+            if (aRInvoiceChargesConstraint != null)
+            {
+                ARInvoiceChargesConstraintRepository.Remove(aRInvoiceChargesConstraint);
+            }
         }
     }
 }

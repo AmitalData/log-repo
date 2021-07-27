@@ -250,6 +250,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Notify1AddressId { get; set; }
         public string Notify1ContactId { get; set; }
         public string Notify1Reference { get; set; }
+        public string Notify1Reference2 { get; set; }
         public string Notify2Id { get; set; }
         public string Notify2AddressId { get; set; }
         public string Notify2ContactId { get; set; }

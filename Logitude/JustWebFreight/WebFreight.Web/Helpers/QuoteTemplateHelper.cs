@@ -497,6 +497,8 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("AIRLINE", "Airline", "Airline", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("FROMLOCATION", "From Location", "From Location", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOLOCATION", "To Location", "To Location", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("FROMLOCATIONINCLUDECOUNTRY", "From Location Include Country", "From Location Include Country", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOLOCATIONINCLUDECOUNTRY", "To Location Include Country", "To Location Include Country", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("PRICINGPACKAGES", "Pricing Packages", "Pricing Packages", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("PRICINGCONTAINERS", "Pricing Containers", "Pricing Containers", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEABLEWEIGHT", "Chargeable Weight", "Chargeable Weight", "QuoteDetails"));

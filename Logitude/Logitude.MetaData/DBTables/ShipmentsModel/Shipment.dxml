@@ -3160,6 +3160,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ForwarderPickUpDeliveryType"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PrivateLabelInvoiceNumber"
     Type="varchar"
     Size="40">
@@ -3205,16 +3212,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ForwarderPickUpDeliveryType"
+    Name="StandalonePickupDeliveryId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="StandalonePickupDeliveryId"
+    Name="Notify1Reference2"
     Type="varchar"
-    Size="15">
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>

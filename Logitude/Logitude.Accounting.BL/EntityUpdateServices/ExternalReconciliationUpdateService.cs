@@ -144,6 +144,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (isDebitTransaction && transactionComesFromDeferedAccountChequesMovingService)
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
                 else if(isDebitTransaction && !transactionHasOnlyOneCheque) 
+
                     return GetChequeOfDepositTransactionBySource(transactionPM.SourceId, transactionPM.Tenant);
                 else
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);

@@ -1,4 +1,5 @@
-﻿import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
+import { CustomFieldClass } from '../DataContracts/CustomFieldClass';
+import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {AppTool} from '../Tools'
 
 export class FieldValueResolver {
@@ -83,6 +84,10 @@ export class FieldValueResolver {
 
 
     public static GetFieldStringValue(field: ObjectFieldPM, value: any): string {
+
+        if (value && (value instanceof CustomFieldClass)) {
+            return value.ResolvedValue;
+        }
         if (field != null && value != null) {
             if (value.toString() == "") {
                 return null;

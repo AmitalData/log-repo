@@ -260,6 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private const string const_qNotinLedgerTransaction = "qNotinLedgerTransaction";
         private readonly string Const_qNotinTotalByMonth = "qNotinTotalByMonth";
         private readonly string Const_qDiff = "qDiff";
+        public const string const_isokNothingDone = "is ok - nothing done  !!!!";
 
         public void FixDbIntegrityFromLedgeToTotal()
         {
@@ -276,7 +277,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     return;
                 }
-                throw new Exception("is ok - nothing done  !!!!");
+                throw new Exception(const_isokNothingDone/*"is ok - nothing done  !!!!"*/);
             }
             
             using (var scope = TransactionFactory.GetNewSerializableTransaction())

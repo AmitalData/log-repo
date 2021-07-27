@@ -76,6 +76,7 @@ Then("the direct shipment should split successfully", () => {
     //#region Validate for old shipment
     cy.BackButton("Shipment: " + shipmentNumber);
     Actions.ValidatePackageDetails(ShipmentSelectors.PackagesTab, containerDetailsList[0], ShipmentSelectors.PackageGrossWeight, false)
+    cy.get('div[id^=row]').should('have.length', 1)
     //#endregion
 });
 //#endregion

@@ -580,9 +580,79 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             EntityStatus = crmContext.TicketStages.Where(d => d.Id == item.StageId).FirstOrDefault().Name,
                         });
                     }
+
+                    var standaloneShipmentDetails = this.GetStandaloneShipmentDetails(myShipment);
+                    if (standaloneShipmentDetails != null)
+                        myResult.AddRange(standaloneShipmentDetails);
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private List<ShipmentConnectedEntity> GetStandaloneShipmentDetails(Shipment myShipment)
+        {
+            if (!myShipment.IsStandalonePickupDelivery)
+            {
+                return null;
+            }
+
+            int tenant = myShipment.Tenant;
+            string standaloneShipmentId = myShipment.Id;
+            List<ShipmentConnectedEntity> shipmentConnectedEntityDetails = new List<ShipmentConnectedEntity>();
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(standaloneShipmentId, tenant);
+
+            if(shipmentPickUpDelivery == null)
+            {
+                return null;
+            }
+
+            shipmentConnectedEntityDetails.Add(new ShipmentConnectedEntity()
+            {
+                EntityId = shipmentPickUpDelivery.ShipmentId,
+                Reference = shipmentPickUpDelivery.PickUpDeliveryNumber,
+                EntityType = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
+                ObjectTableName = "Shipment",
+            });
+
+            return shipmentConnectedEntityDetails;
+        }
+        public HttpResponseMessage GetDisconnectStandaloneShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
+                if (shipmentPickUpDelivery != null)
+                {
+                    shipmentPickUpDelivery.StandaloneShipmentId = null;
+                    shipmentPickUpDelivery.StandaloneShipmentNumber = null;
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                }
+
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+                shipmentPM.IsStandalonePickupDelivery = false;
+                shipmentPM.ForwarderStandaloneShipmentId = null;
+                shipmentPM.StandalonePickupDeliveryId = null;
+                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, authToken.Email);
+                shipmentService.Update();
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 
             catch (Exception ex)
@@ -590,6 +660,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        
         public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try

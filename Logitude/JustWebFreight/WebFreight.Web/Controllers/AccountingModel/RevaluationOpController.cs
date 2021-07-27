@@ -61,6 +61,33 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
         }
 
+        public HttpResponseMessage GetRunOneRevaluation(int tenant, string revaluationId)
+        {
+            try
+            {
+
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
+
+                RevaluationBatch revaluationBatch = new RevaluationBatch();
+                revaluationBatch.RunOneRevaluation(tenant, revaluationId);
+                string responseText = revaluationBatch.ResponseText();
+                HttpStatusCode StatusCode = revaluationBatch.StatusCode();
+                var res1 = new { Success = true, Message = responseText };
+
+                return Request.CreateResponse(StatusCode, res1);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
 
 
