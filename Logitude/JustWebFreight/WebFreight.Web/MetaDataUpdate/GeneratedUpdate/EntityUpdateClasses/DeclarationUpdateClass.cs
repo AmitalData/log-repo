@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "65ca7453b76a783a3cabc7756bdbd186";
+		public const string HashString = "bc339fa4066d004735dbce0a37199508";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1160,7 +1160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3051,7 +3050,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -6345,7 +6343,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -14833,6 +14830,188 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ImporterAddressForExport",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  236,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  236,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ImporterAddressForExport",
+					  						ListPropertyPath =  "ImporterAddressForExport",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportDeclaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ImporterAddressForExport",
+					  						DefaultText =  "Importer Address",
+					  						ListFieldLable =  "ImporterAddressForExportListLable",
+					  						ListLableDefaultText =  "Importer Address",
+					  						ListLocalDefaultText =  "כתובת יצואן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ImporterPassCountryForExport",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsCountry",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ImporterPassCountryForExport",
+					  						ListPropertyPath =  "ImporterPassCountryForExport",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportDeclaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ImporterPassCountryForExport",
+					  						DefaultText =  "Importer Pass Country",
+					  						ListFieldLable =  "ImporterPassCountryForExportListLable",
+					  						ListLableDefaultText =  "Importer Pass Country ",
+					  						ListLocalDefaultText =  "מדינת דרכון יצואן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ImporterNameForExport",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ImporterNameForExport",
+					  						ListPropertyPath =  "ImporterNameForExport",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExportDeclaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ImporterNameForExport",
+					  						DefaultText =  "Importer Name",
+					  						ListFieldLable =  "ImporterNameForExportListLable",
+					  						ListLableDefaultText =  "Importer Name",
+					  						ListLocalDefaultText =  "שם היצואן",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -14914,12 +15093,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationFeature_13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.Declarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.Declarations", NameTextCodeDefaultText = "Declarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Export Declaration",LocalDefaultText = "הצהרות יצוא", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature DeclarationFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclaration", NameTextCodeDefaultText = "ExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+			   TextCode DeclarationTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.Q.ExportDeclarationQuery", DefaultText = @"Open Declarations",LocalDefaultText = "הצהרות פתוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDecWithoutRelease", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDecWithoutRelease", NameTextCodeDefaultText = "ExportDecWithoutRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode DeclarationTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.AllCourierDeclarations", DefaultText = @"All Courier Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.AllCourierDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.AllCourierDeclarations", NameTextCodeDefaultText = "AllCourierDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationInConstraint", DefaultText = @"Declarations in Constraint",LocalDefaultText = " אילוצים ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclarationInConstraint", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclarationInConstraint", NameTextCodeDefaultText = "ExportDeclarationInConstraint", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.PaidExportDeclaration", DefaultText = @"Paid Declarations Without Release",LocalDefaultText = "הגשות ללא תשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.PaidExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.PaidExportDeclaration", NameTextCodeDefaultText = "PaidExportDeclaration", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarationAmendments", DefaultText = @"Declaration Amendments In Process",LocalDefaultText = "תיקוני הצהרה בתהליך", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclarationAmendments", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclarationAmendments", NameTextCodeDefaultText = "ExportDeclarationAmendments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode DeclarationTextCode_19 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.ExportDeclarations", DefaultText = @"All Declarations",LocalDefaultText = "כל ההצהרות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationFeature_19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.ExportDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.ExportDeclarations", NameTextCodeDefaultText = "ExportDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -15184,7 +15379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_9.Id, NameTextCodeCode = DeclarationTextCode_9.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 9, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_9.Id,FeatureUniqeCode= DeclarationFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DeclarationWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_9.Id, NameTextCodeCode = DeclarationTextCode_9.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 9, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_9.Id,FeatureUniqeCode= DeclarationFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclarationWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -15214,7 +15409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationInConstraintQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_10.Id, NameTextCodeCode = DeclarationTextCode_10.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationInConstraint",  QueryGroupCode = "DECL", IndexOrder = 10, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_10.Id,FeatureUniqeCode= DeclarationFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DeclarationInConstraintQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_10.Id, NameTextCodeCode = DeclarationTextCode_10.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationInConstraint",  QueryGroupCode = "DECL", IndexOrder = 10, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_10.Id,FeatureUniqeCode= DeclarationFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclarationInConstraintQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -15244,7 +15439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query PaidDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_11.Id, NameTextCodeCode = DeclarationTextCode_11.Code, ObjectTableName = "Customs.Declaration", Code = "PaidDeclaration",  QueryGroupCode = "DECL", IndexOrder = 11, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_11.Id,FeatureUniqeCode= DeclarationFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query PaidDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_11.Id, NameTextCodeCode = DeclarationTextCode_11.Code, ObjectTableName = "Customs.Declaration", Code = "PaidDeclaration",  QueryGroupCode = "DECL", IndexOrder = 11, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_11.Id,FeatureUniqeCode= DeclarationFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn PaidDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -15303,7 +15498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_13.Id, NameTextCodeCode = DeclarationTextCode_13.Code, ObjectTableName = "Customs.Declaration", Code = "Declarations",  QueryGroupCode = "DECL", IndexOrder = 13, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_13.Id,FeatureUniqeCode= DeclarationFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_13.Id, NameTextCodeCode = DeclarationTextCode_13.Code, ObjectTableName = "Customs.Declaration", Code = "Declarations",  QueryGroupCode = "DECL", IndexOrder = 13, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_13.Id,FeatureUniqeCode= DeclarationFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -15330,27 +15525,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExportDecWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_14.Id, NameTextCodeCode = DeclarationTextCode_14.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDecWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 14, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_14.Id,FeatureUniqeCode= DeclarationFeature_14.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDeclarationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ExportDecWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDecWithoutReleaseQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDecWithoutReleaseQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDecWithoutReleaseQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -15374,6 +15578,136 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllCourierDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 180 }, addedQueryColumns);
 
              AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ExportDeclarationInConstraintQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_16.Id, NameTextCodeCode = DeclarationTextCode_16.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclarationInConstraint",  QueryGroupCode = "DECL", IndexOrder = 16, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_16.Id,FeatureUniqeCode= DeclarationFeature_16.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationInConstraintQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter ExportDeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationInConstraintQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeCode", PredefinedValue = "11",PredefinedValue2 = null, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationInConstraintQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationInConstraintQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationInConstraintQuery.Id,QueryCode = ExportDeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query PaidExportDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_17.Id, NameTextCodeCode = DeclarationTextCode_17.Code, ObjectTableName = "Customs.Declaration", Code = "PaidExportDeclaration",  QueryGroupCode = "DECL", IndexOrder = 17, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_17.Id,FeatureUniqeCode= DeclarationFeature_17.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PaidExportDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn PaidExportDeclarationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter PaidExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PaidExportDeclarationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.PaidDeclarationWithoutRelease", PredefinedValue = "",PredefinedValue2 = null, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PaidExportDeclarationQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PaidExportDeclarationQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = PaidExportDeclarationQuery.Id,QueryCode = PaidExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ExportDeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_18.Id, NameTextCodeCode = DeclarationTextCode_18.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclarationAmendments",  QueryGroupCode = "DECL", IndexOrder = 18, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_18.Id,FeatureUniqeCode= DeclarationFeature_18.FeatureUniqeCode, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationAmendmentsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter ExportDeclarationAmendmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsAmendment", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationAmendmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentStatus", PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationAmendmentsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationAmendmentsQuery.Id,QueryCode = ExportDeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ExportDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_19.Id, NameTextCodeCode = DeclarationTextCode_19.Code, ObjectTableName = "Customs.Declaration", Code = "ExportDeclarations",  QueryGroupCode = "DECL", IndexOrder = 19, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_19.Id,FeatureUniqeCode= DeclarationFeature_19.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ExportDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.TransportModeForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomFileForExport" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ExportDeclarationsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter ExportDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ExportDeclarationsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationsQuery.Id,QueryCode = ExportDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
