@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "69ee5fa32c073afd8c5007de5bed293b";
+		public const string HashString = "bee26a36ac01d2a3832b1bc86abf17e8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2458,6 +2458,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ClientsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Client.PassportNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
 			 QueryColumn ClientsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Client.PassportCountryCode" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClientsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Client.IsExportPoaActive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

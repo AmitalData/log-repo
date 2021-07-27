@@ -3006,7 +3006,7 @@
         QueryCode="&quot;Clients&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="130" />     
       <QueryColumn
         QueryCode="&quot;Clients&quot;"
         IndexOrder="1"
@@ -3026,6 +3026,11 @@
         QueryCode="&quot;Clients&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;PassportCountryCode&quot;"
+        ColumnWidth="130" />
+	  <QueryColumn
+        QueryCode="&quot;Clients&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsExportPoaActive&quot;"
         ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters />
