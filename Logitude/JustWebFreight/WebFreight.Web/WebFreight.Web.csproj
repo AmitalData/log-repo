@@ -5815,6 +5815,8 @@
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTextCode.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTextDesign.cs" />
     <Compile Include="QuoteModel\QuoteModelProcedureClass.cs" />
+    <Compile Include="QuoteOPMModel\DomainServices\QuoteOPMDomainService.cs" />
+    <Compile Include="QuoteOPMModel\DomainServices\QuoteOPMDomainService.QuoteOPCustomerType.cs" />
     <Compile Include="ReportsWebServices\APInvoiceWebService.asmx.cs">
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -7065,7 +7067,6 @@
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
     <Folder Include="MobileApplication\Views\SupplierInvioceItemCertificats\" />
     <Folder Include="OceanInsights\" />
-    <Folder Include="QuoteOPMModel\DomainServices\" />
     <Folder Include="SocialModel\DomainServices\Generated\" />
     <Folder Include="Stimulsoft\CacheFiles\" />
     <Folder Include="Temp\" />
