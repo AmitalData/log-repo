@@ -83,6 +83,7 @@ export class DeclarationCourierStatusList {
 	CrateNumber: string;
 	AmendmentDontDisplayInList: boolean;
 	TruckerName: string;
+	CourierPendingReasonNameList: string;
 	
 }
  

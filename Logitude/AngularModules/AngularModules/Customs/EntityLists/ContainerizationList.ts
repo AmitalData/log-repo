@@ -24,6 +24,8 @@ export class ContainerizationList {
 	HataraStatusName: string;
 	HataraStatusIsNull: boolean;
 	OpenContainerization: boolean;
+	IsMultiCustomers: boolean;
+	IsMultiExportFiles: boolean;
 	
 }
  

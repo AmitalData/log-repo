@@ -48,6 +48,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual NDMessageActionCode NDMessageActionCode { get; set; }
         [Column("IsChange")]
 	    public bool IsChange { get; set; }
+        [Column("IsMultiCustomers")]
+	    public bool IsMultiCustomers { get; set; }
+        [Column("IsMultiExportFiles")]
+	    public bool IsMultiExportFiles { get; set; }
     }
 }
 	 

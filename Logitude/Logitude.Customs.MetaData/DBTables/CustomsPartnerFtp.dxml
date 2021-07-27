@@ -72,4 +72,6 @@
     ReferencedTable="FTPDetails"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,PartnerCode,InterfaceName,TypeCode" />
 </Table>

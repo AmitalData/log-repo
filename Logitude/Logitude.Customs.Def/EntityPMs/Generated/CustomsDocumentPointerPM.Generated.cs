@@ -503,6 +503,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string originEntity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginEntity  
+	   {
+	    
+	     get
+		{
+		   return originEntity;
+		 }
+		 set
+		 {
+		   if(originEntity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginEntity",OldValue=originEntity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originEntity=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

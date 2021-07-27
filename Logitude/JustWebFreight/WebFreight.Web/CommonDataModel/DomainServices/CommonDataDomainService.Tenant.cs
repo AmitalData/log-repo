@@ -224,7 +224,12 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 currentTenant.CurrencyId = service.GetTenantCurrency(currentTenant.CurrencyId, currentTenant.Id);
             }
 
-            if (!string.IsNullOrEmpty(currentTenant.ProfitCurrencyId))
+            SettingRepository settingRepository = new SettingRepository();
+
+       var     setting = settingRepository.GetSingleSetting("1");
+
+
+            if (!string.IsNullOrEmpty(currentTenant.ProfitCurrencyId) && setting.WorkEnvironment!="customs")
             {
                 CommonDataDomainService service = new CommonDataDomainService();
                 currentTenant.ProfitCurrencyId = service.GetTenantCurrency(currentTenant.ProfitCurrencyId, currentTenant.Id);

@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {ClientPM} from './ClientPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -18,11 +19,13 @@ export class ClientsPoaPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
- 	 
+
+	 
     
     private id: string;
     public get Id() { return this.id; }
@@ -45,8 +48,8 @@ export class ClientsPoaPM {
        
 	 
     private poaID: string;
-    public get poaID() { return this.poaID; }
-    public set poaID(newValue: string) { if (this.poaID != newValue) { this.poaID = newValue; this.MarkAsDirty("poaID"); } }
+    public get PoaID() { return this.poaID; }
+    public set PoaID(newValue: string) { if (this.poaID != newValue) { this.poaID = newValue; this.MarkAsDirty("PoaID"); } }
        
 	 
     private authorizedExternalId: string;
@@ -94,16 +97,38 @@ export class ClientsPoaPM {
     public set PoaAuthorizationType(newValue: string) { if (this.poaAuthorizationType != newValue) { this.poaAuthorizationType = newValue; this.MarkAsDirty("PoaAuthorizationType"); } }
        
 	 
+    private poaStatusName: string;
+    public get PoaStatusName() { return this.poaStatusName; }
+    public set PoaStatusName(newValue: string) { if (this.poaStatusName != newValue) { this.poaStatusName = newValue; this.MarkAsDirty("PoaStatusName"); } }
+       
+	 
+    private poaAuthorizationTypeName: string;
+    public get PoaAuthorizationTypeName() { return this.poaAuthorizationTypeName; }
+    public set PoaAuthorizationTypeName(newValue: string) { if (this.poaAuthorizationTypeName != newValue) { this.poaAuthorizationTypeName = newValue; this.MarkAsDirty("PoaAuthorizationTypeName"); } }
+       
+	 
 
     public OldEntityPM: ClientsPoaPM;
-		
+	
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ClientsPoa");

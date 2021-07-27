@@ -598,6 +598,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -826,6 +827,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -905,6 +907,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -982,6 +985,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1137,6 +1141,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1213,6 +1218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2221,6 +2227,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2300,6 +2307,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2686,6 +2694,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2843,6 +2852,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3077,6 +3087,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -4435,6 +4446,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -4958,6 +4970,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9384,6 +9397,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12670,6 +12684,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15079,6 +15094,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15683,6 +15699,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15761,6 +15778,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16733,6 +16751,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17104,6 +17123,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17406,6 +17426,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17833,6 +17854,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17907,6 +17929,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17981,6 +18004,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -18113,6 +18137,227 @@
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;67593b69-3aad-4ba0-92fc-88aaeeeda015&quot;"
+    FieldName="&quot;ImporterAddressForExport&quot;"
+    OldNames="ImporterAddressForExport"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="236"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="236"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ImporterAddressForExport&quot;"
+    ListPropertyPath="&quot;ImporterAddressForExport&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.ExportDeclaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ImporterAddressForExport&quot;"
+    DefaultText="&quot;Importer Address&quot;"
+    ListFieldLable="&quot;ImporterAddressForExportListLable&quot;"
+    ListLableDefaultText="&quot;Importer Address&quot;"
+    ListLocalDefaultText="&quot;כתובת יצואן&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;b6f71ca4-7611-47af-81be-bd3c2a65a050&quot;"
+    FieldName="&quot;ImporterPassCountryForExport&quot;"
+    OldNames="ImporterPassCountryeForExport,ImporterPassCountryForExport"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Customs.CustomsCountry&quot;"
+    MinLength="0"
+    MaxLength="2"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="2"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ImporterPassCountryForExport&quot;"
+    ListPropertyPath="&quot;ImporterPassCountryForExport&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.ExportDeclaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ImporterPassCountryForExport&quot;"
+    DefaultText="&quot;Importer Pass Country&quot;"
+    ListFieldLable="&quot;ImporterPassCountryForExportListLable&quot;"
+    ListLableDefaultText="&quot;Importer Pass Country &quot;"
+    ListLocalDefaultText="&quot;מדינת דרכון יצואן&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;d6b9deb8-2ec5-4b01-af86-48c544eafe72&quot;"
+    FieldName="&quot;ImporterNameForExport&quot;"
+    OldNames="ImporterNameForExport"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ImporterNameForExport&quot;"
+    ListPropertyPath="&quot;ImporterNameForExport&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.ExportDeclaration&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ImporterNameForExport&quot;"
+    DefaultText="&quot;Importer Name&quot;"
+    ListFieldLable="&quot;ImporterNameForExportListLable&quot;"
+    ListLableDefaultText="&quot;Importer Name&quot;"
+    ListLocalDefaultText="&quot;שם היצואן&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -18859,7 +19104,7 @@
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Customs.Declaration&quot;"
     TextCodeCode="&quot;Customs.Declaration.Q.DeclarationWithoutReleaseQuery&quot;"
@@ -18939,7 +19184,7 @@
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Customs.Declaration&quot;"
     TextCodeCode="&quot;Customs.Declaration.Q.DeclaratioInConstraintQuery&quot;"
@@ -19018,7 +19263,7 @@
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Customs.Declaration&quot;"
     TextCodeCode="&quot;Customs.Declaration.Q.PaidDeclarationWithoutReleaseQuery&quot;"
@@ -19182,7 +19427,7 @@
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     QueryGroupName="&quot;Customs.Declaration&quot;"
     TextCodeCode="&quot;Customs.Declaration.Q.DeclarationQuery&quot;"
@@ -19247,9 +19492,9 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;ExportDeclaration&quot;"
-    TextCode="&quot;Export Declaration&quot;"
-    LocalTextCode="&quot;הצהרות יצוא&quot;"
+    Code="&quot;ExportDecWithoutRelease&quot;"
+    TextCode="&quot;Open Declarations&quot;"
+    LocalTextCode="&quot;הצהרות פתוחות&quot;"
     QueryGroupCode="&quot;DECL&quot;"
     IndexOrder="14"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -19264,51 +19509,75 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;CreateDateForExport&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;ExportFile&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;TransportModeForExport&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;CustomFileForExport&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
-        IndexOrder="5"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        IndexOrder="6"
         ObjectFieldName="&quot;DeclarationOfficeName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
-        IndexOrder="6"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        IndexOrder="7"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;ExportDeclaration&quot;"
-        IndexOrder="7"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        IndexOrder="8"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="200" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;ExportDeclaration&quot;"
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
         PredefinedValue="&quot;E&quot;"
         ObjectFieldName="&quot;Direction&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDecWithoutRelease&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
@@ -19373,6 +19642,352 @@
         QueryCode="&quot;AllCourierDeclarations&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ExportDeclarationInConstraint&quot;"
+    TextCode="&quot;Declarations in Constraint&quot;"
+    LocalTextCode="&quot; אילוצים ללא תשובה&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="16"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.ExportDeclaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;TaxationDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDateForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;TransportModeForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomFileForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        PredefinedValue="&quot;11&quot;"
+        ObjectFieldName="&quot;DeclarationStatusTypeCode&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationInConstraint&quot;"
+        PredefinedValue="&quot;E&quot;"
+        ObjectFieldName="&quot;Direction&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;PaidExportDeclaration&quot;"
+    TextCode="&quot;Paid Declarations Without Release&quot;"
+    LocalTextCode="&quot;הגשות ללא תשובה&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="17"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.ExportDeclaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;TaxationDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDateForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;TransportModeForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomFileForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        PredefinedValue="&quot;&quot;"
+        ObjectFieldName="&quot;PaidDeclarationWithoutRelease&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidExportDeclaration&quot;"
+        PredefinedValue="&quot;E&quot;"
+        ObjectFieldName="&quot;Direction&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ExportDeclarationAmendments&quot;"
+    TextCode="&quot;Declaration Amendments In Process&quot;"
+    LocalTextCode="&quot;תיקוני הצהרה בתהליך&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="18"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.ExportDeclaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;AmendmentissueDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDateForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;TransportModeForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomFileForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        PredefinedValue="&quot;True&quot;"
+        ObjectFieldName="&quot;IsAmendment&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;AmendmentStatus&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarationAmendments&quot;"
+        PredefinedValue="&quot;E&quot;"
+        ObjectFieldName="&quot;Direction&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ExportDeclarations&quot;"
+    TextCode="&quot;All Declarations&quot;"
+    LocalTextCode="&quot;כל ההצהרות&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="19"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.ExportDeclaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;TaxationDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDateForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;TransportModeForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomFileForExport&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ExportDeclarations&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarations&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarations&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;ExportDeclarations&quot;"
+        PredefinedValue="&quot;E&quot;"
+        ObjectFieldName="&quot;Direction&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />

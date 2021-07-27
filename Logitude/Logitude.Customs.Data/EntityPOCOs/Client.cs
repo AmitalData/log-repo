@@ -94,6 +94,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual FacilitationType FacilitationType { get; set; }
         [Column("NationalIdentificationNumber")]
 	    public string NationalIdentificationNumber { get; set; }
+        [Column("IsExportPoaActive")]
+	    public int? IsExportPoaActive { get; set; }
     }
 }
 	 

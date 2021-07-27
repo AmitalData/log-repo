@@ -468,6 +468,132 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _UNITID;
 
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? FACTOR
+        {
+            get
+            {
+                return _FACTOR;
+            }
+            set
+            {
+                if (_FACTOR != value)
+                {
+                    _FACTOR = value;
+                    OnPropertyChanged("FACTOR");
+                }
+            }
+        }
+        private decimal? _FACTOR;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string VERIFICATIONNUMBER
+        {
+            get
+            {
+                return _VERIFICATIONNUMBER;
+            }
+            set
+            {
+                if (_VERIFICATIONNUMBER != value)
+                {
+                    _VERIFICATIONNUMBER = value;
+                    OnPropertyChanged("VERIFICATIONNUMBER");
+                }
+            }
+        }
+        private string _VERIFICATIONNUMBER;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string TARIFFID
+        {
+            get
+            {
+                return _TARIFFID;
+            }
+            set
+            {
+                if (_TARIFFID != value)
+                {
+                    _TARIFFID = value;
+                    OnPropertyChanged("TARIFFID");
+                }
+            }
+        }
+        private string _TARIFFID;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string IMPAPPROVTYPEID
+        {
+            get
+            {
+                return _IMPAPPROVTYPEID;
+            }
+            set
+            {
+                if (_IMPAPPROVTYPEID != value)
+                {
+                    _IMPAPPROVTYPEID = value;
+                    OnPropertyChanged("IMPAPPROVTYPEID");
+                }
+            }
+        }
+        private string _IMPAPPROVTYPEID;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string SIVUGINSTRUCTION
+        {
+            get
+            {
+                return _SIVUGINSTRUCTION;
+            }
+            set
+            {
+                if (_SIVUGINSTRUCTION != value)
+                {
+                    _SIVUGINSTRUCTION = value;
+                    OnPropertyChanged("SIVUGINSTRUCTION");
+                }
+            }
+        }
+        private string _SIVUGINSTRUCTION;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string REMARKSMAKAT
+        {
+            get
+            {
+                return _REMARKSMAKAT;
+            }
+            set
+            {
+                if (_REMARKSMAKAT != value)
+                {
+                    _REMARKSMAKAT = value;
+                    OnPropertyChanged("REMARKSMAKAT");
+                }
+            }
+        }
+        private string _REMARKSMAKAT;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string REMARKSPROTEST
+        {
+            get
+            {
+                return _REMARKSPROTEST;
+            }
+            set
+            {
+                if (_REMARKSPROTEST != value)
+                {
+                    _REMARKSPROTEST = value;
+                    OnPropertyChanged("REMARKSPROTEST");
+                }
+            }
+        }
+        private string _REMARKSPROTEST;
+
         #endregion
 
         #region INotifyPropertyChanged Members

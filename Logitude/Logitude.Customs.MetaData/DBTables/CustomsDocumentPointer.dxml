@@ -81,12 +81,23 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OriginEntity"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomsDocumentsTicketId"
     ReferencedTable="CustomsDocumentsTickets"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
-
+  <Relation
+    ForeignKeyColumn="OriginEntity"
+    ReferencedTable="EntityTypeLookups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="ParentEntityId,ParentEntityCode" />
   <Index

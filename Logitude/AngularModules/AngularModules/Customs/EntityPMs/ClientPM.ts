@@ -9,6 +9,7 @@
 
 import {ClientAddressPM} from './ClientAddressPM';
 import {ClientDrivingLicensePM} from './ClientDrivingLicensePM';
+import {ClientsPoaPM} from './ClientsPoaPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -267,6 +268,45 @@ export class ClientPM {
      private nationalIdentificationNumber: string;
     public get NationalIdentificationNumber() { return this.nationalIdentificationNumber; }
     public set NationalIdentificationNumber(newValue: string) { if (this.nationalIdentificationNumber != newValue) { this.nationalIdentificationNumber = newValue; this.MarkAsDirty("NationalIdentificationNumber"); } }
+       
+	 
+     
+	private clientPoas: ClientsPoaPM[];
+    get  ClientPoas() {
+        if (this.clientPoas == null) {
+            this.clientPoas = [];
+        }
+
+        return this.clientPoas;
+    }
+    set  ClientPoas(newValue: ClientsPoaPM[]) {
+        if (this.clientPoas != newValue) {
+            this.clientPoas = newValue;
+        }
+    }
+    public AddClientsPoa(item: ClientsPoaPM) {
+        if (item != null) {
+            var index = this. ClientPoas.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClientPoas.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClientsPoa(item: ClientsPoaPM) {
+        if (item != null) {
+            var index = this. ClientPoas.indexOf(item);
+            if (index > -1) {
+                this. ClientPoas.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClientPoas: Array<ClientsPoaPM>= [];
+     private isExportPoaActive: number;
+    public get IsExportPoaActive() { return this.isExportPoaActive; }
+    public set IsExportPoaActive(newValue: number) { if (this.isExportPoaActive != newValue) { this.isExportPoaActive = newValue; this.MarkAsDirty("IsExportPoaActive"); } }
        
 	 
 

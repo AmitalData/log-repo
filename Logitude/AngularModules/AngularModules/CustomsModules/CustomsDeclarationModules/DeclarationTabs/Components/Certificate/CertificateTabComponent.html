@@ -258,14 +258,14 @@
                                             </ul>
                                         </td>
                                         <td style="width:5px"></td>
-                                        <td style="width: 160px;">
+                                        <td style="width: 160px;" *ngIf="LevelSelectionFilterSelectedValue=='Invoice'">
                                             <ComboBox *ngIf="LevelSelectionFilterSelectedValue=='Invoice'" style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                       (SelectedItemChanged)="InvoicesSelectionChanged($event)" [Binding]="'InvoiceNumber'"></ComboBox>
                                         </td>
                                         <td style="width:5px"></td>
 
                                         <td>
-                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור גורף</button>
+                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
                                         </td>
 
                                         <td style="width: 30px;">
