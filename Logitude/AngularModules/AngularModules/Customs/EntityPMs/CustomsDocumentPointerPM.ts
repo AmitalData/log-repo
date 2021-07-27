@@ -132,6 +132,11 @@ export class CustomsDocumentPointerPM {
     public set DocumentTypeCode(newValue: string) { if (this.documentTypeCode != newValue) { this.documentTypeCode = newValue; this.MarkAsDirty("DocumentTypeCode"); } }
        
 	 
+    private originEntity: string;
+    public get OriginEntity() { return this.originEntity; }
+    public set OriginEntity(newValue: string) { if (this.originEntity != newValue) { this.originEntity = newValue; this.MarkAsDirty("OriginEntity"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPointerPM;
 	
