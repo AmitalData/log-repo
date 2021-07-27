@@ -51,14 +51,25 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
 
 
             IQueryable< QuoteOPList> result = from f in iQueryable
-                                             .Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType")
-                                             .Include("TransportMode").Include("Direction").Include("ToPort")//.Include("ShipmentType")
-                                             .Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact")
-                                             .Include("MainCarriageCarrierCard").Include("Department").Include("Branch")
-                                             .Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country")
-                                             .Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason")
-                                             .Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType")
-                                             .Include("ShipmentSubType")
+
+                                                  .Include("CreatedByUser.Contact")
+                                                  .Include("SalesmanUser.Contact")
+
+
+                                                  .Include("ShipmentSubType")
+                                                  .Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country")
+                                                  .Include("ToPort.Country").Include("FromPort.Country")
+
+
+                                                  .Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType")
+                                                  .Include("TransportMode").Include("Direction").Include("ToPort")//.Include("ShipmentType")
+
+                                                  .Include("MainCarriageCarrierCard").Include("Department").Include("Branch")
+
+                                                  .Include("AgentCard").Include("NotifyCard").Include("MoveType")
+                                                  .Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason")
+                                                  .Include("SalesmanUser")
+
                                               select new QuoteOPList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -166,36 +177,25 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
                                                FromPortName = f.FromPort == null ? "" : f.FromPort.EnglishName,
                                                ToPortName = f.ToPort == null ? "" : f.ToPort.EnglishName,
 
-                                               FromPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               (f.FromPartnerAddress != null ? f.FromPartnerAddress.City : "")
-                                               :
-                                               (f.FromPort != null ? f.FromPort.Code : ""),
+                                                  //12704 adress.city is NVARCHAR hile other is not !!!
+                                                  //12704 FromPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?(f.FromPartnerAddress != null ? f.FromPartnerAddress.City : System.Data.Entity.DbFunctions.AsUnicode( ""))                                               :                                               (f.FromPort != null ? System.Data.Entity.DbFunctions.AsUnicode(f.FromPort.Code) : System.Data.Entity.DbFunctions.AsUnicode("")),
 
-                                               FromCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+
+                                                  FromCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.Code : ""))
                                                :
                                                ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
                                                FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
-                                               ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
-                                               :
-                                               (f.ToPort != null ? f.ToPort.Code : ""),
+                                                  //12704 ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?(f.ToPartnerAddress != null ? f.ToPartnerAddress.City : ""):(f.ToPort != null ? f.ToPort.Code : ""),
+                                                  ToCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.Code : "")):((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                                               ToCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.Code : ""))
-                                               :
-                                               ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
+                                                  ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
-                                               ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
+                                                  //12704 Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City)):((f.FromPort == null ? "" : f.FromPort.Code) + " > " + (f.ToPort == null ? "" : f.ToPort.Code)),
 
-                                               Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                                               ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
-                                               :
-                                               ((f.FromPort == null ? "" : f.FromPort.Code) + " > " + (f.ToPort == null ? "" : f.ToPort.Code)),
-
-                                               Subject = f.Subject,
+                                                  Subject = f.Subject,
                                                IsSubjectEdited = f.IsSubjectEdited,
                                                IsFixedPrice = f.IsFixedPrice,
                                                ProductCode = f.ProductCode,

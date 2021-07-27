@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "885f3127e5a35bd23379d9e84baf8fc8";
+		public const string HashString = "8396a6d1587f7f5ad2973eb7562f6676";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14820,7 +14820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_0.Id, NameTextCodeCode = QuoteOPTextCode_0.Code, ObjectTableName = "QuoteOP", Code = "Created Quotes",  QueryGroupCode = "QUOP", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_0.Id,FeatureUniqeCode= QuoteOPFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query CreatedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_0.Id, NameTextCodeCode = QuoteOPTextCode_0.Code, ObjectTableName = "QuoteOP", Code = "Created Quotes",  QueryGroupCode = "QUOP", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_0.Id,FeatureUniqeCode= QuoteOPFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn CreatedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -14851,7 +14851,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_1.Id, NameTextCodeCode = QuoteOPTextCode_1.Code, ObjectTableName = "QuoteOP", Code = "Draft Quotes",  QueryGroupCode = "QUOP", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_1.Id,FeatureUniqeCode= QuoteOPFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DraftQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_1.Id, NameTextCodeCode = QuoteOPTextCode_1.Code, ObjectTableName = "QuoteOP", Code = "Draft Quotes",  QueryGroupCode = "QUOP", IndexOrder = 1, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_1.Id,FeatureUniqeCode= QuoteOPFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DraftQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -14882,7 +14882,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_2.Id, NameTextCodeCode = QuoteOPTextCode_2.Code, ObjectTableName = "QuoteOP", Code = "Sent Quotes",  QueryGroupCode = "QUOP", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_2.Id,FeatureUniqeCode= QuoteOPFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query SentQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_2.Id, NameTextCodeCode = QuoteOPTextCode_2.Code, ObjectTableName = "QuoteOP", Code = "Sent Quotes",  QueryGroupCode = "QUOP", IndexOrder = 2, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_2.Id,FeatureUniqeCode= QuoteOPFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn SentQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -14913,7 +14913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_3.Id, NameTextCodeCode = QuoteOPTextCode_3.Code, ObjectTableName = "QuoteOP", Code = "Expired Quotes",  QueryGroupCode = "QUOP", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_3.Id,FeatureUniqeCode= QuoteOPFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query ExpiredQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_3.Id, NameTextCodeCode = QuoteOPTextCode_3.Code, ObjectTableName = "QuoteOP", Code = "Expired Quotes",  QueryGroupCode = "QUOP", IndexOrder = 3, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_3.Id,FeatureUniqeCode= QuoteOPFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn ExpiredQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -14974,7 +14974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_5.Id, NameTextCodeCode = QuoteOPTextCode_5.Code, ObjectTableName = "QuoteOP", Code = "Accepted Quotes",  QueryGroupCode = "QUOP", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_5.Id,FeatureUniqeCode= QuoteOPFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_5.Id, NameTextCodeCode = QuoteOPTextCode_5.Code, ObjectTableName = "QuoteOP", Code = "Accepted Quotes",  QueryGroupCode = "QUOP", IndexOrder = 5, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_5.Id,FeatureUniqeCode= QuoteOPFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AcceptedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -15005,7 +15005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_6.Id, NameTextCodeCode = QuoteOPTextCode_6.Code, ObjectTableName = "QuoteOP", Code = "Accepted Without Shipments",  QueryGroupCode = "QUOP", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_6.Id,FeatureUniqeCode= QuoteOPFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AcceptedWithoutShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_6.Id, NameTextCodeCode = QuoteOPTextCode_6.Code, ObjectTableName = "QuoteOP", Code = "Accepted Without Shipments",  QueryGroupCode = "QUOP", IndexOrder = 6, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_6.Id,FeatureUniqeCode= QuoteOPFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AcceptedWithoutShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -15036,7 +15036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_7.Id, NameTextCodeCode = QuoteOPTextCode_7.Code, ObjectTableName = "QuoteOP", Code = "All Quotes",  QueryGroupCode = "QUOP", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_7.Id,FeatureUniqeCode= QuoteOPFeature_7.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
+			  Query AllQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_7.Id, NameTextCodeCode = QuoteOPTextCode_7.Code, ObjectTableName = "QuoteOP", Code = "All Quotes",  QueryGroupCode = "QUOP", IndexOrder = 7, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_7.Id,FeatureUniqeCode= QuoteOPFeature_7.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuotesQuery.Id,QueryCode = AllQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -15064,7 +15064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_8.Id, NameTextCodeCode = QuoteOPTextCode_8.Code, ObjectTableName = "QuoteOP", Code = "Cancelled Quotes",  QueryGroupCode = "QUOP", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_8.Id,FeatureUniqeCode= QuoteOPFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query CancelledQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_8.Id, NameTextCodeCode = QuoteOPTextCode_8.Code, ObjectTableName = "QuoteOP", Code = "Cancelled Quotes",  QueryGroupCode = "QUOP", IndexOrder = 8, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_8.Id,FeatureUniqeCode= QuoteOPFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn CancelledQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -15163,7 +15163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_11.Id, NameTextCodeCode = QuoteOPTextCode_11.Code, ObjectTableName = "QuoteOP", Code = "My Quotes",  QueryGroupCode = "QUOP", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_11.Id,FeatureUniqeCode= QuoteOPFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query MyQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_11.Id, NameTextCodeCode = QuoteOPTextCode_11.Code, ObjectTableName = "QuoteOP", Code = "My Quotes",  QueryGroupCode = "QUOP", IndexOrder = 11, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_11.Id,FeatureUniqeCode= QuoteOPFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn MyQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -15194,7 +15194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_12.Id, NameTextCodeCode = QuoteOPTextCode_12.Code, ObjectTableName = "QuoteOP", Code = "Open Quotes",  QueryGroupCode = "QUOP", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_12.Id,FeatureUniqeCode= QuoteOPFeature_12.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query OpenQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteOPTextCode_12.Id, NameTextCodeCode = QuoteOPTextCode_12.Code, ObjectTableName = "QuoteOP", Code = "Open Quotes",  QueryGroupCode = "QUOP", IndexOrder = 12, Tenant = 0, ObjectTableId = QuoteOPObjectTable.Id, QuerySection = "QuoteOP", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteOPFeature_12.Id,FeatureUniqeCode= QuoteOPFeature_12.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn OpenQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteOP.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -16780,6 +16780,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode QuoteOPTextCode_QuoteOPSCostTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.CostTotalAmount", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPFPackageTypeQuantityShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.F.PackageTypeQuantity.Short", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteOPTextCode_GeneralMHQuotesOP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes(OP)",LocalDefaultText = @"הצעות מחיר(OP)", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
