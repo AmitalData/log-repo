@@ -385,7 +385,18 @@ using Simplog.Data.ShipmentsModel;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
+				   temp.PlannedCargoReadyDate = MyEntityPM.PlannedCargoReadyDate;
+				   temp.ApprovedCargoReadyDate = MyEntityPM.ApprovedCargoReadyDate; 
+
+			  
+				   if(MyEntityPM.HandlerUserId != null)
+				   {
+					   UserQueryService UserService26 = new UserQueryService(Tenant);
+					   					   temp.HandlerUser = UserService26.GetUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -800,9 +811,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService26 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService27 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService26.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService27.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -813,9 +824,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService26 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService27 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService26.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService27.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -833,11 +844,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService26 = new HouseQueryService(Tenant);
+						HouseQueryService HouseService27 = new HouseQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Houses Can't be update"); 
-								temp.ShipmentConsoleShipments = HouseService26.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+								temp.ShipmentConsoleShipments = HouseService27.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -895,11 +906,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService26 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService27 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService26.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService27.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -911,11 +922,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService26 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService27 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService26.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService27.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1136,9 +1147,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService26 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService27 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService26.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService27.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1212,6 +1223,36 @@ using Simplog.Data.ShipmentsModel;
 
 					 
 
+					
+                    							//throw new ApplicationException("PlannedCargoReadyDate Can't be update"); 
+							temp.PlannedCargoReadyDate = MyEntity.PlannedCargoReadyDate;
+
+					 
+
+					
+                    							//throw new ApplicationException("ApprovedCargoReadyDate Can't be update"); 
+							temp.ApprovedCargoReadyDate = MyEntity.ApprovedCargoReadyDate;
+
+					 
+
+					
+					UserQueryService HandlerUserUserService = new UserQueryService(Tenant);
+					if(MyEntity.HandlerUser != null)
+					{
+						var myHandlerUserPM = HandlerUserUserService.UserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myHandlerUserPM != null)
+						{ 
+
+						 								//throw new ApplicationException("HandlerUser Can't be update"); 
+								temp.HandlerUserId = myHandlerUserPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }

@@ -188,6 +188,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.SalesmanUserId)
                 .HasMaxLength(15);
 
+            this.Property(t => t.HandlerUserId)
+                .HasMaxLength(15);
+
             this.Property(t => t.IncotermId)
                 .HasMaxLength(15);
 
@@ -1044,6 +1047,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.OnForwardingATA).HasColumnName("OnForwardingATA");
             this.Property(t => t.OnForwardingATD).HasColumnName("OnForwardingATD");
             this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
+            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
+            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
+            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
         }
     }
 }

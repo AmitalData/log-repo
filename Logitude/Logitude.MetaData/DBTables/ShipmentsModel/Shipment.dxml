@@ -3160,6 +3160,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ForwarderPickUpDeliveryType"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PrivateLabelInvoiceNumber"
     Type="varchar"
     Size="40">
@@ -3199,13 +3206,6 @@
   <Column
     Name="HandlerUserId"
     OldNames="Handler"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ForwarderPickUpDeliveryType"
     Type="varchar"
     Size="15">
     <Constraints

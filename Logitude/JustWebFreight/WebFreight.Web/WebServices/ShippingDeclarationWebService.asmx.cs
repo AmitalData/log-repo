@@ -308,6 +308,9 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
                 myDataProvider.ConfirmationNotes = shipment.BookingConfirmationNotes;
                 myDataProvider.MainCarriageATD = shipment.MainCarriageATD;
+                myDataProvider.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
+                myDataProvider.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
+                myDataProvider.Handler = this.GetHandlerUserName(shipment.HandlerUserId);
 
                 if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                 {
@@ -4814,6 +4817,17 @@ namespace WebFreight.Web.WebServices
             }
 
             return signatureImage;
+        }
+
+        private string GetHandlerUserName(string handlerUserId)
+        {
+            Contact handlerUser = this.contactRepository.GetSingleContact(handlerUserId,tenant);
+            if (handlerUser == null)
+            {
+                return null;
+            }
+
+            return handlerUser.EnglishName;
         }
     }
 }

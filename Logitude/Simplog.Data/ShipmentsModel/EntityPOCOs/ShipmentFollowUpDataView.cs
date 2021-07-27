@@ -640,5 +640,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnForwardingATA { get; set; }       
         public bool IsStandalonePickupDelivery { get; set; }
         public bool IsHTSMissing { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
     }
 }
