@@ -132,9 +132,10 @@
                                                     {{'Shipment.O.DeclarationNo' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{DeclarationNo}}
+                                                    <span *ngIf="DeclarationNo">{{DeclarationNo}}</span>
+                                                    <span *ngIf="!DeclarationNo">---</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -144,9 +145,10 @@
                                                     {{'Shipment.O.GoodsValue' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{GoodsValue}}
+                                                    <span *ngIf="GoodsValue">{{GoodsValue}}</span>
+                                                    <span *ngIf="!GoodsValue">---</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -168,9 +170,10 @@
                                                     {{'Shipment.O.TotalTax' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: blue;text-decoration: underline;cursor:pointer;" (click)="TotalTaxClick()">
-                                                    {{TotalTax}}
+                                                    <span *ngIf="TotalTax">{{TotalTax}}</span>
+                                                    <span *ngIf="!TotalTax">0</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -181,7 +184,7 @@
                     </td>
                 </tr>
                 <tr style="min-height: 458px;height: 100%;border: 1px solid #BCBEC0;border-radius: 4px;">
-                    <td style="overflow-y: auto;overflow-x: hidden;width:193px;top:1px;bottom:4px;position:relative" class="MediaFill">
+                    <td style="overflow-y: auto;overflow-x: hidden;width:193px;top:1px;bottom:4px;position:relative;vertical-align:top" class="MediaFill">
                         <div *ngFor="let item of externalDocs let i = index" style="overflow-y:auto;overflow-x:hidden;">
                             <div (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                                 <table *ngIf="!item.hasFile" style="height:162px;">
