@@ -27,6 +27,7 @@
         public static string StageViewsGetByFilters = "StageViews/GetByFilters";
         public static string TicketStageViewsGetByFilters = "TicketStageViews/GetByFilters";
         public static string ObjectTableViewsGetByFilters = "ObjectTableViews/GetByFilters";
+        public static string TariffProductViews = "TariffProductViews/GetByFilters";
 
         public static string SpecialServicesTypesController = "SpecialServicesTypes";
         public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
@@ -40,6 +41,7 @@
         public static string ActivitiesController = "Activities";
         public static string TicketsController = "tickets";
         public static string OpportunitiesController = "Opportunities";
+        public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
 
         //public static string QuotesGetSingle(string id)
@@ -203,6 +205,10 @@
         public static string TicketSingle(string id)
         {
             return "Tickets/GetSingle?id=" + id;
+        }
+        public static string TariffSingle(string id)
+        {
+            return "Tariffs/GetSingle?id=" + id;
         }
     }
 }
