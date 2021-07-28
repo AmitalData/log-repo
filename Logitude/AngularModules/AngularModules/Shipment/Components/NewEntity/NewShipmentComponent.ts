@@ -523,6 +523,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetPartners();
         this.SetPrepaidCollect();
         this.SetCardDependency();
+        this.ComputeCustomerDependency();
 
         if (this.IsInlandDomestic) {
             if (!this.IsShipmentLevelFixed) {
@@ -583,8 +584,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH','');
-            this.CustomerDependencyProperty1IsList = true;
             this.OnFiltersChanged();
             this.SetTransportModes();
         }
@@ -615,8 +614,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.CustomerDependencyProperty1 = this.IsInlandDomestic ? this.CustomerDependencyProperty1 + ",WH" : this.CustomerDependencyProperty1.replace(',WH', '');
-            this.CustomerDependencyProperty1IsList = true;
             this.DelOrderDetails();
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
@@ -1403,9 +1400,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     private ComputeCustomerDependency() {
         switch (this.ShipmentCustomerTypeCode) {
             case "SHI":
-                this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH" : "CS";
-                this.CustomerDependencyProperty1IsList = this.IsInlandDomestic ? true : false;
-                break;
             case "CON":
                 {
                     this.CustomerDependencyProperty1 = this.IsInlandDomestic ? "CS,WH":"CS";
