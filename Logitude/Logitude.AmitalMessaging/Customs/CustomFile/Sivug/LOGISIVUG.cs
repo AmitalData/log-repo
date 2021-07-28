@@ -376,6 +376,8 @@
 
         private string additionalQuantityTypeField;
 
+        private string descField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private EXPENSES[] eXPENSESField;
@@ -650,6 +652,19 @@
             set
             {
                 this.additionalQuantityTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Desc
+        {
+            get
+            {
+                return this.descField;
+            }
+            set
+            {
+                this.descField = value;
             }
         }
 
