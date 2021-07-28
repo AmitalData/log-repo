@@ -1,4 +1,4 @@
-@dev @weekly 
+@stable @weekly 
 Feature: Move Type Create and Edit it in Maintenance Module
     The user creates a Move Type and edits it from the Maintenance Module.
 
