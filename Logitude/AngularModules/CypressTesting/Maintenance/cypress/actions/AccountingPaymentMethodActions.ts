@@ -92,6 +92,7 @@ export function EditAccountingPaymentMethodGeneralTab(accountingPaymentMethodDet
 
 export function FillAccountingPaymentMethodAccountingTab(accountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, " ");
+    cy.wait(1000)
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, accountingPaymentMethodDetails.ARExternalID);
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, accountingPaymentMethodDetails.APExternalID);
 }
