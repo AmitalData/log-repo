@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "4ba1d10d41a270e6bbf5df60bcbb1ae3";
+		public const string HashString = "b897bc1f2b2068666e54d7ac11075e7d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4656,6 +4656,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IncotermId",
 					  						DefaultText =  "Incoterm",
+					  						ListFieldLable =  "IncotermIdListLable",
+					  						ListLableDefaultText =  "Incoterm Id",
 					  						HelpTextCode =  "Incoterm",
 					  						HelpTextDefaultText =  "Incoterm",
 					  						IsMaxLength =  false,
@@ -13589,6 +13591,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Volume",
 					  						DefaultText =  "Volume (%VolumeCode)",
+					  						ListFieldLable =  "VolumeListLable",
+					  						ListLableDefaultText =  "Volume",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -21168,6 +21172,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NumberOfPackages",
 					  						DefaultText =  "Packages",
+					  						ListFieldLable =  "NumberOfPackagesListLable",
+					  						ListLableDefaultText =  "Packages",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -48413,6 +48419,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 Code =  "HAUI",
                 EnglishName =  "Handler Updated",
                 LocalName =  "Handler Updated",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SADT",
+                EnglishName =  "Standalone shipment is disconnected",
+                LocalName =  "Standalone shipment is disconnected",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
