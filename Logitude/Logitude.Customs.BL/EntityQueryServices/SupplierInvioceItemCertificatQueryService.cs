@@ -23,27 +23,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<SupplierInvioceItemCertificat> supplierInvioceItemCertificates = repository.GetSupplierInvioceItemCertificatesForSupplierInvoice(declarationId, invoiceCounterKey, tenant, FilterLine);
             List<SupplierInvioceItemCertificatPM> supplierInvioceItemCertificatPMs = (from a in supplierInvioceItemCertificates
                                                                                       select new SupplierInvioceItemCertificatPM()
-                                                                          {
-                                                                              DeclarationId = a.DeclarationId,
-                                                                              AttachmentTypeCode = a.AttachmentTypeCode,
-                                                                              AttachmentTypeName = a.AttachmentType != null ? a.AttachmentType.LocalName : null,
-                                                                              CertificateExemptionTypeCode = a.CertificateExemptionTypeCode,
-                                                                              CertificateExemptionTypeName = a.CertificateExemptionType != null ? a.CertificateExemptionType.LocalName : null,
-                                                                              CertificateNumber = a.CertificateNumber,
-                                                                              CustomsAttachmentID = a.CustomsAttachmentID,
-                                                                              ItemCertificateCounterKey = a.ItemCertificateCounterKey,
-                                                                              ReqConfirmationTypeCode = a.ReqConfirmationTypeCode,
-                                                                              ReqConfirmationTypeName = a.RequestConfirmationType != null ? a.RequestConfirmationType.LocalName : null,
-                                                                              ResConfirmationTypeCode = a.ResConfirmationTypeCode,
-                                                                              ResConfirmationTypeName = a.ResponseConfirmationType != null ? a.ResponseConfirmationType.LocalName : null,
-                                                                              InvoiceCounterKey = a.InvoiceCounterKey,
-                                                                              LineNumber = a.LineNumber,
-                                                                              Tenant = a.Tenant,
-                                                                              SequenceNumeric = a.SequenceNumeric,
-                                                                              ApprovalRequestNumber = a.ApprovalRequestNumber,
-                                                                              ExternalRequestTypeCode = a.ExternalRequestTypeCode
+                                                                                      {
+                                                                                          DeclarationId = a.DeclarationId,
+                                                                                          AttachmentTypeCode = a.AttachmentTypeCode,
+                                                                                          AttachmentTypeName = a.AttachmentType != null ? a.AttachmentType.LocalName : null,
+                                                                                          CertificateExemptionTypeCode = a.CertificateExemptionTypeCode,
+                                                                                          CertificateExemptionTypeName = a.CertificateExemptionType != null ? a.CertificateExemptionType.LocalName : null,
+                                                                                          CertificateNumber = a.CertificateNumber,
+                                                                                          CustomsAttachmentID = a.CustomsAttachmentID,
+                                                                                          ItemCertificateCounterKey = a.ItemCertificateCounterKey,
+                                                                                          ReqConfirmationTypeCode = a.ReqConfirmationTypeCode,
+                                                                                          ReqConfirmationTypeName = a.RequestConfirmationType != null ? a.RequestConfirmationType.LocalName : null,
+                                                                                          ResConfirmationTypeCode = a.ResConfirmationTypeCode,
+                                                                                          ResConfirmationTypeName = a.ResponseConfirmationType != null ? a.ResponseConfirmationType.LocalName : null,
+                                                                                          InvoiceCounterKey = a.InvoiceCounterKey,
+                                                                                          LineNumber = a.LineNumber,
+                                                                                          Tenant = a.Tenant,
+                                                                                          SequenceNumeric = a.SequenceNumeric,
+                                                                                          ApprovalRequestNumber = a.ApprovalRequestNumber,
+                                                                                          ExternalRequestTypeCode = a.ExternalRequestTypeCode
 
-                                                                          }).ToList();
+                                                                                      }).ToList();
             return supplierInvioceItemCertificatPMs;
 
         }
@@ -108,10 +108,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public List<SupplierInvioceItemCertificatPM> GetCertificatesBySearchFields(string declarationId, int invoiceCounterKey, string externalRequestTypeCode,string approvalRequestNumber, int tenant)
+        public List<SupplierInvioceItemCertificatPM> GetCertificatesBySearchFields(string declarationId, int invoiceCounterKey, string externalRequestTypeCode, string approvalRequestNumber, int tenant)
         {
-            List<SupplierInvioceItemCertificat> supplierInvioceItemCertificates = 
-                repository.GetCertificatesBySearchFields(declarationId, invoiceCounterKey,externalRequestTypeCode, approvalRequestNumber, tenant);
+            List<SupplierInvioceItemCertificat> supplierInvioceItemCertificates =
+                repository.GetCertificatesBySearchFields(declarationId, invoiceCounterKey, externalRequestTypeCode, approvalRequestNumber, tenant);
 
             List<SupplierInvioceItemCertificatPM> supplierInvioceItemCertificatPMs = (from a in supplierInvioceItemCertificates
                                                                                       select new SupplierInvioceItemCertificatPM()
@@ -230,16 +230,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 query2 = query2.OrderBy(d => d.ReqConfirmationTypeCode).ThenBy(d => d.AttachmentTypeCode);
             }
 
-           
+
 
 
 
 
             return query2.ToList();
 
-   
 
-        
+
+
         }
 
 
@@ -274,13 +274,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 SearchFields = SearchFieldsFilter.FieldValue.ToString();
             }
             int count = repository.GetCertificateConnectedItemsCount(declarationId, attachmentTypeCode, reqConfirmationTypeCode, CertificateExemptionTypeCode, CertificateNumber, ResConfirmationTypeCode, tenant, invoiceNumber, ClassificationCode, SearchFields);
-            
+
             return count;
         }
 
-        public List<CertificateTicket> GetDeclarationCertificateTicket(string declarationId,string reqConfirmationType, string invoiceNumber, int? invoiceCounterKey, string demandState, int tenant)
+        public List<CertificateTicket> GetDeclarationCertificateTicket(string declarationId, string reqConfirmationType, string invoiceNumber, int? invoiceCounterKey, string demandState, int tenant)
         {
-            List<CertificateTicket> tickets = repository.GetDeclarationCertificateTicket(declarationId,reqConfirmationType, invoiceNumber, invoiceCounterKey, demandState, tenant);
+            List<CertificateTicket> tickets = repository.GetDeclarationCertificateTicket(declarationId, reqConfirmationType, invoiceNumber, invoiceCounterKey, demandState, tenant);
 
 
             return tickets;
@@ -302,13 +302,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return tickets;
         }
 
-        public int? GetMaxCounterKey(string declarationId,int invoiceCounterKey,int invoiceItemLineNum, int tenant)
+        public int? GetMaxCounterKey(string declarationId, int invoiceCounterKey, int invoiceItemLineNum, int tenant)
         {
             return repository.GetMaxCounterKey(declarationId, invoiceCounterKey, invoiceItemLineNum, tenant);
         }
         public SupplierInvioceItemCertificatPM GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(string code, string decId, int lineNumber)
         {
-            SupplierInvioceItemCertificat supplierInvioceItemCertificates = repository.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(code,decId,lineNumber);
+            SupplierInvioceItemCertificat supplierInvioceItemCertificates = repository.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode(code, decId, lineNumber);
             if (supplierInvioceItemCertificates != null)
             {
                 SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
@@ -335,6 +335,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 return supplierInvioceItemCertificatPM;
             }
             return null;
+        }
+
+        public new(string certificateKeys, string InvoiceItemKeys) GetSupplierInvoiceItemsCertificateWithoutResponse(int tenant, string declarationId)
+        {
+            List<SupplierInvioceItemCertificat> supplierInvoiceItems = repository.GetSupplierInvoiceItemsCertificateWithoutResponse(declarationId, tenant);
+            if (supplierInvoiceItems == null || supplierInvoiceItems.Count == 0)
+                return ("", "");
+
+            var res1 = "'" + string.Join("','", supplierInvoiceItems.Select(a => a.InvoiceCounterKey + " " + a.LineNumber + " " + a.ItemCertificateCounterKey).ToList()) + "'";
+            var res2 = "'" + string.Join("','", supplierInvoiceItems.Select(a => a.InvoiceCounterKey + " " + a.LineNumber).ToList()) + "'";
+            return (res1, res2);
         }
 
     }
