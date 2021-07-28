@@ -588,11 +588,11 @@
                 <!-- IsClosed -->
                 <div *ngIf="FieldName == 'IsExportPoaActive'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate">
-                        <div *ngIf="Entity['IsExportPoaActive'] == '1'">
+                        <div *ngIf="Entity['IsExportPoaActive'] == true">
                             <img class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/CheckBoxIcon.png" />
                         </div>
                         
-                        <div *ngIf="Entity['IsExportPoaActive']=='0'">
+                        <div *ngIf="Entity['IsExportPoaActive']== false">
                             <img class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/RedX.png" />
                         </div>
                     </div>
