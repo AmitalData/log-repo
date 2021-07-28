@@ -39,12 +39,12 @@ namespace Unifreight.BL.EntityDataMappings
 
         public void CustomPMToPOCO(GGGQCPM entityPM, GGGQC entityPOCO)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(GGGQCPM entityPM, GGGQC entityPOCO)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
 
