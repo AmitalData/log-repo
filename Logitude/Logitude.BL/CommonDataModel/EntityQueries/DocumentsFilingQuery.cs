@@ -2235,7 +2235,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<FollowUp> FollowUps=null;
 
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-            Logitude.Customs.BL.EntityPMs.CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+            var setting = settingService.GetSettingByTenantN(tenant) ;
             var resMode = new { DefaultValue = "" };
             if (setting.IsConnectedToUniFreight)
             {
