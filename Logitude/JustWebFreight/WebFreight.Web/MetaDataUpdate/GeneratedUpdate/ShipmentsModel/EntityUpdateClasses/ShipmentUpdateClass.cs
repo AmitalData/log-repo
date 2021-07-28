@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "9d527451e0c18c5fce87b9a6764e176b";
+]
+		public const string HashString = "b897bc1f2b2068666e54d7ac11075e7d";]
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4656,6 +4657,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IncotermId",
 					  						DefaultText =  "Incoterm",
+					  						ListFieldLable =  "IncotermIdListLable",
+					  						ListLableDefaultText =  "Incoterm Id",
 					  						HelpTextCode =  "Incoterm",
 					  						HelpTextDefaultText =  "Incoterm",
 					  						IsMaxLength =  false,
@@ -13589,6 +13592,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Volume",
 					  						DefaultText =  "Volume (%VolumeCode)",
+					  						ListFieldLable =  "VolumeListLable",
+					  						ListLableDefaultText =  "Volume",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -21168,6 +21173,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NumberOfPackages",
 					  						DefaultText =  "Packages",
+					  						ListFieldLable =  "NumberOfPackagesListLable",
+					  						ListLableDefaultText =  "Packages",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
