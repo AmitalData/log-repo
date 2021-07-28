@@ -778,7 +778,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     MapNewAPInvoice(entityPM) {
         entityPM.Tenant = this.EntityPM.Tenant;
-        entityPM.VendorId = this.vendorId;
+        entityPM.VendorId = this.VendorId;
         entityPM.VendorName = this.VendorName;
         entityPM.VendorLocalName = this.VendorLocalName;
         entityPM.InvoiceNumber = this.invoiceNumber;
@@ -791,6 +791,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.BranchId = this.BranchId;
         entityPM.AmountInInvoiceCurrency = this.AmountInInvoiceCurrency;
         entityPM.InvoiceCurrencyExchangeRate = this.InvoiceCurrencyExchangeRate;
+        entityPM.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
         entityPM.InternalNotes = this.InternalNotes;
         entityPM.InvoiceExpectedAmount = this.InvoiceExpectedAmount;
         entityPM.AmountInLocalCurrency = this.AmountInLocalCurrency == null ? this.EntityPM.AmountInLocalCurrency :null;
@@ -802,6 +803,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.CopiedFrom = this.EntityPM.InvoiceNumber;
         entityPM.IsGeneralInvoice = true;
         entityPM.StatusCode = this.WaitingForApprovalStatusCode;
+        entityPM.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+        entityPM.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
 
     CopyInvoiceLines(entityPM) {
@@ -812,6 +815,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     }
 
     MapNewInvoiceLine(apInvoicePM: APInvoicePM, originalAPInvoiceLine: APInvoiceLinePM) {
+
         var apInvoiceLinePM = new APInvoiceLinePM(apInvoicePM);
         apInvoiceLinePM = originalAPInvoiceLine;
         this.SetChargesTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
@@ -822,6 +826,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         apInvoiceLinePM.Notes = null;
         apInvoiceLinePM.VendorId = this.VendorId;
         apInvoiceLinePM.VendorName = this.VendorName;
+        apInvoiceLinePM.AmountTypeCode = "NEXP";
         return apInvoiceLinePM;
     }
 
