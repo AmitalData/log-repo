@@ -969,6 +969,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 if (args.Contact != null)
                                 {
+                                    HandleInactiveContact(args);
                                     if (args.Contact.Id == null)
                                     {
                                         this.CreateContact(args);
@@ -1009,6 +1010,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private void HandleInactiveContact(PartnerServicePM args)
+        {
+            if (args.InactiveContactId != null)
+            {
+                ContactPM tempContactPM = args.Contact;
+                ContactQuery contactQuery = new ContactQuery(args.Tenant);
+                ContactPM contactPM = contactQuery.GetSingleContactPM(args.InactiveContactId);
+                args.Contact = contactPM;
+                args.Contact.InActive = false;
+                ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+                this.UpdatePartnerContact(args, objectContext);
+                args.Contact = tempContactPM;
+                args.Contact.InActive = !args.IsReactivatingContact;
             }
         }
 

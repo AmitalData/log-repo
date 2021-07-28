@@ -55,7 +55,8 @@ export class ActionButtonsListTemplate {
     }
 
     setVariables(rowData: any, fieldName: string) {
-        this.rowData = rowData; 
+        this.rowData = rowData;
+        this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         if (SessionLocator.PrivateLableSettings) {
             this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res: any) => {
                 if (res.Result == false) {
