@@ -1852,7 +1852,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 }
 
                                 case "PFCL": {
-                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
+                                    this.Quantity = AppTool.Round(ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"), 3);
                                     break;
                                 }
 
@@ -2608,7 +2608,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
 
             case "PFCL": {
-                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"); break;
+                result = AppTool.Round(ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"),3); break;
             }
 
             default: {
