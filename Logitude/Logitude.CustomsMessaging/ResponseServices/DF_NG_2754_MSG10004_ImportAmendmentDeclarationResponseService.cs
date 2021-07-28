@@ -128,7 +128,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idDec }, tenant).FirstOrDefault();
                     if (declarationOrg == null)
                     {
-                        declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
+                        if(isCopy)
+                        {
+                            declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
+
+                        }
+                        if (declarationOrg == null)
+                            declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
                         if(declarationOrg == null)
                         {
                             declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
