@@ -72,6 +72,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="OcrHeight" />
         <xs:element minOccurs="0" maxOccurs="1" ref="AdditionalQuantity" />
         <xs:element minOccurs="0" maxOccurs="1" ref="AdditionalQuantityType" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Desc" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
       </xs:sequence>
@@ -98,6 +99,7 @@
   <xs:element name="OcrHeight" type="xs:string" />
   <xs:element name="AdditionalQuantity" type="xs:string" />
   <xs:element name="AdditionalQuantityType" type="xs:string" />
+  <xs:element name="Desc" type="xs:string" />
   <xs:element name="CERTIFICATES">
     <xs:complexType>
       <xs:sequence>
