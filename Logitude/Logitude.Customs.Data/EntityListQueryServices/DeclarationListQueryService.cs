@@ -345,6 +345,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      EntitleImporterCountryCode = a.EntitleImporterCountryCode,
                                                      ImporterPassCountryCode = a.ImporterPassCountryCode,
+                                                     ImporterPassCountryForExport = a.ImporterPassCountryCode,
                                                      ProcedureCurrentCode = a.ProcedureCurrentCode,
                                                      CustomerCode = a.CustomerCard == null ? null : a.CustomerCard.Code,
                                                      CustomerId = a.CustomerId,
@@ -374,6 +375,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                      a.CreatedByUser.Code,
                                                      ImporterAddress = a.ImporterAddress,
+                                                     ImporterAddressForExport = a.ImporterAddress,
                                                      ImporterName = a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      EntitleImporterName = a.EntitleImporter.FullName,
                                                      UserNotes = a.UserNotes,

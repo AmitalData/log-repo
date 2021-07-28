@@ -44,6 +44,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CustomsDocumentsTicketId { get; set; }
 	      
         public virtual CustomsDocumentsTicket CustomsDocumentsTicket { get; set; }
+        [ForeignKey("EntityTypeLookup")]
+        [Column("OriginEntity")]
+	    public string OriginEntity { get; set; }
+	      
+        public virtual EntityTypeLookup EntityTypeLookup { get; set; }
     }
 }
 	 

@@ -400,6 +400,12 @@ namespace Logitude.Customs.Data.EntityLists
        public int RowNumber  { get; set; }
        [DataMember]
        public bool? IsSubmitDeclaration  { get; set; }
+       [DataMember]
+       public string ImporterAddressForExport  { get; set; }
+       [DataMember]
+       public string ImporterPassCountryForExport  { get; set; }
+       [DataMember]
+       public string ImporterNameForExport  { get; set; }
    }
 
 }

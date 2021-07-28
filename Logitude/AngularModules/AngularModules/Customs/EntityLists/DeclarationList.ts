@@ -201,6 +201,9 @@ export class DeclarationList {
 	ThirdCargoID: string;
 	RowNumber: number;
 	IsSubmitDeclaration: boolean;
+	ImporterAddressForExport: string;
+	ImporterPassCountryForExport: string;
+	ImporterNameForExport: string;
 	
 }
  
