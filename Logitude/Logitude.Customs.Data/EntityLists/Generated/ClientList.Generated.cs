@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string NationalIdentificationNumber  { get; set; }
        [DataMember]
-       public int? IsExportPoaActive  { get; set; }
+       public bool? IsExportPoaActive  { get; set; }
    }
 
 }

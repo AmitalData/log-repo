@@ -210,7 +210,7 @@
   </Column>
   <Column
     Name="IsExportPoaActive"
-    Type="int">
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

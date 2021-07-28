@@ -930,12 +930,12 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClientPoas = value; }
 	    }
-	  	  private int? isExportPoaActive ;
+	  	  private bool? isExportPoaActive ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? IsExportPoaActive  
+       public bool? IsExportPoaActive  
 	   {
 	    
 	     get
@@ -946,7 +946,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isExportPoaActive != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportPoaActive",OldValue=isExportPoaActive,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportPoaActive",OldValue=isExportPoaActive,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   isExportPoaActive=value;
 		   }
