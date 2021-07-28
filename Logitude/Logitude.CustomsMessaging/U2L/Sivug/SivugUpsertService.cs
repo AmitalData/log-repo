@@ -1002,6 +1002,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.OriginCountryCode = null;
 
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
+                SupplierInvoiceItemPM.ItemDescription = invoiceItem.Desc;
                 //   SupplierInvoiceItemPM.UnfInvoiceCounterKey = invoiceItem.ITEM_SI_COUNTER;
                 SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
                 if (messageType == "UMS2L")

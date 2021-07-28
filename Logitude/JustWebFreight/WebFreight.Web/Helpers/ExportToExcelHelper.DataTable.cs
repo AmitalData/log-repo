@@ -60,40 +60,43 @@ namespace WebFreight.Web.Helpers
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
             var rows = dataTable.Rows.Count;
-            for (int j = 1; j <= dataTable.Columns.Count; j++)
+            if (rows > 0)
             {
-                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
-                if (agColumn != null)
+                for (int j = 1; j <= dataTable.Columns.Count; j++)
                 {
-
-                    var writeRange = sheet.Range[2, j, rows + 1, j];
-                    switch (agColumn.DataTypeCode)
+                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
+                    if (agColumn != null)
                     {
-                        case "Constant":
-                        case "Text":
-                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                            break;
-                        case "DateTime":
-                            string datetimeformat = @"dd\/MM\/yyyy";
-                            if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                            {
-                                datetimeformat = CurTenant.DateTimeFormat;
-                            }
-                            writeRange.NumberFormat = datetimeformat;
-                            break;
-                        case "Decimal":
-                        case "Double":
-                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
-                            writeRange.NumberFormat = "###,##0.00";
-                            break;
-                        case "Integer":
-                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
-                            writeRange.NumberFormat = "###,##";
-                            break;
 
-                        default:
-                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
-                            break;
+                        var writeRange = sheet.Range[2, j, rows + 1, j];
+                        switch (agColumn.DataTypeCode)
+                        {
+                            case "Constant":
+                            case "Text":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                                break;
+                            case "DateTime":
+                                string datetimeformat = @"dd\/MM\/yyyy";
+                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                {
+                                    datetimeformat = CurTenant.DateTimeFormat;
+                                }
+                                writeRange.NumberFormat = datetimeformat;
+                                break;
+                            case "Decimal":
+                            case "Double":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                                writeRange.NumberFormat = "###,##0.00";
+                                break;
+                            case "Integer":
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                                writeRange.NumberFormat = "###,##";
+                                break;
+
+                            default:
+                                writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                                break;
+                        }
                     }
                 }
             }
