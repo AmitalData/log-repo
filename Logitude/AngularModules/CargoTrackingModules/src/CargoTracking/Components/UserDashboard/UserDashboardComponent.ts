@@ -41,7 +41,6 @@ export class UserDashboardComponent implements AfterViewInit
         CargoTrackingBrandingData.Tenant = val;
     }
 
-
     constructor(
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private loginService: LoginExtendedService,
