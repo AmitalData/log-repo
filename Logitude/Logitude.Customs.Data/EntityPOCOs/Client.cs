@@ -95,7 +95,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("NationalIdentificationNumber")]
 	    public string NationalIdentificationNumber { get; set; }
         [Column("IsExportPoaActive")]
-	    public int? IsExportPoaActive { get; set; }
+	    public bool? IsExportPoaActive { get; set; }
     }
 }
 	 

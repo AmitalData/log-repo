@@ -2919,7 +2919,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Client&quot;"
-    FieldsDataType="&quot;Integer&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
