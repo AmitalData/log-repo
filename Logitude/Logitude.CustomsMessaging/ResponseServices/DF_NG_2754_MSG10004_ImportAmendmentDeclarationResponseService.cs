@@ -910,10 +910,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0, 0);
  
-                if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
-                    continue;
-
-               if(declarationPMOrg!=null) supplierInvoicePM.ExchangeRate = declarationPMOrg.SupplierInvoices.FirstOrDefault(x => x.SequenceNumeric == supplierInvoicePM.SequenceNumeric).ExchangeRate;
+               // if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
+                   // continue;
+                
+               //**if(declarationPMOrg!=null) supplierInvoicePM.ExchangeRate = declarationPMOrg.SupplierInvoices.FirstOrDefault(x => x.SequenceNumeric == supplierInvoicePM.SequenceNumeric).ExchangeRate;
                 if (item.Invoice.IssueDateTime != null) supplierInvoicePM.IssueDate = Convert.ToDateTime(item.Invoice.IssueDateTime);
 
                 if (item.Invoice.DMExtensions != null)
@@ -955,7 +955,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SupplierInvoicePMOrg = null;
                 }
 
-                supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
+                if (SupplierInvoicePMOrg != null)
+                    supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
 
 
                 supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item, declaration, declarationId, tenant, supplierInvoicePM, context, SupplierInvoicePMOrg);
