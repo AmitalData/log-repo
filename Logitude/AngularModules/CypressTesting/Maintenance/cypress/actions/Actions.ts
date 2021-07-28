@@ -2239,6 +2239,7 @@ export function FillShipmentSubTypeDetails(shipmentSubTypeDetails: ShipmentSubTy
 
 export function FillShipmentSubTypeName(ShipmentSubTypeName: string) {
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, " ")
+    cy.wait(1000)
     cy.FillLogTextBox(MaintenanceSelectors.ShipmentSubTypeName, ShipmentSubTypeName)
 }
 
