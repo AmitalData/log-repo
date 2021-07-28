@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.IsExportPoaActive = null;
             else
                 entityPM.IsExportPoaActive =
-                        entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate) ? 1 : 0;
+                        entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate);
         }
         protected override void UpdateComposition(ClientPM entityPM)
         {
