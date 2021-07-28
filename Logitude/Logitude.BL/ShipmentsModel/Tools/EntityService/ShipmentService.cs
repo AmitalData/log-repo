@@ -7093,7 +7093,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void UpdateShipmentConcectedPackagesByContainerEntityId(ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM)
         {
-            ShipmentPackagePM shipmentPackagePM = this.entityPM.ShipmentPackages.Find(d => d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId);
+            ShipmentPackagePM shipmentPackagePM = this.entityPM.ShipmentPackages.Find(d => !string.IsNullOrEmpty(d.ContainerEntityId) && d.ContainerEntityId == shipmentPickUpDeliveryPackagePM.ContainerEntityId);
             if (shipmentPackagePM == null)
             {
                 return;
