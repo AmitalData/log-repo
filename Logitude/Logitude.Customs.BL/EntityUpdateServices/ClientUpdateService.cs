@@ -29,7 +29,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.Code = "Empty";
             }
         }
-
+        protected override void OnUpdating(ClientPM entityPM)
+        {
+            if (entityPM.ClientPoas == null || entityPM.ClientPoas.Count() == 0)
+                entityPM.IsExportPoaActive = null;
+            else
+                entityPM.IsExportPoaActive =
+                        entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate) ? 1 : 0;
+        }
         protected override void UpdateComposition(ClientPM entityPM)
         {
             ClientAddressUpdateService clientAddressUpdateService = new ClientAddressUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
@@ -37,6 +44,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             ClientDrivingLicenseUpdateService clientDrivingLicenseUpdateService = new ClientDrivingLicenseUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             clientDrivingLicenseUpdateService.UpdateMulti(entityPM.ClientDrivingLicenses, entityPM.DeletedClientDrivingLicenses, entityPM, false);
+
+            ClientsPoaUpdateService clientsPoaUpdateService = new ClientsPoaUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            clientsPoaUpdateService.UpdateMulti(entityPM.ClientPoas, entityPM.DeletedClientPoas, entityPM, false);
 
             base.UpdateComposition(entityPM);
         }
@@ -87,6 +97,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return ExternalId;
         }
-       
+
+        
+        }
     }
-}
