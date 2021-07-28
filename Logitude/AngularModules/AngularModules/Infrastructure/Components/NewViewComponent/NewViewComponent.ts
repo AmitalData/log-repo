@@ -1361,6 +1361,7 @@ export class NewViewComponent {
             }
             else {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
+                return;
             }
         });
 
