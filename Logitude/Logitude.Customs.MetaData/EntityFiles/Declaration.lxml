@@ -23706,6 +23706,18 @@
       LocalDefaultText="&quot;תאריך חישוב&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.PaidDeclarationExport&quot;"
+      DefaultText="&quot;Declaration was already paid , screen is display only&quot;"
+      LocalDefaultText="&quot;הצהרה כבר הוגשה , המסך לתצוגה בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ChangedDeclarationExport&quot;"
+      DefaultText="&quot;Declaration data was changed , please send again before trying to pay&quot;"
+      LocalDefaultText="&quot;בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

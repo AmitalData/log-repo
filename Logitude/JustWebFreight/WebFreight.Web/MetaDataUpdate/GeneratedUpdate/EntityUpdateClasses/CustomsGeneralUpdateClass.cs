@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "9724447fb8bc7f4c653711508a1dbe44";
+		public const string HashString = "35ae087eb73efc8b23c16623dab83341";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "e993",
+			      				    Code =  "1148",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2029,6 +2029,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsMHExportDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MH.ExportDeclaration", DefaultText = "ExportDeclaration",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralOClientPoas = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ClientPoas", DefaultText = "ClientPoas",LocalDefaultText = @"כתבי הרשאה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralONoPaymentDateExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoPaymentDateExport", DefaultText = "Declaration was already paid , can’t send",LocalDefaultText = @"הצהרה כבר הוגשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

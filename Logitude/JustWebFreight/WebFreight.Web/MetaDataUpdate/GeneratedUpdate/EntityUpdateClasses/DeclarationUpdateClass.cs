@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "bc339fa4066d004735dbce0a37199508";
+		public const string HashString = "38c8df9b48273949102b65ae97516ecc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18569,6 +18569,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOCargoTypeCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CargoTypeCode", DefaultText = "Cargo Type Code",LocalDefaultText = @"סוג מזהה מטען", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationFCalculateDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.CalculateDateTime", DefaultText = "Calculate DateTime",LocalDefaultText = @"תאריך חישוב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarationExport", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"הצהרה כבר הוגשה , המסך לתצוגה בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclarationExport", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
