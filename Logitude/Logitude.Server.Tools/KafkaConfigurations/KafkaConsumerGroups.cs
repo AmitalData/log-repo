@@ -12,6 +12,7 @@
         public static string LogitudeVessels = "vessels";
         public static string LogitudeContacts = "contacts";
         public static string LogitudeCards = "cards";
+        public static string LogitudeDocumentTypes = "documenttypes";
         public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
         public static string ObjectFieldTrackChanges = "objectfieldtrackchanges";
     }
