@@ -70,6 +70,23 @@ namespace LogitudeTransferData
             ProduceKafkaMessages<VesselPM>(vesselPMs, KakaMessageTypes.Vessel);
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<DocumentTypePM> documentTypePMs = GetAllDocumentTypes(tenant);
+
+            ProduceKafkaMessages<DocumentTypePM>(documentTypePMs, KakaMessageTypes.DocumentType);
+        }
+
+        private List<DocumentTypePM> GetAllDocumentTypes(int tenant)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            List<DocumentTypePM> documentTypePMs = documentTypeQuery.GetDocumentTypePMsByTenant(tenant)
+                                                                    .Where(d => d.IsDocIn.Equals(true))
+                                                                    .ToList();
+            return documentTypePMs;
+        }
+
         private List<VesselPM> GetAllVessels(int tenant)
         {
             VesselQuery vesselQuery = new VesselQuery(tenant);

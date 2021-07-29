@@ -78,8 +78,6 @@ namespace CommunicationWorkerRole
             }
         }
 
-
-
         #region Private Methods
 
         private object GetEntityById(QueueResponse response)
@@ -100,9 +98,18 @@ namespace CommunicationWorkerRole
                     return GetPortById(Tenant, EntityId);
                 case "Vessel":
                     return GetVesselById(Tenant, EntityId);
+                case "DocumentType":
+                    return GetDocumentTypeById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetDocumentTypeById(int tenant, string id)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSingelDocumentTypeById(id, tenant);
+            return documentTypePM;
         }
 
         private object GetVesselById(int Tenant, string Id)
@@ -155,6 +162,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.Port;
                 case "Vessel":
                     return KakaMessageTypes.Vessel;
+                case "DocumentType":
+                    return KakaMessageTypes.DocumentType;
                 default:
                     return 0;
             }

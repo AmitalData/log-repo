@@ -14,5 +14,6 @@
         public static long Country = 10;
         public static long Card = 11;
         public static long Vessel = 12;
+        public static long DocumentType = 13;
     }
 }
