@@ -125,6 +125,16 @@ export class TenantManagmentPrivateLabelsPM {
     public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
        
 	 
+    private mainTabHighlightColor: string;
+    public get MainTabHighlightColor() { return this.mainTabHighlightColor; }
+    public set MainTabHighlightColor(newValue: string) { if (this.mainTabHighlightColor != newValue) { this.mainTabHighlightColor = newValue; this.MarkAsDirty("MainTabHighlightColor"); } }
+       
+	 
+    private documentTypeHighlightColor: string;
+    public get DocumentTypeHighlightColor() { return this.documentTypeHighlightColor; }
+    public set DocumentTypeHighlightColor(newValue: string) { if (this.documentTypeHighlightColor != newValue) { this.documentTypeHighlightColor = newValue; this.MarkAsDirty("DocumentTypeHighlightColor"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

@@ -674,6 +674,75 @@
                                         </td>
                                     </tr>
 
+                                    <!-- Main Tab Highlight Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Main Tab Highlight Color'" [ObjectFieldName]="'MainTabHighlightColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'MainTabHighlightColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="MainTabHighlightColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="MainTabHighlightColorCode" class="colorPicker" id="color" [style.opacity]="MainTabHighlightColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="MainTabHighlightColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{MainTabHighlightColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+
+                                    <!-- Document Type Highlight Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Document Type Highlight Color'" [ObjectFieldName]="'DocumentTypeHighlightColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DocumentTypeHighlightColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="DocumentTypeHighlightColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="DocumentTypeHighlightColorCode" class="colorPicker" id="color" [style.opacity]="DocumentTypeHighlightColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="DocumentTypeHighlightColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{DocumentTypeHighlightColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                 </table>
 
 

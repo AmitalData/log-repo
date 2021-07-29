@@ -26,6 +26,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string ForgetPasswordImageId { get; set; }
         public string SecondaryColor { get; set; }
         public bool HasLogboxAccess { get; set; }
+        public string MainTabHighlightColor { get; set; }
+        public string DocumentTypeHighlightColor { get; set; }
+
 
     }
 }

@@ -51,7 +51,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "LongName": false
     }
     private entityResourceService: EntityResourceService;
-
+ 
     public AirShipmentToggle: boolean = false;
 
     constructor(private _entityListService: EntityListService) {

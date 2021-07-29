@@ -33,6 +33,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string ForgetPasswordImageId { get; set; }
         public string SecondaryColor { get; set; }
         public bool HasLogboxAccess { get; set; }
+        public string MainTabHighlightColor { get; set; }
+        public string DocumentTypeHighlightColor { get; set; }
 
 
         //[ForeignKey("MainLogoId")]

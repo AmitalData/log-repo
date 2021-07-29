@@ -75,7 +75,12 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
 
-
+ 
+    public hasDocumentTypeHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor == null ? false : true) : false; 
+    public privateLabelClass = {
+        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor : "",
+        border: SessionLocator.PrivateLableSettings ? "1px solid #" + SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor: "",
+    } 
 
     public FromPortCountryCode: string;
     public   FromPortCode: string;

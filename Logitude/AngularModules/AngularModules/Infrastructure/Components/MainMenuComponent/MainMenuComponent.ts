@@ -33,6 +33,12 @@ export class MainMenuComponent {
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public hasMainTabHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.MainTabHighlightColor == null ? false : true) : false; 
+    public privateLabelClass = {
+        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.MainTabHighlightColor : "", 
+    }
+
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
