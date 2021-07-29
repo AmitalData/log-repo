@@ -499,7 +499,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetExceptionDescription(DataRow tableRow)
         {
-            tableRow.SetField("CurrentMilestoneExceptions", tableRow["ExceptionDate"] + "," + tableRow["ExceptionDescription"]);
+            var exceptionDate = tableRow["ExceptionDate"]?.ToString();
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? tableRow["ExceptionDescription"] : tableRow["ExceptionDate"] + "," + tableRow["ExceptionDescription"]);
         }
         private static void SetDefaultShipper(DataRow tableRow)
         {
