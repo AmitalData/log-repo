@@ -30,12 +30,6 @@ h1{
 .mobile-header-title {
     display: none;
 }
-
-.more-text {
-    color: var(--MainColor); 
-    padding-top: 5px;
-}
-
 .search-wrapper {
     /* height: calc(80vh - 70px); */
     height: calc(100vh - 110px);

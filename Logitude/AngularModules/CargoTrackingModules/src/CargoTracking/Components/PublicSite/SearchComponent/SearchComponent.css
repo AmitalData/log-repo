@@ -25,6 +25,11 @@ li {
     color:var(--MainColor); /*#002664;*/
 }
 
+.more-text {
+    color: var(--MainColor);
+    padding-top: 5px;
+}
+
 .truncateText{
     white-space: nowrap;
     overflow: hidden; 
