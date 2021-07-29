@@ -1075,6 +1075,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesInvoiceLineForeignCurrencyNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineForeignCurrencyNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineForeignCurrencyNewId,0,'Fact_Charges','[Invoice Line Foreign Currency]','Invoice Line Foreign Currency','Dimension','false',0,0,'DIM_Currencies','false','false','true','Money','false','false','false','false','false')  
+declare @Fact_ChargesInvoiceLineDescriptionNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineDescriptionNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineDescriptionNewId,0,'Fact_Charges','[Invoice Line Description]','Invoice Line Description','nText','false',0,250,'false','false','true','Charges','false','false','false','false','false')  
+declare @Fact_ChargesInvoiceLineLocalDescriptionNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineLocalDescriptionNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineLocalDescriptionNewId,0,'Fact_Charges','[Invoice Line Local Description]','Invoice Line Local Description','nText','false',0,250,'false','false','true','Charges','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 

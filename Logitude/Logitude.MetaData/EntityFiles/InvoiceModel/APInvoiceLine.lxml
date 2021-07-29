@@ -35,10 +35,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="APInvoice"
   DefaultText="&quot;A/P Invoice Line&quot;"
-
-
-  Code="&quot;ccb9&quot;"
-
+  Code="&quot;ef01&quot;"
   Name="&quot;APInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -1461,7 +1458,7 @@
     MinLength="0"
     MaxLength="250"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -1540,7 +1537,7 @@
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -3543,6 +3540,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LocalAmountWithVatRecognized&quot;"
     ListPropertyPath="&quot;LocalAmountWithVatRecognized&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
