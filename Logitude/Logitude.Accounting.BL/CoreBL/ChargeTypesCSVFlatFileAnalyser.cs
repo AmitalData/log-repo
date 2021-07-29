@@ -79,6 +79,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     string text_44;
                     string text_2;
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                    string measurementCode = "FIXD";
+                    MeasurementQuery measurementQuery = new MeasurementQuery(tenant);
+                    MeasurementPM measurementPM = measurementQuery.GetSinglePMByCode(measurementCode, tenant);
+                    string measurementId = "";
+                    if (measurementPM != null) measurementId = measurementPM.Id;
+
                     string chargesGroupCode = "NONE";
                     ChargesGroupQuery chargesGroupQuery = new ChargesGroupQuery(tenant);
                     ChargesGroupPM chargesGroupPM = chargesGroupQuery.GetSingleChargesGroupPMByCode(chargesGroupCode, tenant);
@@ -181,7 +188,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 AWBPrintDescription = true,
                                 DueTypeCode = "",
                                 IsAutoDisplayInQuote = false,
-                                MeasurementId = "???",
+                                MeasurementId = measurementId,
                                 ContainerMeasurementCode = "",
 
 

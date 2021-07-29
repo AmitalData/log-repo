@@ -1,10 +1,18 @@
 <style>
-  
-  
+
+
 
 </style>
 <div>
-    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Id'">{{ rowData[fieldName]}}</div>
+    <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'Id'">
+        <span>{{ rowData[fieldName]}}</span>
+        <span>
+            <img *ngIf="rowData['ErrorLog']" (click)="ShowError(rowData['ErrorLog'])"
+                [title]="'Build Failed'" style="padding-left: 2px;"
+                class="exc-remark-button exc-remark-button-red" tabindex="-1" src="./Images/error-16.png" />
+        </span>
+
+    </div>
 
     <div [style.text-align]="'left'" class="TextTrimming" *ngIf="fieldName == 'StartDate'">{{ rowData[fieldName] |  DateTimePipe:'DTL12' }}</div>
 

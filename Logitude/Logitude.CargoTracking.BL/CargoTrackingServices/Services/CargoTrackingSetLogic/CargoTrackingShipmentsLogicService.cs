@@ -330,7 +330,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetToWarehouseDone(DataRow tableRow)
         {
             tableRow.SetField("ToWarehouseDone", false);
-            if (tableRow["DirectionId"].Equals(importDirection))
+            if (tableRow["DirectionId"].Equals(importDirection) || tableRow["DirectionId"].Equals(customsDirection))
             {
                 if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDate"))
                 {
@@ -338,8 +338,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 }
 
             }
-
-
         }
 
         private static void SetClearanceDone(DataRow tableRow)
@@ -501,7 +499,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetExceptionDescription(DataRow tableRow)
         {
-            tableRow.SetField("CurrentMilestoneExceptions", tableRow["ExceptionDate"] + "," + tableRow["ExceptionDescription"]);
+            var exceptionDate = tableRow["ExceptionDate"]?.ToString();
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? tableRow["ExceptionDescription"] : tableRow["ExceptionDate"] + "," + tableRow["ExceptionDescription"]);
         }
         private static void SetDefaultShipper(DataRow tableRow)
         {

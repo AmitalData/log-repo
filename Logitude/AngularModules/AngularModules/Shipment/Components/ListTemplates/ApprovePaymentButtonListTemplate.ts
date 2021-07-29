@@ -103,11 +103,12 @@ export class ApprovePaymentButtonListTemplate {
                             newWindow.RTL = false;
                         }
                         //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle") + " " + AdditionalResult.Result.CustomsFileNo;//"אישור היבואן להגשת הצהרת יבוא למכס";
+                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle") + " " + myResult.Result?.forwarderShipmentNumber;//"אישור היבואן להגשת הצהרת יבוא למכס";
                         var windowArgs: any = {};
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
                         windowArgs.AdditionalData = AdditionalResult.Result;
+                        windowArgs.ForwarderPartnerId = this.rowData['ForwarderPartnerId'];
                         newWindow.WindowArgs = windowArgs;
                         //newWindow.Add(control);
                         let privateLabelApprovePaymentComponentPath = this.GetPrivateLabelApprovePaymentComponentPath();

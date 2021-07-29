@@ -130,7 +130,9 @@ namespace CargoTrackingWinService.Helper
                                 "Erros: " + exception.Message + Environment.NewLine + 
                                 "Stack Trace: " + exception.StackTrace + Environment.NewLine ;
 
-            if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
+            if (ApplicationInfo.ErrorLogs == null)
+                ApplicationInfo.ErrorLogs = ErrorsLog;
+            else if (!ApplicationInfo.ErrorLogs.Contains(ErrorsLog))
                 ApplicationInfo.ErrorLogs += ErrorsLog;
 
             TrimIfOver4000();

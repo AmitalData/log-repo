@@ -61,6 +61,22 @@ namespace LogitudeTransferData
 
             ProduceKafkaMessages<PortPM>(portPMs, KakaMessageTypes.Port);
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<VesselPM> vesselPMs = GetAllVessels(tenant);
+
+            ProduceKafkaMessages<VesselPM>(vesselPMs, KakaMessageTypes.Vessel);
+        }
+
+        private List<VesselPM> GetAllVessels(int tenant)
+        {
+            VesselQuery vesselQuery = new VesselQuery(tenant);
+            List<VesselPM> vesselPMs = vesselQuery.GetVesselPMsByTenant(tenant).ToList();
+            return vesselPMs;
+        }
+
         private List<CardPM> GetAllCards(int tenant)
         {
             CardQuery cardQuery = new CardQuery(tenant);
@@ -105,7 +121,7 @@ namespace LogitudeTransferData
                         var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
                         var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact });
                         deliveryReport.Wait();
-                        Console.WriteLine($"Upsert Country: {counter}");
+                        Console.WriteLine($"Upsert Lookup: {counter}");
                     }
                 }
             }

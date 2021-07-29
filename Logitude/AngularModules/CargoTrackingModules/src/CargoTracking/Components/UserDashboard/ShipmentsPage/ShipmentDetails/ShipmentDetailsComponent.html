@@ -108,9 +108,9 @@
         </div>
 
         <div>
-            <div class="title">Customs Broker Ref.</div>
+            <div class="title">{{TitleOfCustomsOrForwarder}}</div>
             <ul>
-                <li>{{CustomsBrokerReference}}</li>
+                <li>{{ValueOfCustomsOrForwarder}}</li>
             </ul>
         </div>
 
@@ -166,9 +166,9 @@
             <button [class.active]="selectedNavButton=='Overview'" (click)="PanelsNavigatorClicked('Overview')">Overview</button>
             <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">Cargo Info</button>
             <button [class.active]="selectedNavButton=='CustomsDataPanel'" (click)="PanelsNavigatorClicked('CustomsDataPanel')">Customs Data</button>
-            <button [class.active]="selectedNavButton=='Routing'" (click)="PanelsNavigatorClicked('Routing')">Routing</button>
-            <button [class.active]="selectedNavButton=='Documents'" (click)="PanelsNavigatorClicked('Documents')">Documents</button>
-            <button [class.active]="selectedNavButton=='Partners'" (click)="PanelsNavigatorClicked('Partners')">Partners</button>
+            <button [class.active]="selectedNavButton=='Routing'" (click)="PanelsNavigatorClicked('RoutingPanel')">Routing</button>
+            <button [class.active]="selectedNavButton=='Documents'" (click)="PanelsNavigatorClicked('DocumentsPanel')">Documents</button>
+            <button [class.active]="selectedNavButton=='Partners'" (click)="PanelsNavigatorClicked('PartnersPanel')">Partners</button>
         </div>
     </div>
 

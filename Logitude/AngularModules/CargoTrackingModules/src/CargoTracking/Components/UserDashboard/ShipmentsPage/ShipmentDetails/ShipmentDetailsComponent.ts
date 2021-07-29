@@ -46,6 +46,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
     ShowDetailsSection: boolean = false;
+    TitleOfCustomsOrForwarder: string = "";
+    ValueOfCustomsOrForwarder: string = "";
+    CustomsEntityType: string = "C";
+    ForwardingEntityType: string = "F";
 
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData = null;
@@ -134,6 +138,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
                 this.SetContainersNumbers(result);
+                this.SetCustomsOrForwarderFields();
 
             }
 
@@ -145,7 +150,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
-
 
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
@@ -218,6 +222,32 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     private SetContainersNumbers(result: any) {
         this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
+    }
+
+    SetCustomsOrForwarderFields() {
+        this.SetTitleOfCustomsOrForwarder();
+        this.SetValueOfCustomsOrForwarder();
+    }
+
+    SetTitleOfCustomsOrForwarder() {
+        if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
+            this.TitleOfCustomsOrForwarder = "Customs Broker References";
+        }
+
+        if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
+            this.TitleOfCustomsOrForwarder = "Forwarder Reference";
+        }
+    }
+
+    SetValueOfCustomsOrForwarder() {
+        if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
+            this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber;
+        }
+
+        if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
+            var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? " - " + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
+            this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber + ForwardingShipmentNumber;
+        }
     }
 
     PartnersAddresses: any[] = [];
@@ -390,7 +420,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
                 newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-                newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions?.trim().length > 1 && CurrentMilestoneExceptions != null;
+                newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
                 return newCard;
@@ -908,7 +938,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     OpenMessageWindow(messageDescription, messageDate) {
         this.dialog.open(MessageWindowComponent, {
             data: {
-                title: 'Alert',
+                title: 'Exception',
                 date: messageDate,
                 description: messageDescription,
             }

@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "40642552fa8ea8faa78c4b8a82134a50";
-
+		public const string HashString = "03a9c63896ac4ca04f0b66c741060675";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10097,6 +10096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PostponedChequesCommission",
 					  						ListPropertyPath =  "PostponedChequesCommission",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -10192,7 +10192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -10255,7 +10255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		

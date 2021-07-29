@@ -794,6 +794,21 @@ export class APInvoicePM {
     public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
        
 	 
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
+       
+	 
+    private isCopied: boolean;
+    public get IsCopied() { return this.isCopied; }
+    public set IsCopied(newValue: boolean) { if (this.isCopied != newValue) { this.isCopied = newValue; this.MarkAsDirty("IsCopied"); } }
+       
+	 
+    private copiedFrom: string;
+    public get CopiedFrom() { return this.copiedFrom; }
+    public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		

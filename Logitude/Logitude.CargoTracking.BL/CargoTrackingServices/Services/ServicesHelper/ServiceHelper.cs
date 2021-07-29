@@ -29,10 +29,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getIsIncrementalBuildRunningcommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteIsIncrementalRunningCommand(getIsIncrementalBuildRunningcommand);
+                connection.Close();
             }
-            finally
+            catch (Exception ex)
             {
                 connection.Close();
+                throw ex;
             }
             return result;
         }
@@ -70,10 +72,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getAutomaticLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteAutomaticLastUpdateDateCommand(getAutomaticLastUpdateDateCommand);
+                connection.Close();
+
             }
-            finally
+            catch (Exception ex)
             {
                 connection.Close();
+                throw ex;
             }
             return result;
         }
@@ -110,6 +115,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteTableLastUpdateCommand(getLastUpdateDateCommand);
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw ex;
             }
             finally
             {

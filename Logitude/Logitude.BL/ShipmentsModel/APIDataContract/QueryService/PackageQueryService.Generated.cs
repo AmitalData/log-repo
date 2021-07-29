@@ -122,12 +122,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myPackageTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("PackageType Can't be update"); 
+						 								//throw new ApplicationException("PackageType Can't be update"); 
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -135,44 +132,34 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)// && item.Quantity != null)
-					{							//throw new ApplicationException("Quantity Can't be update"); 
+                    							//throw new ApplicationException("Quantity Can't be update"); 
 							temp.Quantity = item.Quantity;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ContainerNumber))
-					{							//throw new ApplicationException("ContainerNumber Can't be update"); 
+                    							//throw new ApplicationException("ContainerNumber Can't be update"); 
 							temp.ContainerNumber = item.ContainerNumber;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
+                    							//throw new ApplicationException("Volume Can't be update"); 
 							temp.Volume = item.Volume;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && item.Weight != null)
-					{							//throw new ApplicationException("Weight Can't be update"); 
+                    							//throw new ApplicationException("Weight Can't be update"); 
 							temp.Weight = item.Weight;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Description))
-					{							//throw new ApplicationException("Description Can't be update"); 
+                    							//throw new ApplicationException("Description Can't be update"); 
 							temp.Description = item.Description;
 
-										}  
+					 
 
 										   
 						MyList.Add(temp);

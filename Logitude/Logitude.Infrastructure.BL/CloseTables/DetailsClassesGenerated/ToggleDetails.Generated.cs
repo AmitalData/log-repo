@@ -271,6 +271,24 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+
+                Name = "Reports in Shared Logistics", 
+                Code = "RSL", 
+                SearchFields = "RSL,Reports in Shared Logistics", 
+                Description = "Reports in Shared Logistics", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BIF", 
+                Name = "Invoices DWH", 
+                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
@@ -292,6 +310,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
 			});
+
 			 
             all.Add(new ToggleDetails()
             {    
@@ -300,6 +319,16 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen", 
                 Description = "Allow Tenants to Show Quotes Fact on the BI Report Screen", 
 			});
+
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PLE", 
+                Name = "PL Export Shipments", 
+                SearchFields = "PLE,PL Export Shipments,Create New Air Shipment Frol Private Label", 
+                Description = "Create New Air Shipment Frol Private Label", 
+			});
+
 			
             return all;
        }

@@ -159,6 +159,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipmentTypeId).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DepartmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.HandlerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IncotermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
@@ -854,6 +855,10 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.MainCarriageFromPartnerId).HasColumnName("MainCarriageFromPartnerId");
             this.Property(t => t.MainCarriageToPartnerId).HasColumnName("MainCarriageToPartnerId");
             this.Property(t => t.FreightLocationId).HasColumnName("FreightLocationId");
+            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
+            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
+            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
+
         }
     }
 }
