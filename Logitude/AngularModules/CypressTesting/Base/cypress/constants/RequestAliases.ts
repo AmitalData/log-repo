@@ -241,4 +241,9 @@ export class RequestAliases {
     public static readonly InfoIconImage = "InfoIconImage"
     public static readonly PrintReportWindowOpen = 'PrintReportWindowOpen';
 
+    //CRM
+    public static readonly PostActivity = "PostActivity"
+    public static readonly PutActivity = "PutActivity"
+    public static readonly GetCompleteActivity = "GetCompleteActivity"
+
 }
