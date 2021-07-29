@@ -12331,7 +12331,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;1d37857a-d248-4423-a046-be456fea7cca&quot;"
     FieldName="&quot;PostponedChequesCommission&quot;"
@@ -12360,6 +12359,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PostponedChequesCommission&quot;"
     ListPropertyPath="&quot;PostponedChequesCommission&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -12408,7 +12408,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;b3b6f04f-f0d9-470b-b8ad-d053207d3aa2&quot;"
     FieldName="&quot;BalanceInForeignCurrency&quot;"
@@ -12478,7 +12477,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -12554,14 +12553,13 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Query
     Code="&quot;General Ledger Accounts&quot;"
     TextCode="&quot;General Ledger Accounts&quot;"
