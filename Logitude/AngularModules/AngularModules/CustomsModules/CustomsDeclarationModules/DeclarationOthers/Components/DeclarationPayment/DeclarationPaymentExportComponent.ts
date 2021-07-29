@@ -861,7 +861,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
-            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ChangedDeclaration");
+            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.ChangedDeclarationExport");
         }
         else {
             this.IsDisplayOnly = false;
@@ -873,7 +873,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
-            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.PaidDeclaration");
+            this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.PaidDeclarationExport");
         }
 
         if (entityPM.DeclarationStatusTypeCode == "11") {
