@@ -5,11 +5,11 @@ Feature: Phone Call Create, Search, and Edit from CRM
     Scenario: Create new phone call
         Given the user logged in and open Activites in CRM
         And navigate phone call wizerd and fill the following details
-            | Customer     | t               |
-            | CallWith     | w               |
-            | Subject      | CurrentDate     |
-            | Description  | new description |
-            | PriorityCode | Normal          |
+            | Customer     | TestCustomer         |
+            | CallWith     | TestCustomer Contact |
+            | Subject      | CurrentDate          |
+            | Description  | new description      |
+            | PriorityCode | Normal               |
         When create phone call
         Then the phone call should create successfully
 
