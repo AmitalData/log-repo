@@ -356,13 +356,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         GSTRING3 = entityPM.Id,
 
                         DEBUG = "F",
-                        DONEOPERATION = "D",
+                        DONEOPERATION = "A",
                         QUEUEMANAGEMENT = true,
                           GGGQCPMs = new List<GGGQCPM>() {
                                new GGGQCPM(){ 
                                     ChangeSetOp= ChangeSetOperation.Insert,
                                      FIELDID= "TASK_PARAM",
-                                      FIELDVAL= "PROC=A1468"
+                                      FIELDVAL= "PROC=A1468 "+(char)27+"; PRIMARY_NUM="+entityPM.Id
                                }
                           }
                         
