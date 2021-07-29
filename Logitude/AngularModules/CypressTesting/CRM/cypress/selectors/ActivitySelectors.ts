@@ -23,6 +23,7 @@ export class ActivitySelectors {
     public static readonly CancelledLabel = ".ShortTitleControl";
     public static readonly RecentEntityItem = ".RecentEntityItem";
     public static readonly Button = ".Button";
+    public static readonly QuickSearchTextBox = ".LogitudeQuickSearchTextBox";
     public static readonly MyOpenActivitiesList = "[data-cy='MyOpenActivities']"
     public static readonly MyClosedActivitiesList = "[data-cy='MyClosedActivities']"
     public static readonly CancelledActivitiesList = "[data-cy='CancelledActivities']"

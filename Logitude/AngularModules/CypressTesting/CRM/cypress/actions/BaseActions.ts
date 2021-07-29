@@ -19,11 +19,11 @@ export function CreateActivity() {
 }
 
 function DefinePostActivityRequest() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.Activity, RequestAliases.PostPhoneCall);
+    cy.DefineRequestWait(RestAPI.POST, Urls.Activity, RequestAliases.PostActivity);
 }
 
 export function AssertCreateActivity() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostPhoneCall, 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostActivity, 200).then((interception) => {
         searchFieldValue = interception.response.body.Subject
     });
 }
@@ -43,7 +43,7 @@ export function AssertSearchActivity() {
 
 export function OpenActivity() {
     DefineActivityGetSingleRequest();
-    cy.get('.LogitudeQuickSearchTextBox')
+    cy.get(ActivitySelectors.QuickSearchTextBox)
         .within(() => {
             cy.get('ul > li').eq(0).click({ force: true });
         });
@@ -63,27 +63,27 @@ function AssertActivityGetSingle() {
 }
 
 export function AddNewNote(note) {
-    DefinePutPhoneCallRequest()
+    DefinePutActivityRequest()
     cy.get(ActivitySelectors.HelperNotesButton).click()
     cy.get(ActivitySelectors.HelperNotes).type(note)
 }
 
 export function UpdateActivity() {
-    DefinePutPhoneCallRequest()
+    DefinePutActivityRequest()
     cy.Click(ActivitySelectors.SaveButton, null)
 }
 
 export function MarkAsComplete() {
-    DefinePutPhoneCallRequest()
+    DefinePutActivityRequest()
     cy.get(ActivitySelectors.MarkAsComplete).click()
 }
 
-function DefinePutPhoneCallRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Activity, RequestAliases.PutPhoneCall)
+function DefinePutActivityRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Activity, RequestAliases.PutActivity)
 }
 
 export function AssertUpdateActivity() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutPhoneCall, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.PutActivity, 200)
 }
 
 export function AssertActivityExistInCorrectList(queryLink: string) {
@@ -101,17 +101,17 @@ export function NavigatesToCopyActivityWizerd() {
 }
 
 export function AssertCreateCopyActivity() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostPhoneCall, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.PostActivity, 200)
 }
 
 export function ReOpenActivity() {
-    DefinePutPhoneCallRequest()
+    DefinePutActivityRequest()
     cy.get(ActivitySelectors.MenuButtons).click()
     cy.Click(ActivitySelectors.ReOpenActivity, null)
 }
 
 export function CancelActivity() {
-    DefinePutPhoneCallRequest()
+    DefinePutActivityRequest()
     cy.get(ActivitySelectors.MenuButtons).click()
     cy.Click(ActivitySelectors.CancelActivity, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);

@@ -242,8 +242,8 @@ export class RequestAliases {
     public static readonly PrintReportWindowOpen = 'PrintReportWindowOpen';
 
     //CRM
-    public static readonly PostPhoneCall = "PostPhoneCall"
-    public static readonly PutPhoneCall = "PutPhoneCall"
+    public static readonly PostActivity = "PostActivity"
+    public static readonly PutActivity = "PutActivity"
     public static readonly GetCompleteActivity = "GetCompleteActivity"
 
 }
