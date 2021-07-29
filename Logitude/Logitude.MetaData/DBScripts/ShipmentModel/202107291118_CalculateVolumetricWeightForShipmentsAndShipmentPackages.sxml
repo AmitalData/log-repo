@@ -1,5 +1,4 @@
-﻿
-<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentPackages">
+﻿<Script DBType="Main" Module="Shipment">
   <Sql Version="1">
     <![CDATA[
 	  If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
@@ -28,8 +27,8 @@
 		 into #tempTable
 
 		FROM ShipmentPackages join Shipments on ShipmentPackages.ShipmentId = Shipments.Id where ShipmentPackages.Tenant = 2086
-		And ShipmentPackages.VolumetricWeight is null And Weight is not null And ShipmentPackages.Volume is null and $LastCounterWhere$
-  
+		And ShipmentPackages.VolumetricWeight is null And Weight is not null And ShipmentPackages.Volume is null 
+    
      	DECLARE @Id as varchar(15)
 		  DECLARE @ShipmentId as varchar(15)
 			DECLARE @Tenant as int
