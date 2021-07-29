@@ -43,6 +43,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.ContainerizationDetails.CustomsAgentIDSpecified = true;
             req.ContainerizationDetails.AgentDeclaration = containerization.AgentDeclaration;
             req.ContainerizationDetails.AgentDeclarationSpecified = true;
+            req.ContainerizationDetails.AgentDeclaration = containerization.AgentDeclaration;
             req.ContainerizationDetails.containerizationDate = containerization.ContainerizationDate;
                 List<AV_MSG2_ContainerizationMessageDeclaration> connectedDeclarations = new List<AV_MSG2_ContainerizationMessageDeclaration>();
 

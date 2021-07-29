@@ -25,7 +25,11 @@ export class AgentStatementContainerization
         }
     }
     SendButtonClicked(event) {
-        this.CurrentSession.CurrentWindow.Close(event);
+        if (this.IsSelected) {
+            this.CurrentSession.CurrentWindow.Close("true");
+        } else {
+            this.CurrentSession.CurrentWindow.Close("false");
+        }
     }
 
     CancelButtonClicked() {

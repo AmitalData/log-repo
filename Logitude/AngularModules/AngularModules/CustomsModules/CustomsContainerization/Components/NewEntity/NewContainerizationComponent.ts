@@ -452,7 +452,11 @@ export class NewContainerizationComponent extends BaseComponent {
             logitudeWindow.WindowClosed.subscribe((event: any) => {
                 if (event != null) {
                     SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                    this.entityPM.AgentDeclaration = true;
+                    if (event == "true") {
+                        this.entityPM.AgentDeclaration = true;
+                    } else {
+                        this.entityPM.AgentDeclaration = false;
+                    }
                     this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
                     this.containerizationPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
                         this.CurrentSession.CurrentWindow.Close("0");
