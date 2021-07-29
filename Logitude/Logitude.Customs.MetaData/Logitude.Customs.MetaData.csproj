@@ -504,6 +504,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
