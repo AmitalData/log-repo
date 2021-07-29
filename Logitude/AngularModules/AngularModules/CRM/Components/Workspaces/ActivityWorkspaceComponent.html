@@ -163,7 +163,7 @@
                                             </div>
 
                                             <div>
-                                                <p *ngIf="IsQueryVisible_MyOpen" class="QueryLink" (click)="ViewActivityQuery('Open:My')">My Open Activities ({{MyOpenCount}})</p>
+                                                <p *ngIf="IsQueryVisible_MyOpen" [attr.data-cy]="'MyOpenActivities'" class="QueryLink" (click)="ViewActivityQuery('Open:My')">My Open Activities ({{MyOpenCount}})</p>
                                                 <p *ngIf="IsQueryVisible_AllOpen" class="QueryLink" (click)="ViewActivityQuery('Open:All')">All Open Activities ({{AllOpenCount}})</p>
                                             </div>
                                         </div>
@@ -172,7 +172,7 @@
                                         <div class="QueriesSection" *ngIf="IsQueryVisible_ClosedGroup">
                                             <div>Closed Activities</div>
                                             <div>
-                                                <p *ngIf="IsQueryVisible_MyClosed" class="QueryLink" (click)="ViewActivityQuery('Closed:My')">My Closed Activities</p>
+                                                <p *ngIf="IsQueryVisible_MyClosed" [attr.data-cy]="'MyClosedActivities'" class="QueryLink" (click)="ViewActivityQuery('Closed:My')">My Closed Activities</p>
                                                 <p *ngIf="IsQueryVisible_AllClosed" class="QueryLink" (click)="ViewActivityQuery('Closed:All')">All Closed Activities</p>
                                                 <p *ngIf="IsQueryVisible_Meetings" class="QueryLink" (click)="ViewActivityQuery('Meetings')">Meetings Summary</p>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div>Others</div>
                                             <div>
                                                 <p *ngIf="IsQueryVisible_All" class="QueryLink" (click)="ViewActivityQuery('All')">All Activities</p>
-                                                <p *ngIf="IsQueryVisible_Cancelled" class="QueryLink" (click)="ViewActivityQuery('Cancelled')">Cancelled Activities</p>
+                                                <p *ngIf="IsQueryVisible_Cancelled" [attr.data-cy]="'CancelledActivities'" class="QueryLink" (click)="ViewActivityQuery('Cancelled')">Cancelled Activities</p>
                                             </div>
                                         </div>
 
