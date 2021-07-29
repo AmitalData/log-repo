@@ -1112,7 +1112,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     SavingPromise(isChromeMode: boolean): Promise<boolean> {
 
-
+        debugger;
         return new Promise((resolve) => {
             if (this.IsNewEntity) {
                 this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
@@ -1120,6 +1120,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if (!res.HasError) {
                         this.entity = res.Result;
                         this.EntityPM = this.entity;// now we have the Sequence from server (and can update )
+
+                        console.log("..aaaa", this.currentSession.CurrentEditComponent.EntityPM);
+                        this.currentSession.CurrentEditComponent.ReloadEntityPM();
                         console.log("..Saved Successfully ", this.entity);
                         resolve(true);
                         if (isChromeMode) {

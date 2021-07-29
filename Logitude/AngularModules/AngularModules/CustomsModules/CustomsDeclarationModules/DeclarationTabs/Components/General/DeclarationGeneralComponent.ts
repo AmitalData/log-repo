@@ -96,9 +96,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                                     //    this.ConsigmentTabs.push(tab);
                                                     //}
                                                     this.BuildConsignments();
+                                                    this.BuildRecipientsList();
+
                                                     this.checkImportersVisibility();
                                                     this.DisplayOnlyCheck();
-                                                    this.BuildRecipientsList();
 
                                                     this.CheckRequrierdFieldsForSend();
 
@@ -474,9 +475,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.UIProperties.SetEnabled("DestinationCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ExportAutonomyRegionTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsExporterConfirmation", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientName", this.DeclarationExportRecipientTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecipientIssueCountryCode", "Customs.DeclarationExportRecipient", !this.IsDisplayOnly);
         
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
         this.IsTransferImporterEnabled = !this.IsDisplayOnly;
