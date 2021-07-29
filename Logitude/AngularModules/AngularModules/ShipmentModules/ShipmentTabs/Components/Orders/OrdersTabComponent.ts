@@ -947,6 +947,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
             if (this.EntityPM.ShipmentOrderPackages.length == 0) {
                 this.EntityPM.OrderChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.OrderGrossWeight, this.EntityPM.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+                this.ComputeOrderVolumetricWeight();
             }
         }
     }

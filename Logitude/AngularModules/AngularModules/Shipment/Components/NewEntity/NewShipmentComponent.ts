@@ -2782,6 +2782,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.OrderGrossWeight != newValue) {
             this.EntityPM.OrderGrossWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight();
+            this.ComputeOrderVolumetricWeight();
             this.SetUIProperties_OrderDetails();
         }
     }
