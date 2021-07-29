@@ -98,6 +98,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                PackagesQuantity = shipment.PackagesQuantity,
                                                                ConsigneeName = consignee == null ? null : consignee.EnglishName,
                                                                CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
+                                                               ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
                                                                FromPortCountryCode = fromPort.CountryCode,
