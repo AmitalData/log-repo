@@ -46,7 +46,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
     ShowDetailsSection: boolean = false;
-    TitileOfCustomsOrForwarder: string = "";
+    TitleOfCustomsOrForwarder: string = "";
     ValueOfCustomsOrForwarder: string = "";
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
@@ -138,7 +138,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
                 this.SetContainersNumbers(result);
-                this.SetTitleAndValueOfCustomsOrForwarder();
+                this.SetCustomsOrForwarderFields();
 
             }
 
@@ -224,18 +224,18 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
     }
 
-    SetTitleAndValueOfCustomsOrForwarder() {
+    SetCustomsOrForwarderFields() {
         this.SetTitleOfCustomsOrForwarder();
         this.SetValueOfCustomsOrForwarder();
     }
 
     SetTitleOfCustomsOrForwarder() {
         if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
-            this.TitileOfCustomsOrForwarder = "Customs Broker References";
+            this.TitleOfCustomsOrForwarder = "Customs Broker References";
         }
 
         if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
-            this.TitileOfCustomsOrForwarder = "Forwarder Reference";
+            this.TitleOfCustomsOrForwarder = "Forwarder Reference";
         }
     }
 
