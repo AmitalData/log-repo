@@ -31,5 +31,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string SecondaryColor { get; set; }
         public bool HasLogboxAccess { get; set; }
 
+        public string MainTabHighlightColor { get; set; }
+        public string DocumentTypeHighlightColor { get; set; }
+
     }
 }

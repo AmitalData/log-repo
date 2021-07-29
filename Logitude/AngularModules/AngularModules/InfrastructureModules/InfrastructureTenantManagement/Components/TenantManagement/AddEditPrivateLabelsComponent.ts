@@ -47,6 +47,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     secondaryColorOpacity: number = 100;
     private secondaryColorCode: string;
     wrongSecondaryColor: boolean = false;
+
+    mainTabHighlightColorOpacity: number = 100;
+    private mainTabHighlightColorCode: string;
+    wrongMainTabHighlightColor: boolean = false;
+
+    documentTypeHighlightColorOpacity: number = 100;
+    private documentTypeHighlightColorCode: string;
+    wrongDocumentTypeHighlightColor: boolean = false;
+
     public BackgroundImageId: string;
     public LoginImageId: string;
     public LoginProgressImageId: string;
@@ -253,14 +262,38 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
     private SetColorsFromEntity() {
+        this.setMainColor();
+        this.setSecondaryColor();
+        this.setMainTabHighlightColor();
+        this.setDocumentTypeHighlightColor(); 
+    }
+
+    private setDocumentTypeHighlightColor() {
+        if (this.EntityPM.DocumentTypeHighlightColor) {
+            this.documentTypeHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.DocumentTypeHighlightColor);
+            this.documentTypeHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.DocumentTypeHighlightColor);
+        }
+    }
+
+    private setMainTabHighlightColor() {
+        if (this.EntityPM.MainTabHighlightColor) {
+            this.mainTabHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainTabHighlightColor);
+            this.mainTabHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainTabHighlightColor);
+        }
+    }
+
+    private setSecondaryColor() {
+        if (this.EntityPM.SecondaryColor) {
+            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
+            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
+        }
+    }
+
+    private setMainColor() {
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
         }
-        if (this.EntityPM.SecondaryColor) {
-            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
-            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
-        } 
     }
 
     GetOpacityFromRGBA(rgba: string) {
@@ -315,10 +348,60 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.mainColorOpacity = value;
         this.UpdateEntityMainColor();
     }
-     
+
+    get MainTabHighlightColorOpacity() {
+        return this.mainTabHighlightColorOpacity;
+    }
+    set MainTabHighlightColorOpacity(value: number) {
+        this.mainTabHighlightColorOpacity = value;
+        this.UpdateEntityMainTabHighlightColor();
+    }
+
+    get DocumentTypeHighlightColorOpacity() {
+        return this.documentTypeHighlightColorOpacity;
+    }
+    set DocumentTypeHighlightColorOpacity(value: number) {
+        this.documentTypeHighlightColorOpacity = value;
+        this.UpdateEntityDocumentTypeHighlightColor();
+    }
+
+
     private UpdateEntityMainColor() {
         this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
     }
+
+    private UpdateEntityMainTabHighlightColor() {
+        this.EntityMainTabHighlightColor = this.ConvertHexToRGBColor(this.MainTabHighlightColorCode, this.MainTabHighlightColorOpacity);
+    }
+
+    private UpdateEntityDocumentTypeHighlightColor() {
+        this.EntityDocumentTypeHighlightColor = this.ConvertHexToRGBColor(this.DocumentTypeHighlightColorCode, this.DocumentTypeHighlightColorOpacity);
+    }
+
+
+
+    public get MainTabHighlightColorCode(): string {
+        return this.mainTabHighlightColorCode;
+    }
+    public set MainTabHighlightColorCode(hexColor: string) {
+        this.mainTabHighlightColorCode = hexColor;
+        this.ValidateMainTabHighlightColorCode(hexColor);
+        this.UpdateEntityMainTabHighlightColor();
+    }
+
+
+
+    public get DocumentTypeHighlightColorCode(): string {
+        return this.documentTypeHighlightColorCode;
+    }
+    public set DocumentTypeHighlightColorCode(hexColor: string) {
+        this.documentTypeHighlightColorCode = hexColor;
+        this.ValidateDocumentTypeHighlightColorCode(hexColor);
+        this.UpdateEntityDocumentTypeHighlightColor();
+    }
+
+
+
 
     public get MainColorCode(): string {
         return this.mainColorCode;
@@ -365,6 +448,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
 
+    private ValidateMainTabHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "MainTabHighlightColorCode"))
+            this.wrongMainTabHighlightColor = true;
+        else
+            this.wrongMainTabHighlightColor = false;
+         
+    }
+
+     
     private ValidateMainColorCode(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;
@@ -389,6 +481,31 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
     set EntityMainColor(value: string) {
         this.EntityPM.MainColor = value;
+
+    } 
+
+    private ValidateDocumentTypeHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "DocumentTypeHighlightColorCode"))
+            this.wrongDocumentTypeHighlightColor = true;
+        else
+            this.wrongDocumentTypeHighlightColor = false;
+
+    }
+
+
+    get EntityMainTabHighlightColor() {
+        return this.EntityPM.MainTabHighlightColor;
+    }
+    set EntityMainTabHighlightColor(value: string) {
+        this.EntityPM.MainTabHighlightColor = value;
+
+    }
+
+    get EntityDocumentTypeHighlightColor() {
+        return this.EntityPM.DocumentTypeHighlightColor;
+    }
+    set EntityDocumentTypeHighlightColor(value: string) {
+        this.EntityPM.DocumentTypeHighlightColor = value;
 
     }
 
@@ -722,7 +839,29 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             this.EntityPM.MainColor = value;
         }
     }
- 
+
+    get MainTabHighlightColor() {
+        return this.EntityPM.MainTabHighlightColor;
+    }
+
+    set MainTabHighlightColor(value: string) {
+        if (value != this.EntityPM.MainTabHighlightColor) {
+            this.EntityPM.MainTabHighlightColor = value;
+        }
+    }
+
+
+    get DocumentTypeHighlightColor() {
+        return this.EntityPM.DocumentTypeHighlightColor;
+    }
+
+    set DocumentTypeHighlightColor(value: string) {
+        if (value != this.EntityPM.DocumentTypeHighlightColor) {
+            this.EntityPM.DocumentTypeHighlightColor = value;
+        }
+    }
+
+
     get SecondaryColor() {
         return this.EntityPM.SecondaryColor;
     }
@@ -744,13 +883,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
             errors.push("Hybrid Partner Field is Required");
         }
-        if (this.wrongMainColor) {
-            errors.push("Please Enter Valid Main Color");
-        }
-
-        if (this.wrongSecondaryColor) {
-            errors.push("Please Enter Valid Secondary Color");
-        }
+        this.ValidateColors(errors);
 
         this.ValidationErrorsList = errors;
 
@@ -788,6 +921,26 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
     private myCloner: Cloner;
+    private ValidateColors(errors: string[]) {
+        if (this.wrongMainColor) {
+            errors.push("Please Enter Valid Main Color");
+        }
+
+        if (this.wrongSecondaryColor) {
+            errors.push("Please Enter Valid Secondary Color");
+        }
+
+
+        if (this.wrongMainTabHighlightColor) {
+            errors.push("Please Enter Valid Main Tab Highlight Color");
+        }
+
+
+        if (this.wrongDocumentTypeHighlightColor) {
+            errors.push("Please Enter Valid Document Type Highlight Color");
+        }
+    }
+
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('PackageCode');

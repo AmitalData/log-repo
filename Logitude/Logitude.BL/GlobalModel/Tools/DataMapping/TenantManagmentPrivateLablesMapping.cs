@@ -37,6 +37,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
+            entityPOCO.MainTabHighlightColor = entityPM.MainTabHighlightColor;
+            entityPOCO.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
+
 
         }
     }
