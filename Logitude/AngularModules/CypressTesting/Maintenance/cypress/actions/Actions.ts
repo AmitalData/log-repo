@@ -2092,9 +2092,8 @@ function DefineSpecialServicesTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.SpecialServicesTypesGetSingle, RequestAliases.GetSignle);
 }
 
-export function FillSpecialServicesTypeLocalName(localName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, " ")
-    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, localName)
+export function FillSpecialServicesTypeLocalName() {
+    cy.FillLogTextBox(MaintenanceSelectors.SpecialServicesTypeLocalName, gr.GenerateRandomNumberAndString(5))
 }
 
 export function UpdateSpecialServicesType() {

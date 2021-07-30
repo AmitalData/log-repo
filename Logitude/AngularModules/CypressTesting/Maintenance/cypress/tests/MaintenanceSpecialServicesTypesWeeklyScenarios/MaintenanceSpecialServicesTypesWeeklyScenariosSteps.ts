@@ -61,8 +61,8 @@ Then("the special services type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the special services type
-Given("{string} as special services type local name", (localName) => {
-    MaintenanceActions.FillSpecialServicesTypeLocalName(localName)
+Given("edit special services type local name", () => {
+    MaintenanceActions.FillSpecialServicesTypeLocalName()
 });
 
 When("update special services type", () => {
