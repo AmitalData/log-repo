@@ -906,22 +906,22 @@ namespace WebFreight.Web.WcfApi
         private void MapCustomAgent(ShipmentPM entityPM, CardRepository cardsReporistory)
         {
 
-            if (entityPM.AssginedtoCustomsAgentId == "--")
+            if (entityPM.CustomAgentImportId == "--")
             {
-                entityPM.AssginedtoCustomsAgentId = null;
+                entityPM.CustomAgentImportId = null;
             }
 
-            if (entityPM.AssginedtoCustomsAgentId != null)
+            if (entityPM.CustomAgentImportId != null)
             {
-                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.AssginedtoCustomsAgentId, entityPM.Tenant, false);
+                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.CustomAgentImportId, entityPM.Tenant, false);
 
                 if (customAgent != null && !string.IsNullOrEmpty(customAgent.Id))
                 {
-                    entityPM.AssginedtoCustomsAgentId = customAgent.Id;
+                    entityPM.CustomAgentImportId = customAgent.Id;
                 }
                 else
                 {
-                    throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.");
+                    throw new ApplicationException("CustomAgentImportId field doesn't exist in the database, Upsert this entity before using it.");
                 }
             }
          
