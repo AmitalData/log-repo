@@ -121,6 +121,7 @@ namespace Logitude.Test.Base.Services
                 CurrencyEURId = GetCurrencyId("EUR"),
                 MeasurementGRWTId = GetMeasurementId("GRWT"),
                 ChargeTypeAFTId = GetChargeTypeId("AFT"),
+                ChargeTypeOFTId = GetChargeTypeId("OFT"),
                 IncotermLDEId = GetIncotermId("LDE"),
                 PaymentTermCashId = GetPaymentTermId("Cash"),
                 VATTypeZeroId = GetVATTypeId("ZERO"),
