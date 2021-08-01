@@ -2184,7 +2184,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(shipmentPM.ShipperReference1))
                         {
-                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine + "Inv.No:" + shipmentPM.ShipperReference1;
+                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine + shipmentPM.ShipperReference1;
                         }
                     }
 
@@ -2340,7 +2340,7 @@ namespace WebFreight.Web.ReportsWebServices
                             myDescriptionOfGoods += Environment.NewLine;
                         }
 
-                        myDescriptionOfGoods += "Inv.No:" + shipmentPM.ShipperReference1;
+                        myDescriptionOfGoods += shipmentPM.ShipperReference1;
                     }
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
