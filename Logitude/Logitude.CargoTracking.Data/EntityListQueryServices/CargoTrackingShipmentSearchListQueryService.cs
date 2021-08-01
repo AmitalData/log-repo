@@ -86,18 +86,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
         public List<CargoTrackingShipmentList> GetShipmentsByFilters(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
-            List<string>  shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
-
-            List<CargoTrackingShipmentList> shipments = GetFilteredShipmentsByIds(pageIndex, pageSize, shipmentFilters, shipmentsIds);
+            List<CargoTrackingShipmentList> shipments = GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
 
             return shipments;
         }
 
         public IQueryable<CargoTrackingShipmentList> GetShipmentsByFilters(CargoTrackingShipmentFilters shipmentFilters)
         {
-            List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
-
-            IQueryable<CargoTrackingShipmentList> shipments = GetFilteredShipmentsByIds(shipmentFilters, shipmentsIds);
+            IQueryable<CargoTrackingShipmentList> shipments = GetFilteredShipmentsBySearchText(shipmentFilters);
 
             return shipments;
         }
@@ -111,28 +107,40 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         }
 
-        private List<CargoTrackingShipmentList> GetFilteredShipmentsByIds(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
+        public List<CargoTrackingShipmentList> GetFilteredShipmentsByIds(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetCargoTrackingShipments(pageIndex, pageSize,shipmentsIds.ToList(), shipmentFilters);
             return shipments;
         }
-        private IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsByIds(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
+        public List<CargoTrackingShipmentList> GetFilteredShipments(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetFilteredShipmentsWithMilstones(pageIndex, pageSize, shipmentFilters);
+            return shipments;
+        }
+        public IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsByIds(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             IQueryable<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds.ToList(), shipmentFilters);
             return shipments;
         }
+        private IQueryable<CargoTrackingShipmentList> GetFilteredShipmentsBySearchText(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            IQueryable<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentFilters);
+            return shipments;
+        }
 
         public int GetShipmentsCount(CargoTrackingShipmentFilters shipmentFilters)
         {
-            List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
+            //List<string> shipmentsIds = GetTenantShipmentsIdsBySearchKey(shipmentFilters.SearchText, shipmentFilters.Tenant);
 
-            bool hasSearchKeyWithNoResults = !string.IsNullOrWhiteSpace(shipmentFilters.SearchText) && shipmentsIds.Count == 0;
-            if (hasSearchKeyWithNoResults)
-                return 0;
+            //bool hasSearchKeyWithNoResults = !string.IsNullOrWhiteSpace(shipmentFilters.SearchText) && shipmentsIds.Count == 0;
+            //if (hasSearchKeyWithNoResults)
+            //    return 0;
 
-            return GetFilteredShipmentsCount(shipmentFilters, shipmentsIds);
+            return GetFilteredShipmentsCount(shipmentFilters);
         }
 
         private int GetFilteredShipmentsCount(CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
@@ -141,14 +149,20 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             int shipmentsCount = shipmentsQuery.GetShipmentsCount(shipmentsIds.ToList(), shipmentFilters);
             return shipmentsCount;
         }
-
+        private int GetFilteredShipmentsCount(CargoTrackingShipmentFilters shipmentFilters)
+        {
+            CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
+            int shipmentsCount = shipmentsQuery.GetShipmentsCount(shipmentFilters);
+            return shipmentsCount;
+        }
         private static List<string> GetTenantShipmentsIdsBySearchKey(string searchKey, int tenant)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
                 IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = repo.GetShipmentSearchs(searchKey, tenant);
-                return shipmentsSearchEntities.Select(d => d.ShipmentId).Distinct().ToList();
+                IQueryable<string> lastQuery = shipmentsSearchEntities.Select(d => d.ShipmentId).Distinct();
+                return lastQuery.ToList();
             }
 
             return new List<string>();
