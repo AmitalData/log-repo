@@ -543,10 +543,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 result = string.IsNullOrEmpty(result) ? client.FullName : result + "," + client.FullName;
             }
+            else if (!string.IsNullOrEmpty(entityPM.ImporterName))
+            {
+                result = string.IsNullOrEmpty(result) ? entityPM.ImporterName : result + "," + entityPM.ImporterName;
+            }
 
-         //   if (isNewEntity)
-        //    {
-                foreach (ConsignmentPM item in entityPM.Consignments)
+
+            //   if (isNewEntity)
+            //    {
+            foreach (ConsignmentPM item in entityPM.Consignments)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
                     {
