@@ -84,6 +84,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? TotalInvoiceAmount { get; set; }
         [Column("OriginalReference")]
 	    public string OriginalReference { get; set; }
+        [Column("JournalLineNumber")]
+	    public int JournalLineNumber { get; set; }
         [Column("PreviousReference")]
 	    public string PreviousReference { get; set; }
     }
