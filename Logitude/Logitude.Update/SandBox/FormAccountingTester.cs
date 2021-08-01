@@ -235,8 +235,24 @@ namespace Logitude.Update.SandBox
 
         private void fixJournalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+                        
+            string Id = "1-15275662";
+            int Tenant = 29;
+            string JournalNumber = "1046993";
+            var accountingContext = AccountingContext.GetContext(Tenant);
+            var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+
+            var listTransactionId = new List<string>() {"1-126134019","1-126160652","1-126160668","1-126160730","1-93363452" };
+            myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, false);
+            
+
+
+
+            return;
+
             var fixJournaRecolService = new FixJournaRecolService();
-            fixJournaRecolService.FixByJournalNumber("19698", 28);
+            fixJournaRecolService.FixByJournalNumber(JournalNumber, Tenant);
         }
     }
 }
