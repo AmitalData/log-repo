@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "f2bad346802bdd0d5b5a2c83359513be";
+		public const string HashString = "dd8fc83d7fab95f19abad595914cee89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18228,6 +18228,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationFCalculateDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.F.CalculateDateTime", DefaultText = "Calculate DateTime",LocalDefaultText = @"תאריך חישוב", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHMultiUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.MultiUpdate", DefaultText = "Update Process Code",LocalDefaultText = @"עדכון קוד תהליך/הנחה פטור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update One Item",LocalDefaultText = @"עדכן פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

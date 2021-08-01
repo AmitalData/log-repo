@@ -637,12 +637,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             Declaration: this.EntityPM,
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
-        logWindow.Height = 350;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Customs.Declaration.TH.MultiUpdate");
+        logWindow.Width = 500;
+        logWindow.Height = 320;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/MultiUpdateComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiUpdateComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });

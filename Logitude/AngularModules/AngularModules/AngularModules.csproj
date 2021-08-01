@@ -298,7 +298,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\SendDeclaration\SendManifestComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\ExporterInvoiceComponent.html" />
-    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\MultiUpdateComponenthtml.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\MultiUpdateComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateCountryOfOriginComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
@@ -1372,6 +1372,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendMultiUpdateRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendCollateralRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContainerizationResponseData.ts" />
