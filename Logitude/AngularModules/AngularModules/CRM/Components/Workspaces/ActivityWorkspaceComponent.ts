@@ -33,7 +33,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public DataContext = this;
     public QuickSearchItems: ActivityList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsActivityRecentListLoaded: boolean = false;
+
     constructor() {
         super(); 
         this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
@@ -212,7 +212,6 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     set SelectedRecordsTypeFilter(value: CodeNameClass) {
         if (this.selectedRecordsTypeFilter != value) {
             this.selectedRecordsTypeFilter = value;
-            this.IsActivityRecentListLoaded = false;
             this.RecordsTypeFilterCode = value == null ? "S" : value.Code;
             this.BusinessUnitFilterCode = "M";
             this.CreatedByTypeFilterCode = "M";
@@ -471,7 +470,6 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public UpcomingActivitiesCount: number = 0;
     public UpcomingActivitiesList: UpcomingActivityItem[];
     public LoadUpcomingEntities() {
-        this.IsActivityRecentListLoaded = false;
         this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.UpcomingActivitiesList = [];
@@ -500,7 +498,6 @@ export class ActivityWorkspaceComponent extends BaseComponent {
         //    var itemViewModel: UpcomingActivityItem = new UpcomingActivityItem(item, this, null);
         //    this.UpcomingActivitiesList.push(itemViewModel);
         //});
-        this.IsActivityRecentListLoaded = true;
 
     }
 
