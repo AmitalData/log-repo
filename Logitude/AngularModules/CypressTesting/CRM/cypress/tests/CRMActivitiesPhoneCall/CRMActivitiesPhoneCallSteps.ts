@@ -106,7 +106,6 @@ Then("a red Cancelled label should appear", () => {
 
 Then("the phone call should appear in Cancelled Activites list", () => {
     BaseActions.AssertActivityExistInCorrectList(ActivitySelectors.CancelledActivitiesList);
-    BaseActions.CompleteActivityFromRecentActivitesList()
 });
 //#endregion
 
