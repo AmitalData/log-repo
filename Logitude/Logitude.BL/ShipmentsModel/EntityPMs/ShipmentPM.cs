@@ -2136,10 +2136,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssignedToTruckerDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AssginedtoCustomsAgentId { get; set; }
-
+         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssginedToCustomsAgentDate { get; set; }
 

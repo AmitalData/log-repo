@@ -2988,13 +2988,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AssginedtoCustomsAgentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PreForwardingTransportModeId"
     Type="char"
     Size="1">
@@ -3872,11 +3865,6 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TruckerId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="AssginedtoCustomsAgentId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

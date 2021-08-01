@@ -465,8 +465,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AccrualsApprovalDate = entityPM.AccrualsApprovalDate;
             entityPoco.AssignedToTruckerDate = entityPM.AssignedToTruckerDate;
             entityPoco.TruckerId = entityPM.TruckerId;
-            entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate;
-            entityPoco.AssginedtoCustomsAgentId = entityPM.AssginedtoCustomsAgentId;
+            entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate; 
             entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
             entityPoco.StandalonePickupDeliveryId = entityPM.StandalonePickupDeliveryId;

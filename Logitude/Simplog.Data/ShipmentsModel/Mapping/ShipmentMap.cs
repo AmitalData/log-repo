@@ -327,8 +327,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargeStorageCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.WeightMeasurementCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.WeightRoundingCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.AssginedtoCustomsAgentId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false); 
             this.Property(t => t.PreForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreForwardingToPortId).HasMaxLength(15).IsUnicode(false);
@@ -711,8 +710,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
             this.Property(t => t.TruckerId).HasColumnName("TruckerId");
-            this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate");
-            this.Property(t => t.AssginedtoCustomsAgentId).HasColumnName("AssginedtoCustomsAgentId");
+            this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate"); 
             this.Property(t => t.AssginedToCustomsAgentDate).HasColumnName("AssginedToCustomsAgentDate");
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -988,8 +986,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ChargeStorageCurrency).WithMany().HasForeignKey(d => d.ChargeStorageCurrencyId);
             this.HasOptional(t => t.WeightMeasurement).WithMany().HasForeignKey(d => d.WeightMeasurementCode);
             this.HasOptional(t => t.WeightRounding).WithMany().HasForeignKey(d => d.WeightRoundingCode);
-            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId);
-            this.HasOptional(t => t.CustomsAgentCard).WithMany().HasForeignKey(d => d.AssginedtoCustomsAgentId);
+            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId); 
             this.HasOptional(t => t.PreForwardingCarrierCard).WithMany().HasForeignKey(d => d.PreForwardingCarrierId);
             this.HasOptional(t => t.PreForwardingFromPort).WithMany().HasForeignKey(d => d.PreForwardingFromPortId);
             this.HasOptional(t => t.PreForwardingToPort).WithMany().HasForeignKey(d => d.PreForwardingToPortId);
