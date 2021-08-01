@@ -1715,7 +1715,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     }
                 }
-               
+
+                if (entityPM.IsMultiCurrency.GetValueOrDefault() && !EntityPOCO.IsMultiCurrency.GetValueOrDefault())
+                {
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.CustomerGLAccountId,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "GCC",
+                        Notes = entityPM.Change2MultiCurrencyNotes //"Changed from XXX to Multi Currency -- updated X transaction , deleted X reconciliations"
+
+                    });
+                }
+
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }

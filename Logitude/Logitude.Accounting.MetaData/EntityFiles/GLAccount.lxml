@@ -14725,6 +14725,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;GCC&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;Changed to Multi iCurrency&quot;"
+      LocalName="&quot;הומר לרב מטבעי&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
