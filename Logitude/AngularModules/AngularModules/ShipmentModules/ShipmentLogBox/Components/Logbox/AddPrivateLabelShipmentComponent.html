@@ -656,7 +656,7 @@
 									 
 
 												<table *ngIf="DirectionId == 'C'">  
-													<tr>
+													<tr style="height:30%">
 														<td>
 															<table>
 																<tr style="height: 10px;">
@@ -752,16 +752,7 @@
 																					</table>
 
 																				</td>
-																			</tr>
-
-																			<tr *ngIf="IsDSVTenant" style="height: 30px;">
-																				<td style="height: 22px;">
-																					<label style="padding-left:10px;color:#2F75DD;font-size:14px;">
-																						Optional Fields
-																					</label>
-																				</td>
-																			</tr>
-
+																			</tr> 
 																			<tr>
 																				<td></td>
 																			</tr>
@@ -821,7 +812,7 @@
 																				<td style="height: 22px;">
 																					<LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"></LogTextBox>
 																				</td>
-																			</tr>  
+																			</tr>
 																		</table>
 																	</td>
 																	<td style="width:3px;"><div></div></td>
@@ -830,9 +821,18 @@
 															</table>
 														</td>
 													</tr>
-													<tr *ngIf="IsDSVTenant">
+													<tr *ngIf="IsDSVTenant" style="height:50%">
 														<td>
 															<table>
+
+																<tr *ngIf="IsDSVTenant" style="height: 30px;">
+																	<td style="height: 22px;">
+																		<label style="padding-left:10px;color:#2F75DD;font-size:14px;">
+																			Optional Fields
+																		</label>
+																	</td>
+																</tr>
+
 																<tr style="height: 30px;">
 																	<td style="height: 22px;width:50%;">
 																		<table>
@@ -974,15 +974,15 @@
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																						Quantity
 																					</label>
-																				</td> 
+																				</td>
 																				<td style="height: 22px;width:50px;">
 																					<LogTextBox [ObjectFieldName]="'PackagesQuantity'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
-																				</td> 
+																				</td>
 																				<td style="height: 22px;width:59px;">
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																						Weight
 																					</label>
-																				</td> 
+																				</td>
 																				<td style="height: 22px;width:46px;">
 																					<LogTextBox [ObjectFieldName]="'GrossWeight'" [DataContext]="DataContext" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
 																				</td>
