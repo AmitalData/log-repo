@@ -114,6 +114,7 @@
     <Compile Include="Steps\GetTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanLCLFreightCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffAirFreightCostSteps.cs" />
+    <Compile Include="Steps\UpdateTariffOceanLCLFreightCostSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -122,6 +123,7 @@
     <None Include="Features\GetTariffAirFreightCost.feature" />
     <None Include="Features\GetTariffOceanLCLFreightCost.feature" />
     <None Include="Features\UpdateTariffAirFreightCost.feature" />
+    <None Include="Features\UpdateTariffOceanLCLFreightCost.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
