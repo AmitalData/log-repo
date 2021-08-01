@@ -18,7 +18,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private int tenant;
         private DateTime? fromDate = null;
         private DateTime? toDate = null;
-        private string employeeUserId = null;
+        private string employeeUsers = null;
         private int timeRequired = 9;
         public EmployeeTimeSheetManager(byte[] xmlFilters, int tenant)
         {
@@ -28,7 +28,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
 
-            QueryFilterItem filterItem_EmployeeUserId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            QueryFilterItem filterItem_EmployeeUsers = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Employees").FirstOrDefault();
             QueryFilterItem filterItem_TimeRequired = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRequired").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
@@ -49,11 +49,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
 
-            if (filterItem_EmployeeUserId != null)
+            if (filterItem_EmployeeUsers != null)
             {
-                if (filterItem_EmployeeUserId.FieldValue != null)
+                if (filterItem_EmployeeUsers.FieldValue != null)
                 {
-                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                    employeeUsers = filterItem_EmployeeUsers.FieldValue.ToString();
                 }
             }
 
@@ -89,17 +89,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 EmployeeTimeDaysOff = new List<EmployeeTimeDayOff>(),
             };
 
-            if(this.fromDate != null && this.toDate != null && this.employeeUserId != null)
+            List<string> myUsersIdsList = this.GetSelectedUsersIds();            
+
+            if (this.fromDate != null && this.toDate != null && myUsersIdsList != null && myUsersIdsList.Count > 0)
             {
                 myDataProvider.FromDate = fromDate.Value;
                 myDataProvider.ToDate = toDate.Value;
-                myDataProvider.EmployeeUserId = employeeUserId;
+                //myDataProvider.EmployeeUserId = employeeUserId;
 
-                Simplog.Data.CommonDataModel.EntityPOCOs.Contact iContact = ContactRepository.GetSingleContact(employeeUserId, tenant, true);
-                if(iContact != null)
-                {
-                    myDataProvider.EmployeeUserName = iContact.EnglishName;
-                }
+                //Simplog.Data.CommonDataModel.EntityPOCOs.Contact iContact = ContactRepository.GetSingleContact(employeeUserId, tenant, true);
+                //if(iContact != null)
+                //{
+                //    myDataProvider.EmployeeUserName = iContact.EnglishName;
+                //}
 
                 var dateList = Enumerable.Range(0, 1 + toDate.Value.Subtract(fromDate.Value).Days).Select(offset => fromDate.Value.AddDays(offset)).ToList();
 
@@ -111,7 +113,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         (from a in iContext.TMEmployeeTimes
                          where
                          a.Tenant == tenant
-                         && a.EmployeeUserId == employeeUserId
+                         && myUsersIdsList.Contains(a.EmployeeUserId)
                          && a.DateOfWork != null
                          && System.Data.Entity.DbFunctions.TruncateTime(a.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
                          && System.Data.Entity.DbFunctions.TruncateTime(a.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
@@ -122,7 +124,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                          where
                          !a.Inactive
                          && a.Tenant == tenant
-                         && a.UserId == employeeUserId
+                         && myUsersIdsList.Contains(a.UserId)
                          && a.WorkDate != null
                          && System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
                          && System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
@@ -148,8 +150,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             }
                         }
 
-                        List<TMOfficeHour> item_TMOfficeHour = list_TMOfficeHour.Where(a => a.WorkDate.Date == dateItem.Date && a.UserId == employeeUserId).ToList();
-                        List<TMEmployeeTime> item_TMEmployeeTime = list_TMEmployeeTime.Where(d => d.DateOfWork.Date == dateItem.Date && d.EmployeeUserId == employeeUserId).ToList();
+                        List<TMOfficeHour> item_TMOfficeHour = list_TMOfficeHour.Where(a => a.WorkDate.Date == dateItem.Date && myUsersIdsList.Contains(a.UserId)).ToList();
+                        List<TMEmployeeTime> item_TMEmployeeTime = list_TMEmployeeTime.Where(d => d.DateOfWork.Date == dateItem.Date && myUsersIdsList.Contains(d.EmployeeUserId)).ToList();
 
                         double totalMinutesFromClock = 0;
                         foreach (var item in item_TMOfficeHour)
@@ -224,6 +226,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             myDataProvider.Total_TotalWorkHrs = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesTotalWork));
             myDataProvider.Total_OverTime = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesOverTime));
             return myDataProvider;
+        }
+
+        private List<string> GetSelectedUsersIds()
+        {
+            List<string> myUsersIdsList = new List<string>();
+            if (!string.IsNullOrEmpty(employeeUsers))
+            {
+                employeeUsers = employeeUsers.Replace(" ", "");
+                employeeUsers = employeeUsers.Trim(',');
+                string[] ids = employeeUsers.Split(',');
+                myUsersIdsList = ids.ToList();
+            }
+
+            return myUsersIdsList;
         }
 
         private string GetTimeFormatFromMinutes(double minutes)
