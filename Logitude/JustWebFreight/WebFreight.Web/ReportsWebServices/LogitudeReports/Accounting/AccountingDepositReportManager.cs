@@ -206,7 +206,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
                     reportAPIPayment.Reference = "";
                     reportAPIPayment.BillTo = "";
-                    reportAPIPayment.BillToWebsite = "";
                     reportAPIPayment.InvoiceNumber = "";
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
@@ -229,7 +228,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         {
                             reportAPIPayment.Reference = ariInvoicePayment.ARInvoice.CustomerRef;
                             reportAPIPayment.BillTo = ariInvoicePayment.ARInvoice.BillTo.LocalName;
-                            reportAPIPayment.BillToWebsite = ariInvoicePayment.ARInvoice?.BillTo?.Website;
                             reportAPIPayment.InvoiceNumber = ariInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = ariInvoicePayment.ARInvoice.InvoiceDate;
                             reportAPIPayment.DueDate = ariInvoicePayment.ARInvoice.DueDate;
