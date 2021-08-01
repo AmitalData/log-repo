@@ -68,7 +68,8 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                     var listTransactionId = journalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                     if (listTransactionId.Count > 0)
                     {
-                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, true);
+                        myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, journalPM.Tenant, false);
+                        accountingContext.SaveChanges();
                     }
 
                 }
@@ -86,14 +87,15 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                     if (listReconcileExternalPageLineId.Count > 0)
                     {
                         var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), journalPM.Tenant);
-                        reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, journalPM.Tenant, true);
+                        reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, journalPM.Tenant, false);
+                        accountingContext.SaveChanges();
                     }
                 }
 
                 journalPM.JournalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.JournalExternalReconciles.ForEach(r => r.ChangeSetOp = ChangeSetOperation.Delete);
                 journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                //if (clearIt)
+                if (clearIt && (journalPM.AccountingEntityCode == "10" || journalPM.AccountingEntityCode == "12"))
                 {
                     journalPM.StatusCode = "0";
                     journalPM.AccountingEntityCode = "1";
