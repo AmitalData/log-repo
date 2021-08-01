@@ -52,7 +52,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
     public class CargoTrackingSearchController : ApiController
     {
-        private const string ProjectToken = "24322335b969b8bc7cc9e3fd6af39aa0";
+        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
         private const string MasterUserId = "13793";
 
         [HttpGet]
