@@ -205,7 +205,7 @@
   <Column
     Name="SearchResult"
     Type="varchar"
-    Size="4">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -219,7 +219,7 @@
   <Column
     Name="CheckAuthorityAttenderTypeID"
     Type="varchar"
-    Size="4">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
