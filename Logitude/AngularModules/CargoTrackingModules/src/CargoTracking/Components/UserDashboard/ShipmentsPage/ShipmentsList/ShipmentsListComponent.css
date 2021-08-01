@@ -30,8 +30,6 @@ h1{
 .mobile-header-title {
     display: none;
 }
-
-
 .search-wrapper {
     /* height: calc(80vh - 70px); */
     height: calc(100vh - 110px);
