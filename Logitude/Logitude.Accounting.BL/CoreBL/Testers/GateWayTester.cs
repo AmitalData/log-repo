@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.BuildTenant;
+using Logitude.Accounting.BL.CoreBL.Fix;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
@@ -55,6 +56,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "Change2MultiCurrency_Click":
+                    {
+                        return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "_ButtonReverseTotalFIXControl_Click":
                     {
                         return _ButtonReverseTotalFIXControl_Click(tenant, _TextBoxParam);
@@ -760,6 +767,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 s.FixDbIntegrityFromLedgeToTotal();
 
                 gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        
+            private GateWayTesterResult Change2MultiCurrency_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var myTenant = (int)param.MyTenant;
+                string myGLAccId = (string)param.MyGLAccId;
+
+
+                var changeGLAccount2IsMultiCurrencyService = new ChangeGLAccount2IsMultiCurrencyService();
+                changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency(myGLAccId, tenant);
+
+
+                //gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
 
 
             }
