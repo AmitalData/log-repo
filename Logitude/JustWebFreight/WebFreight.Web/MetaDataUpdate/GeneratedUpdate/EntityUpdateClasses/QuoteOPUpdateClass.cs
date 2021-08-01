@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "8396a6d1587f7f5ad2973eb7562f6676";
+		public const string HashString = "ff7caaa99732404c4ed937186a24c82f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1200,6 +1200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuoteCostCharges",
 					  						ObjectTableName =  "QuoteOP",
+					  						FieldsDataType =  "List",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -1260,6 +1261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuoteSaleCharges",
 					  						ObjectTableName =  "QuoteOP",
+					  						FieldsDataType =  "List",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -11559,6 +11561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuoteSalesTotals",
 					  						ObjectTableName =  "QuoteOP",
+					  						FieldsDataType =  "List",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -11813,6 +11816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TotalVATPerQuote",
 					  						ObjectTableName =  "QuoteOP",
+					  						FieldsDataType =  "List",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

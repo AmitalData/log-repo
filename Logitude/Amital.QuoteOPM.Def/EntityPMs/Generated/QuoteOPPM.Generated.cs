@@ -1032,53 +1032,73 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string quoteCostCharges ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+
+	   private List<QuoteOPCostChargePM> quoteCostCharges;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPCostChargePMs", "Id","QuoteCostCharges")]
 	   [DataMember]
-       public string QuoteCostCharges  
+	   public virtual List<QuoteOPCostChargePM> QuoteCostCharges  
 	   {
-	    
-	     get
-		{
-		   return quoteCostCharges;
-		 }
-		 set
-		 {
-		   if(quoteCostCharges != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteCostCharges",OldValue=quoteCostCharges,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   quoteCostCharges=value;
-		   }
-			
-		 }
-	   }
-	  private string quoteSaleCharges ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	        get
+             {
+                 if (quoteCostCharges == null)
+                 {
+                     quoteCostCharges = new List<QuoteOPCostChargePM>();
+                 }
+                 return quoteCostCharges;
+              }
+             set { quoteCostCharges = value; }
+	    }
+		   
+	   private List<QuoteOPCostChargePM>  deletedQuoteCostCharges;
+	   public virtual List<QuoteOPCostChargePM> DeletedQuoteCostCharges  
+	   {
+	        get
+             {
+                 if ( deletedQuoteCostCharges == null)
+                 {
+                      deletedQuoteCostCharges = new List<QuoteOPCostChargePM>();
+                 }
+                 return  deletedQuoteCostCharges;
+              }
+             set {  deletedQuoteCostCharges = value; }
+	    }
+	  
+	   private List<QuoteOPSaleChargePM> quoteSaleCharges;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPSaleChargePMs", "Id","QuoteOPId")]
 	   [DataMember]
-       public string QuoteSaleCharges  
+	   public virtual List<QuoteOPSaleChargePM> QuoteSaleCharges  
 	   {
-	    
-	     get
-		{
-		   return quoteSaleCharges;
-		 }
-		 set
-		 {
-		   if(quoteSaleCharges != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteSaleCharges",OldValue=quoteSaleCharges,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   quoteSaleCharges=value;
-		   }
-			
-		 }
-	   }
-	  private double totalReceivablesAmount ;
+	        get
+             {
+                 if (quoteSaleCharges == null)
+                 {
+                     quoteSaleCharges = new List<QuoteOPSaleChargePM>();
+                 }
+                 return quoteSaleCharges;
+              }
+             set { quoteSaleCharges = value; }
+	    }
+		   
+	   private List<QuoteOPSaleChargePM>  deletedQuoteSaleCharges;
+	   public virtual List<QuoteOPSaleChargePM> DeletedQuoteSaleCharges  
+	   {
+	        get
+             {
+                 if ( deletedQuoteSaleCharges == null)
+                 {
+                      deletedQuoteSaleCharges = new List<QuoteOPSaleChargePM>();
+                 }
+                 return  deletedQuoteSaleCharges;
+              }
+             set {  deletedQuoteSaleCharges = value; }
+	    }
+	  	  private double totalReceivablesAmount ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
@@ -3977,30 +3997,40 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string quoteSalesTotals ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+
+	   private List<QuoteOPSalesTotalPM> quoteSalesTotals;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPSalesTotals", "","")]
 	   [DataMember]
-       public string QuoteSalesTotals  
+	   public virtual List<QuoteOPSalesTotalPM> QuoteSalesTotals  
 	   {
-	    
-	     get
-		{
-		   return quoteSalesTotals;
-		 }
-		 set
-		 {
-		   if(quoteSalesTotals != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteSalesTotals",OldValue=quoteSalesTotals,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   quoteSalesTotals=value;
-		   }
-			
-		 }
-	   }
-	  private double? valueOfGoods ;
+	        get
+             {
+                 if (quoteSalesTotals == null)
+                 {
+                     quoteSalesTotals = new List<QuoteOPSalesTotalPM>();
+                 }
+                 return quoteSalesTotals;
+              }
+             set { quoteSalesTotals = value; }
+	    }
+		   
+	   private List<QuoteOPSalesTotalPM>  deletedQuoteSalesTotals;
+	   public virtual List<QuoteOPSalesTotalPM> DeletedQuoteSalesTotals  
+	   {
+	        get
+             {
+                 if ( deletedQuoteSalesTotals == null)
+                 {
+                      deletedQuoteSalesTotals = new List<QuoteOPSalesTotalPM>();
+                 }
+                 return  deletedQuoteSalesTotals;
+              }
+             set {  deletedQuoteSalesTotals = value; }
+	    }
+	  	  private double? valueOfGoods ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
@@ -4069,30 +4099,40 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private string totalVATPerQuote ;
-	  	  
-       
-	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+
+	   private List<QuoteOPVATsTotalPM> totalVATPerQuote;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPVATsTotalPMs", "Id","QuoteOPId")]
 	   [DataMember]
-       public string TotalVATPerQuote  
+	   public virtual List<QuoteOPVATsTotalPM> TotalVATPerQuote  
 	   {
-	    
-	     get
-		{
-		   return totalVATPerQuote;
-		 }
-		 set
-		 {
-		   if(totalVATPerQuote != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalVATPerQuote",OldValue=totalVATPerQuote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   totalVATPerQuote=value;
-		   }
-			
-		 }
-	   }
-	  private bool isSecured ;
+	        get
+             {
+                 if (totalVATPerQuote == null)
+                 {
+                     totalVATPerQuote = new List<QuoteOPVATsTotalPM>();
+                 }
+                 return totalVATPerQuote;
+              }
+             set { totalVATPerQuote = value; }
+	    }
+		   
+	   private List<QuoteOPVATsTotalPM>  deletedTotalVATPerQuote;
+	   public virtual List<QuoteOPVATsTotalPM> DeletedTotalVATPerQuote  
+	   {
+	        get
+             {
+                 if ( deletedTotalVATPerQuote == null)
+                 {
+                      deletedTotalVATPerQuote = new List<QuoteOPVATsTotalPM>();
+                 }
+                 return  deletedTotalVATPerQuote;
+              }
+             set {  deletedTotalVATPerQuote = value; }
+	    }
+	  	  private bool isSecured ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]

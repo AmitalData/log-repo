@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))
             {
 
-				entityPOCO.poaID = entityPM.PoaID;
+				entityPOCO.PoaID = entityPM.PoaID;
 
 
 			}

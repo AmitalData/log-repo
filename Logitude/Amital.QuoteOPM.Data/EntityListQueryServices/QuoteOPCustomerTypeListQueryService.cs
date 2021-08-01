@@ -39,7 +39,7 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
 
 		private IQueryable<QuoteOPCustomerType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<QuoteOPCustomerType> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<QuoteOPCustomerType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<QuoteOPCustomerType> iQueryable)
         {

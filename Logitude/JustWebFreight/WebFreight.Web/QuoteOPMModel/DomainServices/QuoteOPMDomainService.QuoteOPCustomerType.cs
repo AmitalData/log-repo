@@ -29,7 +29,7 @@ namespace WebFreight.Web.QuoteOPMModel.DomainServices
 
         public QuoteOPCustomerTypeList GetSingleQuoteOPCustomerTypeList(string code, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             //SecurityUtility.CheckContactFeature("Customs.QuoteOPCustomerType", "READ", tenant);
 
             if (quoteOPMContext == null)
@@ -43,7 +43,7 @@ namespace WebFreight.Web.QuoteOPMModel.DomainServices
 
         public List<QuoteOPCustomerTypeList> GetQuoteOPCustomerTypeLists(int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             //SecurityUtility.CheckContactFeature("Customs.QuoteOPCustomerType", "READ", tenant);
             quoteOPMContext = QuoteOPMContext.GetContext(tenant);
             QuoteOPCustomerTypeListQueryService listService = new QuoteOPCustomerTypeListQueryService(quoteOPMContext);
@@ -53,7 +53,7 @@ namespace WebFreight.Web.QuoteOPMModel.DomainServices
 
         public List<QuoteOPCustomerTypeList> GetQuoteOPCustomerTypeFilters(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             //SecurityUtility.CheckContactFeature("Customs.QuoteOPCustomerType", "READ", tenant);
             quoteOPMContext = QuoteOPMContext.GetContext(tenant);
             QuoteOPCustomerTypeListQueryService listService = new QuoteOPCustomerTypeListQueryService(quoteOPMContext);
@@ -64,7 +64,7 @@ namespace WebFreight.Web.QuoteOPMModel.DomainServices
 
         public int GetQuoteOPCustomerTypeFiltersCount(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             //SecurityUtility.CheckContactFeature("Customs.QuoteOPCustomerType", "READ", tenant);
             quoteOPMContext = QuoteOPMContext.GetContext(tenant);
             QuoteOPCustomerTypeListQueryService queryService = new QuoteOPCustomerTypeListQueryService(quoteOPMContext);
