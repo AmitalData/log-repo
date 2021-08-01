@@ -80,6 +80,16 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.NoEscortRequired).HasColumnName("NoEscortRequired");
 
             this.Property(t => t.VehicleChassisNumber).HasColumnName("VehicleChassisNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.SearchResult).HasColumnName("SearchResult").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.SealNumber).HasColumnName("SealNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.CheckAuthorityAttenderTypeID).HasColumnName("CheckAuthorityAttenderTypeID").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.CheckAuthorityAttenderTypeName).HasColumnName("CheckAuthorityAttenderTypeName").HasMaxLength(255).IsUnicode(false);
+
+            this.Property(t => t.CheckAnwserStatus).HasColumnName("CheckAnwserStatus");
         }
     }
 }
