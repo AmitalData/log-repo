@@ -77,8 +77,8 @@ namespace WebFreight.Web.ReportsWebServices
                 apPaymentDataProvider.VendorSwift = currentPayment.VendorSwift;
                 apPaymentDataProvider.VendorBankAccountNumber = currentPayment.VendorBankAccountNumber;
                 apPaymentDataProvider.VendorIBANNo = currentPayment.VendorIBANNumber;
-               
- 
+                
+
                 if (bankAccount != null)
                 {
                     apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
@@ -160,6 +160,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.Swift = paidToCard.Swift;
                         apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
                         apPaymentDataProvider.PaidToCode = paidToCard.Code;
+                        apPaymentDataProvider.VendorWebsite = paidToCard.Website;
 
                         Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)

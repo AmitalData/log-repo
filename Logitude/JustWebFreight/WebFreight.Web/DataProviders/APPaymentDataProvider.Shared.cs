@@ -27,6 +27,7 @@ namespace WebFreight.Web.DataProviders
         public string Account { get; set; }
 
         //paid to - Vendor
+        public string VendorWebsite { get; set; }
         public string PaidTo { get; set; }
         public string PaidToName { get; set; }
         public string PaidToAddress { get; set; }

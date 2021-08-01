@@ -192,6 +192,7 @@ namespace WebFreight.Web.ReportsWebServices
                         paymentDataProvider.BillToVatNo = billToCard.VatNumber != null ? billToCard.VatNumber : "";
                         paymentDataProvider.IRSPlace = billToCard.IRSPlace;
                         paymentDataProvider.IRSNumber = billToCard.IRSNumber;
+                        paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website  : "";
 
                         Address address = addressRepository.GetSingleAddress(currentPayment.BillToAddressId, tenant);
 
@@ -204,6 +205,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
                                 {
                                     paymentDataProvider.BillToName = billToCard.LocalName != null ? billToCard.LocalName + Environment.NewLine : "";
+                                    paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website : "";
                                 }
                             }
 
