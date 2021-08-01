@@ -21,7 +21,7 @@ export class ActivitySelectors {
     public static readonly MarkAsComplete = "#ActivityBMarkAsComplete";
     public static readonly SaveButton = "#Activity-Save";
     public static readonly CancelledLabel = ".ShortTitleControl";
-    public static readonly RecentEntityItem = ".RecentEntityItem";
+    public static readonly RecentEntityItem = "[data-cy='ActivitiesRecentEntityItem']"
     public static readonly Button = ".Button";
     public static readonly QuickSearchTextBox = ".LogitudeQuickSearchTextBox";
     public static readonly MyOpenActivitiesList = "[data-cy='MyOpenActivities']"

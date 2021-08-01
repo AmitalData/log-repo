@@ -123,6 +123,7 @@ export function AssertCancelledLabelExists() {
 }
 
 export function CompleteActivityFromRecentActivitesList() {
+    cy.wait(1000)
     DefineCompleteActivityRequest();
     cy.get(ActivitySelectors.RecentEntityItem).eq(0).find(ActivitySelectors.Button).click({ force: true });
 }

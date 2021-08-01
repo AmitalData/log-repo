@@ -214,7 +214,7 @@
                                                 <SectionHead>{{UpcomingActivitiesCount}} Upcoming Activities</SectionHead>
                                                 <SectionBody>
                                                     <ul>
-                                                        <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of UpcomingActivitiesList">
+                                                        <li class="RecentEntityItem" [attr.data-cy]="'ActivitiesRecentEntityItem'" style="position: relative;" *ngFor="let item of UpcomingActivitiesList">
                                                             <table (mousedown)="EditActivity(item.entityList)">
                                                                 <tr>
                                                                     <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.PriorityName" [ngStyle]="{background: item.PriorityCode | StringToColorPipe:'ActivityPriorityCode'}">
@@ -243,20 +243,20 @@
                                                                         <div></div>
                                                                     </td>
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('OPP')" *ngIf="item.OpportunityId">
-                                                                            <img title="View Opportunity" class="RightCenter" style="width: 28px; height: 28px; cursor: pointer;" src="./Images/Opportunity.png" />
-                                                                        </span>
-                                                                    </td>-->
+                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('OPP')" *ngIf="item.OpportunityId">
+                                                <img title="View Opportunity" class="RightCenter" style="width: 28px; height: 28px; cursor: pointer;" src="./Images/Opportunity.png" />
+                                            </span>
+                                        </td>-->
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('CUS')" *ngIf="item.CustomerId">
-                                                                            <img title="View Customer" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Person.png" />
-                                                                        </span>
-                                                                    </td>-->
+                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('CUS')" *ngIf="item.CustomerId">
+                                                <img title="View Customer" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Person.png" />
+                                            </span>
+                                        </td>-->
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('QUT')" *ngIf="item.QuoteId">
-                                                                            <img title="View Quote" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Pen.png" />
-                                                                        </span>
-                                                                    </td>-->
+                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('QUT')" *ngIf="item.QuoteId">
+                                                <img title="View Quote" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Pen.png" />
+                                            </span>
+                                        </td>-->
 
                                                                     <td rowspan="2">
                                                                         <div></div>

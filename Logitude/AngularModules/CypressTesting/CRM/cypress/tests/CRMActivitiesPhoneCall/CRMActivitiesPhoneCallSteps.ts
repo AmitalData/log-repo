@@ -111,7 +111,7 @@ Then("the phone call should appear in Cancelled Activites list", () => {
 
 //#region mark a phone call as complete from recent activities list
 When("press on Complete button", () => {
-    cy.Click(ActivitySelectors.PhoneCallFilter, null)
+    cy.get(ActivitySelectors.PhoneCallFilter).click({ force: true })
     BaseActions.CompleteActivityFromRecentActivitesList()
 });
 
