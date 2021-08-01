@@ -222,6 +222,7 @@ namespace Logitude.Test.Base.Hooks
             BillingData.CurrencyEURId = billingVariables.CurrencyEURId;
             BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
             BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
+            BillingData.ChargeTypeOFTId = billingVariables.ChargeTypeOFTId;
             BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
             BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
