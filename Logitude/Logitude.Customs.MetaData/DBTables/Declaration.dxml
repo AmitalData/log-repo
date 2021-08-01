@@ -1235,5 +1235,5 @@
   <Index
     Columns="ExternalDeclarationNumber" />
   <Index
-   Columns="VersionId" />
+    Columns="VersionId" />
 </Table>
