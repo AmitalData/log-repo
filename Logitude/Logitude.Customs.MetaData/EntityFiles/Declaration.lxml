@@ -18083,6 +18083,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsSubmitDeclaration&quot;"
     ListPropertyPath="&quot;IsSubmitDeclaration&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21092,6 +21093,13 @@
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
+      <MenuItem
+        EventCode="&quot;MultiUpdate&quot;"
+        DefaultText="&quot;Multi update Process Code/TaxExemptCode&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="15"
+        LocalDefaultText="&quot;עדכון קוד תהליך/הנחה פטור&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
@@ -23087,6 +23095,18 @@
       Code="&quot;Customs.Declaration.F.CalculateDateTime&quot;"
       DefaultText="&quot;Calculate DateTime&quot;"
       LocalDefaultText="&quot;תאריך חישוב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.MultiUpdate&quot;"
+      DefaultText="&quot;Update Process Code&quot;"
+      LocalDefaultText="&quot;עדכון קוד תהליך/הנחה פטור&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.UpdateOneItem&quot;"
+      DefaultText="&quot;Update One Item&quot;"
+      LocalDefaultText="&quot;עדכן פרט מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
