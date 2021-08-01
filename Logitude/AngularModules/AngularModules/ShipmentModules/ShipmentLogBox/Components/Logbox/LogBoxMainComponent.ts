@@ -52,7 +52,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
     private entityResourceService: EntityResourceService;
 
-    public AirShipmentToggle: boolean = false;
+    public hasAirShipmentToggle: boolean = false;
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -77,7 +77,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private checkAirShipmentToggle() {
         let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
         if (AirShipmentFeatureToggle) {
-            this.AirShipmentToggle = true;
+            this.hasAirShipmentToggle = true;
 
         }
     }
@@ -902,7 +902,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-        if (this.AirShipmentToggle) {
+        if (this.hasAirShipmentToggle) {
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
             newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);
@@ -926,8 +926,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
-        newWindow.Width = this.IsDSV ? 600 : 960;
-        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 600) : 350;
+        newWindow.Width = this.isPrivateLabel ? 960 : 600;
+        newWindow.Height = this.isPrivateLabel ? 600 : 350;
         newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
         return newWindowComponentPath;
     }
