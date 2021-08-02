@@ -3312,7 +3312,7 @@ namespace HypredTest
                 case "ShipmentTrucker":
                     response = TestShipmentTruckerService();
                     break;
-                case "ShipmentAssginedtoCustomsAgent":
+                case "Shipment CustomAgentImportId":
                     response = TestShipmentCustomsAgentService();
                     break;
                 case "AccountingPartner":
