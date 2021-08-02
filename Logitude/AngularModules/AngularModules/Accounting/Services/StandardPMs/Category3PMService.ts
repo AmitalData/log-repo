@@ -29,19 +29,19 @@ export class Category3PMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/category3';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/category3';      
     }
 
-	get(id: string) {
+	get(id: string) {       
 
-		var callTime = new Date();
+		var callTime = new Date();		
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
-
+				
 						var entity: Category3PM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
@@ -49,33 +49,33 @@ export class Category3PMService {
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
-
+              
 						var servertime = response.headers.get('ServerExecutionTime');
 						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Category3", "GetSinglePM", 'id=' + id);
-
+				 
 						return serviceResponse;
 
 					}),
-
+					
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});                    
 	}
 
 	insert(entityPM: Category3PM) {
-
-		var callTime = new Date();
-
+ 
+		var callTime = new Date();  
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("Category3", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: Category3PM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -84,11 +84,11 @@ export class Category3PMService {
 							if (pm) {
 								var mappedResult: Category3PM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
-							}
+							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Category3", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Category3", "SaveChanges", "");                    
+												                             
 							return serviceResponse;
 						}),
 
@@ -105,32 +105,32 @@ export class Category3PMService {
 
 	update(entityPM: Category3PM) {
 
-		var callTime = new Date();
-
+		var callTime = new Date();     
+		
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("Category3", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: Category3PM = this.MapJsonToEntityPM(entityPM, false);
-
+				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
-
+                 
 							var pm = response.body;
 							if (pm) {
 								var mappedResult: Category3PM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
-
+							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Category3", "SaveChanges", "");
-
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Category3", "SaveChanges", "");                    
+					                           
 							return serviceResponse;
 						}),
 
@@ -145,13 +145,13 @@ export class Category3PMService {
 		});
 	}
 
-
+   
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: Category3PM = null) {
 
-
+         
         if (!entityPM) {
-
+            
             entityPM = new Category3PM();
 			entityPM.DisableMarkAsDirty = true;
         }
@@ -168,7 +168,7 @@ export class Category3PMService {
                 continue;
             }
                 var property = jsonPMKeys[key];
-
+				
 			  if(customFields.indexOf(property) > -1)
                 {
                 if (jsonPM[property]) {
@@ -179,11 +179,11 @@ export class Category3PMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-
+                 
             }
-
-
-
+			
+			 
+            
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -206,7 +206,7 @@ export class Category3PMService {
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-
+            
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -218,12 +218,12 @@ export class Category3PMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {
+	  public GetNewEntityPM() {		 
 		    var entityPM: Category3PM;
 			entityPM = new Category3PM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
-
+		 
 
 }
