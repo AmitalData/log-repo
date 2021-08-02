@@ -423,10 +423,10 @@ namespace Logitude.CRM.BL.EntityDataMappings
             var logitudeFooterMessage = "This email is a service from Logitude!";
             var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
 
-            if (LogitudeSettings.WorkEnvironment == "cloud")
-                emailFooterMessage = cloudFooterMessage;
-            else
+            if (LogitudeSettings.DeploymentStage == "Simplog")
                 emailFooterMessage = logitudeFooterMessage;
+            else
+                emailFooterMessage = cloudFooterMessage;
 
             return emailFooterMessage;
         }

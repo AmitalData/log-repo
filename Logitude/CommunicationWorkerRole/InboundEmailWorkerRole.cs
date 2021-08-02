@@ -351,10 +351,10 @@ namespace CommunicationWorkerRole
             var logitudeFooterMessage = "This email is a service from Logitude!";
             var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
             
-            if (LogitudeSettings.WorkEnvironment == "cloud")
-                this.EmailFooterMessage = cloudFooterMessage;
-            else
+            if (LogitudeSettings.DeploymentStage == "Simplog")
                 this.EmailFooterMessage = logitudeFooterMessage;
+            else
+                this.EmailFooterMessage = cloudFooterMessage;
         }
 
         Ticket Ticket;
