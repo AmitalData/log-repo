@@ -61,8 +61,8 @@ Then("the move type should open successfully", () => {
 });
 //#endregion
 //#region  Edit the move type
-Given("{string} as move type local name", (localName) => {
-    MaintenanceActions.FillMoveTypeLocalName(localName)
+Given("fill move type local name", () => {
+    MaintenanceActions.FillMoveTypeLocalName()
 });
  
 When("update move type", () => {

@@ -83,7 +83,7 @@
   <Column
     Name="Description"
     Type="varchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>

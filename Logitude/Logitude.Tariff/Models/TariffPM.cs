@@ -13,20 +13,20 @@ namespace Logitude.Tariff.Models
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public string SearchFields { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public string Name { get; set; }
         public bool InActive { get; set; }
         public string Notes { get; set; }
         public string SellerId { get; set; }
         public string CurrencyId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public DateTime LastExpirationDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public DateTime? LastExpirationDate { get; set; }
         public string PriceSteps { get; set; }
         public string TypeCode { get; set; }
         public string TypeName { get; set; }
-        public DateTime LastStartDate { get; set; }
+        public DateTime? LastStartDate { get; set; }
         public int LastVersion { get; set; }
         public string ContractNumber { get; set; }
         public string SellerName { get; set; }
@@ -48,5 +48,7 @@ namespace Logitude.Tariff.Models
         public bool IsRefreshTranslations { get; set; }
         public string FreightChargeId { get; set; }
         public int ChangeSetOp { get; set; }
+        public string Surcharge1Id { get; set; }
+        public string Surcharge1UOM { get; set; }
     }
 }

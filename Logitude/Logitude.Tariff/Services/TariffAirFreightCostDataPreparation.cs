@@ -44,7 +44,7 @@ namespace Logitude.Tariff.Services
 
         private void TariffDataMap(TariffPM tariff)
         {
-            TariffData.TariffAirFreightCostId = tariff.Id;
+            TariffData.AirFreightCostId = tariff.Id;
         }
     }
 }

@@ -11,15 +11,26 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public CargoTrackingShipmentsResponse GetUserShipmentsResponse(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-
-            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse
+            return new CargoTrackingShipmentsResponse
             {
-                Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList(),
-                ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters)
+                Shipments = GetUserShipments(pageIndex, pageSize, shipmentFilters),
+                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(pageIndex, shipmentFilters)
             };
+        }
 
-            return response;
+        private List<CargoTrackingShipmentList> GetUserShipments(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
+            return shipmentSearchQuery.GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
+        }
+        private int GetAllShipmentsCountForFirstPageOnly(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
+        {
+            var isNotFirstPage = pageIndex != 0;
+            if (isNotFirstPage)
+                return 0;
+
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
+            return shipmentSearchQuery.GetShipmentsCount(shipmentFilters);
         }
         public CargoTrackingShipmentsCounter GetUserShipmentsCounter(CargoTrackingShipmentFilters shipmentFilters)
         {
@@ -40,15 +51,6 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
 
             return counter;
-        }
-        private int GetAllShipmentsCount(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
-        {
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            var count = 0;
-            if (pageIndex == 0)
-                count = shipmentSearchQuery.GetShipmentsCount(shipmentFilters);
-
-            return count;
         }
 
         private CargoTrackingShipmentSearchListQueryService GetCargoTrackingShipmentSearchQuery(CargoTrackingShipmentFilters shipmentFilters)

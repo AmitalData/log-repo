@@ -1,9 +1,8 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import * as PhoneCallActions from "../../actions/PhoneCallActions"
-import { PhoneCallDetails } from "../../models/PhoneCallDetails";
-import * as BaseActions from "../../actions/BaseActions";
-import { ActivitySelectors } from "../../selectors/ActivitySelectors"
+import { ActivitiesDetails } from "../../models/ActivitiesDetails";
+import * as BaseActions from "../../actions/ActivitiesActions";
+import { ActivitiesSelectors } from "../../selectors/ActivitiesSelectors"
 
 //#region Create new phone call
 Given("the user logged in and open Activites in CRM", () => {
@@ -12,9 +11,9 @@ Given("the user logged in and open Activites in CRM", () => {
 });
 
 Given("navigate phone call wizerd and fill the following details", (dataTable) => {
-    PhoneCallActions.NavigatesToPhoneCallWizerd();
-    let phoneCallDetails = Assists.CreateInstance<PhoneCallDetails>(dataTable, true);
-    PhoneCallActions.FillPhoneCallWizardsFields(phoneCallDetails);
+    BaseActions.NavigatesToPhoneCallWizerd();
+    let phoneCallDetails = Assists.CreateInstance<ActivitiesDetails>(dataTable, true);
+    BaseActions.FillPhoneCallWizardsFields(phoneCallDetails);
 });
 
 When("create phone call", () => {
@@ -59,7 +58,7 @@ When("save phone call", () => {
 //#region copy phone call
 Given("copy the phone call with new subject", () => {
     BaseActions.NavigatesToCopyActivityWizerd()
-    PhoneCallActions.FillSubject()
+    BaseActions.FillSubject("PhoneCall_")
 });
 
 Then("the copy phone call should create successfully", () => {
@@ -69,7 +68,7 @@ Then("the copy phone call should create successfully", () => {
 
 //#region mark the phone call as complete
 Given("navigate CRM activity screen", () => {
-    cy.get(ActivitySelectors.Backbutton).click()
+    cy.get(ActivitiesSelectors.Backbutton).click()
 });
 
 When("press on Mark as Complete button", () => {
@@ -81,7 +80,7 @@ Then("the phone call should update successfully", () => {
 });
 
 Then("the phone call should appear in My Closed Activites list", () => {
-    BaseActions.AssertActivityExistInCorrectList(ActivitySelectors.MyClosedActivitiesList);
+    BaseActions.AssertActivityExistInCorrectList(ActivitiesSelectors.MyClosedActivitiesList);
 });
 //#endregion
 
@@ -91,7 +90,7 @@ When("reopen the phone call", () => {
 });
 
 Then("the phone call should appear in My Open Activites list", () => {
-    BaseActions.AssertActivityExistInCorrectList(ActivitySelectors.MyOpenActivitiesList);
+    BaseActions.AssertActivityExistInCorrectList(ActivitiesSelectors.MyOpenActivitiesList);
 });
 //#endregion
 
@@ -105,14 +104,13 @@ Then("a red Cancelled label should appear", () => {
 });
 
 Then("the phone call should appear in Cancelled Activites list", () => {
-    BaseActions.AssertActivityExistInCorrectList(ActivitySelectors.CancelledActivitiesList);
-    BaseActions.CompleteActivityFromRecentActivitesList()
+    BaseActions.AssertActivityExistInCorrectList(ActivitiesSelectors.CancelledActivitiesList);
 });
 //#endregion
 
 //#region mark a phone call as complete from recent activities list
 When("press on Complete button", () => {
-    cy.Click(ActivitySelectors.PhoneCallFilter, null)
+    cy.get(ActivitiesSelectors.PhoneCallFilter).click({ force: true })
     BaseActions.CompleteActivityFromRecentActivitesList()
 });
 

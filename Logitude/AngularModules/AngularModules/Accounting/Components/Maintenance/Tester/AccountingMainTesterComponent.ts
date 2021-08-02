@@ -320,6 +320,11 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    Change2MultiCurrency_Click() {
+        let opr = "Change2MultiCurrency_Click";
+        let obj = { /*MyTenant: SessionLocator.Tenant,*/  MyGLAccId: "1-1234567" };
+        this.StrandartOp(opr, obj, () => { });
+    }
     
 
     

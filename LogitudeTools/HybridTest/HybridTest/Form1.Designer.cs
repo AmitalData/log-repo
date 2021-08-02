@@ -220,7 +220,7 @@
             "Shipment Pickups & Deliveries",
             "ShipmentWarehouseLeg",
             "ShipmentTrucker",
-            "ShipmentAssginedtoCustomsAgent",
+            "Shipment CustomAgentImportId",
             "AccountingPartner",
             "Hybrid Tenant State",
             "Address"});

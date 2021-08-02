@@ -2118,13 +2118,12 @@ export function FillMoveTypeDetails(moveTypeDetails: MoveTypeDetails) {
     var RandomMoveTypeCode = gr.GenerateRandomNumberAndString(3);
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeCode, moveTypeDetails.Code.toLowerCase() == "random" ? RandomMoveTypeCode : moveTypeDetails.Code)
     cy.FillLogTextBox(MaintenanceSelectors.MoveTypeEnglishName, moveTypeDetails.EnglishName)
-    FillMoveTypeLocalName(moveTypeDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, moveTypeDetails.LocalName)
     FillMoveTypeTransportMode(moveTypeDetails.TransportMode)
 }
 
-export function FillMoveTypeLocalName(localName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, " ")
-    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, localName)
+export function FillMoveTypeLocalName() {
+    cy.FillLogTextBox(MaintenanceSelectors.MoveTypeLocalName, gr.GenerateRandomNumberAndString(5))
 }
 
 function FillMoveTypeTransportMode(TransportMode: string) {
@@ -2180,22 +2179,29 @@ export function AssertPostMoveType(responseStatusCode: number, expectedStatusCod
     MoveTypeCode = moveTypeCode
 }
 export function SearchMoveTypeByCode(MoveTypeCode: string) {
+    DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode)
     SearchCardByFilter(MoveTypeCode, MaintenanceSelectors.MoveTypeCodeFilterCheckBox)
 }
-export function SearchMoveType() {
-    SearchMoveTypeByCode(MoveTypeCode)
-}
-export function DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode: string) {
+
+function DefineMoveTypeCodeGetByFiltersRequest(MoveTypeCode: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(MoveTypeCode), RequestAliases.GetFilterSearch);
 }
-export function AssertMoveTypeViewsGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-}
+
 export function AssertSearchMoveTypeByCode(code: string) {
+    AssertMoveTypeViewsGetByFilters()
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(code);
     });
 }
+
+function AssertMoveTypeViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+export function SearchMoveType() {
+    SearchMoveTypeByCode(MoveTypeCode)
+}
+
 export function AssertSearchMoveType() {
     AssertSearchMoveTypeByCode(MoveTypeCode)
 }
@@ -2203,6 +2209,7 @@ export function OpenMoveType() {
     DefineMoveTypesGetSingleRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();
 }
+
 function DefineMoveTypesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.MoveTypeGetSingle, RequestAliases.GetSignle);
 }

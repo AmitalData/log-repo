@@ -177,6 +177,7 @@ namespace WebFreight.Web.Helpers
             queryOperations.SetFilter("EntityType", quoteObjectTableId, false, "Equals", null, false);
             queryOperations.SetFilter("CompanyId", quotesRequestFilters.PartnerId, false, "Equals", null, false);
             queryOperations.SetFilter("SearchFields", quotesRequestFilters.SearchField, false, "Contains", null, false);
+            queryOperations.SetFilter("IsCancelled", false, false, "Equals", null, false);
             MapRequestedByFilterToQueryOperations(queryOperations);
             MapOpenedByFilterToQueryOperations(queryOperations);
             MapCreateDateFilterToQueryOperations(queryOperations);

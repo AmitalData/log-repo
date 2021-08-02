@@ -25,7 +25,7 @@ Feature: Move Type Create and Edit it in Maintenance Module
         Then the move type should open successfully
 
     Scenario: Edit the move type
-        Given "Test edit LocalName move type" as move type local name
+        Given fill move type local name
         When update move type
         Then the move type should update successfully
         And the following event should appear in events tab

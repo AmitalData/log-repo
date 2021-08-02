@@ -1668,7 +1668,7 @@ namespace HypredTest
         private string Login()
         {
             LoginProxy.LoginWcfServiceClient loginService = new LoginProxy.LoginWcfServiceClient();
-            Response loginResponse = loginService.Login("islam@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
+            Response loginResponse = loginService.Login("maheera@fnarsoft.com", "0");//"tomerp@amital.co.il", "!T123456");  ("islam@logitudeworld.com", "!I123456");//("yaronc@amital.co.il", "!Y123456");//"yaronc@amital.co.il", "!Y123456");//
             if (!loginResponse.HasError)
             {
                 Token = loginResponse.Result;
@@ -3312,7 +3312,7 @@ namespace HypredTest
                 case "ShipmentTrucker":
                     response = TestShipmentTruckerService();
                     break;
-                case "ShipmentAssginedtoCustomsAgent":
+                case "Shipment CustomAgentImportId":
                     response = TestShipmentCustomsAgentService();
                     break;
                 case "AccountingPartner":
@@ -3783,7 +3783,7 @@ namespace HypredTest
                 QuoteNumber = "1000",
                 TruckerId = "TEP",
                 AssignedToTruckerDate = DateTime.Today,
-                AssginedtoCustomsAgentId = "TCA",
+                CustomAgentImportId = "sss",
                 AssginedToCustomsAgentDate = DateTime.Today,
 
             };

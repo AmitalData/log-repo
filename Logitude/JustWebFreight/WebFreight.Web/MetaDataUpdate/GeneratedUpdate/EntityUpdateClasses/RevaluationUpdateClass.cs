@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationUpdateClass
    {  		
-		public const string HashString = "be81c8c8d5d56d0605311eb722bbfae9";
+		public const string HashString = "6ec6b1b3458bc1c2a6d68eeb6f2172cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1425,6 +1425,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode RevaluationTextCode_RevaluationCHRevaluationEnabled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationEnabled", DefaultText = "Revaluation Enabled",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode RevaluationTextCode_RevaluationONewRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.NewRevaluation", DefaultText = "New Revaluation",LocalDefaultText = @"שערוך חדש", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationsONotOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.O.NotOpen", DefaultText = "Revaluation is not open",LocalDefaultText = @"שערוך אינו פתוח", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

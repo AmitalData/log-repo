@@ -642,10 +642,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRALastEBbookingSendDate { get; set; }
         public string TruckerId { get; set; } 
         public DateTime? AssignedToTruckerDate { get; set; }
-        public virtual Card TruckerCard { get; set; }
-        public string AssginedtoCustomsAgentId { get; set; }
-        public DateTime? AssginedToCustomsAgentDate { get; set; }
-        public virtual Card CustomsAgentCard { get; set; }
+        public virtual Card TruckerCard { get; set; } 
+        public DateTime? AssginedToCustomsAgentDate { get; set; } 
         public string PreForwardingTransportModeId { get; set; }
         public string PreForwardingFromPortId { get; set; }
         public string PreForwardingToPortId { get; set; }
