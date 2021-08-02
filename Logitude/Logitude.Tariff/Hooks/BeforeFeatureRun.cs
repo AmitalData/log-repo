@@ -15,12 +15,18 @@ namespace Logitude.Tariff.Hooks
         public static void SetUpPrepareDataBeforeFeatureRun()
         {
             new TariffAirFreightCostDataPreparation().Prepar();
+            new TariffOceanLCLFreightCostDataPreparation().Prepar();
         }
 
         [BeforeFeature("Pre-Prepare-Tariff-Air")]
         public static void SetUpPrepareDataBeforeFeatureRunTariffAirFreightCost()
         {
             new TariffAirFreightCostDataPreparation().Prepar();
+        }
+        [BeforeFeature("Pre-Prepare-Tariff-OceanLCL")]
+        public static void SetUpPrepareDataBeforeFeatureRunTariffOceanLCLFreightCost()
+        {
+            new TariffOceanLCLFreightCostDataPreparation().Prepar();
         }
 
     }

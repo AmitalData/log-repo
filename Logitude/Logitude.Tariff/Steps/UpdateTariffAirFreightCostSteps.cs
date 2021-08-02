@@ -25,27 +25,27 @@ namespace Logitude.Tariff.Steps
         [Given(@"an air freight cost tariff")]
         public void GivenAnAirFreightCostTariff()
         {
-            tariffContext.TariffAirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffAirFreightCostId), UserTenant.Token).Data;
+            tariffContext.AirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.AirFreightCostId), UserTenant.Token).Data;
         }
 
         [Given(@"following air freight cost tariff properties")]
         public void GivenFollowingAirFreightCostTariffProperties(Table table)
         {
-            tariffAirFreightCostServices.UpdateInstance(table, tariffContext.TariffAirFreightCost);
+            tariffAirFreightCostServices.UpdateInstance(table, tariffContext.AirFreightCost);
         }
 
         [When(@"update air freight cost tariff")]
         public void WhenUpdateAirFreightCostTariff()
         {
-            updatedTariff = APICaller.CallPut<TariffPM>(tariffContext.TariffAirFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
+            updatedTariff = APICaller.CallPut<TariffPM>(tariffContext.AirFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
         }
 
         [Then(@"the air freight cost tariff should update successfully")]
         public void ThenTheAirFreightCostTariffShouldUpdateSuccessfully()
         {
             updatedTariff.Id.Should().NotBeNull();
-            updatedTariff.Name.Should().Equals(tariffContext.TariffAirFreightCost.Name);
-            updatedTariff.Notes.Should().Equals(tariffContext.TariffAirFreightCost.Notes);
+            updatedTariff.Name.Should().Equals(tariffContext.AirFreightCost.Name);
+            updatedTariff.Notes.Should().Equals(tariffContext.AirFreightCost.Notes);
         }
     }
 }

@@ -10,7 +10,7 @@ using Logitude.Test.Base.Services;
 
 namespace Logitude.Tariff.Services
 {
-    public class TariffAirFreightCostDataPreparation
+    class TariffOceanLCLFreightCostDataPreparation
     {
         public void Prepar()
         {
@@ -21,7 +21,7 @@ namespace Logitude.Tariff.Services
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Failed Creating Tariff Before Feature Run :" + e.InnerException);
+                throw new InvalidOperationException("Failed Creating Tariff ocean LCL Before Feature Run :" + e.InnerException);
             }
         }
 
@@ -29,14 +29,13 @@ namespace Logitude.Tariff.Services
         {
             return new TariffBuilder()
                    .WithDefualtValues()
-                   .TypeCode("Air")
+                   .TypeCode("Ocean LCL")
                    .Name("pre specflow name")
-                   .SellerId(PartnersData.AirlineAAId)
+                   .SellerId(PartnersData.ShippingLineMAEUId)
                    .CurrencyId("EUR")
                    .StartDate(DateTime.Now)
                    .ExpirationDate(DateTime.Now.AddMonths(1))
-                   .TariffProductId(new TariffAirFreightCostServices().GetTariffProductIdByName("General"))
-                   .FreightChargeId(BillingData.ChargeTypeAFTId)
+                   .FreightChargeId(BillingData.ChargeTypeOFTId)
                    .Notes("pre specflow notes")
                    .ContractNumber("2324232")
                    .Build();
@@ -44,7 +43,7 @@ namespace Logitude.Tariff.Services
 
         private void TariffDataMap(TariffPM tariff)
         {
-            TariffData.AirFreightCostId = tariff.Id;
+            TariffData.OceanLCLFreightCostId = tariff.Id;
         }
     }
 }
