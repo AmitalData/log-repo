@@ -172,7 +172,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
-"DCAMU",
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
 "UCTZIP", // Unifreight Table Custom ZIP
@@ -315,7 +314,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
-"DCAMU",
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
 
@@ -429,7 +427,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 2750 per CourierMasterId
-"DCAMU",
 "UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר
 "1171", // - מסר תשובה מצהר

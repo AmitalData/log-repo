@@ -158,28 +158,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage PostSendMultiUpdate(MultiUpdateRequestParams requestParamsData)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
+       
     }
 }
