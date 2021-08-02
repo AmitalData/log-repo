@@ -146,6 +146,7 @@
                      [class.dim]="card.IsDimmed">
                     <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
                     <div class="title">{{card.Title}}</div>
+                    <div class="title">{{card.Date | date: 'HH:mm'}}</div>
                     <div class="desc hide-mobile " [attr.title]="card.Description"
                          style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
                     <div (click)="OpenMessageWindow(card.WarningMessage,card.WarningDate)" [attr.title]="card.WarningDate +'\n'+ card.WarningMessage" *ngIf="card.HasWarning" class="warning-icon mobile-only">!</div>
