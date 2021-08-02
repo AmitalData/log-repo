@@ -45,6 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsExternalLine, 
 	         TotalInvoiceAmount, 
 	         OriginalReference, 
+	         JournalLineNumber, 
 	         PreviousReference,
 	      }
 
@@ -194,6 +195,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.OriginalReference = entityPM.OriginalReference;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalLineNumber))
+            {
+				entityPOCO.JournalLineNumber = entityPM.JournalLineNumber;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PreviousReference))
             {
 				entityPOCO.PreviousReference = entityPM.PreviousReference;
@@ -320,6 +326,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.OriginalReference = entityPOCO.OriginalReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalLineNumber))
+            {
+					entityPM.JournalLineNumber = entityPOCO.JournalLineNumber;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PreviousReference))
             {
 					entityPM.PreviousReference = entityPOCO.PreviousReference;
@@ -434,6 +445,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginalReference))
             {
                 oldEntityPM.OriginalReference = entityPM.OriginalReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalLineNumber))
+            {
+                oldEntityPM.JournalLineNumber = entityPM.JournalLineNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PreviousReference))

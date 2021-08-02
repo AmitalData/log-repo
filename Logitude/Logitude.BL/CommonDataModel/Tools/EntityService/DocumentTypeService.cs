@@ -6,6 +6,8 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -146,6 +148,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 documentTypeCustomFieldRepository.Add(cutomfield1);
             }
             #endregion
+
+            AddDocumentTypeKafkaQueueMessage();
         }
 
         public void Update(DocumentTypePM theEntityPm , List<DocumentTypeCopyPM> documentTypeCopyList = null)
@@ -209,7 +213,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
             RemoveEntityFromCache(theEntityPm);
             TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
-		}
+
+            AddDocumentTypeKafkaQueueMessage();
+        }
 
         public void Update(DocumentTypePM theEntityPm, bool mapComposition = false)
         {
@@ -263,8 +269,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
             RemoveEntityFromCache(theEntityPm);
             TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
-		}
 
+            AddDocumentTypeKafkaQueueMessage();
+        }
+
+        private void AddDocumentTypeKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant) || entityPM.IsDocIn == false)
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DocumentType" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
+        }
 
         private void RemoveEntityFromCache(DocumentTypePM entityPm)
         {

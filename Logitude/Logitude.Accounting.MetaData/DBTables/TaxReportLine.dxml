@@ -163,6 +163,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="JournalLineNumber"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="PreviousReference"
     Type="varchar"
     Size="20">

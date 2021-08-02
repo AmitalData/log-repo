@@ -56,6 +56,8 @@ namespace CommunicationWorkerRole
         public string LoggedContactId { get; set; }
         public string UserName { get; set; }
         public string StageName { get; set; }
+        public string EmailFooterMessage { get; set; }
+
         public string contactEmail = "";
         public string GuidId = "";
         public string EntityId = "";
@@ -93,6 +95,7 @@ namespace CommunicationWorkerRole
                                 ObjectTableId = response.MessageValues["ObjectTableId"].ToString();
                                 LoggedContactId = response.MessageValues["CurrentLoggedUserId"].ToString();
                                 UserName = this.GetUserName(LoggedContactId, tenant);
+                                this.SetEmailFooterMessage();
                                 this.CreateCommunicationLog(lineId, tenant, ticketNumber, contactId, ownerId);
                                 queueservice.Complete();
                                 LogDoneItemInMemory();
@@ -342,6 +345,16 @@ namespace CommunicationWorkerRole
             }
 
             return myResult;
+        }
+        private void SetEmailFooterMessage()
+        {
+            var logitudeFooterMessage = "This email is a service from Logitude!";
+            var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
+            
+            if (LogitudeSettings.DeploymentStage == "Simplog")
+                this.EmailFooterMessage = logitudeFooterMessage;
+            else
+                this.EmailFooterMessage = cloudFooterMessage;
         }
 
         Ticket Ticket;
@@ -1112,7 +1125,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;width:100%!important;height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is a service from Unifreight Cloud Generation!</p>"
+                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage+"</p>"
                    + @"</div>";
 
             string lowerPart =
@@ -1262,7 +1275,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;min-height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service  from Unifreight!</p>"
+                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage + "</p>"
                    + @"</div>";
 
             string lowerPart =

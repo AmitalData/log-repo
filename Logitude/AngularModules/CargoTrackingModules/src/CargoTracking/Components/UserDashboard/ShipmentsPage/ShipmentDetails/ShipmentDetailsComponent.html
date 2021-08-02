@@ -251,12 +251,13 @@
 
 
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'" [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
+           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'" [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
-                    <div class="title">Pack Type</div>
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div class="description">
                         <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
@@ -266,7 +267,8 @@
                     </div>
                 </div>
                 <div>
-                    <div class="title">fcl / lcl</div>
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">Shipment Type</div>
                     <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
                 </div>
                 <div>
@@ -287,12 +289,12 @@
                         {{ShipmentPM?.WarehouseLegEnglishName}}
                     </div>
                 </div>
-                <div>
+                <div *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">
                     <div class="title">containers</div>
                     <div class="description">
-                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
-                            {{container}}
-                            <a *ngIf="ContainersNumbers?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                        <div *ngFor="let container of ShipmentPackages?.slice(0,2), let i = index">
+                            {{container.ContainerNumber}}
+                            <a *ngIf="ShipmentPackages?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
                         </div>
                     </div>

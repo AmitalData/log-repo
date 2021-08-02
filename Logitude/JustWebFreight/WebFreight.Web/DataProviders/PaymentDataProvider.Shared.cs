@@ -10,6 +10,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToName { get; set; }
         public string BillToAddress { get; set; }
         public string BillToVatNo { get; set; }
+        public string BillToWebsite { get; set; }
         public DateTime Today { get; set; }
 
         public DateTime? RegisterDate { get; set; }

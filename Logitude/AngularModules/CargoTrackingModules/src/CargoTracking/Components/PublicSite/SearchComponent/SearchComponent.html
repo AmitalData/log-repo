@@ -339,7 +339,7 @@
                         </div>
                     </div> -->
                         <!-- Status -->
-                        <div class="column col-md-1 status" style="width: 25%;">
+                        <div class="column col-md-1 status" style="width: 22%;">
                             <div>
                                 <div class="subtitle">Status</div>
                                 <div class="value">
@@ -347,7 +347,16 @@
                                 </div>
 
                                 <div class="subtitle">Last Updated</div>
+                                <div class="more-text mobile-only" style="font-size:12px;float:right">More Info</div>
                                 <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:mm' }}</div>
+
+                            </div>
+
+                        </div>
+                         <div class="column col-md-1 status hide-mobile" style="width: 10%">
+                            <div>
+                                <div style="height:85px"></div>
+                                <div class="more-text" style="font-size:12px">More Info</div>
                             </div>
                         </div>
                     </div>
