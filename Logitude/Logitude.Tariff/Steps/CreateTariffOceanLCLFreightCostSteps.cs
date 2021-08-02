@@ -24,20 +24,20 @@ namespace Logitude.Tariff.Steps
         [Given(@"an ocean LCL freight cost tariff with the following properties")]
         public void GivenAnOceanLCLFreightCostTariffWithTheFollowingProperties(Table table)
         {
-            tariffContext.TariffOceanLCLFreightCost = tariffOceanLCLFreightCostServices.CreateInstance(table);
+            tariffContext.OceanLCLFreightCost = tariffOceanLCLFreightCostServices.CreateInstance(table);
         }
         
         [When(@"create ocean LCL freight cost tariff")]
         public void WhenCreateOceanLCLFreightCostTariff()
         {
-            tariffContext.TariffOceanLCLFreightCost = APICaller.CallPost<TariffPM>(tariffContext.TariffOceanLCLFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
+            tariffContext.OceanLCLFreightCost = APICaller.CallPost<TariffPM>(tariffContext.OceanLCLFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
         }
         
         [Then(@"the ocean LCL freight cost tariff should create successfully")]
         public void ThenTheOceanLCLFreightCostTariffShouldCreateSuccessfully()
         {
-            tariffContext.TariffOceanLCLFreightCost.Should().NotBeNull();
-            tariffContext.TariffOceanLCLFreightCost.Id.Should().NotBeNull();
+            tariffContext.OceanLCLFreightCost.Should().NotBeNull();
+            tariffContext.OceanLCLFreightCost.Id.Should().NotBeNull();
         }
     }
 }

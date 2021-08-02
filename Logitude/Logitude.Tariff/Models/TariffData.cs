@@ -8,7 +8,7 @@ namespace Logitude.Tariff.Models
 {
     public static class TariffData
     {
-        public static string TariffAirFreightCostId { get; set; }
-        public static string TariffOceanLCLFreightCostId { get; set; }
+        public static string AirFreightCostId { get; set; }
+        public static string OceanLCLFreightCostId { get; set; }
     }
 }

@@ -21,14 +21,14 @@ namespace Logitude.Tariff.Steps
         [When(@"get air freight cost tariff with TariffId")]
         public void WhenGetAirFreightCostTariffWithTariffId()
         {
-            tariffContext.TariffAirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffAirFreightCostId), UserTenant.Token).Data;
+            tariffContext.AirFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.AirFreightCostId), UserTenant.Token).Data;
         }
         
         [Then(@"air freight cost tariff should be avaliable")]
         public void ThenAirFreightCostTariffShouldBeAvaliable()
         {
-            tariffContext.TariffAirFreightCost.Should().NotBeNull();
-            tariffContext.TariffAirFreightCost.Id.Should().NotBeNull();
+            tariffContext.AirFreightCost.Should().NotBeNull();
+            tariffContext.AirFreightCost.Id.Should().NotBeNull();
         }
     }
 }

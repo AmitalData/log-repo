@@ -20,14 +20,14 @@ namespace Logitude.Tariff.Steps
         [When(@"get ocean LCL freight cost tariff with TariffId")]
         public void WhenGetOceanLCLFreightCostTariffWithTariffId()
         {
-            tariffContext.TariffOceanLCLFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffOceanLCLFreightCostId), UserTenant.Token).Data;
+            tariffContext.OceanLCLFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.OceanLCLFreightCostId), UserTenant.Token).Data;
         }
         
         [Then(@"ocean LCL freight cost tariff should be avaliable")]
         public void ThenOceanLCLFreightCostTariffShouldBeAvaliable()
         {
-            tariffContext.TariffOceanLCLFreightCost.Should().NotBeNull();
-            tariffContext.TariffOceanLCLFreightCost.Id.Should().NotBeNull();
+            tariffContext.OceanLCLFreightCost.Should().NotBeNull();
+            tariffContext.OceanLCLFreightCost.Id.Should().NotBeNull();
         }
     }
 }

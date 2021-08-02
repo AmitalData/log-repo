@@ -43,7 +43,7 @@ namespace Logitude.Tariff.Services
 
         private void TariffDataMap(TariffPM tariff)
         {
-            TariffData.TariffOceanLCLFreightCostId = tariff.Id;
+            TariffData.OceanLCLFreightCostId = tariff.Id;
         }
     }
 }

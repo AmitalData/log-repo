@@ -26,27 +26,27 @@ namespace Logitude.Tariff.Steps
         [Given(@"an ocean LCL freight cost tariff")]
         public void GivenAnOceanLCLFreightCostTariff()
         {
-            tariffContext.TariffOceanLCLFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.TariffOceanLCLFreightCostId), UserTenant.Token).Data;
+            tariffContext.OceanLCLFreightCost = APICaller.CallGet<TariffPM>(Urls.TariffSingle(TariffData.OceanLCLFreightCostId), UserTenant.Token).Data;
         }
         
         [Given(@"following ocean LCL freight cost tariff properties")]
         public void GivenFollowingOceanLCLFreightCostTariffProperties(Table table)
         {
-            tariffOceanLCLFreightCostServices.UpdateInstance(table, tariffContext.TariffOceanLCLFreightCost);
+            tariffOceanLCLFreightCostServices.UpdateInstance(table, tariffContext.OceanLCLFreightCost);
         }
         
         [When(@"update ocean LCL freight cost tariff")]
         public void WhenUpdateOceanLCLFreightCostTariff()
         {
-            updatedTariff = APICaller.CallPut<TariffPM>(tariffContext.TariffOceanLCLFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
+            updatedTariff = APICaller.CallPut<TariffPM>(tariffContext.OceanLCLFreightCost, Urls.TariffsController, UserTenant.Token)?.Data;
         }
         
         [Then(@"the ocean LCL freight cost tariff should update successfully")]
         public void ThenTheOceanLCLFreightCostTariffShouldUpdateSuccessfully()
         {
             updatedTariff.Id.Should().NotBeNull();
-            updatedTariff.Name.Should().Equals(tariffContext.TariffOceanLCLFreightCost.Name);
-            updatedTariff.Notes.Should().Equals(tariffContext.TariffOceanLCLFreightCost.Notes);
+            updatedTariff.Name.Should().Equals(tariffContext.OceanLCLFreightCost.Name);
+            updatedTariff.Notes.Should().Equals(tariffContext.OceanLCLFreightCost.Notes);
         }
     }
 }
