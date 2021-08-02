@@ -374,11 +374,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 AccountRef = new ReferenceType
                                 {
                                     Value = PayablesExternalChargesTypesCode[i]
-                                },
-                                TaxCodeRef = new ReferenceType
-                                {
-                                    Value = ExternalVatTypesCode[i]
-                                },
+                                }
                             };
                         }
                         lineList.Add(line);
