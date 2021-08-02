@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.SystemTableServiceReference;
 
@@ -159,6 +160,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
         }
     }
+
+    [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCBMultiUpdateWithResponseContentHeader", IsNullable = false)]
+    [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCBMultiUpdateWithResponseContentHeader")]
     public class DCAInUCBMultiUpdateWithResponseContentHeader : IINF_MSG_Generic
     {
         public IResponseContentHeader GetResponseContentHeader()

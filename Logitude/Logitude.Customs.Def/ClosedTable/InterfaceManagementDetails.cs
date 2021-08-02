@@ -2729,7 +2729,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
-                InterfaceType = "B",
+                InterfaceType = "C",
             });
 
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
