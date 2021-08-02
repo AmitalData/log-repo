@@ -177,8 +177,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var pm = documentsFilingQuery.GetSinglePM(documentsFilingId, entityPM.Tenant);
                         if (pm.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(pm.ExternalEntityReference))
                         {
-                            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                            unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
+                            CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
+                            CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
+
+                            if (setting.IsConnectedToUniFreight)
+                            {
+                                var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                                unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
+                            }
                         }
                         AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }

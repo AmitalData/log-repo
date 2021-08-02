@@ -273,8 +273,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         eventContextTagModel.EventCode = "RDC";
                     }
                     eventContextTagModel.StatusCustomFileNo = connectedDeclarationPM.CustomFileNo;
-                    SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, connectedDeclarationPM.Id, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
+                    CustomsSettingQueryService settingService = new CustomsSettingQueryService(Tenant);
+                    CustomsSettingPM setting = settingService.GetSettingByTenantN(Tenant);
 
+                    if (setting.IsConnectedToUniFreight)
+                    {
+                        SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, connectedDeclarationPM.Id, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
+                    }
                 }
             }
         }
