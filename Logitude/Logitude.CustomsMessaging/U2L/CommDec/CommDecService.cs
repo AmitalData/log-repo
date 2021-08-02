@@ -1107,6 +1107,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     AppendLogLine(MyGenericResponseObj.Message);
                 }
                 _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, _tenant);
+                if (_CourierMasterPM == null && !String.IsNullOrWhiteSpace(_LogitudeCommDecFile.HAWB))
+                {
+                    _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, null, _LogitudeCommDecFile.MAWB, _tenant);
+                }
                 if (_CourierMasterPM != null)
                 {
                     AppendLogLine("CourierMasterPM found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB);
