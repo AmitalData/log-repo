@@ -2379,6 +2379,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CheckReconcileMethodChange(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            bool isTransactionFixed = !string.IsNullOrWhiteSpace(entityPM.Change2MultiCurrencyNotes);
+            if (isTransactionFixed)
+            {
+                return;
+            }
             if (
                 (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
                 && (entityPOCO.ReconcileMethodCode != entityPM.ReconcileMethodCode)
