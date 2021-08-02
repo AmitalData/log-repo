@@ -11,8 +11,9 @@ namespace Logitude.Tariff.Models
         public int Tenant { get; set; }
         public int Version { get; set; }
         public bool IsDraft { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string ChangeSetOp { get; set; }
     }
 }
