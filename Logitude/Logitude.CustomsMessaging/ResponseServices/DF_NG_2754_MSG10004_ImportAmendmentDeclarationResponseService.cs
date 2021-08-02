@@ -128,7 +128,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idDec }, tenant).FirstOrDefault();
                     if (declarationOrg == null)
                     {
-                        declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
+                        if(isCopy)
+                        {
+                            declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
+
+                        }
+                        if (declarationOrg == null)
+                            declarationOrg = myQueryService.GetAcceptDeclarationAmendment(  idOrg , tenant);
                         if(declarationOrg == null)
                         {
                             declarationOrg = myQueryService.GetDeclarationsByIds(new List<string> { idOrg }, tenant).FirstOrDefault();
@@ -330,7 +336,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
  
                     declarationUpdateService.Update(declarationPM, true);
 
-                if(declarationPM.IsCourierDeclaration)
+                if (declarationPM.IsCourierDeclaration)
                 {
 
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
@@ -338,16 +344,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationOrg.Id, false, false);
                     DeclarationCourierStatusPM declarationCourierStatusPMNew = null;
 
-                    if ( !isUpdateAfterAccept)
-                {
+                    if (!isUpdateAfterAccept)
+                    {
 
                         declarationCourierStatusPMNew = declarationCourierStatusPM;
                         declarationCourierStatusPMNew.DeclarationId = declarationPM.Id;
 
 
 
-                }
-                      else
+                    }
+                    else
                     {
                         declarationCourierStatusPMNew = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                         declarationCourierStatusPMNew.IsClosedForFollowUp = declarationCourierStatusPM.IsClosedForFollowUp;
@@ -363,18 +369,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationCourierStatusPMNew.LastMileStatusRemarks = declarationCourierStatusPM.LastMileStatusRemarks;
                         declarationCourierStatusPMNew.CourierPendingReasonList = declarationCourierStatusPM.CourierPendingReasonList;
                         declarationCourierStatusPMNew.Delivered = declarationCourierStatusPM.Delivered;
-                        declarationCourierStatusPMNew.TruckerId = declarationCourierStatusPM.TruckerId ;
+                        declarationCourierStatusPMNew.TruckerId = declarationCourierStatusPM.TruckerId;
                         declarationCourierStatusPMNew.DistributionArea = declarationCourierStatusPM.DistributionArea;
 
                         DeclarationPendingQueryService declarationPendingQueryService = new DeclarationPendingQueryService(context);
- 
+
                         var declarationPendings = declarationPendingQueryService.GetDeclarationPendingsByDeclarationId(declarationOrg.Id, tenant);
 
                         foreach (var item in declarationCourierStatusPMNew.DeclarationPendings)
                         {
                             item.ChangeSetOp = ChangeSetOperation.Delete;
                         }
- 
+
 
                         foreach (var pending in declarationPendings)
                         {
@@ -395,38 +401,38 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var declarationMamanSpecialActionList = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPM.DeclarationId, declarationCourierStatusPMNew.Tenant);
 
 
-                       var declarationMamanSpecialActionListOld = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPMNew.DeclarationId, declarationCourierStatusPMNew.Tenant);
+                        var declarationMamanSpecialActionListOld = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(declarationCourierStatusPMNew.DeclarationId, declarationCourierStatusPMNew.Tenant);
 
- 
-                         
-                        
 
-                            foreach (var action in declarationMamanSpecialActionList)
-                            {
-                                DeclarationMamanSpecialActionPM declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
-                                declarationMamanSpecialActionPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
-                                declarationMamanSpecialActionPM.MamanLabelText1 = action.MamanLabelText1;
-                                declarationMamanSpecialActionPM.MamanLabelText2 = action.MamanLabelText2;
-                                declarationMamanSpecialActionPM.MamanLabelText3 = action.MamanLabelText3;
-                                declarationMamanSpecialActionPM.MamanLabelText4 = action.MamanLabelText4;
-                                declarationMamanSpecialActionPM.MamanLabelText5 = action.MamanLabelText5;
-                                declarationMamanSpecialActionPM.MamanSpecialActionCode = action.MamanSpecialActionCode;
-                                declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = action.MamanSpecialActionsErrorXml;
-                                declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = action.MamanSpecialActionStatusCode;
-                                declarationMamanSpecialActionPM.Tenant = action.Tenant;
-                                declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+
+
+                        foreach (var action in declarationMamanSpecialActionList)
+                        {
+                            DeclarationMamanSpecialActionPM declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
+                            declarationMamanSpecialActionPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
+                            declarationMamanSpecialActionPM.MamanLabelText1 = action.MamanLabelText1;
+                            declarationMamanSpecialActionPM.MamanLabelText2 = action.MamanLabelText2;
+                            declarationMamanSpecialActionPM.MamanLabelText3 = action.MamanLabelText3;
+                            declarationMamanSpecialActionPM.MamanLabelText4 = action.MamanLabelText4;
+                            declarationMamanSpecialActionPM.MamanLabelText5 = action.MamanLabelText5;
+                            declarationMamanSpecialActionPM.MamanSpecialActionCode = action.MamanSpecialActionCode;
+                            declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = action.MamanSpecialActionsErrorXml;
+                            declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = action.MamanSpecialActionStatusCode;
+                            declarationMamanSpecialActionPM.Tenant = action.Tenant;
+                            declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Insert;
 
 
                             if (declarationMamanSpecialActionListOld.FirstOrDefault(x => x.MamanSpecialActionCode == action.MamanSpecialActionCode) != null)
                                 declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                                DeclarationMamanSpecialActionUpdateService declarationMamanSpecialActionUpdateService = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                            DeclarationMamanSpecialActionUpdateService declarationMamanSpecialActionUpdateService = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
-                                declarationMamanSpecialActionUpdateService.Update(declarationMamanSpecialActionPM, true);
+                            declarationMamanSpecialActionUpdateService.Update(declarationMamanSpecialActionPM, true);
 
-                            }
-                      
- 
+                        }
+
+
 
 
                     }
@@ -439,17 +445,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(context);
                     CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
-                    var courierdeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationOrg.Id, tenant);
-                    courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete
-                        ;
-                    courierDeclarationUpdateService.Update(courierdeclaration, true);
+                    if(isUpdateAfterAccept)
+                    {
 
-                    CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
+                        var courierdeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationOrg.Id, tenant);
+                        if (courierdeclaration != null)
+                            courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete
+                                ;
+                        courierDeclarationUpdateService.Update(courierdeclaration, true);
 
-                    courierDeclarationPM.CourierMasterId = courierdeclaration.CourierMasterId;
-                    courierDeclarationPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
-                    courierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    courierDeclarationUpdateService.Update(courierDeclarationPM, true);
+                        CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
+
+                        courierDeclarationPM.CourierMasterId = courierdeclaration.CourierMasterId;
+                        courierDeclarationPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
+                        courierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        courierDeclarationUpdateService.Update(courierDeclarationPM, true);
+                    }
+
                 }
 
                 string declarationId;
@@ -891,7 +903,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-            foreach (var item in declaration.GoodsShipment)
+            foreach (var item in declaration.GoodsShipment.OrderBy(x=>x.SequenceNumeric))
             {
                 SupplierInvoicePM supplierInvoicePM = new SupplierInvoicePM()
                 {
@@ -910,10 +922,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, 0, 0);
  
-                if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
-                    continue;
-
-               if(declarationPMOrg!=null) supplierInvoicePM.ExchangeRate = declarationPMOrg.SupplierInvoices.FirstOrDefault(x => x.SequenceNumeric == supplierInvoicePM.SequenceNumeric).ExchangeRate;
+               // if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
+                   // continue;
+                
+               //**if(declarationPMOrg!=null) supplierInvoicePM.ExchangeRate = declarationPMOrg.SupplierInvoices.FirstOrDefault(x => x.SequenceNumeric == supplierInvoicePM.SequenceNumeric).ExchangeRate;
                 if (item.Invoice.IssueDateTime != null) supplierInvoicePM.IssueDate = Convert.ToDateTime(item.Invoice.IssueDateTime);
 
                 if (item.Invoice.DMExtensions != null)
@@ -955,7 +967,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SupplierInvoicePMOrg = null;
                 }
 
-                supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
+                if (SupplierInvoicePMOrg != null)
+                    supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
 
 
                 supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item, declaration, declarationId, tenant, supplierInvoicePM, context, SupplierInvoicePMOrg);
