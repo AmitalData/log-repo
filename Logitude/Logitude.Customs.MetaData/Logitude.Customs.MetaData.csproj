@@ -109,6 +109,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
     <None Include="DBScripts\Post\202103251635_AddFCLLCL.sxml" />
     <None Include="DBScripts\Post\202105252040_AddAmendmentStatuses.sxml" />
@@ -124,6 +125,7 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
+    <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -504,6 +506,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />

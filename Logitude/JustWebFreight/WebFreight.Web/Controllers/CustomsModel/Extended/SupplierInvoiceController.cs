@@ -23,6 +23,8 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -148,6 +150,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ServiceResponse response = new ServiceResponse();
                 response.Result = items;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostSendMultiUpdate(MultiUpdateRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
 
             catch (Exception ex)

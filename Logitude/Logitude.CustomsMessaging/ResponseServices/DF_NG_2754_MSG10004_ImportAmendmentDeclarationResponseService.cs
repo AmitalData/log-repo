@@ -897,7 +897,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-            foreach (var item in declaration.GoodsShipment)
+            foreach (var item in declaration.GoodsShipment.OrderBy(x=>x.SequenceNumeric))
             {
                 SupplierInvoicePM supplierInvoicePM = new SupplierInvoicePM()
                 {
