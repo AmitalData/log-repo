@@ -419,8 +419,8 @@
     <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'">
 
         <div body>
-            <div *ngIf="ShipmentRouteSteps?.length == 0">No Routing defined for this shipment </div>
-            <div *ngIf="ShipmentRouteSteps?.length > 0" class="routing-timeline">
+            <div *ngIf="ShipmentRouteSteps?.length == 0" style="margin-top:10px">No Routing defined for this shipment </div>
+            <div *ngIf="ShipmentRouteSteps?.length > 0" style="margin-top:20px" class="routing-timeline">
                 <div class="routing-step" [class.active]="step.IsActive" *ngFor="let step of ShipmentRouteSteps">
                     <div class="routing-banner">
                         <div [ngSwitch]="step.TransportModeCode">
@@ -520,7 +520,7 @@
            [ShowWhitePanelOnMobile]="false">
 
         <div body>
-            <div *ngIf="DocumentsFilings?.length == 0 ">No Documents defined for this shipment</div>
+            <div *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
             <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
