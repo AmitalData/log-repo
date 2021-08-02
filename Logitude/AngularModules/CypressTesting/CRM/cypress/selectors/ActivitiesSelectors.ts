@@ -1,8 +1,9 @@
-export class ActivitySelectors {
+export class ActivitiesSelectors {
     public static readonly CRM = "#GeneralMHCRM"
     public static readonly Activities = "#CRMACT"
     public static readonly NEWACTIVITY = "#NEWACTIVITY"
     public static readonly NEWPHONECALL = "#NEWPHONECALL"
+    public static readonly NEWTASK = "#NEWTASK"
     public static readonly ActivityCallWith = "#Activity_CallWithId"
     public static readonly ActivityCustomer = "#Activity_CustomerId"
     public static readonly ActivitySubject = "input[id^=Activity_Subject]"
@@ -28,5 +29,6 @@ export class ActivitySelectors {
     public static readonly MyClosedActivitiesList = "[data-cy='MyClosedActivities']"
     public static readonly CancelledActivitiesList = "[data-cy='CancelledActivities']"
     public static readonly PhoneCallFilter = "img[id^=ActivityFilter_CL]"
+    public static readonly TaskFilter = "img[id^=ActivityFilter_TS]"
 
 }
