@@ -1,6 +1,6 @@
 {
-  "url": "https://test.logitudeworld.com/test",
-  "email": "specflowtest@logitudeworld.com",
-  "password": "Spec_Flow21",
+  "url": "http://localhost:4200/",
+  "email": "maheera@fnarsoft.com",
+  "password": "0",
   "tenant": null
 }

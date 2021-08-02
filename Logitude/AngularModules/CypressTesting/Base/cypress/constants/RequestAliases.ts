@@ -245,5 +245,6 @@ export class RequestAliases {
     public static readonly PostActivity = "PostActivity"
     public static readonly PutActivity = "PutActivity"
     public static readonly GetCompleteActivity = "GetCompleteActivity"
+    public static readonly PutCompleteActivity = "PutCompleteActivity"
 
 }
