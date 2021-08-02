@@ -95,7 +95,7 @@ namespace WebFreight.Web.Helpers
                                             {
                                                 string childId = item.Url.Split('/').Last();
                                                 WorkItem childItem = GetWorkItemById(int.Parse(childId));
-                                                if (childItem != null)
+                                                if (childItem != null && Convert.ToString(childItem.Fields.GetValueOrDefault("System.State")) != "Removed")
                                                 {
                                                     EffotSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.Effort"));
                                                     completedworkSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
