@@ -159,6 +159,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
                                   </t:Section>
                                 </t:RadDocument>";
 
+            string emailFooterMessage = SetEmailFooterMessage();
+
             entityPM.TicketFooter = @"<t:RadDocument xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:t='clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents' xmlns:s='clr-namespace:Telerik.Windows.Documents.Model.Styles;assembly=Telerik.Windows.Documents' xmlns:r='clr-namespace:Telerik.Windows.Documents.Model.Revisions;assembly=Telerik.Windows.Documents' xmlns:n='clr-namespace:Telerik.Windows.Documents.Model.Notes;assembly=Telerik.Windows.Documents' xmlns:th='clr-namespace:Telerik.Windows.Documents.Model.Themes;assembly=Telerik.Windows.Documents' version='1.2' LayoutMode='Flow' LineSpacing='1.15' LineSpacingType='Auto' ParagraphDefaultSpacingAfter='12' ParagraphDefaultSpacingBefore='0' SelectedBibliographicStyleName='\APA.XSL' StyleName='defaultDocumentStyle'>
                               <t:RadDocument.Captions>
                                 <t:CaptionDefinition IsDefault='True' IsLinkedToHeading='False' Label='Figure' LinkedHeadingLevel='0' NumberingFormat='Arabic' SeparatorType='Hyphen'/>
@@ -208,7 +210,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                                   <t:TableRow Height='20.4833221435547'>
                                     <t:TableCell Borders='0,Inherit,#FF000000,none,,' ColumnSpan='10' RowSpan='1' TextAlignment='Center' VerticalAlignment='Center'>
                                       <t:Paragraph Background='#FF98D0DE' TextAlignment='Center'>
-                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='This email is a service from Unifreight Cloud Generation!'/>
+                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='" + emailFooterMessage + @"'/>
                                       </t:Paragraph>
                                     </t:TableCell>
                                   </t:TableRow>
@@ -217,7 +219,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                               </t:Section>
                             </t:RadDocument>";
 
-            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant,entityPOCO.GuidId);
+            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant, entityPOCO.GuidId);
             entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
 
 
@@ -329,8 +331,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 if (severity != null)
                 {
                     entityPM.SeverityName = severity.Name;
-                    entityPM.SeverityCode= severity.Code;
-                 
+                    entityPM.SeverityCode = severity.Code;
+
                 }
             }
 
@@ -413,6 +415,20 @@ namespace Logitude.CRM.BL.EntityDataMappings
                     entityPM.CreatedbyTypeName = createdByType.Name;
                 }
             }
+        }
+
+        private string SetEmailFooterMessage()
+        {
+            var emailFooterMessage = "";
+            var logitudeFooterMessage = "This email is a service from Logitude!";
+            var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
+
+            if (LogitudeSettings.WorkEnvironment == "cloud")
+                emailFooterMessage = cloudFooterMessage;
+            else
+                emailFooterMessage = logitudeFooterMessage;
+
+            return emailFooterMessage;
         }
 
         private void BuildSearchFields(TicketPM entityPM, Ticket entityPOCO, bool isNewEntity)
