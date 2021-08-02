@@ -48,6 +48,19 @@ namespace Logitude.CargoTracking.Data.Repositories
                              select shipment);
             return shipments;
         }
+        public IQueryable<CargoTrackingShipment> GetFilteredShipmentsSearchKeyword(string searchKeyWord, int tenant)
+        {
+            var shipments = (from shipment in currentContext.CargoTrackingShipments
+                             join search   in currentContext.CargoTrackingShipmentSearches on shipment.EntityId equals search.ShipmentId
+
+                             where (search.SearchFields.Contains(searchKeyWord) || searchKeyWord == null)
+                                    && shipment.Tenant == tenant
+                                    && search.Tenant == tenant
+                                    && shipment.IsMainRecord == true
+
+                             select shipment).Distinct();
+            return shipments;
+        }
 
         public IQueryable<CargoTrackingShipment> GetBySecurityKey(string SecurityKey, int tenant)
         {

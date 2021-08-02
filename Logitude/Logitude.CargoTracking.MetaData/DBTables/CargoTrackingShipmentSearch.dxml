@@ -59,4 +59,10 @@
     Columns="ShipmentId" />
   <Index
     Columns="ShipmentDate" />
+    <Index
+        Columns="Tenant" />
+
+    <Index
+        Columns="SearchFields" />
+    
 </Table>
