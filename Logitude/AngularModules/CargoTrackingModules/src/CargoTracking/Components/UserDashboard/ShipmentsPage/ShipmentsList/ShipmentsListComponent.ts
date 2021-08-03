@@ -15,7 +15,6 @@ import { MessageWindowComponent } from '../../../../../Infrastructure/Components
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 
-
 @Component({
     selector: 'ShipmentsListComponent',
     templateUrl: './ShipmentsListComponent.html',
@@ -338,7 +337,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
-            
+
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
@@ -522,10 +521,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: references.slice(1, references.length + 1).join("\n"),
+
+                description: references.toString().split(',').join("\n"),
             }
         });
-    } 
+    }
 
     GetModeIcon(mode: string)
     {
