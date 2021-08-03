@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 this.entityPM = EntityPM;
+                
                 this.isNewEntity = true;
 
                 this.entityPM.BatchNumber = CodeCounter.GetNumber("CustomerTenantAccessCardsBatch", tenant).ToString();

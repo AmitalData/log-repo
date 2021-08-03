@@ -46,7 +46,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType,
-
+                                                                  IsImportActivated = a.IsImportActivated,
+                                                                  IsExportActivated = a.IsExportActivated,
                                                               };
 
             return entity;
@@ -70,6 +71,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                     IsImportActivated = a.IsImportActivated,
+                                                     IsExportActivated = a.IsExportActivated,
 
                                                  }).FirstOrDefault();
 
@@ -96,7 +99,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-
+                                                     IsImportActivated = a.IsImportActivated,
+                                                     IsExportActivated = a.IsExportActivated,
                                                  }).FirstOrDefault();
 
 
@@ -150,6 +154,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                  IsImportActivated = a.IsImportActivated,
+                                                                  IsExportActivated = a.IsExportActivated,
                                                               }).ToList();
             return CustomerTenantAccessCards.ToList();
         }
@@ -173,6 +179,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
                                                                               StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                              IsImportActivated = a.IsImportActivated,
+                                                                              IsExportActivated = a.IsExportActivated,
                                                                           }).ToList();
             return CustomerTenantAccessCards.ToList();
         }
@@ -195,7 +203,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               LastMappingDateTime = a.LastMappingDateTime,
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
-                                                                              StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                              IsImportActivated = a.IsImportActivated,
+                                                                              IsExportActivated = a.IsExportActivated,
                                                                           }).FirstOrDefault();
             return temp;
         }
