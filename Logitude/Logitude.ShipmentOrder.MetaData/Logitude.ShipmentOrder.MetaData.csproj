@@ -51,6 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGenerators\ContextGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContextGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\ShipmentOrderClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipmentOrderClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,7 +69,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AutoGenerators\" />
     <Folder Include="DBOthers\Procedures\" />
     <Folder Include="DBScripts\" />
     <Folder Include="DBTables\" />
@@ -70,6 +79,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AutoGenerators\ContextGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContextGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\ShipmentOrderClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShipmentOrderClassesGenerator.cs</LastGenOutput>
+    </Content>
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
