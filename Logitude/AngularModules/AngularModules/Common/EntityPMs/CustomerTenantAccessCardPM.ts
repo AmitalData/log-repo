@@ -103,6 +103,16 @@ export class CustomerTenantAccessCardPM {
     public set BuildBatch(newValue: boolean) { if (this.buildBatch != newValue) { this.buildBatch = newValue; this.MarkAsDirty("BuildBatch"); } }
        
 	 
+    private isExportActivated: boolean;
+    public get IsExportActivated() { return this.isExportActivated; }
+    public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
+       
+	 
+    private isImportActivated: boolean;
+    public get IsImportActivated() { return this.isImportActivated; }
+    public set IsImportActivated(newValue: boolean) { if (this.isImportActivated != newValue) { this.isImportActivated = newValue; this.MarkAsDirty("IsImportActivated"); } }
+       
+	 
 
     public OldEntityPM: CustomerTenantAccessCardPM;
 	    

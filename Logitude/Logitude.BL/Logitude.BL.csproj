@@ -455,6 +455,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CardSearchService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CustomerTenantAccessCardsService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />

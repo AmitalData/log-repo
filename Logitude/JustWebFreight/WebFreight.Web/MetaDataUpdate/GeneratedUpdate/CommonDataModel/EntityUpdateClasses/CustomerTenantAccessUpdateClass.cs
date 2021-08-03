@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessUpdateClass
    {  		
-		public const string HashString = "820ac3c5edaff12302f6cbb4de087f93";
+		public const string HashString = "2042afa31bc43eb9ea00da238b87f34c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CustomerTenantAccess",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerTenantAccesses",
-			      				    OldDBTableName =  "CustomerTenantAccesses",
 			      				    ObjectTableSingular =  "Customer Tenant Access",
 			      				    ObjectTablePlural =  "Customer Tenant Accesses",
 			      				    HasCustomFilter =  false,
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -207,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerTenant",
-					  						OldFieldName =  "CustomerTenant",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -272,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerIdInCustomerTenant",
-					  						OldFieldName =  "CustomerIdInCustomerTenant",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -335,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ContactName",
-					  						OldFieldName =  "ContactName",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -401,7 +396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CompanyVat",
-					  						OldFieldName =  "CompanyVat",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -467,7 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CompanyName",
-					  						OldFieldName =  "CompanyName",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -532,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CompanyEmail",
-					  						OldFieldName =  "CompanyEmail",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -597,7 +589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ContactMobile",
-					  						OldFieldName =  "ContactMobile",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -662,7 +653,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ContactPhone",
-					  						OldFieldName =  "ContactPhone",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -727,7 +717,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RequestDateTime",
-					  						OldFieldName =  "RequestDateTime",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -792,7 +781,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Status",
-					  						OldFieldName =  "Status",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomerTenantAccessStatusType",
@@ -858,7 +846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -925,7 +912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -991,7 +977,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastUpdateDate",
-					  						OldFieldName =  "LastUpdateDate",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1056,7 +1041,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1118,7 +1102,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastShipmentDate",
-					  						OldFieldName =  "LastShipmentDate",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1183,7 +1166,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1248,7 +1230,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "StockTypeCode",
-					  						OldFieldName =  "StockTypeCode",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1320,7 +1301,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsPrivateLabelCustomer",
-					  						OldFieldName =  "IsPrivateLabelCustomer",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1385,7 +1365,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomCompanyName",
-					  						OldFieldName =  "CustomCompanyName",
 					  						ObjectTableName =  "CustomerTenantAccess",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1694,6 +1673,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersHybridStartDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.HybridStartDate", DefaultText = "Hybrid Start Date",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessBRelatedCustomersAddRelatedCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.B.RelatedCustomers.AddRelatedCustomer", DefaultText = "Add Related Customer",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersIsExportActivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.IsExportActivated", DefaultText = "Export",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersIsImportActivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.IsImportActivated", DefaultText = "Import",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

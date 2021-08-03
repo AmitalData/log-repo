@@ -44,8 +44,9 @@
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreateDate'    | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreatedBy'     | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.UpdateDateTime'| TextCodeTranslationPipe}}</td>
-                                    
-                                      <td class="LastChild"></td>
+                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsImportActivated'| TextCodeTranslationPipe}}</td>
+                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsExportActivated'| TextCodeTranslationPipe}}</td>
+                                    <td class="LastChild"></td>
 
                                 </tr>
                             </table>
@@ -53,7 +54,7 @@
 
                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                             <table>
-                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" *ngFor="let item of ObsList"  >
+                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" *ngFor="let item of ObsList">
                                     <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
                                         <div>{{item.CustomerCode}}</div>
                                     </td>
@@ -62,17 +63,38 @@
                                     </td>
 
                                     <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                        <span class="Value"  [ngStyle]="{color: item.StatusType | StringToColorPipe}" >{{item.StatusType}}</span>
+                                        <span class="Value" [ngStyle]="{color: item.StatusType | StringToColorPipe}">{{item.StatusType}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.CreateDate | DateTimePipe:'DTL12NW'}}</span>
+                                        <span class="Value">{{item.CreateDate | DateTimePipe:'DTL12NW'}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.CreateByUserId}}</span>
+                                        <span class="Value">{{item.CreateByUserId}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.UpdateDateTime | DateTimePipe:'DTL12NW'}}</span>
+                                        <span class="Value">{{item.UpdateDateTime | DateTimePipe:'DTL12NW'}}</span>
                                     </td>
+
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
+
+                                        <div class="CheckBox">
+                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="item.IsImportActivated" type="checkbox" [(ngModel)]="item.IsImportActivated" />
+                                            <label class="CenterCenter" [attr.for]="item.IsImportActivated"></label>
+                                        </div>
+
+
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
+
+                                        <div class="CheckBox">
+                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="item.IsExportActivated" type="checkbox" [(ngModel)]="item.IsExportActivated" />
+                                            <label class="CenterCenter" [attr.for]="item.IsExportActivated"></label>
+                                        </div>
+
+
+                                    </td>
+
 
                                     <td class="LastChild"><IconButton [Name]="'Edit'" (click)="EditRelatedCustomer(item)"> </IconButton></td>
 

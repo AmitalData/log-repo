@@ -5,6 +5,12 @@
   DBType="Main"
   Module="Common">
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CustomerId"
     Type="varchar"
     Size="15">
@@ -21,14 +27,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LastShipmentDateInQueue"
-    Type="datetime">
+    Name="CreateByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -39,9 +40,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreateByUserId"
-    Type="varchar"
-    Size="15">
+    Name="LastShipmentDateInQueue"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -63,6 +63,18 @@
     Size="2">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsExportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsImportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CustomerId"

@@ -75,11 +75,11 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM, bool isImportActivated)
         {
             if (loggedTenant.CustomerTenantShareImportFile == true)
             {
-                return (entityPM.DirectionId.ToUpper() == "I");
+                return (entityPM.DirectionId.ToUpper() == "I" && isImportActivated == true);
             }
             else
             {
@@ -87,11 +87,11 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM, bool isExportActivated)
         {
             if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
             {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+                return ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && isExportActivated == true);
             }
             else
             {
@@ -293,7 +293,7 @@ namespace CommunicationWorkerRole
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment)))
+                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsImportActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated)))
                                                             IdsList.Add(item);
                                                         else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
                                                             ImportIdsList.Add(item);
@@ -364,11 +364,10 @@ namespace CommunicationWorkerRole
                                                 LogPM.EntityId = Shipment.Id;
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
-                                                if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
-                                                { 
-                                                    queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
-                                                }
+
+                                                queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
+                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
+                                         
 
                                             }
                                             foreach (var ImportId in ImportIdsList)
