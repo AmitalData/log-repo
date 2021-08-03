@@ -992,6 +992,7 @@ export function SearchCountryByCode(CountryCode: string) {
     SearchCardByFilter(CountryCode, MaintenanceSelectors.CountryCodeFilterCheckBox)
 }
 export function AssertSearchCountry(CountryCode: string) {
+    cy.wait(1000)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CountryCode);
     });
