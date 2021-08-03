@@ -430,7 +430,7 @@
                                                                                                             <td style="width:90px">
                                                                                                                 <div class="dropdown" style="float:right;">
 
-                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                    <div tabindex="1" [attr.data-cy]="'AdditionalServicesToggleButton'" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
                                                                                                                         <label>Add/Remove</label>
                                                                                                                         <img src="./Images/ToggleIcon.png" />
                                                                                                                         <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextAdditionalServiceModeDropButtonId" class="ToggleButtonMenu">
@@ -455,7 +455,7 @@
                                                                                                                                                 <div style="width:22px">
 
                                                                                                                                                     <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
-                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                                                                                    <CheckBox DataCy="AdditionalServicesCheckBox" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
 
                                                                                                                                                 </div>
                                                                                                                                             </td>
@@ -541,7 +541,7 @@
 
 
                                                                                                                                                                         <div class="DeleteButton" style="width:20px;float:right">
-                                                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="DeleteItemServiceObsList(Item)"></IconButton>
+                                                                                                                                                                            <IconButton DataCy="DeleteItemServiceObsList" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="DeleteItemServiceObsList(Item)"></IconButton>
                                                                                                                                                                         </div>
                                                                                                                                                                         <div class="DeleteButton" style="width:20px;float:right">
                                                                                                                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="EditItemServiceObsList(Item)"></IconButton>
@@ -617,7 +617,7 @@
                                                                                                             <td style="width:90px">
                                                                                                                 <div class="dropdown" style="float:right;">
 
-                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                    <div tabindex="1" [attr.data-cy]="'CompetitorsToggleButton'" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
                                                                                                                         <label>Add/Remove</label>
                                                                                                                         <img src="./Images/ToggleIcon.png" />
                                                                                                                         <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextCompetitorsDropButtonId" class="ToggleButtonMenu">
@@ -642,7 +642,7 @@
                                                                                                                                                 <div style="width:22px">
 
                                                                                                                                                     <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
-                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                                                                                    <CheckBox DataCy="CompetitorsCheckBox" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
 
                                                                                                                                                 </div>
                                                                                                                                             </td>
@@ -720,7 +720,7 @@
                                                                                                                                                         <td style="width: auto;">
 
                                                                                                                                                             <div class="DeleteButton" style="width:20px;float:right">
-                                                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteItemCompetitorList(Item)"></IconButton>
+                                                                                                                                                                <IconButton DataCy="DeleteItemCompetitorList" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteItemCompetitorList(Item)"></IconButton>
                                                                                                                                                             </div>
                                                                                                                                                         </td>
                                                                                                                                                         <td></td>
@@ -969,7 +969,7 @@
 
                                                                                                     <div style="position: absolute; right: 130px;top:10px;">
                                                                                                         <div *ngIf="item.CompleteButtonVisibility" class="CompleteButton">
-                                                                                                            <button style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
+                                                                                                            <button [attr.data-cy]="'CompleteButton'" style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
                                                                                                         </div>
                                                                                                         <div *ngIf="item.ReopenButtonVisibility" class="CompleteButton">
                                                                                                             <button style="width:75px;height:22px;" class="Button" (click)="item.ReopenClicked()">Incomplete</button>
