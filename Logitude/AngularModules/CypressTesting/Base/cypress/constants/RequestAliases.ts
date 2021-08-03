@@ -247,4 +247,8 @@ export class RequestAliases {
     public static readonly GetCompleteActivity = "GetCompleteActivity"
     public static readonly PutCompleteActivity = "PutCompleteActivity"
 
+    public static readonly PostOpportunities = "PostOpportunities"
+    public static readonly PutOpportunities = "PutOpportunities"
+    public static readonly GetQuotesByOpportunityId = "GetQuotesByOpportunityId"
+
 }
