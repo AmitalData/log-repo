@@ -141,8 +141,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
            // DateTime date = firstTransaction? firstTransaction.InterestValueDate.Date;
             DateTime firstTransactionDate = firstTransaction!=null? GetFirstTransactionDate(firstTransaction, previousInterestReport):new DateTime();
           
-            if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != firstTransactionDate))
-            {
+            //if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != firstTransactionDate))
+            //{
                 CreateNewInterestTransactionPM(previousInterestReportCalculationDate, previousInterestReport?.Id);
                 //if (previousInterestReport != null)
                 //{
@@ -155,7 +155,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 //{
                 //    CreateNewInterestTransactionPM(previousInterestReportCalculationDate);
                 //}
-            }
+            //}
         }
 
         private DateTime GetOpenBalanceInterestValueDate(CloseBalanceInterestReportData latestInterestReport)

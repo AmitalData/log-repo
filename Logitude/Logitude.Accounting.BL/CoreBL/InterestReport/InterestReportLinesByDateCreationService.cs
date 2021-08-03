@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private bool CheckRecentCustomerReportForLine(DateTime? RecentCalculationDate, DateTime fromDate)
         {
             bool hasRecent = false;
-            if (RecentCalculationDate!=null && RecentCalculationDate.Value.Date > fromDate)
+            if (RecentCalculationDate!=null && RecentCalculationDate.Value.Date >= fromDate)
             {
                 hasRecent = true;
                 //InterestReportQueryService ReportQueryService = new InterestReportQueryService(tenant);
