@@ -72,10 +72,10 @@
     <Folder Include="DBOthers\Procedures\" />
     <Folder Include="DBScripts\" />
     <Folder Include="DBTables\" />
-    <Folder Include="EntityFiles\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="EntityFiles\ShipmentOrder.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
