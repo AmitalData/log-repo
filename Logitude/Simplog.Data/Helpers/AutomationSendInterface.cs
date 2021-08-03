@@ -27,6 +27,9 @@ namespace Simplog.Data.Helpers
 
             [DataMember]
             public FTPAutomationDetails FTPDetails { get; set; }
+
+            [DataMember]
+            public WebHookAutomationDetails WebHookDetails { get; set; }
         }
 
 
@@ -41,6 +44,14 @@ namespace Simplog.Data.Helpers
             public string UserName { get; set; }
             [DataMember]
             public string Password { get; set; }
+
+        }
+
+        [DataContract(Namespace = "")]
+        public class WebHookAutomationDetails
+        {
+            [DataMember]
+            public string URL { get; set; }
 
         }
     

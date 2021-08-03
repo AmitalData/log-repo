@@ -2,6 +2,7 @@ export class AutomationSendInterface {
 
     constructor() {
         this.FTPDetails = new FTPAutomationDetails();
+        this.WebHookDetails = new WebHookAutomationDetails();
     }
 
 
@@ -11,6 +12,7 @@ export class AutomationSendInterface {
     public ComputingPartnerId: string;
     public FTBFolderId: string;
     public FTPDetails: FTPAutomationDetails;
+    public WebHookDetails: WebHookAutomationDetails;
     public IsChanged: boolean;
 
 }
@@ -24,4 +26,8 @@ export class FTPAutomationDetails {
     public Password: string;
 
 
+}
+
+export class WebHookAutomationDetails {
+    public URL: string;
 }

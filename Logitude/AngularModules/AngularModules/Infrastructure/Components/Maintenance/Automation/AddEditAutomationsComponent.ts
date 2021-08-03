@@ -1162,6 +1162,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.AutomationSendInterface.FTPDetails = this.AutomatedBackupClass.AutomationSendInterface.FTPDetails;
         this.AutomationSendInterface.InterfaceName = this.AutomatedBackupClass.AutomationSendInterface.InterfaceName;
         this.AutomationSendInterface.SendVia = this.AutomatedBackupClass.AutomationSendInterface.SendVia;
+        this.AutomationSendInterface.WebHookDetails = this.AutomatedBackupClass.AutomationSendInterface.WebHookDetails;
 
 
     }
@@ -1867,6 +1868,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE" && this.AutomationSendInterface.SendVia == "FTP") {
             this.ValidateFTPDetails(this.AutomationSendInterface.FTPDetails);
         }
+
+        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE" && this.AutomationSendInterface.SendVia == "WEBHOOK") {
+            this.ValidateWebHookDetails(this.AutomationSendInterface.WebHookDetails);
+        }
        
         if (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.AutomationSendDocument.SendVia == "FTP") {
             this.ValidateFTPDetails(this.AutomationSendDocument.FTPDetails);
@@ -1949,6 +1954,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     private ValidateFTPDetails(ftpDetials) {
         if (!ftpDetials || (ftpDetials && AppTool.IsNullOrEmpty(ftpDetials.Host))) {
             this.ValidationErrorsList.push("FTP Details are missing. Please contact your administrator.");
+        }
+    }
+
+    private ValidateWebHookDetails(webHookDetials) {
+        if (!webHookDetials || (webHookDetials && AppTool.IsNullOrEmpty(webHookDetials.URL))) {
+            this.ValidationErrorsList.push("WebHook URL is required. Please contact your administrator.");
         }
     }
 
