@@ -328,7 +328,7 @@
                         <th style="width: 250px;">Quantity</th>
                         <th style="width: 250px;">Weight</th>
                         <th style="width: 250px;">Volume</th>
-                        <th style="width: 200px;">Storage Site</th>
+                        <th style="width: 200px;">DIMENSIONS</th>
                     </tr>
 
                     <tr *ngFor="let package of ShipmentPackages">
@@ -336,7 +336,7 @@
                         <td style="width: 250px;">{{package.Quantity}}</td>
                         <td style="width: 250px;">{{package.Weight}}</td>
                         <td style="width: 250px;">{{package.Volume}}</td>
-                        <td style="width: 200px;">{{ShipmentPM?.WarehouseLegEnglishName}}</td>
+                        <td style="width: 200px;" *ngIf="package.Height != null">{{package.Height}} - {{package.Width}} - {{package.Length}}</td>
                     </tr>
                 </table>
             </div>
