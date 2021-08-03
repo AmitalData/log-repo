@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily
 Feature: Department fake Create, Search and Edit from Maintenance
     The user creates a department, searches for and edits it from the Maintenance Module.
 
@@ -28,7 +28,6 @@ Feature: Department fake Create, Search and Edit from Maintenance
         Given the user edit the following department details
             | LocalName        | New LocalName  |
             | Notes            | New Department |
-            | InActiveCheckBox | Yes            |
         When save department
         And the following event should appear in events tab
             | Event              |

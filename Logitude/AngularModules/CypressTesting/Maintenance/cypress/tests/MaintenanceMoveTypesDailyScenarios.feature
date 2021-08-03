@@ -1,4 +1,4 @@
-@release @all @dev @daily
+@release @all @stable @daily
 Feature: Move Type fake Create and Edit in Maintenance Module
     The user creates a Move Type fake create and edit another one from the Maintenance Module.
 
