@@ -116,7 +116,7 @@
             height: unset !important;
         }
         .column+.reference {
-            width: 75% !important;
+            width: 70% !important;
             height: 47% !important;
         }
         .mode-icon {
@@ -160,8 +160,21 @@
             width: 10px;
             height: 10px;
         }
-        
+
+        .column .circle-image div{
+            top: 20px;
+        }
+
+        .column .circle-image div svg{
+            height: 13px;
+            width: 30px;
+        }
+
+        .more-mobile{
+            display: inline;
+            margin-left: 10px
+        }
+
     }
 
- 
 
