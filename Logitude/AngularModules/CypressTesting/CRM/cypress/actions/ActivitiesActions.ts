@@ -16,18 +16,6 @@ export function NavigatesToActivitiesInCRM() {
     cy.get(ActivitiesSelectors.NEWACTIVITY).click()
 }
 
-export function NavigatesToPhoneCallWizerd() {
-    cy.Click(ActivitiesSelectors.NEWPHONECALL, null)
-}
-
-export function NavigatesToTaskWizerd() {
-    cy.Click(ActivitiesSelectors.NEWTASK, null)
-}
-
-export function NavigatesToAppointmentWizerd() {
-    cy.Click(ActivitiesSelectors.NEWAPPOINTMENT, null)
-}
-
 export function FillPhoneCallWizardsFields(activitiesDetails: ActivitiesDetails) {
     cy.FillLogLov(ActivitiesSelectors.ActivityCustomer, activitiesDetails.Customer, true)
     cy.FillLogLov(ActivitiesSelectors.ActivityCallWith, activitiesDetails.CallWith, true);
@@ -38,13 +26,6 @@ export function FillPhoneCallWizardsFields(activitiesDetails: ActivitiesDetails)
 
 export function FillTaskWizardsFields(activitiesDetails: ActivitiesDetails) {
     FillSubject("Task_")
-    cy.FillLogTextBox(ActivitiesSelectors.ActivityDescription, activitiesDetails.Description)
-    cy.FillLogLov(ActivitiesSelectors.ActivityPriorityCode, activitiesDetails.PriorityCode, true)
-}
-
-export function FillAppointmentWizardsFields(activitiesDetails: ActivitiesDetails) {
-    cy.FillLogLov(ActivitiesSelectors.ActivityCustomer, activitiesDetails.Customer, true)
-    FillSubject("Appointment_")
     cy.FillLogTextBox(ActivitiesSelectors.ActivityDescription, activitiesDetails.Description)
     cy.FillLogLov(ActivitiesSelectors.ActivityPriorityCode, activitiesDetails.PriorityCode, true)
 }
@@ -174,19 +155,4 @@ function DefineCompleteActivityRequest() {
 
 export function AssertCompleteActivity() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetCompleteActivity, 200);
-}
-
-export function CompleteAppointmentFromRecentActivitesList() {
-    cy.wait(1000)
-    DefinePutCompleteActivityRequest()
-    cy.get(ActivitiesSelectors.RecentEntityItem).eq(0).find(ActivitiesSelectors.AppointmentCompleteButton).click({ force: true });
-    cy.get(ActivitiesSelectors.MettingSummaryRedButton).filter(":visible").click()
-}
-
-function DefinePutCompleteActivityRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.PutCompleteActivity, RequestAliases.PutCompleteActivity)
-}
-
-export function AssertPutCompleteActivity() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutCompleteActivity, 200);
 }

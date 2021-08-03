@@ -2,6 +2,7 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ActivitiesDetails } from "../../models/ActivitiesDetails";
 import * as ActivitiesActions from "../../actions/ActivitiesActions";
+import * as ActivitiesAppointmentAction from "../../actions/ActivitiesAppointmentAction";
 import { ActivitiesSelectors } from "../../selectors/ActivitiesSelectors"
 
 //#region Create new appointment
@@ -11,9 +12,9 @@ Given("the user logged in and open Activites in CRM", () => {
 });
 
 Given("navigate appointment wizerd and fill the following details", (dataTable) => {
-    ActivitiesActions.NavigatesToAppointmentWizerd();
+    cy.Click(ActivitiesSelectors.NEWAPPOINTMENT, null)
     let appointmentDetails = Assists.CreateInstance<ActivitiesDetails>(dataTable, true);
-    ActivitiesActions.FillAppointmentWizardsFields(appointmentDetails);
+    ActivitiesAppointmentAction.FillAppointmentWizardsFields(appointmentDetails);
 });
 
 When("create appointment", () => {
@@ -111,10 +112,10 @@ Then("the appointment should appear in Cancelled Activites list", () => {
 //#region mark a appointment as complete from recent activities list
 When("press on Complete button", () => {
     cy.get(ActivitiesSelectors.AppointmentFilter).click({ force: true })
-    ActivitiesActions.CompleteAppointmentFromRecentActivitesList()
+    ActivitiesAppointmentAction.CompleteAppointmentFromRecentActivitesList()
 });
 
 Then("the appointment should put complete successfully", () => {
-    ActivitiesActions.AssertPutCompleteActivity();
+    ActivitiesAppointmentAction.AssertPutCompleteActivity();
 });
 //#endregion
