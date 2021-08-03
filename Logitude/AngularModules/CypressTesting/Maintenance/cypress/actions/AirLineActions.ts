@@ -14,7 +14,6 @@ let searchFieldValue = null
 
 export function FillCode(code: string) {
     cy.FillLogTextBox(AirLineSelectors.Code, code)
-    cy.wait(1000)
 }
 
 export function FillICAO(ICAO: string) {

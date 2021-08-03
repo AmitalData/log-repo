@@ -12,8 +12,8 @@ Feature: Airlines Create, Search and Edit from Maintenance
         When add "123" as air line code
         Then a validation message with "Code Field must be less than 2" error should appear
 
-    Scenario: Add Airline ICAO with lenght 2
-        When add "12" as air line ICAO
+    Scenario: Add Airline ICAO with lenght 5
+        When add "12345" as air line ICAO
         Then a validation message with "ICAO Field must be less than 3 and more than 3" error should appear
 
     Scenario: Add Airline ICAO already exists
