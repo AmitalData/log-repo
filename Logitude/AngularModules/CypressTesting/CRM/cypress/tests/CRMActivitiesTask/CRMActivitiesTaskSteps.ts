@@ -11,7 +11,7 @@ Given("the user logged in and open Activites in CRM", () => {
 });
 
 Given("navigate task wizerd and fill the following details", (dataTable) => {
-    BaseActions.NavigatesToTaskWizerd();
+    cy.Click(ActivitiesSelectors.NEWTASK, null)
     let taskDetails = Assists.CreateInstance<ActivitiesDetails>(dataTable, true);
     BaseActions.FillTaskWizardsFields(taskDetails);
 });

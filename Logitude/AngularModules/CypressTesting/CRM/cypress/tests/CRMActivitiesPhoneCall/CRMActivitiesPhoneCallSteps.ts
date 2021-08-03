@@ -11,7 +11,7 @@ Given("the user logged in and open Activites in CRM", () => {
 });
 
 Given("navigate phone call wizerd and fill the following details", (dataTable) => {
-    BaseActions.NavigatesToPhoneCallWizerd();
+    cy.Click(ActivitiesSelectors.NEWPHONECALL, null)
     let phoneCallDetails = Assists.CreateInstance<ActivitiesDetails>(dataTable, true);
     BaseActions.FillPhoneCallWizardsFields(phoneCallDetails);
 });
