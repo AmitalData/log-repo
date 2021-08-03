@@ -324,6 +324,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     {
                         DeclarationId = a.DeclarationId,
                         CounterKey = a.CounterKey,
+                        Tenant=a.Tenant,
                         LineNumber = a.LineNumber,
                         SequenceNumeric = a.SequenceNumeric,
                         ItemCode = a.ItemCode,
@@ -364,6 +365,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
                         InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
                         StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
+                    }).ToList();
+        }
+
+        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByClassificationCode(declarationId, tenant, classificationCode);
+            return (from a in supplierInvoiceItems
+                    select new SupplierInvoiceItemPM()
+                    {
+                        DeclarationId = a.DeclarationId,
+                        CounterKey = a.CounterKey,
+                        Tenant = a.Tenant,
+                        LineNumber = a.LineNumber,
+                        SequenceNumeric = a.SequenceNumeric,
+                        ItemCode = a.ItemCode,
+                        ClassificationCode = a.ClassificationCode,
+                        TaxExemptCode = a.TaxExemptCode,
                     }).ToList();
         }
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByInvoiceNumber(int tenant, string declarationId, string ItemCode)

@@ -229,6 +229,13 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public List<SupplierInvoiceItem> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
+        {
+            return (from a in context.SupplierInvoiceItems
+                    where a.DeclarationId == declarationId &&  a.ClassificationCode ==classificationCode
+                    select a).ToList();
+        }
+
         public int GetSupplierInvoiceItemsCountForDeclaration(string declarationId, int tenant)
         {
             return (from a in context.SupplierInvoiceItems
