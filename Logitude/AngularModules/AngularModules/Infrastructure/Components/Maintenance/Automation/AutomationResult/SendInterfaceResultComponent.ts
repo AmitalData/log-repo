@@ -59,6 +59,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         this.SendViaClassLists = [];
         this.SendViaClassLists.push(new Operator("FTP", "FTP"));
         this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
+        this.SendViaClassLists.push(new Operator("WebHook", "WEBHOOK"));
 
     }
 
@@ -123,6 +124,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     }
 
 
+    private webHookURL: string;
+    get WebHookURL() { return this.webHookURL; }
+    set WebHookURL(newValue: string) {
+        if (newValue != this.webHookURL) {
+            this.webHookURL = newValue;
+            if (this.automationSendInterface.WebHookDetails?.URL != newValue) {
+                this.automationSendInterface.WebHookDetails.URL = newValue;
+                this.SendFormatSelected = this.SendFormatLists.filter(d => d.Code == "JSON")[0];
+                this.automationSendInterface.IsChanged = true;
+            }
+
+        }
+    }
+
 
     private computingPartnerId: string;
     get ComputingPartnerId() { return this.computingPartnerId; }
@@ -161,6 +176,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
             } else this.SendViaSelected = this.SendViaClassLists[0];
 
             this.ComputingPartnerId = this.automationSendInterface.ComputingPartnerId;
+            this.WebHookURL = this.automationSendInterface.WebHookDetails?.URL;
 
         }
 

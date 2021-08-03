@@ -408,6 +408,8 @@
     <Compile Include="Utils\ProxyUtil.cs" />
     <Compile Include="Utils\SMTP.cs" />
     <Compile Include="Utils\TranslateTextsClassUtil.cs" />
+    <Compile Include="WebHook\WebHookServiceExceptionThrower.cs" />
+    <Compile Include="WebHook\WebHookService.cs" />
     <Compile Include="Wildcard.cs" />
     <Compile Include="WorkerEntryPoint.cs" />
   </ItemGroup>

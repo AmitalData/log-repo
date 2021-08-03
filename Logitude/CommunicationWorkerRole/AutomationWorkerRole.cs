@@ -248,6 +248,10 @@ namespace CommunicationWorkerRole
                                         {
                                             ApplyAuomationSendInterfaceFTP(entityChange, automationSendInterface, documentId);
                                         }
+                                        else if (automationSendInterface.SendVia == "WEBHOOK")
+                                        {
+                                            ApplyAutomationSendInterfaceWebHook(entityChange, automationSendInterface, documentId);
+                                        }
                                         MarkEntityChangeExecutedRecord(entityChange, entityChangesAutomation, entityChangesAutomationsLists);
                                     }
                                     else
@@ -531,6 +535,21 @@ namespace CommunicationWorkerRole
             };
             var ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
             ftpAutomationService.Run();
+        }
+
+        private void ApplyAutomationSendInterfaceWebHook(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)
+        {
+            WebHookAutomationServiceArgs webHookAutomationServiceArgs = new WebHookAutomationServiceArgs()
+            {
+                WebHookDetails = automationSendInterface.WebHookDetails,
+                DocumentId = documentId,
+                Tenant = Tenant,
+                EntityId = entityId,
+                ObjectTableId = entityChange.ObjectTableId,
+                ComputingPartnerId = automationSendInterface.ComputingPartnerId,
+            };
+            WebHookAutomationService webHookAutomationService = new WebHookAutomationService(webHookAutomationServiceArgs);
+            webHookAutomationService.Run();
         }
 
         private void ApplyAutomationSendDocumentFTP(AutomationSendDocument automationSendDocument, AutomationDocumentResult automationDocumentResult, string documentFileName)
