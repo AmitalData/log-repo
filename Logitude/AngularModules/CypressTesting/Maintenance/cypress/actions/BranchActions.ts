@@ -107,7 +107,6 @@ export function AssertUpdateAddress() {
 }
 
 export function FillAccountingExternalID(accountingExternalID) {
-    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, " ")
     cy.FillLogTextBox(BranchSelectors.AccountingExternalID, accountingExternalID)
 }
 
