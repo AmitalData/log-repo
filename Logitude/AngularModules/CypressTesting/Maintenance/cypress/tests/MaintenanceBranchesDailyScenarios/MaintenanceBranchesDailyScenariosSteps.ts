@@ -12,6 +12,7 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
 import { Urls } from "../../constants/Urls";
+import { GenerateCurrentDatetimeString } from '../../../../Base/cypress/actions/GenerateRandoms';
 
 //#region Add Branch code with lenght more than 10
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -91,9 +92,9 @@ Then("the address should update successfully", () => {
 //#endregion
 
 //#region Edit the Branch
-Given("add {string} to External ID in Accounting Tab", (accountingExternalID) => {
+Given("add new value to External ID in Accounting Tab", () => {
     cy.Navigate(BranchSelectors.AccountingTab);
-    BranchActions.FillAccountingExternalID(accountingExternalID)
+    cy.FillLogTextBox(BranchSelectors.AccountingExternalID, GenerateCurrentDatetimeString("_"))
 });
 
 When("save branch", () => {
