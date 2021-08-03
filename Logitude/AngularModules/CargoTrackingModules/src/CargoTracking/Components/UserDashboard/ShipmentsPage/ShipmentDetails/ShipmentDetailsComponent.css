@@ -238,9 +238,11 @@ h1 {
     /* z-index: 1; */
 
     color: white;
-    position: absolute;
+    /* position: absolute;
     top: -12px;
-    right: -9px;
+    right: -9px; */
+
+
 }
 
 .data-cards::after,
