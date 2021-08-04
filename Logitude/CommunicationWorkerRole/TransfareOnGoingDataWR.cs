@@ -1,5 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
@@ -100,6 +104,12 @@ namespace CommunicationWorkerRole
                     return GetVesselById(Tenant, EntityId);
                 case "DocumentType":
                     return GetDocumentTypeById(Tenant, EntityId);
+                case "Currency":
+                    return GetCurrencyById(Tenant, EntityId);
+                case "EntityStatus":
+                    return GetEntityStatusById(Tenant, EntityId);
+                case "SpecialServicesType":
+                    return GetSpecialServicesTypeById(Tenant, EntityId);
                 default:
                     return null;
             }
@@ -147,6 +157,25 @@ namespace CommunicationWorkerRole
             return portPM;
         }
 
+        private CurrencyPM GetCurrencyById(int tenant, string Id)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            CurrencyPM currencyPM = currencyQuery.GetSinglePM(Id,tenant);
+            return currencyPM;
+        }
+        private EntityStatusPM GetEntityStatusById(int tenant, string Id)
+        {
+            EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
+            EntityStatusPM entityStatusPM = entityStatusQuery.GetSinglePM(Id, tenant);
+            return entityStatusPM;
+        }
+        private SpecialServicesTypePM GetSpecialServicesTypeById(int tenant, string Id)
+        {
+            SpecialServicesTypeQuery specialServicesTypeQuery = new SpecialServicesTypeQuery(tenant);
+            SpecialServicesTypePM specialServicesTypePM = specialServicesTypeQuery.GetSinglePM(Id, tenant);
+            return specialServicesTypePM;
+        }
+
         private long GetMessageType(QueueResponse response)
         {
             string Entity = response.MessageValues["Entity"].ToString();
@@ -164,6 +193,12 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.Vessel;
                 case "DocumentType":
                     return KakaMessageTypes.DocumentType;
+                case "Currency":
+                    return KakaMessageTypes.Currency;
+                case "EntityStatus":
+                    return KakaMessageTypes.EntityStatus;
+                case "SpecialServicesType":
+                    return KakaMessageTypes.SpecialServicesType;
                 default:
                     return 0;
             }
