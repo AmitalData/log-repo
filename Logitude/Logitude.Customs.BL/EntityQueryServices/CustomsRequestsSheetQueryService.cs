@@ -438,7 +438,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB9999",
 "2751",
 "2757",
-
+"DCAMU" // multi update 
 //"8302" //בקשה לטופס הצהרה
 };
 
