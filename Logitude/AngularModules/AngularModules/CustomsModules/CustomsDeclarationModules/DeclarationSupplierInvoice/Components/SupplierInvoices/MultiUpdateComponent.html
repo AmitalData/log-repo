@@ -100,7 +100,7 @@
                         <td>
                             <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [Text]="ClassificationCode"
                                           [InputType]="'integertext'" [HideColumns]="true" [DataContext]="DataContext" [FocusOnMe]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
-                                          (LostFocus)="OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
+                                          (LostFocus)="OnClassificationLostFocus(ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="ClassificationKeyUp($event,ClassificationTextBox)"></LogTextBoxV2>
                         </td>
                         <td style="width:175px"><div></div></td>
                     </tr>

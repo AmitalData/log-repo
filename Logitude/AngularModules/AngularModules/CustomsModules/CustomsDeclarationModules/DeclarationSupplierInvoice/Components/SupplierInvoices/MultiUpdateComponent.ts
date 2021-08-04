@@ -192,16 +192,16 @@ export class MultiUpdateComponent extends BaseComponent {
         return valid;
     }
 
-    ClassificationKeyUp(event, logCellTemplate: any, classificationTextBox: any) {
+    ClassificationKeyUp(event,classificationTextBox: any) {
         debugger;
         var key = event.keyCode;
         if (key == 13) {
-            this.OnClassificationLostFocus(logCellTemplate, classificationTextBox);
+            this.OnClassificationLostFocus(classificationTextBox);
         }
     }
 
     valid: boolean = true;
-    OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+    OnClassificationLostFocus(classificationTextBox: any) {
         debugger;
         var newValue = this.ClassificationCode;
         this.valid = true;
