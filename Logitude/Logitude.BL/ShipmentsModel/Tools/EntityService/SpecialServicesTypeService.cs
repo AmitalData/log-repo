@@ -9,6 +9,8 @@ using System.Web;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -48,6 +50,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             SpecialServicesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            AddPortKafkaQueueMessage();
         }
 
         public void Update(SpecialServicesTypePM theEntityPm)
@@ -61,7 +64,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             SpecialServicesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();            
+            entityRepository.SubmitChanges();
+            AddPortKafkaQueueMessage();
+        }
+        private void AddPortKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "SpecialServicesType" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }

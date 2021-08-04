@@ -3,10 +3,13 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -49,6 +52,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CurrencyMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            AddPortKafkaQueueMessage();
         }
 
 
@@ -68,6 +72,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             CurrencyValidating.Validate(entityPM);
+            AddPortKafkaQueueMessage();
         }
 
         public string CopyCurrencyToTenant(string currencyId, int tenant)
@@ -89,6 +94,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             };
             this.Create(tenantCurrency);
             return tenantCurrency.Id;
+        }
+        private void AddPortKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Currency" },
+                { "EntityId", entityPm.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }
