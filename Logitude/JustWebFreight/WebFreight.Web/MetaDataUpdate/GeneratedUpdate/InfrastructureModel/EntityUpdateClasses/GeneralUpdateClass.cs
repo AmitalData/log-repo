@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "10f79df9aa2f18b832e6f6bf09124dc7";
+		public const string HashString = "354e3a6f7b32370d38c3728a181a5ec3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0c71",
+			      				    Code =  "0116",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -628,6 +628,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_DefaultRatios = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DefaultRatios", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DefaultRatios", NameTextCodeDefaultText = @"Default Ratios" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_General_Features_OceanInsightsSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.OceanInsightsSettings", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.OceanInsightsSettings", NameTextCodeDefaultText = @"Ocean Insights Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_SHIPMENTORDERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTORDERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHIPMENTORDERS", NameTextCodeDefaultText = @"Shipment Orders" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2436,6 +2438,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingMMoreThanPaymentCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.M.MoreThanPaymentCheque", DefaultText = "There are more than one Cheque for this payment. Click on Edit to view them",LocalDefaultText = "ישנם מספר שקים לקבלה זאת, לחץ על כפתור ''עריכה'' כדי להציגם", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingMMoreThanChequeWithTheSameChequeNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.M.MoreThanChequeWithTheSameChequeNumber", DefaultText = "Can't Add more than one cheque with the same cheque number ",LocalDefaultText = @"לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMHShipmentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ShipmentOrder", DefaultText = "Shipment Orders",LocalDefaultText = @"Shipment Orders", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
