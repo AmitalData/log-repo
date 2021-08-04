@@ -215,13 +215,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
 
 
-
-                if (entityPM.PaymentMethodCode == "BT" && entityPM.ValueDate != null && entityPM.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant))
-                {
-                    string msg = TranslateTextsClass.Translate("APPayment.M.ValueDateCantBeFutureDate", tenant, useLocal);
-                    errors += msg + ";";
-                }
-
                 if(entityPM.BankAccountId == null 
                     && (entityPM.PaymentMethodCode == "BT" || entityPM.PaymentMethodCode == "CH" || entityPM.PaymentMethodCode == "CC"))
                 {
