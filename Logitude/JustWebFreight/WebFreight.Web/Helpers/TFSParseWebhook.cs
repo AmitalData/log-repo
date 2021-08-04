@@ -149,18 +149,6 @@ namespace WebFreight.Web.Helpers
             ComputingPartner computingPartner = computingRepository.GetSingleComputingPartnerByCode("G-TFS"); // Computing Partner for TimeSheet = "TFS"
             if (computingPartner != null)
             {
-                //var objectTable = objectTableRepository.GetObjectTableByName("User", Tenant, false);
-                //ComputingPartnerTable computingTable = computingTableRepository.GetSingleComputingPartnerTable(Tenant, objectTable.Id, computingPartner.Id);
-                //if (computingTable != null)
-                //{
-                //    checkPartner = true;
-                //    this.InsertTMEmployeeTime(checkPartner);
-                //}
-                //else
-                //{
-                //    this.InsertTMEmployeeTime(checkPartner);
-                //}
-
                 this.InsertTMEmployeeTime(true);
             }
             else
@@ -215,11 +203,10 @@ namespace WebFreight.Web.Helpers
             var projectId = tmProjectRepository.GetTMActiveProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
+                if (IsAddingNewTMEmployeeTimeLine(assignedToUser, updatedByUser))
                 {
                     if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
                         var newItem = new TMEmployeeTimePM();
-                        //newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                         newItem.Tenant = Tenant;
                         newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
                         newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -248,6 +235,32 @@ namespace WebFreight.Web.Helpers
             }
         }
 
+        private bool IsAddingNewTMEmployeeTimeLine(User assignedToUser, User updatedByUser)
+        {
+            if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && IsVisualStudioValidStatus())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsVisualStudioValidStatus()
+        {
+            if (Details.TaskState.ToLower() == "in progress")
+                return true;
+
+            if (Details.TaskState.ToLower() == "committed")
+                return true;
+
+            if (Details.TaskState.ToLower() == "done")
+                return true;
+
+            if (Details.TaskState.ToLower() == "ready for test")
+                return true;
+
+            return false;
+        }
+        
         public bool CheckTMLineDuplication(string workItemId, int tenant)
         {
             var isDuplicate = false;
