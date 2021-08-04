@@ -36,8 +36,8 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
         Then the air line should create successfully
 
     Scenario: Search for the Airline by code
-        When search for "AA" air line
-        Then the "AA" air line should appear successfully
+        When search for "BA" air line
+        Then the "BA" air line should appear successfully
 
     Scenario: Open the Airline
         When open air line
