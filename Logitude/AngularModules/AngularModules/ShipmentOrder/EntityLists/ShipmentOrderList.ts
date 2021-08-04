@@ -33,6 +33,7 @@ export class ShipmentOrderList {
 	ATA: Date;
 	CustomsAgentId: string;
 	SpecialServicesTypeId: string;
+	CustomerRefrences: string;
 	
 }
  

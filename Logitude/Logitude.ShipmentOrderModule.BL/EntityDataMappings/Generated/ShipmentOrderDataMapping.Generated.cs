@@ -42,7 +42,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         House, 
 	         VesselId, 
 	         CustomsAgentId, 
-	         SpecialServicesTypeId,
+	         SpecialServicesTypeId, 
+	         CustomerRefrences,
 	      }
 
 
@@ -74,7 +75,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         ATD, 
 	         ATA, 
 	         CustomsAgentId, 
-	         SpecialServicesTypeId,
+	         SpecialServicesTypeId, 
+	         CustomerRefrences,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -181,6 +183,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialServicesTypeId))
             {
 				entityPOCO.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerRefrences))
+            {
+				entityPOCO.CustomerRefrences = entityPM.CustomerRefrences;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -294,6 +301,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.SpecialServicesTypeId = entityPOCO.SpecialServicesTypeId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerRefrences))
+            {
+					entityPM.CustomerRefrences = entityPOCO.CustomerRefrences;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -398,6 +410,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialServicesTypeId))
             {
                 oldEntityPM.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerRefrences))
+            {
+                oldEntityPM.CustomerRefrences = entityPM.CustomerRefrences;
             }
 			
 		}

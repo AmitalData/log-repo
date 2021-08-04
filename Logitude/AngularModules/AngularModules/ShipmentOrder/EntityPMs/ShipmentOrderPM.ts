@@ -154,6 +154,11 @@ export class ShipmentOrderPM {
     public set SpecialServicesTypeId(newValue: string) { if (this.specialServicesTypeId != newValue) { this.specialServicesTypeId = newValue; this.MarkAsDirty("SpecialServicesTypeId"); } }
        
 	 
+    private customerRefrences: string;
+    public get CustomerRefrences() { return this.customerRefrences; }
+    public set CustomerRefrences(newValue: string) { if (this.customerRefrences != newValue) { this.customerRefrences = newValue; this.MarkAsDirty("CustomerRefrences"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

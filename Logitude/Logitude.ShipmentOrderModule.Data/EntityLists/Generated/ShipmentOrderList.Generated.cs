@@ -64,6 +64,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string CustomsAgentId  { get; set; }
        [DataMember]
        public string SpecialServicesTypeId  { get; set; }
+       [DataMember]
+       public string CustomerRefrences  { get; set; }
    }
 
 }

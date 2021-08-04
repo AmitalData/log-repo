@@ -149,6 +149,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CustomerRefrences"
+    Type="varchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

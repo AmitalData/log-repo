@@ -618,6 +618,29 @@ namespace Logitude.ShipmentOrderModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string customerRefrences ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerRefrences  
+	   {
+	    
+	     get
+		{
+		   return customerRefrences;
+		 }
+		 set
+		 {
+		   if(customerRefrences != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerRefrences",OldValue=customerRefrences,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerRefrences=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

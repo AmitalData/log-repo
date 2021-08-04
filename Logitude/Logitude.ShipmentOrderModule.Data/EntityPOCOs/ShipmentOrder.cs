@@ -97,6 +97,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string SpecialServicesTypeId { get; set; }
 	      
         public virtual SpecialServicesType SpecialServicesType { get; set; }
+        [Column("CustomerRefrences")]
+	    public string CustomerRefrences { get; set; }
     }
 }
 	 
