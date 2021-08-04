@@ -2307,6 +2307,7 @@ export function AssertSearchShipmentSubType() {
     AssertSearchCard(ShipmentSubTypeCode)
 }
 export function AssertSearchShipmentSubTypeByCode(code: string) {
+    cy.wait(1000)
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(code);
     });
