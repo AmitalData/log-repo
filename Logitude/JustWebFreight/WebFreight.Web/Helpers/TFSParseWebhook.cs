@@ -48,19 +48,29 @@ namespace WebFreight.Web.Helpers
             this.AnalyzeQueueId = AnalyzeQueueId;
             this.Tenant = tenant;
 
-            foreach (var item in this.Details.Relations)
+            if (this.Details.Relations != null)
             {
-                string url = item.Url;
-
-                if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
+                foreach (var item in this.Details.Relations)
                 {
-                    string last = url.Split('/').Last();
-                    projectNo = this.GetWorkItemById(Int32.Parse(last));
-                    this.Details.ProjectNumber = projectNo;
-                    this.CheckComputingPartners();
-                    break;
+                    string url = item.Url;
+
+                    if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
+                    {
+                        string last = url.Split('/').Last();
+                        projectNo = this.GetWorkItemById(Int32.Parse(last));
+                        this.Details.ProjectNumber = projectNo;
+                        this.CheckComputingPartners();
+                        break;
+                    }
                 }
             }
+            else
+            {
+                projectNo = this.GetWorkItemById(Int32.Parse(this.Details.WorkItemId));
+                this.Details.ProjectNumber = projectNo;
+                this.CheckComputingPartners();
+            }
+
         }
 
         bool isFirst = true;
@@ -237,7 +247,7 @@ namespace WebFreight.Web.Helpers
 
         private bool IsAddingNewTMEmployeeTimeLine(User assignedToUser, User updatedByUser)
         {
-            if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && IsVisualStudioValidStatus())
+            if ((assignedToUser.Id == updatedByUser.Id) && ((Details.RemainingWork != null && IsVisualStudioValidStatus()) || IsMBItemIsMaintenanceBoardItem()))
             {
                 return true;
             }
@@ -260,7 +270,20 @@ namespace WebFreight.Web.Helpers
 
             return false;
         }
-        
+
+        private bool IsMBItemIsMaintenanceBoardItem()
+        {
+            if (Details.WorkItemType.ToLower() == "product backlog item"
+                && Details.TaskState.ToLower() == "committed"
+                && Details.Area != null
+                && Details.Area.Contains("MaintenanceBoard"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool CheckTMLineDuplication(string workItemId, int tenant)
         {
             var isDuplicate = false;
