@@ -154,6 +154,7 @@
     <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
     <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
     <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
+    <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
