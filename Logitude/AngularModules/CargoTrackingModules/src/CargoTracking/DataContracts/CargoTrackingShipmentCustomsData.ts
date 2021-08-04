@@ -4,6 +4,7 @@ export class CargoTrackingShipmentCustomsData
     DeclarationNumber: string;
     DeclarationStatus: string;
     CurrencySign: string;
+    ImporterId: string;
     CurrencyCode: string;
     CurrencyName: string;
     GoodsDescription: string;
