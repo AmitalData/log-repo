@@ -33,7 +33,7 @@ namespace Logitude.BL.DataContracts
         public string TargetEnv { get; set; }
         public string DocumentsApprovedByUserName { get; set; }
         public string DeclarationStatus { get; set; }
-
+        public string ImporterId { get; set; }
 
 
         //public string VersionId { get; set; }

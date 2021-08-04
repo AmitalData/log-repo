@@ -20,6 +20,11 @@ using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers.APIHelpers;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.App_Code
 {
@@ -71,7 +76,7 @@ namespace WebFreight.Web.App_Code
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-           
+
                 if (tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated");
@@ -91,7 +96,7 @@ namespace WebFreight.Web.App_Code
 
 
 
-          
+
                 Uploader uploaderService = new Uploader();
                 byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
 
@@ -103,7 +108,7 @@ namespace WebFreight.Web.App_Code
                     }
                     else result = UTF8Encoding.UTF8.GetString(filedata, 0, filedata.Length);
                 }
-        
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }
@@ -115,9 +120,9 @@ namespace WebFreight.Web.App_Code
 
         }
 
-       
 
-        
+
+
 
         [ActionName("PostUploadFile")]
         public HttpResponseMessage PostUploadFile(ImageParameter filter)
@@ -125,11 +130,11 @@ namespace WebFreight.Web.App_Code
 
             try
             {
-                 
+
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-             
+
 
                 if (filter.Tenant != authToken.Tenant)
                 {
@@ -147,7 +152,7 @@ namespace WebFreight.Web.App_Code
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -313,7 +318,7 @@ namespace WebFreight.Web.App_Code
         }
 
 
-       
+
 
         public HttpResponseMessage GetRemoveFile(string documentId, int tenant)
         {
@@ -322,7 +327,7 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                if (tenant  != authToken.Tenant)
+                if (tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated to remove file");
                 }
@@ -342,12 +347,68 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetImageUrl(string name)
         {
-           
+
             return Request.CreateResponse(HttpStatusCode.OK, "https://www.froala.com/assets/editor/media_files/photo9.jpg");
 
         }
-        
 
+        [ActionName("PostUploadFileFromCTool")]
+        public HttpResponseMessage PostUploadFileFromCTool(ImageParameter filter)
+        {
+
+            try
+            {
+
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                DocumentsFilingPM entityPM = new DocumentsFilingPM();
+                string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(filter.ShipmentNumber, authToken.Tenant);
+                string shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+                
+                if (filter.Tenant != authToken.Tenant)
+                {
+                    throw new Exception("Sorry you’re not authenticated to upload file");
+                }
+                if (filter.SentSize == 0)
+                {
+                   
+                    entityPM.DocumentTypeId = filter.DocumentTypeId;
+                    entityPM.EntityId = entityId;
+                    entityPM.Tenant = authToken.Tenant;
+                    entityPM.ObjectTableId = shipmentObjectTableId;
+                    entityPM.DirectionCode = "I";
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    DocumentsFilingService service = new DocumentsFilingService(MyContext, entityPM.Tenant);
+                    service.Create(entityPM);
+                }
+                else
+                {
+                    DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
+                    entityPM = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityId, shipmentObjectTableId,filter.DocumentTypeId,authToken.Tenant);
+                }
+                filter.EntityId = entityPM.Id;
+                ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
+                if (filter.UploadMode == "AttachmentUploader" || filter.UploadMode == "Chunk")
+                {
+                    ImageParameter _filter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
+                    return Request.CreateResponse(HttpStatusCode.OK, _filter);
+                }
+                else
+                {
+                    string result = imageLibraryControllerHelper.UploadImage(filter);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
 
 

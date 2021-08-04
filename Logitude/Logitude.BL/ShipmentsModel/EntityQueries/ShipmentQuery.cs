@@ -13709,11 +13709,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return new CargoTrackingShipmentCustomsData()
             {
                 DeclarationNumber = cloudCustomData.DeclarationNo,
+                ImporterId = cloudCustomData.ImporterId,
                 TotalValueInNIS = Convert.ToDecimal(cloudCustomData.GoodsValue),
                 TotalValueInForeignCurrency = cloudCustomData.GoodsValueDetails == null ? 0 : cloudCustomData.GoodsValueDetails.Sum(good => Convert.ToDecimal(good.Value)),
                 GoodsDescription = cloudCustomData.MishgorDescOfGoods1,
                 TotalTax = Convert.ToDecimal(cloudCustomData.TotalTax),
-                ImporterVatAmount = CalculateImporterVatAmountFromCloudCustomData(cloudCustomData),
                 TaxDetails = BuildCargoTrackingShipmentCustomTaxDetails(cloudCustomData),
                 CurrencyCode = cloudCustomData.GoodsValueDetails == null ? null : cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName,
                 CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant),
@@ -13734,13 +13734,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return sign;
         }
 
-        private decimal CalculateImporterVatAmountFromCloudCustomData(ShipmentAdditionalCloudCustomData cloudCustomData)
-        {
-            if (cloudCustomData.TaxesDetails == null)
-                return 0;
-            return cloudCustomData.TaxesDetails.Where(detail => detail.TaxTypeCode == "15")
-                                                .Sum(detail => Convert.ToDecimal(detail.TaxAmount));
-        }
         private List<CargoTrackingShipmentCustomTaxDetails> BuildCargoTrackingShipmentCustomTaxDetails(ShipmentAdditionalCloudCustomData cloudCustomData)
         {
             if (cloudCustomData.TaxesDetails == null)
@@ -13987,7 +13980,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TotalValueInNIS { get; set; }
         public decimal TotalValueInForeignCurrency { get; set; }
         public decimal TotalTax { get; set; }
-     
+        public string ImporterId { get; set; }
+
 
         public List<CargoTrackingShipmentCustomTaxDetails> TaxDetails;
     }

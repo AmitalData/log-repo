@@ -768,12 +768,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
+
                             if (lines[i].VatPercentage != 0)
                             {
-                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];                                                                                               
-                                    lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };                                
-
+                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];
+                                lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };
                             }
+      
                         }
 
                         else if (AccountingSystemCode == "QBOG")
@@ -783,7 +784,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
-                                 lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
+                            lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
                             
                         }
 
