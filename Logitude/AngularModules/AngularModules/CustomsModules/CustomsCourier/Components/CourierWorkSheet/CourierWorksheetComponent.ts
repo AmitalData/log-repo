@@ -884,7 +884,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierHawb',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
-            Styles: { width: '120px' },
+            Styles: { width: '108px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -897,7 +897,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '122px' },
+            Styles: { width: '117px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ProcedureCurrentName'
@@ -907,7 +907,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'HighLowValue',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
-            Styles: { width: '68px' },
+            Styles: { width: '67px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -919,7 +919,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            Styles: { width: '173px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'ImporterName'
@@ -929,7 +929,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
@@ -1023,7 +1023,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'SpecialActionStatus',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
-            Styles: { width: '55px' },
+            Styles: { width: '54px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1035,7 +1035,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'DeclarationStatusTypeName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
-            Styles: { width: '200px' },
+            Styles: { width: '188px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'DeclarationStatusTypeName'
@@ -1051,6 +1051,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: true,
             SortByName: 'CourierPendingReasonName'
+        });
+        this.columns.push({
+            FieldName: 'TruckerName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.TruckerName"),
+            Styles: { width: '115px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'TruckerName'
         });
 
         this.columns.push({
@@ -1081,7 +1090,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierPendingReasonList',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '38px' },
+            Styles: { width: '37px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1091,7 +1100,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'SendSplitButton',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '100px' },
+            Styles: { width: '99px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
