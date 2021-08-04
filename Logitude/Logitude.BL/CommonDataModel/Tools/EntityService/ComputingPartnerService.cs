@@ -5,6 +5,7 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -126,6 +127,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         this.UpdatePartnerTables();
                         this.ComputingPartnerNameValidation(entityPM);
+
+                        ComputingPartnerTracing.Trace(entityPM, Poco, isNewEntity);
+                        
                         ComputingPartnerMapping.MapEntity(entityPM, Poco, isNewEntity);
 
                         entityRepository.Add(Poco);
@@ -179,6 +183,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         this.UpdatePartnerTables();
                         this.ComputingPartnerNameValidation(entityPM);
+
+                        ComputingPartnerTracing.Trace(entityPM, Poco, isNewEntity);
+
                         ComputingPartnerMapping.MapEntity(entityPM, Poco, isNewEntity);
 
                         entityRepository.Update(Poco);

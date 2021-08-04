@@ -1,20 +1,19 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.Security;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
+using System.Web;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Helpers;
+namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
-    public class AccountingPaymentMethodTracing
+    public class ComputingPartnerTracing
     {
-        public static void Trace(AccountingPaymentMethodPM entityPM, AccountingPaymentMethod poco, bool isNewEntity)
+        public static void Trace(ComputingPartnerPM entityPM, ComputingPartner poco, bool isNewEntity)
         {
             ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
 
@@ -26,21 +25,21 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EventTypeCode = "CREV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "AccountingPaymentMethod",
+                    ObjectTableName = "ComputingPartner",
                 });
             }
 
             else
             {
                 string notes = "";
-                if (entityPM.Inactive && !poco.Inactive)
+                if (entityPM.InActive && !poco.InActive)
                 {
-                    notes = "Payment Method Inactivated";
+                    notes = "Computing Partner Inactivated";
                 }
 
-                else if (!entityPM.Inactive && poco.Inactive)
+                else if (!entityPM.InActive && poco.InActive)
                 {
-                    notes = "Payment Method Activated";
+                    notes = "Computing Partner Activated";
                 }
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -49,7 +48,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EventTypeCode = "UPEV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "AccountingPaymentMethod",
+                    ObjectTableName = "ComputingPartner",
                     Notes = notes,
                 });
             }
