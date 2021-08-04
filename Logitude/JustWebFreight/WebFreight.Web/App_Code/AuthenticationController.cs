@@ -51,6 +51,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using WebFreight.Web.Helpers.DataProviderHelpers;
+using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 
 namespace WebFreight.Web
 {
@@ -67,6 +68,8 @@ namespace WebFreight.Web
              
         }
         private static readonly string SimplogGuid = Guid.NewGuid().ToString("N");
+        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
+        private const string MasterUserId = "13793";
 
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, string dummy)
         {
@@ -627,7 +630,6 @@ namespace WebFreight.Web
             try
             {
 
-
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
@@ -1117,7 +1119,6 @@ namespace WebFreight.Web
                                 data.PasswordExpirationDateMessage = "Your password will expire in " + days + " days. Do you want to change it now?";
                             }
                         }
-
                     }
                 }
                 #endregion
@@ -1161,7 +1162,7 @@ namespace WebFreight.Web
           
 
                 }
-            
+
                 return data;
             }
             catch (Exception e)
@@ -1503,8 +1504,8 @@ namespace WebFreight.Web
                                 #endregion
 
                                 authenticationTokenRepository.SubmitChanges();
-                              
-                              
+
+
                                 //}
                             }
                         }
@@ -1534,6 +1535,7 @@ namespace WebFreight.Web
                 //        Thread.Sleep(sleepTime);
                 //    }
                 //}
+                SetLoginEventForMixPanel(parameters, user);
 
                 return user;
             }
@@ -1548,6 +1550,22 @@ namespace WebFreight.Web
             }
         }
 
+        private static void SetLoginEventForMixPanel(LoginParameters parameters, UserData user)
+        {
+            if (parameters.IsCargoTracking)
+            {
+                MixPanelEvent LoginEvent = BuildMixPanelLoginEvent();
+
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, user.Tenant);
+                eventTracker.TrackEvent(LoginEvent);
+            }
+        }
+        private static MixPanelEvent BuildMixPanelLoginEvent()
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "login";
+            return mixPanelEvent;
+        }
         private bool CheckLoginSecurityPolicy(int tenant, UserData user, User logitudeUser, ICommonDataContext commonDataContext)
         {
             string ipAddress = AuthenticationUtil.GetIP4Address();
