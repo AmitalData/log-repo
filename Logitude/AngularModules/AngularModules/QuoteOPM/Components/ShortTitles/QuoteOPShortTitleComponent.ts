@@ -9,10 +9,10 @@ import {CardList} from '../../../Common/EntityLists/CardList';
 
 @Component({
     
-    templateUrl: "./QuoteShortTitleComponent.html",
+    templateUrl: "./QuoteOPShortTitleComponent.html",
 })
 
-export class QuoteShortTitleComponent {
+export class QuoteOPShortTitleComponent {
   public CustomerRankName: any;
 
     public EntityPM: QuoteOPPM;

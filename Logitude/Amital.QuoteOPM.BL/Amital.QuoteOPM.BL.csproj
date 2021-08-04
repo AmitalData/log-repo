@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\QuoteOPService.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MarkUpOPTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\QuoteOPCustomerTypeDetails.Generated.cs" />
@@ -159,6 +160,10 @@
     <ProjectReference Include="..\Amital.QuoteOPM.Def\Amital.QuoteOPM.Def.csproj">
       <Project>{97ebbd11-f7e1-4d22-a236-3d1f5261cddc}</Project>
       <Name>Amital.QuoteOPM.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>

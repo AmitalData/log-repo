@@ -12,10 +12,10 @@ import { CustomerPM } from '../../../Common/EntityPMs/CustomerPM';
 
 @Component({
     
-    templateUrl: './QuoteHelperComponent.html',
+    templateUrl: './QuoteOPHelperComponent.html',
 })
 
-export class QuoteHelperComponent implements OnDestroy {
+export class QuoteOPHelperComponent implements OnDestroy {
     public EntityPM: QuoteOPPM;
     public CustomerPM: CustomerPM;
     public IsFollowupsVisible: boolean = false;

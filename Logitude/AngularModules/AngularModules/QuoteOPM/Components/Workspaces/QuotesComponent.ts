@@ -36,12 +36,14 @@ export class QuotesComponent extends BaseComponent {
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            this.IsResourcesReady = true;
-            this.InitializeServices();
-            this.LoadNonFilteredQueries();
-            this.BuildTopQuotesFilters();
-            this.InitializeFilters();           
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => {
+                this.IsResourcesReady = true;
+                this.InitializeServices();
+                this.LoadNonFilteredQueries();
+                this.BuildTopQuotesFilters();
+                this.InitializeFilters();
+            });
         });
     }
 
@@ -627,7 +629,7 @@ export class QuotesComponent extends BaseComponent {
 
         if (item != null) {
 
-            var objectTableName = "Quote";
+            var objectTableName = "QuoteOP";
             var queryCode = "Open Quotes";
             var displayTitle = this.FunnelData[item.index].LabelProperty +" Quotes";
             var backButtonTitle = TextCodeTranslator.Translate("General.MH.Quotes");
@@ -694,11 +696,11 @@ export class QuotesComponent extends BaseComponent {
     RunQuoteWizard() {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
+        logWindow.Width = 1200;
+        logWindow.Height = 800;
         logWindow.WindowArgs = args;
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
-        logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
+        logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {            
             if (s) {
@@ -708,7 +710,7 @@ export class QuotesComponent extends BaseComponent {
     }
     ViewQuoteQuery(code: string) {
         if (code != null) {
-            var objectTableName = "Quote";
+            var objectTableName = "QuoteOP";
             var queryCode = null;
             var displayTitle = "";
             var backButtonTitle = TextCodeTranslator.Translate("General.MH.Quotes");

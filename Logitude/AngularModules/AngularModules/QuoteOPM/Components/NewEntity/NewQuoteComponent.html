@@ -97,13 +97,13 @@
             <div class="FillParent CurvedArea">
                 <table>
                     <tr>
-                        <td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
+                        <td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground" id="MyRight">
 
                             <table *ngIf="!IsCopyFromQuote">
                                 <tr style="height: 1px">
-                                    <td>
+                                    <td >
                                         <!-- Directions -->
-                                        <div style="margin: 10px;">
+                                        <div style="margin: 26px;">
                                             <div style="font-size: 13px; color: #6E7172;">{{'QuoteOP.F.DirectionId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of DirectionsList">
@@ -117,7 +117,7 @@
                                         </div>
 
                                         <!-- Transport Modes -->
-                                        <div style="margin: 10px;">
+                                        <div style="margin: 26px;">
                                             <div style="font-size: 13px; color: #6E7172">{{'QuoteOP.F.TransportModeId.Short' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of TransportModesList">
@@ -131,7 +131,7 @@
                                         </div>
 
                                         <!-- Shipment Types -->
-                                        <div style="margin: 10px;" *ngIf="DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')">
+                                        <div style="margin: 26px;" *ngIf="DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')">
                                             <div style="font-size: 13px; color: #6E7172;">{{'QuoteOP.F.ShipmentTypeId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of ShipmentTypesList">
@@ -145,7 +145,7 @@
                                         </div>
 
                                         <!-- Shipment Sub Types -->
-                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
+                                        <div style="margin: 26px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
                                             <div style="font-size: 13px; color: #6E7172;">{{'QuoteOP.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
@@ -180,7 +180,7 @@
                                             <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                         </div>
 
-                                        <div style="margin: 10px;">
+                                        <div style="margin: 26px;">
                                             <div>
                                                 <span><label style="color:#6E7172; font-size:12px; vertical-align: middle;">{{'QuoteOP.S.NewQuoteOP.SelectFields' | TextCodeTranslationPipe}}:</label></span>
                                             </div>
@@ -296,7 +296,7 @@
                                                     <div class="SectionTitle">
                                                         <table>
                                                             <tr>
-                                                                <td>{{'QuoteOP.F.Shipper' | TextCodeTranslationPipe}}</td>
+                                                                <td>{{'QuoteOP.F.Shipper' | TextCodeTranslationPipe}}Shipper</td>
                                                             </tr>
                                                         </table>
                                                     </div>
