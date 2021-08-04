@@ -286,14 +286,6 @@ export class MultiUpdateComponent extends BaseComponent {
             errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.SelectItems"));
         }
         this.ValidationErrorsList = errors;
-
-      /*  var multiUpdateValues: MultiUpdateValues;
-        debugger;
-        multiUpdateValues.ProcessTypeCode = this.ProcessTypeCode;
-        multiUpdateValues.TaxExemptCode = this.TaxExemptCode;
-        multiUpdateValues.ClassificationCode = this.ClassificationCode;
-        multiUpdateValues.tenant = this.CurrentSession.CurrentEditComponent.EntityPM.Tenant;
-        multiUpdateValues.Declarationid = this.CurrentSession.CurrentEditComponent.EntityPM.Id;*/
         if (errors.length == 0) {
             var confirm = new ConfirmWindow();
             confirm.Width = 320;
@@ -320,8 +312,7 @@ export class MultiUpdateComponent extends BaseComponent {
         currRequestParams.ClassificationCode = this.ClassificationCode;
         currRequestParams.TaxExemptCode = this.TaxExemptCode;
         currRequestParams.Declarationid = this.CurrentSession.CurrentEditComponent.EntityPM.Id;
-
-
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._SupplierInvoiceService.PostSendMultiUpdate(currRequestParams)
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();

@@ -77,12 +77,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             var entity = new SupplierInvoiceItemProcesTypePM();
                             entity.ChangeSetOp = ChangeSetOperation.Insert;
-                            entity.InvoiceCounterKey = invoice.CounterKey;
                             entity.Tenant = customResponse.tenant;
-                            entity.DeclarationId = invoice.DeclarationId;
-                            entity.LineNumber = invoice.LineNumber;
                             entity.ProcessTypeCode = customResponse.ProcessTypeCode;
                             invoice.SupplierInvoiceItemProcesTypes.Add(entity);
+                            invoice.SupplierInvoiceItemsProcessTypeLastLineNumber= mySupplierInvoiceItemProcesTypeQueryService.GetMaxLineNumber(invoice.DeclarationId, invoice.CounterKey, invoice.LineNumber, customResponse.tenant);
                             invoice.ChangeSetOp = ChangeSetOperation.Update;
                         }
                     }
@@ -90,11 +88,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         invoice.TaxExemptCode = customResponse.TaxExemptCode;
                     }
+
                     updateService.Update(invoice, true);
                     this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
                     this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
+                    this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     this.MyResponseData.UserMessage = mess.ToString();
                     this.MyResponseData.Succeeded = true;
+                    this.MyResponseData.ApplicationID= declarationPM.CustomFileNo;
                 }
             }
 
