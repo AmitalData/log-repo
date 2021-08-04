@@ -45,7 +45,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         DocumentsFilingQueryService mappingService = new DocumentsFilingQueryService(authToken.Tenant);
 
                         DocumentsFilingPM entityPM = mappingService.DocumentsFilingCustomDataMappingAndValidating(entity, authToken.Tenant, true);
-
+                        entityPM.IsUoloadedField = true;
+                        entityPM.DocumentTypeCode = entity.DocumentType != null ? entity.DocumentType.Code : null;
                         DocumentsFilingService service = new DocumentsFilingService(MyContext, authToken.Tenant);
                         service.Create(entityPM, null, null, true);
                         if (!string.IsNullOrEmpty(entityPM.DocumentId) && !string.IsNullOrEmpty(entityPM.FileName))
