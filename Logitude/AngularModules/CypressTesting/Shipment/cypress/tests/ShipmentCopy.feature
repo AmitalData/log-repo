@@ -11,7 +11,7 @@ Feature: Copy Direct Export Air Shipment
             | Shipper              | TestShipperExport |
             | MainCarriageFromPort | LHR               |
             | MainCarriageToPort   | MIA               |
-            | Consignee            | aaa               |
+            | Consignee            | 70005             |
             | DescriptionOfGoods   | toys              |
         When create shipment
         Then the direct should create successfully
