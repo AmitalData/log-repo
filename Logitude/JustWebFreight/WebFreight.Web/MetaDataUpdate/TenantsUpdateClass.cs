@@ -118,6 +118,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             WriteLogMessage("Updating Warehouse Module ...");
                             UpdateWarehouseModule(context, false);
 
+                            WriteLogMessage("Updating Shipment Order Module ...");
+                            UpdateShipmentOrderModule(context, false);
+
                             WriteLogMessage("Updating Social Module ...");
                             UpdateSocialModule(context, false);
 
@@ -324,6 +327,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             UpdateBusinessInfrastrutureModule(context, true);
                             break;
                         }
+                    case "shipmentOrder":
+                        {
+                            UpdateShipmentOrderModule(context, true);
+                            break;
+                        }
                     case "global":
                         {
                             GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
@@ -395,7 +403,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
-
 
                     case "all":
                         {
@@ -522,6 +529,10 @@ namespace WebFreight.Web.MetaDataUpdate
                             modelUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             MetadataUpdateUtility.RunPostDeleteProcedure();
+
+                            //shipment order
+                            ShipmentOrderLibUpdateClass shipmentOrderUpdateClass = new ShipmentOrderLibUpdateClass();
+                            shipmentOrderUpdateClass.LoadObjectTablesMetadata(context, false);
 
                             break;
                         }
@@ -1134,6 +1145,18 @@ namespace WebFreight.Web.MetaDataUpdate
             //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
         }
 
+        private static void UpdateShipmentOrderModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            ShipmentOrderLibUpdateClass modelUpdateClass = new ShipmentOrderLibUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",ShipmentOrderLibUpdateClass");
+
+        }
+
         private static void UpdateSocialModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
@@ -1460,6 +1483,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClassHashString = TimeManagementUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? TimeManagementUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             if (string.IsNullOrEmpty(updateClassHashString))
                 updateClassHashString = WarehouseLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? WarehouseLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = ShipmentOrderLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? ShipmentOrderLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             //if (string.IsNullOrEmpty(updateClassHashString))
             //updateClassHashString = CustomsUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CustomsUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
 

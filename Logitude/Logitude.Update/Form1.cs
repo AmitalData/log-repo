@@ -4749,6 +4749,13 @@ User/Pass",
             label14.Visible = true;
 
         }
+
+        private void updateShipmentOrder_click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "shipmentOrder", ShipmentOrderLable));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
     public class TenantMailBox
