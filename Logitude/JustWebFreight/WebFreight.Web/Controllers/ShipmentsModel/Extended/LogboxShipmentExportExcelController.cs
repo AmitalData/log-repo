@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -14,6 +13,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 {
