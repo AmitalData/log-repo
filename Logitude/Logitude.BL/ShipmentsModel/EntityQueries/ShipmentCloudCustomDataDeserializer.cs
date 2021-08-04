@@ -107,6 +107,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomData.MishgorDescOfGoods1 = MishgorDescOfGoods1[0].InnerText;
                 }
 
+                XmlNodeList ImporterId = xmldoc.GetElementsByTagName("importer-id");
+                if (ImporterId[0] != null)
+                {
+                    CustomData.ImporterId = ImporterId[0].InnerText;
+                }
+
                 XmlNodeList GoodsValue = xmldoc.GetElementsByTagName("goods_value");
                 if (GoodsValue[0] != null)
                 {
