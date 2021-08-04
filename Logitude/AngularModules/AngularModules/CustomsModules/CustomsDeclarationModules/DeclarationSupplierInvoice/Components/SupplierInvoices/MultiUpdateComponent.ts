@@ -30,6 +30,7 @@ export class MultiUpdateComponent extends BaseComponent {
             this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsItem").subscribe((response: any) => {
                     this.IsReady = true;
+
                 });
             });
         });
@@ -37,6 +38,7 @@ export class MultiUpdateComponent extends BaseComponent {
         this.SetUIProperties();
     }
     SetUIProperties() {
+        this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
     }
 
     SetWindowArgs(args: any) {
@@ -79,7 +81,7 @@ export class MultiUpdateComponent extends BaseComponent {
         this.updateAll = value;
         if (value) {
             this.UpdateSelected = false;
-            this.UIProperties.SetEnabled("ClassificationCode", null, false);
+            this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
         }
     }
 
@@ -89,7 +91,7 @@ export class MultiUpdateComponent extends BaseComponent {
         this.updateSelected = value;
         if (value) {
             this.UpdateAll = false;
-            this.UIProperties.SetEnabled("ClassificationCode", null, true);
+            this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", true);
         }
     }
 
@@ -190,13 +192,94 @@ export class MultiUpdateComponent extends BaseComponent {
         return valid;
     }
 
+    ClassificationKeyUp(event, logCellTemplate: any, classificationTextBox: any) {
+        debugger;
+        var key = event.keyCode;
+        if (key == 13) {
+            this.OnClassificationLostFocus(logCellTemplate, classificationTextBox);
+        }
+    }
+
+    valid: boolean = true;
+    OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        debugger;
+        var newValue = this.ClassificationCode;
+        this.valid = true;
+        this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+
+        if (AppTool.IsNullOrEmpty(newValue)) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+        else if (newValue.toString().length > 11) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+
+        }
+        else if (newValue.toString().length < 8) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+
+        }
+        else if (newValue.toString().length == 8) {
+            newValue = newValue + "00";
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + this.checkDigit;
+            this.valid = true;;
+
+        }
+        else if (newValue.toString().length == 9) {
+            this.digit = newValue.toString().substring(8);
+
+            newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
+
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
+
+        }
+        else if (newValue.toString().length == 10) {
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + "" + this.checkDigit;
+            this.valid = true;
+
+        }
+        else if (newValue.toString().length == 11) {
+            this.digit = newValue.toString().substring(10);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
+
+
+        }
+
+        else {
+            this.valid = true;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+
+        this.ClassificationCode = newValue;
+        classificationTextBox.TextValue = newValue;
+    }
+
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
         if (!this.UpdateAll && !this.UpdateSelected) {
             errors.push("בחר פריטים לעדכון");
         }
-        if (this.ProcessTypeCode == null || this.TaxExemptCode ) {
+        if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
             errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ProcessTypeRequired"));
         }
         if (this.UpdateSelected ) {
