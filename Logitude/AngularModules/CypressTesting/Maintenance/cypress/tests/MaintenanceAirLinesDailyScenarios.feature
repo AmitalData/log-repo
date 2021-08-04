@@ -87,7 +87,7 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
         Then the air line awb special handling code should create successfully
 
     Scenario: Inactivate Air Line and save changes
-        Given the user Inactivate air line
+        Given the user add a new value to notes field
         When save air line
         Then the air line should update successfully
         And the following event should appear in events tab
