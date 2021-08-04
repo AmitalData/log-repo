@@ -308,11 +308,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerOISimulator", "Con
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShipmentOrder", "ShipmentOrder", "{B965EB15-51A2-45AC-993D-5673E3376100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrder.BL", "Logitude.ShipmentOrder.BL\Logitude.ShipmentOrder.BL.csproj", "{F37BF2F7-0206-4123-A873-290A087538F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrderLib.BL", "Logitude.ShipmentOrderLib.BL\Logitude.ShipmentOrderLib.BL.csproj", "{F37BF2F7-0206-4123-A873-290A087538F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrder.Data", "Logitude.ShipmentOrder.Data\Logitude.ShipmentOrder.Data.csproj", "{378DB1A8-43C3-45A1-A4A0-0B8961CFDB52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrderLib.Data", "Logitude.ShipmentOrderLib.Data\Logitude.ShipmentOrderLib.Data.csproj", "{378DB1A8-43C3-45A1-A4A0-0B8961CFDB52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrder.MetaData", "Logitude.ShipmentOrder.MetaData\Logitude.ShipmentOrder.MetaData.csproj", "{842C3432-0FAF-4B5E-9A27-E8096A2E4CEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrderLib.MetaData", "Logitude.ShipmentOrderLib.MetaData\Logitude.ShipmentOrderLib.MetaData.csproj", "{842C3432-0FAF-4B5E-9A27-E8096A2E4CEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
