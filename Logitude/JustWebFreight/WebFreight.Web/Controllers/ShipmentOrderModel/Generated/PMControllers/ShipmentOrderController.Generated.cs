@@ -34,14 +34,14 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.BL.Helpers;
-using Logitude.ShipmentOrderLib.Data.EntityPOCOs;
-using Logitude.ShipmentOrderLib.BL.EntityPMs;
-using Logitude.ShipmentOrderLib.Data;
-using Logitude.ShipmentOrderLib.BL;
-using Logitude.ShipmentOrderLib.Data.EntityLists;
-using Logitude.ShipmentOrderLib.BL.EntityUpdateServices;
-using Logitude.ShipmentOrderLib.Data.EntityListQueryServices;
-using Logitude.ShipmentOrderLib.BL.EntityQueryServices;
+using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
+using Logitude.ShipmentOrderModule.BL.EntityPMs;
+using Logitude.ShipmentOrderModule.Data;
+using Logitude.ShipmentOrderModule.BL;
+using Logitude.ShipmentOrderModule.Data.EntityLists;
+using Logitude.ShipmentOrderModule.BL.EntityUpdateServices;
+using Logitude.ShipmentOrderModule.Data.EntityListQueryServices;
+using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 

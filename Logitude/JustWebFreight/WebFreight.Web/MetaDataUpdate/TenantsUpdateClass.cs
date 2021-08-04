@@ -531,7 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             MetadataUpdateUtility.RunPostDeleteProcedure();
 
                             //shipment order
-                            ShipmentOrderLibUpdateClass shipmentOrderUpdateClass = new ShipmentOrderLibUpdateClass();
+                            ShipmentOrderModuleUpdateClass shipmentOrderUpdateClass = new ShipmentOrderModuleUpdateClass();
                             shipmentOrderUpdateClass.LoadObjectTablesMetadata(context, false);
 
                             break;
@@ -1147,13 +1147,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateShipmentOrderModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
-            ShipmentOrderLibUpdateClass modelUpdateClass = new ShipmentOrderLibUpdateClass();
+            ShipmentOrderModuleUpdateClass modelUpdateClass = new ShipmentOrderModuleUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
                 modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
-            performanceTimerLogger.LogMessage("Generated" + ",ShipmentOrderLibUpdateClass");
+            performanceTimerLogger.LogMessage("Generated" + ",ShipmentOrderModuleUpdateClass");
 
         }
 
@@ -1484,7 +1484,7 @@ namespace WebFreight.Web.MetaDataUpdate
             if (string.IsNullOrEmpty(updateClassHashString))
                 updateClassHashString = WarehouseLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? WarehouseLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             if (string.IsNullOrEmpty(updateClassHashString))
-                updateClassHashString = ShipmentOrderLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? ShipmentOrderLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+                updateClassHashString = ShipmentOrderModuleUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? ShipmentOrderModuleUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             //if (string.IsNullOrEmpty(updateClassHashString))
             //updateClassHashString = CustomsUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CustomsUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
 

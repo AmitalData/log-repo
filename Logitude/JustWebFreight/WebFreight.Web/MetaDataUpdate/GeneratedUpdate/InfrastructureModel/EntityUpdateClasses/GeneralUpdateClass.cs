@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "354e3a6f7b32370d38c3728a181a5ec3";
+		public const string HashString = "b50d8751a193c564a391406f9cdccfda";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0116",
+			      				    Code =  "81bb",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2439,7 +2439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingMMoreThanChequeWithTheSameChequeNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.M.MoreThanChequeWithTheSameChequeNumber", DefaultText = "Can't Add more than one cheque with the same cheque number ",LocalDefaultText = @"לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHShipmentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ShipmentOrder", DefaultText = "Shipment Orders",LocalDefaultText = @"Shipment Orders", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHShipmentOrders = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ShipmentOrders", DefaultText = "Shipment Orders",LocalDefaultText = @"Shipment Orders", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
