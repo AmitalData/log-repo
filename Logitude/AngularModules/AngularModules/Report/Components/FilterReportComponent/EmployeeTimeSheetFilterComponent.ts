@@ -115,18 +115,23 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-        if (this.UsersComboList.filter(d => d.Checked).length == 0) {
-            this.ValidationErrorsList.push("Please select employee");
-        }
 
         if (this.ValidationErrorsList.length == 0) {
             var myEmployees: string = "";
 
-            this.UsersComboList.forEach((i) => {
-                if (i.Checked) {
+            if (this.UsersComboList.filter(i => i.Checked)[0] == null) {
+                this.UsersComboList.forEach((i) => {
                     myEmployees += i.Id + ",";
-                }
-            });            
+                });
+            }
+            else {
+                this.UsersComboList.forEach((i) => {
+                    if (i.Checked) {
+                        myEmployees += i.Id + ",";
+                    }
+                });
+            }
+        
 
             this.queryFilterItems = new Array<QueryFilterItem>();
             this.queryFilterItem = new QueryFilterItem();

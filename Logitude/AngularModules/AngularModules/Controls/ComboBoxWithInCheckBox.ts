@@ -31,7 +31,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsMouseOverInput: boolean = false;
     public SelectionType: string = " Products"
     public ProductsSelectionType: string = " Selected " + this.SelectionType;
-    public TotalPickedItems: string;;
+    public TotalPickedItems: string = " All";
     public CheckBoxOnly: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() EditedItemSource: EventEmitter<any> = new EventEmitter();
@@ -61,9 +61,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
 
     ngAfterViewInit() {
         this.InitialItemsSource = this.ItemsSource;
-        if (!this.IsAreasMenu) {
-            this.TotalPickedItems = " All";
-        }
+
     }
     private SetControlPosition() {
         var item = document.getElementById(this.ControlId);

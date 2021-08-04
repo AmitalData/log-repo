@@ -7,14 +7,17 @@ namespace WebFreight.Web.DataProviders
 {
     public class EmployeeTimeSheetDataProvider
     {
-        public string EmployeeUserId { get; set; }
-        public string EmployeeUserName { get; set; }
+        public string EmployeesUserNames { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
-        public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
-        public List<EmployeeTimeDayOff> EmployeeTimeDaysOff { get; set; }
+        public List<EmployeeTimeSheetGroupData> EmployeeTimeSheetGroups { get; set; }
+    }
 
+    public class EmployeeTimeSheetGroupData
+    {
+        public string EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
         public string Total_RequiredWorkHours { get; set; }
         public string Total_TimeFromClock { get; set; }
         public string Total_TimeFromOffice { get; set; }
@@ -23,9 +26,11 @@ namespace WebFreight.Web.DataProviders
         public string Total_TimeFromClient { get; set; }
         public string Total_TimeFromDayOff { get; set; }
         public string Total_TotalWorkHrs { get; set; }
-        public string Total_OverTime { get; set; }        
-    }
+        public string Total_OverTime { get; set; }
+        public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
+        public List<EmployeeTimeDayOff> EmployeeTimeDaysOff { get; set; }
 
+    }
     public class EmployeeTimeSheetData
     {
         public string EmployeeName { get; set; }
@@ -41,7 +46,6 @@ namespace WebFreight.Web.DataProviders
         public double MinutesDifference { get; set; }
         public double MinutesTotalWork { get; set; }
         public double MinutesOverTime { get; set; }
-
         public string TimeFromClock { get; set; }
         public string TimeFromOffice { get; set; }
         public string DifferenceTime { get; set; }
