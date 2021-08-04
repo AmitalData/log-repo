@@ -45,6 +45,7 @@ namespace WebFreight.Web.DataProviders
         public string WaterMark { get; set; }
         public string IssuedByUser { get; set; }
         public string IssuedByUser_LocalName { get; set; }
+        public string IssuedByUserEmail { get; set; }
         public string MainCarriageLastDestination { get; set; }
         public string MainCarriageLastDestination_label { get; set; }
         public string MainCarriageLastDestinationPortCode { get; set; }
@@ -696,8 +697,8 @@ namespace WebFreight.Web.DataProviders
         public string LocalDescription { get; set; }
         public string VatAmountInLocalCurrency { get; set; }
         public string VatAmountInInvoiceCurrency { get; set; }
+        public double? VatAmountInInvoiceCurrency_Double { get; set; }
         public string VatAmountIncludeMultiInInvoiceCurrency { get; set; }
-
         public string VatIndication { get; set; }
         public string ChrageTypeCode { get; set; }
         public string DebitInLocalAmount { get; set; }
@@ -733,6 +734,7 @@ namespace WebFreight.Web.DataProviders
         public string VATLocalDescription { get; set; }
         public bool IsRegionalTax { get; set; }
         public string ChargeTypeDescription { get; set; }
+        public double? TotalAmount { get; set; }
     }
 
     public class TotalVat
