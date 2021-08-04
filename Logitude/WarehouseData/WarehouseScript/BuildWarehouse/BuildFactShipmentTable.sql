@@ -297,6 +297,11 @@
 
    declare @ShipmentLevelCode as varchar(1)
     
+   declare @MasterOnCarriageATA as datetime 
+   declare @MasterOnCarriageATD as datetime
+   declare @MasterOnCarriageETD as datetime
+   declare @MasterOnCarriageETA as datetime  
+
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  NewDIM_Directions.Name, TransportModes.Name ,NewDIM_Levels.Name, NewDIM_Types.Name, NewDIM_OBLTypes.Name, NewDIM_Departments.Id_Number ,NewDIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
@@ -331,8 +336,10 @@
 	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number, dw_Shipments.QuoteNumber,
 
 	 dw_Shipments.ShipmentLevelCode,dw_Shipments.PreForwardingETD, dw_Shipments.PreForwardingETA, dw_Shipments.PreForwardingATA,dw_Shipments.PreForwardingATD,
-	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name, 
-	 fromPort.Id_Number, toPort.Id_Number
+
+	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name,
+	  fromPort.Id_Number, toPort.Id_Number, dw_ShipmentMasterDatas.OnCarriageATA, dw_ShipmentMasterDatas.OnCarriageATD, dw_ShipmentMasterDatas.OnCarriageETD, dw_ShipmentMasterDatas.OnCarriageETA
+
 	  
 	 
 
@@ -452,7 +459,9 @@
 
 	  @ShipmentLevelCode,
 	  @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD, 
-	  @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort, @MainCarriageToPortId
+
+	  @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode,  @MainCarriageFromPort, @MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA
+
 
 
 
@@ -501,6 +510,18 @@
 	  SET @PreCarriageToPort = @PreForwardingToPort; 
 	  SET @PreCarriageTransportMode = @PreForwardingTransportMode;   
 	   end
+	   
+	     ------- On Carriage for direct and master shipment ----
+	  if(@ShipmentLevelCode = 'D' or @ShipmentLevelCode = 'C')
+	   begin
+	       
+      SET @OnCarriageATA= @MasterOnCarriageATA
+      SET @OnCarriageATD= @MasterOnCarriageATD
+      SET @OnCarriageETD= @MasterOnCarriageETD
+      SET @OnCarriageETA=  @MasterOnCarriageETA
+	  
+	   end
+
 
 
 
@@ -668,7 +689,9 @@ END CATCH
 	@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
     @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
 	@Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,   @ShipmentLevelCode, @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD,
-	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort,@MainCarriageToPortId
+ 
+	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort,@MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA
+ 
 
 
 		End
