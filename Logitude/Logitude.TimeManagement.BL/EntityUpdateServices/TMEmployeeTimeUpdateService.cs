@@ -106,7 +106,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             if (entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
                 return true;
 
-            if (entityPM.WINumber != entityPOCO.WINumber)
+            if (!string.IsNullOrEmpty(entityPM.WINumber) && entityPM.WINumber != entityPOCO.WINumber)
                 return true;
 
             return false;
