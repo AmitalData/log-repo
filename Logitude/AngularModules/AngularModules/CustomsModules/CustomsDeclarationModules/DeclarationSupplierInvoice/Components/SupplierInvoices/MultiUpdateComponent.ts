@@ -193,7 +193,6 @@ export class MultiUpdateComponent extends BaseComponent {
     }
 
     ClassificationKeyUp(event,classificationTextBox: any) {
-        debugger;
         var key = event.keyCode;
         if (key == 13) {
             this.OnClassificationLostFocus(classificationTextBox);
@@ -202,7 +201,6 @@ export class MultiUpdateComponent extends BaseComponent {
 
     valid: boolean = true;
     OnClassificationLostFocus(classificationTextBox: any) {
-        debugger;
         var newValue = this.ClassificationCode;
         this.valid = true;
         this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
@@ -276,14 +274,14 @@ export class MultiUpdateComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
-        if (!this.UpdateAll && !this.UpdateSelected) {
-            errors.push("בחר פריטים לעדכון");
-        }
         if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
-            errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ProcessTypeRequired"));
+            errors.push("חובה להזין שדה קוד");
         }
         if (this.UpdateSelected ) {
             errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.SelectItems"));
+        }
+        if (!this.UpdateAll && !this.UpdateSelected) {
+            errors.push("בחר פריטים לעדכון");
         }
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
