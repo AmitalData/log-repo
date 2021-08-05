@@ -312,9 +312,20 @@ export class SplittedByCurrencyAccount extends BaseComponent {
     {
      
         if (checked) {
-            this.AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency);
-            this.entityPM.Inactive = true;
-            this.entityPM.Type = "INACTIVE";
+
+            if (balanceInLocalCurrency != null) {
+
+                if (balanceInLocalCurrency != 0) {
+                    this.entityPM.Inactive = false;
+                    this.entityPM.Type = "ACTIVE";
+                    this.AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency);
+                }
+
+                else {
+                    this.entityPM.Inactive = true;
+                    this.entityPM.Type = "INACTIVE";
+                }
+            }
         }
         else {
            
@@ -335,15 +346,10 @@ export class SplittedByCurrencyAccount extends BaseComponent {
 
             });
 
-        
-
     }
 
-    
     private AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency: number) {
-        if (balanceInLocalCurrency != 0) {
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
-        }
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
     }
 
     ConnectedGLAccountClicked(item: any) {
