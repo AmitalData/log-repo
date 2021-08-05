@@ -2852,6 +2852,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
         logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
 
     RunNewContainerization() {
@@ -2861,6 +2862,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         logWindow.Title = ("המכלה חדשה");
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
 
     private RunNewEntityWizard(wizardControlName: string) {

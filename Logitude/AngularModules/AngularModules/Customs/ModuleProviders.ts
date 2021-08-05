@@ -422,7 +422,6 @@ export class ModuleProviders {
     public static GetInstance(name: string) {
 
         var myResult: any = null;
-        debugger;
         switch (name) {
 
             //#region StandardList
