@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Shipment Order&quot;"
-  Code="&quot;6bc8&quot;"
+  Code="&quot;87ba&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;ShipmentOrder&quot;"
@@ -1340,7 +1340,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="20"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
@@ -2076,6 +2076,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomerRefrences&quot;"
     ListPropertyPath="&quot;CustomerRefrences&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2120,15 +2121,345 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;c514e7e4-5423-49d7-ae8e-ebce6340c27e&quot;"
+    FieldName="&quot;TransportModeName&quot;"
+    OldNames="TransportModeName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="10"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="10"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;TransportModeName&quot;"
+    ListPropertyPath="&quot;TransportModeName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ShipmentOrder&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;TransportModeName&quot;"
+    DefaultText="&quot;TransportModeName&quot;"
+    ListFieldLable="&quot;TransportModeNameListLable&quot;"
+    ListLableDefaultText="&quot;TransportModeName&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;b894d1e6-8bc6-40c9-bd53-656728a56a4f&quot;"
+    FieldName="&quot;ShipmentTypeName&quot;"
+    OldNames="ShipmentTypeName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ShipmentTypeName&quot;"
+    ListPropertyPath="&quot;ShipmentTypeName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ShipmentOrder&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ShipmentTypeName&quot;"
+    DefaultText="&quot;ShipmentTypeName&quot;"
+    ListFieldLable="&quot;ShipmentTypeNameListLable&quot;"
+    ListLableDefaultText="&quot;ShipmentTypeName&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;ALSO&quot;"
+    TextCode="&quot;All Shipment Orders&quot;"
+    QueryGroupCode="&quot;87ba&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    QuerySection="&quot;ShipmentOrder&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    EditWizardComponentPath="&quot;&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;OrderNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;Master&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;House&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TransportModeName&quot;"
+        ColumnWidth="155" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ShipmentTypeName&quot;"
+        ColumnWidth="155" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;ShipmentOrderHeaderScreen&quot;"
     ObjectTableName="&quot;ShipmentOrder&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    NumberOfColumns="3"
+    NumberOfRows="3">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;OrderNumber&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;ShipmentTypeName&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;TransportModeName&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;House&quot;"
+        ScreenName="ShipmentOrderHeaderScreen" />
+    </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Shipment Order General Tab Screen&quot;"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ShipmentOrder.GeneralTabScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="8">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;OrderNumber&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;ConsigneeId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;IncotermId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;PONumber&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="5"
+        ObjectFieldName="&quot;DescriptionofGoods&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;CarrierNumber&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="7"
+        ObjectFieldName="&quot;SpecialServicesTypeId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;ShipmentTypeId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ShipperId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="2"
+        ObjectFieldName="&quot;AgentId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="3"
+        ObjectFieldName="&quot;AccountManagerId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="4"
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="5"
+        ObjectFieldName="&quot;House&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="6"
+        ObjectFieldName="&quot;VesselId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="7"
+        ObjectFieldName="&quot;CustomsAgentId&quot;"
+        ScreenName="Shipment Order General Tab Screen" />
+    </ScreenFields>
+  </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;&quot;"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    Code="&quot;SHGE&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;ShipmentOrder.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

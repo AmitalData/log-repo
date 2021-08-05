@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ShipmentOrderUpdateClass
    {  		
-		public const string HashString = "a38bca9c2742d55897d613513a990ce0";
+		public const string HashString = "5ec061111198d5d6d2049bbe375dd170";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Order",
-			      				    Code =  "6bc8",
+			      				    Code =  "87ba",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "ShipmentOrder",
@@ -1057,7 +1057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  20,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -1657,6 +1657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomerRefrences",
 					  						ListPropertyPath =  "CustomerRefrences",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1691,10 +1692,174 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TransportModeName",
+					  						ObjectTableName =  "ShipmentOrder",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  10,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  10,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TransportModeName",
+					  						ListPropertyPath =  "TransportModeName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShipmentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TransportModeName",
+					  						DefaultText =  "TransportModeName",
+					  						ListFieldLable =  "TransportModeNameListLable",
+					  						ListLableDefaultText =  "TransportModeName",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipmentTypeName",
+					  						ObjectTableName =  "ShipmentOrder",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShipmentTypeName",
+					  						ListPropertyPath =  "ShipmentTypeName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShipmentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShipmentTypeName",
+					  						DefaultText =  "ShipmentTypeName",
+					  						ListFieldLable =  "ShipmentTypeNameListLable",
+					  						ListLableDefaultText =  "ShipmentTypeName",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ShipmentOrderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "87ba", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ShipmentOrderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8206", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ShipmentOrderObjectTable = objectTables.ContainsKey("ShipmentOrder") ? objectTables["ShipmentOrder"] : null;
+            if (ShipmentOrderObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ShipmentOrderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ShipmentOrder" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ShipmentOrderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentOrder.Q.ALSO", DefaultText = @"All Shipment Orders",LocalDefaultText = null, ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShipmentOrderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentOrder.Q.ALSO", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentOrderFeatures.ALSO", NameTextCodeDefaultText = "ALSO", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShipmentOrderObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ALSOQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentOrderTextCode_0.Id, NameTextCodeCode = ShipmentOrderTextCode_0.Code, ObjectTableName = "ShipmentOrder", Code = "ALSO",  EditWizardComponentPath = "",
+			   QueryGroupCode = "87ba", IndexOrder = 0, Tenant = 0, ObjectTableId = ShipmentOrderObjectTable.Id, QuerySection = "ShipmentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentOrderFeature_0.Id,FeatureUniqeCode= ShipmentOrderFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ALSOQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ShipmentOrder.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ALSOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShipmentOrder.OrderNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ALSOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShipmentOrder.Master" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ALSOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShipmentOrder.House" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ALSOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShipmentOrder.TransportModeName" , ColumnWidth = 155 }, addedQueryColumns);
+
+			 QueryColumn ALSOQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShipmentOrder.ShipmentTypeName" , ColumnWidth = 155 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

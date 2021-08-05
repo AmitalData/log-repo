@@ -76,7 +76,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         ATA, 
 	         CustomsAgentId, 
 	         SpecialServicesTypeId, 
-	         CustomerRefrences,
+	         CustomerRefrences, 
+	         TransportModeName, 
+	         ShipmentTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

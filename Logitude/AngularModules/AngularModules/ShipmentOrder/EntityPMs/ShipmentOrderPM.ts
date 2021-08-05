@@ -159,6 +159,16 @@ export class ShipmentOrderPM {
     public set CustomerRefrences(newValue: string) { if (this.customerRefrences != newValue) { this.customerRefrences = newValue; this.MarkAsDirty("CustomerRefrences"); } }
        
 	 
+    private transportModeName: string;
+    public get TransportModeName() { return this.transportModeName; }
+    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
+    private shipmentTypeName: string;
+    public get ShipmentTypeName() { return this.shipmentTypeName; }
+    public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

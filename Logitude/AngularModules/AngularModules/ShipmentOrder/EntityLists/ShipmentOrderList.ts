@@ -34,6 +34,8 @@ export class ShipmentOrderList {
 	CustomsAgentId: string;
 	SpecialServicesTypeId: string;
 	CustomerRefrences: string;
+	TransportModeName: string;
+	ShipmentTypeName: string;
 	
 }
  

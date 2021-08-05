@@ -10,6 +10,16 @@ using Logitude.Server.Tools;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
 using Logitude.ShipmentOrderModule.BL.EntityPMs; 
 using Logitude.ShipmentOrderModule.Data;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.ShipmentOrderModule.Data.Repositories;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 {
@@ -19,12 +29,24 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.Id = entityPM.Id;
+
         }
 
         public void CustomPOCOToPM(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(entityPOCO.TransportModeId))
+            {
+                TransportModeQuery transportModeQuery = new TransportModeQuery(entityPM.Tenant);
+                TransportModePM transportModePM = transportModeQuery.GetSinglePM(entityPM.TransportModeId, entityPM.Tenant);
+                entityPM.TransportModeName = transportModePM.Name;
+            }
+            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+            {
+                ShipmentTypeQuery shipmentTypeQuery = new ShipmentTypeQuery(entityPM.Tenant);
+                ShipmentTypePM shipmentTypePM = shipmentTypeQuery.GetSinglePM(entityPM.ShipmentTypeId, entityPM.Tenant);
+                entityPM.ShipmentTypeName = shipmentTypePM.Name;
+            }
         }
    }
 

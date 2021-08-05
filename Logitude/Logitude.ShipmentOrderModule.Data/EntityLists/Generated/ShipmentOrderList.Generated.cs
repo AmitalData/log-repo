@@ -66,6 +66,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string SpecialServicesTypeId  { get; set; }
        [DataMember]
        public string CustomerRefrences  { get; set; }
+       [DataMember]
+       public string TransportModeName  { get; set; }
+       [DataMember]
+       public string ShipmentTypeName  { get; set; }
    }
 
 }
