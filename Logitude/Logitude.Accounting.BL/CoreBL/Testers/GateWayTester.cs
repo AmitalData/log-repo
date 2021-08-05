@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
                 case "Change2MultiCurrency_Click":
                     {
-                        return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
+                        return Change2MultiCurrency_Click(tenant, _TextBoxParam);
                     }
                     break;
 
