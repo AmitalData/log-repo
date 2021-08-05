@@ -422,7 +422,7 @@ export class ModuleProviders {
     public static GetInstance(name: string) {
 
         var myResult: any = null;
-
+        debugger;
         switch (name) {
 
             //#region StandardList
@@ -510,6 +510,7 @@ export class ModuleProviders {
             case "DebtNotificationTypeListService": { myResult = new DebtNotificationTypeListService(); break; }
             case "DeclarationErrorMappingListService": { myResult = new DeclarationErrorMappingListService(); break; }
             case "DeclarationListService": { myResult = new DeclarationListService(); break; }
+            case "Customs.DeclarationListService": { myResult = new DeclarationListService(); break; }
             case "DeclarationPaymentListService": { myResult = new DeclarationPaymentListService(); break; }
             case "DeclarationStatementTypeListService": { myResult = new DeclarationStatementTypeListService(); break; }
             case "DeclarationStatusTypeListService": { myResult = new DeclarationStatusTypeListService(); break; }
