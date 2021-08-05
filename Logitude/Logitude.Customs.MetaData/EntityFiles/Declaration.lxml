@@ -19314,9 +19314,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;PaidDeclaration&quot;"
-        PredefinedValue="&quot;&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PaidDeclarationWithoutRelease&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;PaidDeclaration&quot;"
@@ -19573,6 +19574,7 @@
         PredefinedValue="&quot;1&quot;"
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;ExportDecWithoutRelease&quot;"
@@ -19806,9 +19808,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;PaidExportDeclaration&quot;"
-        PredefinedValue="&quot;&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PaidDeclarationWithoutRelease&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;PaidExportDeclaration&quot;"
