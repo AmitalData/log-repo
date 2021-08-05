@@ -2319,6 +2319,7 @@
     ObjectTableName="&quot;ShipmentOrder&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
+    Code="&quot;ShipmentOrder.HeaderScreen&quot;"
     NumberOfColumns="3"
     NumberOfRows="3">
     <ScreenFields>
@@ -2364,6 +2365,7 @@
     ObjectTableName="&quot;ShipmentOrder&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
+    Code="&quot;ShipmentOrder.GeneralTabScreen&quot;"
     NumberOfColumns="2"
     NumberOfRows="8">
     <ScreenFields>

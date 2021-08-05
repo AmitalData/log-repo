@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             UpdateBusinessInfrastrutureModule(context, true);
                             break;
                         }
-                    case "shipmentOrder":
+                    case "shipmentorder":
                         {
                             UpdateShipmentOrderModule(context, true);
                             break;
