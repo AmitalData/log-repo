@@ -128,6 +128,8 @@ export class DropdownMenuFilterComponent implements OnInit {
             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
             let ExtraTop = 150;
+            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top = myTop + 'px';
+            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left = (myleft -100) + 'px';
 
             if (this.DivHight != -9999) {
                 if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {
