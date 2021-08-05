@@ -89,6 +89,7 @@ function AssertEventTime(expectedEvent: string) {
 function AssertTimeOneOf(text: string) {
   var dateTimeNow = GetTimeZoneDateTime()
   var dateTimeRange = DateTimeRange(dateTimeNow)
+  cy.wait(1000)
   expect(text).to.be.oneOf(dateTimeRange)
 }
 
@@ -155,6 +156,7 @@ function DateTimeRange(time: string) {
   }
   return dateTimeRange
 }
+
 function subHour(hour: number) {
   if (hour == 0) {
     hour = 23
@@ -163,6 +165,7 @@ function subHour(hour: number) {
   }
   return hour
 }
+
 function timeformat(time: number) {
   if (time == 0) {
     return "00"
