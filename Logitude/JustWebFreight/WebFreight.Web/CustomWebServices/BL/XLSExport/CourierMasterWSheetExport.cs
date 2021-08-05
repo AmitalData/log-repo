@@ -9,6 +9,7 @@ using System.Web;
 using Simplog.Server.Infrastructure;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.DataContracts;
+ 
 
 namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 {
@@ -25,7 +26,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.AirlineId,
                     r.MAWB,
                     r.MasterHAWB,
-
+                    r.DeclarationId,
                     MasterGrossMassMeasure=r.MasterGrossMassMeasure??0,
                     MasterPackageQuantity =r.MasterPackageQuantity ?? 0,
                     r.MasterCreateDateTime,
@@ -57,6 +58,28 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
                 });
             ;
+
+
+
+            var group2 = (from d in MyContext.DeclarationPendings
+                          join c in q
+                          on d.DeclarationID equals c.DeclarationId
+
+                          group d by d.DeclarationID into PendingGroup
+                          select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
+ ); ;
+
+            Dictionary<string, string> pendings = new Dictionary<string, string>();
+
+
+            foreach (var item in group2)
+            {
+                pendings.Add(item.declaration, string.Join(",", item.pending));
+            }
+
+
+
+
             /*
                  <div class="TextTrimming" *ngIf="fieldName == 'HighLowValue'" style="text-align:right;">
         <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == 'F'">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
@@ -223,11 +246,11 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[21] = r.SpecialActionStatus;
                     newrow[22] = r.CourierSuspentionName;
                     newrow[23] = r.DeclarationStatusTypeName;
-                    newrow[24] = r.CourierPendingReasonName;
+                    newrow[24] = pendings.FirstOrDefault(x => x.Key == r.DeclarationId).Value;  //r.CourierPendingReasonName;
                     newrow[25] = r.LastMileStatusCode;
                     newrow[26] = r.IsClosedForFollowUp;
-                    newrow[27] = r.CourierPendingReasonList;
-                    
+                    newrow[27] =   r.CourierPendingReasonList;
+
 
                     dt.Rows.Add(newrow);
 
@@ -309,17 +332,55 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ICustomContext MyContext = CustomContext.GetContext(tenant);
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
             declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
-            var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
-                .Where(x => x.CourierPendingReasonList != null)
-                .Select(r => new
-                {
-                    r.CourierHawb,
-                    r.ImporterName,
-                    r.ImporterCode,
-                    TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
-                    //CourierPendingReasonNameList = r.CourierPendingReasonNameList
-                    CourierPendingReasonNameList = r.CourierPendingReasonName
-                });
+            var q  = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
+                .Where(x => x.CourierPendingReasonList != null) 
+            .Select(r => new
+             {r.DeclarationId,
+                 r.CourierHawb,
+                 r.ImporterName,
+                 r.ImporterCode,
+                 TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
+                 //CourierPendingReasonNameList = r.CourierPendingReasonNameList
+               //  CourierPendingReasonNameList = r.CourierPendingReasonName
+             });
+
+
+            var group2 = (from d in MyContext.DeclarationPendings
+                         join c in q
+                         on d.DeclarationID equals c.DeclarationId
+
+                         group d by d.DeclarationID into PendingGroup
+                         select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
+ ); ;
+
+            Dictionary<string, string> pendings = new Dictionary<string, string>();
+
+
+            foreach (var item in group2)
+            {
+                pendings.Add(item.declaration, string.Join(",", item.pending) );
+            }
+
+
+           
+
+            //var ug2 = (from PendingGroup in group2
+            //           select new { PendingGroup.declaration, pendings = string.Join(",", PendingGroup.pending) });
+            //ug2.ToList();
+
+            //var q2 = q
+            //   .Select(r => new {
+            //       r.CourierHawb,
+            //       r.ImporterName,
+            //       r.ImporterCode,
+            //       TotalInvoiceAmountInUSD = r.TotalInvoiceAmountInUSD ?? 0,
+            //       CourierPendingReasonNameList =
+ 
+            //       String.Join(",", MyContext.DeclarationPendings.AsEnumerable()
+            //           .Where(c => c.DeclarationID == r.DeclarationId)
+            //           .Select(c => c.CourierPendingReason.LocalName))
+            //   });
+
             DataTable dt = null;
             var settingCol = new BITabularViewSettings() { Columns = new List<Column>() };
             dt = new DataTable("Courier Master");
@@ -336,8 +397,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             settingCol.Columns.Add(new Column() { Index = 4, Code = "TotalInvoiceAmountInUSD", Name = "TotalInvoiceAmountInUSD", DataTypeCode = "Decimal", Width = 100, });
             dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.TotalInvoiceAmountInUSD", tenant, true), ColumnName = "TotalInvoiceAmountInUSD", DataType = typeof(Decimal) });
 
-            //settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierPendingReasonNameList", Name = "CourierPendingReasonNameList", DataTypeCode = "String", Width = 200, });
-           // dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierPendingReasonNameList", tenant, true), ColumnName = "CourierPendingReasonNameList", DataType = "".GetType() });
+            settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierPendingReasonNameList", Name = "CourierPendingReasonNameList", DataTypeCode = "String", Width = 200, });
+            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierPendingReasonNameList", tenant, true), ColumnName = "CourierPendingReasonNameList", DataType = "".GetType() });
 
             var l = q.ToList();
             l.ForEach(r =>
@@ -347,7 +408,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 newrow[1] = r.ImporterName;
                 newrow[2] = r.ImporterCode;
                 newrow[3] = r.TotalInvoiceAmountInUSD;
-                //newrow[4] = r.CourierPendingReasonNameList;
+                 newrow[4] = pendings.FirstOrDefault(x=>x.Key==r.DeclarationId).Value;
                 dt.Rows.Add(newrow);
             });
             var xls = new ExportToExcelHelper();
