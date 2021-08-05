@@ -50,6 +50,3 @@ Feature: Change Time Zone and Date Time Format from Maintenance
         Given the user update the shipment
         When navigate to event tab
         Then the "Shipment Updated" event should include the time of "UTC+03:00" timezone
-
-
-

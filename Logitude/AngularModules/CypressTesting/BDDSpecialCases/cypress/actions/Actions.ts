@@ -8,11 +8,10 @@ import { LocalSettingsDetails } from "../models/LocalSettingsDetails";
 import { BDDSpecialCasesSelectors } from "../selectors/Selectors";
 import { Urls } from "../constants/URLs";
 
-
 export function FillLocalSettingsDetails(localSettingsDetails: LocalSettingsDetails) {
-  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click({ force: true })
   cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).type('{enter}');
-  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click({ force: true })
   cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).type('{enter}');
 }
 
@@ -33,15 +32,15 @@ function AssertPutTenant() {
   BaseAssertion.AssertStatusCode(RequestAliases.PutTenant, 200);
 }
 
-export function ValidateDateFormat(dateFormat: string , date:string) {
+export function ValidateDateFormat(dateFormat: string, date: string) {
   cy.get(BDDSpecialCasesSelectors.HAWBDate).focus().should(BaseSelectors.HaveValue, FormateTheDate(date, dateFormat))
 }
 
 function FormateTheDate(date: string, format: string) {
   var DateFormat
   var Datelist = date.split("/");
-    var dd = Datelist[0];
-    var mm = Datelist[1]
+  var dd = Datelist[0];
+  var mm = Datelist[1]
   var yyyy = Datelist[2]
 
   if (Number(dd) < 10) {
@@ -62,15 +61,14 @@ function FormateTheDate(date: string, format: string) {
 
 export function ValidateTimeInEventsTab(expectedEvent: string, eventTabSelector: string) {
   cy.get(eventTabSelector).then(($eventTab) => {
-    OpenEventTab($eventTab,eventTabSelector)
+    OpenEventTab($eventTab, eventTabSelector)
     if (expectedEvent) {
       AssertEventTime(expectedEvent)
     }
-
   });
 }
 
-function OpenEventTab($eventTab , eventTabSelector) {
+function OpenEventTab($eventTab, eventTabSelector) {
   cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
   if ($eventTab.hasClass("SelectedMenuItem")) {
     cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
@@ -88,7 +86,7 @@ function AssertEventTime(expectedEvent: string) {
   });
 }
 
-function AssertTimeOneOf(text:string){
+function AssertTimeOneOf(text: string) {
   var dateTimeNow = GetTimeZoneDateTime()
   var dateTimeRange = DateTimeRange(dateTimeNow)
   expect(text).to.be.oneOf(dateTimeRange)
@@ -126,7 +124,7 @@ function FormatAMTimes(hour: string) {
   if (Number(hour) == 12) {
     return "00"
   }
-  return hour ;
+  return hour;
 }
 
 function DateTimeRange(time: string) {
@@ -157,7 +155,7 @@ function DateTimeRange(time: string) {
   }
   return dateTimeRange
 }
-function subHour(hour:number){
+function subHour(hour: number) {
   if (hour == 0) {
     hour = 23
   } else {
@@ -165,12 +163,12 @@ function subHour(hour:number){
   }
   return hour
 }
-function timeformat(time:number){
-  if(time == 0 ){
+function timeformat(time: number) {
+  if (time == 0) {
     return "00"
   }
-  if(time<10 && time >0){
-    return  "0"+time
+  if (time < 10 && time > 0) {
+    return "0" + time
   }
   return time
 }
