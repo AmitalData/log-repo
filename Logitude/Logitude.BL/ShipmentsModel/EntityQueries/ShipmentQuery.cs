@@ -13609,6 +13609,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id);
                 shipmentPM.NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id);
                 shipmentPM.Volume = GetShipmentPackagesVolume(tenant, shipment.Id);
+                shipmentPM.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipment.Id);
             }
         }
 
@@ -13634,6 +13635,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
             string combinedPackagesTypesNames = GetCombinedPackagesTypesNames(shipmentPackages);
             return combinedPackagesTypesNames;
+        }
+
+        private string GetShipmentContainersNumbers(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            var ContainersNumbers = shipmentPackages.Select(package => package.ContainerNumber).ToList();
+            return string.Join(",", ContainersNumbers);
         }
         private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
         {
