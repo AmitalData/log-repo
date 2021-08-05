@@ -2412,7 +2412,7 @@ export class ShipmentGenerator {
     private commonDomainService: CommonDomainService;
     private AllVatTypes: VatTypeList[] = [];
     private VatTypePercentages: VatTypePercentagePM[] = [];
-
+    private shipmentCustomer: CardList;
     constructor(entityPM: ShipmentPM, allRates: LastRate[]) {
         this.EntityPM = entityPM;
         this.AllRates = allRates;
@@ -2425,8 +2425,10 @@ export class ShipmentGenerator {
         if (this.AllRates == null) {
             this.AllRates = [];
         }
+
         this.GetAllVatTypes();
         this.GetAllVatTypePercentagesByDate();
+        this.GetShipmentCustomer();
     }
 
     GetAllVatTypes() {
@@ -2446,6 +2448,16 @@ export class ShipmentGenerator {
                 this.VatTypePercentages = myResponse.Result;
             }
         });
+    }
+
+    GetShipmentCustomer() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
+            this.cardListService.getSingle(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.shipmentCustomer = myResponse.Result;                    
+                }
+            });
+        }
     }
 
     // Payables
@@ -2539,6 +2551,8 @@ export class ShipmentGenerator {
                                     newRecord.ShipmentPayableAmountTypeName = "Accrual";
                                     newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
                                     newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+                                    newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                                    newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                                     newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
                                     newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
                                     newRecord.ChargesTypeId = myChargeType.Id;
@@ -2620,6 +2634,8 @@ export class ShipmentGenerator {
         newRecord.ShipmentPayableAmountTypeName = "Accrual";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = myChargeType.Id;
@@ -2801,6 +2817,8 @@ export class ShipmentGenerator {
                         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
                         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
                         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+                        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                         newRecord.Quantity = itemGrouped.Quantity;
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
@@ -3019,6 +3037,8 @@ export class ShipmentGenerator {
         myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
         myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
+        myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         myRecordPM.IsFromQuote = true;
         myRecordPM.ShipmentPayableLineStatusCode = "EMPT";
         myRecordPM.ShipmentPayableAmountTypeCode = "ACCU";
@@ -3092,6 +3112,8 @@ export class ShipmentGenerator {
                 myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
+                myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                 myRecordPM.ShipmentPayableAmountTypeCode = "ACCU";
                 myRecordPM.ShipmentPayableAmountTypeName = "Accrual";
                 myRecordPM.ShipmentPayableLineStatusCode = "EMPT";
@@ -3149,6 +3171,8 @@ export class ShipmentGenerator {
         newRecord.ShipmentPayableAmountTypeName = "Accrual";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = item.Id;
@@ -3295,6 +3319,8 @@ export class ShipmentGenerator {
                                         newReceivable.ShipmentReceivableLineStatusCode = "EMPT";
                                         newReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
                                         newReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
+                                        newReceivable.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                                        newReceivable.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                                         newReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
                                         newReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                                         newReceivable.ChargesTypeId = myChargeType.Id;
@@ -3536,6 +3562,8 @@ export class ShipmentGenerator {
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
+                        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
 
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
@@ -3738,6 +3766,8 @@ export class ShipmentGenerator {
         myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
         myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
+        myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         myRecordPM.IsFromQuote = true;
         myRecordPM.IsFixedPrice = this.BaseQuote.IsFixedPrice;
         myRecordPM.ChargesTypeId = QuoteCharge.ChargesTypeId;
@@ -3814,6 +3844,8 @@ export class ShipmentGenerator {
             myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
             myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
             myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
+            myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+            myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
             myRecordPM.ShipmentReceivableLineStatusCode = "EMPT";
             myRecordPM.ShipmentReceivableLineStatusName = "Empty";
             myRecordPM.AWBPrint = OriginItemPM.AWBPrint;
@@ -3895,6 +3927,8 @@ export class ShipmentGenerator {
         newRecord.ShipmentReceivableLineStatusCode = "EMPT";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = item.Id;
@@ -3955,8 +3989,8 @@ export class ShipmentGenerator {
     public CalculateReceivableVatAmount(shipmentReceivable: ShipmentReceivablePM) {
         shipmentReceivable.VatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
         shipmentReceivable.VatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
-            this.CalculateVatAmountFromCustomer(shipmentReceivable, this.EntityPM.CustomerId);
+        if (this.shipmentCustomer) {
+            this.CalculateVatAmountFromCustomer(shipmentReceivable);
         }
         else {
             this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, shipmentReceivable.VatTypeId); 
@@ -4016,19 +4050,16 @@ export class ShipmentGenerator {
             });
         }
     }
-    private CalculateVatAmountFromCustomer(shipmentReceivable: ShipmentReceivablePM, customerId: string) {
-        var receivableVatTypeId = null;
-        this.cardListService.getSingle(customerId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                receivableVatTypeId = myResponse.Result.VatTypeId;
-                if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-                    receivableVatTypeId = shipmentReceivable.VatTypeId;
-                }
-                if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-                    this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, receivableVatTypeId);
-                }
-            }
-        });
+    private CalculateVatAmountFromCustomer(shipmentReceivable: ShipmentReceivablePM) {
+        var receivableVatTypeId = this.shipmentCustomer.VatTypeId;
+
+        if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+            receivableVatTypeId = shipmentReceivable.VatTypeId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+            this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, receivableVatTypeId);
+        }
     }
     private CalculateVatAmountFromReceivableLineVatType(shipmentReceivable: ShipmentReceivablePM, vatTypeId: string) {
         var receivableVatTypeId = vatTypeId;
