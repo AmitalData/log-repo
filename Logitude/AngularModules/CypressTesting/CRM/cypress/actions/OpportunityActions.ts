@@ -95,6 +95,7 @@ export function AddCompetitor() {
 }
 
 export function RemoveCompetitor() {
+    cy.wait(1000)
     DefinePutOpportunityRequest()
     cy.get(OpportunitySelectors.DeleteItemCompetitor).eq(0).click({ force: true })
 }
@@ -106,12 +107,12 @@ export function AddAdditionalService() {
 }
 
 export function RemoveAdditionalService() {
+    cy.wait(1000)
     DefinePutOpportunityRequest()
     cy.get(OpportunitySelectors.DeleteItemService).eq(0).click({ force: true })
 }
 
 export function UpdateOpportunity() {
-    cy.wait(1000)
     DefinePutOpportunityRequest()
     cy.Click(OpportunitySelectors.SaveButton, null)
 }
