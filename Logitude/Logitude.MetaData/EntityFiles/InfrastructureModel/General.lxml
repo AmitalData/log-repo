@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0c71&quot;"
+  Code="&quot;8257&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5081,6 +5081,12 @@
       DefaultText="&quot;Can't Add more than one cheque with the same cheque number &quot;"
       LocalDefaultText="&quot;לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.QuotesOP&quot;"
+      DefaultText="&quot;Quotes (OP)&quot;"
+      LocalDefaultText="&quot; הצעות מחיר (OP)&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

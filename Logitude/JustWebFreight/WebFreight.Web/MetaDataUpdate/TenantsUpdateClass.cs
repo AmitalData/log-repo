@@ -303,6 +303,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             UpdateQuoteModule(context, true);
                             break;
                         }
+                    case "quoteopm":
+                        {
+                            UpdateQuoteOPMModule(context, true);
+                            break;
+                        }
                     case "invoice":
                         {
                             UpdateInvoiceModule(context, true);
@@ -1006,7 +1011,16 @@ namespace WebFreight.Web.MetaDataUpdate
 
             performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
         }
+        private static void UpdateQuoteOPMModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            var modelUpdateClass = new QuoteOPMUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
+            performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
+        }
         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
@@ -1466,7 +1480,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return table.HashString != updateClassHashString;
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false, bool includeQuoteOPM = false)
         {
 
             ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
@@ -1477,6 +1491,13 @@ namespace WebFreight.Web.MetaDataUpdate
             if (includeCustoms)
             {
                 ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.Name.Contains("Customs.")).ToList();
+            }
+            else if (includeQuoteOPM)
+            {
+                ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => 
+                t.Name.Contains("QuoteOP") 
+                || t.Name.Contains("BorderOPType")
+                || t.Name.Contains("MarkUpOPType")).ToList();
             }
             else
             {

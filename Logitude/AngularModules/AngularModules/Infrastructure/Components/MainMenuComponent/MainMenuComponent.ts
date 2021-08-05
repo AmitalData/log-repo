@@ -322,6 +322,17 @@ export class MainMenuComponent {
 
                         break;
                     }
+                    case "General.MH.QuotesOP": {
+                        ServiceLocator.SendTotangoUserActivity("Quote", "List View");
+                        myComponentPath = "./QuoteOPM/Components/Workspaces/QuotesComponent";
+
+                        if (FeatureLocator.HasFeaturePermession("Quote", "Quote.Followups")) {
+                            this.FollowUpsTableId = this.SelectedMenu.ObjectTableId;
+                            this.ShowFollowUps = true;
+                        }
+
+                        break;
+                    }
                     case "General.MH.Dashboard": {
                         ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
                         myComponentPath = "./Dashboard/Components/Workspace/DashboardComponent";

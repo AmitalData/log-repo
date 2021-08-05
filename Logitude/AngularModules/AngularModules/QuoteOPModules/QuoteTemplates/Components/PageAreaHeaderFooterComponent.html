@@ -1,0 +1,225 @@
+﻿
+
+<style type="text/css">
+    .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+
+
+
+
+    .SettingDesignButton:hover:not(:disabled) {
+        background: #fefcea; /* Old browsers */
+        background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+    }
+
+    .SettingDesignButton span, .RedButton span, .GreenButton span {
+        text-shadow: 1px 1px white;
+    }
+
+    .SettingDesignButton:disabled, .RedButton:disabled, .GreenButton:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .SettingDesignButton {
+        border: 1px solid #848484;
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #dddddd 40%, #c4c4c4 51%, #e2e2e2 98%, #ffffff 99%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#dddddd 40%,#c4c4c4 51%,#e2e2e2 98%,#ffffff 99%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#dddddd 40%,#c4c4c4 51%,#e2e2e2 98%,#ffffff 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+
+    .SelectedSettingButton {
+        height: 22px;
+        background: #fefcea;
+        background: -moz-linear-gradient(top, #FDD59D 0%, #FDD59D 100%);
+        background: -webkit-linear-gradient(top, #FDD59D 0%,#FDD59D 100%);
+        background: linear-gradient(to bottom, #FDD59D 0%,#FDD59D 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFA500', endColorstr='#FFA500',GradientType=0 );
+        
+    }
+</style>
+
+
+
+
+
+
+
+
+
+<table>
+
+    <tr>
+        <td *ngIf="AreaMode=='Logo'">
+            <table>
+                <tr style="height:10px;"><td style="height:10px"></td></tr>
+
+                <tr>
+
+                    <td style="height:25px" colspan="3">
+                        <div style="width:360px;margin:auto">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="height:30px">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:285px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</span></td>
+                                                                <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageWidth" /></td>
+                                                                <td style="width: 15px;">
+                                                                    <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageWidth' , true)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                    </div>
+                                                                    <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageWidth' ,false)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width:5px;"><span></span></td>
+                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">px</span></td>
+
+                                                                <td style="width:10px;"><span></span></td>
+
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}: </span></td>
+                                                                <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageHeight" /></td>
+
+                                                                <td style="width: 15px;">
+                                                                    <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageHeight' , true)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                    </div>
+                                                                    <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageHeight' ,false)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                    </div>
+                                                                </td>
+
+
+                                                                <td style="width:5px;"><span></span></td>
+
+                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}} </span></td>
+
+
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+
+                                                    </td>
+
+
+                                                    <td style="width:10px"><div style="width:10px"></div></td>
+                                                    <td style="width:62px;">
+                                                        <div style="width:57px;display:inline">
+                                                            <button (click)="AlignmentButtonClick('left')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='left'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                                <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-left-icon.png" />
+                                                            </button>
+
+                                                            <button (click)="AlignmentButtonClick('center')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='center'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                                <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-center-icon.png" />
+                                                            </button>
+
+                                                            <button (click)="AlignmentButtonClick('right')" class="SettingDesignButton" [class.SelectedSettingButton]="Alignment =='right'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                                <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-right-icon.png" />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td><div></div></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+
+
+                    </td>
+                </tr>
+
+                <tr style="height:10px;"><td style="height:10px"></td></tr>
+                <tr style="height:250px">
+                    <td>
+                        <div style="height:250px;width:300px;margin: auto;">
+                            <ImageComponent [EntityName]="'Quotation'" [ImageResizeWidth]="ImageWidth" [ImageResizeHeight]="ImageHeight" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                        </div>
+
+                    </td>
+
+                </tr>
+                <tr></tr>
+            </table>
+
+        </td>
+
+
+        <td *ngIf="DesignAreaFreeTextPM">
+            <table>
+
+                <tr style="height:100%">
+                    <td>
+                        <div style="height:100%;width:100%;">
+                            <TextDesignComponent [QuoteTemplateTextDesignPM]="DesignAreaFreeTextPM"></TextDesignComponent>
+                        </div>
+                    </td>
+                </tr>
+                <tr></tr>
+
+            </table>
+        </td>
+
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

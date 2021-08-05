@@ -1,0 +1,633 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.Data;
+ 
+namespace Amital.QuoteOPM.Data.EntityMapping
+{
+ 
+    public class QuoteOPTemplateSettingMap : EntityTypeConfiguration<QuoteOPTemplateSetting>
+    {
+	    string dbms;
+        public QuoteOPTemplateSettingMap()
+        { 
+				this.ToTable("QuoteOPTemplateSettings");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalInSaleCurrencyPackages).HasColumnName("ShowTotalInSaleCurrencyPackage");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalInSaleCurrencyPackages).HasColumnName("ShowTotalInSaleCurrencyPackages");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalInSaleCurrencyContainers).HasColumnName("ShowTotalInSaleCurrencyContain");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalInSaleCurrencyContainers).HasColumnName("ShowTotalInSaleCurrencyContainers");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalInLocalCurrencyPackages).HasColumnName("ShowTotalInLocalCurrencyPackag");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalInLocalCurrencyPackages).HasColumnName("ShowTotalInLocalCurrencyPackages");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalInLocalCurrencyContainers).HasColumnName("ShowTotalInLocalCurrencyContai");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalInLocalCurrencyContainers).HasColumnName("ShowTotalInLocalCurrencyContainers");
+			}
+
+
+            this.Property(t => t.ShowPricesTablePackages).HasColumnName("ShowPricesTablePackages");
+
+            this.Property(t => t.ShowPricesTableContainers).HasColumnName("ShowPricesTableContainers");
+
+            this.Property(t => t.ShowChargeCodePackages).HasColumnName("ShowChargeCodePackages");
+
+            this.Property(t => t.ShowChargeDescriptionPackages).HasColumnName("ShowChargeDescriptionPackages");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowChargeDescriptionContainers).HasColumnName("ShowChargeDescriptionContainer");
+			}
+			else
+			{
+              this.Property(t => t.ShowChargeDescriptionContainers).HasColumnName("ShowChargeDescriptionContainers");
+			}
+
+
+            this.Property(t => t.ShowChargeCodeContainers).HasColumnName("ShowChargeCodeContainers");
+
+            this.Property(t => t.ShowChargeNamePackages).HasColumnName("ShowChargeNamePackages");
+
+            this.Property(t => t.ShowChargeNameContainers).HasColumnName("ShowChargeNameContainers");
+
+            this.Property(t => t.ShowMeasurementPackages).HasColumnName("ShowMeasurementPackages");
+
+            this.Property(t => t.ShowMeasurementContainers).HasColumnName("ShowMeasurementContainers");
+
+            this.Property(t => t.ShowFixedPriceContainers).HasColumnName("ShowFixedPriceContainers");
+
+            this.Property(t => t.ShowUnitsPackages).HasColumnName("ShowUnitsPackages");
+
+            this.Property(t => t.ShowUnitPricePackages).HasColumnName("ShowUnitPricePackages");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowLocalCurrencyColumnPackages).HasColumnName("ShowLocalCurrencyColumnPackage");
+			}
+			else
+			{
+              this.Property(t => t.ShowLocalCurrencyColumnPackages).HasColumnName("ShowLocalCurrencyColumnPackages");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowLocalCurrencyColumnContainers).HasColumnName("ShowLocalCurrencyColumnContain");
+			}
+			else
+			{
+              this.Property(t => t.ShowLocalCurrencyColumnContainers).HasColumnName("ShowLocalCurrencyColumnContainers");
+			}
+
+
+            this.Property(t => t.ShowSaleCurrencyColumnPackages).HasColumnName("ShowSaleCurrencyColumnPackages");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowSaleCurrencyColumnContainers).HasColumnName("ShowSaleCurrencyColumnContaine");
+			}
+			else
+			{
+              this.Property(t => t.ShowSaleCurrencyColumnContainers).HasColumnName("ShowSaleCurrencyColumnContainers");
+			}
+
+
+            this.Property(t => t.ShowLocalLanguage).HasColumnName("ShowLocalLanguage");
+
+            this.Property(t => t.SplitChargesbyGroupsPackages).HasColumnName("SplitChargesbyGroupsPackages");
+
+            this.Property(t => t.SplitChargesbyGroupsContainers).HasColumnName("SplitChargesbyGroupsContainers");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowContainerNameInsteadOfCodeContainers).HasColumnName("ShowContainerNameInsteadOfCode");
+			}
+			else
+			{
+              this.Property(t => t.ShowContainerNameInsteadOfCodeContainers).HasColumnName("ShowContainerNameInsteadOfCodeContainers");
+			}
+
+
+            this.Property(t => t.AlignRight).HasColumnName("AlignRight");
+
+            this.Property(t => t.ShowPriceByContainerColumn).HasColumnName("ShowPriceByContainerColumn");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowCodeChargeSaleMinMaxContainers).HasColumnName("ShowCodeChargeSaleMinMaxContai");
+			}
+			else
+			{
+              this.Property(t => t.ShowCodeChargeSaleMinMaxContainers).HasColumnName("ShowCodeChargeSaleMinMaxContainers");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowCodeChargeSaleMinMaxPackages).HasColumnName("ShowCodeChargeSaleMinMaxPackag");
+			}
+			else
+			{
+              this.Property(t => t.ShowCodeChargeSaleMinMaxPackages).HasColumnName("ShowCodeChargeSaleMinMaxPackages");
+			}
+
+
+            this.Property(t => t.QuoteTemplatePDFMarginLeft).HasColumnName("QuoteTemplatePDFMarginLeft");
+
+            this.Property(t => t.QuoteTemplatePDFMarginRight).HasColumnName("QuoteTemplatePDFMarginRight");
+
+            this.Property(t => t.PageHeaderArea1Type).HasColumnName("PageHeaderArea1Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea2Type).HasColumnName("PageHeaderArea2Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea3Type).HasColumnName("PageHeaderArea3Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea1ImageDetailId).HasColumnName("PageHeaderArea1ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea2ImageDetailId).HasColumnName("PageHeaderArea2ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea3ImageDetailId).HasColumnName("PageHeaderArea3ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea1FreeText).HasColumnName("PageHeaderArea1FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.PageHeaderArea2FreeText).HasColumnName("PageHeaderArea2FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.PageHeaderArea3FreeText).HasColumnName("PageHeaderArea3FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageHeaderArea1FreeTextDesignId).HasColumnName("PageHeaderArea1FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageHeaderArea1FreeTextDesignId).HasColumnName("PageHeaderArea1FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageHeaderArea2FreeTextDesignId).HasColumnName("PageHeaderArea2FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageHeaderArea2FreeTextDesignId).HasColumnName("PageHeaderArea2FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageHeaderArea3FreeTextDesignId).HasColumnName("PageHeaderArea3FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageHeaderArea3FreeTextDesignId).HasColumnName("PageHeaderArea3FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.PageHeaderArea1Width).HasColumnName("PageHeaderArea1Width").IsRequired();
+
+            this.Property(t => t.PageHeaderArea2Width).HasColumnName("PageHeaderArea2Width").IsRequired();
+
+            this.Property(t => t.PageHeaderArea3Width).HasColumnName("PageHeaderArea3Width").IsRequired();
+
+            this.Property(t => t.PageHeaderImage1Width).HasColumnName("PageHeaderImage1Width");
+
+            this.Property(t => t.PageHeaderImage2Width).HasColumnName("PageHeaderImage2Width");
+
+            this.Property(t => t.PageHeaderImage3Width).HasColumnName("PageHeaderImage3Width");
+
+            this.Property(t => t.PageFooterImage1Width).HasColumnName("PageFooterImage1Width");
+
+            this.Property(t => t.PageFooterImage2Width).HasColumnName("PageFooterImage2Width");
+
+            this.Property(t => t.PageFooterImage3Width).HasColumnName("PageFooterImage3Width");
+
+            this.Property(t => t.PageHeaderAreaHeight).HasColumnName("PageHeaderAreaHeight");
+
+            this.Property(t => t.PageFooterAreaHeight).HasColumnName("PageFooterAreaHeight");
+
+            this.Property(t => t.PageHeaderArea1Height).HasColumnName("PageHeaderArea1Height");
+
+            this.Property(t => t.PageHeaderArea2Height).HasColumnName("PageHeaderArea2Height");
+
+            this.Property(t => t.PageHeaderArea3Height).HasColumnName("PageHeaderArea3Height");
+
+            this.Property(t => t.PageHeaderArea1ImageAlignment).HasColumnName("PageHeaderArea1ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea2ImageAlignment).HasColumnName("PageHeaderArea2ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderArea3ImageAlignment).HasColumnName("PageHeaderArea3ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea1Type).HasColumnName("PageFooterArea1Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea2Type).HasColumnName("PageFooterArea2Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea3Type).HasColumnName("PageFooterArea3Type").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea1ImageDetailId).HasColumnName("PageFooterArea1ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea2ImageDetailId).HasColumnName("PageFooterArea2ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea3ImageDetailId).HasColumnName("PageFooterArea3ImageDetailId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea1FreeText).HasColumnName("PageFooterArea1FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.PageFooterArea2FreeText).HasColumnName("PageFooterArea2FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.PageFooterArea3FreeText).HasColumnName("PageFooterArea3FreeText").HasMaxLength(1000).IsUnicode(true);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageFooterArea1FreeTextDesignId).HasColumnName("PageFooterArea1FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageFooterArea1FreeTextDesignId).HasColumnName("PageFooterArea1FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageFooterArea2FreeTextDesignId).HasColumnName("PageFooterArea2FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageFooterArea2FreeTextDesignId).HasColumnName("PageFooterArea2FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PageFooterArea3FreeTextDesignId).HasColumnName("PageFooterArea3FreeTextDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PageFooterArea3FreeTextDesignId).HasColumnName("PageFooterArea3FreeTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.PageFooterArea1Width).HasColumnName("PageFooterArea1Width").IsRequired();
+
+            this.Property(t => t.PageFooterArea2Width).HasColumnName("PageFooterArea2Width").IsRequired();
+
+            this.Property(t => t.PageFooterArea3Width).HasColumnName("PageFooterArea3Width").IsRequired();
+
+            this.Property(t => t.PageFooterArea1Height).HasColumnName("PageFooterArea1Height");
+
+            this.Property(t => t.PageFooterArea2Height).HasColumnName("PageFooterArea2Height");
+
+            this.Property(t => t.PageFooterArea3Height).HasColumnName("PageFooterArea3Height");
+
+            this.Property(t => t.PageFooterArea1ImageAlignment).HasColumnName("PageFooterArea1ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea2ImageAlignment).HasColumnName("PageFooterArea2ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.PageFooterArea3ImageAlignment).HasColumnName("PageFooterArea3ImageAlignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.ShowHeaderQuoteDate).HasColumnName("ShowHeaderQuoteDate");
+
+            this.Property(t => t.ShowHeaderExpirationDate).HasColumnName("ShowHeaderExpirationDate");
+
+            this.Property(t => t.ShowHeaderQuoteNumber).HasColumnName("ShowHeaderQuoteNumber");
+
+            this.Property(t => t.ShowHeaderCustomer).HasColumnName("ShowHeaderCustomer");
+
+            this.Property(t => t.ShowDetailsExpirationDate).HasColumnName("ShowDetailsExpirationDate");
+
+            this.Property(t => t.ShowDetailsExpirationDays).HasColumnName("ShowDetailsExpirationDays");
+
+            this.Property(t => t.ShowDetailsShipperName).HasColumnName("ShowDetailsShipperName");
+
+            this.Property(t => t.ShowDetailsShipperAddress).HasColumnName("ShowDetailsShipperAddress");
+
+            this.Property(t => t.ShowDetailsShipperContact).HasColumnName("ShowDetailsShipperContact");
+
+            this.Property(t => t.ShowDetailsShipperReferences).HasColumnName("ShowDetailsShipperReferences");
+
+            this.Property(t => t.ShowDetailsConsigneeName).HasColumnName("ShowDetailsConsigneeName");
+
+            this.Property(t => t.ShowDetailsConsigneeAddress).HasColumnName("ShowDetailsConsigneeAddress");
+
+            this.Property(t => t.ShowDetailsConsigneeContact).HasColumnName("ShowDetailsConsigneeContact");
+
+            this.Property(t => t.ShowDetailsConsigneeReferences).HasColumnName("ShowDetailsConsigneeReferences");
+
+            this.Property(t => t.ShowDetailsPickupFrom).HasColumnName("ShowDetailsPickupFrom");
+
+            this.Property(t => t.ShowDetailsDeliveryTo).HasColumnName("ShowDetailsDeliveryTo");
+
+            this.Property(t => t.ShowDetailsFromPort).HasColumnName("ShowDetailsFromPort");
+
+            this.Property(t => t.ShowDetailsToPort).HasColumnName("ShowDetailsToPort");
+
+            this.Property(t => t.ShowDetailsIncoterms).HasColumnName("ShowDetailsIncoterms");
+
+            this.Property(t => t.ShowDetailsService).HasColumnName("ShowDetailsService");
+
+            this.Property(t => t.ShowDetailsSalesMan).HasColumnName("ShowDetailsSalesMan");
+
+            this.Property(t => t.ShowDetailsDescriptionOfGoods).HasColumnName("ShowDetailsDescriptionOfGoods");
+
+            this.Property(t => t.ShowDetailsDangerousGoods).HasColumnName("ShowDetailsDangerousGoods");
+
+            this.Property(t => t.ShowDetailsCarrier).HasColumnName("ShowDetailsCarrier");
+
+            this.Property(t => t.ShowDetailsCustomerName).HasColumnName("ShowDetailsCustomerName");
+
+            this.Property(t => t.ShowDetailsCustomerAddress).HasColumnName("ShowDetailsCustomerAddress");
+
+            this.Property(t => t.ShowDetailsCustomerContact).HasColumnName("ShowDetailsCustomerContact");
+
+            this.Property(t => t.ShowDetailsCustomerReferences).HasColumnName("ShowDetailsCustomerReferences");
+
+            this.Property(t => t.ShowTitleQuoteDetails).HasColumnName("ShowTitleQuoteDetails");
+
+            this.Property(t => t.ShowTitlePricingPackages).HasColumnName("ShowTitlePricingPackages");
+
+            this.Property(t => t.ShowTitlePricingContainsers).HasColumnName("ShowTitlePricingContainsers");
+
+            this.Property(t => t.PackagesTableDesignId).HasColumnName("PackagesTableDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainserTableDesignId).HasColumnName("ContainserTableDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalsPackagesLabelDesignId).HasColumnName("TotalsPackagesLabelDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalsContainsersLabelDesignId).HasColumnName("TotalsContainsersLabelDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalsPackagesValueDesignId).HasColumnName("TotalsPackagesValueDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalsContainsersValueDesignId).HasColumnName("TotalsContainsersValueDesignId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.RightToLeft).HasColumnName("RightToLeft");
+
+            this.Property(t => t.GroupByPackagesLabelDesignId).HasColumnName("GroupByPackagesLabelDesignId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.GroupByPackagesValueDesignId).HasColumnName("GroupByPackagesValueDesignId").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.GroupByContainsersLabelDesignId).HasColumnName("GroupByContainsersLabelDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.GroupByContainsersLabelDesignId).HasColumnName("GroupByContainsersLabelDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.GroupByContainsersValueDesignId).HasColumnName("GroupByContainsersValueDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.GroupByContainsersValueDesignId).HasColumnName("GroupByContainsersValueDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.DetailsTableDesignId).HasColumnName("DetailsTableDesignId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DetailsSectionHasTwoColumns).HasColumnName("DetailsSectionHasTwoColumns");
+
+            this.Property(t => t.HeaderTableDesignId).HasColumnName("HeaderTableDesignId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.HeaderSectionHasTwoColumns).HasColumnName("HeaderSectionHasTwoColumns");
+
+            this.Property(t => t.DetailsTitleDesignId).HasColumnName("DetailsTitleDesignId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PricingPackagesTitleDesignId).HasColumnName("PricingPackagesTitleDesignId").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.PricingContainsersTitleDesignId).HasColumnName("PricingContainsersTitleDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.PricingContainsersTitleDesignId).HasColumnName("PricingContainsersTitleDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.PageHeaderBorderTypeCode).HasColumnName("PageHeaderBorderTypeCode").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderBorderColor).HasColumnName("PageHeaderBorderColor").IsRequired().HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.PageHeaderBorderThickness).HasColumnName("PageHeaderBorderThickness");
+
+            this.Property(t => t.PageFooterBorderTypeCode).HasColumnName("PageFooterBorderTypeCode").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.PageFooterBorderColor).HasColumnName("PageFooterBorderColor").IsRequired().HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.PageFooterBorderThickness).HasColumnName("PageFooterBorderThickness");
+
+            this.Property(t => t.HeaderTableColumWidthType).HasColumnName("HeaderTableColumWidthType").IsRequired().HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.DetailsTableColumWidthType).HasColumnName("DetailsTableColumWidthType").IsRequired().HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.DetailsTableColumn1LabelWidth).HasColumnName("DetailsTableColumn1LabelWidth").IsRequired();
+
+            this.Property(t => t.DetailsTableColumn1ValueWidth).HasColumnName("DetailsTableColumn1ValueWidth").IsRequired();
+
+            this.Property(t => t.DetailsTableColumn2LabelWidth).HasColumnName("DetailsTableColumn2LabelWidth").IsRequired();
+
+            this.Property(t => t.DetailsTableColumn2ValueWidth).HasColumnName("DetailsTableColumn2ValueWidth").IsRequired();
+
+            this.Property(t => t.HeaderTableColumn1LabelWidth).HasColumnName("HeaderTableColumn1LabelWidth").IsRequired();
+
+            this.Property(t => t.HeaderTableColumn1ValueWidth).HasColumnName("HeaderTableColumn1ValueWidth").IsRequired();
+
+            this.Property(t => t.HeaderTableColumn2LabelWidth).HasColumnName("HeaderTableColumn2LabelWidth").IsRequired();
+
+            this.Property(t => t.HeaderTableColumn2ValueWidth).HasColumnName("HeaderTableColumn2ValueWidth").IsRequired();
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalPerChargeGroupPackages).HasColumnName("ShowTotalPerChargeGroupPackage");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalPerChargeGroupPackages).HasColumnName("ShowTotalPerChargeGroupPackages");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTotalPerChargeGroupContainers).HasColumnName("ShowTotalPerChargeGroupContain");
+			}
+			else
+			{
+              this.Property(t => t.ShowTotalPerChargeGroupContainers).HasColumnName("ShowTotalPerChargeGroupContainers");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowPageBreakBeforeTotalPerContainersTable).HasColumnName("ShowPageBreakBeforeTotalPerCon");
+			}
+			else
+			{
+              this.Property(t => t.ShowPageBreakBeforeTotalPerContainersTable).HasColumnName("ShowPageBreakBeforeTotalPerContainersTable");
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.TotalPerContainersAdditionalTextDesignId).HasColumnName("TotalPerContainersAdditionalTe").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.TotalPerContainersAdditionalTextDesignId).HasColumnName("TotalPerContainersAdditionalTextDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.TotalPerContainersTableDesignId).HasColumnName("TotalPerContainersTableDesignI").HasMaxLength(15).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.TotalPerContainersTableDesignId).HasColumnName("TotalPerContainersTableDesignId").HasMaxLength(15).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.TotalPerContainersCurrencyType).HasColumnName("TotalPerContainersCurrencyType").HasMaxLength(10).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowTitleTotalPerContainersTable).HasColumnName("ShowTitleTotalPerContainersTab");
+			}
+			else
+			{
+              this.Property(t => t.ShowTitleTotalPerContainersTable).HasColumnName("ShowTitleTotalPerContainersTable");
+			}
+
+
+            this.Property(t => t.ShowChargeNotePackages).HasColumnName("ShowChargeNotePackages");
+
+            this.Property(t => t.ShowChargeNoteContainers).HasColumnName("ShowChargeNoteContainers");
+
+            this.Property(t => t.ShowSaleMaxMinAmountPackages).HasColumnName("ShowSaleMaxMinAmountPackages");
+
+            this.Property(t => t.ShowSaleMaxMinAmountContainers).HasColumnName("ShowSaleMaxMinAmountContainers");
+
+            this.Property(t => t.ShowHeaderLabelsPackages).HasColumnName("ShowHeaderLabelsPackages");
+
+            this.Property(t => t.ShowHeaderLabelsContainers).HasColumnName("ShowHeaderLabelsContainers");
+
+            this.Property(t => t.SpaceLinesBeforeContainers).HasColumnName("SpaceLinesBeforeContainers");
+
+            this.Property(t => t.SpaceLinesBeforePackages).HasColumnName("SpaceLinesBeforePackages");
+
+            this.Property(t => t.SpaceLinesBeforeQuoteHeaders).HasColumnName("SpaceLinesBeforeQuoteHeaders");
+
+            this.Property(t => t.SpaceLinesBeforeQuoteDetails).HasColumnName("SpaceLinesBeforeQuoteDetails");
+
+            this.Property(t => t.SpaceLinesBeforeHeaders).HasColumnName("SpaceLinesBeforeHeaders");
+
+            this.Property(t => t.SpaceLinesBeforeFooters).HasColumnName("SpaceLinesBeforeFooters");
+
+            this.Property(t => t.SpaceLinesBeforePerContainers).HasColumnName("SpaceLinesBeforePerContainers");
+
+            this.Property(t => t.QuoteTemplatePDFMarginTop).HasColumnName("QuoteTemplatePDFMarginTop");
+
+            this.Property(t => t.QuoteTemplatePDFMarginBottom).HasColumnName("QuoteTemplatePDFMarginBottom");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerContaine");
+			}
+			else
+			{
+              this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerContainers");
+			}
+
+
+            this.Property(t => t.ShowIncludedChargesPackages).HasColumnName("ShowIncludedChargesPackages");
+
+            this.Property(t => t.ShowIncludedChargesContainers).HasColumnName("ShowIncludedChargesContainers");
+
+            this.Property(t => t.ShowVATTypePackages).HasColumnName("ShowVATTypePackages");
+
+            this.Property(t => t.ShowVATTypeContainers).HasColumnName("ShowVATTypeContainers");
+
+            this.Property(t => t.ShowVATPercentagePackages).HasColumnName("ShowVATPercentagePackages");
+
+            this.Property(t => t.ShowVATPercentageContainers).HasColumnName("ShowVATPercentageContainers");
+
+            this.Property(t => t.HidePageNumber).HasColumnName("HidePageNumber");
+
+            this.Property(t => t.PageNumberingTextDesignId).HasColumnName("PageNumberingTextDesignId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ShowRegionalTAXPackages).HasColumnName("ShowRegionalTAXPackages");
+
+            this.Property(t => t.ShowRegionalTAXContainers).HasColumnName("ShowRegionalTAXContainers");
+        }
+    }
+}
+	 

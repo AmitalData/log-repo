@@ -232,7 +232,10 @@ void SaveDetailsClassOutput(string outputFileName)
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-
+	if(pocosspacestring.Contains("QuoteOPM"))
+	{
+	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	}
 	string pmsspacestring =   entityPMsPath;
 	 string dataprojectnamespace = detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
 	 

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{379BCE12-9A26-4271-9F52-2866DFA6F9EE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Amital.QuoteOPM.MetaData</RootNamespace>
+    <AssemblyName>Amital.QuoteOPM.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\ContextGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContextGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\QuoteOPMClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuoteOPMClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class1.cs" />
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="DBTables\BorderOPType.dxml" />
+    <None Include="DBTables\MarkUpOPType.dxml" />
+    <None Include="DBTables\QuoteOP.dxml" />
+    <None Include="DBTables\QuoteOPCharge.dxml" />
+    <None Include="DBTables\QuoteOPClosingReason.dxml" />
+    <None Include="DBTables\QuoteOPComputedField.dxml" />
+    <None Include="DBTables\QuoteOPCustomerType.dxml" />
+    <None Include="DBTables\QuoteOPPackage.dxml" />
+    <None Include="DBTables\QuoteOPPriceSteps.dxml" />
+    <None Include="DBTables\QuoteOPRating.dxml" />
+    <None Include="DBTables\QuoteOPSetting.dxml" />
+    <None Include="DBTables\QuoteOPStage.dxml" />
+    <None Include="DBTables\QuoteOPTemplate.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSection.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSectionType.dxml" />
+    <None Include="DBTables\QuoteOPTemplateSetting.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTableDesign.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTextCode.dxml" />
+    <None Include="DBTables\QuoteOPTemplateTextDesign.dxml" />
+    <None Include="DBTables\QuoteOPTotalVat.dxml" />
+    <None Include="DBTables\QuoteOPType.dxml" />
+    <None Include="EntityFiles\BorderOPType.lxml" />
+    <None Include="EntityFiles\MarkUpOPType.lxml" />
+    <None Include="EntityFiles\QuoteOPCharge.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteOP.lxml" />
+    <None Include="EntityFiles\QuoteOPClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteOPComputedField.lxml" />
+    <None Include="EntityFiles\QuoteOPCostCharge.lxml" />
+    <None Include="EntityFiles\QuoteOPCustomerType.lxml" />
+    <None Include="EntityFiles\QuoteOPPackage.lxml" />
+    <None Include="EntityFiles\QuoteOPPriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteOPRating.lxml" />
+    <None Include="EntityFiles\QuoteOPSaleCharge.lxml" />
+    <None Include="EntityFiles\QuoteOPSalesTotal.lxml" />
+    <None Include="EntityFiles\QuoteOPSetting.lxml" />
+    <None Include="EntityFiles\QuoteOPStage.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplate.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSection.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSectionType.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateSetting.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTableDesign.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTextCode.lxml" />
+    <None Include="EntityFiles\QuoteOPTemplateTextDesign.lxml" />
+    <None Include="EntityFiles\QuoteOPTotalVat.lxml" />
+    <None Include="EntityFiles\QuoteOPType.lxml" />
+    <None Include="EntityFiles\QuoteOPVATsTotal.lxml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoGenerators\ContextGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContextGenerator1.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\QuoteOPMClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuoteOPMClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

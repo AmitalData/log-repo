@@ -239,7 +239,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customsDocumentPointerPM.Child1EntityId = docChild1EntityId;
                 customsDocumentPointerPM.Child2EntityCode = docChild2EntityCode;
                 customsDocumentPointerPM.Child2EntityId = docChild2EntityId;
-                customsDocumentPointerPM.OriginEntity = customResponse.RelatedEntity.FirstOrDefault()?.entityType.ToString();
+                if (myDeclarationPM.Direction == "E")
+                    customsDocumentPointerPM.OriginEntity = customResponse.RelatedEntity.FirstOrDefault()?.entityType.ToString();
               
                 //customsDocumentPointerPM.DocumentStatusCode = "3";
                 customsDocumentPointerPM.DocumentRemarks = customsDocumentsTicketPM.Remarks;

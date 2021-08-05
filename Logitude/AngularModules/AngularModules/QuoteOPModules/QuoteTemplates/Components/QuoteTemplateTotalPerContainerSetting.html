@@ -1,0 +1,444 @@
+﻿
+<table *ngIf="IsLoadPage">
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr style="height:15px">
+                        <td colspan="3"></td>
+                    </tr>
+
+             
+
+                    <tr style="height:160px">
+                        <td colspan="3">
+                            <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                <table style="border :none;">
+                                    <tr style="height:25px">
+                                        <td colspan="3">
+
+                                            <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerTable' | TextCodeTranslationPipe}} </div></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:10px"><td colspan="3"></td></tr>
+                                    <tr  class="SectionBody">
+
+                                        <td>
+                                            <table>
+                               
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+
+                                                                <td style="width:50%">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:10px"><div style="width:10px"></div></td>
+                                                                            <td>
+                                                                                <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                                                    <table style="border :none;">
+                                                                                        <tr style="height:25px">
+                                                                                            <td>
+
+                                                                                                <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:5px;"><div style="width:5px"></div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.Totals' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr class="SectionBody">
+                                                                                            <td>
+                                                                                                <table>
+                                                                                                    <tr style="height:10px;"><td style="height:10px" colspan="2"><div></div></td></tr>
+
+                                                                                                    <tr style="height:20px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'LOCAL'" (Checked)="TotalPerContainersCurrencyType = 'LOCAL'" [Text]="'QuoteTemplate.S.ShowTotalInLocalCurrency' | TextCodeTranslationPipe"></RadioButton>
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
+                                                                                                    <tr style="height:5px;"><td style="height:5px" colspan="2"><div></div></td></tr>
+                                                                                                    <tr style="height:20px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'SALE'" (Checked)="TotalPerContainersCurrencyType = 'SALE'" [Text]="'QuoteTemplate.S.ShowTotalInSaleCurrency' | TextCodeTranslationPipe" ></RadioButton>
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
+                                                                                                    <tr style="height:5px;"><td style="height:5px" colspan="2"><div></div></td></tr>
+
+                                                                                                    <tr style="height:20px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'MULTIPLE'" (Checked)="TotalPerContainersCurrencyType = 'MULTIPLE'" [Text]="'QuoteTemplate.S.ShowTotalSplitToMultipleCurrencies' | TextCodeTranslationPipe"></RadioButton>
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+                                                                                                    <tr style="height:10px;"><td style="height:10px" colspan="2"><div></div></td></tr>
+
+
+
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+
+
+                                                                                    </table>
+
+
+
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td style="width:10px"><div style="width:10px"></div></td>
+                                                                        </tr>
+
+                                                                        <tr style="height:10px"><td colspan="3"></td></tr>
+                                                                        <tr style="height:30px">
+                                                                            <td style="width:18px"><div style="width:18px"></div></td>
+                                                                            <td>
+
+                                                                                <table>
+
+                                                                                    <tr>
+
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe"  [IsChecked]="ShowTitleTotalPerContainersTable" (Checked)="ShowTitleTotalPerContainersTable = $event"></CheckBox>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr style="height:8px;"><td style="height:8px" colspan="2"><div></div></td></tr>
+                                                                                    <tr>
+
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowPageBreakBeforeTable' | TextCodeTranslationPipe"  [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr style="height:8px;"><td style="height:8px" colspan="2"><div></div></td></tr>
+
+                                                                                    <tr>
+
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe" [IsChecked]="ShowIncludedChargesPerContainers" (Checked)="ShowIncludedChargesPerContainers = $event"></CheckBox>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+
+                                                                                </table>
+                                                                            </td>
+                                                                            <td style="width:10px"><div style="width:10px"></div></td>
+                                                                        </tr>
+
+                                                                    </table>
+
+
+                                                                </td>
+
+                                                                <td style="width:15px"><div style="width:15px"></div></td>
+
+                                                                <td style="width:50%">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:10px"><div style="width:10px"></div></td>
+                                                                            <td style="height:100%">
+                                                                                <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                                                    <table style="border :none;">
+                                                                                        <tr style="height:25px">
+                                                                                            <td>
+
+                                                                                                <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:5px;"><div style="width:5px"></div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.QuoteLabels' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr class="SectionBody">
+                                                                                            <td style="vertical-align:top">
+                                                                                                <div style="overflow-x:hidden" class="MediaFill">
+                                                                                                    <logitude-edit-grid [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
+
+
+
+                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe">
+
+
+                                                                                                            <ng-template let-item>
+                                                                                                                <log-cell-template #logcelltemplate>
+
+                                                                                                                    <table>
+                                                                                                                        <tr>
+
+                                                                                                                            <td>
+                                                                                                                                <div [style.width]="item.IsShowRestoreOriginalEnglishName ? '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
+                                                                                                                                    {{item.EnglishName}}
+                                                                                                                                </div>
+                                                                                                                                <div *ngIf="logcelltemplate.IsEditMode">
+
+                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+
+
+
+                                                                                                                            <td *ngIf="item.IsShowRestoreOriginalEnglishName" (click)="item.RestoreEnglishName(item)" style="width:20px;height:20px;vertical-align:central">
+                                                                                                                                <div style="vertical-align:central;width:20px;height:20px">
+                                                                                                                                    <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipEnglishNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreEnglishName(item)" *ngIf="item.IsShowRestoreOriginalEnglishName" />
+
+                                                                                                                                </div>
+
+
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+
+
+
+
+
+
+                                                                                                                </log-cell-template>
+                                                                                                            </ng-template>
+                                                                                                        </log-column>
+                                                                                                        
+
+
+                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.LocalLabel' | TextCodeTranslationPipe">
+
+                                                                                                            <ng-template let-item>
+                                                                                                                <log-cell-template #logcelltemplate>
+
+
+                                                                                                                    <table>
+                                                                                                                        <tr>
+
+                                                                                                                            <td>
+                                                                                                                                <div [style.width]="item.IsShowRestoreOriginalLocalName ?  '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
+                                                                                                                                    {{item.LocalName}}
+                                                                                                                                </div>
+                                                                                                                                <div *ngIf="logcelltemplate.IsEditMode">
+
+                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+
+
+
+                                                                                                                            <td *ngIf="item.IsShowRestoreOriginalLocalName" (click)="item.RestoreLocalName(item)" style="width:20px;height:20px;vertical-align:central">
+                                                                                                                                <div style="vertical-align:central;width:20px;height:20px">
+                                                                                                                                    <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipLocalNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreLocalName(item)" *ngIf="item.IsShowRestoreOriginalLocalName" />
+
+                                                                                                                                </div>
+
+
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+
+
+
+
+                                                                                                                </log-cell-template>
+                                                                                                            </ng-template>
+
+                                                                                                        </log-column>
+                                                                                                    </logitude-edit-grid>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+
+
+                                                                                    </table>
+
+
+
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td style="width:10px"><div style="width:10px"></div></td>
+                                                                        </tr>
+                                                                    </table>
+
+
+
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr style="height:10px"><td colspan="3"></td></tr>
+
+                                </table>
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr style="height:15px">
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                <table style="border :none;">
+                                    <tr style="height:25px">
+                                        <td colspan="3">
+
+                                            <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerDesign' | TextCodeTranslationPipe}} </div></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="SectionBody">
+                                        <td style="width:50%">
+                                            <table>
+                                                <tr style="height:10px"><td colspan="3"></td></tr>
+
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="HeaderTextDesignPM" [QuoteTemplateTextDesignPM]="HeaderTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+
+                                                <tr style="height:15px"><td colspan="3"></td></tr>
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="RowTextDesignPM" [QuoteTemplateTextDesignPM]="RowTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                <tr><td></td></tr>
+                                            </table>
+
+                                        </td>
+
+                                        <td style="width:15px"><div style="width:15px"></div></td>
+
+                                        <td style="width:50%">
+
+                                            <table>
+                                                <tr style="height:10px"><td colspan="3"></td></tr>
+
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TitleTextDesignPM" [QuoteTemplateTextDesignPM]="TitleTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+
+                                                <tr style="height:15px"><td colspan="3"></td></tr>
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="'Per'"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                <!--<tr>
+                                                    <td style="width:10px"></td>
+                                                    <td style="width:10px">
+                                                        <div style="border:1px solid gray;border-radius:12px;height:40px">
+
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:10px"><div style="width:10px"></div>    </td>
+                                                                    <td style="width: 1px;  font-size: 11px !important; color: #6E7172 !important;">Page Break Before Table</td>
+                                                                    <td style="width:30px"><div style="width:30px"></div>    </td>
+                                                                    <td><CheckBox [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox></td>
+                                                                </tr>
+                                                            </table>
+
+                                                          
+
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10px"></td>
+                                                </tr>-->
+
+
+                                                <tr><td></td></tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
