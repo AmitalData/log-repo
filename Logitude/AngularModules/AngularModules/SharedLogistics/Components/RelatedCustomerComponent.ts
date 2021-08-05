@@ -60,28 +60,26 @@ export class RelatedCustomerComponent extends BaseComponent{
     }
 
     CheckIsExportActivated(item: CustomerTenantAccessCardPM) {
-        if (item.IsExportActivated) this.SetIsExportField(item,false); 
-        else  this.SetIsExportField(item, true); 
+        this.SetIsExportField(item); 
        
         this.UpdateCustomerTenantAccess();
     }
  
     CheckIsImportActivated(item: CustomerTenantAccessCardPM) {
-        if (item.IsImportActivated) this.SetIsImportField(item,false) 
-        else this.SetIsImportField(item, true)
+        this.SetIsImportField(item) 
 
-        this.UpdateCustomerTenantAccess();
+       this.UpdateCustomerTenantAccess();
     }
 
 
-    private SetIsExportField(item: CustomerTenantAccessCardPM, isExportActivated: boolean) {
-        item.IsExportActivated = isExportActivated;
-        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsExportActivated = isExportActivated;
+    private SetIsExportField(item: CustomerTenantAccessCardPM) {
+        item.IsExportActivated = !item.IsExportActivated;
+        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsExportActivated = item.IsExportActivated;
     }
 
-    private SetIsImportField(item: CustomerTenantAccessCardPM, isImportActivated: boolean) {
-        item.IsImportActivated = isImportActivated;
-        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsImportActivated = isImportActivated;
+    private SetIsImportField(item: CustomerTenantAccessCardPM) {
+        item.IsImportActivated = !item.IsImportActivated;
+        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsImportActivated = item.IsImportActivated;
     }
 
 
