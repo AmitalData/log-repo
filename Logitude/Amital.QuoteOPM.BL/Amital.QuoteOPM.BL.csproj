@@ -151,6 +151,7 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuoteOPBusinessUnitFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Amital.QuoteOPM.Data\Amital.QuoteOPM.Data.csproj">

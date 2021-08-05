@@ -1,5 +1,7 @@
 ﻿using Amital.QuoteOPM.Data.EntityPOCOs;
 using Amital.QuoteOPM.Data.Repsitories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Logitude.BL.Security;
@@ -9,9 +11,12 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -35,28 +40,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 RecordsTypeCode = this.FixFilter(RecordsTypeCode);
 
                 var quoteOPRepository = new QuoteOPRepository(tenant);
-                var businessUnitFilter = new QuoteBusinessUnitFilter(tenant);
+                var businessUnitFilter = new QuoteOPBusinessUnitFilter(tenant);
 
                 IQueryable<QuoteOP> allQuotes = quoteOPRepository.GetQuotes(tenant);
                 allQuotes = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteOP>(new QueryOperations(), allQuotes, tenant);
                 allQuotes = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteOP>(new QueryOperations(), allQuotes, tenant);
                 allQuotes = businessUnitFilter.RunFilter(allQuotes);
 
-                IQueryable<QuoteOPFollowUpDataView> allFollowups = quoteRepository.GetQuoteFollowUpDataViewByTenant(tenant);
-                allFollowups = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
-                allFollowups = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
-                allFollowups = businessUnitFilter.RunFilter(allFollowups);
+                //IQueryable<QuoteOPFollowUpDataView> allFollowups = quoteRepository.GetQuoteFollowUpDataViewByTenant(tenant);
+                //allFollowups = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
+                //allFollowups = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteFollowUpDataView>(new QueryOperations(), allFollowups, tenant);
+                //allFollowups = businessUnitFilter.RunFilter(allFollowups);
 
                 if (!string.IsNullOrEmpty(directionId))
                 {
                     allQuotes = allQuotes.Where(d => d.DirectionId == directionId);
-                    allFollowups = allFollowups.Where(d => d.DirectionId == directionId);
+                    //allFollowups = allFollowups.Where(d => d.DirectionId == directionId);
                 }
 
                 if (!string.IsNullOrEmpty(transportModeId))
                 {
                     allQuotes = allQuotes.Where(d => d.TransportModeId == transportModeId);
-                    allFollowups = allFollowups.Where(d => d.TransportModeId == transportModeId);
+                    //allFollowups = allFollowups.Where(d => d.TransportModeId == transportModeId);
                 }
 
                 CRMSummary myResult = new CRMSummary();
@@ -66,7 +71,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (!string.IsNullOrEmpty(ownerId))
                     {
                         allQuotes = allQuotes.Where(d => d.CreatedByUserId == ownerId);
-                        allFollowups = allFollowups.Where(d => d.CreatedByUserId == ownerId);
+                        //allFollowups = allFollowups.Where(d => d.CreatedByUserId == ownerId);
                     }
                 }
 
@@ -75,13 +80,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (!string.IsNullOrEmpty(ownerId))
                     {
                         allQuotes = allQuotes.Where(d => d.SalesmanUserId == ownerId);
-                        allFollowups = allFollowups.Where(d => d.SalesmanUserId == ownerId);
+                        //allFollowups = allFollowups.Where(d => d.SalesmanUserId == ownerId);
                     }
 
                     if (!string.IsNullOrEmpty(businessUnitId))
                     {
                         allQuotes = allQuotes.Where(d => d.BusinessUnitId == businessUnitId);
-                        allFollowups = allFollowups.Where(d => d.BusinessUnitId == businessUnitId);
+                        //allFollowups = allFollowups.Where(d => d.BusinessUnitId == businessUnitId);
                     }
                 }
 
@@ -100,8 +105,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 myResult.Quotes_AcceptedNOShip = allQuotes.Where(d => d.Stage.Code == "QTAC" && (d.UsageCount == 0 || d.UsageCount == null)).Count();
                 myResult.Quotes_Sent = allQuotes.Where(d => d.Stage.Code == "QTST").Count();
 
-                myResult.Quotes_AllFollowups = allFollowups.Count();
-                myResult.Quotes_MyFollowups = allFollowups.Where(d => d.FollowUpOwnerId == loggedUserId).Count();
+                //myResult.Quotes_AllFollowups = allFollowups.Count();
+                //myResult.Quotes_MyFollowups = allFollowups.Where(d => d.FollowUpOwnerId == loggedUserId).Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -111,6 +116,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private string FixFilter(string filter)
+        {
+            string myResult = filter;
+
+            if (myResult != null)
+            {
+                switch (myResult.ToLower())
+                {
+                    case "all":
+                    case "null":
+                    case "undefined":
+                        {
+                            myResult = null;
+                            break;
+                        }
+                }
+            }
+
+            return myResult;
+        }
+        private string GetLoggedUserId(string loggedUserEmail, int tenant)
+        {
+            string loggedUserId = null;
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
+            if (loggedContactPM == null)
+            {
+                loggedContactPM = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+            }
+
+            if (loggedContactPM != null)
+            {
+                loggedUserId = loggedContactPM.Id;
+            }
+
+            return loggedUserId;
+        }
+
+#if false
+
+
         public HttpResponseMessage GetRecentQuotes(string ownerId, string businessUnitId)
         {
             try
@@ -435,44 +481,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private string FixFilter(string filter)
-        {
-            string myResult = filter;
-
-            if (myResult != null)
-            {
-                switch (myResult.ToLower())
-                {
-                    case "all":
-                    case "null":
-                    case "undefined":
-                        {
-                            myResult = null;
-                            break;
-                        }
-                }
-            }
-
-            return myResult;
-        }
-        private string GetLoggedUserId(string loggedUserEmail, int tenant)
-        {
-            string loggedUserId = null;
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
-            if (loggedContactPM == null)
-            {
-                loggedContactPM = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-            }
-
-            if (loggedContactPM != null)
-            {
-                loggedUserId = loggedContactPM.Id;
-            }
-
-            return loggedUserId;
-        }
-
+   
+        
         public HttpResponseMessage GetQuoteConnectedEntities(string quoteId, string opportunityId)
         {
             try
@@ -552,7 +562,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+#endif
 
     }
 }

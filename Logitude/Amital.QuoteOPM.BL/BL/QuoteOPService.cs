@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -355,7 +356,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     quoteStatus.QuoteCancelNote = "";
                     quoteStatus.QuoteNumber = entityPM.QuoteNumber;
                     quoteStatus.DueDate = entityPM.StageDueDate;
-                    #region IsCancelled 
+#region IsCancelled 
                     if (entityPM.IsCancelled)
                     {
                         EventTypeRepository eventTypeRepository = new EventTypeRepository(entityPM.Tenant);
@@ -371,9 +372,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             }
                         }
                     }
-                    #endregion
+#endregion
 
-                    #region StatusChange
+#region StatusChange
                     if (entityPoco.StageId != entityPM.StageId)
                     {
                         QuoteStageRepository quoteStageRepository = new QuoteStageRepository(entityPM.Tenant);
@@ -405,9 +406,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         }
 
                     }
-                    #endregion
+#endregion
 
-                    #region Send Quote Status Message 
+#region Send Quote Status Message 
                     if (entityPM.IsCancelled || IsQuoteStageChange)
                     {
                         string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quoteStatus);
@@ -441,7 +442,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
                         Communications.AddCommunicationLog(tasklogParams);
                     }
-                    #endregion
+#endregion
                 }
             }
         }
@@ -1923,7 +1924,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                         foreach (QuoteChargePM item in myDataLines)
                         {
-                            #region
+#region
                             VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
 
                             if (lineVatType != null)
@@ -1994,7 +1995,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
                             }
-                            #endregion
+#endregion
                         }
 
                         List<QuoteTotalsClass> group_data =
@@ -2192,3 +2193,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         public string VatTypeCell { get; set; }
     }
 }
+
+
+#endif

@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Logitude.BL.QuoteModel.EntityLists;
+
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.Data.EntityLists;
 
 namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 {
@@ -54,7 +56,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 
             return iQueryableData;
         }
-        public IQueryable<QuoteList> RunFilter(IQueryable<QuoteList> iQueryableData)
+        public IQueryable<QuoteOPList> RunFilter(IQueryable<QuoteOPList> iQueryableData)
         {
             List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
 
@@ -146,7 +148,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 
             return null;
         }
-        public QuoteList RunFilter(QuoteList entityList)
+        public QuoteOPList RunFilter(QuoteOPList entityList)
         {
             List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
 

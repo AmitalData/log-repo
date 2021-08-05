@@ -36,7 +36,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             //entityPoco.ProductCode = entityPM.ProductCode;
             if (!entityPM.IsHybrid)
             {
-                entityPM.QuoteNumber = TableCounter.GetNumber(tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
+                entityPM.QuoteNumber = TableCounter.GetNumber(entityPM.Tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
             }
             base.OnCreating(entityPM, entityParentPM);
         }
