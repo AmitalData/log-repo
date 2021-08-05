@@ -130,8 +130,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.HasReferences = this.SetHasReferences(); 
-               
+                this.HasReferences = this.SetHasReferences();
+
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
@@ -394,8 +394,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
         //     this.SliderCards.push(newCard);
         // });
-       
-      
+
+
         this.SliderCards = this.Shipment.Milestones
             .filter(milstone =>
             {
@@ -504,8 +504,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.selectedNavButton = panelName;
         var panelElement = document.getElementById(panelName) as HTMLElement;
-        if (panelElement)
+        if (panelElement){
             panelElement.scrollIntoView();
+            document.getElementsByTagName('html')[0].scrollTop -= 103;
+
+    }
+
+
     }
 
     BackLinkClicked()
@@ -904,7 +909,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA"));
         }
     }
-  
+
     BuildExportRouteDirection(fieldValue, fieldName: string) {
         if (fieldValue != null) {
             return new RouteDirection(fieldValue, fieldName, "out");
@@ -943,7 +948,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 description: messageDescription,
             }
         });
-    } 
+    }
 }
 
 
