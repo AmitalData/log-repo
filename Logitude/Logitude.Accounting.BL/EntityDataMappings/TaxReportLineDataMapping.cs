@@ -131,9 +131,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
             if (entityPOCO.UpdatedByUserId != null)
             {
-                ContactPM updatedByContact = contactQuery.GetContactById(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
+                ContactPM updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
                 if (updatedByContact == null)
-                    updatedByContact = contactQuery.GetContactById(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
+                    updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
                 if (updatedByContact != null)
                     entityPM.UpdatedBUserName = updatedByContact.LocalName == null ? updatedByContact.EnglishName : updatedByContact.LocalName;
             }

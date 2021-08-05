@@ -20,8 +20,10 @@ import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxRepo
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { DateTimePipe } from '../../../../../Controls/Pipes/DateTimePipe';
 
+
+
 @Component({
-    
+
     templateUrl: './EditTaxReportLineComponent.html'
 })
 
@@ -37,7 +39,8 @@ export class EditTaxReportLineComponent extends BaseComponent {
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
     private CurrentSession = SessionLocator.SelectedSession;
-   
+    private lastUpdatedByText = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy");
+    private onText = TextCodeTranslator.Translate("TaxReportLine.O.On");
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -55,8 +58,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.OldReferecneGroup = this.ReferecneGroup;
             this.OldReferenceDate = this.ReferenceDate;
             this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
-            var DatePipe = new DateTimePipe();
-            this.UpdateMessage = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.TaxReportLinePM.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.TaxReportLinePM.LastUpdateDateTime, "DT") + " }";
+            this.SetUpdatedByMessage();
             this.SetUIProperties();
         }
     }
@@ -69,6 +71,15 @@ export class EditTaxReportLineComponent extends BaseComponent {
     OldReferecneGroup: string;
     OldReferenceDate: Date;
 
+    private SetUpdatedByMessage()
+    {
+        if(this.TaxReportLinePM.IsManuallyChanged){
+            var datePipe = new  DateTimePipe();
+            var formatedLastUpdatedDate = datePipe.transform(this.TaxReportLinePM.LastUpdateDateTime, "DT");
+            this.UpdateMessage = `${this.lastUpdatedByText} {${this.TaxReportLinePM.UpdatedBUserName}} ${this.onText} {${formatedLastUpdatedDate}}`;
+        }
+    }
+
     //DeferredGLAccount
     get TransmitStatusCode() { return this.TaxReportLinePM.TransmitStatusCode; }
     set TransmitStatusCode(value: string) {
@@ -78,7 +89,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
     }
 
-  //type 
+  //type
   get LineTypeCode() { return this.TaxReportLinePM.LineTypeCode; }
   set LineTypeCode(value: string) {
     if (this.TaxReportLinePM.LineTypeCode != value) {
@@ -142,7 +153,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
             else {
                 this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
             }
-    
+
             this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
@@ -150,7 +161,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
         else {
             this.SetEnabledForReferenceField();
-           
+
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
 
@@ -164,7 +175,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
         else { this.Reference = this.TaxReportLinePM.OriginalReference; }
       }
-      
+
     }
     SetEnabledForReferenceField() {
         if (this.TaxReportLinePM.StatusCode == TaxReportLineStatuse.InvoiceNumberNotValid) {
@@ -173,6 +184,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
     }
     //#region Buttons
     OkButtonClicked() {
+
+        if(!this.TaxReportLinePM.IsDirty)
+            return this.CurrentSession.CloseCurrentWindowEmit("ok");
 
         if (!this.TaxReportLinePM.TransmitStatusCode) {
             var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
@@ -256,5 +270,5 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
 enum TaxReportLineStatuse {
     InvoiceNumberNotValid = "3",
-  
+
 }
