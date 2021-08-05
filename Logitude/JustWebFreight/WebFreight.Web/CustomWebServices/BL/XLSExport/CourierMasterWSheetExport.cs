@@ -26,7 +26,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.AirlineId,
                     r.MAWB,
                     r.MasterHAWB,
-
+                    r.DeclarationId,
                     MasterGrossMassMeasure=r.MasterGrossMassMeasure??0,
                     MasterPackageQuantity =r.MasterPackageQuantity ?? 0,
                     r.MasterCreateDateTime,
@@ -58,6 +58,28 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
                 });
             ;
+
+
+
+            var group2 = (from d in MyContext.DeclarationPendings
+                          join c in q
+                          on d.DeclarationID equals c.DeclarationId
+
+                          group d by d.DeclarationID into PendingGroup
+                          select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
+ ); ;
+
+            Dictionary<string, string> pendings = new Dictionary<string, string>();
+
+
+            foreach (var item in group2)
+            {
+                pendings.Add(item.declaration, string.Join(",", item.pending));
+            }
+
+
+
+
             /*
                  <div class="TextTrimming" *ngIf="fieldName == 'HighLowValue'" style="text-align:right;">
         <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == 'F'">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
@@ -224,11 +246,11 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[21] = r.SpecialActionStatus;
                     newrow[22] = r.CourierSuspentionName;
                     newrow[23] = r.DeclarationStatusTypeName;
-                    newrow[24] = r.CourierPendingReasonName;
+                    newrow[24] = pendings.FirstOrDefault(x => x.Key == r.DeclarationId).Value;  //r.CourierPendingReasonName;
                     newrow[25] = r.LastMileStatusCode;
                     newrow[26] = r.IsClosedForFollowUp;
-                    newrow[27] = r.CourierPendingReasonList;
-                    
+                    newrow[27] =   r.CourierPendingReasonList;
+
 
                     dt.Rows.Add(newrow);
 
