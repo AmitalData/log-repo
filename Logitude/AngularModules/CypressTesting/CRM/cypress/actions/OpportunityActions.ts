@@ -111,6 +111,7 @@ export function RemoveAdditionalService() {
 }
 
 export function UpdateOpportunity() {
+    cy.wait(1000)
     DefinePutOpportunityRequest()
     cy.Click(OpportunitySelectors.SaveButton, null)
 }
