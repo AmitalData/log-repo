@@ -474,6 +474,11 @@ export class CargoTrackingShipmentPM {
     public set CurrentMilestoneExceptions(newValue: string) { if (this.currentMilestoneExceptions != newValue) { this.currentMilestoneExceptions = newValue; this.MarkAsDirty("CurrentMilestoneExceptions"); } }
        
 	 
+    private forwardingShipmentLevelCode: string;
+    public get ForwardingShipmentLevelCode() { return this.forwardingShipmentLevelCode; }
+    public set ForwardingShipmentLevelCode(newValue: string) { if (this.forwardingShipmentLevelCode != newValue) { this.forwardingShipmentLevelCode = newValue; this.MarkAsDirty("ForwardingShipmentLevelCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

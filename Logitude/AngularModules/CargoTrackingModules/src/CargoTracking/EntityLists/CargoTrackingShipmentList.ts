@@ -100,6 +100,7 @@ export class CargoTrackingShipmentList {
 	ToPortCode: string;
 	NumberOfPackages: number;
 	CurrentMilestoneExceptions: string;
+	ForwardingShipmentLevelCode: string;
 	
 }
  

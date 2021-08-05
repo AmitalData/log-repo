@@ -179,6 +179,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ShipmentTypeCode { get; set; }
         [Column("CurrentMilestoneExceptions")]
 	    public string CurrentMilestoneExceptions { get; set; }
+        [Column("ForwardingShipmentLevelCode")]
+	    public string ForwardingShipmentLevelCode { get; set; }
     }
 }
 	 

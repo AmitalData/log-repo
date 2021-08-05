@@ -453,7 +453,15 @@ export class ShipmentsListComponent implements AfterViewInit
         }
     }
 
+    GetConsignmentNumberForCustomsForwardingShipment(shipment: CargoTrackingShipmentList) {
+        if (shipment.ForwardingShipmentLevelCode == 'D') {
+            this.ConsignmentNumber = shipment.Master;
+        }
 
+        else if (shipment.ForwardingShipmentLevelCode == 'H') {
+            this.ConsignmentNumber = shipment.House;
+        }
+    }
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
             this.TitleOfEstimationORActualDate = 'ATA'

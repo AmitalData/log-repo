@@ -176,6 +176,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ShipmentTypeCode).HasColumnName("ShipmentTypeCode").HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.CurrentMilestoneExceptions).HasColumnName("CurrentMilestoneExceptions").HasMaxLength(500).IsUnicode(true);
+
+            this.Property(t => t.ForwardingShipmentLevelCode).HasColumnName("ForwardingShipmentLevelCode").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

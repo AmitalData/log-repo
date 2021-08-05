@@ -501,6 +501,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ForwardingShipmentLevelCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
