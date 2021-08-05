@@ -84,7 +84,8 @@ export class DynamicLoader {
 
     switch (iPathParts[1]) {
       case "InfrastructureModules":
-      case "QuoteModules":
+        case "QuoteModules":
+        case "QuoteOPModules":
       case "ShipmentModules":
       case "Logitude_Modules":
       case "CommonModules":

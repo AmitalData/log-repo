@@ -1,0 +1,349 @@
+
+<style type="text/css">
+    .BoxItemContent .Body > td {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 49.79%,rgba(238, 238, 238, 1) 69.34%,rgba(226, 226, 226, 1) 83.57%,rgba(209, 209, 209, 1) 95.15%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.4979,rgba(245, 245, 245, 1) ),color-stop(0.6934,rgba(238, 238, 238, 1) ),color-stop(0.8357,rgba(226, 226, 226, 1) ),color-stop(0.9515,rgba(209, 209, 209, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .BoxItemContent .Title > td {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .BoxItemContent .Title td, .BoxItemContent .Title div, .BoxItemContent .Title span {
+        line-height: 25px;
+        white-space: nowrap;
+    }
+
+    .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
+        color: #6E7172;
+        font-size: 10px;
+        height: 15px;
+        line-height: 15px;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .BoxItemContent {
+        height: calc(100% - 2px);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .BoxItem:nth-of-type(odd) {
+        margin-right: 3px;
+    }
+
+    .BoxItem:nth-of-type(even) {
+        margin-left: 3px;
+    }
+
+    .BoxItem {
+        float: left;
+        display: block;
+        width: calc(50% - 3px);
+        height: 150px;
+        min-height: 150px;
+    }
+
+    .SetCustomer:hover .SetCustomerIcon {
+        background: url('./Images/Menu/Person.png') center center;
+        background-size: contain;
+    }
+
+    .SetCustomer:hover .SetCustomerText {
+        color: #0075AF;
+    }
+
+    .SetCustomerIcon {
+        background: url('./Images/Menu/Person.Gray.png') center center;
+        background-size: contain;
+    }
+
+    .SetCustomerText {
+        color: #BABABA;
+    }
+
+    .SetCustomer {
+        cursor: pointer;
+    }
+
+    .SetCustomerDisabled {
+        pointer-events: none;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px;">{{'QuoteOP.S.Partners.Partners' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 1px; padding-left: 10px;" *ngIf="IsUpdateSalesmanVisible">
+                            <div class="OrangeInfo" style="height: 26px; padding: 0px; padding-left: 5px; padding-right: 1px;">
+                                <table>
+                                    <tr>
+                                        <td style="height: 26px; font-size: 12px; color: #D8770E;">{{UpdateSalesmanText}}</td>
+
+                                        <td style="height: 26px; padding-left: 5px; padding-bottom: 1px;">
+                                            <button class="Button" (click)="UpdateSalesmanClicked()">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 100px">
+                            <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                                <label>{{'QuoteOP.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
+                                <img src="./Images/ToggleIcon.png" />
+                                <div class="ToggleButtonMenu" style="width: 150px">
+                                    <button id="{{ 'SHIPR' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'QuoteOP.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CONSI' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'QuoteOP.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'AGENT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'QuoteOP.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'NOTFY' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_NOTFY" (click)="AddPartner('NOTFY')">{{'QuoteOP.B.Partners.AddNotify' | TextCodeTranslationPipe}}</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>           
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <ScrollViewer>
+                        <ul>
+                            <li class="BoxItem" *ngFor="let item of ItemsCollection">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="BoxItemContent">
+                                                    <table class="FixedTable">
+                                                        <tr class="Title" style="height: 25px;">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; color: #1B90CB; font-size: 12px;">
+                                                                            {{item.PartnerTypeName}}:
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div class="MediaFill TextTrimming" style="color: #282E30; font-size: 14px; padding-left: 5px;">
+                                                                                {{item.PartnerName}}
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 18px;">
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPartner(item)"></IconButton>
+                                                                        </td>
+
+                                                                        <td style="width: 3px;" *ngIf="item.IsRemoveButtonVisible">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 18px;" *ngIf="item.IsRemoveButtonVisible">
+                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeletePartner(item)"></IconButton>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="Body">
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height: 3px;">
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table style="table-layout: auto;">
+
+                                                                                <!-- Name -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerAddressList">
+                                                                                    <td colspan="3">
+                                                                                        <div class="MediaFill TextTrimming">
+                                                                                            {{item.PartnerAddressList.Name}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Address1 -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerAddressList && item.PartnerAddressList.Address1">
+                                                                                    <td colspan="3">
+                                                                                        <div class="MediaFill TextTrimming">
+                                                                                            {{item.PartnerAddressList.Address1}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Address2 -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerAddressList && item.PartnerAddressList.Address2">
+                                                                                    <td colspan="3">
+                                                                                        <div class="MediaFill TextTrimming">
+                                                                                            {{item.PartnerAddressList.Address2}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- City,State,ZipCode & Tel -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerAddressList">
+                                                                                    <td>
+                                                                                        <div class="MediaFill">
+                                                                                            {{item.AddressCityText}}
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <span *ngIf="item.PartnerAddressList.PhoneNumber" style="font-size:11px; color: #282E30">Tel: </span>
+                                                                                            <span *ngIf="item.PartnerAddressList.PhoneNumber">{{item.PartnerAddressList.PhoneNumber}}</span>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Country -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerAddressList">
+                                                                                    <td>{{item.PartnerAddressList.CountryName}}</td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <span *ngIf="item.PartnerAddressList.FaxNumber" style="font-size:11px; color: #282E30;">Fax: </span>
+                                                                                            <span *ngIf="item.PartnerAddressList.FaxNumber">{{item.PartnerAddressList.FaxNumber}}</span>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Contact -->
+                                                                                <tr class="PartnerTemplateRow" *ngIf="item.PartnerContactList && item.PartnerContactList.EnglishName">
+                                                                                    <td colspan="3">
+                                                                                        <div>
+                                                                                            <span style="font-size:11px; color: #282E30;">Contact: </span>
+                                                                                            <span>{{item.PartnerContactList.EnglishName}}</span>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- References -->
+                                                                                <tr class="PartnerTemplateRow">
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <span *ngIf="item.HasReference1" style="font-size:11px; color: #282E30;">{{'QuoteOP.S.Partners.Reference1' | TextCodeTranslationPipe}}: </span>
+                                                                                            <span *ngIf="item.HasReference1">{{item.Reference1}}</span>
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <span *ngIf="item.HasReference2" style="font-size:11px; color: #282E30;">{{'QuoteOP.S.Partners.Reference2' | TextCodeTranslationPipe}}: </span>
+                                                                                            <span *ngIf="item.HasReference2">{{item.Reference2}}</span>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <div *ngIf="item.PartnerAddressList" style="width: 45px; height: 45px; position:absolute; right: 1px; bottom: -3px; margin: auto;">
+                                                                                <img [attr.src]="item.PartnerAddressList.CountryCode | CountryFlagPipe" />
+                                                                            </div>
+
+                                                                            <div style="width: 20px; height: 15px; position:absolute; right: 0px; bottom: 45px;">
+                                                                                <GoogleMapsButton [AddressList]="item.PartnerAddressList"></GoogleMapsButton>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 3px;">
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                                <div *ngIf="item.IsCustomer" style="position: absolute; right:3px; top:5px; height: 14px; line-height: 14px;">
+                                                                    <div style="background: url('./Images/Menu/Person.png') center center; background-size: contain; width: 14px; height: 14px; display:block; float: right;"></div>
+                                                                    <span style="font-size:11px; color: #0075AF; height: 14px; line-height: 14px; display:block; float: right; margin-right: 5px;">{{'QuoteOP.S.Partners.MyCustomer' | TextCodeTranslationPipe}}</span>
+                                                                </div>
+
+                                                                <div *ngIf="!item.IsCustomer" style="position: absolute; right:3px; top:5px; height: 14px; line-height: 14px;" class="SetCustomer" [class.SetCustomerDisabled]="!IsEditingEnabled" (click)="item.SetAsCustomer()">
+                                                                    <div class="SetCustomerIcon" style="width: 14px; height: 14px; display:block; float: right;"></div>
+                                                                    <span class="SetCustomerText" style="font-size:11px; height: 14px; line-height: 14px; display:block; float: right; margin-right: 5px;">Set as My Customer</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="NoDataText" style="top: 70px;" *ngIf="item.ShowNoTemplateText">No Address Contact</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </ScrollViewer>
+                </div>                
+            </td>
+        </tr>
+    </table>
+</div>

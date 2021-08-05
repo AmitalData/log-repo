@@ -214,7 +214,20 @@ namespace WebFreight.Web.Helpers
                     stop = true;
                 }
             }
+            if (stop == false)
+            {
+                if (tableName.Contains("."))
+                    tableName = tableName.Split('.')[1];
 
+                MethodsInfo = getMethodsInfo("WebFreight.Web.QuoteOPMModel.DomainServices.QuoteOPMDomainService", tableName);
+                if (MethodsInfo != null)
+                {
+                    getListMethodInfo = MethodsInfo.ListMethodInfo;
+                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                    context = MethodsInfo.context;
+                    stop = true;
+                }
+            }
 
             if (stop == false)
             {

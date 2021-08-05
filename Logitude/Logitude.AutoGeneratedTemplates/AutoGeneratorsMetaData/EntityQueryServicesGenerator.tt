@@ -152,7 +152,10 @@ void SaveEntityQueryServiceOutput(string outputFileName)
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-
+	if(pocosspacestring.Contains("QuoteOPM"))
+	{
+	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	}
 	string pmsspacestring =   entityPMsPath;	string mappingspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
 	string repspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + (iswrongname? ".Repsitories;" : ".Repositories;");
 	string keysspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityKeys;";

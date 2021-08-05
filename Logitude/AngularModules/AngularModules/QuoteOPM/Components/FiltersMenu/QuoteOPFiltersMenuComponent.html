@@ -1,0 +1,52 @@
+﻿<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width:55px; vertical-align:middle; font-size:11px; color : #6E7172;">
+            <div>{{'General.O.FilterBy' | TextCodeTranslationPipe}}:</div>
+        </td>
+
+        <td style="width:117px; vertical-align:middle;">
+            <ul class="FiltersMenu">
+                <li (click)="TransportModeItemClicked('All')" (mouseover)="TransportModeItemMouseOver('All')" [class.SelectedFilter]="SelectedTransportMode === 'All'">
+                    All
+                </li>
+                <li (click)="TransportModeItemClicked('A')" (mouseover)="TransportModeItemMouseOver('A')" (mouseleave)="TransportModeItemMouseLeave('A')" [class.SelectedFilter]="SelectedTransportMode === 'A'" title="Air">
+                    <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="TransportModeItemClicked('O')" (mouseover)="TransportModeItemMouseOver('O')" (mouseleave)="TransportModeItemMouseLeave('O')" [class.SelectedFilter]="SelectedTransportMode === 'O'" title="Ocean">
+                    <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="TransportModeItemClicked('I')" (mouseover)="TransportModeItemMouseOver('I')" (mouseleave)="TransportModeItemMouseLeave('I')" [class.SelectedFilter]="SelectedTransportMode === 'I'" title="Inland">
+                    <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png" style="top: 1px;" />
+                </li>
+            </ul>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <td style="width:140px; vertical-align:middle;">
+            <ul class="FiltersMenu">
+                <li (click)="DirectionItemClicked('All')" (mouseover)="DirectionItemMouseOver('All')" [class.SelectedFilter]="SelectedDirection === 'All'">
+                    All
+                </li>
+                <li (click)="DirectionItemClicked('E')" (mouseover)="DirectionItemMouseOver('E')" (mouseleave)="DirectionItemMouseLeave('E')" [class.SelectedFilter]="SelectedDirection === 'E'" title="Export">
+                    <img [id]="DirectionFilter_E" class="CenterCenter" src="./Images/Directions/E_g.png" />
+                </li>
+                <li (click)="DirectionItemClicked('I')" (mouseover)="DirectionItemMouseOver('I')" (mouseleave)="DirectionItemMouseLeave('I')" [class.SelectedFilter]="SelectedDirection === 'I'" title="Import">
+                    <img [id]="DirectionFilter_I" class="CenterCenter" src="./Images/Directions/I_g.png" />
+                </li>
+                <li (click)="DirectionItemClicked('R')" (mouseover)="DirectionItemMouseOver('R')" (mouseleave)="DirectionItemMouseLeave('R')" [class.SelectedFilter]="SelectedDirection === 'R'" title="Drop">
+                    <img [id]="DirectionFilter_R" class="CenterCenter" src="./Images/Directions/R_g.png" />
+                </li>
+                <li (click)="DirectionItemClicked('D')" (mouseover)="DirectionItemMouseOver('D')" (mouseleave)="DirectionItemMouseLeave('D')" [class.SelectedFilter]="SelectedDirection === 'D'" title="Domestic">
+                    <img [id]="DirectionFilter_D" class="CenterCenter" src="./Images/Directions/D_g.png" />
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>

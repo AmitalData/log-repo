@@ -58,6 +58,15 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
     
     { loadChildren: () => import('../../CustomsModules/CustomsContainerization/ModuleCustomsContainerization').then(m => m.ModuleCustomsContainerization), path: 'CustomsContainerization' },
 
+
+
+    // QuoteOPM Modules
+    { loadChildren: () => import('../../QuoteOPM/Module_QUPM').then(m => m.QuoteModule), path: 'QuoteOPM' },
+    { loadChildren: () => import('../../QuoteOPModules/QuoteCharges/ModuleQuoteCharges').then(m => m.ModuleQuoteCharges), path: 'QuoteCharges' },
+    { loadChildren: () => import('../../QuoteOPModules/QuoteOthers/ModuleQuoteOthers').then(m => m.ModuleQuoteOthers), path: 'QuoteOthers' },
+    { loadChildren: () => import('../../QuoteOPModules/QuoteTabs/ModuleQuoteTabs').then(m => m.ModuleQuoteTabs), path: 'QuoteTabs' },
+    { loadChildren: () => import('../../QuoteOPModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteTemplates), path: 'QuoteTemplates' },
+
 ];
 
 export function LazyArrayToObjects() {

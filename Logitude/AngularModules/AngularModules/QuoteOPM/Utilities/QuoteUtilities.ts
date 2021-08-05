@@ -1,0 +1,693 @@
+import {QuoteOPPM} from '../EntityPMs/QuoteOPPM';
+import {QuoteOPPackagePM} from '../EntityPMs/QuoteOPPackagePM';
+import {QuoteOPChargePM} from '../EntityPMs/QuoteOPChargePM';
+import {QuoteOPPriceStepsPM} from '../EntityPMs/QuoteOPPriceStepsPM';
+import {QuoteOPStageList} from '../EntityLists/QuoteOPStageList';
+import {QuoteOPStageListService} from '../Services/StandardLists/QuoteOPStageListService';
+import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
+import {InfraSettings} from '../../Infrastructure/Utilities/InfraSettings';
+import {AppTool, ArrayTool} from '../../Infrastructure/Tools';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {PackageTypeListService} from '../../Common/Services/StandardLists/PackageTypeListService';
+import {PackageTypeList} from '../../Common/EntityLists/PackageTypeList';
+import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
+import {ShipmentOrderPackagePM} from '../../Shipment/EntityPMs/ShipmentOrderPackagePM';
+import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
+import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
+import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
+import { PackageAmountCalculator } from '../../Infrastructure/Utilities/PackageAmountCalculator';
+
+export class QuoteUtilities {
+    public static IsQuoteEditEnabled(entityPM: QuoteOPPM) {
+        var myResult: boolean = true;
+        
+        if (entityPM != null) {
+
+            if (entityPM.IsClosed) {
+                myResult = false;
+            }
+
+            else if (entityPM.IsCancelled) {
+                myResult = false;
+            }
+
+            else if (entityPM.IsQuoteDataExternal && entityPM.IsQuoteDocumentExternal) {
+                myResult = false;
+            }
+
+            else {
+
+                var allStages = [];
+                var myService: QuoteOPStageListService = new QuoteOPStageListService();
+                myService.getAllFromCache().subscribe((resp: any) => {
+                    if (!resp.HasError) {
+                        allStages = resp.Result;
+                    }
+                });
+
+                var mySentStageId = "";
+                var mySentStage: QuoteOPStageList = allStages.filter(d => d.Code == "QTST")[0];
+
+                if (mySentStage != null) {
+                    mySentStageId = mySentStage.Id;
+                }
+
+                if (entityPM.StageId == mySentStageId) {
+                    myResult = false;
+                }
+            }
+        }
+
+        return myResult;
+    }
+
+    public static IsLCLQuote(entityPM: QuoteOPPM ) {
+        var myResult = false;
+
+        if (entityPM != null) {
+            if (entityPM.TransportModeId.toUpperCase() == "A") {
+                myResult = true;
+            }
+
+            else if (entityPM.TransportModeId.toUpperCase() == "O" && entityPM.ShipmentTypeId.toUpperCase() == "LCLD") {
+                myResult = true;
+            }
+
+            else if (entityPM.TransportModeId.toUpperCase() == "I" && entityPM.ShipmentTypeId.toUpperCase() == "LTL") {
+                myResult = true;
+            }
+        }
+
+        return myResult;
+    }
+
+    public static IsInlandDomestic(entityPM: QuoteOPPM) {
+        var isInlandDomestic = false;
+
+        if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I") {
+            isInlandDomestic = true;
+        }
+
+        return isInlandDomestic;
+    }
+
+    public static RecalculateQuoteFields(entityPM: QuoteOPPM) {
+        if (entityPM != null) {
+            if (entityPM.Ratio == null) {
+                entityPM.Ratio = AppTool.GetRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            }
+
+            if (entityPM.PickupDeliveryRatio == null) {
+                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
+            }
+
+            if (entityPM.QuotePackages.length == 0) {
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.Volume = null;
+                entityPM.VolumetricWeight = null;
+                entityPM.ChargeableWeight = null;
+                entityPM.PickupDeliveryVolumetricWeight = null;
+                entityPM.PickupDeliveryChargeableWeight = null;
+            }           
+
+            else {                
+                var myVolume: number = 0;
+                var myQuantity: number = 0;
+                var myVolumetricWeight: number = 0;
+                var myGrossWeight: number = 0;
+
+                entityPM.QuotePackages.forEach((item) => {
+                    item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+                    item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
+                    if (item.Quantity != null) {
+                        myQuantity += item.Quantity;
+                    }
+
+                    if (item.Volume != null) {
+                        myVolume += item.Volume;
+                    }
+                    
+                    if (item.VolumetricWeight != null) {
+                        myVolumetricWeight += item.VolumetricWeight;
+                    }
+                    if (item.GrossWeight != null) {
+                        myGrossWeight += item.GrossWeight;
+                    }
+                })
+
+                entityPM.Volume = myVolume;
+                entityPM.NumberOfPackages = myQuantity;
+                entityPM.VolumetricWeight = myVolumetricWeight;
+                entityPM.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, entityPM.Volume, entityPM.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode);
+                entityPM.GrossWeight = myGrossWeight;
+                entityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+            }
+        }
+    }
+    public static OnQuoteRatioChanged(entityPM: QuoteOPPM) {
+        if (entityPM) {
+            if (entityPM.Ratio == null) {
+                entityPM.Ratio = AppTool.GetRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            }
+
+            if (entityPM.QuotePackages.length == 0) {
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.Volume = null;
+                entityPM.VolumetricWeight = null;
+                entityPM.ChargeableWeight = null;
+            }
+
+            else {
+                entityPM.QuotePackages.forEach((item) => {
+                    if (item.Volume) {
+                        item.VolumetricWeight = AppTool.GetWeightFromVolume(entityPM.VolumeUnitCode, entityPM.ChargeableWeightUnitCode, item.Volume, entityPM.Ratio);
+                    }
+                });
+
+                entityPM.VolumetricWeight = AppTool.Round(ArrayTool.Sum(entityPM.QuotePackages, "VolumetricWeight"), 3);
+                entityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+            }
+        }
+    }
+    public static OnQuotePickupDeliveryRatioChanged(entityPM: QuoteOPPM) {
+        if (entityPM) {
+            if (entityPM.PickupDeliveryRatio == null) {
+                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
+            }
+
+            if (entityPM.QuotePackages.length == 0) {
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.PickupDeliveryVolumetricWeight = null;
+                entityPM.PickupDeliveryChargeableWeight = null;
+            }
+
+            else {
+                entityPM.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, entityPM.Volume, entityPM.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode);
+                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+            }
+        }
+    }
+    public static CopyQuote(entityPM: QuoteOPPM, copiedEntityPM: QuoteOPPM) {
+        entityPM.DirectionId = copiedEntityPM.DirectionId;
+        entityPM.TransportModeId = copiedEntityPM.TransportModeId;
+        entityPM.ShipmentTypeId = copiedEntityPM.ShipmentTypeId;
+        entityPM.BranchId = copiedEntityPM.BranchId;
+        entityPM.DepartmentId = copiedEntityPM.DepartmentId;
+        entityPM.QuoteTypeCode = copiedEntityPM.QuoteTypeCode;
+        entityPM.IncotermId = copiedEntityPM.IncotermId;
+        entityPM.MoveTypeId = copiedEntityPM.MoveTypeId;
+        entityPM.IsByKG = copiedEntityPM.IsByKG;
+        entityPM.IsByContainer = copiedEntityPM.IsByContainer;
+        entityPM.BaseShipmentNumber = copiedEntityPM.QuoteNumber;
+        //entityPM.IsAutomaticallyClosed = copiedEntityPM.IsAutomaticallyClosed;
+        //entityPM.AutomaticallyCloseDate = copiedEntityPM.AutomaticallyCloseDate;
+        //entityPM.AutomaticallyCloseDays = copiedEntityPM.AutomaticallyCloseDays;
+        entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
+        entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
+        entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
+        entityPM.ChargeableWeightInKG = copiedEntityPM.ChargeableWeightInKG;
+        entityPM.VolumeInCBM = copiedEntityPM.VolumeInCBM;
+        entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
+        entityPM.Ratio = copiedEntityPM.Ratio;
+        entityPM.PickupDeliveryRatio = copiedEntityPM.PickupDeliveryRatio;
+        entityPM.PickupDeliveryVolumetricWeight = copiedEntityPM.PickupDeliveryVolumetricWeight;
+        entityPM.PickupDeliveryChargeableWeight = copiedEntityPM.PickupDeliveryChargeableWeight;
+        entityPM.DimFactor = copiedEntityPM.DimFactor;
+        entityPM.IsDangerous = copiedEntityPM.IsDangerous;
+        entityPM.DescriptionOfGoods = copiedEntityPM.DescriptionOfGoods;
+        entityPM.PackageType1Id = copiedEntityPM.PackageType1Id;
+        entityPM.PackageType2Id = copiedEntityPM.PackageType2Id;
+        entityPM.PackageType3Id = copiedEntityPM.PackageType3Id;
+        entityPM.PackageType4Id = copiedEntityPM.PackageType4Id;
+        entityPM.PackageType5Id = copiedEntityPM.PackageType5Id;
+        entityPM.PackageType1Quantity = copiedEntityPM.PackageType1Quantity;
+        entityPM.PackageType2Quantity = copiedEntityPM.PackageType2Quantity;
+        entityPM.PackageType3Quantity = copiedEntityPM.PackageType3Quantity;
+        entityPM.PackageType4Quantity = copiedEntityPM.PackageType4Quantity;
+        entityPM.PackageType5Quantity = copiedEntityPM.PackageType5Quantity;
+        entityPM.Volume = copiedEntityPM.Volume;
+        entityPM.VolumetricWeight = copiedEntityPM.VolumetricWeight;
+        entityPM.GrossWeight = copiedEntityPM.GrossWeight;
+        entityPM.GrossWeightInKG = copiedEntityPM.GrossWeightInKG;
+        entityPM.GrossWeightPerTon = copiedEntityPM.GrossWeightPerTon;
+        entityPM.ChargeableWeight = copiedEntityPM.ChargeableWeight;
+        entityPM.NumberOfContainers = copiedEntityPM.NumberOfContainers;
+        entityPM.NumberOfPackages = copiedEntityPM.NumberOfPackages;
+        entityPM.ValueOfGoods = copiedEntityPM.ValueOfGoods;
+        entityPM.ValueOfGoodsCurrencyId = copiedEntityPM.ValueOfGoodsCurrencyId;
+        entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
+        entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
+        entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
+        entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
+        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
+        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
+        entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
+        entityPM.ShipmentSubTypeId = copiedEntityPM.ShipmentSubTypeId;
+
+        //entityPM.ShipperId = copiedEntityPM.ShipperId;
+        //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
+        //entityPM.ShipperReference1 = copiedEntityPM.ShipperReference1;
+        //entityPM.ShipperReference2 = copiedEntityPM.ShipperReference2;
+        //entityPM.ShipperNote = copiedEntityPM.ShipperNote;
+        //entityPM.ShipperMainAddressId = copiedEntityPM.ShipperMainAddressId;
+        //entityPM.ShipperPickAddressId = copiedEntityPM.ShipperPickAddressId;
+
+        //entityPM.ConsigneeId = copiedEntityPM.ConsigneeId;
+        //entityPM.ConsigneeContactId = copiedEntityPM.ConsigneeContactId;
+        //entityPM.ConsigneeReference1 = copiedEntityPM.ConsigneeReference1;
+        //entityPM.ConsigneeReference2 = copiedEntityPM.ConsigneeReference2;
+        //entityPM.ConsigneeNote = copiedEntityPM.ConsigneeNote;
+        //entityPM.ConsigneeMainAddressId = copiedEntityPM.ConsigneeMainAddressId;
+        //entityPM.ConsigneePickAddressId = copiedEntityPM.ConsigneePickAddressId;
+
+        //entityPM.FromPort = copiedEntityPM.FromPort;
+        //entityPM.FromPortCountry = copiedEntityPM.FromPortCountry;
+        //entityPM.FromPortId = copiedEntityPM.FromPortId;
+        //entityPM.FromPortName = copiedEntityPM.FromPortName;
+        //entityPM.ToPort = copiedEntityPM.ToPort;
+        //entityPM.ToPortCountry = copiedEntityPM.ToPortCountry;
+        //entityPM.ToPortId = copiedEntityPM.ToPortId;
+        //entityPM.ToPortName = copiedEntityPM.ToPortName;
+
+        entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
+        entityPM.TransitTime = copiedEntityPM.TransitTime;
+        entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
+        entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
+        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;       
+    }
+    public static CopyQuotePackages(entityPM: QuoteOPPM, copiedEntityPM: QuoteOPPM) {
+        copiedEntityPM.QuotePackages.forEach(item => {
+            var newPackage: QuoteOPPackagePM = new QuoteOPPackagePM(null);
+
+            newPackage.Tenant = item.Tenant;
+            newPackage.PackageTypeId = item.PackageTypeId;
+            newPackage.PackageTypeName = item.PackageTypeName;
+            newPackage.Quantity = item.Quantity;
+            newPackage.GrossWeight = item.GrossWeight;
+            newPackage.Volume = item.Volume;
+            newPackage.Height = item.Height;
+            newPackage.Length = item.Length;
+            newPackage.Width = item.Width;
+
+            entityPM.AddQuoteOPPackage(newPackage);
+        });
+    }
+    public static CopyQuoteCharges(entityPM: QuoteOPPM, oldEntityPM: QuoteOPPM, isCopySales: boolean, isCopyCost: boolean) {
+
+        if (entityPM.QuoteCharges.length > 0) {
+            entityPM.QuoteCharges.forEach(itemCharge => {
+                itemCharge.QuoteOPChargePriceSteps.forEach((priceItem) => {
+                    itemCharge.RemoveQuoteOPPriceSteps(priceItem);
+                });
+
+                entityPM.RemoveQuoteOPCharge(itemCharge);
+            });
+        }
+
+        var allVatTypes: VatTypeList[] = VatTypesValidator.GetAllVatTypes();
+
+        oldEntityPM.QuoteCharges.forEach(item => {
+
+            var newChargePM: QuoteOPChargePM = new QuoteOPChargePM(null);
+            newChargePM.Tenant = item.Tenant;
+            newChargePM.ChargesTypeId = item.ChargesTypeId;
+            newChargePM.VendorId = item.VendorId;
+            newChargePM.SaleCurrencyId = item.SaleCurrencyId;
+            newChargePM.CostCurrencyId = item.CostCurrencyId;
+            newChargePM.SaleExchangeRate = item.SaleExchangeRate;
+            newChargePM.CostExchangeRate = item.CostExchangeRate;
+            newChargePM.SaleIsFixedRate = item.SaleIsFixedRate;
+            newChargePM.CostIsFixedRate = item.CostIsFixedRate;
+            newChargePM.SaleMeasurementId = item.SaleMeasurementId;
+            newChargePM.SaleMeasurementCode = item.SaleMeasurementCode;
+            newChargePM.CostMeasurementId = item.CostMeasurementId;
+            newChargePM.CostMeasurementCode = item.CostMeasurementCode;
+            newChargePM.IsAllIN = item.IsAllIN;
+            newChargePM.ViewOrder = item.ViewOrder;
+            newChargePM.UpdateDate = item.UpdateDate;
+            newChargePM.UpdatedByUserId = item.UpdatedByUserId;
+            newChargePM.CostMaxAmount = item.CostMaxAmount;
+            newChargePM.CostMinAmount = item.CostMinAmount;
+            newChargePM.SaleMinAmount = item.SaleMinAmount;
+            newChargePM.SaleMaxAmount = item.SaleMaxAmount;
+            newChargePM.MarkUpValue = item.MarkUpValue;
+            newChargePM.ContainerType1MarkUpValue = item.ContainerType1MarkUpValue;
+            newChargePM.ContainerType2MarkUpValue = item.ContainerType2MarkUpValue;
+            newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
+            newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
+            newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+            newChargePM.MarkUpText = item.MarkUpText;
+            newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+            newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+            newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+            newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+            newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
+            newChargePM.MarkUpTypeCode = "F";
+            newChargePM.ContainerType1MarkUpTypeCode = "F";
+            newChargePM.ContainerType2MarkUpTypeCode = "F";
+            newChargePM.ContainerType3MarkUpTypeCode = "F";
+            newChargePM.ContainerType4MarkUpTypeCode = "F";
+            newChargePM.ContainerType5MarkUpTypeCode = "F";
+            newChargePM.IsChargeBySteps = item.IsChargeBySteps;                       
+            newChargePM.ChargesGroupCode = item.ChargesGroupCode;
+            newChargePM.Notes = item.Notes;
+            if (isCopyCost) {
+                newChargePM.CostUnitPrice = item.CostUnitPrice;
+                newChargePM.CostQuantity = item.CostQuantity;
+                newChargePM.CostUnitPrice1InSaleCurrency = item.CostUnitPrice1InSaleCurrency;
+                newChargePM.CostUnitPrice2InSaleCurrency = item.CostUnitPrice2InSaleCurrency;
+                newChargePM.CostUnitPrice3InSaleCurrency = item.CostUnitPrice3InSaleCurrency;
+                newChargePM.CostUnitPrice4InSaleCurrency = item.CostUnitPrice4InSaleCurrency;
+                newChargePM.CostUnitPrice5InSaleCurrency = item.CostUnitPrice5InSaleCurrency;
+                newChargePM.CostUnitPriceInSaleCurrency = item.CostUnitPriceInSaleCurrency;
+                newChargePM.CostContainerType1UnitPrice = item.CostContainerType1UnitPrice;
+                newChargePM.CostContainerType2UnitPrice = item.CostContainerType2UnitPrice;
+                newChargePM.CostContainerType3UnitPrice = item.CostContainerType3UnitPrice;
+                newChargePM.CostContainerType4UnitPrice = item.CostContainerType4UnitPrice;
+                newChargePM.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
+                newChargePM.CostTotalAmount = item.CostTotalAmount;
+                newChargePM.CostTotalAmountLocal = item.CostTotalAmountLocal;
+                newChargePM.CostAmountInSaleCurrency = item.CostAmountInSaleCurrency;
+            }
+
+            if (isCopySales) {
+                newChargePM.MarkUpValue = item.MarkUpValue;
+                newChargePM.ContainerType1MarkUpValue = item.ContainerType1MarkUpValue;
+                newChargePM.ContainerType2MarkUpValue = item.ContainerType2MarkUpValue;
+                newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
+                newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
+                newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+                newChargePM.MarkUpText = item.MarkUpText;
+                newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+                newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+                newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+                newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+                newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
+                newChargePM.MarkUpTypeCode = item.MarkUpTypeCode;
+                newChargePM.ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode;
+                newChargePM.ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode;
+                newChargePM.ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode;
+                newChargePM.ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode;
+                newChargePM.ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode;
+                newChargePM.SaleUnitPrice = item.SaleUnitPrice;
+                newChargePM.SaleQuantity = item.SaleQuantity;
+                newChargePM.SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice;
+                newChargePM.SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice;
+                newChargePM.SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice;
+                newChargePM.SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice;
+                newChargePM.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;
+
+                if (oldEntityPM.IsChargesByVAT) {
+                    newChargePM.VatTypeId = item.VatTypeId;
+                    newChargePM.VatTypeName = item.VatTypeName;
+                    newChargePM.VatAmount = item.VatAmount;
+                    newChargePM.VatPercentage = item.VatPercentage;
+                    newChargePM.VatIsMultiPercentage = item.VatIsMultiPercentage;
+                    newChargePM.ExternalVATCard = item.ExternalVATCard;
+                }
+
+                newChargePM.SaleTotalAmount = item.SaleTotalAmount;
+                newChargePM.SaleTotalAmountLocal = item.SaleTotalAmountLocal;
+            }
+
+            if (item.IsChargeBySteps) {
+                item.QuoteOPChargePriceSteps.forEach(step => {
+                    var stepItem: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(item);
+
+                    stepItem.Tenant = step.Tenant;
+                    stepItem.CostUnitPrice = step.CostUnitPrice;
+                    stepItem.MarkupValue = step.MarkupValue;
+                    stepItem.SaleUnitPrice = step.SaleUnitPrice;
+                    stepItem.Step = step.Step;
+
+                    newChargePM.AddQuoteOPPriceSteps(stepItem);
+                });
+            }
+
+            entityPM.AddQuoteOPCharge(newChargePM);
+        });
+    }
+
+
+    public static ComputeChargeableWeight(entityPM: QuoteOPPM) {        
+        var myResult = 0;
+        myResult = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+
+        return myResult;
+    }
+    public static ComputeVolumetricWeight(entityPM: QuoteOPPM) {
+        var myResult = 0;
+
+        if (entityPM.Volume != null) {
+            myResult = AppTool.GetWeightFromVolume(entityPM.VolumeUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.Volume, entityPM.Ratio);
+        }
+
+        else if (entityPM.GrossWeight != null) {
+            myResult = AppTool.GetWeightFromWeight(entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.GrossWeight);
+        }
+
+        return myResult;
+    }
+    public static ComputeQuoteTEU(entityPM: QuoteOPPM) {
+        var totalTEU = 0;
+
+        var packageTypeService = new PackageTypeListService();
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PackageType1Id) && entityPM.PackageType1Quantity != null) {
+            packageTypeService.getSingleFromCache(entityPM.PackageType1Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var myPackageTypeList: PackageTypeList = myResponse.Result;
+                    if (myPackageTypeList != null) {
+                        totalTEU = totalTEU + (myPackageTypeList.TEU * entityPM.PackageType1Quantity);
+                    }
+                }
+            });
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PackageType2Id) && entityPM.PackageType2Quantity != null) {
+            packageTypeService.getSingleFromCache(entityPM.PackageType2Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var myPackageTypeList: PackageTypeList = myResponse.Result;
+                    if (myPackageTypeList != null) {
+                        totalTEU = totalTEU + (myPackageTypeList.TEU * entityPM.PackageType2Quantity);
+                    }
+                }
+            });
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PackageType3Id) && entityPM.PackageType3Quantity != null) {
+            packageTypeService.getSingleFromCache(entityPM.PackageType3Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var myPackageTypeList: PackageTypeList = myResponse.Result;
+                    if (myPackageTypeList != null) {
+                        totalTEU = totalTEU + (myPackageTypeList.TEU * entityPM.PackageType3Quantity);
+                    }
+                }
+            });
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PackageType4Id) && entityPM.PackageType4Quantity != null) {
+            packageTypeService.getSingleFromCache(entityPM.PackageType4Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var myPackageTypeList: PackageTypeList = myResponse.Result;
+                    if (myPackageTypeList != null) {
+                        totalTEU = totalTEU + (myPackageTypeList.TEU * entityPM.PackageType4Quantity);
+                    }
+                }
+            });
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.PackageType5Id) && entityPM.PackageType5Quantity != null) {
+            packageTypeService.getSingleFromCache(entityPM.PackageType5Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    var myPackageTypeList: PackageTypeList = myResponse.Result;
+                    if (myPackageTypeList != null) {
+                        totalTEU = totalTEU + (myPackageTypeList.TEU * entityPM.PackageType5Quantity);
+                    }
+                }
+            });
+        }
+
+        return totalTEU;
+    }
+
+    public static BuildShipment(entityPM: QuoteOPPM) {
+        var packageTypeService: PackageTypeListService = new PackageTypeListService();
+
+        var shipmentPM: ShipmentPM = new ShipmentPM();
+
+        shipmentPM.IsBuildFromQuote = true;
+        shipmentPM.Tenant = SessionLocator.Tenant;
+        shipmentPM.TransportModeId = entityPM.TransportModeId;
+        shipmentPM.DirectionId = entityPM.DirectionId;
+        shipmentPM.QuoteId = entityPM.Id;
+        shipmentPM.QuoteNumber = entityPM.QuoteNumber;
+        shipmentPM.DepartmentId = entityPM.DepartmentId;
+        shipmentPM.BranchId = entityPM.BranchId;
+        shipmentPM.IncotermId = entityPM.IncotermId;
+        shipmentPM.SalesmanUserId = entityPM.SalesmanUserId;
+        shipmentPM.EstimateProfitInLocalCurrency = entityPM.EstimateProfit;
+        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
+        shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
+        shipmentPM.ShipmentTypeId = entityPM.ShipmentTypeId;
+        shipmentPM.ValueOfGoods = entityPM.ValueOfGoods;
+        shipmentPM.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
+        shipmentPM.MoveTypeId = entityPM.MoveTypeId;
+        shipmentPM.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
+
+        //Partners
+        shipmentPM.ShipperId = entityPM.ShipperId;
+        shipmentPM.ShipperContactId = entityPM.ShipperContactId;
+        shipmentPM.ShipperName = entityPM.ShipperName;
+        shipmentPM.ShipperNote = entityPM.ShipperNote;
+        shipmentPM.ShipperReference1 = entityPM.ShipperReference1;
+        shipmentPM.ShipperReference2 = entityPM.ShipperReference2;
+
+        shipmentPM.ConsigneeId = entityPM.ConsigneeId;
+        shipmentPM.ConsigneeContactId = entityPM.ConsigneeContactId;
+        shipmentPM.ConsigneeName = entityPM.ConsigneeName;
+        shipmentPM.ConsigneeNote = entityPM.ConsigneeNote;
+        shipmentPM.ConsigneeReference1 = entityPM.ConsigneeReference1;
+        shipmentPM.ConsigneeReference2 = entityPM.ConsigneeReference2;
+
+        shipmentPM.CustomerId = entityPM.CustomerId;
+        shipmentPM.CustomerContactId = entityPM.CustomerContactId;
+        shipmentPM.CustomerReference1 = entityPM.CustomerReference1;
+        shipmentPM.CustomerReference2 = entityPM.CustomerReference2;
+        shipmentPM.CustomerName = entityPM.CustomerName;
+        shipmentPM.CustomerNote = entityPM.CustomerNote;
+
+        if (entityPM.QuoteCustomerTypeCode == "NOT") {
+            shipmentPM.ShipmentCustomerTypeCode = "NT1";
+        }
+
+        else {
+            shipmentPM.ShipmentCustomerTypeCode = entityPM.QuoteCustomerTypeCode;
+        }
+
+        shipmentPM.AgentId = entityPM.AgentId;
+        shipmentPM.AgentName = entityPM.AgentName;
+        shipmentPM.AgentAddressId = entityPM.AgentAddressId;
+        shipmentPM.AgentContactId = entityPM.AgentContactId;
+        shipmentPM.AgentReference1 = entityPM.AgentReference1;
+        shipmentPM.AgentReference2 = entityPM.AgentReference2;
+
+        shipmentPM.Notify1Id = entityPM.NotifyId;
+        shipmentPM.Notify1Name = entityPM.NotifyName;
+        shipmentPM.Notify1AddressId = entityPM.NotifyAddressId;
+        shipmentPM.Notify1ContactId = entityPM.NotifyContactId;
+
+        //Routing
+        shipmentPM.MainCarriageFromPartnerId = entityPM.FromPartnerId;
+        shipmentPM.MainCarriageFromAddressId = entityPM.FromPartnerAddressId;
+        shipmentPM.MainCarriageToPartnerId = entityPM.ToPartnerId;
+        shipmentPM.MainCarriageToAddressId = entityPM.ToPartnerAddressId;
+
+        shipmentPM.MainCarriageFromPortId = entityPM.FromPortId;
+        shipmentPM.MainCarriageToPortId = entityPM.ToPortId;
+        shipmentPM.FromPortId = entityPM.FromPortId;
+        shipmentPM.ToPortId = entityPM.ToPortId;
+        shipmentPM.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
+        shipmentPM.MainCarriageFinalDestinationPortId = entityPM.ToPortId;
+        shipmentPM.MainCarriageETA = entityPM.ETA;
+        shipmentPM.MainCarriageETD = entityPM.ETD;
+
+        //Measurments
+        shipmentPM.VolumeUnitCode = entityPM.VolumeUnitCode;
+        shipmentPM.DimensionsUnitCode = entityPM.DimensionsUnitCode;
+        shipmentPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+        shipmentPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
+        shipmentPM.VolumeInCBM = entityPM.VolumeInCBM;
+        shipmentPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+        shipmentPM.BookingVolume = entityPM.Volume;
+        shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
+        shipmentPM.OrderGrossWeight = entityPM.GrossWeight;
+        shipmentPM.OrderChargeableWeight = entityPM.ChargeableWeight;
+        shipmentPM.OrderGrossWeightEdited = entityPM.GrossWeightEdited;
+        shipmentPM.OrderChargeableWeightEdited = entityPM.ChargeableWeightEdited;
+        shipmentPM.Ratio = entityPM.Ratio;
+        shipmentPM.DimFactor = entityPM.DimFactor;
+        shipmentPM.BookingNumberOfPackages = entityPM.NumberOfPackages;
+        shipmentPM.OrderIsDangerouseGoods = entityPM.IsDangerous;
+        shipmentPM.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+
+        //PickUp Delivery
+        shipmentPM.IncludePickUp = entityPM.IncludePickUp;
+        shipmentPM.FromAddressCity = entityPM.FromAddressCity;
+        shipmentPM.FromAddressZipCode = entityPM.FromAddressZipCode;
+        shipmentPM.FromAddressCountryId = entityPM.FromAddressCountryId;
+        shipmentPM.PickUpAddressId = entityPM.PickUpAddressId;
+        shipmentPM.ShipperMainAddressId = entityPM.ShipperMainAddressId;
+        shipmentPM.ShipperPickAddressId = entityPM.ShipperPickAddressId;
+
+        shipmentPM.IncludeDelivery = entityPM.IncludeDelivery;
+        shipmentPM.ToAddressCity = entityPM.ToAddressCity;
+        shipmentPM.ToAddressZipCode = entityPM.ToAddressZipCode;
+        shipmentPM.ToAddressCountryId = entityPM.ToAddressCountryId;
+        shipmentPM.DeliveryAddressId = entityPM.DeliveryAddressId;
+        shipmentPM.ConsigneeMainAddressId = entityPM.ConsigneeMainAddressId;
+        shipmentPM.ConsigneePickAddressId = entityPM.ConsigneePickAddressId;
+        
+        //Order Packages
+        if (this.IsLCLQuote(entityPM)) {
+            entityPM.QuotePackages.forEach(item => {
+                var newItem: ShipmentOrderPackagePM = new ShipmentOrderPackagePM(shipmentPM);
+
+                packageTypeService.getSingleFromCache(item.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null) {
+                        var myPackageTypeList: PackageTypeList = myResponse.Result;
+                        if (myPackageTypeList != null) {
+                            newItem.PackageTypeName = myPackageTypeList.EnglishName;
+                        }
+                    }
+                });
+
+                newItem.Tenant = SessionLocator.Tenant;
+                newItem.PackageTypeId = item.PackageTypeId;
+                newItem.Quantity = item.Quantity;
+                newItem.GrossWeight = item.GrossWeight;
+                newItem.Volume = item.Volume;
+                newItem.Height = item.Height;
+                newItem.Length = item.Length;
+                newItem.Width = item.Width;
+                newItem.VolumetricWeight = item.VolumetricWeight;             
+                
+                shipmentPM.ShipmentOrderPackages.push(newItem);
+            });
+        }
+
+        else {
+            shipmentPM.Quantity1 = entityPM.PackageType1Quantity;
+            shipmentPM.Quantity2 = entityPM.PackageType2Quantity;
+            shipmentPM.Quantity3 = entityPM.PackageType3Quantity;
+            shipmentPM.Quantity4 = entityPM.PackageType4Quantity;
+            shipmentPM.Quantity5 = entityPM.PackageType5Quantity;
+            shipmentPM.PackageTypeId1 = entityPM.PackageType1Id;
+            shipmentPM.PackageTypeId2 = entityPM.PackageType2Id;
+            shipmentPM.PackageTypeId3 = entityPM.PackageType3Id;
+            shipmentPM.PackageTypeId4 = entityPM.PackageType4Id;
+            shipmentPM.PackageTypeId5 = entityPM.PackageType5Id;
+        }
+
+        return shipmentPM;
+    }
+
+    public static IsPriceCheckVisible(entityPM: QuoteOPPM) {
+        var myResult = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
+        if (featureToggle  != null && FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+            myResult = true;
+        }
+        return myResult;
+    }
+
+}

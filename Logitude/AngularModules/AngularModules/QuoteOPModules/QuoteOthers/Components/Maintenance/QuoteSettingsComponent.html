@@ -1,0 +1,379 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill" *ngIf="IsResourcesReady">
+                <table>
+                    <tr style="height: 180px;">
+                        <td>
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">Copy Fields</td>
+                                                <td style="padding-left: 5px;" class="Label">Fields to Copy</td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+                                    <SectionBody>
+                                        <table>
+                                            <tr>
+
+                                                <!-- Partners -->
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <fieldset class="MediaFill GroupBox">
+                                                            <legend>
+                                                                <span>Partners</span>
+                                                            </legend>
+
+                                                            <div style="top: 10px;">
+                                                                <table>
+
+                                                                    <!-- Shipper -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyShipper'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 16px;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyShipper'" [Checked]="CopyShipper" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Consignee -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyConsignee'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyConsignee'" [Checked]="CopyConsignee" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Agent -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyAgent'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyAgent'" [Checked]="CopyAgent" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Notify -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyNotify'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyNotify'" [Checked]="CopyNotify" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <!-- Routings -->
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <fieldset class="MediaFill GroupBox">
+                                                            <legend>
+                                                                <span>Routings</span>
+                                                            </legend>
+
+                                                            <div style="top: 10px;">
+                                                                <table>
+
+                                                                    <!-- Main Carriage -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyMainCarriage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 16px;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyMainCarriage'" [Checked]="CopyMainCarriage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Pickup -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyPickup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyPickup'" [Checked]="CopyPickup" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Delivery -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyDelivery'" [Checked]="CopyDelivery" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <!-- Charges -->
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <fieldset class="MediaFill GroupBox">
+                                                            <legend>
+                                                                <span>Charges</span>
+                                                            </legend>
+
+                                                            <div style="top: 10px;">
+                                                                <table>
+
+                                                                    <!-- Charges Types -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyChargesTypes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width: 16px;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyChargesTypes'" [Checked]="CopyChargesTypes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Cost -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyChargesCost'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyChargesCost'" [Checked]="CopyChargesCost" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Sale -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'CopyChargesSale'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'CopyChargesSale'" [Checked]="CopyChargesSale" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Rates -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Rates'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [Checked]="CopyExchangeRates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 100px;">
+                        <td>
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">Main Carriage</td>
+                                                <td style="padding-left: 5px;" class="Label">Ability to change Main Carriage when Copying Quote</td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+                                    <SectionBody>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'EditMainCarriage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'EditMainCarriage'" [Checked]="EditMainCarriage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 140px;">
+                        <td>
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">General Settings</td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+                                    <SectionBody>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 170px;">
+                                                    <LogLabel [ObjectFieldName]="'IsSaleAsCostCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <ComboBox [ItemsSource]="SaleCurrencySettings" [Binding]="'Name'" [SelectedItem]="SelectedSaleCurrencySetting" (SelectedItemChanged)="SelectedSaleCurrencySetting = $event"></ComboBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true" [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'QuoteExpirationDays'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'QuoteExpirationDays'" [Text]="QuoteExpirationDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

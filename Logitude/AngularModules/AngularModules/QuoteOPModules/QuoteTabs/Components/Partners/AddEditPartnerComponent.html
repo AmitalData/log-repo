@@ -1,0 +1,421 @@
+
+<style type="text/css">
+    .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
+        color: #6E7172;
+        font-size: 10px;
+        height: 15px;
+        line-height: 15px;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .TemplateSection .Template {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #EBEBEB;
+        border: 1px solid #AAAAAA;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .TemplateSection {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0px 0px 2px 2px rgba(170, 170, 170, 0.7);
+        -moz-box-shadow: 0px 0px 2px 2px rgba(170, 170, 170, 0.7);
+        -webkit-box-shadow: 0px 0px 2px 2px rgba(170, 170, 170, 0.7);
+    }
+
+    .ContactTemplateLabel {
+        width: 60px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 85px;">
+                                    <LogLabel [ObjectFieldName]="DataContext.PartnerIdProperty" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'QuoteOP.S.Partners.Name'"></LogLabel>
+                                </td>
+
+                                <td style="width: 270px;">
+                                    <LogLov [ObjectFieldName]="DataContext.PartnerIdProperty"
+                                            [SelectedValue]="DataContext.PartnerId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="DataContext.CardDependencyProperty1"
+                                            [DependencyFilter1IsList]="DataContext.CardDependencyProperty1IsList"                                            
+                                            [HideAdd]="true"
+                                            [HideAddLink]="true"
+                                            (SelectedItemChanged)="DataContext.PartnerCardList = $event">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DataContext.EditPartnerClicked()" [IsEnabled]="DataContext.EditPartnerIsEnabled"></IconButton>
+                                        <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="DataContext.AddPartnerClicked()" [IsEnabled]="DataContext.IsEditingEnabled"></IconButton>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Reference -->
+                <tr class="FormFieldRow" *ngIf="DataContext.HasReference1 || DataContext.HasReference2">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 85px;">
+                                    <div>
+                                        <LogLabel *ngIf="DataContext.HasReference1" [ObjectFieldName]="DataContext.Reference1Property" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'QuoteOP.S.Partners.Reference1'"></LogLabel>
+                                    </div>
+                                </td>
+
+                                <td style="width: 270px;">
+                                    <div>
+                                        <LogTextBox *ngIf="DataContext.HasReference1" [ObjectFieldName]="DataContext.Reference1Property" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 85px;">
+                                    <div>
+                                        <LogLabel *ngIf="DataContext.HasReference2" [ObjectFieldName]="DataContext.Reference2Property" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'QuoteOP.S.Partners.Reference2'"></LogLabel>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div>
+                                        <LogTextBox *ngIf="DataContext.HasReference2" [ObjectFieldName]="DataContext.Reference2Property" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 7px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Templates -->
+                <tr style="height: 180px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="TemplateSection">
+                                            <div class="MarginAbsolute5">
+                                                <table>
+                                                    <tr style="height: 15px;">
+                                                        <td class="BlueTitle">{{'QuoteOP.S.Partners.Address' | TextCodeTranslationPipe}}</td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td *ngIf="IsAgentPartner" style="width: 300px;">
+                                                                        <LogLov [ObjectFieldName]="DataContext.PartnerAddressIdProperty"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Address'"
+                                                                                [DependencyFilter1Value]="DataContext.PartnerId"
+                                                                                [SelectedValue]="DataContext.AddressId">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td *ngIf="!IsAgentPartner" class="Label">
+                                                                        {{'QuoteOP.S.Partners.MainAddress' | TextCodeTranslationPipe}}
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill">
+                                                                <div class="Template">
+                                                                    <div class="MediaFillAbsolute" style="left: 5px; top: 3px;">
+                                                                        <table *ngIf="DataContext.PartnerAddressList">
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.Name">
+                                                                                <td>
+                                                                                    <div class="MediaFill TextTrimming">
+                                                                                        {{DataContext.PartnerAddressList.Name}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.Address1">
+                                                                                <td>
+                                                                                    <div class="MediaFill TextTrimming">
+                                                                                        {{DataContext.PartnerAddressList.Address1}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.Address2">
+                                                                                <td>
+                                                                                    <div class="MediaFill TextTrimming">
+                                                                                        {{DataContext.PartnerAddressList.Address2}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.City">
+                                                                                <td>
+                                                                                    <div class="MediaFill">
+                                                                                        {{DataContext.AddressCityText}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.CountryName">
+                                                                                <td>{{DataContext.PartnerAddressList.CountryName}}</td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.PhoneNumber">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 30px; font-size: 10px; font-weight: bold;">Tel:</td>
+                                                                                            <td>{{DataContext.PartnerAddressList.PhoneNumber}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerAddressList.FaxNumber">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 30px; font-size: 10px; font-weight: bold;">Fax:</td>
+                                                                                            <td>{{DataContext.PartnerAddressList.FaxNumber}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div style="width: 20px; height: 15px; position:absolute; right: 3px; bottom: 45px;">
+                                                                        <GoogleMapsButton [AddressList]="DataContext.PartnerAddressList"></GoogleMapsButton>
+                                                                    </div>
+
+                                                                    <div *ngIf="DataContext.PartnerAddressList" style="width: 45px; height: 45px; position:absolute; right:7px; bottom: 0px; margin: auto;">
+                                                                        <img [attr.src]="DataContext.PartnerAddressList.CountryCode | CountryFlagPipe" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 15px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="TemplateSection">
+                                            <div class="MarginAbsolute5">
+                                                <table>
+                                                    <tr style="height: 15px;">
+                                                        <td class="BlueTitle">{{'QuoteOP.S.Partners.Contact' | TextCodeTranslationPipe}}</td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 300px;">
+                                                                        <LogLov [ObjectFieldName]="DataContext.PartnerContactIdProperty"
+                                                                                [SelectedValue]="DataContext.ContactId"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Contact'"
+                                                                                [DependencyFilter1Value]="DataContext.PartnerId" [HideLastColumn]="true">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td style="width: 20px;">
+                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="DataContext.AddContact()" [IsEnabled]="DataContext.IsEditingEnabled && DataContext.PartnerId"></IconButton>
+                                                                    </td>
+
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill">
+                                                                <div class="Template">
+                                                                    <div class="MediaFillAbsolute" style="left: 5px; top: 3px;">
+                                                                        <table *ngIf="DataContext.PartnerContactList">
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.EnglishName">
+                                                                                <td>{{DataContext.PartnerContactList.EnglishName}}</td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.Position">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="ContactTemplateLabel">Position:</td>
+                                                                                            <td>{{DataContext.PartnerContactList.Position}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.Email">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="ContactTemplateLabel">Email:</td>
+                                                                                            <td>{{DataContext.PartnerContactList.Email}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.BusinessPhone">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="ContactTemplateLabel">Tel:</td>
+                                                                                            <td>{{DataContext.PartnerContactList.BusinessPhone}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.Mobile">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="ContactTemplateLabel">Mobile:</td>
+                                                                                            <td>{{DataContext.PartnerContactList.Mobile}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="PartnerTemplateRow" *ngIf="DataContext.PartnerContactList.Fax">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="ContactTemplateLabel">Fax:</td>
+                                                                                            <td>{{DataContext.PartnerContactList.Fax}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" id="{{'PartnerCancelbtn' | IdGeneratorPipe}}" (mousedown)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" id="{{'PartnerOKbtn' | IdGeneratorPipe}}" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
