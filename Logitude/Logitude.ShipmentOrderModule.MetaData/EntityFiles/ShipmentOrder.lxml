@@ -29,7 +29,7 @@
   SortingByObjectField="&quot;CreateDate&quot;"
   SortingByDirection="&quot;Descending&quot;"
   InActive="false"
-  IsSaveButtonVisible="true"
+  IsSaveButtonVisible="false"
   IsComposition="false"
   EnableSecurity="true"
   AllowCustomFields="false"
@@ -1910,7 +1910,8 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentOrder&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Card&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -2273,7 +2274,7 @@
     ObjectTableName="&quot;ShipmentOrder&quot;"
     QuerySection="&quot;ShipmentOrder&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
@@ -2359,11 +2360,10 @@
     </ScreenFields>
   </Screen>
   <Screen
-    Name="&quot;Shipment Order General Tab Screen&quot;"
+    Name="&quot;ShipmentOrderGeneralTabScreen&quot;"
     ObjectTableName="&quot;ShipmentOrder&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;ShipmentOrder.GeneralTabScreen&quot;"
     NumberOfColumns="2"
     NumberOfRows="8">
     <ScreenFields>
@@ -2371,82 +2371,82 @@
         Column="0"
         Row="0"
         ObjectFieldName="&quot;OrderNumber&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;TransportModeId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;ShipperId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="2"
-        ObjectFieldName="&quot;ConsigneeId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;IncotermId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;IncotermId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;PONumber&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="4"
-        ObjectFieldName="&quot;PONumber&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;DescriptionofGoods&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="5"
-        ObjectFieldName="&quot;DescriptionofGoods&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;CarrierNumber&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="6"
-        ObjectFieldName="&quot;CarrierNumber&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;CustomsAgentId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="7"
         ObjectFieldName="&quot;SpecialServicesTypeId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;ShipmentTypeId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;ShipperId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;ConsigneeId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="2"
         ObjectFieldName="&quot;AgentId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="3"
         ObjectFieldName="&quot;AccountManagerId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="4"
-        ObjectFieldName="&quot;Master&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;ShipmentTypeId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="5"
-        ObjectFieldName="&quot;House&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="6"
-        ObjectFieldName="&quot;VesselId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;House&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
       <ScreenField
         Column="1"
         Row="7"
-        ObjectFieldName="&quot;CustomsAgentId&quot;"
-        ScreenName="Shipment Order General Tab Screen" />
+        ObjectFieldName="&quot;VesselId&quot;"
+        ScreenName="ShipmentOrderGeneralTabScreen" />
     </ScreenFields>
   </Screen>
   <Tab
