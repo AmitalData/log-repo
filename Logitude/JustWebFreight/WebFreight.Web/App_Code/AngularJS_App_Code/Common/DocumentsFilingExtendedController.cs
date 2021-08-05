@@ -536,10 +536,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             string token = HttpContext.Current.Request.Headers["Token"]; 
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-             
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+             string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-            List<DocumentsFilingPM> myResult = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(shipmentNumber, "", ObjectTableRepository.GetObjectTableByName("Shipment"), "I", tenant);
+            List<DocumentsFilingPM> myResult = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, "", ObjectTableRepository.GetObjectTableByName("Shipment"), "I", tenant);
              
             myResult = myResult.Where(d => d.DocumentId != null && d.HasFile == true).ToList();
             
