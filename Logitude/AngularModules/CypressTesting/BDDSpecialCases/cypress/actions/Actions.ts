@@ -1,4 +1,3 @@
-
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
@@ -89,7 +88,9 @@ function AssertEventTime(expectedEvent: string) {
 function AssertTimeOneOf(text: string) {
   var dateTimeNow = GetTimeZoneDateTime()
   var dateTimeRange = DateTimeRange(dateTimeNow)
-  cy.wait(1000)
+  for (let i = 0; i < 11; i++) {
+    cy.log(dateTimeRange[i])
+  }
   expect(text).to.be.oneOf(dateTimeRange)
 }
 
