@@ -870,16 +870,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    if (!isSetPendingTo901)
-                    {
-                        if (declarationPendingPM_901 != null)
-                        {
-                            declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPendingPM_901.Status = "S";
-                            if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 901 Set as Solved");
-                        }
-                    }
+                    //if (!isSetPendingTo901)
+                    //{
+                    //    if (declarationPendingPM_901 != null)
+                    //    {
+                    //        declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
+                    //        declarationPendingPM_901.Status = "S";
+                    //        if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //        LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 901 Set as Solved");
+                    //    }
+                    //}
                     // Pending 900
                     CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                     CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
