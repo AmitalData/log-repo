@@ -1,16 +1,37 @@
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { Urls } from "../constants/Urls";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
+import { ActivitiesDetails } from "../models/ActivitiesDetails";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import { ActivitySelectors } from "../selectors/ActivitySelectors"
+import { ActivitiesSelectors } from "../selectors/ActivitiesSelectors"
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { Constants } from "../constants/Constants";
+import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
 
 let searchFieldValue = null
 
 export function NavigatesToActivitiesInCRM() {
-    cy.Click(ActivitySelectors.CRM, null)
-    cy.Click(ActivitySelectors.Activities, null)
+    cy.Click(ActivitiesSelectors.CRM, null)
+    cy.Click(ActivitiesSelectors.Activities, null)
+    cy.get(ActivitiesSelectors.NEWACTIVITY).click()
+}
+
+export function FillPhoneCallWizardsFields(activitiesDetails: ActivitiesDetails) {
+    cy.FillLogLov(ActivitiesSelectors.ActivityCustomer, activitiesDetails.Customer, true)
+    cy.FillLogLov(ActivitiesSelectors.ActivityCallWith, activitiesDetails.CallWith, true);
+    FillSubject("PhoneCall_")
+    cy.FillLogTextBox(ActivitiesSelectors.ActivityDescription, activitiesDetails.Description)
+    cy.FillLogLov(ActivitiesSelectors.ActivityPriorityCode, activitiesDetails.PriorityCode, true)
+}
+
+export function FillTaskWizardsFields(activitiesDetails: ActivitiesDetails) {
+    FillSubject("Task_")
+    cy.FillLogTextBox(ActivitiesSelectors.ActivityDescription, activitiesDetails.Description)
+    cy.FillLogLov(ActivitiesSelectors.ActivityPriorityCode, activitiesDetails.PriorityCode, true)
+}
+
+export function FillSubject(activityType: string) {
+    cy.FillLogTextBox(ActivitiesSelectors.ActivitySubject + BaseSelectors.LastElement, activityType + GenerateCurrentDatetimeString("_"))
 }
 
 export function CreateActivity() {
@@ -30,7 +51,7 @@ export function AssertCreateActivity() {
 
 export function SearchActivity() {
     DefineViewsGetByFiltersRequest();
-    cy.FillLogTextBox(ActivitySelectors.SearchTextboxInput, searchFieldValue);
+    cy.FillLogTextBox(ActivitiesSelectors.SearchTextboxInput, searchFieldValue);
 }
 
 function DefineViewsGetByFiltersRequest() {
@@ -43,7 +64,7 @@ export function AssertSearchActivity() {
 
 export function OpenActivity() {
     DefineActivityGetSingleRequest();
-    cy.get(ActivitySelectors.QuickSearchTextBox)
+    cy.get(ActivitiesSelectors.QuickSearchTextBox)
         .within(() => {
             cy.get('ul > li').eq(0).click({ force: true });
         });
@@ -55,7 +76,7 @@ function DefineActivityGetSingleRequest() {
 
 export function AssertOpenActivity() {
     AssertActivityGetSingle();
-    BaseAssertion.AssertElementExist(ActivitySelectors.GeneralEditScreen)
+    BaseAssertion.AssertElementExist(ActivitiesSelectors.GeneralEditScreen)
 }
 
 function AssertActivityGetSingle() {
@@ -64,18 +85,18 @@ function AssertActivityGetSingle() {
 
 export function AddNewNote(note) {
     DefinePutActivityRequest()
-    cy.get(ActivitySelectors.HelperNotesButton).click()
-    cy.get(ActivitySelectors.HelperNotes).type(note)
+    cy.get(ActivitiesSelectors.HelperNotesButton).click()
+    cy.get(ActivitiesSelectors.HelperNotes).type(note)
 }
 
 export function UpdateActivity() {
     DefinePutActivityRequest()
-    cy.Click(ActivitySelectors.SaveButton, null)
+    cy.Click(ActivitiesSelectors.SaveButton, null)
 }
 
 export function MarkAsComplete() {
     DefinePutActivityRequest()
-    cy.get(ActivitySelectors.MarkAsComplete).click()
+    cy.get(ActivitiesSelectors.MarkAsComplete).click()
 }
 
 function DefinePutActivityRequest() {
@@ -87,17 +108,17 @@ export function AssertUpdateActivity() {
 }
 
 export function AssertActivityExistInCorrectList(queryLink: string) {
-    cy.get(ActivitySelectors.Backbutton).click()
+    cy.get(ActivitiesSelectors.Backbutton).click()
     cy.get(queryLink).click()
     DefineViewsGetByFiltersRequest();
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, searchFieldValue);
     AssertSearchActivity()
-    cy.get(ActivitySelectors.Backbutton).click()
+    cy.get(ActivitiesSelectors.Backbutton).click()
 }
 
 export function NavigatesToCopyActivityWizerd() {
-    cy.get(ActivitySelectors.MenuButtons).click()
-    cy.Click(ActivitySelectors.CopyActivity, null)
+    cy.get(ActivitiesSelectors.MenuButtons).click()
+    cy.Click(ActivitiesSelectors.CopyActivity, null)
 }
 
 export function AssertCreateCopyActivity() {
@@ -106,26 +127,26 @@ export function AssertCreateCopyActivity() {
 
 export function ReOpenActivity() {
     DefinePutActivityRequest()
-    cy.get(ActivitySelectors.MenuButtons).click()
-    cy.Click(ActivitySelectors.ReOpenActivity, null)
+    cy.get(ActivitiesSelectors.MenuButtons).click()
+    cy.Click(ActivitiesSelectors.ReOpenActivity, null)
 }
 
 export function CancelActivity() {
     DefinePutActivityRequest()
-    cy.get(ActivitySelectors.MenuButtons).click()
-    cy.Click(ActivitySelectors.CancelActivity, null)
+    cy.get(ActivitiesSelectors.MenuButtons).click()
+    cy.Click(ActivitiesSelectors.CancelActivity, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
 export function AssertCancelledLabelExists() {
-    BaseAssertion.AssertElementExist(ActivitySelectors.CancelledLabel)
-    BaseAssertion.AssertElementTextEqual(ActivitySelectors.CancelledLabel, Constants.Cancelled)
+    BaseAssertion.AssertElementExist(ActivitiesSelectors.CancelledLabel)
+    BaseAssertion.AssertElementTextEqual(ActivitiesSelectors.CancelledLabel, Constants.Cancelled)
 }
 
 export function CompleteActivityFromRecentActivitesList() {
     cy.wait(1000)
     DefineCompleteActivityRequest();
-    cy.get(ActivitySelectors.RecentEntityItem).eq(0).find(ActivitySelectors.Button).click({ force: true });
+    cy.get(ActivitiesSelectors.RecentEntityItem).eq(0).find(ActivitiesSelectors.Button).click({ force: true });
 }
 
 function DefineCompleteActivityRequest() {

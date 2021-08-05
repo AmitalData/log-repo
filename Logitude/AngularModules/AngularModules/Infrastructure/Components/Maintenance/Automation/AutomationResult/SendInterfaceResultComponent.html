@@ -49,7 +49,7 @@
                                             <div style="width:20px"> </div>
                                         </td>
 
-                                        <td>
+                                        <td *ngIf="SendViaSelected && SendViaSelected.Code != 'WEBHOOK'">
                                             <div>
                                                 <table>
                                                     <tr>
@@ -127,6 +127,27 @@
 
                                                         <td style="width:70px">
                                                             <a *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP'" [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()"> FTP Details</a>
+                                                        </td>
+                                                        <td *ngIf="IsCustomerCare && SendViaSelected && SendViaSelected.Code == 'WEBHOOK'">
+                                                            <div>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td class="CellStretched" style="width:35px;vertical-align:central">
+                                                                            <p style="font-size:12px;color:#6E7172"> URL</p>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div style="text-align:left;width:330px;">
+                                                                                <LogTextBox [ObjectFieldName]="'WebHookURL'"
+                                                                                            [NoObjectField]="true"
+                                                                                            [Text]="WebHookURL"
+                                                                                            [DataContext]="DataContext">
+                                                                                </LogTextBox>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </td>
                                                         <td> </td>
                                                     </tr>

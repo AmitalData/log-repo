@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily
 Feature: Single Vat Type fake Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
@@ -35,7 +35,7 @@ Feature: Single Vat Type fake Create, Search and Edit from Maintenance
             | LocalDescription | Local New Description |
         And add vat type percentage
             | PercentageDate | CurrentDate |
-            | Percentage     | 4           |
+            | Percentage     | 0           |
         And fill the following single vat type Accounting details
             | AccountingReceivablesExternalID | Receivables1 |
             | AccountingPayablesExternalID    | Payables1    |

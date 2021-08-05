@@ -356,7 +356,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             else if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
             {
-                if (entityPM.DirectionId == "I")
+                if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
                 {
                     this.CreateTraceEvent("CUCD", entityPM.CustomsClearanceDate);
                 }
@@ -445,7 +445,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
             {
-                if (entityPM.DirectionId == "I")
+                if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
                 {
                     this.CreateTraceEvent("ICUC", entityPM.CustomsClearanceDate);
                 }

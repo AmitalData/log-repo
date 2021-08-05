@@ -40,7 +40,7 @@ export function FillQuoteFields(quoteDetails: QuoteDetails) {
     FillMainCarriagePorts(quoteDetails);
 }
 
-function FillMainFields(quoteDetails: QuoteDetails) {
+export function FillMainFields(quoteDetails: QuoteDetails) {
     FillDirection(quoteDetails.Direction);
     FillTransportMode(quoteDetails.TransportMode);
     FillShipmentType(quoteDetails.ShipmentType, quoteDetails.TransportMode);
@@ -94,7 +94,7 @@ function FillShipperAndConsignee(quoteDetails: QuoteDetails) {
     }
 }
 
-function FillMainCarriagePorts(quoteDetails: QuoteDetails) {
+export function FillMainCarriagePorts(quoteDetails: QuoteDetails) {
     if (!Conditions.IsInlandDomestic(quoteDetails.Direction, quoteDetails.TransportMode)) {
         cy.FillLogLov(QuoteSelectors.QuoteFromPort, quoteDetails.MainCarriageFromPort, false)
         cy.FillLogLov(QuoteSelectors.QuoteToPort, quoteDetails.MainCarriageToPort, false)

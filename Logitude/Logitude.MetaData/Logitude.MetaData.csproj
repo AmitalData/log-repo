@@ -213,6 +213,7 @@
     <None Include="DBScripts\GlobalModel\202105301502_AddContainerStatusesMonitorWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106060833_AddContainerStatusesReceiverWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106081600_AddContainerStatusesConnecterWR.sxml" />
+    <None Include="DBScripts\GlobalModel\202108021331_AddWebHookWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentCreateSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentUpdateSgipmentUpdateBatchService.sxml" />
@@ -529,6 +530,7 @@
     <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
+    <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />

@@ -10,6 +10,9 @@
         public static string LogitudePorts = "ports";
         public static string LogitudeCountries = "countries";
         public static string LogitudeVessels = "vessels";
+        public static string LogitudeCurrencies = "currency";
+        public static string LogitudeEntityStatus = "entitystatus";
+        public static string LogitudeSpecialServicesTypes = "specialservicestype";
         public static string LogitudeContacts = "contacts";
         public static string LogitudeCards = "cards";
         public static string LogitudeDocumentTypes = "documenttypes";

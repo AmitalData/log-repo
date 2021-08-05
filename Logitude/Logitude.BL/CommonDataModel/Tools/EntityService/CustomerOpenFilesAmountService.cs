@@ -64,11 +64,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private  void UpdateGLaccountCardsData(CustomerOpenFilesAmountPM customerOpenFilesAmountPM)
         {
             CustomerPM customer = GetCustomer(customerOpenFilesAmountPM);
-            gLAccountCardDataService = new GLAccountCardDataService(customer.Id, customer.GLAccountId, customer.Tenant);
-            bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
-            if (GlAccountCardDataExists)
+            if (customer.GLAccountId != null)
             {
-                gLAccountCardDataService.UpdateGLaccountCardsData();
+                gLAccountCardDataService = new GLAccountCardDataService(customer.Id, customer.GLAccountId, customer.Tenant);
+                bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
+                if (GlAccountCardDataExists)
+                {
+                    gLAccountCardDataService.UpdateGLaccountCardsData();
+                }
             }
         }
         private  bool CheckIfGlAccountCardDataExists()

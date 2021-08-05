@@ -1,4 +1,4 @@
-@release @all @dev @testing
+@release @all @stable @testing
 Feature: Create, Search, Open and Edit a Quote Template from Maintenance
     The user creates, searches for, opens and edits a quote template from Maintenance Module.
 

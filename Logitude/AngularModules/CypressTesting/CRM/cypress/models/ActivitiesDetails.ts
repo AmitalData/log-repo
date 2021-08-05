@@ -1,4 +1,4 @@
-export interface PhoneCallDetails {
+export interface ActivitiesDetails {
     CallWith: string,
     Subject: string,
     Customer: string,

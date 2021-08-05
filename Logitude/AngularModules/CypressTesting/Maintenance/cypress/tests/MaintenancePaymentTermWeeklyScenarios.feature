@@ -8,8 +8,8 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
         Then a validation message with "Code Field must be less than 4" error should appear
 
     Scenario: Add Payment Term Method Code already exists
-        Given add another payment term code: "Cash"
-        Then this validation message error "Payment Term with Code Cash already exists" should appear
+        Given add another payment term code: "CH"
+        Then this validation message error "Payment Term with Code CH already exists" should appear
 
     Scenario: Create new payment term
         Given a payment term with the following details

@@ -1,4 +1,4 @@
-@smoke @dev @all
+@smoke @stable @all
 Feature: Copy Direct Export Air Shipment
     The user creates a Direct Export Air shipment and copies it.
 
@@ -11,7 +11,7 @@ Feature: Copy Direct Export Air Shipment
             | Shipper              | TestShipperExport |
             | MainCarriageFromPort | LHR               |
             | MainCarriageToPort   | MIA               |
-            | Consignee            | aaa               |
+            | Consignee            | 70005             |
             | DescriptionOfGoods   | toys              |
         When create shipment
         Then the direct should create successfully

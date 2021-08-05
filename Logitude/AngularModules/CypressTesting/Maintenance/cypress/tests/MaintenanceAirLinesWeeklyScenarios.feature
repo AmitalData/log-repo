@@ -1,4 +1,4 @@
-@dev @weekly
+@stable @weekly
 Feature: Airlines Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
@@ -9,11 +9,11 @@ Feature: Airlines Create, Search and Edit from Maintenance
 
     Scenario: Add Airline Code with lenght more than 2
         Given the user navigate air line Wizard
-        When add "123" as air line code
+        When add "12345" as air line code
         Then a validation message with "Code Field must be less than 2" error should appear
 
-    Scenario: Add Airline ICAO with lenght 2
-        When add "12" as air line ICAO
+    Scenario: Add Airline ICAO with lenght 5
+        When add "12345" as air line ICAO
         Then a validation message with "ICAO Field must be less than 3 and more than 3" error should appear
 
     Scenario: Add Airline ICAO already exists
@@ -21,7 +21,7 @@ Feature: Airlines Create, Search and Edit from Maintenance
         Then a validation single error message with "An airline with same ICAO already exists!" should appear
 
     Scenario: Add Airline Prefix with lenght more than 3
-        When add "test" as airline prefix
+        When add "testing" as airline prefix
         Then a validation message with "Prefix Field must be less than 3" error should appear
 
     Scenario: Create new Airline

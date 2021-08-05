@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily
 Feature: Branch fake Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
@@ -39,7 +39,7 @@ Feature: Branch fake Create, Search and Edit from Maintenance
         Then the address should update successfully
 
     Scenario: Edit the Branch
-        Given add "external" to External ID in Accounting Tab
+        Given add new value to External ID in Accounting Tab
         When save branch
         Then the branch should update successfully
         And the following event should appear in events tab

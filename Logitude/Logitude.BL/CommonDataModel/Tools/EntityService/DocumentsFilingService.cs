@@ -363,6 +363,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+
+            RunDocumentPopulateAutomaticDatesService(theEntityPm);
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
             if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
@@ -729,7 +731,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //} 
             UpdateDocumentsFilingMetaDataValuesCollection();
             bool HavingDREL = false;
-           
+
             var OldIsSigned = Poco.IsDigitallySigned;
             var WasRequested = Poco.IsRequested;
 
@@ -805,7 +807,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         // shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
-                            
+
                             if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false) || (entityPM.IsSharedWithCustomer && WasRequested && entityPM.HasFile == true)))
                             {
                                 IQueueService queueservice = new DbQueueService();
@@ -855,15 +857,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
 
-            if (theEntityPm.IsUoloadedField)
-            {
-                DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-               var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-                string objectTableName = OTName != null ? OTName.Name : "";
-                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
-            }
 
-
+            RunDocumentPopulateAutomaticDatesService(theEntityPm);
+            
             if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
@@ -871,9 +867,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-           
-
-
+            
             if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();
@@ -881,13 +875,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 queueservice.Send(new Dictionary<string, string>() { { "EntityId", entityPM.EntityId }, { "Tenant", entityPM.Tenant.ToString() }, { "DocumentTypeCode", entityPM.DocumentTypeCode }, { "SecurityId", entityPM.SecurityId } }, tenant, null, null, null, null);
                 entityPM.IsUpdateSharedDocument = false;
             }
-
-      
+            
             if (addBackupQueue)
             {
                 AddDocumentBackupLog();
             }
+        }
 
+        private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)
+        {
+            if (!theEntityPm.IsUoloadedField)
+                return;
+
+            DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
+            var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
+            string objectTableName = OTName != null ? OTName.Name : "";
+            documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
         }
 
         private string GetEntityDocumentsSearchFields()

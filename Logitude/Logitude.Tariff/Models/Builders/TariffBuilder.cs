@@ -17,7 +17,8 @@ namespace Logitude.Tariff.Models.Builders
             {"A", "AFC"},
             {"Air", "AFC"},
             {"Ocean LCL", "OLC"},
-            {"Ocean FCL", "OFC"}
+            {"Ocean FCL", "OFC"},
+            {"Air Surcharge", "ASC"},
         };
         public TariffBuilder()
         {
@@ -89,6 +90,18 @@ namespace Logitude.Tariff.Models.Builders
             return this;
         }
 
+        public TariffBuilder Surcharge1Id(string surcharge1Id)
+        {
+            _tariff.Surcharge1Id = surcharge1Id;
+            return this;
+        }
+
+        public TariffBuilder Surcharge1UOM(string surcharge1UOM)
+        {
+            _tariff.Surcharge1UOM = surcharge1UOM;
+            return this;
+        }
+
         public TariffPM Build()
         {
             TariffPM result = _tariff;
@@ -112,6 +125,8 @@ namespace Logitude.Tariff.Models.Builders
                 UpdatedByUserId = UserTenant.UserId,
                 ConcurrencyGUID = randomGuid,
                 NewConcurrencyGUID = randomGuid,
+                CreateDate = DateTime.Now,
+                UpdateDate =DateTime.Now,
                 TariffVersions = GetDefaultTariffVersions()
             };
             return this;
@@ -124,8 +139,9 @@ namespace Logitude.Tariff.Models.Builders
                 new TariffVersionPM
                 {
                     Tenant = UserTenant.Tenant,
-                    StartDate = DateTime.Now,
+                    StartDate = null,
                     ExpirationDate =null,
+                    CreateDate =DateTime.Now,
                     Version =1,
                     IsDraft =true,
                     ChangeSetOp ="Insert"

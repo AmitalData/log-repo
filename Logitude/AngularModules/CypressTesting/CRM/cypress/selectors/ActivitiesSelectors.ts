@@ -1,8 +1,10 @@
-export class ActivitySelectors {
+export class ActivitiesSelectors {
     public static readonly CRM = "#GeneralMHCRM"
     public static readonly Activities = "#CRMACT"
     public static readonly NEWACTIVITY = "#NEWACTIVITY"
     public static readonly NEWPHONECALL = "#NEWPHONECALL"
+    public static readonly NEWTASK = "#NEWTASK"
+    public static readonly NEWAPPOINTMENT = "#NEWAPPOINTMENT"
     public static readonly ActivityCallWith = "#Activity_CallWithId"
     public static readonly ActivityCustomer = "#Activity_CustomerId"
     public static readonly ActivitySubject = "input[id^=Activity_Subject]"
@@ -23,10 +25,14 @@ export class ActivitySelectors {
     public static readonly CancelledLabel = ".ShortTitleControl";
     public static readonly RecentEntityItem = "[data-cy='ActivitiesRecentEntityItem']"
     public static readonly Button = ".Button";
+    public static readonly AppointmentCompleteButton = "button[id^=MettingSummaryButton]"
+    public static readonly MettingSummaryRedButton = "[data-cy='MettingSummaryRedButton']"
     public static readonly QuickSearchTextBox = ".LogitudeQuickSearchTextBox";
     public static readonly MyOpenActivitiesList = "[data-cy='MyOpenActivities']"
     public static readonly MyClosedActivitiesList = "[data-cy='MyClosedActivities']"
     public static readonly CancelledActivitiesList = "[data-cy='CancelledActivities']"
     public static readonly PhoneCallFilter = "img[id^=ActivityFilter_CL]"
+    public static readonly TaskFilter = "img[id^=ActivityFilter_TS]"
+    public static readonly AppointmentFilter = "img[id^=ActivityFilter_AP]"
 
 }

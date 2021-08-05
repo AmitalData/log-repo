@@ -108,38 +108,38 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Freight",
                             "Ocean LCL"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Name",
                             "specflow name"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "ContractNumber",
                             "43242312"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Seller",
                             "Maersk lines; INC"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Currency",
                             "EUR"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "StartDate",
                             "2021-07-15"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "ExpirationDate",
                             "2021-07-18"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "FreightCharge",
                             "Ocean Freight"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Notes",
                             "specflow note"});
 #line 5
- testRunner.Given("an ocean LCL freight cost tariff with the following properties", ((string)(null)), table2, "Given ");
+ testRunner.Given("an ocean LCL freight cost tariff with the following properties", ((string)(null)), table3, "Given ");
 #line hidden
 #line 16
  testRunner.When("create ocean LCL freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

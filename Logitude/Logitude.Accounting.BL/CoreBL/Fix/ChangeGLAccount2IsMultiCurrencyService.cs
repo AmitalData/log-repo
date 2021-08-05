@@ -43,15 +43,15 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 string resetLedgerTransaction =
                     //$"update LedgerTransactions set IsReconciled=0,OpenAmountCurrencyId=(select id from Currencies where code='NIS' and tenant = {tenant}),OpenAmount=LocalAmountDebit-LocalAmountCredit where AccountId='{gLAccountId}' and tenant = {tenant}";
                     $"update LedgerTransactions set IsReconciled=0,OpenAmountCurrencyId='{accountingCurrencyId}',OpenAmount=LocalAmountDebit-LocalAmountCredit where AccountId='{gLAccountId}' and tenant = {tenant}";
-                int resetLedgerTransactionRes =  CommandExecuteNonQuery(accountingContext.GetConnection(), resetLedgerTransaction);
+                int resetLedgerTransactionRes =  CommandExecuteNonQuery(AccountingContext.GetContext(tenant).GetConnection(), resetLedgerTransaction);
 
 
                 string deleteAllRecoLines = 
                     $"delete ReconciliationLines where tenant = {tenant} and ReconciliationId in (select id from Reconciliations where tenant = {tenant} and AccountId = '{gLAccountId}')";
-                CommandExecuteNonQuery(accountingContext.GetConnection(), deleteAllRecoLines);
+                CommandExecuteNonQuery(AccountingContext.GetContext(tenant).GetConnection(), deleteAllRecoLines);
                 string deleteAllRecos =
                     $"delete Reconciliations where AccountId = '{gLAccountId}' and tenant = {tenant}";
-                int deleteAllRecosRes =CommandExecuteNonQuery(accountingContext.GetConnection(), deleteAllRecos);
+                int deleteAllRecosRes =CommandExecuteNonQuery(AccountingContext.GetContext(tenant).GetConnection(), deleteAllRecos);
 
 
 
@@ -63,6 +63,8 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 ///update GLAccounts set IsMultiCurrency=1 ,CurrencyId=null,ReconcileMethodCode=0 where id='1-1544136' and tenant = 74
                 gLAccountPm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 gLAccountPm.IsMultiCurrency = true;
+                gLAccountPm.CurrencyId = null;
+                gLAccountPm.CurrencyCode= null;// override fillforeign
                 gLAccountPm.ReconcileMethodCode = ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString();
                 string remark= $"Changed from {gLAccountPm.CurrencyCode} to Multi Currency/n updated {resetLedgerTransactionRes} transaction , deleted {deleteAllRecosRes} reconciliations";
                 gLAccountPm.Change2MultiCurrencyNotes = remark;
@@ -74,7 +76,7 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
 BalanceInForeignCurrency = BalanceInLocalCurrency,
 ForeignBalanceInDue = LocalBalanceInDue
 where Tenant = {tenant} and AccountId = '{gLAccountId}' ";
-                CommandExecuteNonQuery(accountingContext.GetConnection(), fixGLAMoreData);
+                CommandExecuteNonQuery(AccountingContext.GetContext(tenant).GetConnection(), fixGLAMoreData);
 
 
                 accountingContext.SaveChanges();
