@@ -395,22 +395,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
- 
-                DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
-                string error="";
-                DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
+                if (requestParams.RequestName.StartsWith("Export"))
+                {
+                    DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
+                    var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParams);
+                    string error = "";
+                    DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
 
-                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error,user: requestParams.LoggingUserId,isCopy: Convert.ToBoolean( requestParams.LoggingEntityId2));
+                    DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: Convert.ToBoolean(requestParams.LoggingEntityId2));
 
-                XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
- 
 
-                if (declarationPM != null)
-                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+                    if (declarationPM != null)
+                        return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
 
-                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+                }
+                else
+                {
+                    DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                    var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+                    string error = "";
+                    DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
+                    DeclarationPM declarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: Convert.ToBoolean(requestParams.LoggingEntityId2));
+
+                    XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+
+
+                    if (declarationPM != null)
+                        return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+                }
 
             }
 

@@ -312,7 +312,10 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         searchParams.LoggingEntityReference = declarationNumber;
         searchParams.LoggingObjectTableId =  this.ObjectTableName;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-        searchParams.RequestName = "Declaration Request";
+        if (this.EntityPM.Direction == "E")
+            searchParams.RequestName = "Export Declaration Request";
+        else
+            searchParams.RequestName = "Declaration Request";
         searchParams.ResponseName = "Declaration Response";
         searchParams.RequestVIA = SendRequestVIA.DCABatch;
         searchParams.ForcePersonalSign = false;

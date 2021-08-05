@@ -344,6 +344,7 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
