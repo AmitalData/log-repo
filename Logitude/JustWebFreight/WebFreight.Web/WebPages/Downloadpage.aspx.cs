@@ -101,6 +101,7 @@ namespace WebFreight.Web.WebPages
                 string securityId = "";
                 string CustomName = "";
                 string Tenant = Request["tenant"] ?? "";
+                string cardId = Request["cardId"] ?? "";
 
                 SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
@@ -134,7 +135,7 @@ namespace WebFreight.Web.WebPages
 
                     if (overrideSecDueIsConnectedToUniFreight || CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0)
                     {
-                        if (!overrideSecDueIsConnectedToUniFreight && !IsUser(email, (int)tenant)) isValid = false;
+                        isValid = CheckAuthenticationForNoUsers(cardId, isValid, overrideSecDueIsConnectedToUniFreight);
                     }
                     else isValid = false;
                 }
@@ -555,6 +556,24 @@ ExceptionInErrorLog.ToString()
             }
 
         }
+
+        private bool CheckAuthenticationForNoUsers(string cardId, bool isValid, bool overrideSecDueIsConnectedToUniFreight)
+        {
+            if (IsUser(email, (int)tenant))
+                return isValid;
+
+            if (CheckSharedContactAuthenticationByCardId(cardId, (int)tenant))
+            {
+                return true;
+            }
+            else if (!overrideSecDueIsConnectedToUniFreight)
+            {
+                return false;
+            }
+
+            return isValid;
+        }
+
         public string BMKSecurityId;
         public string BMKFileName;
         public string BMKdocumentOutCopyId;
@@ -831,6 +850,42 @@ ExceptionInErrorLog.ToString()
                 isUser = globalContext.GlobalContacts.Where(c => c.Email == email && (c.GlobalTenantId == tenant || c.GlobalTenantId == 0) && c.IsUser == true).Any();
             }
             return isUser;
+        }
+
+        public bool CheckSharedContactAuthenticationByCardId(string cardId, int tenant)
+        {
+            if (tenant == 0)
+                return true;
+
+            bool exists = CheckIfCardContactExistByCardIdAndTenant(cardId, tenant);
+
+            if (!exists)
+            {
+                throw new AutenticationException("Sorry! you are not authorized to read data!");
+            }
+
+            return true;
+
+        }
+
+        private bool CheckIfCardContactExistByCardIdAndTenant(string cardId, int tenant)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+
+            bool exists = false;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactrep = new ContactRepository(commonDataContext);
+            Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == cardId).FirstOrDefault();
+                exists = cardContact != null;
+            }
+
+            return exists;
         }
 
         private string GetReceivedCustomResponseCorrelationDocumentId(string requestComminicationId, string mtenant)
