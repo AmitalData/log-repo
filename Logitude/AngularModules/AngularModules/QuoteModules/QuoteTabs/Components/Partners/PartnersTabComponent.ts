@@ -381,18 +381,18 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {
             case "SHIPR":
-                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
-                break;
             case "CONSI":
-                myResult = this.IsInlandDomestic ? "CS,WH" : myResult;
-                break;
             case "CSTMR":
                 {
                     myResult = "CS,PO";
                     
                     if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
                         myResult = "CS,PO,AG";
-                    }                   
+                    }
+
+                    if (this.IsInlandDomestic) {
+                        myResult = myResult + ",WH";
+                    }
                     break
                 }
 
@@ -425,11 +425,7 @@ export class PartnerItem extends BaseComponent {
 
         switch (this.Code) {   
             case "SHIPR":
-                myResult = this.IsInlandDomestic ? true : myResult;
-                break;
             case "CONSI":
-                myResult = this.IsInlandDomestic ? true : myResult;
-                break;
             case "CSTMR":
             case "NOTFY":
                 {
