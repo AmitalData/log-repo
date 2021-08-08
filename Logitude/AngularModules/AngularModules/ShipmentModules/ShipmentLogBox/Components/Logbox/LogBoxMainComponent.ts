@@ -417,7 +417,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: 'Supplier',
+            Display: this.isPrivateLabel ? 'Supplier / Consignee' : 'Supplier' ,
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -425,8 +425,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
 
         this.QueryColumns.push(
-            this.GetQueryColumn("ShipperName", 'Text', 'Supplier')
+            this.GetQueryColumn("ShipperName", 'Text', this.isPrivateLabel ? 'Supplier / Consignee' : 'Supplier')
         );
+
+        if (this.isPrivateLabel) { 
+            this.DisplayAgentColumn();
+        }
+
 
         if (this.SelectedFilter == "Action Required") {
             this.columns.push({
@@ -587,6 +592,22 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             });
         }
         this.CustomColumnsReady.emit(this.columns);
+    }
+
+    private DisplayAgentColumn() {
+        this.columns.push({
+            FieldName: 'AgentName',
+            DataTypeCode: 'String',
+            Display: 'Agent',
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: "AgentName"
+        });
+
+        this.QueryColumns.push(
+            this.GetQueryColumn("AgentName", 'Text', 'Agent')
+        );
     }
 
     private showComputedStatusDateField() {
