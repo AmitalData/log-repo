@@ -833,7 +833,10 @@ export class SendDeclarationService implements OnDestroy {
         searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
         searchParams.LoggingObjectTableId = this.ObjectTable.Id;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-        searchParams.RequestName = "Amendment Declaration Request";
+        if (this.EntityPM.Direction == "E")
+            searchParams.RequestName = "Export Amendment Declaration Request";
+        else
+            searchParams.RequestName = "Amendment Declaration Request";
         searchParams.ResponseName = "Amendment Declaration Response";
         searchParams.RequestVIA = this.RequestVIA;
         searchParams.ForcePersonalSign = this.ForcePersonalSign;

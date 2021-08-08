@@ -89,7 +89,95 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             return myDeclaretionCorrectionXml;
         }
 
+        public string AnalyzeCorrectionsPointerExport(string currentCorrectionXml, UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.Response response, List<error> systemMessagesList, int tenant, UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg[] referenceListMsg = null)
+        {
+            DeclarationCorrection declarationCorrectionXml = new DeclarationCorrection();
+            if (response == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(currentCorrectionXml))
+            {
+
+                declarationCorrectionXml.GeneralData = new List<General>();
+            }
+            else
+            {
+                byte[] errorsByte = Encoding.UTF8.GetBytes(currentCorrectionXml);
+                MemoryStream memorystream = new MemoryStream(errorsByte);
+                XmlSerializer serializer = new XmlSerializer(typeof(DeclarationCorrection));
+                declarationCorrectionXml = (DeclarationCorrection)serializer.Deserialize(memorystream);
+            }
+
+            //Get General Data
+            _DeclarationCorrection = new General();
+            _DeclarationCorrection.IssueDateTime = response.IssueDateTime;
+            if (response.Declaration != null && response.Declaration.DMExtensions != null && response.Declaration.DMExtensions.VersionID != null)
+            {
+                _DeclarationCorrection.VersionId = response.Declaration.DMExtensions.VersionID.Value;
+            }
+
+            if (response.AdditionalInformation != null)
+            {
+                _DeclarationCorrection.AdditionalInformation = new List<Additional>();
+                foreach (var additionalInformationItem in response.AdditionalInformation)
+                {
+                    //Analyze AdditionalInformation
+                    GetCorrectionAdditionalInformationExport(additionalInformationItem, tenant);
+                }
+            }
+
+            if (referenceListMsg != null)
+            {
+                _DeclarationCorrection.References = new List<Reference>();
+                foreach (var reference in referenceListMsg)
+                {
+                    GetCorrectionReferencesExport(reference, tenant);
+                }
+            }
+
+
+            if (response.Amendment != null)
+            {
+                _DeclarationCorrection.Amendments = new List<Entity>();
+                foreach (var amendmentItem in response.Amendment)
+                {
+                    //Analyze Amendment pointers
+                    GetCorrectionAmendmentExport(amendmentItem);
+                }
+            }
+
+            if (systemMessagesList != null && systemMessagesList.Count > 0)
+            {
+                _DeclarationCorrection.SystemMessages = systemMessagesList;
+            }
+
+            declarationCorrectionXml.GeneralData.Add(_DeclarationCorrection);
+
+            var myDeclaretionCorrectionXml = XmlGenericUtil<DeclarationCorrection>.SerializeObject(declarationCorrectionXml);
+            return myDeclaretionCorrectionXml;
+        }
+
         private void GetCorrectionAdditionalInformation(ResponseAdditionalInformation additionalInformationItem, int tenant)
+        {
+            Additional additionalInfo = new Additional();
+            if (additionalInformationItem.StatementTypeCode != null)
+            {
+                additionalInfo.StatementTypeCode = additionalInformationItem.StatementTypeCode.Value;
+                DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                if (statementTypePM != null)
+                {
+                    additionalInfo.StatementName = statementTypePM.LocalName;
+                }
+            }
+
+            additionalInfo.Content = GetInformationContent(additionalInformationItem.StatementTypeCode.Value, additionalInformationItem.Content.Value, tenant);
+            _DeclarationCorrection.AdditionalInformation.Add(additionalInfo);
+        }
+
+        private void GetCorrectionAdditionalInformationExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAdditionalInformation additionalInformationItem, int tenant)
         {
             Additional additionalInfo = new Additional();
             if (additionalInformationItem.StatementTypeCode != null)
@@ -140,6 +228,52 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             if (referenceListMsg.remarks != null) reference.Remarks = referenceListMsg.remarks;
 
             if (referenceListMsg.referenceInputType != null){
+                reference.RefernceInputType = referenceListMsg.referenceInputType;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            _DeclarationCorrection.References.Add(reference);
+        }
+
+        private void GetCorrectionReferencesExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg referenceListMsg, int tenant)
+        {
+            Reference reference = new Reference();
+            if (referenceListMsg.referenceType != null)
+            {
+                reference.ReferenceType = referenceListMsg.referenceType;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            if (referenceListMsg.referenceStatus != null)
+            {
+                reference.RefernceStatus = referenceListMsg.referenceStatus;
+                //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
+                //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
+                //if (statementTypePM != null)
+                //{
+                //    additionalInfo.StatementName = statementTypePM.LocalName;
+                //}
+            }
+
+
+            if (referenceListMsg.referenceID != null) reference.RefernceID = referenceListMsg.referenceID.ToString();
+
+            if (referenceListMsg.remarks != null) reference.Remarks = referenceListMsg.remarks;
+
+            if (referenceListMsg.referenceInputType != null)
+            {
                 reference.RefernceInputType = referenceListMsg.referenceInputType;
                 //DeclarationStatementTypeQueryService statementTypeQueryService = new DeclarationStatementTypeQueryService(tenant);
                 //DeclarationStatementTypePM statementTypePM = statementTypeQueryService.GetSingle(additionalInformationItem.StatementTypeCode.Value, false, true);
@@ -333,6 +467,188 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
                 if (amendmentItem.AmendmentFieldStatus != null) myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
                 if (amendmentItem.AmendmentRequestInitiatorType != null) myFieldError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
                 if (amendmentItem.FieldAmendmentRejectReasonRemarks != null) myFieldError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
+
+                myFieldError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
+                if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
+                {
+                    myFieldError.MessageError = MessageErrorArray[0];
+                    if (MessageErrorArray.Count() > 1)
+                    {
+                        myFieldError.OldValue = MessageErrorArray[1];
+                        myFieldError.NewValue = MessageErrorArray[2];
+                    }
+                }
+                else
+                {
+                    myFieldError.MessageError = amendmentItem.ChangeReasonCode.name;
+                }
+
+                myFieldError.Fieldcode = myCargoDescription.LogitudeFieldID;
+
+                if (myEntityErrorDetail.FieldErrors == null)
+                {
+                    myEntityErrorDetail.FieldErrors = new List<field>();
+                }
+                myEntityErrorDetail.FieldErrors.Add(myFieldError);
+            }
+
+            if (isNewEntity == true)
+            {
+                _DeclarationCorrection.Amendments.Add(myEntityErrorDetail);
+            }
+        }
+
+        private void GetCorrectionAmendmentExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAmendment amendmentItem)
+        {
+            var myDB = WCO.Instance.CreateDB();
+            int pointerLevelCounter = 0;
+            WCOErrorPointerModel myCargoDescription = new WCOErrorPointerModel();
+            WCOErrorPointerModel.LogitudeEntityEnum lastLogitudeEntity = WCOErrorPointerModel.LogitudeEntityEnum.None;
+            string[] MessageErrorArray = null;
+
+            string myChild1Type = "";
+            string myChild1Sequence = "";
+            string myChild2Type = "";
+            string myChild2Sequence = "";
+            string myChild3Type = "";
+            string myChild3Sequence = "";
+            bool isNewEntity = false;
+
+            if (amendmentItem.Pointer != null)
+            {
+                foreach (var pointerItem in amendmentItem.Pointer)
+                {
+                    //string  NaturalKey = "";
+                    string SequenceNumeric = "0";
+
+                    myCargoDescription = WCO.Instance.CreateDB().GetTagID(pointerLevelCounter, pointerItem.DocumentSectionCode.Value);
+                    myDB = myDB.GetNode(pointerLevelCounter++, pointerItem.DocumentSectionCode.Value);
+                    //lastLogitudeEntity = myCargoDescription.LogitudeEntity;
+
+                    if (pointerItem.TagID != null && !string.IsNullOrEmpty(pointerItem.TagID.Value))
+                    {
+                        myCargoDescription = myDB.GetTagID(pointerLevelCounter, pointerItem.TagID.Value);
+                        bool isContaineLetters = pointerItem.TagID.Value.Any(x => char.IsLetter(x));
+                        if (myCargoDescription == null && isContaineLetters == true)
+                        {
+                            string[] splitWords = pointerItem.TagID.Value.Split('[');
+                            string tagId = splitWords[0];
+                            myCargoDescription = myDB.GetTagID(pointerLevelCounter, tagId);
+                        }
+                    }
+
+                    SequenceNumeric = pointerItem.SequenceNumeric.ToString();
+
+                    if (pointerItem.DMExtensions != null && pointerItem.DMExtensions.NaturalKey != null && pointerItem.DMExtensions.NaturalKey.Value != null)
+                    {
+                        //NaturalKey = pointerItem.DMExtensions.NaturalKey.Value;
+                        SequenceNumeric = pointerItem.DMExtensions.NaturalKey.Value;
+                    }
+
+                    if (myCargoDescription == null) //Temporary treatment until mapping all WCO records
+                    {
+                        myCargoDescription = new WCOErrorPointerModel();
+                        myCargoDescription.LogitudeEntity = WCOErrorPointerModel.LogitudeEntityEnum.None;
+                        myCargoDescription.LogitudeFieldID = "";
+                    }
+
+                    switch (myCargoDescription.LogitudeEntity)
+                    {
+                        case WCOErrorPointerModel.LogitudeEntityEnum.None:
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.Declaration:
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.DeclarationTaxes:
+                            myChild1Type = "DeclarationTaxes";
+                            myChild1Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.Consignment:
+                            myChild1Type = "Consignment";
+                            myChild1Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.ConsignmentPackages:
+                            myChild2Type = "ConsignmentPackages";
+                            myChild2Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.ConsignmentInternalTransitions:
+                            myChild2Type = "ConsignmentInternalTransitions";
+                            myChild2Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment:
+                            myChild1Type = "SupplierInvoice";
+                            myChild1Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.CustomsValuation:
+                            myChild2Type = "SupplierInvoiceModifications";
+                            myChild2Sequence = SequenceNumeric;
+                            break;
+                        case WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem:
+                            myChild2Type = "SupplierInvoiceItem";
+                            myChild2Sequence = SequenceNumeric;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            Entity myEntityErrorDetail = FindEntityinList(myChild1Type, myChild1Sequence, myChild2Type, myChild2Sequence, myChild3Type, myChild3Sequence);
+            if (myEntityErrorDetail == null)
+            {
+                myEntityErrorDetail = new Entity();
+                myEntityErrorDetail.Child1Type = myChild1Type;
+                myEntityErrorDetail.Child1Sequence = myChild1Sequence;
+                myEntityErrorDetail.Child2Type = myChild2Type;
+                myEntityErrorDetail.Child2Sequence = myChild2Sequence;
+                myEntityErrorDetail.Child3Type = myChild3Type;
+                myEntityErrorDetail.Child3Sequence = myChild3Sequence;
+                isNewEntity = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(amendmentItem.ChangeReasonCode.name))
+            {
+                MessageErrorArray = amendmentItem.ChangeReasonCode.name.Split('|');
+            }
+
+            if (myCargoDescription.LogitudeFieldID == null || myCargoDescription.LogitudeFieldID == "")
+            {
+                //Add New Entity Error
+                var myEntityError = new error();
+                //if (amendmentItem.AmendmentFieldStatus != null) myEntityError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                //if (amendmentItem.AmendmentRequestInitiatorType != null) myEntityError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+                //if (amendmentItem.FieldAmendmentRejectReasonRemarks != null) myEntityError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
+
+                myEntityError.Code = amendmentItem.ChangeReasonCode.Value;
+                myEntityError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
+                if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
+                {
+                    myEntityError.MessageError = MessageErrorArray[0];
+                    if (MessageErrorArray.Count() > 1)
+                    {
+                        myEntityError.OldValue = MessageErrorArray[1];
+                        myEntityError.NewValue = MessageErrorArray[2];
+                    }
+                }
+                else
+                {
+                    myEntityError.MessageError = amendmentItem.ChangeReasonCode.name;
+                }
+
+                if (myEntityErrorDetail.EntityErrors == null)
+                {
+                    myEntityErrorDetail.EntityErrors = new List<error>();
+                }
+                myEntityErrorDetail.EntityErrors.Add(myEntityError);
+            }
+            else
+            {
+                //Add New Fields Error
+                var myFieldError = new field();
+                myFieldError.Code = amendmentItem.ChangeReasonCode.Value;
+                //myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                //if (amendmentItem.AmendmentFieldStatus != null) myFieldError.AmendmentFieldStatus = amendmentItem.AmendmentFieldStatus.ToString();
+                //if (amendmentItem.AmendmentRequestInitiatorType != null) myFieldError.AmendmentRequestInitiatorType = amendmentItem.AmendmentRequestInitiatorType.ToString();
+                //if (amendmentItem.FieldAmendmentRejectReasonRemarks != null) myFieldError.FieldAmendmentRejectReasonRemarks = amendmentItem.FieldAmendmentRejectReasonRemarks.ToString();
 
                 myFieldError.ListVersionID = amendmentItem.ChangeReasonCode.listVersionID;
                 if (MessageErrorArray != null && MessageErrorArray.Count() > 0)
