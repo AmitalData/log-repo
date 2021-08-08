@@ -67,7 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                SetSearchEventForMixPanel(searchKey, tenant, shipments);
+                CreateSearchEventForMixPanel(searchKey, tenant, shipments);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
@@ -80,7 +80,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        private static void SetSearchEventForMixPanel(string searchKey, int tenant, List<CargoTrackingShipmentList> shipments)
+        private static void CreateSearchEventForMixPanel(string searchKey, int tenant, List<CargoTrackingShipmentList> shipments)
         {
             if (searchKey != null)
             {
@@ -123,7 +123,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 };
 
-                SetZoomEventForMixPanel(tenant, shipment);
+                CreateZoomEventForMixPanel(tenant, shipment);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
 
@@ -136,7 +136,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        private static void SetZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment)
+        private static void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment)
         {
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
 
@@ -160,7 +160,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
                 CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
 
-                SetSearchEventForMixPanel(shipmentFilters.SearchText, shipmentFilters.Tenant, response.Shipments);
+                CreateSearchEventForMixPanel(shipmentFilters.SearchText, shipmentFilters.Tenant, response.Shipments);
             
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 

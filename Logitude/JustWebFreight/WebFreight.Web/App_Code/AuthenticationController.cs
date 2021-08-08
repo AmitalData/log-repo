@@ -1535,7 +1535,7 @@ namespace WebFreight.Web
                 //        Thread.Sleep(sleepTime);
                 //    }
                 //}
-                SetLoginEventForMixPanel(parameters, user);
+                CreateLoginEventForMixPanel(parameters, user);
 
                 return user;
             }
@@ -1550,15 +1550,14 @@ namespace WebFreight.Web
             }
         }
 
-        private static void SetLoginEventForMixPanel(LoginParameters parameters, UserData user)
+        private static void CreateLoginEventForMixPanel(LoginParameters parameters, UserData user)
         {
-            if (parameters.IsCargoTracking)
-            {
-                MixPanelEvent LoginEvent = BuildMixPanelLoginEvent();
+            if (!parameters.IsCargoTracking){ return; }
+            MixPanelEvent LoginEvent = BuildMixPanelLoginEvent();
 
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, user.Tenant);
-                eventTracker.TrackEvent(LoginEvent);
-            }
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, user.Tenant);
+            eventTracker.TrackEvent(LoginEvent);
+            
         }
         private static MixPanelEvent BuildMixPanelLoginEvent()
         {
