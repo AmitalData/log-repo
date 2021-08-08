@@ -152,6 +152,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     CustomData.VersionId = VersionId[0].InnerText;
                 }
+
+                XmlNodeList CargoIdentifier1 = xmldoc.GetElementsByTagName("mishgor-manifest");
+                if (CargoIdentifier1[0] != null)
+                {
+                    CustomData.CargoIdentifier1 = CargoIdentifier1[0].InnerText;
+                }
+
+                XmlNodeList CargoIdentifier2 = xmldoc.GetElementsByTagName("mishgor-ident_num");
+                if (CargoIdentifier2[0] != null)
+                {
+                    CustomData.CargoIdentifier2 = CargoIdentifier2[0].InnerText;
+                }
+
+                XmlNodeList CargoIdentifier3 = xmldoc.GetElementsByTagName("mishgor-hawb");
+                if (CargoIdentifier3[0] != null)
+                {
+                    CustomData.CargoIdentifier3 = CargoIdentifier3[0].InnerText;
+                }
+
                 ////////////////////////////////////
 
                 XmlNodeList TaxDetailsList = xmldoc.GetElementsByTagName("tax");
