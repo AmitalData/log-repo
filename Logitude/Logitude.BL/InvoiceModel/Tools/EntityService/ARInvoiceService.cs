@@ -3701,7 +3701,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                          journalLine = new JournalLinePM();
                         int counter = 1;
                         List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                            group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                            group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate, d.ValueDate } into g
                                                             select new JournalLinePM()
                                                             {
                                                                 Tenant = tenant,
@@ -3712,7 +3712,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 Line = ++counter,
                                                                 DocumentDate = theEntityPm.InvoiceDate.Value,
                                                                 AccountingDate = theEntityPm.InvoiceDate.Value,
-                                                                DueDate = theEntityPm.DueDate.Value,
+                                                                DueDate = g.Key.ValueDate == null ? theEntityPm.DueDate.Value : (DateTime)g.Key.ValueDate,
                                                                 LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
                                                                 CurrencyId = g.Key.ForiegnCurrencyId,
                                                                 ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
