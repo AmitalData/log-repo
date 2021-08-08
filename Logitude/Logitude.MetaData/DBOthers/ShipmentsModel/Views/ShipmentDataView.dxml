@@ -6,7 +6,7 @@ CREATE VIEW [dbo].[ShipmentDataView]
 AS
 SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, dbo.shipments.SLAC,
-                         dbo.ShipmentMasterDatas.MainCarriageFromPortId, dbo.ShipmentMasterDatas.MainCarriageToPortId, dbo.Shipments.FirstARInvoiceApprovalDate,
+                         dbo.Shipments.FirstARInvoiceApprovalDate,
 						 dbo.Shipments.LastFinalDestination, [dbo].[Shipments].[From], [dbo].[Shipments].[To], dbo.Shipments.Origin, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,
 						 dbo.Shipments.ExceptionDescription,dbo.Shipments.ValueOfGoodsCurrencyId,dbo.Shipments.ExceptionDate, dbo.Shipments.HasException, dbo.Shipments.IsManifestSentToAgent, dbo.Shipments.ManifestLastSharingDate,
 						 dbo.Shipments.AgentSharedManifestRef , dbo.Shipments.ExceptionResolvedDescription,dbo.Shipments.LastExceptionDescription, dbo.Shipments.OperationalDate, dbo.ShipmentMasterDatas.CutoffDate,
@@ -275,8 +275,10 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusLocation ELSE dbo.Shipments.StatusLocation END ELSE dbo.Shipments.StatusLocation END AS StatusLocation, 
 						CASE WHEN ('A' = dbo.Shipments.TransportModeId) THEN CASE WHEN (( NOT ((AirlinePrefix IS NULL) OR ((LEN(AirlinePrefix)) = 0))) AND ( NOT ((Master IS NULL) OR ((LEN(Master)) = 0)))) THEN CASE WHEN (AirlinePrefix IS NULL) THEN N'' ELSE AirlinePrefix END + N'-' + CASE WHEN (Master IS NULL) THEN N'' ELSE Master END ELSE N'' END ELSE Master END AS LongMaster, 
 						CAST( MissingDocumentsCount AS nvarchar(max)) + N' Missing' AS MissingDocumentsCountWords, 
-						CASE WHEN (IsOperationalClosed = 1) THEN N'Archived' ELSE N'' END AS ArchivedText
-						
+						CASE WHEN (IsOperationalClosed = 1) THEN N'Archived' ELSE N'' END AS ArchivedText,
+						CASE WHEN ((dbo.Shipments.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN dbo.Shipments.FromPortId ELSE dbo.ShipmentMasterDatas.MainCarriageFromPortId END AS MainCarriageFromPortId,
+            CASE WHEN ((dbo.Shipments.ShipmentLevelCode = 'H') AND (MasterShipmentDataId IS NULL)) THEN dbo.Shipments.ToPortId ELSE dbo.ShipmentMasterDatas.MainCarriageToPortId END AS MainCarriageToPortId
+            
 						--CASE WHEN (dbo.Shipments.TransportModeId = 'I' AND dbo.Shipments.DirectionId = 'D') THEN MainCarriageFromAddressesStates.EnglishName
 						--ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = 'H' AND dbo.Shipments.MasterShipmentDataId is null) THEN FromPortsStates.EnglishName
 						--ELSE MainCarriageFromPortsStates.EnglishName END) END AS MainCarriageFromState,
