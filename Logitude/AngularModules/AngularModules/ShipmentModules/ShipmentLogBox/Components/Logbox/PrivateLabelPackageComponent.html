@@ -151,27 +151,27 @@
 								<tr>
 									<td style="width: 1px; padding-left: 20px;">
 										<div class="TabSummaryValue">{{BookingNumberOfPackages | NumbersPipe:'N0'}}</div>
-										<div class="TabSummaryLabel">Number of Packages</div>
+										<div class="TabSummaryLabel">{{'Shipment.F.BookingNumberOfPackages.Short' | TextCodeTranslationPipe}}</div>
 									</td>
 
 									<td style="width: 1px; padding-left: 20px;">
 										<div class="TabSummaryValue">{{OrderGrossWeight | NumbersPipe:'N3'}}</div>
-										<div class="TabSummaryLabel">Gross Weight (KG)</div>
+										<div class="TabSummaryLabel">{{GrossWeightLabel}}</div>
 									</td>
 
 									<td style="width: 1px; padding-left: 20px;">
 										<div class="TabSummaryValue">{{BookingVolume | NumbersPipe:'N3'}}</div>
-										<div class="TabSummaryLabel">Volume(CBM)</div>
+										<div class="TabSummaryLabel">{{VolumeLabel}}</div>
 									</td>
 
 									<td style="width: 1px; padding-left: 20px;">
 										<div class="TabSummaryValue">{{OrderVolumetricWeight | NumbersPipe:'N3'}}</div>
-										<div class="TabSummaryLabel">Volumetric Weight(KG)</div>
+										<div class="TabSummaryLabel">{{VolumetricWeightLabel}}</div>
 									</td>
 
 									<td style="width: 1px; padding-left: 20px;">
 										<div class="TabSummaryValue">{{OrderChargeableWeight | NumbersPipe:'N3'}}</div>
-										<div class="TabSummaryLabel">Chargeable Weight(KG)</div>
+										<div class="TabSummaryLabel">{{ChargeableWeightLabel}}</div>
 									</td>
 
 									<td>
