@@ -200,6 +200,8 @@ h1{
     -ms-user-select: none;
     user-select: none;
     background: white;
+
+    display: flex;
 }
 
 .web-header .logo-wrapper {
