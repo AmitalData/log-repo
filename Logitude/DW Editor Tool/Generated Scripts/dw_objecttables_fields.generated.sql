@@ -1081,6 +1081,15 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesInvoiceLineLocalDescriptionNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineLocalDescriptionNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineLocalDescriptionNewId,0,'Fact_Charges','[Invoice Line Local Description]','Invoice Line Local Description','nText','false',0,250,'false','false','true','Charges','false','false','false','false','false')  
+declare @Fact_ChargesExpectedPayableAmountinLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesExpectedPayableAmountinLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesExpectedPayableAmountinLocalNewId,0,'Fact_Charges','[Expected Payable Amount in Local]','Expected Payable Amount in Local','Decimal','false',0,0,'false','false','true','Money','false','false','false','ShipmentPayable.ExpectedAmountLocal','false','false')  
+declare @Fact_ChargesExpectedPayableAmountinProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesExpectedPayableAmountinProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesExpectedPayableAmountinProfitNewId,0,'Fact_Charges','[Expected Payable Amount in Profit]','Expected Payable Amount in Profit','Decimal','false',0,0,'false','false','true','Money','false','false','false','ShipmentPayable.ExpectedAmountInProfitCurrency','false','false')  
+declare @Fact_ChargesExpectedPayableAmountNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesExpectedPayableAmountNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesExpectedPayableAmountNewId,0,'Fact_Charges','[Expected Payable Amount]','Expected Payable Amount','Decimal','false',0,0,'false','false','true','Money','false','false','false','ShipmentPayable.ExpectedAmount','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 
