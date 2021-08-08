@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentReceivablePM> MapPocoToPM(IQueryable<ShipmentReceivable> iQueryable)
         {
-            List<ShipmentReceivablePM> myResult = (from a in iQueryable.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentReceivableLineStatus").Include("Shipment")
+            List<ShipmentReceivablePM> myResult = (from a in iQueryable.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentReceivableLineStatus").Include("Shipment").Include("CreatedByUser.Contact").Include("UpdateByUser.Contact")
                                                    select new ShipmentReceivablePM()
                                                    {
                                                        Quantity = a.Quantity,
@@ -101,6 +101,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
                                                        VatAmountProfit = a.VatAmountProfit,
                                                        VatAmountLocal = a.VatAmountLocal,
+                                                       CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                                                       UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
                                                    }).ToList();
             return myResult;
         }
@@ -108,7 +110,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentReceivablePM GetSinglePM(string id, int tenant)
         {
             ShipmentReceivablePM myResult
-                = (from a in repository.context.ShipmentReceivables.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentReceivableLineStatus").Include("Shipment")
+                = (from a in repository.context.ShipmentReceivables.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentReceivableLineStatus").Include("Shipment").Include("CreatedByUser.Contact").Include("UpdateByUser.Contact")
                    where a.Id == id && a.Tenant == tenant
                    select new ShipmentReceivablePM()
                    {
@@ -162,6 +164,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
                        VatAmountProfit = a.VatAmountProfit,
                        VatAmountLocal = a.VatAmountLocal,
+                       CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                       UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
                    }).FirstOrDefault();
 
             return myResult;

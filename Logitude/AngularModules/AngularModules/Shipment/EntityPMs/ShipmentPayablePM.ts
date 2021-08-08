@@ -143,6 +143,11 @@ export class ShipmentPayablePM {
     public set UpdateByUserId(newValue: string) { if (this.updateByUserId != newValue) { this.updateByUserId = newValue; this.MarkAsDirty("UpdateByUserId"); } }
        
 	 
+    private updateByUserName: string;
+    public get UpdateByUserName() { return this.updateByUserName; }
+    public set UpdateByUserName(newValue: string) { if (this.updateByUserName != newValue) { this.updateByUserName = newValue; this.MarkAsDirty("UpdateByUserName"); } }
+       
+	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
@@ -216,6 +221,11 @@ export class ShipmentPayablePM {
     private createdByUserId: string;
     public get CreatedByUserId() { return this.createdByUserId; }
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
+       
+	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
        
 	 
     private accountedAmount: number;
