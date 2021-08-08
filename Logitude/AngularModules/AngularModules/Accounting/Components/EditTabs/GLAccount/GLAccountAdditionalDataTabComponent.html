@@ -79,7 +79,7 @@
                     <ng-template let-item>
                     <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
                         <div *ngIf="!IsConnectedWithExistGLAccount(item.DisplayNumber)" style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
-                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event)"></LogCheckBox>
+                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event,item.BalanceInLocalCurrency)"></LogCheckBox>
                         </div>
 
 
