@@ -4223,6 +4223,19 @@
     FeatureDefaultText="&quot;Request Sheets&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Search Reasult&quot;"
+    TabLocalName="&quot;תוצאות בדיקה&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    Code="&quot;ANPC&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.PhysicalCheckAvailableTimesControl&quot;"
+    TextCode="&quot;Customs.PhysicalCheck.TH.Answer&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsPhysicalCheck/Components/EditTabs/SearchReasult/PhysicalCheckSearchReasultTabComponent&quot;"
+    HtmlComponentName="&quot;PhysicalCheckSearchReasultTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;PCI&quot;"

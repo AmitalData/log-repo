@@ -1,9 +1,15 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.Security;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.MessagingServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -66,5 +72,43 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+
+
+        public HttpResponseMessage PostAnswerPhysicalCheck(GenericRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                //PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
+                //PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
+                //if (physicalCheckPM != null)
+                //{
+                //    INF_MSG_GenericResponseData responseData = null;
+                //    GenericRequestParams requestParamsData = new GenericRequestParams();
+                //    requestParamsData.AppicationId = physicalCheckPM.DeclarationId;
+                //    requestParamsData.LoggingEntityId =  physicalCheckId;
+                //    requestParamsData.LoggingEntityId2 = physicalCheckPM.DeclarationId;
+                //requestParamsData.LoggingUserId = authToken.
+                    // use messageing servicephysicalCheckPM
+                    var service = new SaveCH_MSG_195_SearchResultsMessagingService();
+                  var  responseData = service.Send(requestParamsData);
+                    return Request.CreateResponse(HttpStatusCode.OK, responseData);
+               // }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

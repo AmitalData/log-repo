@@ -12,15 +12,15 @@ using UnifreightIIG.Common.SearchResultsServiceReference;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class SaveCH_MSG_195_SearchResultsRequestService : RequestServiceBase<CH_NG_195_MSG6_SearchResults, RequestParamsBase>
+    public class SaveCH_MSG_195_SearchResultsRequestService : RequestServiceBase<CH_NG_195_MSG6_SearchResults, GenericRequestParams>
     {
 
-        public override void OnRequestFail(RequestParamsBase requestParams)
+        public override void OnRequestFail(GenericRequestParams requestParams)
         {
             base.OnRequestFail(requestParams);
         }
 
-        public override CH_NG_195_MSG6_SearchResults GetRequest(RequestParamsBase requestParams)
+        public override CH_NG_195_MSG6_SearchResults GetRequest(GenericRequestParams requestParams)
         {
             var cH_NG_195_MSG6_SearchResults = new CH_NG_195_MSG6_SearchResults();
             cH_NG_195_MSG6_SearchResults.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
@@ -31,40 +31,27 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             cH_NG_195_MSG6_SearchResults.GeneralDetails = new CH_NG_195_MSG6_SearchResultsGeneralDetails();
 
-            cH_NG_195_MSG6_SearchResults.GeneralDetails.searchReasult = physicalCheck.
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.searchReasult = Convert.ToInt32( physicalCheck.SearchResult);
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.SealNumber = physicalCheck.SealNumber;
+            if(string.IsNullOrEmpty(physicalCheck.CheckAuthorityAttenderTypeID))
+            {
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CheckAuthorityAttenderTypeID = Convert.ToInt32(physicalCheck.CheckAuthorityAttenderTypeID);
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CheckAuthorityAttenderTypeIDSpecified = true;
+            }
+
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.CheckAuthorityAttenderTypeName = physicalCheck.CheckAuthorityAttenderTypeName;
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.declarationID = physicalCheck.DeclarationNo;
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.checkId = Convert.ToInt32(physicalCheck.CheckId);
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.checkIdSpecified = true;
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationID;
-            this.MyRequestSheetParam.CustomFileNo = requestParams.CustomFileNo;
-            this.MyRequestSheetParam.RequestDescription = "בקשה לעדכון סגרים";
+            this.MyRequestSheetParam.EntityId1 = physicalCheck.DeclarationId;
+            this.MyRequestSheetParam.CustomFileNo = physicalCheck.CustomFileNo;
+            this.MyRequestSheetParam.RequestDescription = "תשובה לבדיקה פיזית";
 
             return cH_NG_195_MSG6_SearchResults;
         }
 
-        private SE_NG_6001_MSG01_SealUpdateMessageUpdatedSeals[] GetUpdatedSealsList(CargoSealsRequestParams requestParams)
-        {
-            List<SE_NG_6001_MSG01_SealUpdateMessageUpdatedSeals> myCargoSealDetailsList = new List<SE_NG_6001_MSG01_SealUpdateMessageUpdatedSeals>();
-            foreach (var sealItem in requestParams.CargoSealList)
-            {
-                SE_NG_6001_MSG01_SealUpdateMessageUpdatedSeals myCargoSealDetails = new SE_NG_6001_MSG01_SealUpdateMessageUpdatedSeals();
-                myCargoSealDetails.remarks = sealItem.Remarks;
-                int sealCompletenessState = 0;
-                int.TryParse(sealItem.SealCompletenessStateCode, out sealCompletenessState);
-                myCargoSealDetails.sealCompletenessState = sealCompletenessState;
-                myCargoSealDetails.sealNumber = sealItem.SealNumber;
-                int sealType = 0;
-                int.TryParse(sealItem.SealTypeCode, out sealType);
-                myCargoSealDetails.sealType = sealType;
-                int updateReason = 0;
-                int.TryParse(sealItem.UpdateReasonCode, out updateReason);
-                myCargoSealDetails.updateReason = updateReason;
-                int updateType = 0;
-                int.TryParse(sealItem.UpdateTypeCode, out updateType);
-                myCargoSealDetails.updateType = updateType;
-                myCargoSealDetailsList.Add(myCargoSealDetails);
-            }
-            return myCargoSealDetailsList.ToArray();
-        }
-    }
+     }
 }

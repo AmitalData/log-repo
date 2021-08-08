@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "4ab803ff81725a3a15031b2cf7440833";
+		public const string HashString = "f91cd2e636b2f58a7f1e785549ee11cb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3295,6 +3295,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode PhysicalCheckRequestSheetsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "גיליון בקשה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PhysicalCheckRequestSheetsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
+ 
+                 
+			   TextCode PhysicalCheckSearchReasultTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Answer", DefaultText = "Search Reasult",LocalDefaultText = "תוצאות בדיקה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature PhysicalCheckSearchReasultFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Tab.SearchReasult", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ANPC", NameTextCodeDefaultText = "Search Reasult", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3307,6 +3311,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PHCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PhysicalCheckCommunicationsFeature_TH2.Id,FeatureUniqeCode = PhysicalCheckCommunicationsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = PhysicalCheckObjectTable.Id, TabNameTextCodeId = PhysicalCheckCommunicationsTextCode_TH2.Id, TabNameTextCodeCode = PhysicalCheckCommunicationsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PHRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = PhysicalCheckRequestSheetsFeature_TH3.Id,FeatureUniqeCode = PhysicalCheckRequestSheetsFeature_TH3.FeatureUniqeCode, ControlPath = " ", ObjectTableId = PhysicalCheckObjectTable.Id, TabNameTextCodeId = PhysicalCheckRequestSheetsTextCode_TH3.Id, TabNameTextCodeCode = PhysicalCheckRequestSheetsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ANPC",HtmlComponentName = "PhysicalCheckSearchReasultTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsPhysicalCheck/Components/EditTabs/SearchReasult/PhysicalCheckSearchReasultTabComponent", FeatureId = PhysicalCheckSearchReasultFeature_TH4.Id,FeatureUniqeCode = PhysicalCheckSearchReasultFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.PhysicalCheckAvailableTimesControl", ObjectTableId = PhysicalCheckObjectTable.Id, TabNameTextCodeId = PhysicalCheckSearchReasultTextCode_TH4.Id, TabNameTextCodeCode = PhysicalCheckSearchReasultTextCode_TH4.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

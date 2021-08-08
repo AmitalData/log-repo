@@ -21,9 +21,9 @@ using UnifreightIIG.Common.SearchResultsServiceReference;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class SaveCH_MSG_195_SearchResultsMessagingService : MessagingServiceBase<
-        RequestParamsBase, INF_MSG_GenericResponseData,
+        GenericRequestParams, INF_MSG_GenericResponseData,
         CH_NG_195_MSG6_SearchResults, INF_MSG_Generic,
-        SE_6001_SealUpdateRequestService, SE_6001_SealUpdateResponseService,
+        SaveCH_MSG_195_SearchResultsRequestService, SaveCH_MSG_195_SearchResultsResponseService,
         RequestHeader>
     {
         public override string MainInterfaceCode
@@ -37,15 +37,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return base.GetIIGBLExceptionFromReponseHeader(customsResponse);
         }
 
-        protected override INF_MSG_Generic CallWS(SE_NG_6001_MSG01_SealUpdateMessage customRequest, CargoSealsRequestParams requestParams, out string exceptionMessage)
+        protected override INF_MSG_Generic CallWS(CH_NG_195_MSG6_SearchResults customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null;
             var response = new INF_MSG_Generic();
        
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<ISealUpdateOperation>()
-                    .SealUpdate(
+                _ResponseHeader = uifreightSdkGateway.GetChannel<ISearchResultsOperation>()
+                    .SearchResults(
                     this.RequestsSheetExternalId,
                     base.CustomsSetting.CustomsAgentId,
                     customRequest,
@@ -54,23 +54,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         
-           using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                if (response.ResponseContentHeader.Exception != null)
-                {
-                    ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+           //using (TransactionScope scope = TransactionFactory.GetTransaction())
+           // {
+           //     if (response.ResponseContentHeader.Exception != null)
+           //     {
+           //         ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
 
-                    var cargoSealIdentifierQueryService = new CargoSealIdentifierQueryService(dbContext);
-                    var cargoSealIdentifierUpdateService = new CargoSealIdentifierUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    CargoSealIdentifierPM cargoSealIdentifierPM = cargoSealIdentifierQueryService.GetSingle(requestParams.CargoSealIdentifierId, false, false);
-                    cargoSealIdentifierPM.Status = "2";
-                    cargoSealIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;
-                    cargoSealIdentifierUpdateService.Update(cargoSealIdentifierPM, true);
+           //         var cargoSealIdentifierQueryService = new CargoSealIdentifierQueryService(dbContext);
+           //         var cargoSealIdentifierUpdateService = new CargoSealIdentifierUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+           //         CargoSealIdentifierPM cargoSealIdentifierPM = cargoSealIdentifierQueryService.GetSingle(requestParams.CargoSealIdentifierId, false, false);
+           //         cargoSealIdentifierPM.Status = "2";
+           //         cargoSealIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;
+           //         cargoSealIdentifierUpdateService.Update(cargoSealIdentifierPM, true);
 
-                }
+           //     }
 
-                scope.Complete();
-            }
+           //     scope.Complete();
+           // }
             return response;
         }
     }

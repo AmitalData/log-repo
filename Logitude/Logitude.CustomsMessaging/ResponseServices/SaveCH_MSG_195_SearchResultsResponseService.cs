@@ -11,60 +11,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.SealUpdateServiceReference;
+using UnifreightIIG.Common.SearchResultsServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class SaveCH_MSG_195_SearchResultsResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, INF_MSG_Generic, RequestParamsBase>
+    public class SaveCH_MSG_195_SearchResultsResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, INF_MSG_Generic, GenericRequestParams>
     {
 
 
-        public override void OnRequestFail(INF_MSG_Generic customResponse, RequestParamsBase requestParams)
+        public override void OnRequestFail(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
         {
             base.OnRequestFail(customResponse, requestParams);
         }
 
-        public override INF_MSG_GenericResponseData GetResponse(INF_MSG_Generic customResponse, RequestParamsBase requestParams)
+        public override INF_MSG_GenericResponseData GetResponse(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
         }
 
-        public override void Update(INF_MSG_Generic customResponse, RequestParamsBase requestParams)
+        public override void Update(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
         {
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-            var cargoSealIdentifierQueryService = new CargoSealIdentifierQueryService(dbContext);
-            var cargoSealIdentifierUpdateService = new CargoSealIdentifierUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-
+         
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
 
-            CargoSealIdentifierPM cargoSealIdentifierPM = cargoSealIdentifierQueryService.GetSingle(requestParams.CargoSealIdentifierId, true, false);
-            if (cargoSealIdentifierPM == null)
-            {
-                this.MyResponseData.HasException = true;
-                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
-                return;
-            }
 
             if (customResponse.ResponseContentHeader.Exception != null)
             {
-                cargoSealIdentifierPM.Status = "2";
-                this.MyResponseData.HasException = true;
+                 this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
 
- 
+                return;
 
             }
-            else
-            {
-                cargoSealIdentifierPM.Status = "1";
 
-                cargoSealIdentifierPM.CargoSeals.ForEach(x => { x.UpdateTypeCode = "2"; x.ChangeSetOp = ChangeSetOperation.Update; });
-                this.MyResponseData.UserMessage = "התקבלה תשובה תקינה והסגר עודכן";
-            }
-            cargoSealIdentifierPM.ChangeSetOp = ChangeSetOperation.Update;
-            cargoSealIdentifierUpdateService.Update(cargoSealIdentifierPM, true);
+            PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(requestParams.Tenant);
+            PhysicalCheckUpdateService physicalCheckUpdateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var physicalCheck = physicalCheckQueryService.GetSingle(requestParams.LoggingEntityId, false, false);
+
+            physicalCheck.CheckAnwserStatus = 1;
+            physicalCheck.ChangeSetOp = ChangeSetOperation.Update;
+
+            physicalCheckUpdateService.Update(physicalCheck, true);
+
+            this.MyResponseData.UserMessage = "תוצאות בדיקה התקבלו במכס";
+         
         }
     }
 }
