@@ -54,6 +54,20 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     }
 
+    public get IsCargoTrackWebAccessActivated() {
+
+        if (this.TenantPM) {
+            return this.TenantPM.IsCargoTrackWebAccessActivated;
+        }
+        else return false;
+    }
+    public set IsCargoTrackWebAccessActivated(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.IsCargoTrackWebAccessActivated = value;
+        }
+
+    }
+
 
     public get IsMobileActivated() {
 
@@ -118,6 +132,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     IsSharedLogisticsActivatedCheckboxBoxId: string;
     IsMobileActivatedCheckboxBoxId: string;
     IsWebAccessActivatedCheckboxBoxId: string;
+    IsCargoTrackWebAccessActivatedCheckboxBoxId; string;
     SharedLogisticsMessageLinkCheckboxBoxId: string;
     SharedLogisticsMasterMessageLinkCheckboxBoxId: string;
 
@@ -125,6 +140,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
     IsShowMobileActivateArea: boolean = true;
     TenantPM: TenantPM;
+    SharedTitleType: string;
     public tenantPMService: TenantPMService;
     OnCloseWindowEvent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -163,6 +179,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
          this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
          this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
+         this.IsCargoTrackWebAccessActivated = this.TenantPM.IsCargoTrackWebAccessActivated;
          this.IsMobileActivated = this.TenantPM.IsMobileActivated;
          this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
          this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
@@ -192,6 +209,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.IsSharedLogisticsActivatedCheckboxBoxId = Guid.newGuid();
         this.IsMobileActivatedCheckboxBoxId = Guid.newGuid();
         this.IsWebAccessActivatedCheckboxBoxId = Guid.newGuid();
+        this.IsCargoTrackWebAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
 
@@ -259,6 +277,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     SetWindowArgs(args: any) {
 
         this.TenantPM = args.TenantPM;
+        this.SharedTitleType = args.SharedTitleType;
         this.IsShowAreaColseAndCancelButton = true;
         this.Clone();
         // this.Run();
@@ -277,6 +296,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('DisplayDocumentsAndEvents');
         this.myCloner.AddField('SharedLogisticsMasterMessageLink');
         this.myCloner.AddField('IsQuotesRequestActivatedInShared');
+        this.myCloner.AddField('IsCargoTrackWebAccessActivated');
 
         this.myCloner.AddEntity(this.TenantPM);
     }

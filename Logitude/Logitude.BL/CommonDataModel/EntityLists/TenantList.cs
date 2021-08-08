@@ -111,7 +111,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VatUniquePartnerTypeCode { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
         public bool IsQuotesRequestActivatedInShared { get; set; }
+        public bool IsCargoTrackWebAccessActivated { get; set; }
 
-        
+
     }
 }

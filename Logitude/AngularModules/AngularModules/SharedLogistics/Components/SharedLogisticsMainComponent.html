@@ -70,10 +70,11 @@ Test:hover {
                                                 <div class="QueriesSection">
                                                     <div>Display Settings</div>
                                                     <div>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsPermissionsLinkClick()">Events Permissions</p>
+                                                        <p *ngIf="SharedTitleType != 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsPermissionsLinkClick()">Events Permissions</p>
+                                                        <p *ngIf="SharedTitleType == 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MilestonesPermissionsLinkClick()">Milestones Permissions</p>
                                                         <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
                                                         <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="PartnersPermissionsLinkClick()">Partners Permissions</p>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
+                                                        <p *ngIf="SharedTitleType != 'CargoTracking'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
                                                     </div>
                                                 </div>
 

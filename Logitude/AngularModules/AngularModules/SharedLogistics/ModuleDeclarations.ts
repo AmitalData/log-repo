@@ -2,6 +2,7 @@ import {SharedLogisticsMainComponent} from './Components/SharedLogisticsMainComp
 import {SharedLogisticsSettingComponent} from './Components/SharedLogisticsSettingComponent';
 import {SharedLogisticsWizardComponent} from './Components/SharedLogisticsWizardComponent';
 import {SharedLogisticsEventPermissiosComponent} from './Components/SharedLogisticsEventPermissiosComponent';
+import {CargoTrackingMilestonesPermissiosComponent} from './Components/CargoTrackingMilestonesPermissiosComponent';
 import {SharedLogisticsDocumentPermissiosComponent} from './Components/SharedLogisticsDocumentPermissiosComponent';
 import {ActivityZoomComponent} from './Components/ActivityZoomComponent';
 import {InviteCustomersComponent} from './Components/InviteCustomersComponent';
@@ -24,6 +25,7 @@ export const ControlsComponents =
     [
         SharedLogisticsSettingComponent,
         SharedLogisticsEventPermissiosComponent,
+        CargoTrackingMilestonesPermissiosComponent,
         SharedLogisticsDocumentPermissiosComponent,
         SharedLogisticsMoneyPermissiosComponent,
         SharedLogisticsPartnersPermissiosComponent,        
@@ -36,6 +38,7 @@ export const Components =
         SharedLogisticsSettingComponent,
         SharedLogisticsWizardComponent,
         SharedLogisticsEventPermissiosComponent,
+        CargoTrackingMilestonesPermissiosComponent,
         SharedLogisticsDocumentPermissiosComponent,
         ActivityZoomComponent,
         InviteCustomersComponent,
@@ -64,7 +67,8 @@ export class ModuleDeclarations {
             case "SharedLogisticsMainComponent": { myResult = SharedLogisticsMainComponent; break; }
             case "SharedLogisticsSettingComponent": { myResult = SharedLogisticsSettingComponent; break; }
             case "SharedLogisticsWizardComponent": { myResult = SharedLogisticsWizardComponent; break; }
-            case "SharedLogisticsEventPermissiosComponent": { myResult = SharedLogisticsEventPermissiosComponent; break; } 
+            case "SharedLogisticsEventPermissiosComponent": { myResult = SharedLogisticsEventPermissiosComponent; break; }
+            case "CargoTrackingMilestonesPermissiosComponent": { myResult = CargoTrackingMilestonesPermissiosComponent; break; } 
             case "SharedLogisticsDocumentPermissiosComponent": { myResult = SharedLogisticsDocumentPermissiosComponent; break; } 
             case "ActivityZoomComponent": { myResult = ActivityZoomComponent; break; }  
             case "InviteCustomersComponent": { myResult = InviteCustomersComponent; break; }  

@@ -25,6 +25,7 @@ import {SharedLogisticsService} from '../Services/Others/SharedLogisticsService'
 import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
+import { AppTool } from '../../Infrastructure/Tools';
 
 @Component({
     
@@ -71,6 +72,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     TitleSettings: string;
     TitleStatus: string;
+    SharedTitleType: string;
     public LastPartnersList: LastLoginPartners[];
     public SelectLastPartnersList: LastLoginPartners;
     public SupportManagement: any;
@@ -88,13 +90,34 @@ export class SharedLogisticsMainComponent implements OnInit {
     ngOnInit() {
         this.LoadData();
 
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleSettings = "Shared Logistics & Mobile Settings";
-        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) this.TitleSettings = "Mobile Settings";
-        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleSettings = "Shared Logistics Settings";
+        this.SetTitles();
+    }
 
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleStatus = "Shared Logistics & Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) this.TitleStatus = "Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleStatus = "Shared Logistics Status";
+    SetTitles() {
+
+        if (this.SharedTitleType == "CargoTracking")
+        {
+            this.TitleSettings = "Cargo Tracking Settings";
+        }
+        else {
+            if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+                this.TitleSettings = "Shared Logistics & Mobile Settings";
+            else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
+                this.TitleSettings = "Mobile Settings";
+            else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+                this.TitleSettings = "Shared Logistics Settings";
+        }
+        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+            this.TitleStatus = "Shared Logistics & Mobile Status";
+        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
+            this.TitleStatus = "Mobile Status";
+        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+            this.TitleStatus = "Shared Logistics Status";
+    }
+
+
+    SetSharedTitleType(titleType) {
+        this.SharedTitleType = titleType;
     }
 
     LoadData() {
@@ -260,6 +283,16 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsEventPermissiosComponent");
     }
 
+    MilestonesPermissionsLinkClick() {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Milestones Permissions";
+        logWindow.Show("./SharedLogistics/Components/CargoTrackingMilestonesPermissiosComponent");
+    }
+
     DocumentsPermissionsLinkClick() {
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
@@ -305,11 +338,12 @@ export class SharedLogisticsMainComponent implements OnInit {
     SettingsLinkClick() {
         var windowArgs: any = {};
         windowArgs.TenantPM = this.myTenantPM;
+        windowArgs.SharedTitleType = this.SharedTitleType;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 900;
         logWindow.Height = 550;
-        logWindow.Title = "Shared Logistics Settings";
+        logWindow.Title = this.SharedTitleType == "CargoTracking" ? "Cargo Tracking Settings": "Shared Logistics Settings";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsSettingComponent");
     }
 
