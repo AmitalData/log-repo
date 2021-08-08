@@ -219,7 +219,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                               </t:Section>
                             </t:RadDocument>";
 
-            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant, entityPOCO.GuidId);
+            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant, entityPOCO.GuidId, entityPM.SupportMailboxId);
             entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
 
 
@@ -506,26 +506,33 @@ namespace Logitude.CRM.BL.EntityDataMappings
             return searchFields;
         }
 
-        public string GetReplyToEmail(int tenant, string guidId)
+        public string GetReplyToEmail(int tenant, string guidId, string supportMailboxId)
         {
             string email = "";
+            var mailBox = this.GetDefaultSupportMailBox(tenant, supportMailboxId);
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
                 if (myTenant != null)
                 {
-                    string supportEmail = myTenant.SupportEmail;
-                    if (!string.IsNullOrEmpty(supportEmail))
-                        email = supportEmail.Split('@')[0] + "+" + guidId + "-ex"+"@" + supportEmail.Split('@')[1];
+                    string supportDomain = myTenant.SupportDomain;
+                    if (!string.IsNullOrEmpty(supportDomain))
+                        email = mailBox + "+" + guidId + "-ex"+"@" + supportDomain;
                 }
-
                 scope.Complete();
             }
-
             return email;
         }
 
-   }
+        private string GetDefaultSupportMailBox(int tenant, string supportMailboxId)
+        {
+            string mailBox = null;
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetSingle(supportMailboxId, tenant);
+            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
+            return mailBox;
+        }
+    }
 }
    
