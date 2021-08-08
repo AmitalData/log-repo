@@ -298,6 +298,10 @@ export class SplittedByCurrencyAccount extends BaseComponent {
         this.entityPM.DisplayNumber = value;
     }
 
+    public get BalanceInLocalCurrency() { return this.entityPM.BalanceInLocalCurrency; }
+    public set BalanceInLocalCurrency(value: number) {
+        this.entityPM.BalanceInLocalCurrency = value;
+    }
 
     public get Inactive()
     {
@@ -313,12 +317,12 @@ export class SplittedByCurrencyAccount extends BaseComponent {
      
         if (checked) {
 
-            if (balanceInLocalCurrency != null) {
+            if (this.BalanceInLocalCurrency != null) {
 
-                if (balanceInLocalCurrency != 0) {
+                if (this.BalanceInLocalCurrency != 0) {
+                    this.AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency);
                     this.entityPM.Inactive = false;
                     this.entityPM.Type = "ACTIVE";
-                    this.AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency);
                 }
 
                 else {
