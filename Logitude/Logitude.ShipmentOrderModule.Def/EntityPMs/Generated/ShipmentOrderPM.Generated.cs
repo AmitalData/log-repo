@@ -10,9 +10,9 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.Server.Tools; 
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
-using Logitude.ShipmentOrderModule.BL.Validators;
+using Logitude.ShipmentOrderModule.Def.Validators;
   
-namespace Logitude.ShipmentOrderModule.BL.EntityPMs
+namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 {
    [CustomValidation(typeof(ShipmentOrderModuleClassLevelValidator), "ValidateClass")]
    [DataContract]

@@ -61,6 +61,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShipmentOrderClassesGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="AutoGenerators\ShipmentOrderDataContractsClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipmentOrderDataContractsClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,6 +91,11 @@
     <Content Include="AutoGenerators\ShipmentOrderClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ShipmentOrderClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\ShipmentOrderDataContractsClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShipmentOrderDataContractsClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\ShipmentOrderDataContractsClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

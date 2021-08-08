@@ -1079,6 +1079,7 @@
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
+    <Compile Include="ExternalAPIs\V1\ShipmentOrderModule\ShipmentOrderController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentStatusesController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
@@ -7094,6 +7095,10 @@
     <ProjectReference Include="..\..\Logitude.ShipmentOrderModule.Data\Logitude.ShipmentOrderModule.Data.csproj">
       <Project>{378db1a8-43c3-45a1-a4a0-0b8961cfdb52}</Project>
       <Name>Logitude.ShipmentOrderModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.ShipmentOrderModule.Def\Logitude.ShipmentOrderModule.Def.csproj">
+      <Project>{4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e}</Project>
+      <Name>Logitude.ShipmentOrderModule.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.Social.BL\Logitude.Social.BL.csproj">
       <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>

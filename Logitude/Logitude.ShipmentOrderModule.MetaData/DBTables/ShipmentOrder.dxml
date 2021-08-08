@@ -216,4 +216,6 @@
     ReferencedTable="SpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="Tenant,OrderNumber" />
 </Table>

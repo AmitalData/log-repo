@@ -35,7 +35,7 @@ using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.BL.Helpers;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
-using Logitude.ShipmentOrderModule.BL.EntityPMs;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Logitude.ShipmentOrderModule.Data;
 using Logitude.ShipmentOrderModule.BL;
 using Logitude.ShipmentOrderModule.Data.EntityLists;

@@ -11,7 +11,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
-using Logitude.ShipmentOrderModule.BL.EntityPMs; 
+using Logitude.ShipmentOrderModule.Def.EntityPMs; 
 using Logitude.ShipmentOrderModule.Data;
 
 namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings

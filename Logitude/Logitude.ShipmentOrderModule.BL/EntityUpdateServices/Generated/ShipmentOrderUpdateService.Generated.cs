@@ -14,7 +14,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Web;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
-using Logitude.ShipmentOrderModule.BL.EntityPMs;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Logitude.ShipmentOrderModule.BL.EntityDataMappings;
 using Logitude.ShipmentOrderModule.Data.Repositories;
 using Logitude.ShipmentOrderModule.Data.EntityKeys;

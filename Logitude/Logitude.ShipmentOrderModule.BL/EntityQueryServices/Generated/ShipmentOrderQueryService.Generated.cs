@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
-using Logitude.ShipmentOrderModule.BL.EntityPMs;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Logitude.ShipmentOrderModule.BL.EntityDataMappings;
 using Logitude.ShipmentOrderModule.Data.Repositories;
 using Logitude.ShipmentOrderModule.Data.EntityKeys;
