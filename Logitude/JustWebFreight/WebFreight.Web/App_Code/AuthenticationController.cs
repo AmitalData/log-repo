@@ -784,7 +784,7 @@ namespace WebFreight.Web
                                 }
                                 else
                                 {
-                                    enableLogin = currentTenant.IsWebAccessActivated;
+                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated;
                                 }
                                 if (enableLogin)
                                 {
@@ -868,7 +868,7 @@ namespace WebFreight.Web
                                 }
                                 else
                                 {
-                                    enableLogin = currentTenant.IsWebAccessActivated;
+                                    enableLogin = currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated;
                                 }
                                 if (enableLogin)
                                 {

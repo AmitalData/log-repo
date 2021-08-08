@@ -724,9 +724,17 @@ export class TenantPM {
     public get FTLRatio() { return this.fTLRatio; }
     public set FTLRatio(newValue: number) { if (this.fTLRatio != newValue) { this.fTLRatio = newValue; this.MarkAsDirty("FTLRatio"); } }
        
+	 
     private isQuotesRequestActivatedInShared: boolean;
     public get IsQuotesRequestActivatedInShared() { return this.isQuotesRequestActivatedInShared; }
     public set IsQuotesRequestActivatedInShared(newValue: boolean) { if (this.isQuotesRequestActivatedInShared != newValue) { this.isQuotesRequestActivatedInShared = newValue; this.MarkAsDirty("IsQuotesRequestActivatedInShared"); } }
+       
+	 
+    private isCargoTrackWebAccessActivated: boolean;
+    public get IsCargoTrackWebAccessActivated() { return this.isCargoTrackWebAccessActivated; }
+    public set IsCargoTrackWebAccessActivated(newValue: boolean) { if (this.isCargoTrackWebAccessActivated != newValue) { this.isCargoTrackWebAccessActivated = newValue; this.MarkAsDirty("IsCargoTrackWebAccessActivated"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

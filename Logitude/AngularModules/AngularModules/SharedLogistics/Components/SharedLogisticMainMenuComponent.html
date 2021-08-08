@@ -1,4 +1,4 @@
-﻿
+
 <div style="position: absolute; top:10px; bottom:0px; left:15px; right:10px;margin:auto; background:white;">
     <table>
         <tr style="height:21px;">
@@ -7,6 +7,8 @@
                     <li [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
 
                     <li *ngIf="CustomerTenantAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'LOBO'" (click)="SelectedItem = 'LOBO'">Access Management</li>
+
+                    <li [class.SelectedPageMenu]="SelectedItem == 'CATR'" (click)="SelectedItem = 'CATR'">Cargo Tracking</li>
                 </ul>
             </td>
         </tr>
@@ -23,6 +25,11 @@
                 <!--LogBox-->
                 <div class="CellContent" [hidden]="SelectedItem != 'LOBO'">
                     <div LocationDirective Code="LOBO"></div>
+                </div>
+
+                <!--CargoTracking-->
+                <div class="CellContent" [hidden]="SelectedItem != 'CATR'">
+                    <div LocationDirective Code="CATR"></div>
                 </div>
 
 
