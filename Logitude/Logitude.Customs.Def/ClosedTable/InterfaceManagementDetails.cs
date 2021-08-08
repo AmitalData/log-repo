@@ -1953,6 +1953,22 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "8235",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר תקן/בטל",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "8235",
+                //   NeedSignature = false,
+                //     SignatureTypeCode = "C"
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "5002",
                 InOut = InOutEnum.O.ToString(),
                 Description = "ביטול הצהרה",

@@ -475,8 +475,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 INF_MSG_GenericResponseData responseData;
-                var messagingService = new DF_MSG2892_ImportDeclarationAmendmentMessagingService();
-                responseData = messagingService.Send(requestParamsData);
+                if (requestParamsData.RequestName.StartsWith("Export"))
+                {
+                    var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
+                    responseData = messagingService.Send(requestParamsData);
+                }
+                else
+                {
+                    var messagingService = new DF_MSG2892_ImportDeclarationAmendmentMessagingService();
+                    responseData = messagingService.Send(requestParamsData);
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
             catch (Exception ex)
