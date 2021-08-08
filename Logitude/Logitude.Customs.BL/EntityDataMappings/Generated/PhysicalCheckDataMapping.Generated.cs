@@ -50,7 +50,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CheckTypeCode, 
 	         CustomerId, 
 	         NoEscortRequired, 
-	         VehicleChassisNumber,
+	         VehicleChassisNumber, 
+	         SearchResult, 
+	         SealNumber, 
+	         CheckAuthorityAttenderTypeID, 
+	         CheckAuthorityAttenderTypeName, 
+	         CheckAnwserStatus,
 	      }
 
 
@@ -100,7 +105,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomerId, 
 	         NoEscortRequired, 
 	         VehicleChassisNumber, 
-	         EndDate,
+	         EndDate, 
+	         SearchResult, 
+	         SealNumber, 
+	         CheckAuthorityAttenderTypeID, 
+	         CheckAuthorityAttenderTypeName, 
+	         CheckAnwserStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -247,6 +257,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
             {
 				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResult))
+            {
+				entityPOCO.SearchResult = entityPM.SearchResult;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))
+            {
+				entityPOCO.SealNumber = entityPM.SealNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAuthorityAttenderTypeID))
+            {
+				entityPOCO.CheckAuthorityAttenderTypeID = entityPM.CheckAuthorityAttenderTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAuthorityAttenderTypeName))
+            {
+				entityPOCO.CheckAuthorityAttenderTypeName = entityPM.CheckAuthorityAttenderTypeName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAnwserStatus))
+            {
+				entityPOCO.CheckAnwserStatus = entityPM.CheckAnwserStatus;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -400,6 +435,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchResult))
+            {
+					entityPM.SearchResult = entityPOCO.SearchResult;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SealNumber))
+            {
+					entityPM.SealNumber = entityPOCO.SealNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CheckAuthorityAttenderTypeID))
+            {
+					entityPM.CheckAuthorityAttenderTypeID = entityPOCO.CheckAuthorityAttenderTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CheckAuthorityAttenderTypeName))
+            {
+					entityPM.CheckAuthorityAttenderTypeName = entityPOCO.CheckAuthorityAttenderTypeName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CheckAnwserStatus))
+            {
+					entityPM.CheckAnwserStatus = entityPOCO.CheckAnwserStatus;
+            }
+
 		}
 
 		public void PMToOldPM(PhysicalCheckPM entityPM, PhysicalCheckPM oldEntityPM)
@@ -544,6 +604,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
             {
                 oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchResult))
+            {
+                oldEntityPM.SearchResult = entityPM.SearchResult;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SealNumber))
+            {
+                oldEntityPM.SealNumber = entityPM.SealNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAuthorityAttenderTypeID))
+            {
+                oldEntityPM.CheckAuthorityAttenderTypeID = entityPM.CheckAuthorityAttenderTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAuthorityAttenderTypeName))
+            {
+                oldEntityPM.CheckAuthorityAttenderTypeName = entityPM.CheckAuthorityAttenderTypeName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckAnwserStatus))
+            {
+                oldEntityPM.CheckAnwserStatus = entityPM.CheckAnwserStatus;
             }
 			
 		}
