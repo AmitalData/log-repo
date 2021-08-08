@@ -37,13 +37,19 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         IncotermId, 
 	         AccountManagerId, 
 	         PONumber, 
-	         DescriptionofGoods, 
+	         DescriptionOfGoods, 
 	         ShipmentTypeId, 
+	         Master, 
 	         House, 
 	         VesselId, 
 	         CustomsAgentId, 
 	         SpecialServicesTypeId, 
-	         CustomerRefrences,
+	         CustomerReferences, 
+	         IsReadyForPickup, 
+	         PickupEstimatedDateTime, 
+	         PickupActualDateTime, 
+	         ForwarderId, 
+	         BookingConfirmationDate,
 	      }
 
 
@@ -65,7 +71,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         IncotermId, 
 	         AccountManagerId, 
 	         PONumber, 
-	         DescriptionofGoods, 
+	         DescriptionOfGoods, 
 	         ShipmentTypeId, 
 	         Master, 
 	         House, 
@@ -76,9 +82,14 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         ATA, 
 	         CustomsAgentId, 
 	         SpecialServicesTypeId, 
-	         CustomerRefrences, 
+	         CustomerReferences, 
 	         TransportModeName, 
-	         ShipmentTypeName,
+	         ShipmentTypeName, 
+	         IsReadyForPickup, 
+	         PickupEstimatedDateTime, 
+	         PickupActualDateTime, 
+	         ForwarderId, 
+	         BookingConfirmationDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -157,14 +168,19 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 				entityPOCO.PONumber = entityPM.PONumber;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionofGoods))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionOfGoods))
             {
-				entityPOCO.DescriptionofGoods = entityPM.DescriptionofGoods;
+				entityPOCO.DescriptionOfGoods = entityPM.DescriptionOfGoods;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeId))
             {
 				entityPOCO.ShipmentTypeId = entityPM.ShipmentTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Master))
+            {
+				entityPOCO.Master = entityPM.Master;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.House))
@@ -187,9 +203,34 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 				entityPOCO.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerRefrences))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReferences))
             {
-				entityPOCO.CustomerRefrences = entityPM.CustomerRefrences;
+				entityPOCO.CustomerReferences = entityPM.CustomerReferences;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForPickup))
+            {
+				entityPOCO.IsReadyForPickup = entityPM.IsReadyForPickup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupEstimatedDateTime))
+            {
+				entityPOCO.PickupEstimatedDateTime = entityPM.PickupEstimatedDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupActualDateTime))
+            {
+				entityPOCO.PickupActualDateTime = entityPM.PickupActualDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderId))
+            {
+				entityPOCO.ForwarderId = entityPM.ForwarderId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingConfirmationDate))
+            {
+				entityPOCO.BookingConfirmationDate = entityPM.BookingConfirmationDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -273,14 +314,19 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.PONumber = entityPOCO.PONumber;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DescriptionofGoods))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DescriptionOfGoods))
             {
-					entityPM.DescriptionofGoods = entityPOCO.DescriptionofGoods;
+					entityPM.DescriptionOfGoods = entityPOCO.DescriptionOfGoods;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentTypeId))
             {
 					entityPM.ShipmentTypeId = entityPOCO.ShipmentTypeId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Master))
+            {
+					entityPM.Master = entityPOCO.Master;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.House))
@@ -303,9 +349,34 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.SpecialServicesTypeId = entityPOCO.SpecialServicesTypeId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerRefrences))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerReferences))
             {
-					entityPM.CustomerRefrences = entityPOCO.CustomerRefrences;
+					entityPM.CustomerReferences = entityPOCO.CustomerReferences;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReadyForPickup))
+            {
+					entityPM.IsReadyForPickup = entityPOCO.IsReadyForPickup;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PickupEstimatedDateTime))
+            {
+					entityPM.PickupEstimatedDateTime = entityPOCO.PickupEstimatedDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PickupActualDateTime))
+            {
+					entityPM.PickupActualDateTime = entityPOCO.PickupActualDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwarderId))
+            {
+					entityPM.ForwarderId = entityPOCO.ForwarderId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingConfirmationDate))
+            {
+					entityPM.BookingConfirmationDate = entityPOCO.BookingConfirmationDate;
             }
 
 		}
@@ -384,14 +455,19 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 oldEntityPM.PONumber = entityPM.PONumber;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionofGoods))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionOfGoods))
             {
-                oldEntityPM.DescriptionofGoods = entityPM.DescriptionofGoods;
+                oldEntityPM.DescriptionOfGoods = entityPM.DescriptionOfGoods;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeId))
             {
                 oldEntityPM.ShipmentTypeId = entityPM.ShipmentTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Master))
+            {
+                oldEntityPM.Master = entityPM.Master;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.House))
@@ -414,9 +490,34 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 oldEntityPM.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerRefrences))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReferences))
             {
-                oldEntityPM.CustomerRefrences = entityPM.CustomerRefrences;
+                oldEntityPM.CustomerReferences = entityPM.CustomerReferences;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForPickup))
+            {
+                oldEntityPM.IsReadyForPickup = entityPM.IsReadyForPickup;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupEstimatedDateTime))
+            {
+                oldEntityPM.PickupEstimatedDateTime = entityPM.PickupEstimatedDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupActualDateTime))
+            {
+                oldEntityPM.PickupActualDateTime = entityPM.PickupActualDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderId))
+            {
+                oldEntityPM.ForwarderId = entityPM.ForwarderId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingConfirmationDate))
+            {
+                oldEntityPM.BookingConfirmationDate = entityPM.BookingConfirmationDate;
             }
 			
 		}
@@ -432,9 +533,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.DescriptionofGoods)) //T4 find type == nText 
+            if (!String.IsNullOrWhiteSpace(entityPM.DescriptionOfGoods)) //T4 find type == nText 
             {
-                entityPM.DescriptionofGoods = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DescriptionofGoods));
+                entityPM.DescriptionOfGoods = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DescriptionOfGoods));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

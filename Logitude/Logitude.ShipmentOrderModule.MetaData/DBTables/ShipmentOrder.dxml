@@ -108,7 +108,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DescriptionofGoods"
+    Name="DescriptionOfGoods"
     Type="nvarchar"
     Size="2000">
     <Constraints
@@ -118,6 +118,13 @@
     Name="ShipmentTypeId"
     Type="varchar"
     Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
@@ -150,9 +157,41 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CustomerRefrences"
+    Name="CustomerReferences"
+    OldNames="CustomerRefrences"
     Type="varchar"
     Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsReadyForPickup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PickupEstimatedDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupActualDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwarderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingConfirmationDate"
+    Type="date">
     <Constraints
       Nullable="true" />
   </Column>
@@ -214,6 +253,11 @@
   <Relation
     ForeignKeyColumn="SpecialServicesTypeId"
     ReferencedTable="SpecialServicesTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ForwarderId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

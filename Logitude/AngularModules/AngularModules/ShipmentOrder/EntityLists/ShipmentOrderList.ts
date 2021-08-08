@@ -23,7 +23,7 @@ export class ShipmentOrderList {
 	IncotermId: string;
 	AccountManagerId: string;
 	PONumber: string;
-	DescriptionofGoods: string;
+	DescriptionOfGoods: string;
 	ShipmentTypeId: string;
 	Master: string;
 	House: string;
@@ -33,9 +33,14 @@ export class ShipmentOrderList {
 	ATA: Date;
 	CustomsAgentId: string;
 	SpecialServicesTypeId: string;
-	CustomerRefrences: string;
+	CustomerReferences: string;
 	TransportModeName: string;
 	ShipmentTypeName: string;
+	IsReadyForPickup: boolean;
+	PickupEstimatedDateTime: Date;
+	PickupActualDateTime: Date;
+	ForwarderId: string;
+	BookingConfirmationDate: Date;
 	
 }
  

@@ -45,7 +45,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        [DataMember]
        public string PONumber  { get; set; }
        [DataMember]
-       public string DescriptionofGoods  { get; set; }
+       public string DescriptionOfGoods  { get; set; }
        [DataMember]
        public string ShipmentTypeId  { get; set; }
        [DataMember]
@@ -65,11 +65,21 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        [DataMember]
        public string SpecialServicesTypeId  { get; set; }
        [DataMember]
-       public string CustomerRefrences  { get; set; }
+       public string CustomerReferences  { get; set; }
        [DataMember]
        public string TransportModeName  { get; set; }
        [DataMember]
        public string ShipmentTypeName  { get; set; }
+       [DataMember]
+       public bool IsReadyForPickup  { get; set; }
+       [DataMember]
+       public DateTime? PickupEstimatedDateTime  { get; set; }
+       [DataMember]
+       public DateTime? PickupActualDateTime  { get; set; }
+       [DataMember]
+       public string ForwarderId  { get; set; }
+       [DataMember]
+       public DateTime? BookingConfirmationDate  { get; set; }
    }
 
 }

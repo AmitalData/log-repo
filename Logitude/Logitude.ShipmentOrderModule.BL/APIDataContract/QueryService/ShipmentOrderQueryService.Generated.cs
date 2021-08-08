@@ -109,8 +109,7 @@ using Logitude.ShipmentOrderModule.Data;
 			       
 					   				   }
 				   
-				   temp.PONumber = MyEntityPM.PONumber;
-				   temp.DescriptionofGoods = MyEntityPM.DescriptionofGoods;			  
+				   temp.PONumber = MyEntityPM.PONumber;			  
 				   if(MyEntityPM.ShipmentTypeId != null)
 				   {
 					   ShipmentTypeQueryService ShipmentTypeService6 = new ShipmentTypeQueryService(Tenant);
@@ -140,8 +139,19 @@ using Logitude.ShipmentOrderModule.Data;
 					   					   temp.SpecialServicesType = SpecialServicesTypeService9.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant); 
 			       
 					   				   }
+				   			  
+				   if(MyEntityPM.ForwarderId != null)
+				   {
+					   CardQueryService CardService10 = new CardQueryService(Tenant);
+					   					   temp.Forwarder = CardService10.GetCardById(MyEntityPM.ForwarderId,Tenant); 
+			       
+					   				   }
 				   
-				   temp.CustomerRefrences = MyEntityPM.CustomerRefrences;					
+				   temp.IsReadyForPickup = MyEntityPM.IsReadyForPickup;
+				   temp.DescriptionOfGoods = MyEntityPM.DescriptionOfGoods;
+				   temp.TransportModeName = MyEntityPM.TransportModeName;
+				   temp.ShipmentTypeName = MyEntityPM.ShipmentTypeName;
+				   temp.CustomerReferences = MyEntityPM.CustomerReferences;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -247,7 +257,6 @@ using Logitude.ShipmentOrderModule.Data;
 			
 					
 					temp.PONumber = MyEntity.PONumber;
-					temp.DescriptionofGoods = MyEntity.DescriptionofGoods;
 					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
 					if(MyEntity.ShipmentType != null)
 					{
@@ -298,7 +307,23 @@ using Logitude.ShipmentOrderModule.Data;
 					}
 			
 					
-					temp.CustomerRefrences = MyEntity.CustomerRefrences;					   
+					CardQueryService ForwarderCardService = new CardQueryService(Tenant);
+					if(MyEntity.Forwarder != null)
+					{
+						var myForwarderPM = ForwarderCardService.CardDataMappingAndValidatin(MyEntity.Forwarder,Tenant,ComputingPartnerName);
+												if(myForwarderPM != null)
+						{
+							temp.ForwarderId = myForwarderPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.IsReadyForPickup = MyEntity.IsReadyForPickup;
+					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+					temp.TransportModeName = MyEntity.TransportModeName;
+					temp.ShipmentTypeName = MyEntity.ShipmentTypeName;
+					temp.CustomerReferences = MyEntity.CustomerReferences;					   
 					   return temp;
 		    }
             catch (Exception ex)

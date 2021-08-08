@@ -55,11 +55,13 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        PONumber = a.PONumber,
 
-                                                       DescriptionofGoods = a.DescriptionofGoods,
+                                                       DescriptionOfGoods = a.DescriptionOfGoods,
 
                                                        ShipmentTypeId = a.ShipmentTypeId,
 
                                                        House = a.House,
+
+                                                       Master = a.Master,
 
                                                        CustomsAgentId = a.CustomsAgentId,
 
@@ -68,6 +70,18 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
                                                        ShipmentTypeName = a.ShipmentType == null ? "" : a.ShipmentType.Name,
 
                                                        TransportModeName = a.TransportMode == null ? "" : a.TransportMode.Name,
+
+                                                       BookingConfirmationDate = a.BookingConfirmationDate,
+
+                                                       CustomerReferences = a.CustomerReferences,
+
+                                                       IsReadyForPickup = a.IsReadyForPickup,
+
+                                                       PickupEstimatedDateTime = a.PickupEstimatedDateTime,
+
+                                                       PickupActualDateTime = a.PickupActualDateTime,
+
+                                                       ForwarderId = a.ForwarderId,
 
                                                    });
             return query;

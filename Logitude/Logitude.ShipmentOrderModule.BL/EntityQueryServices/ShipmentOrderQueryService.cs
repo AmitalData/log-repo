@@ -29,13 +29,18 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 IncotermId = a.IncotermId,
                 AccountManagerId = a.AccountManagerId,
                 PONumber = a.PONumber,
-                DescriptionofGoods = a.DescriptionofGoods,
+                DescriptionOfGoods = a.DescriptionOfGoods,
                 ShipmentTypeId = a.ShipmentTypeId,
                 House = a.House,
                 VesselId = a.VesselId,
                 CustomsAgentId = a.CustomsAgentId,
                 SpecialServicesTypeId = a.SpecialServicesTypeId,
-                CustomerRefrences = a.CustomerRefrences,
+                BookingConfirmationDate = a.BookingConfirmationDate,
+                CustomerReferences = a.CustomerReferences,
+                IsReadyForPickup = a.IsReadyForPickup,
+                PickupEstimatedDateTime = a.PickupEstimatedDateTime,
+                PickupActualDateTime = a.PickupActualDateTime,
+                ForwarderId = a.ForwarderId,
 
             }).FirstOrDefault();
         }
@@ -62,13 +67,18 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 IncotermId = a.IncotermId,
                 AccountManagerId = a.AccountManagerId,
                 PONumber = a.PONumber,
-                DescriptionofGoods = a.DescriptionofGoods,
+                DescriptionOfGoods = a.DescriptionOfGoods,
                 ShipmentTypeId = a.ShipmentTypeId,
                 House = a.House,
                 VesselId = a.VesselId,
                 CustomsAgentId = a.CustomsAgentId,
                 SpecialServicesTypeId = a.SpecialServicesTypeId,
-                CustomerRefrences = a.CustomerRefrences,
+                BookingConfirmationDate = a.BookingConfirmationDate,
+                CustomerReferences = a.CustomerReferences,
+                IsReadyForPickup = a.IsReadyForPickup,
+                PickupEstimatedDateTime = a.PickupEstimatedDateTime,
+                PickupActualDateTime = a.PickupActualDateTime,
+                ForwarderId = a.ForwarderId,
 
             }).FirstOrDefault();
         }

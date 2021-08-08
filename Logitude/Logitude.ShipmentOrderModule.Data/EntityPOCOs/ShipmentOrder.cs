@@ -73,13 +73,15 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
         public virtual User AccountManagerUser { get; set; }
         [Column("PONumber")]
 	    public string PONumber { get; set; }
-        [Column("DescriptionofGoods")]
-	    public string DescriptionofGoods { get; set; }
+        [Column("DescriptionOfGoods")]
+	    public string DescriptionOfGoods { get; set; }
         [ForeignKey("ShipmentType")]
         [Column("ShipmentTypeId")]
 	    public string ShipmentTypeId { get; set; }
 	      
         public virtual ShipmentType ShipmentType { get; set; }
+        [Column("Master")]
+	    public string Master { get; set; }
         [Column("House")]
 	    public string House { get; set; }
         [ForeignKey("Vessel")]
@@ -97,8 +99,21 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string SpecialServicesTypeId { get; set; }
 	      
         public virtual SpecialServicesType SpecialServicesType { get; set; }
-        [Column("CustomerRefrences")]
-	    public string CustomerRefrences { get; set; }
+        [Column("CustomerReferences")]
+	    public string CustomerReferences { get; set; }
+        [Column("IsReadyForPickup")]
+	    public bool IsReadyForPickup { get; set; }
+        [Column("PickupEstimatedDateTime")]
+	    public DateTime? PickupEstimatedDateTime { get; set; }
+        [Column("PickupActualDateTime")]
+	    public DateTime? PickupActualDateTime { get; set; }
+        [ForeignKey("FreightForwarderCard")]
+        [Column("ForwarderId")]
+	    public string ForwarderId { get; set; }
+	      
+        public virtual Card FreightForwarderCard { get; set; }
+        [Column("BookingConfirmationDate")]
+	    public DateTime? BookingConfirmationDate { get; set; }
     }
 }
 	 

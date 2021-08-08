@@ -40,8 +40,6 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public string PONumber { get; set; }
     
-    public string DescriptionofGoods { get; set; }
-    
     public ShipmentType ShipmentType { get; set; }
     
     public string Master { get; set; }
@@ -54,6 +52,16 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public SpecialServicesType SpecialServicesType { get; set; }
     
-    public string CustomerRefrences { get; set; }
+    public Card Forwarder { get; set; }
+    
+    public bool IsReadyForPickup { get; set; }
+    
+    public string DescriptionOfGoods { get; set; }
+    
+    public string TransportModeName { get; set; }
+    
+    public string ShipmentTypeName { get; set; }
+    
+    public string CustomerReferences { get; set; }
     }
 } 

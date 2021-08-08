@@ -53,9 +53,11 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.PONumber).HasColumnName("PONumber").HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.DescriptionofGoods).HasColumnName("DescriptionofGoods").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(2000).IsUnicode(true);
 
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.Master).HasColumnName("Master").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.House).HasColumnName("House").HasMaxLength(20).IsUnicode(false);
 
@@ -65,7 +67,17 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CustomerRefrences).HasColumnName("CustomerRefrences").HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.CustomerReferences).HasColumnName("CustomerReferences").HasMaxLength(300).IsUnicode(false);
+
+            this.Property(t => t.IsReadyForPickup).HasColumnName("IsReadyForPickup");
+
+            this.Property(t => t.PickupEstimatedDateTime).HasColumnName("PickupEstimatedDateTime");
+
+            this.Property(t => t.PickupActualDateTime).HasColumnName("PickupActualDateTime");
+
+            this.Property(t => t.ForwarderId).HasColumnName("ForwarderId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.BookingConfirmationDate).HasColumnName("BookingConfirmationDate");
         }
     }
 }

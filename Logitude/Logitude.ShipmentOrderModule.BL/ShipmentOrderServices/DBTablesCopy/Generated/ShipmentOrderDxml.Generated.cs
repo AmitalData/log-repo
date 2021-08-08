@@ -54,10 +54,13 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='PONumber' Type='varchar' Size='50'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='DescriptionofGoods' Type='nvarchar' Size='2000'>"+
+"  <Column Name='DescriptionOfGoods' Type='nvarchar' Size='2000'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ShipmentTypeId' Type='varchar' Size='4'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='Master' Type='varchar' Size='20'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='House' Type='varchar' Size='20'>"+
@@ -72,7 +75,22 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='SpecialServicesTypeId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CustomerRefrences' Type='varchar' Size='300'>"+
+"  <Column Name='CustomerReferences' OldNames='CustomerRefrences' Type='varchar' Size='300'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='IsReadyForPickup' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='PickupEstimatedDateTime' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='PickupActualDateTime' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ForwarderId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingConfirmationDate' Type='date'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
@@ -87,6 +105,8 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='VesselId' ReferencedTable='Vessels' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CustomsAgentId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='SpecialServicesTypeId' ReferencedTable='SpecialServicesTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='ForwarderId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Index Columns='Tenant,OrderNumber' />"+
 "</Table>";
 		
 		   return dxmlFile;

@@ -99,9 +99,9 @@ export class ShipmentOrderPM {
     public set PONumber(newValue: string) { if (this.pONumber != newValue) { this.pONumber = newValue; this.MarkAsDirty("PONumber"); } }
        
 	 
-    private descriptionofGoods: string;
-    public get DescriptionofGoods() { return this.descriptionofGoods; }
-    public set DescriptionofGoods(newValue: string) { if (this.descriptionofGoods != newValue) { this.descriptionofGoods = newValue; this.MarkAsDirty("DescriptionofGoods"); } }
+    private descriptionOfGoods: string;
+    public get DescriptionOfGoods() { return this.descriptionOfGoods; }
+    public set DescriptionOfGoods(newValue: string) { if (this.descriptionOfGoods != newValue) { this.descriptionOfGoods = newValue; this.MarkAsDirty("DescriptionOfGoods"); } }
        
 	 
     private shipmentTypeId: string;
@@ -154,9 +154,9 @@ export class ShipmentOrderPM {
     public set SpecialServicesTypeId(newValue: string) { if (this.specialServicesTypeId != newValue) { this.specialServicesTypeId = newValue; this.MarkAsDirty("SpecialServicesTypeId"); } }
        
 	 
-    private customerRefrences: string;
-    public get CustomerRefrences() { return this.customerRefrences; }
-    public set CustomerRefrences(newValue: string) { if (this.customerRefrences != newValue) { this.customerRefrences = newValue; this.MarkAsDirty("CustomerRefrences"); } }
+    private customerReferences: string;
+    public get CustomerReferences() { return this.customerReferences; }
+    public set CustomerReferences(newValue: string) { if (this.customerReferences != newValue) { this.customerReferences = newValue; this.MarkAsDirty("CustomerReferences"); } }
        
 	 
     private transportModeName: string;
@@ -167,6 +167,31 @@ export class ShipmentOrderPM {
     private shipmentTypeName: string;
     public get ShipmentTypeName() { return this.shipmentTypeName; }
     public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
+       
+	 
+    private isReadyForPickup: boolean;
+    public get IsReadyForPickup() { return this.isReadyForPickup; }
+    public set IsReadyForPickup(newValue: boolean) { if (this.isReadyForPickup != newValue) { this.isReadyForPickup = newValue; this.MarkAsDirty("IsReadyForPickup"); } }
+       
+	 
+    private pickupEstimatedDateTime: Date;
+    public get PickupEstimatedDateTime() { return this.pickupEstimatedDateTime; }
+    public set PickupEstimatedDateTime(newValue: Date) { if (this.pickupEstimatedDateTime != newValue) { this.pickupEstimatedDateTime = newValue; this.MarkAsDirty("PickupEstimatedDateTime"); } }
+       
+	 
+    private pickupActualDateTime: Date;
+    public get PickupActualDateTime() { return this.pickupActualDateTime; }
+    public set PickupActualDateTime(newValue: Date) { if (this.pickupActualDateTime != newValue) { this.pickupActualDateTime = newValue; this.MarkAsDirty("PickupActualDateTime"); } }
+       
+	 
+    private forwarderId: string;
+    public get ForwarderId() { return this.forwarderId; }
+    public set ForwarderId(newValue: string) { if (this.forwarderId != newValue) { this.forwarderId = newValue; this.MarkAsDirty("ForwarderId"); } }
+       
+	 
+    private bookingConfirmationDate: Date;
+    public get BookingConfirmationDate() { return this.bookingConfirmationDate; }
+    public set BookingConfirmationDate(newValue: Date) { if (this.bookingConfirmationDate != newValue) { this.bookingConfirmationDate = newValue; this.MarkAsDirty("BookingConfirmationDate"); } }
        
 	 
 
