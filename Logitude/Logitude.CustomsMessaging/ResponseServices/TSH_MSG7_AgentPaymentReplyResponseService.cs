@@ -124,6 +124,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //    declarationId = declarationQueryService.GetIdByCustomFileNo(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
               
                 var declaration = declarationQueryService.GetAcceptDeclarationAmendmentByCustomsFile(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
+               if(declaration!=null)
                 declarationId = declaration.Id;
 
                 if (_PaymentOrderPM.PaymentOrderConnectionTables != null && !string.IsNullOrWhiteSpace(declarationId))
