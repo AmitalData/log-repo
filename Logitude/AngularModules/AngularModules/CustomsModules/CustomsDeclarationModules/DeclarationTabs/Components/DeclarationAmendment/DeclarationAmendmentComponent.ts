@@ -73,8 +73,11 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
+                if (this.EntityPM.Direction == "E")
+                    this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.IsSubmitDeclaration == true && this.EntityPM.AmendmentDontDisplayInList == false);
+                else
+                    this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
 
-                this.declarationAmendmentSharedDataService.CanOpenNewAmendment =   (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
                 this.Listen();
@@ -123,7 +126,10 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
-         this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
+        if (this.EntityPM.Direction == "E")
+            this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.IsSubmitDeclaration == true && this.EntityPM.AmendmentDontDisplayInList == false);
+        else
+            this.declarationAmendmentSharedDataService.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
         this.LoadDeclarationAmendmentsList();
 
 
