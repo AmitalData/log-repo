@@ -1435,6 +1435,24 @@ namespace Logitude.Customs.Def.ClosedTable
                 //   NeedSignature = false
             });
 
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "195",
+                InOut = InOutEnum.O.ToString(),
+                Description = "תשובה לבדיקה פיזית",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "195",
+                //  NeedSignature = false,
+            });
+
+
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "8240",
