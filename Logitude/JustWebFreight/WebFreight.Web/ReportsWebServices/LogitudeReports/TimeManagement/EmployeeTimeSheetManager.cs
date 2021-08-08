@@ -204,13 +204,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         employeeTimeSheetGroup.Total_OverTime = GetTimeFormatFromMinutes(employeeTimeSheetGroup.EmployeeTimeSheetList.Sum(a => a.MinutesOverTime));
 
                         employeeTimeSheetGroup.EmployeeTimeDaysOff = (from d in list_TMEmployeeTime
-                                                              where d.LocationCode == "D"
-                                                              group d by d.ProjectId into g
-                                                              select new EmployeeTimeDayOff
-                                                              {
-                                                                  ProjectId = g.Key,
-                                                                  TimeInMinutes = g.Sum(s => s.TimeInMinutes),
-                                                              }).ToList();
+                                                                      where  d.EmployeeUserId == employeeTimeSheetGroup.EmployeeId 
+                                                                      && d.LocationCode == "D"
+                                                                      group d by d.ProjectId into g
+                                                                      select new EmployeeTimeDayOff
+                                                                      {
+                                                                         ProjectId = g.Key,
+                                                                         TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                                                      }).ToList();
 
                         foreach (EmployeeTimeDayOff item in employeeTimeSheetGroup.EmployeeTimeDaysOff)
                         {

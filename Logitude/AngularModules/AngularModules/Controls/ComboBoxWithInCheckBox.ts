@@ -149,9 +149,13 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         this.ItemsSource[index] = item;
         this.TotalPickedItems = "";
         if (!this.WithinImage) {
-            for (var i = 0; i < this.ItemsSource.length; i++) {
-                if (this.ItemsSource[i].Checked) {
-                    this.TotalPickedItems += this.ItemsSource[i].Name + ",";
+            if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
+                this.TotalPickedItems = " All";
+            } else {
+                for (var i = 0; i < this.ItemsSource.length; i++) {
+                    if (this.ItemsSource[i].Checked) {
+                        this.TotalPickedItems += this.ItemsSource[i].Name + ",";
+                    }
                 }
             }
         }
