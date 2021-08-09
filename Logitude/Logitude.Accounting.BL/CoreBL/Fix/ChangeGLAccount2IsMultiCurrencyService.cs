@@ -62,11 +62,12 @@ namespace Logitude.Accounting.BL.CoreBL.Fix
                 //ReconciliationUpdateService.DeleteReconciliationsOfGLaccount(accountingContext, gLAccountId,tenant);
                 ///update GLAccounts set IsMultiCurrency=1 ,CurrencyId=null,ReconcileMethodCode=0 where id='1-1544136' and tenant = 74
                 gLAccountPm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                string remark = $"Changed from {gLAccountPm.CurrencyCode} to Multi Currency/n updated {resetLedgerTransactionRes} transaction , deleted {deleteAllRecosRes} reconciliations";
                 gLAccountPm.IsMultiCurrency = true;
                 gLAccountPm.CurrencyId = null;
                 gLAccountPm.CurrencyCode= null;// override fillforeign
                 gLAccountPm.ReconcileMethodCode = ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString();
-                string remark= $"Changed from {gLAccountPm.CurrencyCode} to Multi Currency/n updated {resetLedgerTransactionRes} transaction , deleted {deleteAllRecosRes} reconciliations";
+                
                 gLAccountPm.Change2MultiCurrencyNotes = remark;
                 gLAccountUpdateService.Update(gLAccountPm, true);
 
