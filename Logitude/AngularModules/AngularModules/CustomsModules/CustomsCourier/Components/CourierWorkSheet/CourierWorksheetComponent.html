@@ -181,14 +181,16 @@
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==false" (click)="CancelFlight()">{{'Customs.CourierMaster.O.CancelFlight' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
 
-                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
                                                         <button style="text-align:right" (click)="SendALLSVG(true)">בקרת סיווגים</button>
-                                                        <button style="text-align:right" (click)="ExportCourierSuspention2Excel()" [disabled]="IsDisplayOnly">{{'דוח מעוכבי מכס' }}<img class="CenterCenter" title="Export Suspention To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
-                                                        <button style="text-align:right" (click)="ExportCourierPENDING2Excel()" [disabled]="IsDisplayOnly">{{'דוח PENDING' }}<img class="CenterCenter" title="Export PENDING To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
+                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
+                                                        <button style="text-align:right" (click)="ExportCourierSuspention2Excel()" [disabled]="IsDisplayOnly">{{'דוח מעוכבי מכס' }}<img class="CenterCenter" title="Export Suspention To Excel" class="certOkImg" style="position:relative;margin-bottom:8px;width:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
+                                                        <button style="text-align:right" (click)="ExportCourierPENDING2Excel()" [disabled]="IsDisplayOnly">{{'דוח PENDING' }}<img class="CenterCenter" title="Export PENDING To Excel" class="certOkImg" style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; " src="./Images/Buttons/excelicon.png" /></button>
+
+
 
                                                     </div>
 
-                                                </div>
+                                                    </div>
                                             </td>
                                         </tr>
                                         <tr style="height:10px;"></tr>
