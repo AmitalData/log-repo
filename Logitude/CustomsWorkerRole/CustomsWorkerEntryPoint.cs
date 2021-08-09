@@ -16,7 +16,7 @@ namespace CustomsWorkerRole
             if (CacheManager.CacheWrapper != null) return;
             CustomsWorkerEntryPoint.StartStatic();
         }
-        public static void StartStatic(bool suppressCache = false, Action<bool, bool> BuildObjectTablesZipFilesDataAction=null,string prodInfo = null,
+        public static void StartStatic(bool suppressCache = false, Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction=null,string prodInfo = null,
             Action<string, string, int, string> checkContactFeature= null
             )
         {

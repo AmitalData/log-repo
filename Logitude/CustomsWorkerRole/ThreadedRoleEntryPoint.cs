@@ -168,7 +168,7 @@ namespace CustomsWorkerRole
             throw new NotImplementedException();
         }
 
-        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
+        public static void StartStatic(Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
         {
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
