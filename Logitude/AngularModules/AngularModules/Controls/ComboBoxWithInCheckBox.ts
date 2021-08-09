@@ -1,5 +1,6 @@
 import {Component, OnInit, Output, EventEmitter,AfterViewInit} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../Infrastructure/Tools';
 
 @Component({
     selector: 'ComboBoxWithInCheckBox',
@@ -38,6 +39,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAreasMenu: boolean = false;
     public SearchAreasId: string = "SearchAreasId";
+    public InitialItemsSource: any[];
     constructor() {
         this.ItemsSource = [];
        
@@ -58,7 +60,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     }
 
     ngAfterViewInit() {
-       
+        this.InitialItemsSource = this.ItemsSource;
 
     }
     private SetControlPosition() {
@@ -133,51 +135,44 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                     this.CheckSource[i] = false;
             }
         }
-        if (this.CheckSource[index] == false) 
+        if (this.CheckSource[index] == false) {
             this.CheckSource[index] = true;
-        else
+        }
+
+        else {
             this.CheckSource[index] = false;
+        }
 
         item.Checked = this.CheckSource[index];
-
-        
-
-
-            
+ 
         this.TotalPickedItems += "," + item.Name;
         this.ItemsSource[index] = item;
         this.TotalPickedItems = "";
         if (!this.WithinImage) {
-            for (var i = 0; i < this.ItemsSource.length; i++) {
-
-                if (this.ItemsSource[i].Checked)
-                    this.TotalPickedItems += this.ItemsSource[i].Name + ",";
-
-
+            if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
+                this.TotalPickedItems = " All";
+            } else {
+                for (var i = 0; i < this.ItemsSource.length; i++) {
+                    if (this.ItemsSource[i].Checked) {
+                        this.TotalPickedItems += this.ItemsSource[i].Name + ",";
+                    }
+                }
             }
         }
+
         else {
-
-
             for (var i = 0; i < this.ItemsSource.length; i++) {
-
-                if (this.ItemsSource[i].Checked)
+                if (this.ItemsSource[i].Checked) {
                     this.TotalPickedItems += this.ItemsSource[i].Code + ",";
-
-
+                }
             }
-
         }
         
         this.EditedItemSource.emit(this.ItemsSource);
     }
-    private timerToken: any;
 
     IsChecked() {
-
         return false;
-
-
     }
 
     ComboBoxClicked() {
@@ -259,8 +254,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         var temp = document.getElementById(this.SearchAreasId) as HTMLInputElement;
         temp.placeholder = "";
         temp.style.background = "rgba(0, 0, 0, 0)";
-        //var ToggleBTN = document.getElementById(this.SearchProductDropButtonCustomerId) as HTMLDivElement;
-        //ToggleBTN.className = "ToggleButtonMenuTemp";
+        var ToggleBTN = document.getElementById(this.DropdownId) as HTMLDivElement;
+        ToggleBTN.className = "ToggleButtonMenuTemp";
     }
     FillPlaceHolder() {
         if (!this.SearchText) {
@@ -270,8 +265,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             temp.style.backgroundPosition = "right center";
             temp.style.paddingRight = "30px";
         }
-        //var ToggleBTN = document.getElementById(this.SearchProductDropButtonCustomerId) as HTMLDivElement;
-        //ToggleBTN.className = "ToggleButtonMenu";
+        var ToggleBTN = document.getElementById(this.DropdownId) as HTMLDivElement;
+        ToggleBTN.className = "ToggleButtonMenu";
     }
     OnDeleteValue() {
         var temp = document.getElementById(this.SearchAreasId) as HTMLInputElement;
@@ -285,30 +280,20 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
-            //this.FillList();
-            //this.CD.detectChanges();
+            this.ReBuildItemsSource();
         }
     }
+    ReBuildItemsSource() {
+        var tempData = this.InitialItemsSource;
+        var data: any[] = [];
 
-    //private FillList() {
-    //    var temp: FieldsTranslationsItem[] = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            data = tempData.filter(f => f.Name.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1);
+        }
+        else {
+            data = tempData;
+        }
 
-    //    if (AppTool.IsNullOrEmpty(this.SearchText)) {
-    //        this.list.forEach((item) => {
-    //            temp.push(new FieldsTranslationsItem(item, this));
-    //        })
-    //    }
-
-    //    else {
-    //        this.list.filter(d => !AppTool.IsNullOrEmpty(d.DefaultText) && d.DefaultText.toUpperCase().startsWith(this.SearchText.toUpperCase())
-    //            || !AppTool.IsNullOrEmpty(d.TranslatedText) && d.TranslatedText.toUpperCase().startsWith(this.SearchText.toUpperCase())
-    //            || !AppTool.IsNullOrEmpty(d.Code) && d.Code.toUpperCase().startsWith(this.SearchText.toUpperCase()))
-    //            .forEach((item) => {
-    //                temp.push(new FieldsTranslationsItem(item, this));
-    //            });
-    //    }
-
-    //    this.TabsList.InsertCollection(temp);
-    //    this.CountText = this.TabsList.Length;
-    //}
+        this.ItemsSource = data;
+    }
 }
