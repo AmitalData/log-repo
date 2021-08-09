@@ -1149,12 +1149,14 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
                                 {
-                                   // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-                                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                                  //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                  //  {
+                                    AppendLogLine("open UCUDO");
 
-                                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                    // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                    //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                    //  {
+
+                                    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
                                         UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
                                         {
 
