@@ -91,8 +91,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             var user = AuthenticationUtil.ResolveUserId(_tenant);
             string defValue = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
 
-            if (!string.IsNullOrEmpty(defValue) && defValue == "B")
-            {
+         //   if (!string.IsNullOrEmpty(defValue) && defValue == "B")
+          //  {
                 AppendLogLine("!string.IsNullOrEmpty(defValue) && defValue=='B'");
 
                 var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
@@ -113,13 +113,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
 
 
-            }
-            else
-            {
-                AppendLogLine("Default= WS'");
+           // }
+           // else
+          //  {
+          //      AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
-            }
+           //     ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
+          //  }
 
 
         }
@@ -127,14 +127,15 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //{
         //    return _tenant;
         //}
-
+        public string _PBId;
 
         public void ProccessGenericRequestReal(
-              string xmlLOGICOMMDEC, int tenant, string Curruser,
+              string xmlLOGICOMMDEC, int tenant, string Curruser, string PBId , 
               ref string MoreParams,
               out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
         {
-            _tenant = tenant;
+            _PBId = PBId;
+               _tenant = tenant;
             customFileNo = "";
             MessageOut = "";
             decId = "";
@@ -175,7 +176,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                             if (this._MyDeclarationPM != null)
                             {
-                                CheckMasterToUpdate(MoreParams);
+                                CheckMasterToUpdate(MoreParams , Curruser);
                                 AppendLogLine("Updated declaration " + this._MyDeclarationPM.CustomFileNo );
                                 
                             }
@@ -202,7 +203,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
                         {
-                            CheckMasterToUpdate(MoreParams);
+                            CheckMasterToUpdate(MoreParams, Curruser);
                             AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                             return;
                         }
@@ -271,7 +272,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            CheckMasterToUpdate(MoreParams);
+            CheckMasterToUpdate(MoreParams, Curruser);
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
             {
                 this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.TaxationDateTime, "LogitudeCommDecFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
@@ -593,14 +594,14 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
 
-            if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
-            {
+           // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
+           // {
                 AppendLogLine("update UpdateLOGITUDE_FILE");
 
                 var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
                 var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
                 repo.SubmitChanges();
-            }
+          //  }
 
             customFileNo = _MyDeclarationPM.CustomFileNo;
             decId = _MyDeclarationPM.Id;
@@ -1068,7 +1069,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         }
 
 
-        private void CheckMasterToUpdate(string MoreParams)
+        private void CheckMasterToUpdate(string MoreParams, string Curruser)
         {
             string courier_id = null;
             if (!String.IsNullOrWhiteSpace(MoreParams))
@@ -1123,7 +1124,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (_CourierMasterPM != null)
             {
-                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
+                 var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
                 var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
                 _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
                 if (_CourierDeclarationPM == null)
@@ -1138,7 +1139,34 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
                             try
                             {
+
+
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+
+ 
+                                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
+                                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+
+                                if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                {
+                                    customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                    customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                    {
+
+                                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                        UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                        {
+
+                                            LoggingUserId = Curruser,
+                                            Tenant = _tenant,
+                                            LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+
+                                        };
+
+                                        string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                    }
+                                }
                             }
                             catch (DbEntityValidationException ex)
                             {
@@ -1198,10 +1226,17 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
                     _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
                     _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+
+
+
                 }
                 else
                 {
+
                     _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+
                 }
                 if (_CourierDeclarationPM.SequenceNumeric == null)
                 {
