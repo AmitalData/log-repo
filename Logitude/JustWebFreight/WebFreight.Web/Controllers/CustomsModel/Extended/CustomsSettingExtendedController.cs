@@ -419,5 +419,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage GetAppSettingByCode(string key)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                string val=System.Configuration.ConfigurationManager.AppSettings.Get("AngularKey."+ key);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { val=val });
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
