@@ -119,7 +119,7 @@ namespace Logitude.Update.SandBox
             //revaluationBatch.RunAllOpenRevaluations(28);
             //return;
             var changeGLAccount2IsMultiCurrencyService = new ChangeGLAccount2IsMultiCurrencyService();
-            changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency("1-476221", 1255);
+            changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency("1-18459", 1255);
             return;
             YearTest();
             return;
