@@ -770,10 +770,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 var certificateKeysList = res.certificateKeys.Split(',');
                 var invoiceItemKeysList = res.InvoiceItemKeys.Split(',');
-                for (i = 0; i < certificateKeysList.Length; )
+                for (var j = 0; j < certificateKeysList.Length; j++)
                 {
-                    var certificateKeyItem = certificateKeysList[i];
-                    var invoiceItemKeyItem = invoiceItemKeysList[i];
+                    var certificateKeyItem = certificateKeysList[j];
+                    var invoiceItemKeyItem = invoiceItemKeysList[j];
                     if (i < 990)
                     {
                         whereInCertificateKeys += certificateKeyItem + ',';
