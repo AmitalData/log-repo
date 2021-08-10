@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0c71&quot;"
+  Code="&quot;81bb&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5082,6 +5082,12 @@
       LocalDefaultText="&quot;לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ShipmentOrders&quot;"
+      DefaultText="&quot;Shipment Orders&quot;"
+      LocalDefaultText="&quot;Shipment Orders&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7115,6 +7121,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.OceanInsightsSettings&quot;"
       FeatureDefaultText="&quot;Ocean Insights Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHIPMENTORDERS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHIPMENTORDERS&quot;"
+      FeatureDefaultText="&quot;Shipment Orders&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

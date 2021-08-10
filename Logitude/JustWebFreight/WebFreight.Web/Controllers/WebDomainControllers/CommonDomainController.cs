@@ -2815,6 +2815,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetHTSCodesForProductItemsIds(string productItemIds, string toCountryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(authToken.Tenant);
+                List<HTSCodePM> hTSCodePMs = hTSCodeQuery.GetHTSCodeByProductItemIdsAndCountry(productItemIds, toCountryId, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, hTSCodePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 public class ExcelPartnerType

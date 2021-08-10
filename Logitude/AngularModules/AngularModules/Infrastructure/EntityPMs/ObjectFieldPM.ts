@@ -607,11 +607,12 @@ export class ObjectFieldPM {
     public get EnableFullscreenTextBox() { return this.enableFullscreenTextBox; }
     public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
        
-
+	 
     private additionalQuerySections: string;
     public get AdditionalQuerySections() { return this.additionalQuerySections; }
     public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
-
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		

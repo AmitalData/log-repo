@@ -101,7 +101,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (analyzeQueue != null)
             {
                 this.Deserialize();
-            }
+             }
         }
         private void Deserialize()
         {

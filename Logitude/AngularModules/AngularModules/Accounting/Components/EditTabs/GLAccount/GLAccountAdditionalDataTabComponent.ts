@@ -298,6 +298,10 @@ export class SplittedByCurrencyAccount extends BaseComponent {
         this.entityPM.DisplayNumber = value;
     }
 
+    public get BalanceInLocalCurrency() { return this.entityPM.BalanceInLocalCurrency; }
+    public set BalanceInLocalCurrency(value: number) {
+        this.entityPM.BalanceInLocalCurrency = value;
+    }
 
     public get Inactive()
     {
@@ -308,13 +312,24 @@ export class SplittedByCurrencyAccount extends BaseComponent {
         this.entityPM.Inactive = value;
     } 
 
-    InactiveChecked(checked: boolean)
+    InactiveChecked(checked: boolean, balanceInLocalCurrency: number )
     {
      
-
         if (checked) {
-            this.entityPM.Inactive = true;
-            this.entityPM.Type = "INACTIVE";
+
+            if (this.BalanceInLocalCurrency != null) {
+
+                if (this.BalanceInLocalCurrency != 0) {
+                    this.AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency);
+                    this.entityPM.Inactive = false;
+                    this.entityPM.Type = "ACTIVE";
+                }
+
+                else {
+                    this.entityPM.Inactive = true;
+                    this.entityPM.Type = "INACTIVE";
+                }
+            }
         }
         else {
            
@@ -335,11 +350,12 @@ export class SplittedByCurrencyAccount extends BaseComponent {
 
             });
 
-        
-
     }
 
-    
+    private AddValidationErrorIfThereTransactionsConnectedToSplitGLAccount(balanceInLocalCurrency: number) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+    }
+
     ConnectedGLAccountClicked(item: any) {
         this.EditEntity("GLAccount", this.entityPM.Id, null, "GAGC");
 

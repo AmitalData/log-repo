@@ -110,9 +110,18 @@ namespace CommunicationWorkerRole
                     return GetEntityStatusById(Tenant, EntityId);
                 case "SpecialServicesType":
                     return GetSpecialServicesTypeById(Tenant, EntityId);
+                case "PackageType":
+                    return GetPackageTypeById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetPackageTypeById(int tenant, string id)
+        {
+            PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
+            PackageTypePM packageTypePM = packageTypeQuery.GetSinglePM(id, tenant);
+            return packageTypePM;
         }
 
         private object GetDocumentTypeById(int tenant, string id)
@@ -199,6 +208,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.EntityStatus;
                 case "SpecialServicesType":
                     return KakaMessageTypes.SpecialServicesType;
+                case "PackageType":
+                    return KakaMessageTypes.PackageType;
                 default:
                     return 0;
             }

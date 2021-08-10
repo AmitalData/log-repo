@@ -140,6 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature UserDefinedReportFeature = tenantFeatures.Where(d => d.Code == "UserDefinedReportFeature" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature DailyCurrenciesRatesFeature = tenantFeatures.Where(d => d.Code == "DailyCurrenciesRates" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature ReportExecutionLogFeature = tenantFeatures.Where(d => d.Code == "REPORTEXECUTIONLOGS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature shipmentOrderFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTORDERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -177,6 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SINV", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 29, CategoryTypeCode = null, TextCode = "General.MH.Invoices", Icon = "AccountingPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARInvoice").FirstOrDefault().Id, FeatureId = sharedInvoicesFeature.Id, FeatureUniqeCode = sharedInvoicesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 30, CategoryTypeCode = null, TextCode = "General.MH.Depositions", Icon = "DepositionsPath", FeatureId = depositionFeature.Id, FeatureUniqeCode = depositionFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SHOR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.ShipmentOrders", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ShipmentOrder").FirstOrDefault().Id, FeatureId = shipmentOrderFeature.Id, FeatureUniqeCode = shipmentOrderFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
 
 
