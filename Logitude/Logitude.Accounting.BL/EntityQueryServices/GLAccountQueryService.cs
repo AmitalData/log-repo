@@ -620,6 +620,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<GLAccountPM> Accounts = from a in context.GLAccounts
                                                join
                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                                               join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
                                                where c.MainGLAccountId == accountId && a.Tenant == tenant
                                                select new GLAccountPM()
                                                {
@@ -635,6 +636,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    ReconcileMethodCode = c.GLAccount != null? c.GLAccount.ReconcileMethodCode : null,
                                                    RevenueExpenseType = c.GLAccount != null? c.GLAccount.RevenueExpenseType : null,
                                                    Tenant = tenant,
+                                                   BalanceInLocalCurrency = MoreDatas.BalanceInLocalCurrency,
+
 #if GLAccMoreData
                                                    //BalanceInLocalCurrency = c.GLAccount != null? c.GLAccount.BalanceInLocalCurrency:null,
                                                    LocalBalanceInDue = c.GLAccount != null ? c.GLAccount.LocalBalanceInDue : null,

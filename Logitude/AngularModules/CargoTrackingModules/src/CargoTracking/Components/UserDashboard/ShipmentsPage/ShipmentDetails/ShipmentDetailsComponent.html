@@ -144,9 +144,12 @@
                      *ngFor="let card of SliderCards"
                      [class.active]="card.IsActive"
                      [class.dim]="card.IsDimmed">
-                    <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
+                    <div class="date">{{card.Date | date: 'dd'}}
+                    <span style="display:inline-flex;flex-direction:column-reverse">
+                        <span style="flex:50%">{{card.Date | date: 'MMM'}}</span>
+                        <span style="flex:50%">{{card.Date | date: 'HH:mm'}}</span></span>
+                    </div>
                     <div class="title">{{card.Title}}</div>
-                    <div class="title">{{card.Date | date: 'HH:mm'}}</div>
                     <div class="desc hide-mobile " [attr.title]="card.Description"
                          style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
                     <div (click)="OpenMessageWindow(card.WarningMessage,card.WarningDate)" [attr.title]="card.WarningDate +'\n'+ card.WarningMessage" *ngIf="card.HasWarning" class="warning-icon mobile-only">!</div>
@@ -293,9 +296,9 @@
                 <div *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">
                     <div class="title">containers</div>
                     <div class="description">
-                        <div *ngFor="let container of ShipmentPackages?.slice(0,2), let i = index">
-                            {{container.ContainerNumber}}
-                            <a *ngIf="ShipmentPackages?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
+                            {{container}}
+                            <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
                         </div>
                     </div>
@@ -306,7 +309,9 @@
 
         <div details>
             <br>
-            <div *ngIf="!HasContainersDetails">No Containers Details for this Shipment</div>
+            <div *ngIf="!HasContainersDetails && Shipment.ShipmentList.TransportModeId != 'A'">No Containers Details for this Shipment</div>
+            <div *ngIf="!HasContainersDetails && Shipment.ShipmentList.TransportModeId == 'A'">No Packages Details for this Shipment</div>
+
             <div *ngIf="Shipment && Shipment.ShipmentList && HasContainersDetails">
 
                 <table *ngIf="Shipment.ShipmentList.TransportModeId != 'A' ">

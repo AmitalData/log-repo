@@ -62,8 +62,10 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                            <label [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                            <input *ngIf="SharedTitleType != 'CargoTracking'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label *ngIf="SharedTitleType != 'CargoTracking'" [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                            <input *ngIf="SharedTitleType == 'CargoTracking'" [attr.id]="IsCargoTrackWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsCargoTrackWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label *ngIf="SharedTitleType == 'CargoTracking'" [attr.for]="IsCargoTrackWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -74,7 +76,7 @@
                                                 <tr>
                                                     <td colspan="3" style="vertical-align:top">
 
-                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the shared logistics module.</div>
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the {{SharedTitleType == 'CargoTracking' ? 'cargo tracking' : 'shared logistics'}} module.</div>
                                                     </td>
                                                 </tr>
                                             </table>

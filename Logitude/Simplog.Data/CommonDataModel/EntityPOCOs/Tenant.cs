@@ -196,5 +196,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public double? FCLRatio { get; set; }
         public double? LTLRatio { get; set; }
         public double? FTLRatio { get; set; }
+        public bool IsCargoTrackWebAccessActivated { get; set; }
     }
 }

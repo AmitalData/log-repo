@@ -137,7 +137,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
-                this.SetContainersNumbers(result);
                 this.SetCustomsOrForwarderFields();
 
             }
@@ -190,6 +189,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
+                this.SetContainersNumbers(result);
                 this.InitRoutes();
             }
         });
@@ -221,7 +221,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     private SetContainersNumbers(result: any) {
-        this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
+        this.ContainersNumbers = [];
+        this.ContainersNumbers = result.ContainersNumbers ? result.ContainersNumbers.split(',') : null;
     }
 
     SetCustomsOrForwarderFields() {

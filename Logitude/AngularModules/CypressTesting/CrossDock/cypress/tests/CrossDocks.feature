@@ -1,4 +1,4 @@
-@release @stable @all
+@release @dev @all
 Feature: Cross Docks Entries and Releases
 
     The user creates a shipment, adds a cross dock entry, modifies it, cancels it,
@@ -28,9 +28,9 @@ Feature: Cross Docks Entries and Releases
     Scenario: Add cross dock entry
         Given the user in Connected Entities tab
         And a corss dock "Entry" with the following details
-            | Warehouse         | TestWarehouse |
-            | ExpectedEntryDate | Today         |
-            | ExpectedEntryTime | 13:00         |
+            | Warehouse         | TSWHE |
+            | ExpectedEntryDate | Today |
+            | ExpectedEntryTime | 13:00 |
         When create cross dock entry
         Then the cross dock entry should create successfully
         And the shipment should update successfully
@@ -54,9 +54,9 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Add cross dock entry
         Given a corss dock "Entry" with the following details
-            | Warehouse         | TestWarehouse |
-            | ExpectedEntryDate | Today         |
-            | ExpectedEntryTime | 14:00         |
+            | Warehouse         | TSWHE |
+            | ExpectedEntryDate | Today |
+            | ExpectedEntryTime | 14:00 |
         When create cross dock entry
         Then the cross dock entry should create successfully
 
@@ -78,7 +78,7 @@ Feature: Cross Docks Entries and Releases
     Scenario: Add cross dock release
         Given the user in Connected Entities tab
         And a corss dock "Release" with the following details
-            | Warehouse           | TestWarehouse          |
+            | Warehouse           | TSWHE                  |
             | ExpectedReleaseDate | Today                  |
             | ExpectedReleaseTime | 13:00                  |
             | Package             | PackageWithEntryNumber |
@@ -110,7 +110,7 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Add cross dock release
         Given a corss dock "Release" with the following details
-            | Warehouse           | TestWarehouse          |
+            | Warehouse           | TSWHE                  |
             | ExpectedReleaseDate | Today                  |
             | ExpectedReleaseTime | 14:00                  |
             | Package             | PackageWithEntryNumber |

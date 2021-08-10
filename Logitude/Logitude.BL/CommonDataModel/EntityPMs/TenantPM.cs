@@ -414,8 +414,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         public bool IsQuotesRequestActivatedInShared { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsCargoTrackWebAccessActivated { get; set; }
 
 
-        
     }
 }

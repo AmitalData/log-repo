@@ -747,8 +747,13 @@
   </Column>
   <Column
     Name="IsQuotesRequestActivatedInShared"
-    ShortName="IsQuotesRequestActivated"
-  Type="bit">
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCargoTrackWebAccessActivated"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

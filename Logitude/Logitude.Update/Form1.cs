@@ -4928,6 +4928,13 @@ User/Pass",
                 });
             }
         }
+
+        private void UpdateShipmentOrderButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "shipmentOrder", UpdateSHOLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
     public class TenantMailBox

@@ -6,9 +6,10 @@ import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
+import { UserList } from '../../../Common/EntityLists/UserList';
 
-@Component({
-    
+@Component({    
     selector: 'EmployeeTimeSheetFilterComponent',
     templateUrl: './EmployeeTimeSheetFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -27,13 +28,16 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
-
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.DateOfWorkMinutes = 525;
-    }
 
+        //this.DropButtonId += this.CurrentSession.GetNewId("DropButtonId_1");
+        //this.SearchTextBoxId += this.CurrentSession.GetNewId("SearchTextBoxId_1");
+
+        this.GetUsers();
+    }
 
     private dateOfWorkMinutes: number;;
     get DateOfWorkMinutes() {
@@ -79,7 +83,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         this.FromDate = this.SetDate(Year, month, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
 
-        this.ReportsPreview = myReportsPreview;
+        this.ReportsPreview = myReportsPreview;        
     }
 
     daysInMonth(aDate: Date) {
@@ -102,16 +106,33 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
         }
+
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
         }
+
         if (this.FromDate > this.ToDate) {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
-        if (this.EmployeeUserId == null) {
-            this.ValidationErrorsList.push("Employee is required");
-        }
+
+
         if (this.ValidationErrorsList.length == 0) {
+            var myEmployees: string = "";
+
+            if (this.UsersComboList.filter(i => i.Checked)[0] == null) {
+                this.UsersComboList.forEach((i) => {
+                    myEmployees += i.Id + ",";
+                });
+            }
+            else {
+                this.UsersComboList.forEach((i) => {
+                    if (i.Checked) {
+                        myEmployees += i.Id + ",";
+                    }
+                });
+            }
+        
+
             this.queryFilterItems = new Array<QueryFilterItem>();
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
@@ -131,8 +152,8 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "EmployeeUserId";
-            this.queryFilterItem.FieldValue = this.EmployeeUserId;
+            this.queryFilterItem.FieldName = "Employees";
+            this.queryFilterItem.FieldValue = myEmployees;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
@@ -145,7 +166,6 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
-            //this.reportFliter.DateType = "CreateDate";
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
             this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
@@ -156,4 +176,36 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
     }
+
+    public SelectedUsers: string;
+    EditedItemSource(newSource: any) {
+        this.UsersComboList = newSource;
+    }
+
+    public UsersComboList: UserItemClass[] = [];
+    GetUsers() {
+        var AddtionalService: UserListService = new UserListService();
+        AddtionalService.getAllFromCache().subscribe((result: any) => {
+            var usesrList: UserList[] = result.Result.filter(s => !s.InActive);
+            usesrList.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 });
+
+            usesrList.forEach((item) => {
+                this.UsersComboList.push(new UserItemClass(item));
+            });
+        });
+    }
+}
+
+export class UserItemClass {
+    public entityList: UserList;
+    constructor(entityList: UserList) {
+        this.entityList = entityList;
+    }
+
+    get Id() { return this.entityList.Id; }
+    get Name() { return this.entityList.EnglishName; }
+
+    private checked: boolean;
+    public get Checked() { return this.checked; }
+    public set Checked(value: boolean) { this.checked = value; }
 }

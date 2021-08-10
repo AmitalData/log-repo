@@ -551,7 +551,7 @@
 																				<td [style.width.px]="LabelColumnWidth">
 																					<div class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
-																						Number of Packages:
+																						{{'Shipment.F.BookingNumberOfPackages.Short' | TextCodeTranslationPipe}}:
 																					</label>
 																				</td>
 
@@ -599,7 +599,7 @@
 																				<td [style.width.px]="LabelColumnWidth">
 																					<div class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
-																						Gross Weight (MT):
+																					 {{GrossWeightLabel}} 
 																					</label>
 																				</td>
 
@@ -620,7 +620,7 @@
 
 																				<td [style.width.px]="LabelColumnWidth">
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
-																						Volume (CBM):
+																						{{VolumeLabel}}
 																					</label>
 																				</td>
 

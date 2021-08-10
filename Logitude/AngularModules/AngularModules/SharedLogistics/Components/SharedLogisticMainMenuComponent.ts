@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
@@ -75,6 +75,7 @@ export class SharedLogisticMainMenuComponent {
 
     private Page_BOOK: any = null;
     private Page_SHIP: any = null;
+    private Page_CATR: any = null;
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -109,7 +110,17 @@ export class SharedLogisticMainMenuComponent {
                             break;
                         }
 
-              
+                          //CargoTracking
+                        case "CATR": {
+                            if (this.Page_CATR == null) {
+                                SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.Page_CATR = cmpRef.instance;
+                                        this.Page_CATR.SetSharedTitleType("CargoTracking");
+                                    });
+                            }
+                            break;
+                        }
                     }
                 }
             }

@@ -1117,7 +1117,7 @@
 
         function ViewQuotationDocument(QuotationDocumentSecurityId) {
 
-            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&cardId=" + $.CurrentCardId + "&tempId=";
             $.ajax({
                 url: "api/DocumentDownloadToken",
                 type: 'GET',

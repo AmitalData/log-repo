@@ -3,7 +3,7 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { APInvoicePM } from '../../../Invoice/EntityPMs/APInvoicePM';
 import { InvoiceTool } from '../../../Invoice/Tools';
-import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { AppTool, ArrayTool, DateTool } from '../../../Infrastructure/Tools';
 import { PaymentTermListService } from '../../../Common/Services/StandardLists/PaymentTermListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { PaymentTermList } from '../../../Common/EntityLists/PaymentTermList';
@@ -613,6 +613,28 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         }
     }
 
+    private subTotalInLocalCurrency: number;
+    get SubTotalInLocalCurrency() {
+        return this.subTotalInLocalCurrency;
+    }
+    set SubTotalInLocalCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+
+        if (this.subTotalInLocalCurrency != setValue) {
+            this.subTotalInLocalCurrency = setValue;
+        }
+    }
+
+    private subTotalInInvoiceCurrency: number;
+    get SubTotalInInvoiceCurrency() { return this.subTotalInInvoiceCurrency; }
+    set SubTotalInInvoiceCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+
+        if (this.subTotalInInvoiceCurrency != setValue) {
+            this.subTotalInInvoiceCurrency = setValue;
+        }
+    }
+
     public ComputeAPInvoiceDueDate() {
         if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
             this.ComputeDueDateWithoutPaymentTerm();
@@ -772,6 +794,9 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (this.IsCopyLinesChecked) {
             this.CopyInvoiceLines(entityPM);
         }
+
+        entityPM.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(entityPM.InvoiceLines, "LocalCurrencyAmount"), 2);
+        entityPM.SubTotalInInvoiceCurrency = AppTool.Round(ArrayTool.Sum(entityPM.InvoiceLines, "InvoiceCurrencyAmount"), 2);
         this.InitializeProfitCurrency(entityPM);
         this.OpenInvoiceEditScreen(entityPM);
     }
@@ -794,7 +819,6 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
         entityPM.InternalNotes = this.InternalNotes;
         entityPM.InvoiceExpectedAmount = this.InvoiceExpectedAmount;
-        entityPM.AmountInLocalCurrency = this.AmountInLocalCurrency == null ? this.EntityPM.AmountInLocalCurrency :null;
         entityPM.ProfitCurrencyExchangeRate = this.ProfitCurrencyExchangeRate;
         entityPM.AmountInProfitCurrency = this.EntityPM.AmountInProfitCurrency;
         entityPM.localCurrencyId = this.LocalCurrencyId;
@@ -805,6 +829,13 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.StatusCode = this.WaitingForApprovalStatusCode;
         entityPM.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         entityPM.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        if (SessionLocator.LocalCurrencyId == this.InvoiceCurrencyId) {
+            entityPM.AmountInLocalCurrency = this.AmountInInvoiceCurrency;
+        }
+        else {
+            entityPM.AmountInLocalCurrency = AppTool.Round(this.AmountInInvoiceCurrency * this.InvoiceCurrencyExchangeRate, 2);
+        }
+    
     }
 
     CopyInvoiceLines(entityPM) {
@@ -821,9 +852,11 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         this.SetChargesTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
         apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
+        apInvoiceLinePM.LocalCurrencyAmount = this.IsCopyAmountsChecked ? AppTool.Round(originalAPInvoiceLine.LocalCurrencyAmount * this.InvoiceCurrencyExchangeRate, 2) : 0;
         apInvoiceLinePM.OpenAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.OpenAmount : 0;
         apInvoiceLinePM.Description = originalAPInvoiceLine.Description;
         apInvoiceLinePM.Notes = null;
+        apInvoiceLinePM.ForiegnExchangeRate = apInvoicePM.InvoiceCurrencyExchangeRate;
         apInvoiceLinePM.VendorId = this.VendorId;
         apInvoiceLinePM.VendorName = this.VendorName;
         apInvoiceLinePM.AmountTypeCode = "NEXP";

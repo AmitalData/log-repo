@@ -251,7 +251,7 @@ export function FillReleaseDate(releaseDetails: CrossDockDetails) {
 }
 export function FillCrossDockDate(selector: string, date: string) {
     if (date == "Today") {
-        cy.FillDate(selector, GetTodayDate())
+        cy.FillDate(selector, ".")
     }
     else {
         cy.FillDate(selector, date)

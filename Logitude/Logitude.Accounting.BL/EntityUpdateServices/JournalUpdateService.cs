@@ -563,14 +563,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
         {
-
-            List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
+            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice) { 
+                List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
             foreach (JournalLinePM journalLine in jourlDebitInputLines)
             {
                 JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
                 SaveJournalAdditionalData(journalAdditionalDataPM);
 
             }
+        }
         }
         private List<JournalLinePM> SelectJournalDebitLinesFromJournalLines(JournalPM journal)
         {
