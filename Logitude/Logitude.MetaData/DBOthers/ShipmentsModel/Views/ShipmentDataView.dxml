@@ -232,7 +232,8 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 AccountManagerUserContacts.EnglishName as AccountManagerUserName,
 						 SalesmanUserContact.EnglishName as SalesmanUserName,
 						 CreatedByUserContact.EnglishName as CreatedByUserName,
-						 LastSentByUserContact.EnglishName as LastSentByUserName,						 
+						 LastSentByUserContact.EnglishName as LastSentByUserName,		
+             HandlerUserContact.EnglishName as HandlerUserName,
 						 ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
 						 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 						 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
@@ -375,7 +376,8 @@ FROM            dbo.Shipments LEFT OUTER JOIN
 						 dbo.EventTypes ON dbo.Shipments.LastSharedEventId = dbo.EventTypes.Id LEFT OUTER JOIN
 						 dbo.Contacts AS LastSentByUserContact ON dbo.Shipments.LastSentByUserId = LastSentByUserContact.Id LEFT OUTER JOIN
 						 dbo.Contacts AS LocalCustomsSentByUser ON dbo.Shipments.LocalCustomsSentByUserId = LocalCustomsSentByUser.Id LEFT OUTER JOIN
-						 dbo.Contacts AS CreatedByUserContact ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id INNER JOIN						 
+             dbo.Contacts AS HandlerUserContact ON dbo.Shipments.HandlerUserId = HandlerUserContact.Id LEFT OUTER JOIN
+						 dbo.Contacts AS CreatedByUserContact ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id INNER JOIN
 						 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
 						 dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id LEFT OUTER JOIN
 

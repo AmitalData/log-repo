@@ -467,6 +467,7 @@ export class ShipmentList {
 		PlannedCargoReadyDate: Date;
 		ApprovedCargoReadyDate: Date;
 		HandlerUserId: string;
+		HandlerUserName: string;
 		StandalonePickupDeliveryId: string;
 	
 }

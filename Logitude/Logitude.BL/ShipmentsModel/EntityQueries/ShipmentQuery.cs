@@ -11143,6 +11143,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PlannedCargoReadyDate = view.PlannedCargoReadyDate,
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
                         HandlerUserId = view.HandlerUserId,
+                        HandlerUserName = view.HandlerUserName,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12356,6 +12357,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                                ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                                HandlerUserId = f.HandlerUserId,
+                               HandlerUserName = f.HandlerUserName,
                            };
             return myResult;
         }
@@ -12723,6 +12725,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
+                    HandlerUserName = f.HandlerUserName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12991,6 +12994,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
+                    HandlerUserName = f.HandlerUserName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
