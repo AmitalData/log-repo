@@ -18,5 +18,6 @@
         public static long Currency = 14;
         public static long EntityStatus = 15;
         public static long SpecialServicesType = 16;
+        public static long PackageType = 17;
     }
 }
