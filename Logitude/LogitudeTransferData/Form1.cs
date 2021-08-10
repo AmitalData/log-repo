@@ -105,6 +105,22 @@ namespace LogitudeTransferData
 
             ProduceKafkaMessages<EntityStatusPM>(entityStatusPMs, KakaMessageTypes.EntityStatus);
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<PackageTypePM> packageTypePMs = GetAllPackageTypes(tenant);
+
+            ProduceKafkaMessages<PackageTypePM>(packageTypePMs, KakaMessageTypes.PackageType);
+        }
+
+        private List<PackageTypePM> GetAllPackageTypes(int tenant)
+        {
+            PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
+            List<PackageTypePM> packageTypePMs = packageTypeQuery.GetPackageTypePMsByTenant(tenant).ToList();
+            return packageTypePMs;
+        }
+
         private List<CurrencyPM> GetAllCurrencies(int tenant)
         {
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
