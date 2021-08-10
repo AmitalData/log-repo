@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "84a5e5439dde3425e5bf4b69dfb9e227";
+		public const string HashString = "efb05404e46de401263b963536275f09";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "8897",
+			      				    Code =  "6abe",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2087,10 +2087,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalInvoiceAmountInUSD",
 					  						DefaultText =  "Total Invoice Amount",
-					  						FullLocalDefaultText =  "סכום חשבונות בדולד",
+					  						FullLocalDefaultText =  "סכום חשבונית בדולר",
 					  						ListFieldLable =  "TotalInvoiceAmountInUSDListLable",
 					  						ListLableDefaultText =  "Total Invoice Amount",
-					  						ListLocalDefaultText =  "סכום חשבונות בדולד",
+					  						ListLocalDefaultText =  "סכום חשבונית בדולר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4659,6 +4659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CourierPendingReasonNameList",
 					  						ListPropertyPath =  "CourierPendingReasonNameList",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

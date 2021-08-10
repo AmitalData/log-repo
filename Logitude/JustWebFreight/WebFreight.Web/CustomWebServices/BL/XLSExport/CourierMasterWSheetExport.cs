@@ -346,11 +346,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
 
             var group2 = (from d in MyContext.DeclarationPendings
-                         join c in q
-                         on d.DeclarationID equals c.DeclarationId
-
-                         group d by d.DeclarationID into PendingGroup
-                         select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
+                          join c in q on d.DeclarationID equals c.DeclarationId
+                          where d.Status != "S"
+                          group d by d.DeclarationID into PendingGroup
+                          select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
  ); ;
 
             Dictionary<string, string> pendings = new Dictionary<string, string>();
