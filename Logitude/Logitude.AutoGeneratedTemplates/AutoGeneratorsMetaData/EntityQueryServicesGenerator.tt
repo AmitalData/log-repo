@@ -115,7 +115,7 @@ void SaveEntityQueryServiceOutput(string outputFileName)
 	
 	         string[] namespacearr = pmnamespacestring.ToString().Split('.');
 		     string projectname = namespacearr[1].Replace("Lib","");
-        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking")
+        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking" && projectname != "ShipmentOrderModule")
         {
 		 iswrongname = true;
         }
@@ -151,6 +151,11 @@ void SaveEntityQueryServiceOutput(string outputFileName)
 	if(pocosspacestring.Contains("CargoTracking"))
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
+	}
+	
+	if(pocosspacestring.Contains("ShipmentOrderModule"))
+	{
+	   entityPMsPath="Logitude.ShipmentOrderModule.Def.EntityPMs;";
 	}
 
 	string pmsspacestring =   entityPMsPath;	string mappingspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
