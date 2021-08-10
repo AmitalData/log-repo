@@ -17,9 +17,9 @@ import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/
 import { DeclarationPendingsGeneralComponent } from './Components/CourierPendingReason/DeclarationPendingsGeneralComponent';
 import { CourierDeclarationWorkspaceComponent } from './Components/CourierWorkspaces/CourierDeclarationWorkspaceComponent';
 import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyKeywordComponent';
-import { VirtualScrollNG } from './Components/CourierWorkspaces/VirtualScrollNG';
-import { VirtualScrollNGScroll } from './Components/CourierWorkspaces/VirtualScrollNGScroll';
-import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
+//import { VirtualScrollNG } from './Components/CourierWorkspaces/VirtualScrollNG';
+//import { VirtualScrollNGScroll } from './Components/CourierWorkspaces/VirtualScrollNGScroll';
+//import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
 import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 
@@ -44,9 +44,9 @@ export const Components =
         CourierDeclarationWorkspaceComponent,
         AutonomyKeywordComponent,
         GetUnloadPortCodeComponent,
-        VirtualScrollNG,
-        VirtualScrollNGScroll,
-        CourierWorksheetNGTComponent,
+        //VirtualScrollNG,
+        //VirtualScrollNGScroll,
+        //CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
     ];
@@ -77,9 +77,9 @@ export class ModuleDeclarations {
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
                 
             case "AutonomyKeywordComponent": { myResult = AutonomyKeywordComponent; break; }
-            case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
-            case "VirtualScrollNGScroll": { myResult = VirtualScrollNGScroll; break; }
-            case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
+            //case "VirtualScrollNG": { myResult = VirtualScrollNG; break; }
+            //case "VirtualScrollNGScroll": { myResult = VirtualScrollNGScroll; break; }
+            //case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
                 
