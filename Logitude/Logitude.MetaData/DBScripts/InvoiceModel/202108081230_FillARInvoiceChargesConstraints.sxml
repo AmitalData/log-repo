@@ -1,7 +1,9 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-    	  If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
+    Delete from ARInvoiceChargesConstraints
+	  
+	  If(OBJECT_ID('tempdb..#tempTable') Is Not Null)
 				Begin
 					Drop Table #tempTable
 				End
@@ -25,7 +27,7 @@
 		 ARInvoices.CreateDate
 		 into #tempTable
 
-		FROM ARInvoiceLines join ARInvoices on ARInvoiceLines.ARInvoiceId = ARInvoices.Id Where $LastCounterWhere$
+		FROM ARInvoiceLines join ARInvoices on ARInvoiceLines.ARInvoiceId = ARInvoices.Id where ARInvoiceLines.ReceivableId is not null And $LastCounterWhere$
       
      	DECLARE @Id as varchar(15)
 		  DECLARE @InvoiceLineId as varchar(15)
@@ -45,7 +47,7 @@
 				 WHILE @@FETCH_STATUS = 0
 				 BEGIN
 
-			   if Exists (Select ReceivableId from ARInvoiceLines Group By (ReceivableId) having ReceivableId = @ReceivableId And count(ReceivableId) = 1)
+		   	if not exists (Select ReceivableId from ARInvoiceChargesConstraints where ReceivableId = @ReceivableId)
 				 begin
 				    EXECUTE usp_GetNextTableIdValue @Id OUTPUT,'ARInvoiceChargesConstraints'
 			      insert into #temp_ARInvoiceChargesConstraints(Id, Tenant, InvoiceLineId,ReceivableId,CreateDate) values (@Id, @Tenant, @InvoiceLineId, @ReceivableId, @CreateDate)
@@ -78,7 +80,6 @@
 
 		drop table #tempTable
 		drop table #temp_ARInvoiceChargesConstraints
-
     ]]>
   </Sql>
 </Script>
