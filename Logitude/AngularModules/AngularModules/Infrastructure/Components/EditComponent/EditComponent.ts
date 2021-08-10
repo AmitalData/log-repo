@@ -929,6 +929,13 @@ export class EditComponent implements OnDestroy {
                         }
                     }
 
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHPI");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+
                     // SHCF: Customs File
                     if (this.EntityPM.ShipmentLevelCode != "D" && this.EntityPM.ShipmentLevelCode != "H") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHCF");

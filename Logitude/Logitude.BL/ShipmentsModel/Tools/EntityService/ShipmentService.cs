@@ -396,7 +396,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                     this.UpdateShipmentProductItems();
-                    this.UpdateShipmentProductItems();
                     this.ComputeIsHTSMissingField();
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
