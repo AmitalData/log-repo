@@ -406,7 +406,7 @@ h1{
     ul.toolbar-filters > li{
         cursor: pointer;
         padding: 4px 17px;
-        background: #E9E9E9; 
+        background: #E9E9E9;
         /*background: var(--secondaryColor);*/
         display: inline-block;
         margin: 2px 10px;
@@ -535,7 +535,7 @@ h1{
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 99;
     width: 340px;
     transition: 1s all ;
     /* padding: 20px; */
