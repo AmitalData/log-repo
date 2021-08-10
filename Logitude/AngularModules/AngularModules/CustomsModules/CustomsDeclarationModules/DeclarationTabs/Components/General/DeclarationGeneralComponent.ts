@@ -1551,13 +1551,29 @@ export class DeclarationExportRecipientModel extends BaseComponent {
     public get RecipientAddress() { return this.EntityPM.RecipientAddress; }
     public set RecipientAddress(newValue: string) {
         this.EntityPM.RecipientAddress = newValue;
-
+        if (newValue != null) {
+            if (this.Parent.RecipientList.length == 1) {
+                this.Parent.EntityPM.AddDeclarationExportRecipient(this.EntityPM);
+            }
+            this.Parent.AddRecipientEnabled = true;
+        }
+        else {
+            this.Parent.AddRecipientEnabled = false;
+        }
     }
 
     public get RecipientIssueCountryCode() { return this.EntityPM.RecipientIssueCountryCode; }
     public set RecipientIssueCountryCode(newValue: string) {
         this.EntityPM.RecipientIssueCountryCode = newValue;
-
+        if (newValue != null) {
+            if (this.Parent.RecipientList.length == 1) {
+                this.Parent.EntityPM.AddDeclarationExportRecipient(this.EntityPM);
+            }
+            this.Parent.AddRecipientEnabled = true;
+        }
+        else {
+            this.Parent.AddRecipientEnabled = false;
+        }
     }
     //#endregion
 
