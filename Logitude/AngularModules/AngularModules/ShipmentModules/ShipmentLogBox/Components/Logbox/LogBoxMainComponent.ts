@@ -56,6 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
+        this.LoadEntityResource("Shipment");
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
@@ -63,7 +64,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         this.checkAirShipmentToggle();
     }
-
+     
     private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -911,7 +912,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadAddEditComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
-        this.LoadEntityResource("Shipment");
         newWindow.Width = 600;
         newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376 : 420) : 350;
         newWindowComponentPath += this.isPrivateLabel ? 'AddEditPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';

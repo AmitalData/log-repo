@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IncotermList } from '../../../../Common/EntityLists/IncotermList';
 import { PortList } from '../../../../Common/EntityLists/PortList';
+import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
 import { DepartmentListService } from '../../../../Common/Services/StandardLists/DepartmentListService';
 import { IncotermListService } from '../../../../Common/Services/StandardLists/IncotermListService';
@@ -30,7 +31,7 @@ import { AddEditPrivateLabelShipmentComponent } from './AddEditPrivateLabelShipm
 
 export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmentComponent {
 
-
+    public TenantPM: TenantPM;
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
@@ -50,32 +51,122 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired"); 
     private args: any;
     EntityProgressStatusId: string;
-    public SessionIndex: number;
-    private entityResourceService: EntityResourceService;
-    public ScreenOpacity: number = 1;  
+    public SessionIndex: number; 
+    public ScreenOpacity: number = 1;   
+    public VolumeLabel: string;
+    public GrossWeightLabel: string;
+    public ChargeableWeightLabel: string;
+    public VolumetricWeightColumnHeader: string;
 
     constructor() {
-        super();
-        this.SessionIndex = this.CurrentSession.SessionIndex;
+        super(); 
         this.InitializeServices();
-        this.BuildFiltersLists();
-        this.LoadEntityResource(this.ObjectTableName);
+        this.SetUIProperties_Filters(); 
+        this.TenantPM = SessionLocator.TenantPM;
+        this.SessionIndex = this.CurrentSession.SessionIndex; 
+        this.BuildFiltersLists(); 
+        this.SetUnits();
+        this.SetLabels();
     }
 
-    LoadEntityResource(objectTableName: string) { 
+    SetUnits() { 
+        this.SetDimensionsUnitCode(); 
+        this.SetVolumeUnitCode(); 
+        this.SetGrossWeightUnitCode();
+        this.SetChargeableWeightUnitCode();
+        this.ComputeOrderVolumetricWeight();
+        this.ComputeChargeableWeight(); 
+    }
  
-        this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => { 
+    private SetChargeableWeightUnitCode() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
+            this.EntityPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
+        }
+    }
 
-        });
+    private SetGrossWeightUnitCode() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.GrossWeightUnitCode)) {
+            this.EntityPM.GrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
+        }
+    }
 
+    private SetVolumeUnitCode() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+            this.EntityPM.VolumeUnitCode = this.TenantPM.VolumeUnitCode;
+        }
+    }
 
+    private SetDimensionsUnitCode() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.DimensionsUnitCode)) {
+            this.EntityPM.DimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
+        }
+    }
+
+    private ComputeOrderVolumetricWeight() {
+        let weight: number = null;
+
+        if (this.BookingVolume != null) {
+            weight = AppTool.GetWeightFromVolume(this.EntityPM.VolumeUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.BookingVolume, this.EntityPM.Ratio);
+        } 
+        else if (this.OrderGrossWeight != null) {
+            weight = AppTool.GetWeightFromWeight(this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.OrderGrossWeight);
+        }
+
+        this.OrderVolumetricWeight = weight;
+    }
+
+    get OrderVolumetricWeight() { return this.EntityPM.OrderVolumetricWeight; }
+    set OrderVolumetricWeight(newValue: number) {
+        if (this.EntityPM.OrderVolumetricWeight != newValue) {
+            this.EntityPM.OrderVolumetricWeight = AppTool.Round(newValue, 3);
+            this.ComputeChargeableWeight();
+        }
+    }
+
+    private ComputeChargeableWeight() {
+        this.OrderChargeableWeight = AppTool.CalculateChargeableWeight(this.OrderGrossWeight, this.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+    }
+
+    get OrderChargeableWeight() { return this.EntityPM.OrderChargeableWeight; }
+    set OrderChargeableWeight(newValue: number) {
+        if (this.EntityPM.OrderChargeableWeight != newValue) {
+            let OrderVolume: number = AppTool.Round(newValue, 3);
+            this.EntityPM.OrderChargeableWeight = OrderVolume;
+
+            this.SetUIProperties_OrderDetails();
+
+            if (this.OrderGrossWeight == null && this.OrderVolumetricWeight == null) {
+                this.SetOrderDetails(OrderVolume);
+            }
+        }
+    }
+
+     
+
+    private SetOrderDetails(orderVolume: number) {
+        this.EntityPM.OrderVolumetricWeight = orderVolume;
+        this.EntityPM.OrderGrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, orderVolume);
+        this.EntityPM.BookingVolume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, orderVolume, this.EntityPM.Ratio);
+    }
+
+    SetLabels() { 
+
+        this.VolumeLabel = TextCodeTranslator.Translate("Shipment.F.BookingVolume.Short").replace("%VolumeCode", this.EntityPM.VolumeUnitCode);
+        this.GrossWeightLabel = TextCodeTranslator.Translate("Shipment.F.OrderGrossWeight.Short").replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
+
+        if (this.TransportModeId == "A") {
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+        } 
+        else {
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+        }
+         
     }
     InitializeServices() {
         this.portListService = new PortListService();
         this.incotermListService = new IncotermListService();
         this.shipmentPMService = new ShipmentPMService();  
         this.entityStatusListService = new EntityStatusListService();
-        this.entityResourceService= new EntityResourceService();
     }
 
     SetWindowArgs(args: any) { 
@@ -119,8 +210,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         });
     }
 
-    SetUIProperties() {
-        this.SetUIProperties_Filters();
+    SetUIProperties() { 
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, true);
 
     }
