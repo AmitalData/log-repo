@@ -215,6 +215,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
                     this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
                 }
+                if(!string.IsNullOrEmpty(customsDocumentPointerPM.OriginEntity))
+                {
+                    relatedEntity.entityType = Convert.ToInt32(customsDocumentPointerPM.OriginEntity);
+                }
             }
 
             return relatedEntity;
