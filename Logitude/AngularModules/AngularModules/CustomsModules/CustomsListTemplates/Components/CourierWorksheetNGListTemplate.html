@@ -104,6 +104,14 @@
     </div>
 
 
+    <div style="text-align: right;" class="TextTrimming" *ngIf="fieldName == 'DeclarationStatusTypeName'">
+        <span>{{_CourierWorksheet['DeclarationStatusTypeName']}}</span>
+    </div>
+
+    <div style="text-align: right;" class="TextTrimming" *ngIf="fieldName == 'ImporterCode'">
+        <span>{{_CourierWorksheet['ImporterCode']}}</span>
+    </div>
+
 
     <div class="TextTrimming" *ngIf="fieldName == 'DocumentStatusCode'">
         <img *ngIf="IsDocumentStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
@@ -166,7 +174,7 @@
         <span style="font-weight: bold">{{_CourierWorksheet.CourierHawb}}</span>
     </div>
 
- 
+
 
     <div class="TextTrimming" (click)=" CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'');ButtonClick($event)" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
         <span data-toggle="tooltip" data-placement="bottom" title="{{CourierPendingReasonListToolTip}}">{{CourierPendingReasonListText}}</span><!-- _CourierWorksheet.CourierPendingReasonList -->
@@ -188,7 +196,7 @@
                         <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'');">
                             <span>Pending</span>
                         </li>
-                       
+
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
                         <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
                             <span>כניסה ל-F/U</span>
