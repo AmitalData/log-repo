@@ -1,5 +1,5 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile;
-using Logitude.BL.Security;
+//using Logitude.BL.Security;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -22,6 +22,15 @@ using System.Web.Http;
 using WebFreight.Web.CustomModel;
 using WebFreight.Web.CustomWebServices;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.DataContracts;
+using System.Linq.Expressions;
+using System.Text;
+using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityListQueryServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -132,7 +141,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             var responseData = new ResultClientProgressBar();
             try
             {
-                
+
                 if (BasicResponse)
                 {
                     responseData.responseDataXml = ClientProgressBarIndicatorService.GetClientProgressBarIndicatorCurrentStage(CustomsRequestsSheetId);
@@ -721,6 +730,118 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        public HttpResponseMessage PostVirtualDeclarationCourierStatus
+                   (AmitalLazyLoadEvent amitalLazyLoadEvent)
+        {
+            try
+            {
+               string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
+                var q =declarationCourierStatusQuery.GetVirtual(tenant);
+                //var myLazyLoadEvent = amitalLazyLoadEvent.MyLazyLoadEvent as LazyLoadEvent;
+                q=q.LazyFilters(amitalLazyLoadEvent , 
+                    ()=> { return declarationCourierStatusQuery.GetVirtual(tenant); } 
+                    );
+
+                ServiceResponse response = new ServiceResponse();
+                if (amitalLazyLoadEvent.GetCount)
+                {
+                    int count = q.Count();
+                    response.Count = count;
+                }
+                if (String.IsNullOrWhiteSpace(amitalLazyLoadEvent.sortField))
+                {
+                    amitalLazyLoadEvent.sortField = "DeclarationId";
+                }
+                
+                q = q.LazyOrderBy(amitalLazyLoadEvent);
+                
+                q = q.LazySkipTake(amitalLazyLoadEvent);
+
+                response.Result = q.ToList(); ;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        static Car[] _Cars = null;
+        public HttpResponseMessage GetVirtualCar
+           (bool GetCount, int first, int rows,  string sortField/*: "CreatAt"*/, int  sortOrder/*: 1*/)
+        {
+            int max = 105;  
+
+            try
+            {
+                if (_Cars == null)
+                {
+
+                    var carService = new CarService();
+                    var cars = new List<Car>();
+                    ///if (first + i < 500)
+
+                    for (int i = 0; i < max; i++)
+                    {
+
+
+                        cars.Add(carService.generateCar(first + i));
+
+                    }
+                    _Cars = cars.ToArray();
+
+
+                }
+                
+
+                ServiceResponse response = new ServiceResponse();
+                if (GetCount)
+                {
+                    int count = max;
+                    response.Count = count;
+                }
+                var lazyLoadEvent = new AmitalLazyLoadEvent() {
+                    first = first,
+                    rows = rows,
+                    sortField = sortField,
+                    sortOrder = sortOrder
+                };
+                var q = _Cars.ToList().AsQueryable<Car>();
+                if (!string.IsNullOrWhiteSpace(sortField)  && sortField!="undefined")
+                {
+                    //sortField
+                    q=q.LazyOrderBy(lazyLoadEvent);
+
+
+                }
+                q = q.LazySkipTake(lazyLoadEvent);
+                response.Result = q.ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
+
     }
     class ResultClientProgressBar
     {
@@ -731,4 +852,70 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
     }
 
+
+    class CarService
+    {
+        static string[] brands = { "Vapid", "Carson", "Kitano", "Dabver", "Ibex", "Morello", "Akira", "Titan", "Dover", "Norma" };
+        static string[] colors = { "Black", "White", "Red", "Blue", "Silver", "Green", "Yellow" };
+
+        public Car generateCar(int id)
+        {
+            return new Car()
+            {
+                vin =id.ToString(), //this.generateVin(),
+                brand = this.generateBrand(id),
+                color = this.generateColor(id),
+                CreatAt = this.generateYear(id)
+            };
+        }
+
+
+        string generateVin()
+        {
+
+
+            return RandomString(5);
+        }
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        string generateBrand(int id)
+        {
+            return brands[id % 10];
+            return brands[random.Next(10)];
+        }
+
+        string generateColor(int id)
+        {
+            return colors[id % 5];
+            //return colors[random.Next(7)];
+        }
+
+        DateTime generateYear(int id)
+        {
+            return (DateTime.Now.Date.AddDays(-1*id));
+            //return 2000 + random.Next(21);
+        }
+    }
+
+    public class Car
+    {
+        public string vin { get; set; }
+        public DateTime CreatAt { get; set; }
+        public string brand { get; set; }
+
+        public string color { get; set; }
+
+        public int price { get; set; }
+
+        public int saleDate { get; set; }
+
+    }
+
+
+   
 }

@@ -62,7 +62,32 @@ export class CustomsSettingExtendedListService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    private static _AppSetting: KeyValue[] = [];
+    GetAppSettingByCode(key: string): any {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        return defer(() => {
+            let res = CustomsSettingExtendedListService._AppSetting.filter(r => r.Key == key);
+            if (res.length == 1) {
+                let val = res[0].Value;
+                let serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = { val: val };
+
+                return of(serviceResponse);
+            }
+            return this._http.get(this._apiUrl + '/GetAppSettingByCode/?key=' + key.toString() , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var obj = response;
+                let val: string = (obj as any).val;
+                CustomsSettingExtendedListService._AppSetting.push(new KeyValue(key,val))
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = obj;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     GetSincroOption(tenant: number, SincroScreen: string): any {
         var authHeader = new Headers();
@@ -210,4 +235,8 @@ export class CustomsSettingExtendedListService {
         });
     }
 
+
+}
+class KeyValue {
+    constructor(public Key: string, public Value) { }
 }

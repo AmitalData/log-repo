@@ -44,6 +44,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
     
@@ -92,6 +93,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     //public Title: string;
     private title: string;//= "";
+    customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     get Title() { return this.title; }
     set Title(newValue: string) {
         if (this.title != newValue) {
@@ -1913,12 +1915,29 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                     //logWindow.IsHideHeader = true;
                                                     logWindow.IsFillScreen = true;
                                                     AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-                                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
                                                         AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
                                                         this.isEditControlOpened = false;
                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                     });
+                                                    this.customsSettingExtendedListService.GetAppSettingByCode("PrimeNG")
+                                                        .subscribe((response: ServiceResponse) => {
+                                                            if (response.HasError) {
+                                                                logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                                            } else {
+                                                                if (response.Result.val == "1") {
+                                                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetNGComponent');
+                                                                } else {
+                                                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                                                }
+                                                            }
+                                                            
+                                                            
+                                                            //logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkspaces/CourierWorksheetNGTComponent');
+                                                            });
+                                                        
+                                                    
+                                                   
                                                 }
                                             });
 

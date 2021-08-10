@@ -4,7 +4,7 @@ declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Input } from '@angular/core';
 //import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -48,17 +48,53 @@ import { CacheCourierPendingReasonService } from "../../../Customs/Services/Othe
 import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
 import { Observable, of } from 'rxjs';
 
-
 @Component({
 
-    templateUrl: './CourierWorksheetListTemplate.html',
+
+    templateUrl: './CourierWorksheetNGListTemplate.html',
+    selector: 'CourierWorksheetNGListTemplate',
+
+
 })
 
-export class CourierWorksheetListTemplate {
+export class CourierWorksheetNGListTemplate {
+    
+    
+   
     public entityPM: any;
 
-    public _CourierWorksheet: DeclarationCourierStatusList;
-    public fieldName: any;
+    
+    private _CourierWorksheet: DeclarationCourierStatusList;
+    @Input()
+    public get CourierWorksheet(): DeclarationCourierStatusList {
+        return this._CourierWorksheet;
+    }
+    public set CourierWorksheet(value: DeclarationCourierStatusList) {
+        this._CourierWorksheet = value;
+        if (!AppTool.IsNullOrEmpty(this._fieldName)) {
+            this.ReloadVariables();
+        }
+    }
+    _ReloadVariables: boolean = false;
+    
+    private _fieldName: string;
+    @Input()
+    public get fieldName(): string {
+        return this._fieldName;
+    }
+    public set fieldName(value: string) {
+        this._fieldName = value;
+        //console.log("CourierWorksheetNGListTemplate");
+        //console.log(this._CourierWorksheet );
+        
+        if (!AppTool.IsNullOrEmpty(this._CourierWorksheet)) {
+            
+            this.ReloadVariables();
+        }
+
+    }
+
+
 
     IsDocumentStatusGreen: boolean = false;
     IsDocumentStatusRed: boolean = false;
@@ -147,13 +183,18 @@ export class CourierWorksheetListTemplate {
         //}
     }
 
-    ShowOpCenter() {
-        this._CourierWorksheetSharedDataService.SendNextMessage
-    }
 
-    setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
-        this._CourierWorksheet = courierWorksheet;
-        this.fieldName = fieldName;
+
+    setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)
+        { }
+
+    ReloadVariables() {
+        if (this._ReloadVariables) {
+            return;
+        }
+        this._ReloadVariables = true;
+        //this._CourierWorksheet = courierWorksheet;
+        //this.fieldName = fieldName;
         //this._AdditionalData = AdditionalData;
         this.DropdownDisplayClose();
         DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
@@ -357,8 +398,6 @@ export class CourierWorksheetListTemplate {
 
     }
 
-
-
     SendDec(event) {
         //event.stopPropagation();
         //SplitButtonComponent.EnsureLastSplitButtonIsClosed();
@@ -390,7 +429,7 @@ export class CourierWorksheetListTemplate {
 
     ButtonClick(event) {
         this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
-        
+
         //event.stopPropagation();
         //this.RowSelect()
         this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
@@ -410,7 +449,7 @@ export class CourierWorksheetListTemplate {
 
         let myToolTip = "";
         var mycache: Array<CourierPendingReasonList> = CacheCourierPendingReasonService.Instance.GetCache();
-        let listString: string =this._CourierWorksheet.CourierPendingReasonList;
+        let listString: string = this._CourierWorksheet.CourierPendingReasonList;
         let arry = listString.split(',');
         arry.forEach(itemReason => {
             let rec = mycache.filter(r => r.Code == itemReason)[0];
@@ -427,8 +466,8 @@ export class CourierWorksheetListTemplate {
                 }
             }
         });
-        
-        return myToolTip; 
+
+        return myToolTip;
 
         ///return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
     }
@@ -473,7 +512,7 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
@@ -617,7 +656,7 @@ export class CourierWorksheetListTemplate {
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
         this.SbanDetails = null;
-        this.IsMamanEnabled = false;       
+        this.IsMamanEnabled = false;
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
@@ -693,10 +732,10 @@ export class CourierWorksheetListTemplate {
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         var declarationIdList = [];
-        
+
         this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
-        //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
-        //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
+            //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
+            //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 //declarationIdList.push(response.Result);
                 //windowArgs.DeclarationIdList = declarationIdList;
@@ -723,7 +762,7 @@ export class CourierWorksheetListTemplate {
                 else {
                     //if (mode == "Update") {
                     windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
-                        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                    //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
                     logitudeWindow.Width = 470;
                     logitudeWindow.Height = 300;
@@ -736,7 +775,7 @@ export class CourierWorksheetListTemplate {
                         this.RefreshData();
                     });
                 }
-                
+
             }
         });
 
@@ -921,8 +960,8 @@ export class CourierWorksheetListTemplate {
         confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
         confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
 
-        if (SetEvetActive==0) {
-                      
+        if (SetEvetActive == 0) {
+
             confirm.Show("אשר ביטול סגירת ש.מ.ב")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
@@ -934,7 +973,7 @@ export class CourierWorksheetListTemplate {
                     }
                     );
                 }
-                        else {
+                else {
                     confirm.Close();
                 }
             });
@@ -949,8 +988,8 @@ export class CourierWorksheetListTemplate {
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             this.RefreshData();
                         });
-                                 }
-                 else {
+                }
+                else {
                     confirm.Close();
                 }
             });
