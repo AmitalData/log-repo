@@ -194,12 +194,14 @@ h1{
     margin: 0 auto;
     /* height: 60px; */
     height: 93px;
-    max-width: 1300px;
+    max-width: 1400px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     background: white;
+
+    display: flex;
 }
 
 .web-header .logo-wrapper {
