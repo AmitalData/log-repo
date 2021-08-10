@@ -98,11 +98,19 @@
     }
 </style>
 
-<div *ngIf="fieldName!=null  && _CourierWorksheet!=null ">
+<div *ngIf="fieldName!=null  && CourierWorksheet!=null ">
     <div class="TextTrimming" *ngIf="fieldName == 'MAWBP'">
         <span>{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</span>
     </div>
 
+
+    <div style="text-align: right;" class="TextTrimming" *ngIf="fieldName == 'DeclarationStatusTypeName'">
+        <span>{{CourierWorksheet['DeclarationStatusTypeName']}}</span>
+    </div>
+
+    <div style="text-align: right;" class="TextTrimming" *ngIf="fieldName == 'ImporterCode'">
+        <span>{{CourierWorksheet['ImporterCode']}}</span>
+    </div>
 
 
     <div class="TextTrimming" *ngIf="fieldName == 'DocumentStatusCode'">
@@ -133,49 +141,49 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'StorageSiteStatusCode'">
-        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '2'" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '0'">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '1'">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '2'">{{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}</span>
+        <img *ngIf="CourierWorksheet['StorageSiteStatusCode'] == '1'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="CourierWorksheet['StorageSiteStatusCode'] == '2'" src="./Images/Icons/RedX.png" [attr.title]="CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <span *ngIf="CourierWorksheet['StorageSiteStatusCode'] == '1' && CourierWorksheet['AcceptanceStatusCode'] == '0'">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
+        <span *ngIf="CourierWorksheet['StorageSiteStatusCode'] == '1' && CourierWorksheet['AcceptanceStatusCode'] == '1'">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
+        <span *ngIf="CourierWorksheet['StorageSiteStatusCode'] == '1' && CourierWorksheet['AcceptanceStatusCode'] == '2'">{{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}</span>
     </div>
 
 
     <div class="TextTrimming" *ngIf="fieldName == 'SpecialActionStatus'" style="cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)">
-        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " (click)="SpecialActionStatusXClicked($event)" />
-        <img *ngIf="_CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" (click)="SpecialActionStatusXClicked($event)" [attr.title]="_CourierWorksheet['SpecialActionsErrorXml']"
+        <img *ngIf="CourierWorksheet['SpecialActionStatus'] == 'V'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " (click)="SpecialActionStatusXClicked($event)" />
+        <img *ngIf="CourierWorksheet['SpecialActionStatus'] == 'X'" src="./Images/Icons/RedX.png" (click)="SpecialActionStatusXClicked($event)" [attr.title]="CourierWorksheet['SpecialActionsErrorXml']"
              style="height:20px;width:15px;vertical-align:central;padding-bottom:5px;cursor:pointer;" />
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'IsClosedForFollowUp'" style="text-align:right;">
-        <span *ngIf="!_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Open'  | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="!CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Open'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'IsCourierMissingClassification'" style="text-align: center;  ">
-        <img *ngIf="_CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <img *ngIf="!_CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="!CourierWorksheet['IsCourierMissingClassification']" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'HighLowValue'" style="text-align:right;">
-        <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == 'F'">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['FastIndividualProcessCode'] == 'I'">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="CourierWorksheet['FastIndividualProcessCode'] == 'F'">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="CourierWorksheet['FastIndividualProcessCode'] == 'I'">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
-        <span style="font-weight: bold">{{_CourierWorksheet.CourierHawb}}</span>
+        <span style="font-weight: bold">{{CourierWorksheet.CourierHawb}}</span>
     </div>
 
- 
 
-    <div class="TextTrimming" (click)=" CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'');ButtonClick($event)" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
-        <span data-toggle="tooltip" data-placement="bottom" title="{{CourierPendingReasonListToolTip}}">{{CourierPendingReasonListText}}</span><!-- _CourierWorksheet.CourierPendingReasonList -->
+
+    <div class="TextTrimming" (click)=" CourierPendingReasonCommand($event,CourierWorksheet['DeclarationId'],'');ButtonClick($event)" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
+        <span data-toggle="tooltip" data-placement="bottom" title="{{CourierPendingReasonListToolTip}}">{{CourierPendingReasonListText}}</span><!-- CourierWorksheet.CourierPendingReasonList -->
     </div>
 
     <div *ngIf="false &&  fieldName == 'CourierPendingReasonList'" (click)="ButtonClick($event)">
         <div (click)="ButtonClick($event)">
             <courier-filter-button #MyDropdownMenuFilterComponent
-                                   (DropdownMenuButtonClicked)="DropdownMenuButtonClicked($event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])"
+                                   (DropdownMenuButtonClicked)="DropdownMenuButtonClicked($event);PrepareDropdownMenuFilter($event,CourierWorksheet['DeclarationId'])"
                                    [IsDisabled]="IsDisplayOnly">
                 <div class="class-filter-content">
                     <div>
@@ -185,44 +193,44 @@
 
                 <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
                     <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:120px; ">
-                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'');">
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,CourierWorksheet['DeclarationId'],'');">
                             <span>Pending</span>
                         </li>
-                       
+
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
                         <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowFollowUpStatus();">
                             <span>כניסה ל-F/U</span>
                         </li>
 
 
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'U','2');">
                             <span>הפקת תעודת עיכוב</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','2');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'C','2');">
                             <span>ביטול תעודת עיכוב</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); MamanStickerCommand($event,CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הפקת מדבקה</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','4');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsMamanSticker" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'C','4');">
                             <span>ביטול הפקת מדבקה</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','5');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'U','5');">
                             <span>הדפסת מסמכים</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','5');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsPrintDocuments" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'C','5');">
                             <span>ביטול הדפסת מסמכים</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','6');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'U','6');">
                             <span>סב''ן</span>
                         </li>
-                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'C','6');">
+                        <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && IsSban && IsMamanEnabled" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(CourierWorksheet['DeclarationId'],'C','6');">
                             <span>ביטול סב''ן</span>
                         </li>
-                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'I');">
+                        <li *ngIf="CourierWorksheet['HighLowValue'] == 'L' && CourierWorksheet['FastIndividualProcessCode'] != 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(CourierWorksheet['DeclarationId'],'I');">
                             <span>העברה לפרטני</span>
                         </li>
-                        <li *ngIf="_CourierWorksheet['HighLowValue'] == 'L' && _CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(_CourierWorksheet['DeclarationId'],'F');">
+                        <li *ngIf="CourierWorksheet['HighLowValue'] == 'L' && CourierWorksheet['FastIndividualProcessCode'] == 'I'" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SetManualProcesscode(CourierWorksheet['DeclarationId'],'F');">
                             <span>העברה למהיר</span>
                         </li>
 
@@ -243,7 +251,7 @@
 
     <div class="TextTrimming" style="cursor:default;height:35px;width:115px" *ngIf=" false && fieldName == 'SendSplitButton'" (click)="ButtonClick($event)">
         <div style="text-align:right;margin-top:5px;cursor:default;margin-left:30px" (click)="ButtonClick($event)">
-            <!--[IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "-->
+            <!--[IsDisabled]="CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "-->
             <split-button #currSplitButtonComponent
                           [IsDisabled]="IsDisplayOnly"
                           [OnClickedShowMenuContent]="true"
@@ -256,23 +264,23 @@
                         <ul *ngIf="_IsSplitButtonMenuFilterReady" class="x-button-drop-menu" style="width:90px;">
 
                             <li>
-                                <span *ngIf=" ( (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null) && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X' || _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
-                                <span *ngIf="!( (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X'|| _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" class="DimLI">מצהר</span>
+                                <span *ngIf=" ( (CourierWorksheet['CourierPaymentStatusCode'] != 'P' || CourierWorksheet['CourierPaymentStatusCode'] ==null) && ( CourierWorksheet['CourierManifestStatusCode']=='V' ||CourierWorksheet['CourierManifestStatusCode'] == 'R' || CourierWorksheet['CourierManifestStatusCode'] == 'X' || CourierWorksheet['CourierManifestStatusCode'] == 'M'))" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
+                                <span *ngIf="!( (CourierWorksheet['CourierPaymentStatusCode'] != 'P' || CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( CourierWorksheet['CourierManifestStatusCode']=='V' ||CourierWorksheet['CourierManifestStatusCode'] == 'R' || CourierWorksheet['CourierManifestStatusCode'] == 'X'|| CourierWorksheet['CourierManifestStatusCode'] == 'M'))" class="DimLI">מצהר</span>
                             </li>
 
 
                             <li>
-                                <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
-                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">הצהרה</span>
+                                <span *ngIf="!(CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendDec($event);">הצהרה</span>
+                                <span *ngIf="(CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">הצהרה</span>
                             </li>
                             <li>
-                                <span *ngIf="!(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
-                                <span *ngIf="(_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">תשלום</span>
+                                <span *ngIf="!(CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
+                                <span *ngIf="(CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||CourierWorksheet['CourierPaymentStatusCode'] == 'O' )  " class="DimLI">תשלום</span>
                             </li>
 
                             <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
-                                <!-- *ngIf="_CourierWorksheet['AcceptanceStatusCode']==null" <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>-->
+                                <!-- *ngIf="CourierWorksheet['AcceptanceStatusCode']==null" <span *ngIf="CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>-->
                             </li>
 
                         </ul>
@@ -294,11 +302,11 @@
         {{SuspentionReasonText}}
     </div>-->
     <div class="TextTrimming" style="text-align:right" title="{{SuspentionReasonTip}}" *ngIf="fieldName == 'CourierCustomStatusName' && SuspentionReasonText!=''">
-        <span style="color:red" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='2'">{{SuspentionReasonText}}</span><!--Task 44091-->
-        <span style="color:green" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='1'">{{SuspentionReasonText}}</span><!--Task 44091-->
+        <span style="color:red" *ngIf="CourierWorksheet['CourierCustomStatusCode']=='2'">{{SuspentionReasonText}}</span><!--Task 44091-->
+        <span style="color:green" *ngIf="CourierWorksheet['CourierCustomStatusCode']=='1'">{{SuspentionReasonText}}</span><!--Task 44091-->
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'LastMileStatusCode' " style="text-align:right;">
-        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate'] | DateTimePipe:'DT'}}">{{_CourierWorksheet.LastMileStatusName}}</span>
+        <span data-toggle="tooltip" data-placement="bottom" title="{{CourierWorksheet['LastMileStatusDate'] | DateTimePipe:'DT'}}">{{CourierWorksheet.LastMileStatusName}}</span>
     </div>
 </div>

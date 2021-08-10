@@ -952,6 +952,12 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
             Styles: { width: '100px' },
+
+
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+
+
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'SortedImporterCode'
@@ -1059,6 +1065,12 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
             Styles: { width: '200px' },
             IsCustomTemplate: true,
+
+            ///due >>text-align: right;
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+
+
             ServerSideSortable: true,
             SortByName: 'DeclarationStatusTypeName'
         });
@@ -2396,6 +2408,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
 
         //console.log($event);
+        if (AppTool.IsNullOrEmpty($event.sortField)) {
+            $event.sortField = "CourierHawb";
+            $event.sortOrder = 0;//"Descending";
+        }
 
 
         let useCache: boolean = true;
