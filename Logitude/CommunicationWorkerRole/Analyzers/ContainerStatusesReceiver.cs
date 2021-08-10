@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole.Analyzers
             loginToExternalServiceTask.Wait();
             if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
             {
-                throw new Exception(loginToExternalServiceTask.Result.ErrorMessage);
+                throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
             }
             token = loginToExternalServiceTask.Result.Result;
             this.ReadContainerStatusRequestToOceanInsightSevice();
@@ -116,7 +116,7 @@ namespace CommunicationWorkerRole.Analyzers
                 }
                 if (envelopeResponse.HasError)
                 {
-                    throw new Exception(envelopeResponse.ErrorMessage);
+                    throw new ApplicationException(envelopeResponse.ErrorMessage);
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
                 if (oceanInsightsPushUpdate != null)
@@ -139,7 +139,7 @@ namespace CommunicationWorkerRole.Analyzers
             var communicationLogResponse = await response;
             if (communicationLogResponse.HasError)
             {
-                throw new Exception(communicationLogResponse.ErrorMessage);
+                throw new ApplicationException(communicationLogResponse.ErrorMessage);
             }
             externalTasksQueueWcfService.Close();
         }
