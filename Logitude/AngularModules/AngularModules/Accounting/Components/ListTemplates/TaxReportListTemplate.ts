@@ -16,7 +16,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 
 @Component({
-    
+
     templateUrl: './TaxReportListTemplate.html',
 })
 
@@ -117,7 +117,7 @@ export class TaxReportListTemplate {
 
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 450;
-                            logWindow.Height = 350;
+                            logWindow.Height = 400;
                             logWindow.Title = windowTitle;
                             logWindow.WindowArgs = windowArgs;
                             logWindow.WindowClosed.subscribe((event: any) => {
