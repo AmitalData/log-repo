@@ -805,6 +805,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         entityPM.Tenant = this.EntityPM.Tenant;
         entityPM.VendorId = this.VendorId;
         entityPM.VendorName = this.VendorName;
+        entityPM.VendorGLAccountId = this.VendorGLAccountId;
         entityPM.VendorLocalName = this.VendorLocalName;
         entityPM.InvoiceNumber = this.invoiceNumber;
         entityPM.InvoiceCurrencyId = this.InvoiceCurrencyId;
@@ -853,6 +854,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
         apInvoiceLinePM.LocalCurrencyAmount = this.IsCopyAmountsChecked ? AppTool.Round(originalAPInvoiceLine.LocalCurrencyAmount * this.InvoiceCurrencyExchangeRate, 2) : 0;
+        apInvoiceLinePM.ForiegnCurrencyId = apInvoicePM.InvoiceCurrencyId;
+        apInvoiceLinePM.ForiegnCurrencyCode = apInvoicePM.InvoiceCurrencyCode;
         apInvoiceLinePM.OpenAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.OpenAmount : 0;
         apInvoiceLinePM.Description = originalAPInvoiceLine.Description;
         apInvoiceLinePM.Notes = null;
