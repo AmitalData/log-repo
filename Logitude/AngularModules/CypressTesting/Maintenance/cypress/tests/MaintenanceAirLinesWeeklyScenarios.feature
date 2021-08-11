@@ -1,4 +1,4 @@
-@stable @weekly
+@dev @weekly
 Feature: Airlines Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
@@ -87,12 +87,13 @@ Feature: Airlines Create, Search and Edit from Maintenance
         Then the air line awb special handling code should create successfully
 
     Scenario: Inactivate Air Line and save changes
-        Given the user Inactivate air line
+        Given the user Inactivate the air line
+        And the user reactivate the air line
         When save air line
         Then the air line should update successfully
         And the following event should appear in events tab
-            | Event           | Notes               |
-            | Airline Updated | Airline Inactivated |
+            | Event           | Notes             |
+            | Airline Updated | Airline Activated |
 
     Scenario: Save and close the Airline
         When save and close air line
