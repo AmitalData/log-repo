@@ -42,9 +42,8 @@ namespace Logitude.Tariff.Steps
         [Then(@"the air surcharge cost tariff should update successfully")]
         public void ThenTheAirSurchargesCostTariffShouldUpdateSuccessfully()
         {
-            updatedTariff.Id.Should().NotBeNull();
-            updatedTariff.Name.Should().Equals(tariffContext.AirSurchargeCost.Name);
-            updatedTariff.Notes.Should().Equals(tariffContext.AirSurchargeCost.Notes);
+            tariffAirSurchargeCostServices.AssertUpdate(tariffContext.AirSurchargeCost, updatedTariff);
         }
+
     }
 }

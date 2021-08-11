@@ -1,4 +1,5 @@
-﻿using Logitude.Tariff.Models;
+﻿using FluentAssertions;
+using Logitude.Tariff.Models;
 using Logitude.Tariff.Models.Builders;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
@@ -42,5 +43,11 @@ namespace Logitude.Tariff.Services
                 .Build();
         }
 
+        public void AssertUpdate(TariffPM tariff, TariffPM updatedTariff)
+        {
+            updatedTariff.Id.Should().NotBeNull();
+            updatedTariff.Name.Should().Equals(tariff.Name);
+            updatedTariff.Notes.Should().Equals(tariff.Notes);
+        }
     }
 }
