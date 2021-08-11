@@ -121,7 +121,7 @@
         <td>
             <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
                 <tr style="height:50px;">
-                    <td style="width:250px; max-width: 250px;">
+                    <td style="width:185px; max-width: 185px;">
                         <table>
                             <tr>
                                 <td>
@@ -184,7 +184,7 @@
                     </td>
                 </tr>
                 <tr style="min-height: 458px;height: 100%;border: 1px solid #BCBEC0;border-radius: 4px;">
-                    <td style="overflow-y: auto;overflow-x: hidden;width:193px;top:1px;bottom:4px;position:relative;vertical-align:top" class="MediaFill">
+                    <td style="overflow-y: auto;overflow-x: hidden;width:185px;top:1px;bottom:4px;position:relative;vertical-align:top" class="MediaFill">
                         <div *ngFor="let item of externalDocs let i = index" style="overflow-y:auto;overflow-x:hidden;">
                             <div (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                                 <table *ngIf="!item.hasFile" style="height:162px;">
