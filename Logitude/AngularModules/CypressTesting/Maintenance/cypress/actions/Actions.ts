@@ -52,7 +52,7 @@ let CardCode = null;
 let TruckerCode = null;
 let MoveTypeCode = null;
 let ShipmentSubTypeCode = null;
-let CreditCardTypeCode = null;
+let CreditCardTypeSearchValue = null;
 let CommodityName = null;
 let RegionName = null;
 let inActiveCountry = false;
@@ -2343,9 +2343,8 @@ export function FillCreditCardTypeCode(CreditCardTypeCode: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, CreditCardTypeCode)
 }
 export function FillCreditCardTypeDetails(creditCardTypeDetails: CreditCardTypeDetails) {
-    var RandomCreditCardTypeCode = gr.GenerateRandomNumberAndString(2);
-    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, creditCardTypeDetails.Code.toLowerCase() == "random" ? RandomCreditCardTypeCode : creditCardTypeDetails.Code)
-    FilllCreditCardTypeName(creditCardTypeDetails.EnglishName)
+    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, creditCardTypeDetails.Code.toLowerCase() == "random" ? gr.GenerateRandomNumberAndString(2) : creditCardTypeDetails.Code)
+    FilllCreditCardTypeName(gr.GenerateCurrentDatetimeString("_"))
 }
 export function FilllCreditCardTypeName(Name: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeName, Name)
@@ -2371,38 +2370,21 @@ export function AssertCreateCreditCardTypeMockCreate() {
 export function AssertCreateCreditCardType() {
     let intercept = cy.wait("@" + RequestAliases.PostCreditCardType);
     intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            ReCreateCreditCardType();
-        }
-        else {
-            AssertPostCreditCardType(interception.response.statusCode, 200, interception.response.body.Code)
-        }
+        assert.equal(interception.response.statusCode, 200)
+        CreditCardTypeSearchValue = interception.response.body.Name
     })
 }
 
-function ReCreateCreditCardType() {
-    var RandomCreditCardTypeCode = gr.GenerateRandomNumberAndString(2);
-    cy.FillLogTextBox(MaintenanceSelectors.CreditCardTypeCode, RandomCreditCardTypeCode)
-    CreateCreditCardType();
-    AssertCreateCreditCardType();
+export function getCreditCardTypeSearchValue() {
+    return CreditCardTypeSearchValue
 }
 
-export function AssertPostCreditCardType(responseStatusCode: number, expectedStatusCode: number, creditCardTypeCode: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    CreditCardTypeCode = creditCardTypeCode
-}
-export function AssertSearchCreditCardTypeByFilter(companyName: string) {
+export function AssertSearchCreditCardTypeByFilter() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
-        expect(text).to.contain(companyName);
+        expect(text).to.contain(CreditCardTypeSearchValue);
     });
 }
-export function SearchCreditCardType() {
-    SearchCardByFilter(CreditCardTypeCode, MaintenanceSelectors.CreditCardTypeCodeFilterCheckBox)
-}
 
-export function AssertSearchCreditCardType(companyName: string) {
-    AssertSearchCard(companyName)
-}
 export function OpenCreditCardType() {
     DefineCreditCardTypeGetSingleRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();

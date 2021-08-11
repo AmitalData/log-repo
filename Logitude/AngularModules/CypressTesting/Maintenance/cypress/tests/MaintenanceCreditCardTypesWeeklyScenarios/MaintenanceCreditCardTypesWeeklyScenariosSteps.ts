@@ -6,9 +6,11 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
+import * as GeneralActions from "../../actions/BaseActions";
 
 //#region variable
 let creditCardTypeDetails: CreditCardTypeDetails
+let creditCardTypeSearchValue = null
 //#endregion
 
 //#region Add Credit Card Type Code with lenght more than 2
@@ -43,11 +45,12 @@ Then("the credit card type should create successfully", () => {
 //#endregion
 //#region Search for the credit card type by code
 When("search for credit card type", () => {
-    MaintenanceActions.SearchCreditCardType()
+    creditCardTypeSearchValue = MaintenanceActions.getCreditCardTypeSearchValue()
+    GeneralActions.Search(creditCardTypeSearchValue)
 });
 
 Then("the credit card type should appear successfully", () => {
-    MaintenanceActions.AssertSearchCreditCardTypeByFilter(creditCardTypeDetails.EnglishName)
+    GeneralActions.AssertSearch(creditCardTypeSearchValue)
 });
 
 //#endregion
