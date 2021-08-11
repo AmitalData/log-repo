@@ -140,7 +140,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "specflow note"});
                 table3.AddRow(new string[] {
                             "ContainerType",
-                            "PC2"});
+                            "ContainerId"});
 #line 5
  testRunner.Given("an ocean FCL freight cost tariff with the following properties", ((string)(null)), table3, "Given ");
 #line hidden
