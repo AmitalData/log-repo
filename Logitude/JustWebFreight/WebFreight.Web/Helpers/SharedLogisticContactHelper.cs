@@ -370,7 +370,7 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
       
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -419,7 +419,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -472,7 +472,7 @@ namespace WebFreight.Web.Helpers
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -523,8 +523,8 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs)
         {
-
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+ 
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -651,7 +651,7 @@ namespace WebFreight.Web.Helpers
 
             return message;
         }
-
+         
         private static string GetLogoInvitation(int tenant, string workEnvironment)
         {
             string filename = "logo" + tenant.ToString();
@@ -680,16 +680,22 @@ namespace WebFreight.Web.Helpers
 
         }
 
+         
 
-
-
-        private static DocumentType GetDocumentTypeForInvitation(int tenant)
+        private static DocumentType GetDocumentTypeForInvitation(Tenant tenant)
         {
             DocumentType documentType = null;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant.Id);
+                if (tenant.IsCargoTrackWebAccessActivated)
+                {
+                    documentType = documentTypeRepository.GetDocumentTypeByCode("CTIM", tenant.Id);
+                }
+                else if(!tenant.IsCargoTrackWebAccessActivated || documentType == null)
+                {
+                    documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant.Id);
+                } 
                 scope.Complete();
 
             }
