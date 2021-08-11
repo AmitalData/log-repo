@@ -37,6 +37,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference4 { get; set; }
         public string CustomAgentImportId { get; set; }
         public string CustomAgentImportName { get; set; }
+        public string FlightNumber { get; set; }
         public List<ReportGroupData> ReportGroupDataList { get; set; }
 
         public ReportGroup()
@@ -113,5 +114,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string FlightNumber { get; set; }
     }
 }

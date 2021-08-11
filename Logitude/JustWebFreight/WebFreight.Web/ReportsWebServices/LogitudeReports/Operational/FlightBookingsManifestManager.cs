@@ -167,6 +167,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
                     myDataRecord.Routing = shipmentPackage.Routing;
 
+                    string flightNumber = null;
+                    if(!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierCode))
+                    {
+                        flightNumber = shipmentPackage.MainCarriageCarrierCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierNumber))
+                    {
+                        if (string.IsNullOrEmpty(flightNumber))
+                        {
+                            flightNumber = shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                        else
+                        {
+                            flightNumber = flightNumber + shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                    }
+
+                    myDataRecord.FlightNumber = flightNumber;
+
                     if (shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
                         && shipmentPackage.PackageHeight != null && shipmentPackage.PackageHeight != 0)
@@ -195,7 +215,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
                                                                      group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
-                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD} 
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.FlightNumber } 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -209,6 +229,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          ATD = g.Key.ATD,
                                                                          ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
+                                                                         FlightNumber = g.Key.FlightNumber,
                                                                      }).ToList();
 
                     List<ReportGroup> reference4Results = (from p in myDataList
@@ -360,7 +381,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
-                     
                  });
 
             return dataList;
