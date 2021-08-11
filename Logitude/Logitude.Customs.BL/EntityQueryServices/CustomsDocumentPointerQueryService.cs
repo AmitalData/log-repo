@@ -38,6 +38,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DocPM.Tenant = docPtr.Tenant;
                 DocPM.ParentEntityCode = docPtr.ParentEntityCode;
                 DocPM.ParentEntityId = docPtr.ParentEntityId;
+                DocPM.OriginEntity = docPtr.OriginEntity;
                 DocPM.Child1EntityCode = docPtr.Child1EntityCode;
                 DocPM.Child1EntityId = docPtr.Child1EntityId;
                 DocPM.Child2EntityCode = docPtr.Child2EntityCode;
