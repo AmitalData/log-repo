@@ -1,4 +1,4 @@
-@dev
+@stable
 Feature: Task Create, Search, and Edit from CRM
     The user creates a task, searches for and edits it from the CRM Module.
 

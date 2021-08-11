@@ -1,4 +1,4 @@
-@dev
+@stable
 Feature: Phone Call Create, Search, and Edit from CRM
     The user creates a phone call, searches for and edits it from the CRM Module.
 
