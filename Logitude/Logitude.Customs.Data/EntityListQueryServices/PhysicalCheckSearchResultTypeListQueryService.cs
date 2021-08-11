@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<PhysicalCheckSearchResultType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PhysicalCheckSearchResultType> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

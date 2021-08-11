@@ -76,39 +76,43 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
 
-        public HttpResponseMessage PostAnswerPhysicalCheck(GenericRequestParams requestParamsData)
+ 
+
+
+
+        public HttpResponseMessage SendSearchResults(GenericRequestParams requestParams)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                //PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
-                //PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
-                //if (physicalCheckPM != null)
-                //{
-                //    INF_MSG_GenericResponseData responseData = null;
-                //    GenericRequestParams requestParamsData = new GenericRequestParams();
-                //    requestParamsData.AppicationId = physicalCheckPM.DeclarationId;
-                //    requestParamsData.LoggingEntityId =  physicalCheckId;
-                //    requestParamsData.LoggingEntityId2 = physicalCheckPM.DeclarationId;
-                //requestParamsData.LoggingUserId = authToken.
-                    // use messageing servicephysicalCheckPM
-                    var service = new SaveCH_MSG_195_SearchResultsMessagingService();
-                  var  responseData = service.Send(requestParamsData);
-                    return Request.CreateResponse(HttpStatusCode.OK, responseData);
-               // }
-                return Request.CreateResponse(HttpStatusCode.OK, "");
+                //requestParams
+                /*GenericRequestParams ContainerizationRequest = new GenericRequestParams()
+                {
+                    LoggingEnabled = true,
+                    Tenant = requestParams.Tenant,
+                    RequestName = "המכלה",
+                    ResponseName = "המכלה תשובה",
+                    LoggingEntityId = requestParams.LoggingEntityId,
+                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Containerization"),
+                    MainInterfaceCode = "2450",
+                    InterfaceTypeCode ="2450" , 
+                    LoggingEntityReference = requestParams.AppicationId,
+                    LoggingUserId = requestParams.LoggingUserId,
+                    RequestVIA=requestParams.RequestVIA,
+                    ForcePersonalSign=requestParams.ForcePersonalSign,
+                };*/
+                requestParams.MainInterfaceCode = "195";
+                requestParams.InterfaceTypeCode = "195";
+                 var service = new SaveCH_MSG_195_SearchResultsMessagingService();
+                var responseData = service.Send(requestParams);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+
         }
+
 
     }
 }

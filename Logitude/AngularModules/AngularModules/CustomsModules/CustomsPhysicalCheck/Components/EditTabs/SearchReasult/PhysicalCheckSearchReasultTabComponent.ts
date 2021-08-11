@@ -15,7 +15,7 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { LogDatePickerComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/LogDatePickerComponent';
-import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, RequestParamsBase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { CH_NG_191_MSG2_ChangingTimeRequestParams } from    '../../../../../Customs/DataContract/RequestParams/CH_NG_191_MSG2_ChangingTimeRequestParams';
 import { SendRequestVIA } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
@@ -23,6 +23,11 @@ import { CH_NG_192_MSG3_ApproveChangeTimeResponseData } from '../../../../../Cus
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { PhysicalCheckPMService } from '../../../../../Customs/Services/StandardPMs/PhysicalCheckPMService';
+import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { PhysicalCheckWebService } from '../../../../../Customs/Services/WebServices/PhysicalCheckWebService';
+import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector:'PhysicalCheckSearchReasultTabComponent',
@@ -39,9 +44,12 @@ export class PhysicalCheckSearchReasultTabComponent
 
     private currentEditComponentId: string;
  
-    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
+ 
+    physicalCheckWebService: PhysicalCheckWebService = new PhysicalCheckWebService();
+    physicalCheckPMService: PhysicalCheckPMService  = new PhysicalCheckPMService();
+    ResponseData: INF_MSG_GenericResponseData;
+    ValidationErrors: string[];
 
-    
 
     ValidationErrorsList: string[] = [];
     public get ErrorsList() { return this.ValidationErrorsList; }
@@ -49,13 +57,21 @@ export class PhysicalCheckSearchReasultTabComponent
         this.ValidationErrorsList = val;
     }
 
-
+    
 
     get SearchResult() { return this.EntityPM.SearchResult; }
     set SearchResult(value: string) {
         if (this.EntityPM.SearchResult != value) {
             this.EntityPM.SearchResult = value;
         }
+
+        if (value) {
+            this.UIProperties.SetWarning("SearchResult", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetWarning("SearchResult", this.ObjectTableName, true);
+        }
+
     }
 
 
@@ -81,12 +97,8 @@ export class PhysicalCheckSearchReasultTabComponent
     }
 
 
-    get CheckAnwserStatus() { return this.EntityPM.CheckAnwserStatus; }
-    set CheckAnwserStatus(value: number) {
-        if (this.EntityPM.CheckAnwserStatus != value) {
-            this.EntityPM.CheckAnwserStatus = value;
-        }
-    }
+    get CheckAnwserStatus() { return this.EntityPM.CheckAnwserStatus == 1 ? "תוצאות בדיקה התקבלו במכס" : ""; }
+    
 
     _InputParam: EntityArgs;
     @Input()
@@ -101,7 +113,7 @@ export class PhysicalCheckSearchReasultTabComponent
         this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
                 this.Init();
-              
+                this.UIProperties.SetEnabled("CheckAnwserStatus", this.ObjectTableName, false);
                                
             });
         });
@@ -112,6 +124,9 @@ export class PhysicalCheckSearchReasultTabComponent
         if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) return;
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResult))
+            this.UIProperties.SetWarning("SearchResult", this.ObjectTableName, true);
+
         this.Listen();
     }
 
@@ -122,6 +137,70 @@ export class PhysicalCheckSearchReasultTabComponent
     {
   
     }
+
+    OnAddEditWindowClosed(event) {
+        this.ValidationErrors = [];
+    }
+    OnCustomSendOptionsButtonClick(event) {
+        this.ValidationErrors = [];
+       // this.ValidationErrorsList = [];
+         this.CurrentSession.StartBusyIndicator("");
+        this.physicalCheckPMService.update(this.EntityPM).subscribe((response: any) => {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResult)) {
+                 this.ValidationErrors.push("תוצאת הבדיקה שדה חובה");
+
+                var windowArgs: any = {};
+                windowArgs.Errors = this.ValidationErrors;
+                windowArgs.ComponentHeight = '328px';  
+                var windowTitle = "Error";
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 600;
+                logWindow.Height = 400;
+                logWindow.Title = windowTitle;
+                logWindow.ShowCloseButton = false;
+                logWindow.WindowArgs = windowArgs;
+                logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+
+                logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+
+                this.CurrentSession.StopBusyIndicator();
+                return;
+            }
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+            var params: GenericRequestParams = new GenericRequestParams();
+            params.Tenant = SessionLocator.Tenant;
+            params.RequestVIA = event.RequestVIA;
+            params.ForcePersonalSign = event.ForcePersonalSign;
+            params.LoggingEnabled = true;
+            params.LoggingEntityId = this.EntityPM.Id;
+            params.LoggingEntityId2 = this.EntityPM.DeclarationId;
+            params.AppicationId = this.EntityPM.Id;
+            params.LoggingUserId = SessionLocator.LoggedUserId;
+            params.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.PhysicalCheck')[0].Id;
+            params.RequestName = "מענה לבדיקה פיזית";
+            params.ResponseName = "מענה לבדיקה פיזית - תשובה"
+            CustomMessageProgressComponent
+                .ShowProgressBar(params.PBId,
+                    "שליחת תוצאות בדיקה", false)
+                .then((res) => {
+                    this.ResponseData = res;
+                }
+                ).catch((err) => {
+                    this.ValidationErrors.push(err);
+                 });
+            this.physicalCheckWebService.SendSearchResults(params)
+                .subscribe((myServiceResponse: ServiceResponse) => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+                });
+
+        });
+    }
+
+
+
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
 

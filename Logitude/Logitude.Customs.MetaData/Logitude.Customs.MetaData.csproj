@@ -125,6 +125,7 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
+    <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -414,6 +415,7 @@
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
+    <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
     <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
     <None Include="DBTables\PointerLevel.dxml" />

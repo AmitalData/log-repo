@@ -48,7 +48,7 @@
         <tr class="FormFieldRow">
             <td>
                 <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
-                    <ValidationSummary [ItemsSource]="ErrorsList"></ValidationSummary>
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                 </div>
 
             </td>
@@ -57,7 +57,7 @@
             <td>
                 <div class="MediaFill">
                     <div style="float:right;">
-                        <table style="width: 450px;height: 350px;padding-top: 10px;float:right;">
+                        <table style="width: 320px;height: 300px;padding-top: 10px;float:right;">
 
                             <tr style="height:25px">
                                 <td colspan="3" class="TabTitleRow" style="width:150px">
@@ -72,17 +72,19 @@
                                               [TextCode]="'Customs.PhysicalCheck.F.SearchResult'"></LogLabel>
                                 </td>
                                 <td class="Tbl1Col1">
+                                    <LogLov [ObjectFieldName]="'SearchResult'"
+                                            [ObjectTableName]="'ObjectTableName'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.PhysicalCheckSearchResultType'"
+                                            [SelectedValue]="Code"
+                                            [HideColumns]="'true'">
+                                    </LogLov>
 
-                                    <LogTextBox [ObjectFieldName]="'SearchResult'" [ObjectTableName]="ObjectTableName"
-                                                [HideColumns]="true" [DataContext]="DataContext" [Text]="SearchResult" [IsMultiline]="'true'"></LogTextBox>
+
+                              
                                 </td>
-                                <td><div></div></td>
-                            </tr>
-                            <tr>
-                                <td><div></div></td>
-                                <td><div></div></td>
-                                <td><div></div></td>
-                            </tr>
+                             </tr>
+                            
                             <tr class="FormFieldRow">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'SealNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
@@ -93,8 +95,7 @@
                                     <LogTextBox [ObjectFieldName]="'SealNumber'" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true" [DataContext]="DataContext" [Text]="SealNumber"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
-                            </tr>
+                             </tr>
 
                             <tr class="FormFieldRow">
                                 <td class="Tbl1Col0">
@@ -111,8 +112,7 @@
                                             [HideColumns]="'true'">
                                     </LogLov>
                                 </td>
-                                <td><div></div></td>
-                            </tr>
+                             </tr>
                             <tr class="FormFieldRow">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CheckAuthorityAttenderTypeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
@@ -123,7 +123,7 @@
                                     <LogTextBox [ObjectFieldName]="'CheckAuthorityAttenderTypeName'" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true" [DataContext]="DataContext" [Text]="CheckAuthorityAttenderTypeName"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                               
                             </tr>
 
 
@@ -137,14 +137,13 @@
                                     <LogTextBox [ObjectFieldName]="'CheckAnwserStatus'" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true" [DataContext]="DataContext" [Text]="CheckAnwserStatus"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                               
 
 
                             </tr>
 
                             <tr>
-                                <td></td>
-                                <td colspan="2">
+                                 <td colspan="2">
                                     <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
                                                          (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
@@ -154,7 +153,7 @@
                             <tr>
                                 <td></td>
                                 <td></td>
-                                <td><div></div></td>
+                                
                             </tr>
                         </table>
                     </div>

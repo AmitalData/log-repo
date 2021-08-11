@@ -4,6 +4,8 @@ import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { GenericRequestParams } from '../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 
 
 @Injectable()
@@ -66,4 +68,8 @@ export class PhysicalCheckExtendedPMService {
             return pmresponse;
           }), catchError(ServiceHelper.HandleServiceError));
     }
+
+
+
+ 
 }

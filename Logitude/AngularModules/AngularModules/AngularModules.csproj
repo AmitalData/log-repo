@@ -1368,6 +1368,7 @@
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />
+    <TypeScriptCompile Include="Customs\Controller\PhysicalCheckEditComponentController.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
@@ -1630,6 +1631,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\MAWBTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingByKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\PhysicalCheckSearchResultTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PoaStatusTypeLookUpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ProceduralFaultsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ReferantExceptionListService.ts" />
