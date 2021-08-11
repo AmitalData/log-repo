@@ -10,9 +10,10 @@ using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 
+
 namespace Logitude.Tariff.Services
 {
-    public class TariffAirSurchargeCostDataPreparation
+    public class TariffOceanLCLSurchargeCostDataPreparation
     {
         public void Prepar()
         {
@@ -27,14 +28,14 @@ namespace Logitude.Tariff.Services
             {
                 if (e.InnerException.Message.Contains("Tariff surcharge seller should be unique"))
                 {
-                    TariffDataMap(GetAirSurchargesCostTariffBySellerId(tariff.SellerId));
+                    TariffDataMap(GetOceanLCLSurchargesCostTariffBySellerId(tariff.SellerId));
                 }
                 else
-                    throw new InvalidOperationException("Failed Creating Air Surcharges Tariff Before Feature Run :" + e.InnerException);
+                    throw new InvalidOperationException("Failed Creating Ocean LCL Surcharges Tariff Before Feature Run :" + e.InnerException);
             }
         }
 
-        public TariffPM GetAirSurchargesCostTariffBySellerId(string sellerId)
+        public TariffPM GetOceanLCLSurchargesCostTariffBySellerId(string sellerId)
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
                 .Filter1Name("SellerId")
@@ -42,7 +43,7 @@ namespace Logitude.Tariff.Services
                 .Filter1Value(sellerId)
                 .Filter2Name("TypeCode")
                 .Filter2Operator("equals")
-                .Filter2Value("ASC").Build();
+                .Filter2Value("OSC").Build();
 
             ApiResponse<IEnumerable<TariffPM>> response = APICaller.CallGetByFilters<IEnumerable<TariffPM>>(Urls.TariffViews, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
@@ -50,23 +51,22 @@ namespace Logitude.Tariff.Services
 
         private TariffPM GetValidTariffPM()
         {
-
             return new TariffBuilder()
-                    .WithDefualtValues()
-                    .TypeCode("Air Surcharge")
-                    .Name("pre specflow name")
-                    .SellerId(PartnersData.AirlineAAId)
-                    .CurrencyId("EUR")
-                    .Notes("pre specflow notes")
-                    .Surcharge1Id(BillingData.ChargeTypeAFTId)
-                    .Surcharge1UOM(BillingData.MeasurementGRWTId)
-                    .ContractNumber("2324232")
-                    .Build();
+                   .WithDefualtValues()
+                   .TypeCode("Ocean LCL Surcharge")
+                   .Name("pre specflow name")
+                   .SellerId(PartnersData.ShippingLineYMLUId)
+                   .CurrencyId("EUR")
+                   .Notes("pre specflow notes")
+                   .Surcharge1Id(BillingData.ChargeTypeOFTId)
+                   .Surcharge1UOM(BillingData.MeasurementGRWTId)
+                   .ContractNumber("2324232")
+                   .Build();
         }
 
         private void TariffDataMap(TariffPM tariff)
         {
-            TariffData.AirSurchargeCostId = tariff.Id;
+            TariffData.OceanLCLSurchargeCostId = tariff.Id;
         }
     }
 }

@@ -19,21 +19,19 @@ namespace Logitude.Tariff.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Tariff-OceanLCL")]
-    public partial class UpdateTariffOceanLCLFreightCostFeature : object, Xunit.IClassFixture<UpdateTariffOceanLCLFreightCostFeature.FixtureData>, System.IDisposable
+    public partial class CreateTariffOceanLCLSurchargeCostFeature : object, Xunit.IClassFixture<CreateTariffOceanLCLSurchargeCostFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "Pre-Prepare-Tariff-OceanLCL"};
+        private string[] _featureTags = ((string[])(null));
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateTariffOceanLCLFreightCost.feature"
+#line 1 "CreateTariffOceanLCLSurchargeCost.feature"
 #line hidden
         
-        public UpdateTariffOceanLCLFreightCostFeature(UpdateTariffOceanLCLFreightCostFeature.FixtureData fixtureData, Logitude_Tariff_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateTariffOceanLCLSurchargeCostFeature(CreateTariffOceanLCLSurchargeCostFeature.FixtureData fixtureData, Logitude_Tariff_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +40,7 @@ namespace Logitude.Tariff.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Update Tariff Ocean LCL Freight Cost", "\tWe want to update ocean LCL freight cost tariff.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Tariff-OceanLCL"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Tariff Ocean LCL Surcharge Cost", "\tWe want to create ocean LCL surcharge cost tariff.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,15 +80,15 @@ namespace Logitude.Tariff.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update ocean LCL freight cost tariff")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update Tariff Ocean LCL Freight Cost")]
-        [Xunit.TraitAttribute("Description", "Update ocean LCL freight cost tariff")]
-        public virtual void UpdateOceanLCLFreightCostTariff()
+        [Xunit.SkippableFactAttribute(DisplayName="Create ocean LCL surcharge cost tariff")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Tariff Ocean LCL Surcharge Cost")]
+        [Xunit.TraitAttribute("Description", "Create ocean LCL surcharge cost tariff")]
+        public virtual void CreateOceanLCLSurchargeCostTariff()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update ocean LCL freight cost tariff", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create ocean LCL surcharge cost tariff", null, tagsOfScenario, argumentsOfScenario);
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,26 +108,41 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
- testRunner.Given("an ocean LCL freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table9.AddRow(new string[] {
+                table5.AddRow(new string[] {
+                            "Freight",
+                            "Ocean LCL Surcharge"});
+                table5.AddRow(new string[] {
                             "Name",
-                            "updated specflow name"});
-                table9.AddRow(new string[] {
+                            "specflow name"});
+                table5.AddRow(new string[] {
+                            "ContractNumber",
+                            "43242312"});
+                table5.AddRow(new string[] {
+                            "Seller",
+                            "Yangming marine transport corp"});
+                table5.AddRow(new string[] {
+                            "Currency",
+                            "EUR"});
+                table5.AddRow(new string[] {
                             "Notes",
-                            "updated specflow note"});
-#line 7
- testRunner.And("following ocean LCL freight cost tariff properties", ((string)(null)), table9, "And ");
+                            "specflow note"});
+                table5.AddRow(new string[] {
+                            "FreightCharge",
+                            "Ocean Freight"});
+                table5.AddRow(new string[] {
+                            "Measurement",
+                            "Gross Weight"});
+#line 5
+ testRunner.Given("an ocean LCL surcharge cost tariff with the following properties", ((string)(null)), table5, "Given ");
 #line hidden
-#line 11
- testRunner.When("update ocean LCL freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.When("create ocean LCL surcharge cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
- testRunner.Then("the ocean LCL freight cost tariff should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 16
+ testRunner.Then("the ocean LCL surcharge cost tariff should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -143,12 +155,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateTariffOceanLCLFreightCostFeature.FeatureSetup();
+                CreateTariffOceanLCLSurchargeCostFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateTariffOceanLCLFreightCostFeature.FeatureTearDown();
+                CreateTariffOceanLCLSurchargeCostFeature.FeatureTearDown();
             }
         }
     }

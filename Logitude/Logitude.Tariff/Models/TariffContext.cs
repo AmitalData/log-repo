@@ -10,7 +10,8 @@ namespace Logitude.Tariff.Models
     {
         public TariffPM AirFreightCost { get; set; }
         public TariffPM OceanLCLFreightCost { get; set; }
-        public TariffPM AirSurchargeCost { get; set; }
         public TariffPM OceanFCLFreightCost { get; set; }
+        public TariffPM AirSurchargeCost { get; set; }
+        public TariffPM OceanLCLSurchargeCost { get; set; }
     }
 }

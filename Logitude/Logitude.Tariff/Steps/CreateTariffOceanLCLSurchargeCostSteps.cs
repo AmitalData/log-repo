@@ -1,0 +1,60 @@
+﻿using System;
+using TechTalk.SpecFlow;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
+using FluentAssertions;
+using Logitude.Tariff.Models;
+using Logitude.Tariff.Services;
+
+namespace Logitude.Tariff.Steps
+{
+    [Binding]
+    public class CreateTariffOceanLCLSurchargeCostSteps
+    {
+        private readonly TariffContext tariffContext;
+        private readonly TariffOceanLCLSurchargeCostServices tariffOceanLCLSurchargeCostServices;
+        private string insertException;
+
+        public CreateTariffOceanLCLSurchargeCostSteps(TariffContext tariffContext, TariffOceanLCLSurchargeCostServices tariffOceanLCLSurchargeCostServices)
+        {
+            this.tariffContext = tariffContext;
+            this.tariffOceanLCLSurchargeCostServices = tariffOceanLCLSurchargeCostServices;
+        }
+
+        [Given(@"an ocean LCL surcharge cost tariff with the following properties")]
+        public void GivenAnOceanLCLSurchargeCostTariffWithTheFollowingProperties(Table table)
+        {
+            tariffContext.OceanLCLSurchargeCost = tariffOceanLCLSurchargeCostServices.CreateInstance(table);
+
+        }
+
+        [When(@"create ocean LCL surcharge cost tariff")]
+        public void WhenCreateOceanLCLSurchargeCostTariff()
+        {
+            try
+            {
+                tariffContext.OceanLCLSurchargeCost = APICaller.CallPost<TariffPM>(tariffContext.OceanLCLSurchargeCost, Urls.TariffsController, UserTenant.Token)?.Data;
+            }
+            catch (Exception e)
+            {
+                insertException = e.InnerException.Message;
+            }
+        }
+
+        [Then(@"the ocean LCL surcharge cost tariff should create successfully")]
+        public void ThenTheOceanLCLSurchargeCostTariffShouldCreateSuccessfully()
+        {
+            if (string.IsNullOrEmpty(insertException))
+            {
+                tariffContext.OceanLCLSurchargeCost.Should().NotBeNull();
+                tariffContext.OceanLCLSurchargeCost.Id.Should().NotBeNull();
+            }
+            else
+            {
+                insertException.Should().Contain("Tariff surcharge seller should be unique");
+            }
+
+        }
+    }
+}
