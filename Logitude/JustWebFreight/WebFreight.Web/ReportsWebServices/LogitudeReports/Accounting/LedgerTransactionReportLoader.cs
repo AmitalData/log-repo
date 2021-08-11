@@ -330,9 +330,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private string GetLoggedContactName()
         {
-            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            var x = showLocals ? loggedContact.LocalName : loggedContact.EnglishName;
-            return x;
+
+            ContactPM loggedContact;
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = contactQuery.GetContactByEmailOnly(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            }
+            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
         }
 
         private void FillTenantFields()
