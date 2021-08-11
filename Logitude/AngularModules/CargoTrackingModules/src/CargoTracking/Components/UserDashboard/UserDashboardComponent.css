@@ -194,7 +194,7 @@ h1{
     margin: 0 auto;
     /* height: 60px; */
     height: 93px;
-    max-width: 1400px;
+    /* max-width: 1400px; */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -208,6 +208,7 @@ h1{
     max-width: 1400px;
     margin: 0px auto;
     width: 100%;
+    position: relative;
 }
 
 @media screen and (max-width: 1440px) {
@@ -225,14 +226,23 @@ h1{
     border:none;
     text-align:left;
     outline:none;
+
+    display: flex;
+    align-content: center;
 }
 
     .web-header .logo img {
-        width: auto;
-        padding: 5px 0px;
+        max-width: 170px;
+        padding: 5px 5px;
         border: 0;
-        height :83px;
-        outline:none;
+        height: auto;
+        max-height: 93px;
+        outline: none;
+        box-sizing: border-box;
+
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
 
