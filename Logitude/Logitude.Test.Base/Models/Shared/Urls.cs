@@ -28,6 +28,7 @@
         public static string TicketStageViewsGetByFilters = "TicketStageViews/GetByFilters";
         public static string ObjectTableViewsGetByFilters = "ObjectTableViews/GetByFilters";
         public static string TariffProductViews = "TariffProductViews/GetByFilters";
+        public static string TariffViews = "TariffViews/GetByFilters";
 
         public static string SpecialServicesTypesController = "SpecialServicesTypes";
         public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
