@@ -12148,6 +12148,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                AWBPrint = f.AWBPrint,
                                FNAReason = f.FNAReason,
                                AgentName = f.AgentName,
+                               Agent = f.Agent,
                                MainCarriageCarrierName = f.MainCarriageCarrierName,
                                FinalArrivalDate = f.FinalArrivalDate,
                                EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
