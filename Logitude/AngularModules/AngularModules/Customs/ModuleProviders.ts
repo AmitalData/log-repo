@@ -248,6 +248,7 @@ import { CargoTypeListService } from './Services/StandardLists/CargoTypeListServ
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
+import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 
 //#endregion
 
@@ -380,6 +381,8 @@ import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButto
 import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/PhysicalCheckMenuButtonsHandler';
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
+import { PhysicalCheckEditComponentController } from './Controller/PhysicalCheckEditComponentController'
+
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
@@ -693,6 +696,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
 
                 
              //#endregion                
@@ -828,6 +832,7 @@ export class ModuleProviders {
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
             case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+            case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
 
                 
 

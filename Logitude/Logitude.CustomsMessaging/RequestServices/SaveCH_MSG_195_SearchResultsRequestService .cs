@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -30,7 +31,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             var physicalCheck = physicalCheckQueryService.GetSingle(requestParams.LoggingEntityId, false, false);
 
             cH_NG_195_MSG6_SearchResults.GeneralDetails = new CH_NG_195_MSG6_SearchResultsGeneralDetails();
+            CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(requestParams.Tenant);
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(requestParams.Tenant);
 
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.customsAgent = Convert.ToInt32(CustomsSetting.CustomsAgentId);
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.customsAgentSpecified = true;
             cH_NG_195_MSG6_SearchResults.GeneralDetails.searchReasult = Convert.ToInt32( physicalCheck.SearchResult);
             cH_NG_195_MSG6_SearchResults.GeneralDetails.SealNumber = physicalCheck.SealNumber;
             if(string.IsNullOrEmpty(physicalCheck.CheckAuthorityAttenderTypeID))
@@ -43,14 +48,24 @@ namespace Logitude.CustomsMessaging.RequestServices
             cH_NG_195_MSG6_SearchResults.GeneralDetails.declarationID = physicalCheck.DeclarationNo;
             cH_NG_195_MSG6_SearchResults.GeneralDetails.checkId = Convert.ToInt32(physicalCheck.CheckId);
             cH_NG_195_MSG6_SearchResults.GeneralDetails.checkIdSpecified = true;
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.storageSiteNumber = physicalCheck.StorageSiteCode;
+            cH_NG_195_MSG6_SearchResults.GeneralDetails.rowNumber = Convert.ToInt32(physicalCheck.RowNumber);
+            if(!string.IsNullOrEmpty(physicalCheck.CargoIdentifierKey1))
+            {
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CargoIdentifier = new cargoIdentifier();
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CargoIdentifier.cargoIdentifierKey1 = physicalCheck.CargoIdentifierKey1;
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CargoIdentifier.cargoIdentifierKey2 = physicalCheck.CargoIdentifierKey2;
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CargoIdentifier.cargoIdentifierKey3 = physicalCheck.CargoIdentifierKey3;
+                cH_NG_195_MSG6_SearchResults.GeneralDetails.CargoIdentifier.cargoIdentifierType = Convert.ToInt32(physicalCheck.CargoIdentifierTypeCode);
+
+            }
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyRequestSheetParam.EntityId1 = physicalCheck.DeclarationId;
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PhysicalCheck");
+            this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
             this.MyRequestSheetParam.CustomFileNo = physicalCheck.CustomFileNo;
             this.MyRequestSheetParam.RequestDescription = "תשובה לבדיקה פיזית";
-
-            return cH_NG_195_MSG6_SearchResults;
+             return cH_NG_195_MSG6_SearchResults;
         }
 
      }

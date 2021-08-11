@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  
+  <Oracle Version="1">
+    <![CDATA[
+   declare
+ n int := 0;
+begin
+  select count(*) into n
+  from PACKAGES 
+ where code='PHSRB';
+ if n = 0 then
+Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('PHSRB','Search Result  - Physical Check','PHSRB,Search Result  - Physical Check',0,'BS');
+Insert into PACKAGES (CODE,NAME,SEARCHFIELDS,INACTIVE,FEATUREPACKAGETYPECODE) values ('PHSRA','Search Result  - Physical Check ','PHSRA,Search Result  - Physical Check ',0,'AD');
+Insert into PACKAGECONNECTEDPACKAGES (ID,PACKAGECODE,CONNECTEDPACKAGECODE) values ('G-50','PHSRA','PHSRB');
+
+ 
+commit;
+  end if;
+end;
+
+
+
+
+
+]]>
+  </Oracle>
+</Script>
