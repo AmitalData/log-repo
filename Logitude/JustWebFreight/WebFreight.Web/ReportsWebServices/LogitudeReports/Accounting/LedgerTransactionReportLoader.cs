@@ -324,24 +324,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillPrintingInformation()
         {
-            transactionsDataProvider.PrintedByUser = GetLoggedContactName();
+            var loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+            var loggedContactName = GetContactName(loggedContact);
+            transactionsDataProvider.PrintedByUser = loggedContactName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
-        private string GetLoggedContactName()
+        private string GetContactName(ContactPM loggedContact)
         {
-
-            ContactPM loggedContact;
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            {
-                loggedContact = contactQuery.GetContactByEmailOnly(AuthenticationUtil.AuthenticatedUserEmail, tenant);
-            }
-            else
-            {
-                loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            }
             return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
+        }
+
+        private ContactPM GetContactByEmail(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return contactQuery.GetContactByEmailOnly(email, tenant);
         }
 
         private void FillTenantFields()
