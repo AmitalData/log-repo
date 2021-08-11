@@ -89,7 +89,7 @@ Then("the {string} air line should appear successfully", (searchValueField) => {
 });
 //#endregion
 
-//#region Open the shipping line
+//#region Open the Air line
 When("open air line", () => {
     AirLineActions.OpenAirLine();
 });
@@ -99,7 +99,7 @@ Then("the air line should open successfully", () => {
 });
 //#endregion
 
-//#region Create shipping line address
+//#region Create Air line address
 Given("fill the following Address details in Addresses air line tab", (dataTable) => {
     let addressDetails = Assists.CreateInstance<AddressDetails>(dataTable, true);
     cy.Navigate(AirLineSelectors.AddressesTab);
@@ -193,10 +193,10 @@ Then("the air line awb special handling code should create successfully", () => 
 });
 //#endregion
 
-//#region Inactivate shipping line
-Given("the user add a new value to notes field", () => {
+//#region Inactivate Air Line and then reactivate it
+Given("the user change inactive checkBox value", () => {
     cy.Navigate(AirLineSelectors.GeneralTab);
-    cy.FillLogTextBox(AirLineSelectors.Notes, GenerateRandomNumberAndString(5))
+    Actions.ChangeInactiveCheckBoxValue(AirLineSelectors.InactiveAirline)
 });
 
 When("save air line", () => {

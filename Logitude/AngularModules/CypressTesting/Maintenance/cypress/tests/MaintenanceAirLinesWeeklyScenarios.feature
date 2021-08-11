@@ -86,9 +86,16 @@ Feature: Airlines Create, Search and Edit from Maintenance
         When create air line awb special handling code
         Then the air line awb special handling code should create successfully
 
-    Scenario: Inactivate Air Line and save changes
-        Given the user Inactivate the air line
-        And the user reactivate the air line
+    Scenario: Inactivate the Air Line
+        Given the user change inactive checkBox value
+        When save air line
+        Then the air line should update successfully
+        And the following event should appear in events tab
+            | Event           | Notes               |
+            | Airline Updated | Airline Inactivated |
+
+    Scenario: Reactivate the Air Line
+        Given the user change inactive checkBox value
         When save air line
         Then the air line should update successfully
         And the following event should appear in events tab
