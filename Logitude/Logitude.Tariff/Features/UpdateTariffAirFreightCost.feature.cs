@@ -114,17 +114,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
  testRunner.Given("an air freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Name",
                             "updated specflow name"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Notes",
                             "updated specflow note"});
 #line 7
- testRunner.And("following air freight cost tariff properties", ((string)(null)), table4, "And ");
+ testRunner.And("following air freight cost tariff properties", ((string)(null)), table5, "And ");
 #line hidden
 #line 11
  testRunner.When("update air freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

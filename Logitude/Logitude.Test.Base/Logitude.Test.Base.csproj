@@ -96,6 +96,9 @@
     <Compile Include="Models\BillingsPreparation\PaymentTerm.cs" />
     <Compile Include="Models\BillingsPreparation\VATType.cs" />
     <Compile Include="Models\Infrastructure\Configurations.cs" />
+    <Compile Include="Models\PackageTypesPreparation\PackageType.cs" />
+    <Compile Include="Models\PackageTypesPreparation\PackageTypesData.cs" />
+    <Compile Include="Models\PackageTypesPreparation\PackageTypesVariables.cs" />
     <Compile Include="Services\ObjectTableService.cs" />
     <Compile Include="Services\RandomGeneratorService.cs" />
     <Compile Include="Models\LocationsPreparation\City.cs" />

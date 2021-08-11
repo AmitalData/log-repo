@@ -109,10 +109,12 @@
     <Compile Include="Services\TariffAirFreightCostServices.cs" />
     <Compile Include="Services\TariffAirSurchargeCostServices.cs" />
     <Compile Include="Services\TariffAirSurchargeCostDataPreparation.cs" />
+    <Compile Include="Services\TariffOceanFCLFreightCostServices.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostServices.cs" />
     <Compile Include="Steps\CreateTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\CreateTariffAirSurchargeCostSteps.cs" />
+    <Compile Include="Steps\CreateTariffOceanFCLFreightCostSteps.cs" />
     <Compile Include="Steps\CreateTariffOceanLCLFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffAirSurchargeCostSteps.cs" />
@@ -125,6 +127,7 @@
     <None Include="app.config" />
     <None Include="Features\CreateTariffAirFreightCost.feature" />
     <None Include="Features\CreateTariffAirSurchargeCost.feature" />
+    <None Include="Features\CreateTariffOceanFCLFreightCost.feature" />
     <None Include="Features\CreateTariffOceanLCLFreightCost.feature" />
     <None Include="Features\GetTariffAirFreightCost.feature" />
     <None Include="Features\GetTariffAirSurchargeCost.feature" />

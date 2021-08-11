@@ -50,5 +50,6 @@ namespace Logitude.Tariff.Models
         public int ChangeSetOp { get; set; }
         public string Surcharge1Id { get; set; }
         public string Surcharge1UOM { get; set; }
+        public string ContainerType1Id { get; set; }
     }
 }
