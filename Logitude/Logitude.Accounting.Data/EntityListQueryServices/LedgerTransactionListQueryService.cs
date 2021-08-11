@@ -1195,16 +1195,22 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (queryOperations.GetAll == false)
             {
-                var skippedPages = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
-                resultedList = resultedList
-                    .Skip(skippedPages < 0 ? 0 : skippedPages)
-                    .Take(queryOperations.PageSize);
+                resultedList = GetLedgerTransactionPage(queryOperations, resultedList);
             }
 
             var mylist = resultedList.ToList();
             MapLedgerTransactionnList(mylist, false);
 
             return mylist;
+        }
+
+        private static IQueryable<LedgerTransactionList> GetLedgerTransactionPage(QueryOperations queryOperations, IQueryable<LedgerTransactionList> resultedList)
+        {
+            var skippedPages = (queryOperations.PageIndex - 1);
+            resultedList = resultedList
+                .Skip(skippedPages < 0 ? 0 : skippedPages)
+                .Take(queryOperations.PageSize);
+            return resultedList;
         }
 
         public int GetOpenLedgerTransactionsCount(QueryOperations queryOperations, string accountId, string transferAccountId, int tenant)
