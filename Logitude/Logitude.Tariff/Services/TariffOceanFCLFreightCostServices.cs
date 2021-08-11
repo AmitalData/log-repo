@@ -34,5 +34,15 @@ namespace Logitude.Tariff.Services
                 .ContractNumber(Convert.ToString(dataTable.ContractNumber))               
                 .Build();
         }
+        public TariffPM UpdateInstance(Table tariffTable, TariffPM tariff)
+        {
+            dynamic dataTable = tariffTable.CreateDynamicInstance();
+            return new TariffBuilder()
+                .WithModel(tariff)
+                .Name((string)dataTable.Name)
+                .Notes((string)dataTable.Notes)
+                .Build();
+        }
+
     }
 }

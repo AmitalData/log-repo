@@ -94,7 +94,7 @@ namespace Logitude.Test.Base.Hooks
 
         private static void SetupPackageTypePreparationVariables()
         {
-            PackageTypesVariables packageTypesVariables = DataPreparation.GetPackageTypesVariables();
+            PackageTypesVariables packageTypesVariables = PackageTypesDataPreparation.GetVariables();
             PackageTypesDataMap(packageTypesVariables);
         }
 
