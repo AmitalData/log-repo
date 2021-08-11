@@ -1193,10 +1193,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             //resultedList = FilterMaxDate(callback, resultedList);
 
-            var skippedPages = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
-            resultedList = resultedList
-                .Skip(skippedPages<0?0:skippedPages)
-                .Take(queryOperations.PageSize);
+            if (queryOperations.GetAll == false)
+            {
+                var skippedPages = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
+                resultedList = resultedList
+                    .Skip(skippedPages < 0 ? 0 : skippedPages)
+                    .Take(queryOperations.PageSize);
+            }
 
             var mylist = resultedList.ToList();
             MapLedgerTransactionnList(mylist, false);
