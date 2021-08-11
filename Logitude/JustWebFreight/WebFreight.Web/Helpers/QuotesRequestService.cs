@@ -211,6 +211,8 @@ namespace WebFreight.Web.Helpers
 
         private void MapCustomerStatusCustomFieldFilterToQueryOperations(QueryOperations queryOperations)
         {
+            if (quotesRequestFilters.CustomerStatus == "All")
+                return;
             List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", tenant);
             ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code.Replace(" ","") == "CustomerStatus").FirstOrDefault();
             if (objectCustomField == null)
