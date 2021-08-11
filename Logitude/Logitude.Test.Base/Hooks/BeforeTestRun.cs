@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.PackageTypesPreparation;
 
 namespace Logitude.Test.Base.Hooks
 {
@@ -26,6 +27,7 @@ namespace Logitude.Test.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
+            SetupPackageTypePreparationVariables();
         }
 
         public static void PrepareTheData(string email, string password,string url)
@@ -36,6 +38,7 @@ namespace Logitude.Test.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
+            SetupPackageTypePreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -88,6 +91,13 @@ namespace Logitude.Test.Base.Hooks
             BillingVariables BillingsVariables = DataPreparation.GetBillingVariables();
             BillingDataMap(BillingsVariables);
         }
+
+        private static void SetupPackageTypePreparationVariables()
+        {
+            PackageTypesVariables packageTypesVariables = PackageTypesDataPreparation.GetVariables();
+            PackageTypesDataMap(packageTypesVariables);
+        }
+
 
         private static Configurations GetConfigurations()
         {
@@ -228,5 +238,14 @@ namespace Logitude.Test.Base.Hooks
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
             BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
+
+        private static void PackageTypesDataMap(PackageTypesVariables packageTypesVariables)
+        {
+            PackageTypesData.PackageTypeOceanPC1Id = packageTypesVariables.PackageTypeOceanPC1Id;
+            PackageTypesData.PackageTypeOceanPC2Id = packageTypesVariables.PackageTypeOceanPC2Id;
+            PackageTypesData.PackageTypeAirPP1Id = packageTypesVariables.PackageTypeAirPP1Id;
+            PackageTypesData.PackageTypeAirPP2Id = packageTypesVariables.PackageTypeAirPP2Id;
+        }
+
     }
 }

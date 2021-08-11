@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PackageTypesPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;

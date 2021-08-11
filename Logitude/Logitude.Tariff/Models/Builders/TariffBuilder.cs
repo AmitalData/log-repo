@@ -102,6 +102,12 @@ namespace Logitude.Tariff.Models.Builders
             return this;
         }
 
+        public TariffBuilder ContainerType1Id(string containerType1Id)
+        {
+            _tariff.ContainerType1Id = containerType1Id;
+            return this;
+        }
+
         public TariffPM Build()
         {
             TariffPM result = _tariff;
