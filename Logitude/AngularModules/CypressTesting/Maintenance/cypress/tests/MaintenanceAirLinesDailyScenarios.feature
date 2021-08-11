@@ -1,4 +1,4 @@
-@stable @daily
+@dev @daily
 Feature: Airlines Mock Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 
@@ -86,13 +86,21 @@ Feature: Airlines Mock Create, Search and Edit from Maintenance
         When create air line awb special handling code
         Then the air line awb special handling code should create successfully
 
-    Scenario: Inactivate Air Line and save changes
-        Given the user add a new value to notes field
+    Scenario: Inactivate the Air Line
+        Given the user change inactive checkBox value
         When save air line
         Then the air line should update successfully
         And the following event should appear in events tab
-            | Event           |
-            | Airline Updated |
+            | Event           | Notes               |
+            | Airline Updated | Airline Inactivated |
+
+    Scenario: Reactivate the Air Line
+        Given the user change inactive checkBox value
+        When save air line
+        Then the air line should update successfully
+        And the following event should appear in events tab
+            | Event           | Notes             |
+            | Airline Updated | Airline Activated |
 
     Scenario: Save and close the Airline
         When save and close air line

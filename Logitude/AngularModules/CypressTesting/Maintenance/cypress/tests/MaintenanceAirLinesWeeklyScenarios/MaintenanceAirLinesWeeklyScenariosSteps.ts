@@ -192,14 +192,8 @@ Then("the air line awb special handling code should create successfully", () => 
 });
 //#endregion
 
-//#region Inactivate shipping line
-Given("the user Inactivate the air line", () => {
-    cy.Navigate(AirLineSelectors.GeneralTab);
-    Actions.ChangeInactiveCheckBoxValue(AirLineSelectors.InactiveAirline)
-    cy.Click(AirLineSelectors.SaveButton, null);
-});
-
-Given("the user reactivate the air line", () => {
+//#region Inactivate Air Line and then reactivate it
+Given("the user change inactive checkBox value", () => {
     cy.Navigate(AirLineSelectors.GeneralTab);
     Actions.ChangeInactiveCheckBoxValue(AirLineSelectors.InactiveAirline)
 });
