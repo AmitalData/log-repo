@@ -31,7 +31,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsMouseOverInput: boolean = false;
     public SelectionType: string = " Products"
     public ProductsSelectionType: string = " Selected " + this.SelectionType;
-    public TotalPickedItems: string = " All";
+    public TotalPickedItems: string ;
     public CheckBoxOnly: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() EditedItemSource: EventEmitter<any> = new EventEmitter();
@@ -57,12 +57,17 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         }
 
         this.SearchAreasId += this.CurrentSession.GetNewId("SearchAreasId_1");
+
     }
 
     ngAfterViewInit() {
         this.InitialItemsSource = this.ItemsSource;
-
+        this.SetDefaultTotalPickedItems();
+        if (!this.IsAreasMenu) {
+            this.TotalPickedItems = " All";
+        }
     }
+
     private SetControlPosition() {
         var item = document.getElementById(this.ControlId);
         if (item != null) {
@@ -135,7 +140,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                     this.CheckSource[i] = false;
             }
         }
-        if (this.CheckSource[index] == false) {
+        if (this.CheckSource[index] == false && !item.Checked) {
             this.CheckSource[index] = true;
         }
 
@@ -154,7 +159,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             } else {
                 for (var i = 0; i < this.ItemsSource.length; i++) {
                     if (this.ItemsSource[i].Checked) {
-                        this.TotalPickedItems += this.ItemsSource[i].Name + ",";
+                        this.TotalPickedItems = [this.TotalPickedItems, this.ItemsSource[i].Name].filter(Boolean).join(",");
                     }
                 }
             }
@@ -209,6 +214,19 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
 
 
     } 
+    SetDefaultTotalPickedItems() {
+        if (!this.WithinImage) {
+            if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
+                this.TotalPickedItems = " All";
+            } else {
+                for (var i = 0; i < this.ItemsSource.length; i++) {
+                    if (this.ItemsSource[i].Checked) {
+                        this.TotalPickedItems = [this.TotalPickedItems, this.ItemsSource[i].Name].filter(Boolean).join(",");
+                    }
+                }
+            }
+        }
+    }
 
     ItemClicked(clickedItem: any) {
         if (this.CheckSource == null) {
