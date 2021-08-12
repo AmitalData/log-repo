@@ -228,6 +228,16 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             this.OnMeasurmentsSettingsChanged();
         }
     }
+    
+    //get SpecialServiceId() { return this.EntityPM.SpecialServiceId; }
+    //set SpecialServiceId(newValue: string) {
+    //    if (this.EntityPM.SpecialServiceId!= newValue) {
+    //        this.EntityPM.SpecialServiceId= newValue;
+
+    //        this.ComputeDimFactor();
+    //        this.OnMeasurmentsSettingsChanged();
+    //    }
+    //}
 
     get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
     set ChargeableWeightUnitCode(newValue: string) {
