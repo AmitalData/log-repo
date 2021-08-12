@@ -2550,7 +2550,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        private void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
+        public void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
         {
             shipmentPM.MainCarriageLegs = new List<TransshipmentLeg>();
 
