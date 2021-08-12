@@ -1,4 +1,4 @@
-@stable
+@stable @all
 Feature: Appointment Create, Search, and Edit from CRM
     The user creates a appointment, searches for and edits it from the CRM Module.
 
