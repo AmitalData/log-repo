@@ -166,6 +166,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string TruckerName  { get; set; }
        [DataMember]
        public string CourierPendingReasonNameList  { get; set; }
+       [DataMember]
+       public bool IsAmendment  { get; set; }
    }
 
 }

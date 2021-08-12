@@ -227,8 +227,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.CasualImporterContact = declarationOrg.CasualImporterContact;
                         declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
                         declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
- 
-       
+                       // declarationPM.MAWBCourierMaster = 
+
+
                     }
 
 
@@ -455,7 +456,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         courierDeclarationUpdateService.Update(courierdeclaration, true);
 
                         CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
-
+                        courierDeclarationPM.Tenant = courierdeclaration.Tenant;
+                        courierDeclarationPM.SequenceNumeric = courierdeclaration.SequenceNumeric;
                         courierDeclarationPM.CourierMasterId = courierdeclaration.CourierMasterId;
                         courierDeclarationPM.DeclarationId = declarationCourierStatusPMNew.DeclarationId;
                         courierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;

@@ -185,8 +185,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,
-                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList,
                                                                   TruckerName = a.Trucker.Card.LocalName,
+                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList , 
+                                                                  IsAmendment  = d.IsAmendment==true? true :false
                                                               });
 
 
