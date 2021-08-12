@@ -1254,6 +1254,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SpecialServiceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteOPTemplates"
@@ -1530,6 +1537,11 @@
   <Relation
     ForeignKeyColumn="RegionalTaxId"
     ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SpecialServiceId"
+    ReferencedTable="SpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

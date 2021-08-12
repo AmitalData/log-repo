@@ -6686,6 +6686,52 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
+	  private string specialServiceId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialServiceId  
+	   {
+	    
+	     get
+		{
+		   return specialServiceId;
+		 }
+		 set
+		 {
+		   if(specialServiceId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialServiceId",OldValue=specialServiceId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialServiceId=value;
+		   }
+			
+		 }
+	   }
+	  private string specialServiceName ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialServiceName  
+	   {
+	    
+	     get
+		{
+		   return specialServiceName;
+		 }
+		 set
+		 {
+		   if(specialServiceName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialServiceName",OldValue=specialServiceName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialServiceName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

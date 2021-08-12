@@ -341,6 +341,25 @@
                                                     </LogTextBox>
                                                 </td>
                                             </tr>
+                                            
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'SpecialServiceId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <!--[LookUpTableName]="'SpecialService'"-->
+                                                    <LogLov [ObjectFieldName]="'SpecialServiceId'"
+                                                            [SelectedValue]="SpecialServiceId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'SpecialServicesType'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td>

@@ -210,7 +210,8 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         RegionalTaxPercentage, 
 	         DescriptionRightToLeft, 
 	         AutomaticLastUpdateDate, 
-	         IsMultiCurrency,
+	         IsMultiCurrency, 
+	         SpecialServiceId,
 	      }
 
 
@@ -494,7 +495,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         IsMultiCurrency, 
 	         IsRefreshFollowUp, 
 	         IsRefreshQuoteFollowUps, 
-	         ConvertTransportMode,
+	         ConvertTransportMode, 
+	         SpecialServiceId, 
+	         SpecialServiceName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1416,6 +1419,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiCurrency))
             {
 				entityPOCO.IsMultiCurrency = entityPM.IsMultiCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialServiceId))
+            {
+				entityPOCO.SpecialServiceId = entityPM.SpecialServiceId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -2344,6 +2352,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.IsMultiCurrency = entityPOCO.IsMultiCurrency;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SpecialServiceId))
+            {
+					entityPM.SpecialServiceId = entityPOCO.SpecialServiceId;
+            }
+
 		}
 
 		public void PMToOldPM(QuoteOPPM entityPM, QuoteOPPM oldEntityPM)
@@ -3263,6 +3276,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiCurrency))
             {
                 oldEntityPM.IsMultiCurrency = entityPM.IsMultiCurrency;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialServiceId))
+            {
+                oldEntityPM.SpecialServiceId = entityPM.SpecialServiceId;
             }
 			
 		}

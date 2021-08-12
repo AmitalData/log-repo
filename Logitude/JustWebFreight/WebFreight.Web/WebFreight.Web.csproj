@@ -5536,6 +5536,7 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\AccountingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\QuoteOPMUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />

@@ -199,6 +199,8 @@ export class QuoteOPList {
 	RegionalTaxId: string;
 	RegionalTaxPercentage: number;
 	IsMultiCurrency: boolean;
+	SpecialServiceId: string;
+	SpecialServiceName: string;
 	
 }
  

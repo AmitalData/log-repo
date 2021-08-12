@@ -1614,6 +1614,16 @@ export class QuoteOPPM {
     public set ConvertTransportMode(newValue: boolean) { if (this.convertTransportMode != newValue) { this.convertTransportMode = newValue; this.MarkAsDirty("ConvertTransportMode"); } }
        
 	 
+    private specialServiceId: string;
+    public get SpecialServiceId() { return this.specialServiceId; }
+    public set SpecialServiceId(newValue: string) { if (this.specialServiceId != newValue) { this.specialServiceId = newValue; this.MarkAsDirty("SpecialServiceId"); } }
+       
+	 
+    private specialServiceName: string;
+    public get SpecialServiceName() { return this.specialServiceName; }
+    public set SpecialServiceName(newValue: string) { if (this.specialServiceName != newValue) { this.specialServiceName = newValue; this.MarkAsDirty("SpecialServiceName"); } }
+       
+	 
 
     public OldEntityPM: QuoteOPPM;
 		
