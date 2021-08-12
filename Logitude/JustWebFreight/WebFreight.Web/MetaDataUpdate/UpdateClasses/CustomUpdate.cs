@@ -15046,8 +15046,13 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSES", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.ExportStorage", Icon = "CustomersPath", FeatureId = exportStorageFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExportStorge").FirstOrDefault().Id, FeatureUniqeCode = exportStorageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", FeatureId = QuoteOPFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault().Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+
+            if (tenantObjectTables.Any(o => o.Name == "QuoteOP"))/// FIRST CLICK BuildOPM  !!!
+            {
+                ///AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", FeatureId = QuoteOPFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault().Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+                AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QOPM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.QuotesOP", Icon = "QuotesPath", FeatureId = QuoteOPFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault().Id, FeatureUniqeCode = QuoteOPFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+
+            }
 
 
             #endregion

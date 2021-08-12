@@ -1019,6 +1019,10 @@ namespace WebFreight.Web.MetaDataUpdate
             else
                 modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
+
+            var quoteOPMUpdate = new QuoteOPMUpdate();
+            System.Windows.Forms.MessageBox.Show("quoteOPMUpdate.LoadObjectsTenantZero(context);"); //quoteOPMUpdate.LoadObjectsTenantZero(context);
+
             performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
         }
         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
@@ -1494,10 +1498,12 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             else if (includeQuoteOPM)
             {
-                ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => 
-                t.Name.Contains("QuoteOP") 
-                || t.Name.Contains("BorderOPType")
-                || t.Name.Contains("MarkUpOPType")).ToList();
+                ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t =>
+                t.Name.Contains("QuoteOP")
+                || t.Name == "BorderOPType"
+                || t.Name == "MarkUpOPType"
+                || t.Name == "SpecialServicesType"
+                ).ToList();
             }
             else
             {

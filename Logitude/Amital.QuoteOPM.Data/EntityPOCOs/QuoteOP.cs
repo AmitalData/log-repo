@@ -562,6 +562,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public DateTime? AutomaticLastUpdateDate { get; set; }
         [Column("IsMultiCurrency")]
 	    public bool IsMultiCurrency { get; set; }
+        [ForeignKey("SpecialServicesType")]
+        [Column("SpecialServiceId")]
+	    public string SpecialServiceId { get; set; }
+	      
+        public virtual SpecialServicesType SpecialServicesType { get; set; }
     }
 }
 	 

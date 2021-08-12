@@ -400,6 +400,8 @@ namespace Amital.QuoteOPM.Data.EntityMapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             this.Property(t => t.IsMultiCurrency).HasColumnName("IsMultiCurrency");
+
+            this.Property(t => t.SpecialServiceId).HasColumnName("SpecialServiceId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

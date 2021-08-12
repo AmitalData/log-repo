@@ -323,6 +323,7 @@ export class MainMenuComponent {
                         break;
                     }
                     case "General.MH.QuotesOP": {
+                        this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => { });
                         ServiceLocator.SendTotangoUserActivity("Quote", "List View");
                         myComponentPath = "./QuoteOPM/Components/Workspaces/QuotesComponent";
 

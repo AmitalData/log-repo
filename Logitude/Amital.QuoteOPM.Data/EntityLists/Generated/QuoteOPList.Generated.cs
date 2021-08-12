@@ -396,6 +396,10 @@ namespace Amital.QuoteOPM.Data.EntityLists
        public double? RegionalTaxPercentage  { get; set; }
        [DataMember]
        public bool IsMultiCurrency  { get; set; }
+       [DataMember]
+       public string SpecialServiceId  { get; set; }
+       [DataMember]
+       public string SpecialServiceName  { get; set; }
    }
 
 }
