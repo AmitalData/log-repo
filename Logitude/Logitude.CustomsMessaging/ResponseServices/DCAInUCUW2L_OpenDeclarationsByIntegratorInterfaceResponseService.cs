@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string decId = "";
                 string courierMasterID = "";
                 string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , requestParams.PBId,  ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
 
                 if(error!="")
                 {

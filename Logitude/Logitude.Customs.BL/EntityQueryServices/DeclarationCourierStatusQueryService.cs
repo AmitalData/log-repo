@@ -281,23 +281,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                select dc);
 
 
-            var test = (from a in declarationCourierStatuses
-                        group a by 1 into groupBy1
-                        select new DeclarationCourierStatusSummary
-                        {
+            var counters = (from a in declarationCourierStatuses
+                            group a by 1 into groupBy1
+                            select new DeclarationCourierStatusSummary
+                            {
 
-                            OpenCourierMasterCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false),
-                            UnReleasedFastProcessCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "F" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)),
-                            WithoutIdCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902")),
-                            WithoutClassificationCount = declarationCourierStatuses.Count(x => x.IsCourierMissingClassification == true),
-                            PendingPaymentCount = declarationCourierStatuses.Count(x => x.CourierPendingReasonList.Contains("900")),
-                            PendingCustomsCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode == "2"),
-                            PendingCount = declarationCourierStatuses.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList))
+                                OpenCourierMasterCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false),
+                                UnReleasedFastProcessCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "F" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)),
+                                WithoutIdCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902")),
+                                WithoutClassificationCount = declarationCourierStatuses.Count(x => x.IsCourierMissingClassification == true),
+                                PendingPaymentCount = declarationCourierStatuses.Count(x => x.CourierPendingReasonList.Contains("900")),
+                                PendingCustomsCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode == "2"),
+                                PendingCount = declarationCourierStatuses.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList)),
+                                AllCourierDeclarationsCount = declarationCourierStatuses.Count(),
+                                CourierMasterOpenIndividualCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode == "I"),
+                                UnReleasedIndividualCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "I" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue))
+                            }); ;
 
-                        });
 
-
-      declarationCourierStatusSummary= test.FirstOrDefault();
+      declarationCourierStatusSummary= counters.FirstOrDefault();
 
 
             //declarationCourierStatusSummary.OpenCourierMasterCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false).Count();

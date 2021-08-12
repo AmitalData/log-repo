@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;d874&quot;"
+  Code="&quot;46bf&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5883,6 +5883,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Screen
     Name="&quot;Customs.DeclarationCourierStatusHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.DeclarationCourierStatus&quot;"

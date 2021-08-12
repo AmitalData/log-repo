@@ -188,6 +188,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   TruckerName = a.Trucker.Card.LocalName,
                                                                   AmendmentDontDisplayInList= d.AmendmentDontDisplayInList , 
                                                                   IsAmendment  = d.IsAmendment==true? true :false
+
                                                               });
 
 
