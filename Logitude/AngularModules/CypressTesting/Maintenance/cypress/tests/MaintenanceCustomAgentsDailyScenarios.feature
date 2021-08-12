@@ -1,4 +1,4 @@
-@release @stable @daily 
+@release @stable @daily @all
 Feature: Custom Agent fake Create and Edit in Maintenance Module
     The user creates a custom agent fake create and edit another one from the Maintenance Module.
 

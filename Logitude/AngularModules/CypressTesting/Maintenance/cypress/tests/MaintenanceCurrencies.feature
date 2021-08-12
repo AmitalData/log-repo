@@ -1,4 +1,4 @@
-@stable @daily
+@stable @daily @all
 Feature: Currency fake Create, Search and Edit from Maintenance
     The user creates a Currency, searches for and edits it from the Maintenance Module.
 

@@ -1,4 +1,4 @@
-@stable @daily
+@stable @daily @all
 Feature: Package Type fake Create, Search and Edit from Maintenance
     The user creates a Package Type, searches for and edits it from the Maintenance Module.
 

@@ -1,4 +1,4 @@
-@stable @daily
+@stable @daily @all
 Feature: Single Vat Type fake Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
