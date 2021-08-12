@@ -190,7 +190,11 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             usesrList.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 });
 
             usesrList.forEach((item) => {
-                this.UsersComboList.push(new UserItemClass(item));
+                var isLoggedUser = false;
+                if (item.Id == SessionLocator.LoggedUserId) {
+                    isLoggedUser = true;
+                }
+                this.UsersComboList.push(new UserItemClass(item, isLoggedUser));
             });
         });
     }
@@ -198,8 +202,11 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
 export class UserItemClass {
     public entityList: UserList;
-    constructor(entityList: UserList) {
+    constructor(entityList: UserList, isLoggedUser: boolean) {
         this.entityList = entityList;
+        if (isLoggedUser) {
+            this.Checked = true;
+        }
     }
 
     get Id() { return this.entityList.Id; }
