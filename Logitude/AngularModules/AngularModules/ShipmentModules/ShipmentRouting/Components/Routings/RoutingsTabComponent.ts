@@ -110,6 +110,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     }
                 } else {
                     this.IsShowStanadAloneActionsWindow = false;
+                    this.IsShowEditLegWindow = false;
+                    this.IsShowAddChildLeg = false;
                 }
             });
 
@@ -537,7 +539,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     EditLeg(myRoutingItem: RoutingItem) {
         this.myRoutingItem = myRoutingItem;
-        if (this.IsAddingStandaloneShipmentVisible) {
+        if (this.IsAddingStandaloneShipmentVisible && ["Pick Up", "Delivery"].includes(myRoutingItem.LegType)) {
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 
