@@ -427,12 +427,14 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public SummaryVolumetricWeightUnitCode: string = "KG";
     public SummaryChargeableWeightUnitCode: string = "KG";
     private BuildSummary() {
+        this.SummaryQuantity = ArrayTool.Sum(this.ItemsSource1, "Quantity");
         this.ComputeSummaryGrossWeight();
         this.ComputeSummaryChargeableWeight();
         this.ComputeSummaryVolumetricWeight();
     }
 
     ComputeSummaryGrossWeight() {
+        this.SummaryGrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
         this.SummaryGrossWeight = 0;
         this.ItemsSource1.forEach(item => {
             var grossWeight = item.GrossWeight;
@@ -442,20 +444,22 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     }
 
     ComputeSummaryChargeableWeight() {
+        this.SummaryVolumetricWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
         this.SummaryChargeableWeight = 0;
         this.ItemsSource1.forEach(item => {
             var chargeableWeight = item.ChargeableWeight;
             var chargeableWeightUnit = item.ChargeableWeightUnitCode;
-            this.SummaryChargeableWeight = this.SummaryChargeableWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.GrossWeightUnitCode, chargeableWeight);
+            this.SummaryChargeableWeight = this.SummaryChargeableWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, chargeableWeight);
         });
     }
 
     ComputeSummaryVolumetricWeight() {
+        this.SummaryChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
         this.SummaryVolumetricWeight = 0;
         this.ItemsSource1.forEach(item => {
             var volumetricWeight = item.VolumetricWeight;
             var chargeableWeightUnit = item.ChargeableWeightUnitCode;
-            this.SummaryVolumetricWeight = this.SummaryVolumetricWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.GrossWeightUnitCode, volumetricWeight);
+            this.SummaryVolumetricWeight = this.SummaryVolumetricWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, volumetricWeight);
         });
     }
 
