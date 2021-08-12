@@ -633,6 +633,7 @@ class HAWBItem {
     get ShipmentType() { return this.item.ShipmentType; }
     get CreateDateTime() { return this.item.CreateDateTime; }
     get StatusName() { return this.item.StatusName; }
+    get ExactStatusName() { return this.item.ExactStatusName; }
     get BranchName() { return this.item.BranchName; }
     get House() { return this.item.House; }
     get CustomerName() { return this.item.CustomerName; }
