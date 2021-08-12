@@ -235,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 //credit details
 
                 CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
+                InsuredCreditLimit = (decimal)customerPeriods.First().InsuredCreditLimit,
                 CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
                 TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,

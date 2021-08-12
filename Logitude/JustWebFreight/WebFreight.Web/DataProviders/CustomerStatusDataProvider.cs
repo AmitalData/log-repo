@@ -33,6 +33,8 @@ namespace WebFreight.Web.DataProviders
         public decimal TotalOpenCheques { get; set; }
         public decimal AccountingBalance { get; set; }
         public decimal CreditLimit { get; set; }
+        public decimal InsuredCreditLimit { get; set; }
+
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
         public string AccountCollectorName { get; set; }
