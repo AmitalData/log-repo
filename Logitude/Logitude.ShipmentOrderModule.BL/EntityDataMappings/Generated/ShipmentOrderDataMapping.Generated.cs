@@ -42,6 +42,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         Master, 
 	         House, 
 	         VesselId, 
+	         ETD, 
+	         ETA, 
+	         ATD, 
+	         ATA, 
 	         CustomsAgentId, 
 	         SpecialServicesTypeId, 
 	         CustomerReferences, 
@@ -89,7 +93,16 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         PickupEstimatedDateTime, 
 	         PickupActualDateTime, 
 	         ForwarderId, 
-	         BookingConfirmationDate,
+	         BookingConfirmationDate, 
+	         ConsigneeName, 
+	         ShipperName, 
+	         AgentName, 
+	         IncotermCode, 
+	         AccountManagerName, 
+	         VesselName, 
+	         CustomsAgentName, 
+	         SpecialServicesTypeName, 
+	         ForwarderName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -191,6 +204,26 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VesselId))
             {
 				entityPOCO.VesselId = entityPM.VesselId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ETD))
+            {
+				entityPOCO.ETD = entityPM.ETD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ETA))
+            {
+				entityPOCO.ETA = entityPM.ETA;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ATD))
+            {
+				entityPOCO.ATD = entityPM.ATD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ATA))
+            {
+				entityPOCO.ATA = entityPM.ATA;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))
@@ -339,6 +372,26 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.VesselId = entityPOCO.VesselId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ETD))
+            {
+					entityPM.ETD = entityPOCO.ETD;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ETA))
+            {
+					entityPM.ETA = entityPOCO.ETA;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ATD))
+            {
+					entityPM.ATD = entityPOCO.ATD;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ATA))
+            {
+					entityPM.ATA = entityPOCO.ATA;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsAgentId))
             {
 					entityPM.CustomsAgentId = entityPOCO.CustomsAgentId;
@@ -478,6 +531,26 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VesselId))
             {
                 oldEntityPM.VesselId = entityPM.VesselId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ETD))
+            {
+                oldEntityPM.ETD = entityPM.ETD;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ETA))
+            {
+                oldEntityPM.ETA = entityPM.ETA;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ATD))
+            {
+                oldEntityPM.ATD = entityPM.ATD;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ATA))
+            {
+                oldEntityPM.ATA = entityPM.ATA;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))

@@ -69,6 +69,18 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='VesselId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='ETD' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ETA' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ATD' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ATA' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='CustomsAgentId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
@@ -107,6 +119,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='SpecialServicesTypeId' ReferencedTable='SpecialServicesTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='ForwarderId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='Tenant,OrderNumber' />"+
+"  <UniqueConstraint Columns='Tenant,OrderNumber' />"+
 "</Table>";
 		
 		   return dxmlFile;

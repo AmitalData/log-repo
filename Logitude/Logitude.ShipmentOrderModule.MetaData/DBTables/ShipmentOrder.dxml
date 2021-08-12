@@ -143,6 +143,30 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CustomsAgentId"
     Type="varchar"
     Size="15">
@@ -261,5 +285,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
+    Columns="Tenant,OrderNumber" />
+  <UniqueConstraint
     Columns="Tenant,OrderNumber" />
 </Table>

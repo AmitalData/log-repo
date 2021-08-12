@@ -41,6 +41,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 PickupEstimatedDateTime = a.PickupEstimatedDateTime,
                 PickupActualDateTime = a.PickupActualDateTime,
                 ForwarderId = a.ForwarderId,
+                Master = a.Master,
+                ATA = a.ATA,
+                ATD = a.ATD,
+                ETD = a.ETD,
+                ETA = a.ETA,
 
             }).FirstOrDefault();
         }
@@ -79,6 +84,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 PickupEstimatedDateTime = a.PickupEstimatedDateTime,
                 PickupActualDateTime = a.PickupActualDateTime,
                 ForwarderId = a.ForwarderId,
+                Master = a.Master,
+                ATA = a.ATA,
+                ATD = a.ATD,
+                ETD = a.ETD,
+                ETA = a.ETA,
 
             }).FirstOrDefault();
         }

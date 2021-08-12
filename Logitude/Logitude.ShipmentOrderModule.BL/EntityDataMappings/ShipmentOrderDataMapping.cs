@@ -14,6 +14,8 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 {
@@ -40,6 +42,60 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 ShipmentTypeQuery shipmentTypeQuery = new ShipmentTypeQuery(entityPM.Tenant);
                 ShipmentTypePM shipmentTypePM = shipmentTypeQuery.GetSinglePM(entityPM.ShipmentTypeId, entityPM.Tenant);
                 entityPM.ShipmentTypeName = shipmentTypePM.Name;
+            }
+            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+            {
+                CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPM.ConsigneeId, entityPM.Tenant);
+                if (cardPM != null) entityPM.ConsigneeName = cardPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.ShipperId))
+            {
+                CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPM.ShipperId, entityPM.Tenant);
+                if (cardPM != null) entityPM.ShipperName = cardPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.AgentId))
+            {
+                CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPM.AgentId, entityPM.Tenant);
+                if (cardPM != null) entityPM.AgentName = cardPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.AccountManagerId))
+            {
+                UserQuery userQuery = new UserQuery(entityPM.Tenant);
+                UserPM userPM = userQuery.GetSinglePM(entityPM.AccountManagerId, entityPM.Tenant);
+                if (userPM != null) entityPM.AccountManagerName = userPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.VesselId))
+            {
+                VesselQuery vesselQuery = new VesselQuery(entityPM.Tenant);
+                VesselPM vesselPM = vesselQuery.GetSinglePM(entityPM.VesselId, entityPM.Tenant);
+                entityPM.VesselName = vesselPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.CustomsAgentId))
+            {
+                CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPM.CustomsAgentId, entityPM.Tenant);
+                if (cardPM != null) entityPM.CustomsAgentName = cardPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.SpecialServicesTypeId))
+            {
+                SpecialServicesTypeQuery specialServicesTypeQuery = new SpecialServicesTypeQuery(entityPM.Tenant);
+                SpecialServicesTypePM specialServicesTypePM = specialServicesTypeQuery.GetSinglePM(entityPM.SpecialServicesTypeId, entityPM.Tenant);
+                entityPM.SpecialServicesTypeName = specialServicesTypePM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.ForwarderId))
+            {
+                CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPM.ForwarderId, entityPM.Tenant);
+                if (cardPM != null) entityPM.ForwarderName = cardPM.EnglishName;
+            }
+            if (!string.IsNullOrEmpty(entityPM.IncotermId))
+            {
+                IncotermQuery incotermQuery = new IncotermQuery(entityPM.Tenant);
+                IncotermPM incotermPM = incotermQuery.GetSinglePM(entityPM.IncotermId, entityPM.Tenant);
+                if (incotermPM != null) entityPM.IncotermCode = incotermPM.Code;
             }
         }
 

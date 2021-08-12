@@ -29,6 +29,7 @@ export class ShipmentOrderList {
 	House: string;
 	CarrierNumber: string;
 	ETD: Date;
+	ETA: Date;
 	ATD: Date;
 	ATA: Date;
 	CustomsAgentId: string;
@@ -41,6 +42,15 @@ export class ShipmentOrderList {
 	PickupActualDateTime: Date;
 	ForwarderId: string;
 	BookingConfirmationDate: Date;
+	ConsigneeName: string;
+	ShipperName: string;
+	AgentName: string;
+	IncotermCode: string;
+	AccountManagerName: string;
+	VesselName: string;
+	CustomsAgentName: string;
+	SpecialServicesTypeName: string;
+	ForwarderName: string;
 	
 }
  

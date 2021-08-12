@@ -194,6 +194,51 @@ export class ShipmentOrderPM {
     public set BookingConfirmationDate(newValue: Date) { if (this.bookingConfirmationDate != newValue) { this.bookingConfirmationDate = newValue; this.MarkAsDirty("BookingConfirmationDate"); } }
        
 	 
+    private consigneeName: string;
+    public get ConsigneeName() { return this.consigneeName; }
+    public set ConsigneeName(newValue: string) { if (this.consigneeName != newValue) { this.consigneeName = newValue; this.MarkAsDirty("ConsigneeName"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
+    private agentName: string;
+    public get AgentName() { return this.agentName; }
+    public set AgentName(newValue: string) { if (this.agentName != newValue) { this.agentName = newValue; this.MarkAsDirty("AgentName"); } }
+       
+	 
+    private incotermCode: string;
+    public get IncotermCode() { return this.incotermCode; }
+    public set IncotermCode(newValue: string) { if (this.incotermCode != newValue) { this.incotermCode = newValue; this.MarkAsDirty("IncotermCode"); } }
+       
+	 
+    private accountManagerName: string;
+    public get AccountManagerName() { return this.accountManagerName; }
+    public set AccountManagerName(newValue: string) { if (this.accountManagerName != newValue) { this.accountManagerName = newValue; this.MarkAsDirty("AccountManagerName"); } }
+       
+	 
+    private vesselName: string;
+    public get VesselName() { return this.vesselName; }
+    public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
+       
+	 
+    private customsAgentName: string;
+    public get CustomsAgentName() { return this.customsAgentName; }
+    public set CustomsAgentName(newValue: string) { if (this.customsAgentName != newValue) { this.customsAgentName = newValue; this.MarkAsDirty("CustomsAgentName"); } }
+       
+	 
+    private specialServicesTypeName: string;
+    public get SpecialServicesTypeName() { return this.specialServicesTypeName; }
+    public set SpecialServicesTypeName(newValue: string) { if (this.specialServicesTypeName != newValue) { this.specialServicesTypeName = newValue; this.MarkAsDirty("SpecialServicesTypeName"); } }
+       
+	 
+    private forwarderName: string;
+    public get ForwarderName() { return this.forwarderName; }
+    public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

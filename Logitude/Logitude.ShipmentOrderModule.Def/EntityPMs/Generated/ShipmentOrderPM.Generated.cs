@@ -480,12 +480,12 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime eTD ;
+	  private DateTime? eTD ;
 	  	  
        
 	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ETD  
+       public DateTime? ETD  
 	   {
 	    
 	     get
@@ -496,19 +496,19 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		 {
 		   if(eTD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ETD",OldValue=eTD,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ETD",OldValue=eTD,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   eTD=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime eTA ;
+	  private DateTime? eTA ;
 	  	  
        
 	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ETA  
+       public DateTime? ETA  
 	   {
 	    
 	     get
@@ -519,19 +519,19 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		 {
 		   if(eTA != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ETA",OldValue=eTA,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ETA",OldValue=eTA,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   eTA=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime aTD ;
+	  private DateTime? aTD ;
 	  	  
        
 	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ATD  
+       public DateTime? ATD  
 	   {
 	    
 	     get
@@ -542,19 +542,19 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		 {
 		   if(aTD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATD",OldValue=aTD,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATD",OldValue=aTD,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   aTD=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime aTA ;
+	  private DateTime? aTA ;
 	  	  
        
 	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ATA  
+       public DateTime? ATA  
 	   {
 	    
 	     get
@@ -565,7 +565,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		 {
 		   if(aTA != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATA",OldValue=aTA,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATA",OldValue=aTA,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   aTA=value;
 		   }
@@ -798,6 +798,213 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingConfirmationDate",OldValue=bookingConfirmationDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   bookingConfirmationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string consigneeName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConsigneeName  
+	   {
+	    
+	     get
+		{
+		   return consigneeName;
+		 }
+		 set
+		 {
+		   if(consigneeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsigneeName",OldValue=consigneeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   consigneeName=value;
+		   }
+			
+		 }
+	   }
+	  private string shipperName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipperName  
+	   {
+	    
+	     get
+		{
+		   return shipperName;
+		 }
+		 set
+		 {
+		   if(shipperName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=shipperName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipperName=value;
+		   }
+			
+		 }
+	   }
+	  private string agentName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AgentName  
+	   {
+	    
+	     get
+		{
+		   return agentName;
+		 }
+		 set
+		 {
+		   if(agentName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AgentName",OldValue=agentName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   agentName=value;
+		   }
+			
+		 }
+	   }
+	  private string incotermCode ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IncotermCode  
+	   {
+	    
+	     get
+		{
+		   return incotermCode;
+		 }
+		 set
+		 {
+		   if(incotermCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IncotermCode",OldValue=incotermCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   incotermCode=value;
+		   }
+			
+		 }
+	   }
+	  private string accountManagerName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountManagerName  
+	   {
+	    
+	     get
+		{
+		   return accountManagerName;
+		 }
+		 set
+		 {
+		   if(accountManagerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountManagerName",OldValue=accountManagerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountManagerName=value;
+		   }
+			
+		 }
+	   }
+	  private string vesselName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VesselName  
+	   {
+	    
+	     get
+		{
+		   return vesselName;
+		 }
+		 set
+		 {
+		   if(vesselName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VesselName",OldValue=vesselName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vesselName=value;
+		   }
+			
+		 }
+	   }
+	  private string customsAgentName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsAgentName  
+	   {
+	    
+	     get
+		{
+		   return customsAgentName;
+		 }
+		 set
+		 {
+		   if(customsAgentName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsAgentName",OldValue=customsAgentName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsAgentName=value;
+		   }
+			
+		 }
+	   }
+	  private string specialServicesTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SpecialServicesTypeName  
+	   {
+	    
+	     get
+		{
+		   return specialServicesTypeName;
+		 }
+		 set
+		 {
+		   if(specialServicesTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpecialServicesTypeName",OldValue=specialServicesTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   specialServicesTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string forwarderName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderName  
+	   {
+	    
+	     get
+		{
+		   return forwarderName;
+		 }
+		 set
+		 {
+		   if(forwarderName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderName",OldValue=forwarderName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwarderName=value;
 		   }
 			
 		 }

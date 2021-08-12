@@ -58,6 +58,25 @@ using Logitude.ShipmentOrderModule.Data;
             }
         }
 		
+		public ShipmentOrder GetShipmentOrderByOrderNumber(string OrderNumber,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByOrderNumber(OrderNumber,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("ShipmentOrder with OrderNumber " + OrderNumber + " doesn't exist");
+
+				return ShipmentOrderDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public ShipmentOrder ShipmentOrderDataMapping(ShipmentOrderPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -151,7 +170,14 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.DescriptionOfGoods = MyEntityPM.DescriptionOfGoods;
 				   temp.TransportModeName = MyEntityPM.TransportModeName;
 				   temp.ShipmentTypeName = MyEntityPM.ShipmentTypeName;
-				   temp.CustomerReferences = MyEntityPM.CustomerReferences;					
+				   temp.CustomerReferences = MyEntityPM.CustomerReferences;
+				   temp.PickupEstimatedDateTime = MyEntityPM.PickupEstimatedDateTime;
+				   temp.PickupActualDateTime = MyEntityPM.PickupActualDateTime;
+				   temp.BookingConfirmationDate = MyEntityPM.BookingConfirmationDate;
+				   temp.ETD = MyEntityPM.ETD;
+				   temp.ETA = MyEntityPM.ETA;
+				   temp.ATD = MyEntityPM.ATD;
+				   temp.ATA = MyEntityPM.ATA;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -172,10 +198,13 @@ using Logitude.ShipmentOrderModule.Data;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+										if (!string.IsNullOrEmpty(MyEntity.OrderNumber))
+					{
+						temp = query.GetSinglePMByOrderNumber(MyEntity.OrderNumber, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("ShipmentOrder with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("ShipmentOrder with OrderNumber " + MyEntity.OrderNumber + " doesn't exist");
 						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -323,7 +352,14 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					temp.TransportModeName = MyEntity.TransportModeName;
 					temp.ShipmentTypeName = MyEntity.ShipmentTypeName;
-					temp.CustomerReferences = MyEntity.CustomerReferences;					   
+					temp.CustomerReferences = MyEntity.CustomerReferences;
+					temp.PickupEstimatedDateTime = MyEntity.PickupEstimatedDateTime;
+					temp.PickupActualDateTime = MyEntity.PickupActualDateTime;
+					temp.BookingConfirmationDate = MyEntity.BookingConfirmationDate;
+					temp.ETD = MyEntity.ETD;
+					temp.ETA = MyEntity.ETA;
+					temp.ATD = MyEntity.ATD;
+					temp.ATA = MyEntity.ATA;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -63,5 +63,19 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public string ShipmentTypeName { get; set; }
     
     public string CustomerReferences { get; set; }
+    
+    public DateTime? PickupEstimatedDateTime { get; set; }
+    
+    public DateTime? PickupActualDateTime { get; set; }
+    
+    public DateTime? BookingConfirmationDate { get; set; }
+    
+    public DateTime? ETD { get; set; }
+    
+    public DateTime? ETA { get; set; }
+    
+    public DateTime? ATD { get; set; }
+    
+    public DateTime? ATA { get; set; }
     }
 } 
