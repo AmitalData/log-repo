@@ -1535,7 +1535,7 @@ namespace WebFreight.Web
                 //        Thread.Sleep(sleepTime);
                 //    }
                 //}
-                CreateLoginEventForMixPanel(parameters, user);
+                CreateLoginEventForMixPanel(parameters, tenant);
 
                 return user;
             }
@@ -1550,19 +1550,20 @@ namespace WebFreight.Web
             }
         }
 
-        private static void CreateLoginEventForMixPanel(LoginParameters parameters, UserData user)
+        private static void CreateLoginEventForMixPanel(LoginParameters parameters, int tenant)
         {
             if (!parameters.IsCargoTracking){ return; }
-            MixPanelEvent LoginEvent = BuildMixPanelLoginEvent();
+            MixPanelEvent LoginEvent = BuildMixPanelLoginEvent(parameters);
 
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, user.Tenant);
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
             eventTracker.TrackEvent(LoginEvent);
             
         }
-        private static MixPanelEvent BuildMixPanelLoginEvent()
+        private static MixPanelEvent BuildMixPanelLoginEvent(LoginParameters parameters)
         {
             MixPanelEvent mixPanelEvent = new MixPanelEvent();
             mixPanelEvent.Name = "login";
+            mixPanelEvent.AddProperty("email", parameters.Email);
             return mixPanelEvent;
         }
         private bool CheckLoginSecurityPolicy(int tenant, UserData user, User logitudeUser, ICommonDataContext commonDataContext)
