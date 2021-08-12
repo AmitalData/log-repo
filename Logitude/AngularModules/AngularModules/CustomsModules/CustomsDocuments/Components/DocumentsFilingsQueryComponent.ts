@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output,EventEmitter}  from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output,EventEmitter, ViewChildren, QueryList}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
 import {CustomsDocumentPM} from '../../../Customs/EntityPMs/CustomsDocumentPM';
@@ -15,9 +15,13 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {DocumentsFilingViewsExtService} from '../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
 import {DocumentsFilingList}  from '../../../Common/EntityLists/DocumentsFilingList';
+import { Declaration } from 'typescript';
+import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
+import { CardExtendedPMService } from '../../../Common/Services/ExtendedPMs/CardExtendedPMService';
+import { MultiSelectLOVComponent } from '../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
 
 @Component({
-    
+    providers: [CardExtendedPMService], 
     templateUrl: './DocumentsFilingsQueryComponent.html',
 })
 
@@ -25,7 +29,12 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     //***********************properties*************************//
     DataContext = this;
   IsDisplayOnly: boolean = false;
-  public AllowPointerEvents: any ='all';
+    public AllowPointerEvents: any = 'all';
+
+   @ViewChildren(MultiSelectLOVComponent)
+    public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
+
+
     private documentTypeId: string;
     get DocumentTypeId() { return this.documentTypeId; }
     set DocumentTypeId(value: string) {
@@ -37,6 +46,15 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
                 this.DocumentTypeIdFilter = null
             }
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+        }
+    }
+
+
+    _CustomersList: any[] = [];
+    get CustomersList() { return this._CustomersList; }
+    set CustomersList(value) {
+        if (this._CustomersList != value) {
+            this._CustomersList = value;
         }
     }
 
@@ -63,6 +81,12 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
             }
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         }
+    }
+
+
+    SelectedValueChangedEmit() {
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+
     }
 
     private customsDocId: string;
@@ -113,9 +137,13 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
     entityListService: EntityListService;
     preventSelect: boolean = false;
     SelectedItem: any;
+    declarationPM: DeclarationPM;
+    isLoad: boolean = false;
+    
+
     //**********************************************************//
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(public cardExtendedPMService: CardExtendedPMService, private _CD: ChangeDetectorRef) {
         super();
         this.BuildColumns();
         this.CurrentSession.SubscriptionAdd(
@@ -125,9 +153,35 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
                 }
             })
         );
+
     }
 
     SetWindowArgs(windowArgs) {
+        debugger;
+        this.declarationPM = windowArgs;
+
+        if (this.declarationPM != null && this.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.declarationPM.ImporterCode)) {
+
+            this.cardExtendedPMService.GetAllCardsByVatNumber(this.declarationPM.ImporterCode).subscribe(data => {
+                this.CustomersList = data.Result;
+
+                this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+                this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+
+                this._CD.detectChanges();
+                this.isLoad = true;
+
+
+            });
+
+
+        }
+
+        else {
+
+            this.isLoad = true;
+}
+
         this.entityListService = new EntityListService();
     }
 
@@ -185,6 +239,23 @@ export class DocumentsFilingsQueryComponent extends BaseComponent {
         if (this.SearchFieldsFilter) {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
+      debugger;
+      if (this.CustomersList) {
+
+          var CustomersListString = "";
+
+          if (this.CustomersList.length > 0) {
+
+              this.CustomersList.forEach(item => { CustomersListString += item["Code"] + ","; });//Id: "1-3697"
+              CustomersListString = CustomersListString.slice(0, -1); // trim last comma
+
+              // filters.AdditionalFilters.push(this.SearchFieldsFilter);
+              filters.addAdditionalFilter("ExternalEntityReference", CustomersListString, null, null, "InListExact", false, false, false, "string", this.CustomersList.length == 0);
+
+          }
+      }
+
+
 
         filters.PageSize = 30;
         filters.PageIndex = 0; // decremented 1 in the service

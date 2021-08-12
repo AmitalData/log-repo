@@ -301,7 +301,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         } else {
             UsersListString = "HowCare"
-          //  UserNamesListString = "HowCare"
+          //  UserNamesListString = "HowCare"LOVListUsers
             RemoveFilter = true;
         }
         this.apiQueryFilters.addAdditionalFilter("ReferantUserName", UserNamesListString, null, null, "Equal", true, false, false, "string", true);

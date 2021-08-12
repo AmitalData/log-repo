@@ -453,7 +453,7 @@ export class CustomsDocumentTicketViewModel {
                                     customsDocumentPM.Tenant = SessionLocator.Tenant;
                                     isExport = relatedDocumentViewModel.DocumentCategoryCode == 'E' ? true : false;
                                     //if (isExport && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
-                                    //    if (!AppTool.IsNullOrEmpty(res.Result)) {
+                                    //    if (!AppTool.IsNullOrEmpty(res.Result)) { this.EntityPM
                                     //        customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
                                     //        this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
 
@@ -1079,7 +1079,7 @@ export class CustomsDocumentTicketViewModel {
     ViewDocumentsQuery() {
 
        
-        var windowArgs: any = {};
+        var windowArgs: any = this.EntityPM;
        
         var entityInfo = this.iCustomsDocumentsController.GetParentAndChildrenEntityCodesAndIds();
        

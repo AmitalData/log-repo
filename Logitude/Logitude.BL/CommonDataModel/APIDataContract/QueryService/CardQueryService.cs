@@ -81,5 +81,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             return shortConnectedPartnersDetails;
         }
 
+
+
+     
+
     }
 }
