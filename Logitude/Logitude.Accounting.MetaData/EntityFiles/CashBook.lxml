@@ -11,7 +11,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
