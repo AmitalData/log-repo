@@ -116,23 +116,20 @@ export class TaxReportMenuButtonsHandler {
                         this.entityArgs.EditComponent.ReloadEntityPM();
                     });
                     logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
-
-
-                    //this.CurrentSession.StartBusyIndicatorLoading();
-                    //this._TaxReportExtendedPMService.DownloadPNC874File(this.EntityPM).subscribe((myResult:any) => {
-                    //  var mm: ServiceResponse = myResult;
-                    //  var entity = mm.Result;
-
-                    //    var docFilingPM = entity;
-                    //    DownloadManager.DownloadPage(docFilingPM.DocumentId);
-                    //  this.CurrentSession.StopBusyIndicator();
-
-                    //});
-
-
                     break;
                 }
 
+            case "UPLD": // upload 
+                {
+                    //this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 650;
+                        logitudeWindow.Height = 350;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Receiving1000");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/Receiving1000Component');
+                    //});
+                    break;
+                }
         }
 
 

@@ -2744,6 +2744,13 @@
         IndexOrder="1"
         LocalDefaultText="&quot;ביטול&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;UPLD&quot;"
+        DefaultText="&quot;Upload Rows&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;טעינת שורות&quot;"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

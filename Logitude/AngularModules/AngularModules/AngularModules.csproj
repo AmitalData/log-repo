@@ -130,6 +130,7 @@
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileExternalPage\ManageExternalReconciliationTabComponent.html" />
+    <Content Include="Accounting\Components\Others\TaxReportUploadLinesComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
@@ -346,6 +347,7 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyInvoiceComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\TaxReportUploadLinesComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountFollowUpDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalMoreDataPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\GLaccountFollowUpDataExtendedPMService.ts" />
