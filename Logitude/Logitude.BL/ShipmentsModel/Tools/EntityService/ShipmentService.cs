@@ -2410,7 +2410,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void MapMainCarriageLegsForAutomation()
         {
-            ShipmentQuery shipmentQuery = new ShipmentQuery(entityPM.Tenant);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(entityRepository);
             shipmentQuery.MapMainCarriageLegsForAPI(entityPM);
         }
 
