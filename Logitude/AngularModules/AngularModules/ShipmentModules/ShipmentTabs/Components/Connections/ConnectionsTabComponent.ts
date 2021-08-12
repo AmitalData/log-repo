@@ -16,6 +16,7 @@ import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 @Component({
     
@@ -229,6 +230,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.MastersItemsSource = [];
         this.CustomFilesItemsSource = [];
         this.TicketsItemsSource = [];
+        this.PickupDeliveryItemsSource = [];
 
         list.forEach(item => {
             this.ItemsSource.push(new ShipmentConnectedEntityItem(item, this));
@@ -284,16 +286,21 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        if (item.ObjectTableName == "WarehouseRelease" || item.ObjectTableName == "WarehouseEntry") {
-                            this.EntityPM.IsDirty = true;
-                            this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    if (item.EntityType == "PickUp" || item.EntityType == "Delivery") {
+                        this.entityArgs.EditComponent.EntityId = this.EntityPM.Id;
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                    else {
+                        if (isEditComponentSaved) {
+                            if (item.ObjectTableName == "WarehouseRelease" || item.ObjectTableName == "WarehouseEntry") {
+                                this.EntityPM.IsDirty = true;
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                            }
+                            else
+                                this.entityArgs.EditComponent.ReloadEntityPM();
                         }
-                        else
-                            this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 });
-
                 cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         isEditComponentSaved = true;

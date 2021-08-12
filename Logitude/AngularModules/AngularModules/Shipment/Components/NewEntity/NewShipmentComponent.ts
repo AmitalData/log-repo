@@ -4135,8 +4135,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                                     this.CurrentSession.FireEvent("LoadConnectedShipments");
                                 }
 
-                                else if (this.IsStandalone) {
+                                else if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
                                     this.CurrentSession.FireEvent("ReloadPickUpDelivery");
+                                }
+
+                                else if  (this.IsNewStandAlonePickupDelivery) {
+                                    this.CurrentSession.FireEvent("ReloadForwarderShipmentFromStandAlone");
                                 }
                             });
                         });

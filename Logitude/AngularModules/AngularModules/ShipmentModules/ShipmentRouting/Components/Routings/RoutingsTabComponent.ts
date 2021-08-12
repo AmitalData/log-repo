@@ -85,9 +85,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
-
-                if (s == "FollowupsChangedMainMenu") {
-                    this.entityArgs.EditComponent.ReloadEntityPM();
+                
+                if (s == "ReloadForwarderShipmentFromStandAlone") {
+                      this.entityArgs.EditComponent.ReloadEntityPM();
                 }
             });
 
@@ -108,6 +108,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsShowAddChildLeg = false;
                         this.ViewAddChildLedWindow();
                     }
+                } else {
+                    this.IsShowStanadAloneActionsWindow = false;
                 }
             });
 

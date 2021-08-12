@@ -427,6 +427,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             shipmentPickUpDelivery.ShipmentId = forwarderShipment.Id;
             shipmentPickUpDelivery.PickUpDeliveryFromTypeCode = "PART";
             shipmentPickUpDelivery.PickUpDeliveryToTypeCode = "PART";
+            shipmentPickUpDelivery.FullResponsibility = true;
         }
 
         private dynamic GetShipmentPickUpDeliveryType()
