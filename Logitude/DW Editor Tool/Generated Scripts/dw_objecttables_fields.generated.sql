@@ -1090,6 +1090,18 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesExpectedPayableAmountNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesExpectedPayableAmountNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesExpectedPayableAmountNewId,0,'Fact_Charges','[Expected Payable Amount]','Expected Payable Amount','Decimal','false',0,0,'false','false','true','Money','false','false','false','ShipmentPayable.ExpectedAmount','false','false')  
+declare @Fact_ChargesPlannedCargoReadyDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesPlannedCargoReadyDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesPlannedCargoReadyDateNewId,0,'Fact_Charges','[Planned Cargo Ready Date]','Planned Cargo Ready Date','DateTime','false',0,0,'false','false','true','Dates','false','false','false','Shipment.PlannedCargoReadyDate','false','false')  
+declare @Fact_ChargesApprovedCargoReadyDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesApprovedCargoReadyDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesApprovedCargoReadyDateNewId,0,'Fact_Charges','[Approved Cargo Ready Date]','Approved Cargo Ready Date','DateTime','false',0,0,'false','false','true','Dates','false','false','false','Shipment.ApprovedCargoReadyDate','false','false')  
+declare @Fact_ChargesHandlerNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesHandlerNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesHandlerNewId,0,'Fact_Charges','[Handler]','Handler','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false','Shipment.HandlerUserId','false','false')  
+declare @Fact_ChargesNotify1Ref2NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesNotify1Ref2NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesNotify1Ref2NewId,0,'Fact_Charges','[Notify 1 Ref2]','Notify 1 Ref2','Text','false',0,50,'false','false','true','References ','false','false','false','Shipment.Notify1Reference2','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 
