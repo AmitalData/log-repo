@@ -45,9 +45,7 @@ namespace Logitude.Tariff.Steps
         [Then(@"the ocean LCL surcharge cost tariff should update successfully")]
         public void ThenTheOceanLCLSurchargeCostTariffShouldUpdateSuccessfully()
         {
-            updatedTariff.Id.Should().NotBeNull();
-            updatedTariff.Name.Should().Equals(tariffContext.OceanLCLSurchargeCost.Name);
-            updatedTariff.Notes.Should().Equals(tariffContext.OceanLCLSurchargeCost.Notes);
+            tariffOceanLCLSurchargeCostServices.AssertUpdate(tariffContext.OceanLCLSurchargeCost, updatedTariff);
         }
     }
 }

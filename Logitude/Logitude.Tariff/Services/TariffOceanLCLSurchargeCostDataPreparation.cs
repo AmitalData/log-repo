@@ -17,36 +17,15 @@ namespace Logitude.Tariff.Services
     {
         public void Prepar()
         {
-            TariffPM tariff = null;
             try
             {
-                tariff = GetValidTariffPM();
-                ApiResponse<TariffPM> response = APICaller.CallPost<TariffPM>(tariff, Urls.TariffsController, UserTenant.Token);
+                ApiResponse<TariffPM> response = APICaller.CallPost<TariffPM>(GetValidTariffPM(), Urls.TariffsController, UserTenant.Token);
                 TariffDataMap(response.Data);
             }
             catch (Exception e)
             {
-                if (e.InnerException.Message.Contains("Tariff surcharge seller should be unique"))
-                {
-                    TariffDataMap(GetOceanLCLSurchargesCostTariffBySellerId(tariff.SellerId));
-                }
-                else
-                    throw new InvalidOperationException("Failed Creating Ocean LCL Surcharges Tariff Before Feature Run :" + e.InnerException);
+                throw new InvalidOperationException("Failed Creating Ocean LCL Surcharges Tariff Before Feature Run :" + e.InnerException);
             }
-        }
-
-        public TariffPM GetOceanLCLSurchargesCostTariffBySellerId(string sellerId)
-        {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
-                .Filter1Name("SellerId")
-                .Filter1Operator("equals")
-                .Filter1Value(sellerId)
-                .Filter2Name("TypeCode")
-                .Filter2Operator("equals")
-                .Filter2Value("OSC").Build();
-
-            ApiResponse<IEnumerable<TariffPM>> response = APICaller.CallGetByFilters<IEnumerable<TariffPM>>(Urls.TariffViews, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault();
         }
 
         private TariffPM GetValidTariffPM()
@@ -55,7 +34,7 @@ namespace Logitude.Tariff.Services
                    .WithDefualtValues()
                    .TypeCode("Ocean LCL Surcharge")
                    .Name("pre specflow name")
-                   .SellerId(PartnersData.ShippingLineYMLUId)
+                   .SellerId(new PartnerService().GetAgentId())
                    .CurrencyId("EUR")
                    .Notes("pre specflow notes")
                    .Surcharge1Id(BillingData.ChargeTypeOFTId)

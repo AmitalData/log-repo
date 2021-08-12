@@ -3,6 +3,7 @@ using Logitude.Tariff.Models;
 using Logitude.Tariff.Models.Builders;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.LocationsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -24,7 +25,7 @@ namespace Logitude.Tariff.Services
                 .WithDefualtValues()
                 .TypeCode((string)dataTable.Freight)
                 .Name((string)dataTable.Name)
-                .SellerId(PartnersData.ShippingLineYMLUId)
+                .SellerId(new PartnerService().GetAgentId())
                 .CurrencyId((string)dataTable.Currency)
                 .Notes((string)dataTable.Notes)
                 .Surcharge1Id(BillingData.ChargeTypeOFTId)
@@ -32,6 +33,7 @@ namespace Logitude.Tariff.Services
                 .ContractNumber(Convert.ToString(dataTable.ContractNumber))
                 .Build();
         }
+
         public TariffPM UpdateInstance(Table tariffTable, TariffPM tariff)
         {
             dynamic dataTable = tariffTable.CreateDynamicInstance();
@@ -40,6 +42,13 @@ namespace Logitude.Tariff.Services
                 .Name((string)dataTable.Name)
                 .Notes((string)dataTable.Notes)
                 .Build();
+        }
+
+        public void AssertUpdate(TariffPM tariff, TariffPM updatedTariff)
+        {
+            updatedTariff.Id.Should().NotBeNull();
+            updatedTariff.Name.Should().Equals(tariff.Name);
+            updatedTariff.Notes.Should().Equals(tariff.Notes);
         }
 
     }

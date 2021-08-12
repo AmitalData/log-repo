@@ -32,28 +32,16 @@ namespace Logitude.Tariff.Steps
         [When(@"create ocean LCL surcharge cost tariff")]
         public void WhenCreateOceanLCLSurchargeCostTariff()
         {
-            try
-            {
-                tariffContext.OceanLCLSurchargeCost = APICaller.CallPost<TariffPM>(tariffContext.OceanLCLSurchargeCost, Urls.TariffsController, UserTenant.Token)?.Data;
-            }
-            catch (Exception e)
-            {
-                insertException = e.InnerException.Message;
-            }
+
+            tariffContext.OceanLCLSurchargeCost = APICaller.CallPost<TariffPM>(tariffContext.OceanLCLSurchargeCost, Urls.TariffsController, UserTenant.Token)?.Data;
         }
 
         [Then(@"the ocean LCL surcharge cost tariff should create successfully")]
         public void ThenTheOceanLCLSurchargeCostTariffShouldCreateSuccessfully()
         {
-            if (string.IsNullOrEmpty(insertException))
-            {
-                tariffContext.OceanLCLSurchargeCost.Should().NotBeNull();
-                tariffContext.OceanLCLSurchargeCost.Id.Should().NotBeNull();
-            }
-            else
-            {
-                insertException.Should().Contain("Tariff surcharge seller should be unique");
-            }
+
+            tariffContext.OceanLCLSurchargeCost.Should().NotBeNull();
+            tariffContext.OceanLCLSurchargeCost.Id.Should().NotBeNull();
 
         }
     }
