@@ -30,12 +30,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
                 ", Mas.MainCarriageETA  as MainCarriageETA ";
 
+            var forwardingShipmentFields =
+                "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
+                " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
+                " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
+                " min(ForwardingComputed.ContainersNumbers) as ForwardingContainersNumbers, " +
+                " min(P.House) as ForwardingHouse, " +
+                " min(ForwardingMaster.Master) as ForwardingMaster, " +
+                " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
+                " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
+                " min(P.ShipperName) as ForwardingShipperName, " +
+                " min(P.ConsigneeName) as ForwardingConsigneeName, " +
+                " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
-            var groupSelect = "Min(P.Id) as ForwardingIdForCustom" +
-                            ", min(P.ShipmentNumber) as ForwardingShipmentNumber " + 
-                            ", min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
-            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} ";
+            var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
+
+            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields}";
 
 
 
@@ -43,7 +54,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var joinScript = $"JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId ";
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id ";
 
 
             List<string> whereConditions = new List<string>();
@@ -120,12 +133,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA," +
-                "min(P.ShipmentNumber) as ForwardingShipmentNumber , " + 
-                " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
+                ", Mas.MainCarriageETA  as MainCarriageETA";
+
+            var forwardingShipmentFields =
+          "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
+          " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
+          " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
+          " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
+          " min(P.House) as ForwardingHouse, " +
+          " min(Mas.Master) as ForwardingMaster, " +
+          " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
+          " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
+          " min(P.ShipperName) as ForwardingShipperName, " +
+          " min(P.ConsigneeName) as ForwardingConsigneeName, " +
+          " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} ";
+            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} ";
 
 
 

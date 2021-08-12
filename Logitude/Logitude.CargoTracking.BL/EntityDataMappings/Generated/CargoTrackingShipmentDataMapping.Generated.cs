@@ -99,6 +99,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ForwardingShipmentNumber, 
 	         ShipmentTypeCode, 
 	         CurrentMilestoneExceptions, 
+	         ForwardingHouse, 
+	         ForwardingMaster, 
 	         ForwardingShipmentLevelCode,
 	      }
 

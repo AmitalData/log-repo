@@ -115,6 +115,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
                                                                ShipperName = shipper == null ? null : shipper.EnglishName,
+                                                               ForwardingMaster = shipment.ForwardingMaster,
+                                                               ForwardingHouse = shipment.ForwardingHouse,
 
 
                                                            });

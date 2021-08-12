@@ -199,6 +199,22 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string CurrentMilestoneExceptions  { get; set; }
        [DataMember]
+       public string ForwardingCustomerReference1  { get; set; }
+       [DataMember]
+       public string ForwardingCustomerReference2  { get; set; }
+       [DataMember]
+       public string ForwardingContainersNumbers  { get; set; }
+       [DataMember]
+       public string ForwardingHouse  { get; set; }
+       [DataMember]
+       public string ForwardingMaster  { get; set; }
+       [DataMember]
+       public string ForwardingCustomFileNumber  { get; set; }
+       [DataMember]
+       public string ForwardingShipperName  { get; set; }
+       [DataMember]
+       public string ForwardingConsigneeName  { get; set; }
+       [DataMember]
        public string ForwardingShipmentLevelCode  { get; set; }
    }
 

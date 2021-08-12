@@ -502,6 +502,20 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ForwardingHouse"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwardingMaster"
+    Type="nvarchar"
+    Size="222">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ForwardingShipmentLevelCode"
     Type="varchar"
     Size="100">
