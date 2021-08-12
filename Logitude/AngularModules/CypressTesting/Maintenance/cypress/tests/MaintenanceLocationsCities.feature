@@ -1,4 +1,4 @@
-@release @stable
+@release @stable @all
 Feature: Create City, Inactivate and activate it from Maintenance
     The user creates a City, selects it to edit,
     selects it to edit again and Inactivates it from the Maintenance module.
