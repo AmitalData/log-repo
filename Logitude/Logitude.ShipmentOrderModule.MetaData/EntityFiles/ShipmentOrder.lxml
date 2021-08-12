@@ -3589,7 +3589,7 @@
       <DCField
         DCFieldName="&quot;OrderNumber&quot;"
         FieldName="&quot;OrderNumber&quot;"
-        IsKey="true"
+        IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
         FieldsDataType="&quot;Text&quot;"

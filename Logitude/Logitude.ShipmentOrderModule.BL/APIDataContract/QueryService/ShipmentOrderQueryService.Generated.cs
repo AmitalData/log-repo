@@ -58,25 +58,6 @@ using Logitude.ShipmentOrderModule.Data;
             }
         }
 		
-		public ShipmentOrder GetShipmentOrderByOrderNumber(string OrderNumber,int Tenant)
-        { 
-		    try
-            {
-
-				
-				var temp = query.GetSinglePMByOrderNumber(OrderNumber,Tenant);				
-				 if (temp == null)
-                    throw new ApplicationException("ShipmentOrder with OrderNumber " + OrderNumber + " doesn't exist");
-
-				return ShipmentOrderDataMapping(temp,Tenant);
-			}
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-		
 		public ShipmentOrder ShipmentOrderDataMapping(ShipmentOrderPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -198,13 +179,10 @@ using Logitude.ShipmentOrderModule.Data;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										if (!string.IsNullOrEmpty(MyEntity.OrderNumber))
-					{
-						temp = query.GetSinglePMByOrderNumber(MyEntity.OrderNumber, Tenant);
-					} 					   
+										   
 					if(temp == null)
 					{
-					    throw new ApplicationException("ShipmentOrder with OrderNumber " + MyEntity.OrderNumber + " doesn't exist");
+					    throw new ApplicationException("ShipmentOrder with Id " + MyEntity.Id + " doesn't exist");
 						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

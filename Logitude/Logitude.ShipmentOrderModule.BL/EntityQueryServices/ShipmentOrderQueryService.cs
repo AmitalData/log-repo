@@ -52,8 +52,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
 
         public ShipmentOrderPM GetSinglePMByOrderNumber(string orderNumber, int tenant)
         {
-
-
             return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).Select(a => new ShipmentOrderPM
             {
 
@@ -92,5 +90,13 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
 
             }).FirstOrDefault();
         }
+
+
+
+        public string GetIdByOrderNumber(string orderNumber)
+        {
+            return context.ShipmentOrders.FirstOrDefault(a => a.OrderNumber == orderNumber)?.Id;
+        }
+
     }
 }
