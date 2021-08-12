@@ -2360,6 +2360,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return cards;
         }
+
+
+        public List<CardList> GetAllCardsByVatNumber(string vatNumber, int tenant)
+        {
+            List<CardList> cards = (from a in repository.context.Cards
+                                                where a.Tenant == tenant && a.VatNumber == vatNumber
+                                                select new CardList()
+                                                {
+                                                   Code= a.Code,
+                                                   Id= a.Id,
+                                                   VatNumber=a.VatNumber,
+                                                   LocalName= a.LocalName,
+                                                   EnglishName=a.EnglishName,
+                                                    InActive = a.InActive
+                                                }).ToList();
+
+            return cards;
+        }
+
     }
 
     public class ShortPartnersDetails

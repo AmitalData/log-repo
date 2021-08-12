@@ -63,6 +63,18 @@ export class CardExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetAllCardsByVatNumber(vatNumber: string) {
 
+        var url = this._apiUrl + '/GetAllCardsByVatNumber?vatNumber=' + vatNumber  ;
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
 }

@@ -312,5 +312,31 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        public HttpResponseMessage GetAllCardsByVatNumber(string vatNumber)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                CardQuery cardQuery = new CardQuery(authToken.Tenant);
+                 List<CardList> cards =  cardQuery.GetAllCardsByVatNumber(vatNumber, authToken.Tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, cards);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
