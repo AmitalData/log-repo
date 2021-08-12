@@ -45,7 +45,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.DomainServices.Server">
-      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
+      <HintPath>..\Logitude.Accounting.Def\bin\Debug\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />

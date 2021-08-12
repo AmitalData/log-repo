@@ -67,7 +67,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     .CoulmnName("House")
                     .Delimiter('-')
                     .Build());
-                AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
 
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
@@ -76,8 +75,58 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+
+                bool isCustomsShipment = tableRow["ShipmentLevelCode"].Equals("A");
+                if (isCustomsShipment)
+                    AddForwardingSearchRecordsForCustomsShipment(tableRow, bulkDataPreperation);
+
                 SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
             }
+
+        }
+
+        private static void AddForwardingSearchRecordsForCustomsShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingMaster");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomFileNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipperName");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingConsigneeName");
+
+            AddSplittedData(new SplittedDataArguments
+            .Builder()
+            .TableRow(tableRow)
+            .DataTable(bulkDataPreperation.InnerDataTable)
+            .CoulmnName("ForwardingCustomerReference1")
+            .Delimiter(',')
+            .Build());
+
+            AddSplittedData(new SplittedDataArguments
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("ForwardingCustomerReference2")
+                .Delimiter(',')
+                .Build());
+
+            AddSplittedData(new SplittedDataArguments
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("ForwardingContainersNumbers")
+                .Delimiter(',')
+                .Build());
+
+            AddSplittedData(new SplittedDataArguments
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("ForwardingHouse")
+                .Delimiter('-')
+                .Build());
+
+            AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
 
         }
 
