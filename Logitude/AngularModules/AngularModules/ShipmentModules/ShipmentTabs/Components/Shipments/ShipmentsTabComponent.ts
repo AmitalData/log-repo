@@ -422,11 +422,41 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public SummaryGrossWeight: number = 0;
     public SummaryVolumetricWeight: number = 0;
     public SummaryChargeableWeight: number = 0;
+
+    public SummaryGrossWeightUnitCode: string = "KG";
+    public SummaryVolumetricWeightUnitCode: string = "KG";
+    public SummaryChargeableWeightUnitCode: string = "KG";
     private BuildSummary() {
-        this.SummaryQuantity = ArrayTool.Sum(this.ItemsSource1, "Quantity");
-        this.SummaryGrossWeight = ArrayTool.Sum(this.ItemsSource1, "GrossWeight");
-        this.SummaryChargeableWeight = ArrayTool.Sum(this.ItemsSource1, "ChargeableWeight");
-        this.SummaryVolumetricWeight = ArrayTool.Sum(this.ItemsSource1, "VolumetricWeight");
+        this.ComputeSummaryGrossWeight();
+        this.ComputeSummaryChargeableWeight();
+        this.ComputeSummaryVolumetricWeight();
+    }
+
+    ComputeSummaryGrossWeight() {
+        this.SummaryGrossWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var grossWeight = item.GrossWeight;
+            var grossWeightUnit = item.GrossWeightUnitCode;
+            this.SummaryGrossWeight = this.SummaryGrossWeight + AppTool.GetWeightFromWeight(grossWeightUnit, this.EntityPM.GrossWeightUnitCode, grossWeight);
+        });
+    }
+
+    ComputeSummaryChargeableWeight() {
+        this.SummaryChargeableWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var chargeableWeight = item.ChargeableWeight;
+            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
+            this.SummaryChargeableWeight = this.SummaryChargeableWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.GrossWeightUnitCode, chargeableWeight);
+        });
+    }
+
+    ComputeSummaryVolumetricWeight() {
+        this.SummaryVolumetricWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var volumetricWeight = item.VolumetricWeight;
+            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
+            this.SummaryVolumetricWeight = this.SummaryVolumetricWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.GrossWeightUnitCode, volumetricWeight);
+        });
     }
 
     Save() {
@@ -641,6 +671,8 @@ class HAWBItem {
     get GrossWeight() { return this.item.GrossWeight; }
     get VolumetricWeight() { return this.item.VolumetricWeight; }
     get ChargeableWeight() { return this.item.ChargeableWeight; }    
+    get GrossWeightUnitCode() { return this.item.GrossWeightUnitCode; }
+    get ChargeableWeightUnitCode() { return this.item.ChargeableWeightUnitCode; }
 
     get JobNumber() { return (this.item.ShipmentNumber == this.item.MasterShipmentNumber) ? "" : this.item.MasterShipmentNumber;; }
     public CellNotes: string = null;

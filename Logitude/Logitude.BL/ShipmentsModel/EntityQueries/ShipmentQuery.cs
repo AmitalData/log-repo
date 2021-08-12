@@ -12357,6 +12357,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                                HandlerUserId = f.HandlerUserId,
                                HandlerUserName = f.HandlerUserName,
+                               GrossWeightUnitCode = f.GrossWeightUnitCode,
                            };
             return myResult;
         }
