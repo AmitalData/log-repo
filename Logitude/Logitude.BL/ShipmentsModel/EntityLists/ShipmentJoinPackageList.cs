@@ -177,5 +177,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? OnForwardingETA { get; set; }
         public string OnForwardingToPortCode { get; set; }
         public string OnForwardingToPortId { get; set; }
+        public DateTime? CutOffDate { get; set; }
     }
 }

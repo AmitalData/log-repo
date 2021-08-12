@@ -115,5 +115,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
         public string FlightNumber { get; set; }
+        public DateTime? CutOffDate { get; set; }
     }
 }
