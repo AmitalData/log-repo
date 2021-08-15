@@ -152,6 +152,7 @@ var QuotesRequest = function () {
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
     this.QuotationPreparedTickVisibility = "";
+    this.QuotationStatusColor = "";
     this.DocumentSecurityId = "";
     this.Feedback = "";
     this.Comments = "";
@@ -1760,7 +1761,35 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
         newQuotesRequest.QuotationPreparedTickVisibility = "collapse";
     }
 
+    newQuotesRequest.QuotationStatusColor = GetQuotationStatusColor(quotesRequest.Status); 
+
+    
     return newQuotesRequest;
+}
+
+function GetQuotationStatusColor(quotesRequestStatus) {
+    switch (quotesRequestStatus) {
+        case "Request Received":
+            return "black";
+            break;
+        case "Quote Process":
+            return "yellowgreen";
+            break;
+        case "Pending Approval":
+            return "orange";
+            break;
+        case "Pending Decision":
+            return "orange";
+            break;
+        case "Approved":
+            return "green";
+            break;
+        case "Rejected":
+            return "red";
+            break;
+    }
+
+    return "black";
 }
 
 
