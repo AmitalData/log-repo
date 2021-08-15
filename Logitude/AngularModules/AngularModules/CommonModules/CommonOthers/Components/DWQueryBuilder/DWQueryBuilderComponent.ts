@@ -266,7 +266,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 TempObsList.push(view);
             }
         });
-        this.AllFieldsWithChildrenDataSource = TempObsList;
+        this.AllFieldsWithChildrenDataSource = TempObsList.sort((a, b) => a.DisplayName.localeCompare(b.DisplayName));
     }
 
     SetWindowArgs(args: any) {
