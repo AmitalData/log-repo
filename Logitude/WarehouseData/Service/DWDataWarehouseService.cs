@@ -242,7 +242,7 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingFromPortId DEFAULT '-1' FOR OnForwardingFromPortId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnForwardingCarrierId DEFAULT '-1' FOR OnForwardingCarrierId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingCarrierId DEFAULT '-1' FOR PreForwardingCarrierId"
-
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "HandlerUserId DEFAULT '-1' FOR HandlerUserId;"
 
                         ;
 
