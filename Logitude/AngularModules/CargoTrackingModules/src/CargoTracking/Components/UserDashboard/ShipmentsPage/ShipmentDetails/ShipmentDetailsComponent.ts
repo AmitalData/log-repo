@@ -247,7 +247,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
 
         if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
-            var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? " - " + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
+            var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? "\n" + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
             this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber + ForwardingShipmentNumber;
         }
     }
