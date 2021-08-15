@@ -12018,6 +12018,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
                                CarrierLastStatusDate = f.CarrierLastStatusDate,
                                CarrierLastStatusName = f.CarrierLastStatusName,
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
