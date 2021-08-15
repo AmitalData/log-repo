@@ -579,7 +579,7 @@
                                 <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
                                     <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
                                                 [ObjectFieldName]="'OpenAmount'" [Text]="OpenAmount" [HideColumns]="true"
-                                                (ValueChanged)="OpenAmountTextChanged($event)"
+                                                (ValueChanged)="OpenAmountTextChanged($event)" [DebounceTime]="400"
                                                 [ObjectTableName]="ExtRecoTable" [DataContext]="DataContext"></LogTextBox>
                                 </li>
 
