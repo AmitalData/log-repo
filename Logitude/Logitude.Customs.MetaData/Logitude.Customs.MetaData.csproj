@@ -634,11 +634,6 @@
     <None Include="EntityFiles\ClaimsRelatedEntity.lxml">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
-    </Compile>
     <None Include="EntityFiles\CustomsDocumentsDefinition.lxml" />
     <None Include="EntityFiles\CustomsInsuranceCompany.lxml" />
     <None Include="EntityFiles\DeclarationCargoSplit.lxml" />
@@ -666,7 +661,6 @@
     </None>
     <None Include="AutoGenerators\CustomClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CustomClassesGenerator.cs</LastGenOutput>
     </None>
     <None Include="EntityFiles\AddressContactState.lxml" />
     <None Include="EntityFiles\AddressPurpose.lxml" />
