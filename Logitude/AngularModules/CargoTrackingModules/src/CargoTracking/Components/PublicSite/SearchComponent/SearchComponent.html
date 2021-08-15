@@ -300,19 +300,19 @@
                         </div>
                         <!-- Pickup -->
                         <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
-                        <div>
-                            <div class="subtitle">Pickup</div>
-                            <div class="value uppercase">
-                                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
-                            </div>
+        <div>
+            <div class="subtitle">Pickup</div>
+            <div class="value uppercase">
+                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
+            </div>
 
-                            <div class="subtitle">Delivery Location</div>
-                            <div class="value uppercase">
-                                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
-                            </div>
+            <div class="subtitle">Delivery Location</div>
+            <div class="value uppercase">
+                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
+            </div>
 
-                        </div>
-                    </div>-->
+        </div>
+    </div>-->
                         <!-- Shipment Id -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
@@ -326,18 +326,18 @@
 
                         <!-- From -->
                         <!-- <div class="column col-md-2">
-                        <div>
-                            <div class="header subtitle">From</div>
-                            {{ shipment.From | date: " MMMM d, y, h:mm" }}
-                        </div>
-                    </div> -->
+        <div>
+            <div class="header subtitle">From</div>
+            {{ shipment.From | date: " MMMM d, y, h:mm" }}
+        </div>
+    </div> -->
                         <!-- To -->
                         <!-- <div class="column col-md-2">
-                        <div>
-                            <div class="header subtitle">To</div>
-                            {{ shipment.To | date: " MMMM d, y, h:mm" }}
-                        </div>
-                    </div> -->
+        <div>
+            <div class="header subtitle">To</div>
+            {{ shipment.To | date: " MMMM d, y, h:mm" }}
+        </div>
+    </div> -->
                         <!-- Status -->
                         <div class="column col-md-1 status" style="width: 22%;">
                             <div>
@@ -347,13 +347,21 @@
                                 </div>
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="more-text mobile-only" style="font-size:12px;float:right">More Info</div>
+                                <div class="more-text mobile-only" style="font-size:12px;float:right;padding-top: 20px;">More Info</div>
                                 <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:mm' }}</div>
 
                             </div>
 
                         </div>
-                         <div class="column col-md-1 status hide-mobile" style="width: 10%">
+
+                        <div class="column status empty-div">
+                            <div>
+                                <div style="height:85px"></div>
+                                <div class="more-text" style="font-size:12px"></div>
+                            </div>
+                        </div>
+
+                        <div class="column col-md-1 status hide-mobile" style="width:69px;text-align:right">
                             <div>
                                 <div style="height:85px"></div>
                                 <div class="more-text" style="font-size:12px">More Info</div>
