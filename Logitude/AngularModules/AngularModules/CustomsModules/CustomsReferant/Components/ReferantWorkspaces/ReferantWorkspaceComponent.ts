@@ -167,8 +167,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification", true));
 
 
-            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
-            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
+           // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
+           // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
 
             this.FillInProgressDeclarationReferantDataDashboardData();
         });

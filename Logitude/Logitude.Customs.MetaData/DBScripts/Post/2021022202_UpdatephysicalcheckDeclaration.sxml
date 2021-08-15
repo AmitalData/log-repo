@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="4">
+  <Oracle Version="8">
 
      <![CDATA[
 
