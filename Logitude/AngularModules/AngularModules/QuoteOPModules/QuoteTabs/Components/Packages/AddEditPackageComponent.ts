@@ -65,7 +65,7 @@ export class AddEditPackageComponent {
 
             if (this.DataContext.IsNewEntity) {
 
-                this.DataContext.QuoteOPPM.AddQuoteOPPackagePM(this.EntityPM);
+                this.DataContext.QuoteOPPM.AddQuoteOPPackage(this.EntityPM); 
                 this.DataContext.fatherComponent.ItemsSource.Insert(this.DataContext);
                 this.DataContext.fatherComponent.BuildItemsSource();   
             }

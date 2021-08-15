@@ -625,7 +625,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         if (this.SelectedQuoteOPTemplate != null) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
-            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(this.QuoteOPPM);
+            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(/*this.QuoteOPPM*/);
 
             quoteDocumentVersion.Tenant = SessionLocator.Tenant;
             quoteDocumentVersion.QuoteOPId = this.QuoteOPPM.Id;
@@ -879,7 +879,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         }
         else {
 
-            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(this.QuoteOPPM);
+            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(/*this.QuoteOPPM*/);
 
             quoteDocumentVersion.Tenant = SessionLocator.Tenant;
             quoteDocumentVersion.QuoteOPId = this.QuoteOPPM.Id;

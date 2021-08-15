@@ -26,7 +26,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
     IsShowMessageNoQuoteOPTemplate: boolean;
     public QuoteOPTemplateViewModelSelected: any;
     IsLoadTextCode: boolean;
-    QuoteId: any;
+    QuoteOPId: any;
     QuoteTypeCode: string = null;
     AreaName: string;
     private CurrentSession = SessionLocator.SelectedSession;

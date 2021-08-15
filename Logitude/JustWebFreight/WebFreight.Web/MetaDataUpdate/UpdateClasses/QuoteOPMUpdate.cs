@@ -79,6 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 		SpecialServicesTypeUpdateClass SpecialServicesTypeUpdateClass = new SpecialServicesTypeUpdateClass();
 		public void LoadObjectsTenantZero(IWebFreightContext context)
 		{
+			return;// quit SpecialServicesType
 			ICommonDataContext commonContext = CommonDataContext.GetContext(0);
 			ObjectContext = context;
 			CommonContext = commonContext;

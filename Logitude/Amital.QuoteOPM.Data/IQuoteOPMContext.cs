@@ -17,6 +17,7 @@ namespace Amital.QuoteOPM.Data
    
        	 IDbSet<BorderOPType> BorderOPTypes { get; }
 		 IDbSet<MarkUpOPType> MarkUpOPTypes { get; }
+		 IDbSet<OPSpecialServicesType> OPSpecialServicesTypes { get; }
 		 IDbSet<QuoteOP> QuoteOPs { get; }
 		 IDbSet<QuoteOPCharge> QuoteOPCharges { get; }
 		 IDbSet<QuoteOPClosingReason> QuoteOPClosingReasons { get; }

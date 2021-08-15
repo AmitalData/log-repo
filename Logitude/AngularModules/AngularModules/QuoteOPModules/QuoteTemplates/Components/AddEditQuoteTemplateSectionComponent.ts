@@ -30,7 +30,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
     public ValidationErrorsList: string[];
     IsNewQuoteOPTemplateSession: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    QuoteOPTemplateId: string;
+    QuoteTemplateId: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

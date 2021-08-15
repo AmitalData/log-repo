@@ -191,7 +191,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         }
         //windowArgs.IsAddCustomerAllowed = true;
         windowArgs.CustomerId = this.EntityPM.CustomerId;
-        windowArgs.QuoteOPId = this.EntityPM.Id;
+        windowArgs.QuoteId = this.EntityPM.Id;
         logWindow.Title = windowTitle;
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;

@@ -43,7 +43,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
 
 
-    QuoteId: string;
+    QuoteOPId: string;
     BorderTypesSelected: BorderType;
     BorderTypes: BorderType[] = [];
     SelectedTabCode: string;

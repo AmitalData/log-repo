@@ -76,6 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		 
 	   	BorderOPTypeUpdateClass  BorderOPTypeUpdateClass = new BorderOPTypeUpdateClass();
 		MarkUpOPTypeUpdateClass  MarkUpOPTypeUpdateClass = new MarkUpOPTypeUpdateClass();
+		OPSpecialServicesTypeUpdateClass  OPSpecialServicesTypeUpdateClass = new OPSpecialServicesTypeUpdateClass();
 		QuoteOPUpdateClass  QuoteOPUpdateClass = new QuoteOPUpdateClass();
 		QuoteOPChargeUpdateClass  QuoteOPChargeUpdateClass = new QuoteOPChargeUpdateClass();
 		QuoteOPClosingReasonUpdateClass  QuoteOPClosingReasonUpdateClass = new QuoteOPClosingReasonUpdateClass();
@@ -256,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings = new Dictionary<string, string>();
  			TablesHashStrings.Add("BorderOPType",  BorderOPTypeUpdateClass.HashString);
 			TablesHashStrings.Add("MarkUpOPType",  MarkUpOPTypeUpdateClass.HashString);
+			TablesHashStrings.Add("OPSpecialServicesType",  OPSpecialServicesTypeUpdateClass.HashString);
 			TablesHashStrings.Add("QuoteOP",  QuoteOPUpdateClass.HashString);
 			TablesHashStrings.Add("QuoteOPCharge",  QuoteOPChargeUpdateClass.HashString);
 			TablesHashStrings.Add("QuoteOPClosingReason",  QuoteOPClosingReasonUpdateClass.HashString);
@@ -352,6 +354,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				MarkUpOPTypeUpdateClass.FillMarkUpOPType();
 
  
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("OPSpecialServicesType", ObjectTables, OPSpecialServicesTypeUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("OPSpecialServicesType");
+					OPSpecialServicesTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					OPSpecialServicesTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					OPSpecialServicesTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteOP", ObjectTables, QuoteOPUpdateClass.HashString))
@@ -1135,6 +1170,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MarkUpOPTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   OPSpecialServicesTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   QuoteOPUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   QuoteOPChargeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -1191,6 +1228,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   //MarkUpOPTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   //OPSpecialServicesTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //QuoteOPUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //QuoteOPChargeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -1245,6 +1284,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   BorderOPTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   QuoteOPUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
@@ -1301,6 +1342,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   QuoteOPUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   QuoteOPChargeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -1355,6 +1398,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   BorderOPTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   QuoteOPUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -1411,6 +1456,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   QuoteOPUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   QuoteOPChargeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -1466,6 +1513,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   QuoteOPUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   QuoteOPChargeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -1519,6 +1568,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   BorderOPTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   QuoteOPUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -1574,6 +1625,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MarkUpOPTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   OPSpecialServicesTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   QuoteOPUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   QuoteOPChargeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -1628,6 +1681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   	   MarkUpOPTypeUpdateClass.FillMarkUpOPType();
 	
+	   
 	   
 	   
 	   

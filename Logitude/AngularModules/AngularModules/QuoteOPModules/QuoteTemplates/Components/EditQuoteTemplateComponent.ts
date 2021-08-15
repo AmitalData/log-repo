@@ -55,7 +55,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     QuoteOPTemplateSectionPMService: QuoteOPTemplateSectionPMService;
     VisibilityGeneralSetting: boolean = true;
     IsLoadPreviewSectionRuning: boolean;
-    QuoteOPTemplateId: string;
+    QuoteTemplateId: string;
     QuoteOPPM: any;
     QuoteOPTemplateExtendedPMService: QuoteOPTemplateExtendedPMService;
     QuoteOPTemplateTextCodeExtendedPMService: QuoteOPTemplateTextCodeExtendedPMService;

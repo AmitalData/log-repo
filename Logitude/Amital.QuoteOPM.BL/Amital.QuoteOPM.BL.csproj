@@ -60,6 +60,7 @@
     <Compile Include="EntityDataMappings\BorderOPTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\BorderOPTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MarkUpOPTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OPSpecialServicesTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPChargeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPClosingReasonDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPComputedFieldDataMapping.Generated.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="EntityDataMappings\Generated\QuoteOPTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPVATsTotalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\MarkUpOPTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OPSpecialServicesTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPChargeDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPClosingReasonDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPComputedFieldDataMapping.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="EntityDataMappings\QuoteOPVATsTotalDataMapping.cs" />
     <Compile Include="EntityQueryServices\Generated\BorderOPTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MarkUpOPTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OPSpecialServicesTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPChargeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPClosingReasonQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPComputedFieldQueryService.Generated.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="EntityQueryServices\Generated\QuoteOPTypeQueryService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BorderOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MarkUpOPTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OPSpecialServicesTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPChargeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPClosingReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPComputedFieldUpdateService.Generated.cs" />

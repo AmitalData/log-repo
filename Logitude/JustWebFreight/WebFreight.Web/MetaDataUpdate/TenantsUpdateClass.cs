@@ -1021,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
             var quoteOPMUpdate = new QuoteOPMUpdate();
-            System.Windows.Forms.MessageBox.Show("quoteOPMUpdate.LoadObjectsTenantZero(context);"); //quoteOPMUpdate.LoadObjectsTenantZero(context);
+            quoteOPMUpdate.LoadObjectsTenantZero(context);
 
             performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
         }
@@ -1502,7 +1502,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 t.Name.Contains("QuoteOP")
                 || t.Name == "BorderOPType"
                 || t.Name == "MarkUpOPType"
-                || t.Name == "SpecialServicesType"
+                || t.Name.StartsWith("OP")
+                //|| t.Name == "SpecialServicesType"
                 ).ToList();
             }
             else
