@@ -495,28 +495,28 @@ h1 {
         position: absolute;
         bottom: 0px;
         width: 100%;
-        background: var(--MainColor);;
+        background: var(--secondaryColor);
         height: 2px;
         left: 0;
     }
-    .routing-step:first-child:after{
+    .routing-step:first-child:after {
         content: "";
         display: block;
         position: absolute;
         bottom: 0px;
         width: calc(50% + 15px);
-        background: var(--MainColor);;
+        background: var(--secondaryColor);
         height: 2px;
         right: 0;
         left: unset !important;
     }
-    .routing-step:last-child:after{
+    .routing-step:last-child:after {
         content: "";
         display: block;
         position: absolute;
         bottom: 0px;
         width: calc(50% + 15px);
-        background: var(--MainColor);;
+        background: var(--secondaryColor);
         height: 2px;
         left: 0;
         right: unset !important;
@@ -577,7 +577,7 @@ h1 {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: var(--MainColor);
+    background: var(--secondaryColor);
     color: white;
     text-align: center;
     margin-right: 5px;
@@ -590,7 +590,7 @@ h1 {
     height: 35px;
     font-size: 18px;
     border-radius: 50%;
-    background: var(--MainColor);
+    background: var(--secondaryColor);
     color: white;
     text-align: center;
     margin-right: 10px;
