@@ -54,6 +54,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="EntityPMs\Generated\BorderOPTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MarkUpOPTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OPSpecialServicesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPClosingReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPComputedFieldPM.Generated.cs" />

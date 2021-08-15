@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteDomainService} from '../../../../QuoteOPM/Services/QuoteDomainService';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,7 +23,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 })
 
 export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestroy {
-    public EntityPM: QuotePM = null;
+    public EntityPM: QuoteOPPM = null;
     public ObjectTableName: string = "QuoteOP";
     public DataContext = this;
     public IsSubjectVisible: boolean = false;
@@ -34,7 +34,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
         this.Listen();
     }
 
-    InitTab(entityPM: QuotePM, tableName: string) {
+    InitTab(entityPM: QuoteOPPM, tableName: string) {
         this.EntityPM = entityPM;
         this.LoadPickupDeliveryData();
         this.SetLabels();

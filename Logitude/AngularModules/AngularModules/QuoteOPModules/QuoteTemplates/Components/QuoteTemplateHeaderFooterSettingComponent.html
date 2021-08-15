@@ -15,15 +15,15 @@
                         <ul style="margin-left: 2px;">
                             <li [class.Selected]="SelectedTabCode == 'QCS'" (click)="SelectedTabCode = 'QCS'" style="margin-left:2px;">
                                 <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                    <span>{{'QuoteTemplate.S.ColumnsSettings' | TextCodeTranslationPipe}}</span>
+                                    <span>{{'QuoteOPTemplate.S.ColumnsSettings' | TextCodeTranslationPipe}}</span>
                                 </div>
                             </li>
 
-                            <li *ngIf="QuoteTemplateSectionTypeName == 'Footer'" [class.Selected]="SelectedTabCode == 'QPN'" (click)="SelectedTabCode = 'QPN'">
+                            <li *ngIf="QuoteOPTemplateSectionTypeName == 'Footer'" [class.Selected]="SelectedTabCode == 'QPN'" (click)="SelectedTabCode = 'QPN'">
                                 <div class="InnerChild" style="color:black;width:110px">
 
                                     <div style="width:110px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                        <span>{{'QuoteTemplate.S.PageNumbering' | TextCodeTranslationPipe}}</span>
+                                        <span>{{'QuoteOPTemplate.S.PageNumbering' | TextCodeTranslationPipe}}</span>
                                     </div>
                                 </div>
                             </li>
@@ -49,17 +49,17 @@
                                                                         <table>
                                                                             <tr style="height:35px">
 
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column1' | TextCodeTranslationPipe}} </div></td>
+                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Column1' | TextCodeTranslationPipe}} </div></td>
                                                                                 <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area1',$event)" [SelectedItem]="PageArea1Type"></ComboBox></td>
                                                                                 <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:85px">
 
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth1'}}" [(ngModel)]="Area1Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                             <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                         </tr>
                                                                                     </table>
 
@@ -76,17 +76,17 @@
 
                                                                             <tr style="height:35px">
 
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column2' | TextCodeTranslationPipe}}</div></td>
+                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Column2' | TextCodeTranslationPipe}}</div></td>
                                                                                 <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area2',$event)" [SelectedItem]="PageArea2Type"></ComboBox></td>
                                                                                 <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:85px">
 
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth2'}}" [(ngModel)]="Area2Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                             <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                         </tr>
                                                                                     </table>
 
@@ -105,10 +105,10 @@
 
                                                                             <tr style="height:35px">
 
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column3' | TextCodeTranslationPipe}}</div></td>
+                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Column3' | TextCodeTranslationPipe}}</div></td>
                                                                                 <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" (SelectedItemChanged)="PageAreaSelectedChanged('Area3',$event)" [ItemsSource]="AreaType" [SelectedItem]="PageArea3Type"></ComboBox></td>
                                                                                 <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteOPTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:85px">
 
 
@@ -117,7 +117,7 @@
                                                                                         <tr>
                                                                                             <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth3'}}" [(ngModel)]="Area3Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                             <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                         </tr>
                                                                                     </table>
 
@@ -141,14 +141,14 @@
                                                                     <td style="width:350px;">
                                                                         <table>
                                                                             <tr style="height:30px">
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}:</div></td>
+                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteOPTemplate.S.Height' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:120px">
 
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td style="width:80px"><input type="number" (blur)="HeightAreaLostFocusMethod()" [(ngModel)]="HeightArea" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                             <td style="width:3px;"><div style="width:3px;"></div></td>
-                                                                                            <td style="width:30px"><span style="font-size:12px;color:gray;width:30px;margin-top:2px">{{'QuoteTemplate.S.Cm' | TextCodeTranslationPipe}}</span></td>
+                                                                                            <td style="width:30px"><span style="font-size:12px;color:gray;width:30px;margin-top:2px">{{'QuoteOPTemplate.S.Cm' | TextCodeTranslationPipe}}</span></td>
                                                                                         </tr>
                                                                                     </table>
 
@@ -160,23 +160,23 @@
 
                                                                             <tr style="height:30px">
 
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.BorderType' | TextCodeTranslationPipe}}:</div></td>
+                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteOPTemplate.S.BorderType' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:120px"><ComboBox style="width:120px;height:22px;display:inline" (SelectedItemChanged)="BorderTypesSelectedChanged($event)" [ItemsSource]="BorderTypes" [SelectedItem]="BorderTypesSelected" [Binding]="'Name'"></ComboBox></td>
                                                                                 <td style="width:7px"><div style="width:7px"></div></td>
 
                                                                                 <td style="width: 70px;">
                                                                                     <div>
-                                                                                        <button style="height:28px" class="Button" (click)="AdvanceButtonClicked()">{{'QuoteTemplate.B.Advanced' | TextCodeTranslationPipe}}</button>
+                                                                                        <button style="height:28px" class="Button" (click)="AdvanceButtonClicked()">{{'QuoteOPTemplate.B.Advanced' | TextCodeTranslationPipe}}</button>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td><div></div></td>
                                                                             </tr>
 
 
-                                                                            <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:5px"><td style="height:5px" colspan="5"></td></tr>
+                                                                            <tr *ngIf="QuoteOPTemplateSectionTypeName == 'Footer'" style="height:5px"><td style="height:5px" colspan="5"></td></tr>
 
-                                                                            <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:30px">
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.SpaceLinesBefore' | TextCodeTranslationPipe}}:</div></td>
+                                                                            <tr *ngIf="QuoteOPTemplateSectionTypeName == 'Footer'" style="height:30px">
+                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteOPTemplate.S.SpaceLinesBefore' | TextCodeTranslationPipe}}:</div></td>
                                                                                 <td style="width:120px">
 
                                                                                     <table>
@@ -204,7 +204,7 @@
                                                     <tr style="height:25px">
                                                         <td style="height:25px">
                                                             <div style="text-align:center">
-                                                                <div class="CenterCenter" style="width:300px;height:30px;border-radius:2px;color:#1B90CB;border:1px solid #E4E3E1;background-color:#EDEDED;font-size:22px;text-align:center;vertical-align:central"> {{'QuoteTemplate.B.Preview' | TextCodeTranslationPipe}} </div>
+                                                                <div class="CenterCenter" style="width:300px;height:30px;border-radius:2px;color:#1B90CB;border:1px solid #E4E3E1;background-color:#EDEDED;font-size:22px;text-align:center;vertical-align:central"> {{'QuoteOPTemplate.B.Preview' | TextCodeTranslationPipe}} </div>
                                                             </div>
 
                                                         </td>
@@ -292,7 +292,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                         </div>
                     </td>
 
@@ -301,7 +301,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteOPTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

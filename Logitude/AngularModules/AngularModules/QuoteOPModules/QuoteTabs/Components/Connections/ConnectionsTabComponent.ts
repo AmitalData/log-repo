@@ -2,8 +2,8 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteDomainService, QuoteConnectedEntity} from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteDomainService, QuoteConnectedEntity} from '../../../../QuoteOPM/Services/QuoteDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -15,7 +15,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 })
 
 export class ConnectionsTabComponent implements OnInit, OnDestroy {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public ObjectTableName: string;
     private myDomainService: QuoteDomainService;
     public ItemsSource: QuoteConnectedEntityItem[] = [];

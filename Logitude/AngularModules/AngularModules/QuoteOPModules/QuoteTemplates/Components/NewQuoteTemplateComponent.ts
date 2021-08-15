@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
-import {QuoteTemplateList} from '../../../Quote/EntityLists/QuoteTemplateList';
+import {QuoteOPTemplatePM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplatePM';
+import {QuoteOPTemplateList} from '../../../QuoteOPM/EntityLists/QuoteOPTemplateList';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -11,7 +11,7 @@ import {CitySelectionArgs} from '../../../Common/Args';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {QuoteTemplateExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateExtendedPMService';
+import {QuoteOPTemplateExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateExtendedPMService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
@@ -25,15 +25,15 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     public DataContext: NewQuoteTemplateComponent = this;
-    EntityPM: QuoteTemplatePM;
-    QuoteTemplateLists: QuoteTemplateList[] = [];
-    AllQuoteTemplateLists: QuoteTemplateList[] = [];
+    EntityPM: QuoteOPTemplatePM;
+    QuoteOPTemplateLists: QuoteOPTemplateList[] = [];
+    AllQuoteOPTemplateLists: QuoteOPTemplateList[] = [];
 
-    SelectedQuoteTemplate: QuoteTemplateList;
+    SelectedQuoteOPTemplate: QuoteOPTemplateList;
     VisibilityRadioFromTenant: boolean = false;
     IsNewEntityCall: boolean = true;
     public ValidationErrorsList: string[];
-    quoteTemplateExtendedPMService: QuoteTemplateExtendedPMService;
+    QuoteOPTemplateExtendedPMService: QuoteOPTemplateExtendedPMService;
 
     FromAllTenantRadioButton: string;
     CopyRadioButton: string;
@@ -48,10 +48,10 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
+        _entityResourceService.getEntityResourceByTableName("QuoteOPTemplate").subscribe((response:any) => {
             this.IsReady = true;
             this.EntityPM = this.GetNewInstance();
-            this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+            this.QuoteOPTemplateExtendedPMService = new QuoteOPTemplateExtendedPMService();
             this.FromAllTenantRadioButton = Guid.newGuid();
             this.CopyRadioButton = Guid.newGuid();
             this.NewRadioButton = Guid.newGuid();
@@ -73,7 +73,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     GetNewInstance() {
 
-        var newEntity = new QuoteTemplatePM();
+        var newEntity = new QuoteOPTemplatePM();
         newEntity.Tenant = SessionLocator.Tenant;
         newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
         newEntity.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
@@ -96,8 +96,8 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         if (this.templateTypeCode != newValue) {
             if (this.EntityPM) {
                 this.EntityPM.TemplateTypeCode = newValue;
-                if (this.AllQuoteTemplateLists) {
-                    this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
+                if (this.AllQuoteOPTemplateLists) {
+                    this.QuoteOPTemplateLists = this.AllQuoteOPTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
                 }
             }
         }
@@ -123,7 +123,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
             case "Copy":
                 {
                     this.AddType = "Copy";
-                    this.LoadQuoteTemplateList();
+                    this.LoadQuoteOPTemplateList();
                     break;
                 }
 
@@ -132,7 +132,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
             case "FromAllTenant":
                 {
                     this.AddType = "FromAllTenant";
-                    this.LoadQuoteTemplateList();
+                    this.LoadQuoteOPTemplateList();
                     break;
                 }
 
@@ -141,19 +141,19 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         }
 
     }
-    OnSelectQuoteTemplateChange(item: QuoteTemplateList) {
-        this.SelectedQuoteTemplate = item;
+    OnSelectQuoteOPTemplateChange(item: QuoteOPTemplateList) {
+        this.SelectedQuoteOPTemplate = item;
     }
 
-    LoadQuoteTemplateList() {
-        this.QuoteTemplateLists = [];
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe((res:any) => {
+    LoadQuoteOPTemplateList() {
+        this.QuoteOPTemplateLists = [];
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
+        this.QuoteOPTemplateExtendedPMService.GetQuoteOPTemplateLists(this.AddType).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                this.AllQuoteTemplateLists = pmResponse.Result;
-                this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
+                this.AllQuoteOPTemplateLists = pmResponse.Result;
+                this.QuoteOPTemplateLists = this.AllQuoteOPTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
             }
          
         });
@@ -170,27 +170,27 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.TemplateTypeCode)) {
-            this.ValidationErrorsList.push("Please Select QuoteTemplate");
+            this.ValidationErrorsList.push("Please Select QuoteOPTemplate");
         }
 
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.AddType == "New") {
 
-                this.CreateNewQuoteTemplate();
+                this.CreateNewQuoteOPTemplate();
             }
             else {
-                if (this.SelectedQuoteTemplate) {
-                    this.CopyQuoteTemplatePM();
+                if (this.SelectedQuoteOPTemplate) {
+                    this.CopyQuoteOPTemplatePM();
                 }
               
             }
         }
     }
 
-    CreateNewQuoteTemplate() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe((res:any) => {
+    CreateNewQuoteOPTemplate() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
+        this.QuoteOPTemplateExtendedPMService.insert(this.EntityPM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.EntityPM = pmResponse.Result;
@@ -212,10 +212,10 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     }
 
  
-    CopyQuoteTemplatePM() {
+    CopyQuoteOPTemplatePM() {
      
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe((res:any) => {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
+        this.QuoteOPTemplateExtendedPMService.GetCopyQuoteOPTemplate(this.SelectedQuoteOPTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe((res:any) => {
            
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -238,7 +238,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     }
 
 
-    //OpenEditQuoteTemplate
+    //OpenEditQuoteOPTemplate
     OpenEditQuoteTemplateComponent() {
         this.CloseButtonClicked();
         var windowArgs: any = {};
@@ -252,7 +252,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = this;
 
-        logWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        logWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
        
     }

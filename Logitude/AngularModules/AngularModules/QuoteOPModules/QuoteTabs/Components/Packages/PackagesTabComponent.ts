@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuotePackagePM} from '../../../../Quote/EntityPMs/QuotePackagePM';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteOPPackagePM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPackagePM';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -16,7 +16,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {QuoteTool} from '../../../../Quote/Tools';
+import {QuoteTool} from '../../../../QuoteOPM/Tools';
 
 @Component({
     selector: 'PackagesTabComponent',
@@ -25,7 +25,7 @@ import {QuoteTool} from '../../../../Quote/Tools';
 })
 
 export class PackagesTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public DataContext: PackagesTabComponent = this;
     public ObjectTableName: string = "QuoteOP";
     public IsResourcesReady: boolean = false;
@@ -1176,9 +1176,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
     AddPackageClicked() {
-        var itemPM = new QuotePackagePM(null);
+        var itemPM = new QuoteOPPackagePM(null);
         itemPM.Tenant = SessionLocator.Tenant;
-        itemPM.QuoteId = this.EntityPM.Id;
+        itemPM.QuoteOPId = this.EntityPM.Id;
 
         var itemComponent = new QuotePackageItem(itemPM, this, true);
         this.RunAddEditPackage(itemComponent, TextCodeTranslator.Translate("QuoteOP.S.Packages.AddPackage"));
@@ -1198,7 +1198,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
-                this.EntityPM.RemoveQuotePackagePM(itemComponent.EntityPM);
+                this.EntityPM.RemoveQuoteOPPackage(itemComponent.EntityPM);
 
                 this.BuildItemsSource();
                 this.ComputeTotals();
@@ -1248,17 +1248,17 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 }
 export class QuotePackageItem extends BaseComponent {
-    public EntityPM: QuotePackagePM;
-    public QuotePM: QuotePM;
+    public EntityPM: QuoteOPPackagePM;
+    public QuoteOPPM: QuoteOPPM;
     public ObjectTableName: string = "QuoteOPPackage";
     public IsNewEntity: boolean = false;
     public TransportModeId: string;
     public CellReadOnlyBackground = "#E6E7E8";
 
-    constructor(entity: QuotePackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean) {
+    constructor(entity: QuoteOPPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
-        this.QuotePM = fatherComponent.EntityPM;
+        this.QuoteOPPM = fatherComponent.EntityPM;
         this.TransportModeId = fatherComponent.EntityPM.TransportModeId;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
@@ -1270,7 +1270,7 @@ export class QuotePackageItem extends BaseComponent {
         var isFieldEnabled = false;
         var isVolumeEnabled = false;
         var isDimensionEnabled = false;
-        this.IsQuoteEditEnabled = QuoteUtilities.IsQuoteEditEnabled(this.QuotePM);
+        this.IsQuoteEditEnabled = QuoteUtilities.IsQuoteEditEnabled(this.QuoteOPPM);
 
         if (this.IsQuoteEditEnabled) {
             if (this.Quantity > 0) {
@@ -1457,8 +1457,8 @@ export class QuotePackageItem extends BaseComponent {
     OnGrossWeightLostFocus(input: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
-                this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.QuotePM.ChargeableWeightUnitCode, this.QuotePM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.QuotePM.Ratio);
+                this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.QuoteOPPM.GrossWeightUnitCode, this.QuoteOPPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.QuoteOPPM.ChargeableWeightUnitCode, this.QuoteOPPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.QuoteOPPM.Ratio);
 
                 this.SetUIProperties();
 
@@ -1472,17 +1472,17 @@ export class QuotePackageItem extends BaseComponent {
 
     private ComputeVolume() {
         if (this.fatherComponent.Ratio == null) {
-            this.fatherComponent.Ratio = AppTool.GetRatio(this.QuotePM.DirectionId, this.QuotePM.TransportModeId, this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            this.fatherComponent.Ratio = AppTool.GetRatio(this.QuoteOPPM.DirectionId, this.QuoteOPPM.TransportModeId, this.QuoteOPPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
         }
 
-        this.Volume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuotePM.Ratio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode);
+        this.Volume = AppTool.ComputePackageVolume(this.Quantity, this.Width, this.Height, this.Length, this.GrossWeight, this.QuoteOPPM.Ratio, this.QuoteOPPM.DimensionsUnitCode, this.QuoteOPPM.VolumeUnitCode, this.QuoteOPPM.GrossWeightUnitCode);
     }
 
     private ComputeVolumetricWeight() {
         if (this.fatherComponent.Ratio == null) {
-            this.fatherComponent.Ratio = AppTool.GetRatio(this.QuotePM.DirectionId, this.QuotePM.TransportModeId, this.QuotePM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
+            this.fatherComponent.Ratio = AppTool.GetRatio(this.QuoteOPPM.DirectionId, this.QuoteOPPM.TransportModeId, this.QuoteOPPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
         }
 
-        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.GrossWeight, this.QuotePM.Ratio, this.QuotePM.DimensionsUnitCode, this.QuotePM.VolumeUnitCode, this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode);
+        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.GrossWeight, this.QuoteOPPM.Ratio, this.QuoteOPPM.DimensionsUnitCode, this.QuoteOPPM.VolumeUnitCode, this.QuoteOPPM.GrossWeightUnitCode, this.QuoteOPPM.ChargeableWeightUnitCode);
     }
 }

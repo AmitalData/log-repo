@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuoteTemplateTextDesignPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateTextDesignPMService';
-import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
-import {QuoteTemplateTableDesignPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateTableDesignPMService';
+import {QuoteOPTemplateTextDesignPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateTextDesignPMService';
+import {QuoteOPTemplateSettingPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSettingPM';
+import {QuoteOPTemplateTableDesignPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateTableDesignPMService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSettingPMService';
+import {QuoteOPTemplateSettingPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSettingPMService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {QuoteTemplateTextDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTextDesignPM';
+import {QuoteOPTemplateTextDesignPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateTextDesignPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
@@ -18,16 +18,16 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class PageAreaHeaderFooterComponent extends BaseComponent implements OnInit {
-    quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
+    QuoteOPTemplateSettingPMService: QuoteOPTemplateSettingPMService;
     DataContext: this;
-    QuoteTemplateSettingPM: QuoteTemplateSettingPM;
-    quoteTemplateTextDesignPMService: QuoteTemplateTextDesignPMService;
-    DesignAreaFreeTextPM: QuoteTemplateTextDesignPM;
+    QuoteOPTemplateSettingPM: QuoteOPTemplateSettingPM;
+    QuoteOPTemplateTextDesignPMService: QuoteOPTemplateTextDesignPMService;
+    DesignAreaFreeTextPM: QuoteOPTemplateTextDesignPM;
   
 
     AreaType: string;
     AreaMode: string;
-    QuoteTemplateSectionTypeName: string;
+    QuoteOPTemplateSectionTypeName: string;
 
     //Logo
     ImageWidth: number;
@@ -41,8 +41,8 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
-        this.quoteTemplateTextDesignPMService = new QuoteTemplateTextDesignPMService();
+        this.QuoteOPTemplateSettingPMService = new QuoteOPTemplateSettingPMService();
+        this.QuoteOPTemplateTextDesignPMService = new QuoteOPTemplateTextDesignPMService();
     }
 
     ngOnInit() {
@@ -50,8 +50,8 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
     }
 
      SetWindowArgs(args: any) {
-        this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
-        this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
+        this.QuoteOPTemplateSettingPM = args.QuoteOPTemplateSettingPM;
+        this.QuoteOPTemplateSectionTypeName = args.QuoteOPTemplateSectionTypeName;
         this.AreaType = args.AreaType;
         this.AreaMode = args.AreaMode;
 
@@ -59,24 +59,24 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
         if (this.AreaMode == "Logo") {
 
             if (this.AreaType == "Area1") {
-                this.ImageId = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1ImageDetailId : this.QuoteTemplateSettingPM.PageFooterArea1ImageDetailId;
-                this.ImageWidth = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderImage1Width : this.QuoteTemplateSettingPM.PageFooterImage1Width;
-                this.ImageHeight = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1Height : this.QuoteTemplateSettingPM.PageFooterArea1Height;
-                this.Alignment = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1ImageAlignment : this.QuoteTemplateSettingPM.PageFooterArea1ImageAlignment;
+                this.ImageId = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea1ImageDetailId : this.QuoteOPTemplateSettingPM.PageFooterArea1ImageDetailId;
+                this.ImageWidth = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderImage1Width : this.QuoteOPTemplateSettingPM.PageFooterImage1Width;
+                this.ImageHeight = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea1Height : this.QuoteOPTemplateSettingPM.PageFooterArea1Height;
+                this.Alignment = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea1ImageAlignment : this.QuoteOPTemplateSettingPM.PageFooterArea1ImageAlignment;
             }
 
             else if (this.AreaType == "Area2") {
-                this.ImageId = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2ImageDetailId : this.QuoteTemplateSettingPM.PageFooterArea2ImageDetailId;
-                this.ImageWidth = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderImage2Width : this.QuoteTemplateSettingPM.PageFooterImage2Width;
-                this.ImageHeight = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2Height : this.QuoteTemplateSettingPM.PageFooterArea2Height;
-                this.Alignment = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2ImageAlignment : this.QuoteTemplateSettingPM.PageFooterArea2ImageAlignment;
+                this.ImageId = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea2ImageDetailId : this.QuoteOPTemplateSettingPM.PageFooterArea2ImageDetailId;
+                this.ImageWidth = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderImage2Width : this.QuoteOPTemplateSettingPM.PageFooterImage2Width;
+                this.ImageHeight = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea2Height : this.QuoteOPTemplateSettingPM.PageFooterArea2Height;
+                this.Alignment = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea2ImageAlignment : this.QuoteOPTemplateSettingPM.PageFooterArea2ImageAlignment;
             }
 
             else if (this.AreaType == "Area3") {
-                this.ImageId = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3ImageDetailId : this.QuoteTemplateSettingPM.PageFooterArea3ImageDetailId;
-                this.ImageWidth = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderImage3Width : this.QuoteTemplateSettingPM.PageFooterImage3Width;
-                this.ImageHeight = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3Height : this.QuoteTemplateSettingPM.PageFooterArea3Height;
-                this.Alignment = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3ImageAlignment : this.QuoteTemplateSettingPM.PageFooterArea3ImageAlignment;
+                this.ImageId = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea3ImageDetailId : this.QuoteOPTemplateSettingPM.PageFooterArea3ImageDetailId;
+                this.ImageWidth = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderImage3Width : this.QuoteOPTemplateSettingPM.PageFooterImage3Width;
+                this.ImageHeight = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea3Height : this.QuoteOPTemplateSettingPM.PageFooterArea3Height;
+                this.Alignment = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea3ImageAlignment : this.QuoteOPTemplateSettingPM.PageFooterArea3ImageAlignment;
             }
 
         }
@@ -84,18 +84,18 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
         else if (this.AreaMode == "Text") {
 
          if (this.AreaType == "Area1") {
-                this.PageAreaFreeText = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1FreeText : this.QuoteTemplateSettingPM.PageFooterArea1FreeText;
-                this.LoadDesignAreaFreeText(this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1FreeTextDesignId : this.QuoteTemplateSettingPM.PageFooterArea1FreeTextDesignId);
+                this.PageAreaFreeText = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea1FreeText : this.QuoteOPTemplateSettingPM.PageFooterArea1FreeText;
+                this.LoadDesignAreaFreeText(this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea1FreeTextDesignId : this.QuoteOPTemplateSettingPM.PageFooterArea1FreeTextDesignId);
             }
 
             else if (this.AreaType == "Area2") {
-                this.PageAreaFreeText = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2FreeText : this.QuoteTemplateSettingPM.PageFooterArea2FreeText;
-                this.LoadDesignAreaFreeText(this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2FreeTextDesignId : this.QuoteTemplateSettingPM.PageFooterArea2FreeTextDesignId);
+                this.PageAreaFreeText = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea2FreeText : this.QuoteOPTemplateSettingPM.PageFooterArea2FreeText;
+                this.LoadDesignAreaFreeText(this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea2FreeTextDesignId : this.QuoteOPTemplateSettingPM.PageFooterArea2FreeTextDesignId);
             }
 
             else if (this.AreaType == "Area3") {
-                this.PageAreaFreeText = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3FreeText : this.QuoteTemplateSettingPM.PageFooterArea3FreeText;
-                this.LoadDesignAreaFreeText(this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3FreeTextDesignId : this.QuoteTemplateSettingPM.PageFooterArea3FreeTextDesignId);
+                this.PageAreaFreeText = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea3FreeText : this.QuoteOPTemplateSettingPM.PageFooterArea3FreeText;
+                this.LoadDesignAreaFreeText(this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderArea3FreeTextDesignId : this.QuoteOPTemplateSettingPM.PageFooterArea3FreeTextDesignId);
             }
         }
 
@@ -103,7 +103,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
 
      LoadDesignAreaFreeText(headerDesignId: string) {
-         this.quoteTemplateTextDesignPMService.get(headerDesignId).subscribe((res:any) => {
+         this.QuoteOPTemplateTextDesignPMService.get(headerDesignId).subscribe((res:any) => {
              var pmResponse: ServiceResponse = res;
        
              if (!pmResponse.HasError && pmResponse.Result) {
@@ -146,45 +146,45 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
     
         if (this.AreaMode == "Logo") {
             if (this.AreaType == "Area1") {
-                if (this.QuoteTemplateSectionTypeName == "Header") {
-                    this.QuoteTemplateSettingPM.PageHeaderArea1Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageHeaderImage1Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageHeaderArea1ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageHeaderArea1ImageAlignment = this.Alignment;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") {
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea1Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageHeaderImage1Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea1ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea1ImageAlignment = this.Alignment;
                 }
                 else {
-                    this.QuoteTemplateSettingPM.PageFooterArea1Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageFooterImage1Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageFooterArea1ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageFooterArea1ImageAlignment = this.Alignment;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea1Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageFooterImage1Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea1ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea1ImageAlignment = this.Alignment;
                 }
             }
             else if (this.AreaType == "Area2") {
-                if (this.QuoteTemplateSectionTypeName == "Header") {
-                    this.QuoteTemplateSettingPM.PageHeaderArea2Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageHeaderImage2Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageHeaderArea2ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageHeaderArea2ImageAlignment = this.Alignment;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") {
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea2Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageHeaderImage2Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea2ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea2ImageAlignment = this.Alignment;
                 }
                 else {
-                    this.QuoteTemplateSettingPM.PageFooterArea2Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageFooterImage2Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageFooterArea2ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageFooterArea2ImageAlignment = this.Alignment;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea2Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageFooterImage2Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea2ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea2ImageAlignment = this.Alignment;
                 }
             }
             else if (this.AreaType == "Area3") {
-                if (this.QuoteTemplateSectionTypeName == "Header") {
-                    this.QuoteTemplateSettingPM.PageHeaderArea3Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageHeaderImage3Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageHeaderArea3ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageHeaderArea3ImageAlignment = this.Alignment;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") {
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea3Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageHeaderImage3Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea3ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageHeaderArea3ImageAlignment = this.Alignment;
                 }
                 else {
-                    this.QuoteTemplateSettingPM.PageFooterArea3Height = this.ImageHeight;
-                    this.QuoteTemplateSettingPM.PageFooterImage3Width = this.ImageWidth;
-                    this.QuoteTemplateSettingPM.PageFooterArea3ImageDetailId = this.ImageId;
-                    this.QuoteTemplateSettingPM.PageFooterArea3ImageAlignment = this.Alignment;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea3Height = this.ImageHeight;
+                    this.QuoteOPTemplateSettingPM.PageFooterImage3Width = this.ImageWidth;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea3ImageDetailId = this.ImageId;
+                    this.QuoteOPTemplateSettingPM.PageFooterArea3ImageAlignment = this.Alignment;
                 }
             }
         }
@@ -194,47 +194,47 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
             this.PageAreaFreeText = this.DesignAreaFreeTextPM.TextValue;
   
             if (this.AreaType == "Area1") {
-                if (this.QuoteTemplateSectionTypeName == "Header") this.QuoteTemplateSettingPM.PageHeaderArea1FreeText = this.PageAreaFreeText;
-                else this.QuoteTemplateSettingPM.PageFooterArea1FreeText = this.QuoteTemplateSettingPM.PageFooterArea1FreeText = this.PageAreaFreeText;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") this.QuoteOPTemplateSettingPM.PageHeaderArea1FreeText = this.PageAreaFreeText;
+                else this.QuoteOPTemplateSettingPM.PageFooterArea1FreeText = this.QuoteOPTemplateSettingPM.PageFooterArea1FreeText = this.PageAreaFreeText;
             }
 
             else if (this.AreaType == "Area2") {
-                if (this.QuoteTemplateSectionTypeName == "Header") this.QuoteTemplateSettingPM.PageHeaderArea2FreeText = this.PageAreaFreeText;
-                else this.QuoteTemplateSettingPM.PageFooterArea2FreeText = this.QuoteTemplateSettingPM.PageFooterArea2FreeText = this.PageAreaFreeText;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") this.QuoteOPTemplateSettingPM.PageHeaderArea2FreeText = this.PageAreaFreeText;
+                else this.QuoteOPTemplateSettingPM.PageFooterArea2FreeText = this.QuoteOPTemplateSettingPM.PageFooterArea2FreeText = this.PageAreaFreeText;
             }
 
             else if (this.AreaType == "Area3") {
-                if (this.QuoteTemplateSectionTypeName == "Header") this.QuoteTemplateSettingPM.PageHeaderArea3FreeText = this.PageAreaFreeText;
-                else this.QuoteTemplateSettingPM.PageFooterArea3FreeText = this.QuoteTemplateSettingPM.PageFooterArea3FreeText = this.PageAreaFreeText;
+                if (this.QuoteOPTemplateSectionTypeName == "Header") this.QuoteOPTemplateSettingPM.PageHeaderArea3FreeText = this.PageAreaFreeText;
+                else this.QuoteOPTemplateSettingPM.PageFooterArea3FreeText = this.QuoteOPTemplateSettingPM.PageFooterArea3FreeText = this.PageAreaFreeText;
             }
 
         }
 
 
 
-        if (this.QuoteTemplateSettingPM.IsDirty || (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty)) {
+        if (this.QuoteOPTemplateSettingPM.IsDirty || (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty)) {
             this.IsSaveRuning = true;
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
         }
 
 
         if (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty) {
 
-            this.quoteTemplateTextDesignPMService.update(this.DesignAreaFreeTextPM).subscribe((res:any) => {
-                this.SaveQuoteTemplateSetting();
+            this.QuoteOPTemplateTextDesignPMService.update(this.DesignAreaFreeTextPM).subscribe((res:any) => {
+                this.SaveQuoteOPTemplateSetting();
             });
         }
         else {
-            this.SaveQuoteTemplateSetting();
+            this.SaveQuoteOPTemplateSetting();
         }
      
       
     }
 
-    SaveQuoteTemplateSetting() {
-    if (this.QuoteTemplateSettingPM.IsDirty) {
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
-                this.QuoteTemplateSettingPM.IsDirty = false;
+    SaveQuoteOPTemplateSetting() {
+    if (this.QuoteOPTemplateSettingPM.IsDirty) {
+            this.QuoteOPTemplateSettingPMService.update(this.QuoteOPTemplateSettingPM).subscribe((res:any) => {
+                this.QuoteOPTemplateSettingPM.IsDirty = false;
                 this.SaveCompleted();
 
             });

@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteUtilities} from '../../../../Quote/../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteUtilities} from '../../../../QuoteOPM/../QuoteOPM/Utilities/QuoteUtilities';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartne
 })
 
 export class PartnersTabComponent implements OnInit, OnDestroy {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public ObjectTableName: string = "QuoteOP";
     public ItemsCollection: PartnerItem[];
     public IsInlandDomestic: boolean = false;
@@ -266,7 +266,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 }
 export class PartnerItem extends BaseComponent {
     public IsNewAdded: boolean;
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public Code: string;
     public ObjectTableName: string = "QuoteOP";
     public IsMyCustomer: boolean = false;

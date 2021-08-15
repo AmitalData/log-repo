@@ -4,7 +4,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
+import {QuoteOPTemplateSectionExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateSectionExtendedPMService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
@@ -16,17 +16,17 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewInit {
 
-    QuoteTemplateId: string;
+    QuoteOPTemplateId: string;
     QuoteId: string;
     PdfDivKey: string = Guid.newGuid();
-    quoteTemplateSectionExtendedPMService: QuoteTemplateSectionExtendedPMService;
+    QuoteOPTemplateSectionExtendedPMService: QuoteOPTemplateSectionExtendedPMService;
     HeightPdf: number;
     isFromLibrary: boolean = false;
     AreaName: string;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
+        this.QuoteOPTemplateSectionExtendedPMService = new QuoteOPTemplateSectionExtendedPMService();
     }
 
     ngOnInit() {
@@ -35,14 +35,14 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     }
 
     ngAfterViewInit() {
-        this.GetQuoteTemplatePdfReport();
+        this.GetQuoteOPTemplatePdfReport();
     }
 
 
 
-    GetQuoteTemplatePdfReport() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe((res:any) => {
+    GetQuoteOPTemplatePdfReport() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
+        this.QuoteOPTemplateSectionExtendedPMService.GetQuoteOPTemplatePdfReport(this.QuoteOPId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -73,7 +73,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
     SetWindowArgs(args: any) {
         this.QuoteTemplateId = args.QuoteTemplateId;
-        this.QuoteId = args.QuoteId;
+        this.QuoteOPId = args.QuoteOPId;
         this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
   
         if (args.AreaName == "FromLibrary") this.isFromLibrary = true;

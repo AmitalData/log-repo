@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
+import {QuoteOPTemplateSettingPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSettingPM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSettingPMService';
+import {QuoteOPTemplateSettingPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSettingPMService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -15,25 +15,25 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class AdvanceDesignTableComponent extends BaseComponent implements OnInit {
-    quoteTemplateSettingPMService: QuoteTemplateSettingPMService; 
-    QuoteTemplateSettingPM: QuoteTemplateSettingPM;  
+    QuoteOPTemplateSettingPMService: QuoteOPTemplateSettingPMService; 
+    QuoteOPTemplateSettingPM: QuoteOPTemplateSettingPM;  
     public ValidationErrorsList: string[];    
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();     
+        this.QuoteOPTemplateSettingPMService = new QuoteOPTemplateSettingPMService();     
     }
 
     ngOnInit() {
 
     }
 
-    QuoteTemplateSectionTypeName :string;
+    QuoteOPTemplateSectionTypeName :string;
     SetWindowArgs(args: any) {
-        this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
-        this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
-        this.BorderColor = this.GetColorFromOrginal(this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderBorderColor : this.QuoteTemplateSettingPM.PageFooterBorderColor);
-        this.BorderThickness = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderBorderThickness : this.QuoteTemplateSettingPM.PageFooterBorderThickness;
+        this.QuoteOPTemplateSettingPM = args.QuoteOPTemplateSettingPM;
+        this.QuoteOPTemplateSectionTypeName = args.QuoteOPTemplateSectionTypeName;
+        this.BorderColor = this.GetColorFromOrginal(this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderBorderColor : this.QuoteOPTemplateSettingPM.PageFooterBorderColor);
+        this.BorderThickness = this.QuoteOPTemplateSectionTypeName == "Header" ? this.QuoteOPTemplateSettingPM.PageHeaderBorderThickness : this.QuoteOPTemplateSettingPM.PageFooterBorderThickness;
     }
     
     GetColorFromOrginal(color: string) {
@@ -83,21 +83,21 @@ export class AdvanceDesignTableComponent extends BaseComponent implements OnInit
     }
 
     SaveButtonClicked() {
-        if (this.QuoteTemplateSectionTypeName == "Header") {
-            this.QuoteTemplateSettingPM.PageHeaderBorderColor = this.GetOrginalFromColor(this.BorderColor);
-            this.QuoteTemplateSettingPM.PageHeaderBorderThickness = this.BorderThickness;
+        if (this.QuoteOPTemplateSectionTypeName == "Header") {
+            this.QuoteOPTemplateSettingPM.PageHeaderBorderColor = this.GetOrginalFromColor(this.BorderColor);
+            this.QuoteOPTemplateSettingPM.PageHeaderBorderThickness = this.BorderThickness;
         }
 
         else {
-            this.QuoteTemplateSettingPM.PageFooterBorderColor = this.GetOrginalFromColor(this.BorderColor);
-            this.QuoteTemplateSettingPM.PageFooterBorderThickness = this.BorderThickness;
+            this.QuoteOPTemplateSettingPM.PageFooterBorderColor = this.GetOrginalFromColor(this.BorderColor);
+            this.QuoteOPTemplateSettingPM.PageFooterBorderThickness = this.BorderThickness;
         }
 
-        if (this.QuoteTemplateSettingPM.IsDirty) {
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+        if (this.QuoteOPTemplateSettingPM.IsDirty) {
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
+            this.QuoteOPTemplateSettingPMService.update(this.QuoteOPTemplateSettingPM).subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
-                this.QuoteTemplateSettingPM.IsDirty = false;
+                this.QuoteOPTemplateSettingPM.IsDirty = false;
                 this.CurrentSession.CurrentWindow.Close("Refresh");
             });
         }

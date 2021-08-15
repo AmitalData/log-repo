@@ -76,6 +76,7 @@
     <None Include="App.config" />
     <None Include="DBTables\BorderOPType.dxml" />
     <None Include="DBTables\MarkUpOPType.dxml" />
+    <None Include="DBTables\OPSpecialServicesType.dxml" />
     <None Include="DBTables\QuoteOP.dxml" />
     <None Include="DBTables\QuoteOPCharge.dxml" />
     <None Include="DBTables\QuoteOPClosingReason.dxml" />
@@ -122,6 +123,7 @@
     <None Include="EntityFiles\QuoteOPTotalVat.lxml" />
     <None Include="EntityFiles\QuoteOPType.lxml" />
     <None Include="EntityFiles\QuoteOPVATsTotal.lxml" />
+    <None Include="EntityFiles\OPSpecialServicesType.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

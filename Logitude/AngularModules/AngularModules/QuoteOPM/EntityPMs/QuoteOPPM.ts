@@ -14,6 +14,7 @@ import {QuoteOPPackagePM} from './QuoteOPPackagePM';
 import {QuoteOPSalesTotalPM} from './QuoteOPSalesTotalPM';
 import {QuoteOPVATsTotalPM} from './QuoteOPVATsTotalPM';
 import {QuoteOPFollowUpPM} from './QuoteOPFollowUpPM';
+import {QuoteOPDocumentVersionPM} from './QuoteOPDocumentVersionPM';
 import {QuoteOPTotalVATPM} from './QuoteOPTotalVATPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -1215,7 +1216,21 @@ export class QuoteOPPM {
         }
     }
     //public FollowUps: Array<QuoteOPFollowUpPM>= [];
-     private markFollowUpsAsDone: boolean;
+      
+	private quoteDocumentVersions: QuoteOPDocumentVersionPM[];
+    get  QuoteDocumentVersions() {
+        if (this.quoteDocumentVersions == null) {
+            this.quoteDocumentVersions = [];
+        }
+
+        return this.quoteDocumentVersions;
+    }
+    set  QuoteDocumentVersions(newValue: QuoteOPDocumentVersionPM[]) {
+        if (this.quoteDocumentVersions != newValue) {
+            this.quoteDocumentVersions = newValue;
+        }
+    }
+    private markFollowUpsAsDone: boolean;
     public get MarkFollowUpsAsDone() { return this.markFollowUpsAsDone; }
     public set MarkFollowUpsAsDone(newValue: boolean) { if (this.markFollowUpsAsDone != newValue) { this.markFollowUpsAsDone = newValue; this.MarkAsDirty("MarkFollowUpsAsDone"); } }
        

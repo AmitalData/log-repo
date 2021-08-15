@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="IsLoadPage">
 
     <tr>
@@ -23,7 +23,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerTable' | TextCodeTranslationPipe}} </div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.TotalPerContainerTable' | TextCodeTranslationPipe}} </div></td>
                                                         <td></td>
                                                     </tr>
                                                 </table>
@@ -57,7 +57,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.Totals' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.Totals' | TextCodeTranslationPipe}} </div></td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -75,7 +75,7 @@
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
 
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'LOCAL'" (Checked)="TotalPerContainersCurrencyType = 'LOCAL'" [Text]="'QuoteTemplate.S.ShowTotalInLocalCurrency' | TextCodeTranslationPipe"></RadioButton>
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'LOCAL'" (Checked)="TotalPerContainersCurrencyType = 'LOCAL'" [Text]="'QuoteOPTemplate.S.ShowTotalInLocalCurrency' | TextCodeTranslationPipe"></RadioButton>
 
                                                                                                         </td>
 
@@ -86,7 +86,7 @@
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
 
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'SALE'" (Checked)="TotalPerContainersCurrencyType = 'SALE'" [Text]="'QuoteTemplate.S.ShowTotalInSaleCurrency' | TextCodeTranslationPipe" ></RadioButton>
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'SALE'" (Checked)="TotalPerContainersCurrencyType = 'SALE'" [Text]="'QuoteOPTemplate.S.ShowTotalInSaleCurrency' | TextCodeTranslationPipe" ></RadioButton>
 
                                                                                                         </td>
 
@@ -98,7 +98,7 @@
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
 
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'MULTIPLE'" (Checked)="TotalPerContainersCurrencyType = 'MULTIPLE'" [Text]="'QuoteTemplate.S.ShowTotalSplitToMultipleCurrencies' | TextCodeTranslationPipe"></RadioButton>
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'MULTIPLE'" (Checked)="TotalPerContainersCurrencyType = 'MULTIPLE'" [Text]="'QuoteOPTemplate.S.ShowTotalSplitToMultipleCurrencies' | TextCodeTranslationPipe"></RadioButton>
 
                                                                                                         </td>
 
@@ -133,7 +133,7 @@
 
                                                                                         <td>
                                                                                             <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowTitle' | TextCodeTranslationPipe"  [IsChecked]="ShowTitleTotalPerContainersTable" (Checked)="ShowTitleTotalPerContainersTable = $event"></CheckBox>
+                                                                                                <CheckBox [Text]="'QuoteOPTemplate.S.ShowTitle' | TextCodeTranslationPipe"  [IsChecked]="ShowTitleTotalPerContainersTable" (Checked)="ShowTitleTotalPerContainersTable = $event"></CheckBox>
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
@@ -142,7 +142,7 @@
 
                                                                                         <td>
                                                                                             <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowPageBreakBeforeTable' | TextCodeTranslationPipe"  [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox>
+                                                                                                <CheckBox [Text]="'QuoteOPTemplate.S.ShowPageBreakBeforeTable' | TextCodeTranslationPipe"  [IsChecked]="ShowPageBreakBeforeTotalPerContainersTable" (Checked)="ShowPageBreakBeforeTotalPerContainersTable = $event"></CheckBox>
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
@@ -153,7 +153,7 @@
 
                                                                                         <td>
                                                                                             <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe" [IsChecked]="ShowIncludedChargesPerContainers" (Checked)="ShowIncludedChargesPerContainers = $event"></CheckBox>
+                                                                                                <CheckBox [Text]="'QuoteOPTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe" [IsChecked]="ShowIncludedChargesPerContainers" (Checked)="ShowIncludedChargesPerContainers = $event"></CheckBox>
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
@@ -186,7 +186,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.QuoteLabels' | TextCodeTranslationPipe}} </div></td>
+                                                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.QuoteLabels' | TextCodeTranslationPipe}} </div></td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -202,7 +202,7 @@
 
 
 
-                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe">
+                                                                                                        <log-column [width]="'195'" [header]="'QuoteOPTemplate.S.EnglishLabel' | TextCodeTranslationPipe">
 
 
                                                                                                             <ng-template let-item>
@@ -217,7 +217,7 @@
                                                                                                                                 </div>
                                                                                                                                 <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteOPTemplateTextCode'" [HideColumns]="true"></LogTextBox>
                                                                                                                                 </div>
                                                                                                                             </td>
 
@@ -246,7 +246,7 @@
                                                                                                         
 
 
-                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.LocalLabel' | TextCodeTranslationPipe">
+                                                                                                        <log-column [width]="'195'" [header]="'QuoteOPTemplate.S.LocalLabel' | TextCodeTranslationPipe">
 
                                                                                                             <ng-template let-item>
                                                                                                                 <log-cell-template #logcelltemplate>
@@ -261,7 +261,7 @@
                                                                                                                                 </div>
                                                                                                                                 <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteOPTemplateTextCode'" [HideColumns]="true"></LogTextBox>
                                                                                                                                 </div>
                                                                                                                             </td>
 
@@ -341,7 +341,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TotalPerContainerDesign' | TextCodeTranslationPipe}} </div></td>
+                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.TotalPerContainerDesign' | TextCodeTranslationPipe}} </div></td>
                                                         <td></td>
                                                     </tr>
                                                 </table>
@@ -374,7 +374,7 @@
                                                 <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TitleTextDesignPM" [QuoteTemplateTextDesignPM]="TitleTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
 
                                                 <tr style="height:15px"><td colspan="3"></td></tr>
-                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="'Per'"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteOPTemplateSettingPM"  [SectionType]="'Per'"></TextDesignComponent></td> <td style="width:10px"></td></tr>
                                                 <!--<tr>
                                                     <td style="width:10px"></td>
                                                     <td style="width:10px">
@@ -426,7 +426,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                     </td>
 
                     <td style="width: 5px;">
@@ -434,7 +434,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteOPTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

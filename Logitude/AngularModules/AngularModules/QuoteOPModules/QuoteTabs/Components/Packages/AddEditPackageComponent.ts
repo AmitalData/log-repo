@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {QuotePackagePM} from '../../../../Quote/EntityPMs/QuotePackagePM';
+import {QuoteOPPackagePM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import {QuotePackageItem} from './PackagesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -13,7 +13,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 })
 
 export class AddEditPackageComponent {
-    public EntityPM: QuotePackagePM;
+    public EntityPM: QuoteOPPackagePM;
     public DataContext: QuotePackageItem;
     public ObjectTableName: string = "QuoteOPPackage";
     public ValidationErrorsList: string[];
@@ -34,10 +34,10 @@ export class AddEditPackageComponent {
     public VolumetricWeightLabel: string;
     public GrossWeightLabel: string;    
     SetLabels() {
-        this.DimensionsLabel = TextCodeTranslator.Translate('QuotePackage.F.Dimensions').replace('%UnitCode', this.DataContext.QuotePM.DimensionsUnitCode);
-        this.VolumeLabel = TextCodeTranslator.Translate('QuotePackage.F.Volume').replace('%VolumeCode', this.DataContext.QuotePM.VolumeUnitCode);
-        this.VolumetricWeightLabel = TextCodeTranslator.Translate('QuotePackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.QuotePM.ChargeableWeightUnitCode);
-        this.GrossWeightLabel = TextCodeTranslator.Translate('QuotePackage.F.GrossWeight').replace('%WeightCode', this.DataContext.QuotePM.GrossWeightUnitCode);        
+        this.DimensionsLabel = TextCodeTranslator.Translate('QuotePackage.F.Dimensions').replace('%UnitCode', this.DataContext.QuoteOPPM.DimensionsUnitCode);
+        this.VolumeLabel = TextCodeTranslator.Translate('QuotePackage.F.Volume').replace('%VolumeCode', this.DataContext.QuoteOPPM.VolumeUnitCode);
+        this.VolumetricWeightLabel = TextCodeTranslator.Translate('QuotePackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.QuoteOPPM.ChargeableWeightUnitCode);
+        this.GrossWeightLabel = TextCodeTranslator.Translate('QuotePackage.F.GrossWeight').replace('%WeightCode', this.DataContext.QuoteOPPM.GrossWeightUnitCode);        
     }
 
     CancelButtonClicked() {
@@ -49,7 +49,7 @@ export class AddEditPackageComponent {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        if (this.DataContext.QuotePM.TransportModeId != "A") {
+        if (this.DataContext.QuoteOPPM.TransportModeId != "A") {
             if (AppTool.IsNullOrEmpty(this.DataContext.PackageTypeId)) {
                 errors.push("Package Type Field is Required");
             }
@@ -65,7 +65,7 @@ export class AddEditPackageComponent {
 
             if (this.DataContext.IsNewEntity) {
 
-                this.DataContext.QuotePM.AddQuotePackagePM(this.EntityPM);
+                this.DataContext.QuoteOPPM.AddQuoteOPPackage(this.EntityPM); 
                 this.DataContext.fatherComponent.ItemsSource.Insert(this.DataContext);
                 this.DataContext.fatherComponent.BuildItemsSource();   
             }
@@ -91,7 +91,7 @@ export class AddEditPackageComponent {
         this.myCloner.AddField('PickupDeliveryVolumetricWeight');
         this.myCloner.AddField('Weight');
         this.myCloner.AddEntity(this.EntityPM);
-        this.myCloner.AddEntity(this.DataContext.QuotePM);
+        this.myCloner.AddEntity(this.DataContext.QuoteOPPM);
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();

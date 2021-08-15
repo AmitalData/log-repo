@@ -1,6 +1,6 @@
 
 <style type="text/css">
-    .QuoteTemplateSettingButton:hover:not(:disabled) {
+    .QuoteOPTemplateSettingButton:hover:not(:disabled) {
         background: #fefcea; /* Old browsers */
         background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
         background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10-25,Safari5.1-6 */
@@ -8,16 +8,16 @@
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
     }
 
-    .QuoteTemplateSettingButton span, .RedButton span, .GreenButton span {
+    .QuoteOPTemplateSettingButton span, .RedButton span, .GreenButton span {
         text-shadow: 1px 1px white;
     }
 
-    .QuoteTemplateSettingButton:disabled, .RedButton:disabled, .GreenButton:disabled {
+    .QuoteOPTemplateSettingButton:disabled, .RedButton:disabled, .GreenButton:disabled {
         opacity: 0.5;
         pointer-events: none;
     }
 
-    .QuoteTemplateSettingButton {
+    .QuoteOPTemplateSettingButton {
         border: 1px solid #848484;
         background: #ffffff; /* Old browsers */
         background: -moz-linear-gradient(top, #ffffff 0%, #dddddd 40%, #c4c4c4 51%, #e2e2e2 98%, #ffffff 99%); /* FF3.6-15 */
@@ -215,10 +215,10 @@
                                                         <table>
                                                             <tr>
                                                                 <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                <td style="width:50px;"><button style="width:50px" id="{{'EditId' | IdGeneratorPipe}}" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteTemplateButton">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
+                                                                <td style="width:50px;"><button style="width:50px" id="{{'EditId' | IdGeneratorPipe}}" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteOPTemplateButton">{{'QuoteOPTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
                                                                 <td></td>
                                                                 <td style="float:right;margin-top:5px" *ngIf="IsShowFromLibraryLink">
-                                                                    <a [class.HyperlinkDisabled]="!IsEditEnabled" (click)="AddQuoteTemplateFromLibraryClcik()" style="font-size:12px;color:#0094ff;width:150px;">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}</a>
+                                                                    <a [class.HyperlinkDisabled]="!IsEditEnabled" (click)="AddQuoteOPTemplateFromLibraryClcik()" style="font-size:12px;color:#0094ff;width:150px;">{{'QuoteOPTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}</a>
                                                                 </td>
                                                                 <td style="width:30px;"><div style="width:20px"></div></td>
                                                             </tr>
@@ -233,8 +233,8 @@
                                                         <ScrollViewer>
                                                             <ul [class.FiltersMenuDisabled]="!IsEditEnabled" style="margin:5px;">
 
-                                                                <li (click)="SelectedQuoteTemplate = item" [class.RowSelected]="item === SelectedQuoteTemplate" class="SessionItem"
-                                                                    [class.SelectedSessionItem]="item === SelectedQuoteTemplate"
+                                                                <li (click)="SelectedQuoteOPTemplate = item" [class.RowSelected]="item === SelectedQuoteOPTemplate" class="SessionItem"
+                                                                    [class.SelectedSessionItem]="item === SelectedQuoteOPTemplate"
                                                                     *ngFor="let item of QuotationTemplates">
                                                                     <table>
                                                                         <tr>
@@ -276,15 +276,15 @@
                                         <tr>
                                             <td style="width:50%"></td>
                                             <td style="width:1px">
-                                                <button [class.RefreshButtonShake]="IsQuoteTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteTemplateSectionInCludedChange == false" (click)="PreviewQuoteTemplatePdfReport()" style="text-align:center;margin-left:10px;width:75px;font-size:13px">Refresh</button>
+                                                <button [class.RefreshButtonShake]="IsQuoteOPTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteOPTemplateSectionInCludedChange == false" (click)="PreviewQuoteOPTemplatePdfReport()" style="text-align:center;margin-left:10px;width:75px;font-size:13px">Refresh</button>
                                             </td>
                                             <td></td>
                                         </tr>
                                     </table>
                                 </div>
-                                <!--<div style="position:absolute;top:14px;width:50%"><button [class.RefreshButtonShake]="IsQuoteTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteTemplateSectionInCludedChange == false" (click)="PreviewQuoteTemplatePdfReport()" style="text-align:center;width:60px;float:right;margin-left: 55px;">Refresh</button></div>-->
+                                <!--<div style="position:absolute;top:14px;width:50%"><button [class.RefreshButtonShake]="IsQuoteOPTemplateSectionInCludedChange == true" [class.RefreshButton]="IsQuoteOPTemplateSectionInCludedChange == false" (click)="PreviewQuoteOPTemplatePdfReport()" style="text-align:center;width:60px;float:right;margin-left: 55px;">Refresh</button></div>-->
 
-                                <iframe [attr.id]="PreviewPdfId" *ngIf="IsShowPreviewPDF" [src]="IFrameURI | SafePipe" style="width:100%;height:99%">{{'QuoteTemplate.M.Loading' | TextCodeTranslationPipe}}</iframe>
+                                <iframe [attr.id]="PreviewPdfId" *ngIf="IsShowPreviewPDF" [src]="IFrameURI | SafePipe" style="width:100%;height:99%">{{'QuoteOPTemplate.M.Loading' | TextCodeTranslationPipe}}</iframe>
                             </div>
                         </td>
                     </tr>
@@ -293,7 +293,7 @@
 
 
             <td *ngIf="HasNoTmplates">
-                <p style="font-size:24px;font-style:italic;color:gray;height:30px;width:200px;text-align:center" class="CenterCenter">{{'QuoteTemplate.M.NoActiveTemplatesFoundMessage' | TextCodeTranslationPipe}} </p>
+                <p style="font-size:24px;font-style:italic;color:gray;height:30px;width:200px;text-align:center" class="CenterCenter">{{'QuoteOPTemplate.M.NoActiveTemplatesFoundMessage' | TextCodeTranslationPipe}} </p>
             </td>
 
             <td *ngIf="SelectedMode === 'Upload' && !HasNoTmplates" colspan="2">
@@ -342,7 +342,7 @@
                                     <tr>
                                         <td [style.width]="IsShowDownloadTemplateButton ? '49%' : '100%'" style="width:48%;"><button style="text-align:center" class="Button" (click)="OnPrint()" [disabled]="!IsPrintButtonEnabled  ">{{'QuoteOP.Quotation.B.Print' | TextCodeTranslationPipe}} </button></td>
                                       <td *ngIf="IsShowDownloadTemplateButton" style="width:2%"></td>
-                                      <td  *ngIf="IsShowDownloadTemplateButton" style="width:49%;"><button style="text-align:center;" class="Button" (click)="OnDownLoadTemplateButtonClick()" [disabled]="!IsPrintButtonEnabled && (!QuotePM || (QuotePM && !QuotePM.QuoteHTMLDocumentId))">DownLoad Template</button></td>
+                                      <td  *ngIf="IsShowDownloadTemplateButton" style="width:49%;"><button style="text-align:center;" class="Button" (click)="OnDownLoadTemplateButtonClick()" [disabled]="!IsPrintButtonEnabled && (!QuoteOPPM || (QuoteOPPM && !QuoteOPPM.QuoteHTMLDocumentId))">DownLoad Template</button></td>
                                     
                                       </tr>
                                 </table>
@@ -386,7 +386,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                        <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.Sections' | TextCodeTranslationPipe}}  </div></td>
+                                                        <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.Sections' | TextCodeTranslationPipe}}  </div></td>
                                                         <td></td>
                                                         <td style="width:20px"></td>
                                                         <td style="width:10px;"><div style="width:10px"></div></td>
@@ -409,7 +409,7 @@
                                                     <ul>
 
                                                         <li class="SessionItem"
-                                                            *ngFor="let item of QuoteTemplateSectionLists">
+                                                            *ngFor="let item of QuoteOPTemplateSectionLists">
                                                             <table>
                                                                 <tr>
 
@@ -433,11 +433,11 @@
                                                                     <td class="CellStretched" style="width:100px;position:relative">
 
                                                                         <div *ngIf="item.IsSection" style="vertical-align:central;margin-top:2px">
-                                                                            <button style="display:inline;width:80px;margin-top:2px" id="{{'EditSection1' | IdGeneratorPipe}}" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
+                                                                            <button style="display:inline;width:80px;margin-top:2px" id="{{'EditSection1' | IdGeneratorPipe}}" class="QuoteOPTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
                                                                                 <table>
                                                                                     <tr>
                                                                                         <td style="width:20px;"> <img src="./Images/Buttons/EditBlack.png" />  </td>
-                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}  </td>
+                                                                                        <td style="width:30px;">{{'QuoteOPTemplate.B.Edit' | TextCodeTranslationPipe}}  </td>
                                                                                         <td></td>
                                                                                     </tr>
                                                                                 </table>

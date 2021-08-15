@@ -1,7 +1,7 @@
 
 <style type="text/css">
 
-.QuoteTemplateSettingButton:hover:not(:disabled) {
+.QuoteOPTemplateSettingButton:hover:not(:disabled) {
 
 background: #fefcea; /* Old browsers */
 background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
@@ -10,15 +10,15 @@ background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C, IE10+, 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
 }
 
-.QuoteTemplateSettingButton span, .RedButton span, .GreenButton span {
+.QuoteOPTemplateSettingButton span, .RedButton span, .GreenButton span {
     text-shadow: 1px 1px white;
 }
 
-.QuoteTemplateSettingButton:disabled, .RedButton:disabled, .GreenButton:disabled {
+.QuoteOPTemplateSettingButton:disabled, .RedButton:disabled, .GreenButton:disabled {
     opacity: 0.5;
     pointer-events: none;
 }
-.QuoteTemplateSettingButton {
+.QuoteOPTemplateSettingButton {
    border:1px solid #848484;
 background: #ffffff; /* Old browsers */
 background: -moz-linear-gradient(top, #ffffff 0%, #dddddd 40%, #c4c4c4 51%, #e2e2e2 98%, #ffffff 99%); /* FF3.6-15 */
@@ -86,23 +86,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                            <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.Sections' | TextCodeTranslationPipe}}</div></td>
+                                                                            <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.Sections' | TextCodeTranslationPipe}}</div></td>
                                                                             <td></td>
 
                                                                             <td style="width: 45px;">
                                                                                 <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" class="ToggleButton" tabindex="0">
-                                                                                    <label id="{{'MainAdd' | IdGeneratorPipe}}" style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
+                                                                                    <label id="{{'MainAdd' | IdGeneratorPipe}}" style="left: 5px;">{{'QuoteOPTemplate.B.Add' | TextCodeTranslationPipe}} </label>
                                                                                     <img style="right: 5px;margin-top:1px" src="./Images/ToggleIcon.png" />
                                                                                 
                                                                                     <div  class="ToggleButtonMenu">
                                                                                         <button id="{{'AddSection' | IdGeneratorPipe}}" [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
                                                                                              
-                                                                                            {{'QuoteTemplate.B.Section' | TextCodeTranslationPipe}}
+                                                                                            {{'QuoteOPTemplate.B.Section' | TextCodeTranslationPipe}}
                                                                                         </button>
 
                                                                                         <button [disabled]="IsDisableEditButton" (click)="AddPageBreakSection()">
                                                                                         
-                                                                                            {{'QuoteTemplate.B.PageBreak' | TextCodeTranslationPipe}}
+                                                                                            {{'QuoteOPTemplate.B.PageBreak' | TextCodeTranslationPipe}}
                                                                                         </button>
 
                                                                                     </div>
@@ -140,10 +140,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                     <ScrollViewer>
                                                                         <ul>
                                                                             <!--[style.background-color]="item.Background"--> 
-                                                                            <li (click)="SelectQuoteTemplateSection=item" [class.RowSelected]="item === SelectQuoteTemplateSection" class="SectionItem"
+                                                                            <li (click)="SelectQuoteOPTemplateSection=item" [class.RowSelected]="item === SelectQuoteOPTemplateSection" class="SectionItem"
                                                                          
-                                                                                 [class.SelectedSectionItem]="item === SelectQuoteTemplateSection"
-                                                                                 *ngFor="let item of QuoteTemplateSectionLists">
+                                                                                 [class.SelectedSectionItem]="item === SelectQuoteOPTemplateSection"
+                                                                                 *ngFor="let item of QuoteOPTemplateSectionLists">
                                                                                 <table>
                                                                                     <tr [attr.title]="item.ToolTipDisplay">
 
@@ -158,21 +158,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                          
                                                                                         <td class="CellStretched" style="width:93px;position:relative">
                                                                                             <div *ngIf="!item.IsSection && !item.IsPagebrackSession " style="vertical-align:central;margin-top:2px">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteTemplateSettingButton" id="{{'Setting' | IdGeneratorPipe}}" attr.data-cy="{{'Setting_' + item.DisplayName}}" (click)="EditSectionButtonClicked(item)" >
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteOPTemplateSettingButton" id="{{'Setting' | IdGeneratorPipe}}" attr.data-cy="{{'Setting_' + item.DisplayName}}" (click)="EditSectionButtonClicked(item)" >
 
                                                                                                     <span><img style="margin-top:-1px"  src="./Images/Buttons/SettingGray.png" /></span>
-                                                                                                    <span>{{'QuoteTemplate.B.Settings' | TextCodeTranslationPipe}} </span>
+                                                                                                    <span>{{'QuoteOPTemplate.B.Settings' | TextCodeTranslationPipe}} </span>
 
                                                                                                 </button>
 
                                                                                             </div>
 
                                                                                             <div *ngIf="item.IsSection && !item.IsPagebrackSession" style="vertical-align:central;margin-top:2px;width:80px;">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" id="{{'EditSection2' | IdGeneratorPipe}}"  attr.data-cy="{{'Setting_' + item.DisplayName}}" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" id="{{'EditSection2' | IdGeneratorPipe}}"  attr.data-cy="{{'Setting_' + item.DisplayName}}" class="QuoteOPTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
-                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}</td>
+                                                                                                            <td style="width:30px;">{{'QuoteOPTemplate.B.Edit' | TextCodeTranslationPipe}}</td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -190,11 +190,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                                                                                         <td class="CellStretched" style="width:30px;position:relative;">
                                                                                             <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" *ngIf="item.IsShowArrowUpDown" class="CenterCenter" style="width:100%;vertical-align:middle;">
-                                                                                                <!--QuoteTemplate.B.Down-->
-                                                                                                <!--QuoteTemplate.B.Up-->
-                                                                                                <img  (click)="ArrowUpButtonClicked(item)" title="{{'QuoteTemplate.B.Up' | TextCodeTranslationPipe}}" style="width:20px;height:20px;margin-top:4px;" src="./Images/arrow-up-n.png" />
+                                                                                                <!--QuoteOPTemplate.B.Down-->
+                                                                                                <!--QuoteOPTemplate.B.Up-->
+                                                                                                <img  (click)="ArrowUpButtonClicked(item)" title="{{'QuoteOPTemplate.B.Up' | TextCodeTranslationPipe}}" style="width:20px;height:20px;margin-top:4px;" src="./Images/arrow-up-n.png" />
 
-                                                                                                <img  (click)="ArrowDownButtonClicked(item)" title="{{'QuoteTemplate.B.Down' | TextCodeTranslationPipe}}"  style="width:20px;height:20px;margin-top:4px;margin-left:-10px" src="./Images/arrow-down-n.png" />
+                                                                                                <img  (click)="ArrowDownButtonClicked(item)" title="{{'QuoteOPTemplate.B.Down' | TextCodeTranslationPipe}}"  style="width:20px;height:20px;margin-top:4px;margin-left:-10px" src="./Images/arrow-down-n.png" />
                                                                                             </div>
 
 
@@ -212,7 +212,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                                         <tr>
 
                                                                                                             <td>
-                                                                                                                <IconButton [disabled]="IsDisableEditButton" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveQuoteTemplateSectionClicked(item)"></IconButton>
+                                                                                                                <IconButton [disabled]="IsDisableEditButton" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveQuoteOPTemplateSectionClicked(item)"></IconButton>
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -262,7 +262,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.Translation' | TextCodeTranslationPipe}} </div></td>
+                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.Translation' | TextCodeTranslationPipe}} </div></td>
                                                                             <td></td>
                                                                         </tr>
                                                                     </table>
@@ -284,7 +284,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                              <td>
                                                                  <div class="CheckBox">
                                                                      <input [disabled]="IsDisableEditButton"  [(ngModel)]="ShowLocalLanguage" class="LeftCenter" style="text-align:center"  [attr.id]="ShowLocalLanguageCheckBoxKey" type="checkbox" />
-                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowLocalLanguageCheckBoxKey">{{'QuoteTemplate.S.ShowLocalLanguage' | TextCodeTranslationPipe}} </label>
+                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowLocalLanguageCheckBoxKey">{{'QuoteOPTemplate.S.ShowLocalLanguage' | TextCodeTranslationPipe}} </label>
                                                                  </div>
                                                              </td>
 
@@ -296,7 +296,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                              <td>
                                                                  <div class="CheckBox">
                                                                      <input [disabled]="IsDisableEditButton" [(ngModel)]="RightToLeft" class="LeftCenter" style="text-align:center"  [attr.id]="ShowRightToLeftCheckBoxKey" type="checkbox" />
-                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowRightToLeftCheckBoxKey">{{'QuoteTemplate.S.Righttoleft' | TextCodeTranslationPipe}}  </label>
+                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowRightToLeftCheckBoxKey">{{'QuoteOPTemplate.S.Righttoleft' | TextCodeTranslationPipe}}  </label>
                                                                  </div>
                                                              </td>
 
@@ -344,7 +344,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                  
                     <td *ngIf="VisibilityGeneralSetting" style="width: 100px;">
                         <div>
-                            <button [disabled]="IsDisableEditButton" class="Button" (click)="GeneralSettingsButtonClicked()">{{'QuoteTemplate.B.GeneralSettings' | TextCodeTranslationPipe}}   </button>
+                            <button [disabled]="IsDisableEditButton" class="Button" (click)="GeneralSettingsButtonClicked()">{{'QuoteOPTemplate.B.GeneralSettings' | TextCodeTranslationPipe}}   </button>
                         </div>
                     </td>
 
@@ -354,7 +354,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                     <td *ngIf="VisibilityGeneralSetting" style="width: 60px;">
                         <div>
-                            <button class="Button" (click)="PreviewButtonClicked()">{{'QuoteTemplate.B.Preview' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="PreviewButtonClicked()">{{'QuoteOPTemplate.B.Preview' | TextCodeTranslationPipe}} </button>
                         </div>
                     </td>
 
@@ -364,7 +364,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                         </div>
                     </td>
 
@@ -373,7 +373,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()"  id="{{'Save' | IdGeneratorPipe}}">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()"  id="{{'Save' | IdGeneratorPipe}}">{{'QuoteOPTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

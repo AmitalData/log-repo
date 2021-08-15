@@ -4,7 +4,7 @@ declare var window: any;
 
 import {Component, OnInit}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
 
 @Component({
     
@@ -13,7 +13,7 @@ import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 
 export class QuoteDocsInTabComponent implements OnInit {
 
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public EntityId: string;
     public ObjectTableId: string;
     public TransportModeId: string;

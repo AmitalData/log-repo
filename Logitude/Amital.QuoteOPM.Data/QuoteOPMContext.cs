@@ -68,6 +68,8 @@ namespace Amital.QuoteOPM.Data
 	
             modelBuilder.Configurations.Add(new MarkUpOPTypeMap());
 	
+            modelBuilder.Configurations.Add(new OPSpecialServicesTypeMap());
+	
             modelBuilder.Configurations.Add(new QuoteOPMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPChargeMap());
@@ -386,6 +388,11 @@ namespace Amital.QuoteOPM.Data
 	 
 	 }
 		 public IDbSet<MarkUpOPType> MarkUpOPTypes 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<OPSpecialServicesType> OPSpecialServicesTypes 
 	 {
 	      get; set;
 	 

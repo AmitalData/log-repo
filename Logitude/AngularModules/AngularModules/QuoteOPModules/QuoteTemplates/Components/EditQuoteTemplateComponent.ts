@@ -2,7 +2,7 @@
 
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
+import {QuoteOPTemplatePM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplatePM';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -11,17 +11,17 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {QuoteTemplateExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateExtendedPMService';
+import {QuoteOPTemplateExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateExtendedPMService';
 import {QuotationComponent} from '../../QuoteOthers/Components/Quotation/QuotationComponent';
-import {QuoteTemplateSectionPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSectionPMService';
-import {QuoteTemplatePMService} from '../../../Quote/Services/StandardPMs/QuoteTemplatePMService';
-import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
-import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSettingPMService';
-import {QuoteTemplateTextCodeExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateTextCodeExtendedPMService';
-import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
+import {QuoteOPTemplateSectionPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSectionPMService';
+import {QuoteOPTemplatePMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplatePMService';
+import {QuoteOPTemplateSettingPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSettingPM';
+import {QuoteOPTemplateSettingPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSettingPMService';
+import {QuoteOPTemplateTextCodeExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateTextCodeExtendedPMService';
+import {QuoteOPTemplateSectionExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateSectionExtendedPMService';
 import {FroalaEditorSetting} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
-import {QuoteTemplateTextCodePM} from '../../../Quote/EntityPMs/QuoteTemplateTextCodePM';
-import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
+import {QuoteOPTemplateTextCodePM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateTextCodePM';
+import {QuoteOPTemplateSectionPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSectionPM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
@@ -32,38 +32,38 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 export class EditQuoteTemplateComponent extends BaseComponent implements OnInit {
     public DataContext: EditQuoteTemplateComponent = this;
-    EntityPM: QuoteTemplatePM;
+    EntityPM: QuoteOPTemplatePM;
     IsNewEntityCall: boolean = true;
     public ValidationErrorsList: string[];
     CurrentEntity: any;
-    QuoteTemplateSectionLists: QuoteTemplateSectionViewModel[] = [];
-    AllQuoteTemplateSectionLists: QuoteTemplateSectionViewModel[] = [];
-    QuoteTemplateTextCodeLists: QuoteTemplateTextCodePM[] = [];
-    IsLoadQuoteTemplateSectionRuning: boolean = false;
-    IsLoadQuoteTemplateTextCodeRuning: boolean = false;
-    IsLoadQuoteTemplateSettingsRuning: boolean = false;
+    QuoteOPTemplateSectionLists: QuoteOPTemplateSectionViewModel[] = [];
+    AllQuoteOPTemplateSectionLists: QuoteOPTemplateSectionViewModel[] = [];
+    QuoteOPTemplateTextCodeLists: QuoteOPTemplateTextCodePM[] = [];
+    IsLoadQuoteOPTemplateSectionRuning: boolean = false;
+    IsLoadQuoteOPTemplateTextCodeRuning: boolean = false;
+    IsLoadQuoteOPTemplateSettingsRuning: boolean = false;
 
-    IsSaveQuoteTemplateSectionRuning: boolean = false;
-    IsSaveQuoteTemplateRuning: boolean = false;
-    IsSaveQuoteTemplateSettingsRuning: boolean = false;
+    IsSaveQuoteOPTemplateSectionRuning: boolean = false;
+    IsSaveQuoteOPTemplateRuning: boolean = false;
+    IsSaveQuoteOPTemplateSettingsRuning: boolean = false;
     ShowLocalLanguageCheckBoxKey: string;
     ShowRightToLeftCheckBoxKey: string;
     IsAddSectionRunning: boolean = false;   
 
-    QuoteTemplateSettingPM: QuoteTemplateSettingPM;
+    QuoteOPTemplateSettingPM: QuoteOPTemplateSettingPM;
     
-    quoteTemplateSectionPMService: QuoteTemplateSectionPMService;
+    QuoteOPTemplateSectionPMService: QuoteOPTemplateSectionPMService;
     VisibilityGeneralSetting: boolean = true;
     IsLoadPreviewSectionRuning: boolean;
     QuoteTemplateId: string;
-    QuotePM: any;
-    quoteTemplateExtendedPMService: QuoteTemplateExtendedPMService;
-    quoteTemplateTextCodeExtendedPMService: QuoteTemplateTextCodeExtendedPMService;
-    quoteTemplateSectionExtendedPMService: QuoteTemplateSectionExtendedPMService;
-    quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
+    QuoteOPPM: any;
+    QuoteOPTemplateExtendedPMService: QuoteOPTemplateExtendedPMService;
+    QuoteOPTemplateTextCodeExtendedPMService: QuoteOPTemplateTextCodeExtendedPMService;
+    QuoteOPTemplateSectionExtendedPMService: QuoteOPTemplateSectionExtendedPMService;
+    QuoteOPTemplateSettingPMService: QuoteOPTemplateSettingPMService;
     IsShowFroalaEditor: boolean = false;
     froalaEditorSetting: FroalaEditorSetting;
-    quoteTemplatePMService: QuoteTemplatePMService;
+    QuoteOPTemplatePMService: QuoteOPTemplatePMService;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     IsDisableEditButton: boolean = false;
@@ -71,16 +71,16 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     constructor() {
         super();
       
-        if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditButton = true;
+        if (!FeatureLocator.HasFeaturePermession("QuoteOPTemplate", "UPDATE")) this.IsDisableEditButton = true;
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
-        this.quoteTemplateTextCodeExtendedPMService = new QuoteTemplateTextCodeExtendedPMService();
-        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
-        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
-        this.quoteTemplateSectionPMService = new QuoteTemplateSectionPMService();
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
+        this.QuoteOPTemplateExtendedPMService = new QuoteOPTemplateExtendedPMService();
+        this.QuoteOPTemplateTextCodeExtendedPMService = new QuoteOPTemplateTextCodeExtendedPMService();
+        this.QuoteOPTemplateSectionExtendedPMService = new QuoteOPTemplateSectionExtendedPMService();
+        this.QuoteOPTemplateSettingPMService = new QuoteOPTemplateSettingPMService();
+        this.QuoteOPTemplateSectionPMService = new QuoteOPTemplateSectionPMService();
         
-        this.quoteTemplatePMService = new QuoteTemplatePMService();
+        this.QuoteOPTemplatePMService = new QuoteOPTemplatePMService();
 
     }
 
@@ -94,7 +94,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args: any) {
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
+        _entityResourceService.getEntityResourceByTableName("QuoteOPTemplate").subscribe((response:any) => {
             this.IsReady = true;
             this.Load(args);
         });
@@ -114,7 +114,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         this.IsNewEntityCall = args.IsNewEntityCall;
         this.EntityPM = args.EntityPM;
-        this.QuotePM = args.QuotePM;
+        this.QuoteOPPM = args.QuoteOPPM;
         this.CurrentEntity = args.CurrentEntity;
         this.QuoteTemplateId = args.QuoteTemplateId;
 
@@ -124,32 +124,32 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         }
         else {
             if (this.CurrentEntity) this.QuoteTemplateId = this.CurrentEntity.Id;
-            if (!AppTool.IsNullOrEmpty(this.QuoteTemplateId)) this.LoadQuoteTemplatePM();
+            if (!AppTool.IsNullOrEmpty(this.QuoteTemplateId)) this.LoadQuoteOPTemplatePM();
             else this.LoadCompleted();
         }
 
-        if (this.QuotePM != null) {
+        if (this.QuoteOPPM != null) {
             this.VisibilityGeneralSetting = false;
         }
 
     }
 
 
-    private selectQuoteTemplateSection: QuoteTemplateSectionViewModel;
-    get SelectQuoteTemplateSection() { return this.selectQuoteTemplateSection; }
-    set SelectQuoteTemplateSection(newValue: QuoteTemplateSectionViewModel) {
+    private selectQuoteOPTemplateSection: QuoteOPTemplateSectionViewModel;
+    get SelectQuoteOPTemplateSection() { return this.selectQuoteOPTemplateSection; }
+    set SelectQuoteOPTemplateSection(newValue: QuoteOPTemplateSectionViewModel) {
 
-        if (this.selectQuoteTemplateSection != newValue || !newValue.IsLoaded) {
-            this.selectQuoteTemplateSection = newValue;
-            this.QuoteTemplateSectionLists.forEach((item) => {
-                if (item.Id != this.selectQuoteTemplateSection.Id) {
+        if (this.selectQuoteOPTemplateSection != newValue || !newValue.IsLoaded) {
+            this.selectQuoteOPTemplateSection = newValue;
+            this.QuoteOPTemplateSectionLists.forEach((item) => {
+                if (item.Id != this.selectQuoteOPTemplateSection.Id) {
                     item.Background = "white";
                     item.IsShowArrowUpDown = false;
                 }
             });
-            this.selectQuoteTemplateSection.Background = "#96D3F0";
-            if (this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode != "PF" && this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode != "PH" && this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode != "QH" && this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode != "QD") {
-                this.selectQuoteTemplateSection.IsShowArrowUpDown = true;
+            this.selectQuoteOPTemplateSection.Background = "#96D3F0";
+            if (this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PF" && this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PH" && this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "QH" && this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "QD") {
+                this.selectQuoteOPTemplateSection.IsShowArrowUpDown = true;
             }
            
 
@@ -164,30 +164,30 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     get RightToLeft() {
         var rightToLeft: boolean = false;
-        if (this.QuoteTemplateSettingPM) rightToLeft = this.QuoteTemplateSettingPM.RightToLeft;
+        if (this.QuoteOPTemplateSettingPM) rightToLeft = this.QuoteOPTemplateSettingPM.RightToLeft;
         return rightToLeft;
     }
     set RightToLeft(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            if (this.QuoteTemplateSettingPM.RightToLeft != value) {
-                this.QuoteTemplateSettingPM.RightToLeft = value;
-                this.IsSaveQuoteTemplateSettingsRuning = true;
-                this.SaveQuoteTemplateSetting();
+        if (this.QuoteOPTemplateSettingPM != null) {
+            if (this.QuoteOPTemplateSettingPM.RightToLeft != value) {
+                this.QuoteOPTemplateSettingPM.RightToLeft = value;
+                this.IsSaveQuoteOPTemplateSettingsRuning = true;
+                this.SaveQuoteOPTemplateSetting();
             }
         }
     }
 
     get ShowLocalLanguage() {
         var showLocalLanguage: boolean = false;
-        if (this.QuoteTemplateSettingPM) showLocalLanguage = this.QuoteTemplateSettingPM.ShowLocalLanguage;
+        if (this.QuoteOPTemplateSettingPM) showLocalLanguage = this.QuoteOPTemplateSettingPM.ShowLocalLanguage;
         return showLocalLanguage;
     }
     set ShowLocalLanguage(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            if (this.QuoteTemplateSettingPM.ShowLocalLanguage != value) {
-                this.QuoteTemplateSettingPM.ShowLocalLanguage = value;
-                this.IsSaveQuoteTemplateSettingsRuning = true;
-                this.SaveQuoteTemplateSetting();
+        if (this.QuoteOPTemplateSettingPM != null) {
+            if (this.QuoteOPTemplateSettingPM.ShowLocalLanguage != value) {
+                this.QuoteOPTemplateSettingPM.ShowLocalLanguage = value;
+                this.IsSaveQuoteOPTemplateSettingsRuning = true;
+                this.SaveQuoteOPTemplateSetting();
             }
         }
     }
@@ -199,15 +199,15 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
-        windowArgs.QuoteTemplatePM = this.EntityPM;
-        windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
+        windowArgs.QuoteOPTemplatePM = this.EntityPM;
+        windowArgs.QuoteOPTemplateSettingPM = this.QuoteOPTemplateSettingPM;
 
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 620;
         logWindow.Height = 450;
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.General"); 
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateGeneralSetting");
+        logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.General"); 
+        logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateGeneralSetting");
 
    
     }
@@ -217,8 +217,8 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
         windowArgs.QuoteTemplateId = this.EntityPM.Id;
-        windowArgs.QuoteId = this.QuotePM != null ? this.QuotePM.Id : "";
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.PreviewTemplate");
+        windowArgs.QuoteOPId = this.QuoteOPPM != null ? this.QuoteOPPM.Id : "";
+        logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.PreviewTemplate");
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1000;
         logWindow.Height = (window.innerHeight - 130);
@@ -232,7 +232,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     }
 
     //Event Area
-    EditSectionButtonClicked(item: QuoteTemplateSectionViewModel) {
+    EditSectionButtonClicked(item: QuoteOPTemplateSectionViewModel) {
 
         if (item.IsSection) {
             this.AddEditSection(item);
@@ -241,42 +241,42 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             var componentPath = "";
             var logWindow = new LogitudeWindow();
             var windowArgs: any = {};
-            windowArgs.QuoteTemplatePM = this.EntityPM;
-            windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
-            windowArgs.QuoteTemplateSectionViewModel = item;
-            windowArgs.QuoteId = this.QuotePM != null ? this.QuotePM.Id : "";
-            windowArgs.QuotePM = this.QuotePM;
+            windowArgs.QuoteOPTemplatePM = this.EntityPM;
+            windowArgs.QuoteOPTemplateSettingPM = this.QuoteOPTemplateSettingPM;
+            windowArgs.QuoteOPTemplateSectionViewModel = item;
+            windowArgs.QuoteOPId = this.QuoteOPPM != null ? this.QuoteOPPM.Id : "";
+            windowArgs.QuoteOPPM = this.QuoteOPPM;
             //Pricing Setting
-            if (item.QuoteTemplateSectionTypeCode == "PP" || item.QuoteTemplateSectionTypeCode == "PC") {
-                windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
-                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Pricing" + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
-                windowArgs.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodeLists;
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplatePricingSettingComponent";
+            if (item.QuoteOPTemplateSectionTypeCode == "PP" || item.QuoteOPTemplateSectionTypeCode == "PC") {
+                windowArgs.QuoteOPTemplateSectionTypeName = item.QuoteOPTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
+                logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.Pricing" + windowArgs.QuoteOPTemplateSectionTypeName.replace(" ", "") + "Settings");
+                windowArgs.QuoteOPTemplateTextCodePMList = this.QuoteOPTemplateTextCodeLists;
+                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplatePricingSettingComponent";
                 logWindow.Width = 950;
                 logWindow.Height = 660;
               
             }
       
             //Page Header && Footer  Setting
-            else if (item.QuoteTemplateSectionTypeCode == "PH" || item.QuoteTemplateSectionTypeCode == "PF") {
-                windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
+            else if (item.QuoteOPTemplateSectionTypeCode == "PH" || item.QuoteOPTemplateSectionTypeCode == "PF") {
+                windowArgs.QuoteOPTemplateSectionTypeName = item.QuoteOPTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
                 windowArgs.EditQuoteTemplateComponent = this;
                 
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderFooterSettingComponent";
+                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateHeaderFooterSettingComponent";
                 logWindow.Width = (window.innerWidth / 1.476); // 1920/1300
                 logWindow.Height = 600;
   
-                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Page" + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
+                logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.Page" + windowArgs.QuoteOPTemplateSectionTypeName.replace(" ", "") + "Settings");
             }
 
-            else if (item.QuoteTemplateSectionTypeCode == "QH" || item.QuoteTemplateSectionTypeCode == "QD") {
-                windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "QH" ? "QuoteHeader" : "QuoteDetails";
-                logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S." + windowArgs.QuoteTemplateSectionTypeName.replace(" ", "") + "Settings");
-                windowArgs.QuoteTemplateSectionTypeCode = item.QuoteTemplateSectionTypeCode;
-                windowArgs.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodeLists;
-                windowArgs.QuotePM = this.QuotePM;
+            else if (item.QuoteOPTemplateSectionTypeCode == "QH" || item.QuoteOPTemplateSectionTypeCode == "QD") {
+                windowArgs.QuoteOPTemplateSectionTypeName = item.QuoteOPTemplateSectionTypeCode == "QH" ? "QuoteHeader" : "QuoteDetails";
+                logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S." + windowArgs.QuoteOPTemplateSectionTypeName.replace(" ", "") + "Settings");
+                windowArgs.QuoteOPTemplateSectionTypeCode = item.QuoteOPTemplateSectionTypeCode;
+                windowArgs.QuoteOPTemplateTextCodePMList = this.QuoteOPTemplateTextCodeLists;
+                windowArgs.QuoteOPPM = this.QuoteOPPM;
                 
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderDetailsSettingComponent";
+                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateHeaderDetailsSettingComponent";
                 logWindow.Width = 940;
                 logWindow.Height = 660;
         
@@ -289,9 +289,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 logWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Refresh") {
 
-                        if (windowArgs.QuoteTemplateSectionTypeName == "Header" || windowArgs.QuoteTemplateSectionTypeName == "Footer") {
-                            if (this.SelectQuoteTemplateSection != item) {
-                                this.SelectQuoteTemplateSection = item;
+                        if (windowArgs.QuoteOPTemplateSectionTypeName == "Header" || windowArgs.QuoteOPTemplateSectionTypeName == "Footer") {
+                            if (this.SelectQuoteOPTemplateSection != item) {
+                                this.SelectQuoteOPTemplateSection = item;
                             }
                             else {
                                 this.LoadSectionPreviewData();
@@ -300,16 +300,16 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                         }
                         else {
 
-                            if (item.QuoteTemplateSectionTypeCode == "QH") {
-                                var quoteTemplateSectionHeaderViewModel = this.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "PH")[0];
-                                if (quoteTemplateSectionHeaderViewModel) {
-                                    quoteTemplateSectionHeaderViewModel.IsLoaded = false;
+                            if (item.QuoteOPTemplateSectionTypeCode == "QH") {
+                                var QuoteOPTemplateSectionHeaderViewModel = this.QuoteOPTemplateSectionLists.filter(d => d.QuoteOPTemplateSectionTypeCode == "PH")[0];
+                                if (QuoteOPTemplateSectionHeaderViewModel) {
+                                    QuoteOPTemplateSectionHeaderViewModel.IsLoaded = false;
                                 }
                             }
                       
 
                             item.IsLoaded = false;
-                            this.SelectQuoteTemplateSection = item;
+                            this.SelectQuoteOPTemplateSection = item;
                         }
 
                     }
@@ -320,7 +320,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
-    AddEditSection(item: QuoteTemplateSectionViewModel) {
+    AddEditSection(item: QuoteOPTemplateSectionViewModel) {
 
         this.IsAddSectionRunning = true;
         var widthwindow = window.innerWidth;
@@ -335,7 +335,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         var windowArgs: any = {};
         windowArgs.FatherComponent = this;
         windowArgs.HeightWindow = sendWindowHeight;
-        windowArgs.QuoteTemplateSectionViewModel = item;
+        windowArgs.QuoteOPTemplateSectionViewModel = item;
         windowArgs.QuoteTemplateId = this.EntityPM.Id;
 
         var logWindow = new LogitudeWindow();
@@ -344,11 +344,11 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         
         logWindow.Width = sendWindowWidth;
         logWindow.Height = sendWindowHeight;
-        logWindow.Title = !item ? TextCodeTranslator.Translate("QuoteTemplate.S.AddSection") : TextCodeTranslator.Translate("QuoteTemplate.S.EditSection");
+        logWindow.Title = !item ? TextCodeTranslator.Translate("QuoteOPTemplate.S.AddSection") : TextCodeTranslator.Translate("QuoteOPTemplate.S.EditSection");
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
-                this.QuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => !d.IsCancel);
+                this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => !d.IsCancel);
                 this.LoadSectionPreviewData();
             }
             this.IsAddSectionRunning = false;
@@ -365,44 +365,44 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
-    ArrowUpButtonClicked(item: QuoteTemplateSectionViewModel) {
-        if (item.QuoteTemplateSectionTypeCode != "QH" && item.QuoteTemplateSectionTypeCode != "QD" && item.QuoteTemplateSectionTypeCode != "PH" && item.QuoteTemplateSectionTypeCode != "PF") {
-            var i = this.AllQuoteTemplateSectionLists.indexOf(item);
-            var upColumn = this.AllQuoteTemplateSectionLists[i - 1];
-            if (upColumn.QuoteTemplateSectionTypeCode != "PH") {
+    ArrowUpButtonClicked(item: QuoteOPTemplateSectionViewModel) {
+        if (item.QuoteOPTemplateSectionTypeCode != "QH" && item.QuoteOPTemplateSectionTypeCode != "QD" && item.QuoteOPTemplateSectionTypeCode != "PH" && item.QuoteOPTemplateSectionTypeCode != "PF") {
+            var i = this.AllQuoteOPTemplateSectionLists.indexOf(item);
+            var upColumn = this.AllQuoteOPTemplateSectionLists[i - 1];
+            if (upColumn.QuoteOPTemplateSectionTypeCode != "PH") {
 
                 if (i > 0) {
-                    this.AllQuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => d.Id != upColumn.Id);
+                    this.AllQuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => d.Id != upColumn.Id);
                     var tempOrder = item.Order;
 
                     item.Order = upColumn.Order;
                     upColumn.Order = tempOrder;
 
-                    this.AllQuoteTemplateSectionLists.splice(i, 0, upColumn);
+                    this.AllQuoteOPTemplateSectionLists.splice(i, 0, upColumn);
                 }
             }
 
 
-            this.QuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => !d.IsCancel);
+            this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => !d.IsCancel);
         }
     }
 
-    ArrowDownButtonClicked(item: QuoteTemplateSectionViewModel) {
-        if (item.QuoteTemplateSectionTypeCode != "QH" && item.QuoteTemplateSectionTypeCode != "QD" && item.QuoteTemplateSectionTypeCode != "PH" && item.QuoteTemplateSectionTypeCode != "PF") {
-            var i = this.AllQuoteTemplateSectionLists.indexOf(item);
-            var downColumn = this.AllQuoteTemplateSectionLists[i + 1];
-            if (downColumn.QuoteTemplateSectionTypeCode != "PF") {
-                if (i < this.AllQuoteTemplateSectionLists.length - 1) {
-                    this.AllQuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => d.Id != downColumn.Id);
+    ArrowDownButtonClicked(item: QuoteOPTemplateSectionViewModel) {
+        if (item.QuoteOPTemplateSectionTypeCode != "QH" && item.QuoteOPTemplateSectionTypeCode != "QD" && item.QuoteOPTemplateSectionTypeCode != "PH" && item.QuoteOPTemplateSectionTypeCode != "PF") {
+            var i = this.AllQuoteOPTemplateSectionLists.indexOf(item);
+            var downColumn = this.AllQuoteOPTemplateSectionLists[i + 1];
+            if (downColumn.QuoteOPTemplateSectionTypeCode != "PF") {
+                if (i < this.AllQuoteOPTemplateSectionLists.length - 1) {
+                    this.AllQuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => d.Id != downColumn.Id);
                     var tempOrder = item.Order;
                     item.Order = downColumn.EntityPM.Order;
                     downColumn.Order = tempOrder;
 
-                    this.AllQuoteTemplateSectionLists.splice(i, 0, downColumn);
+                    this.AllQuoteOPTemplateSectionLists.splice(i, 0, downColumn);
                 }
             }
 
-            this.QuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => !d.IsCancel);
+            this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => !d.IsCancel);
         }
     }
 
@@ -411,9 +411,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
     //Loading Area
-    LoadQuoteTemplatePM() {
+    LoadQuoteOPTemplatePM() {
 
-        this.quoteTemplatePMService.get(this.QuoteTemplateId).subscribe((res:any) => {
+        this.QuoteOPTemplatePMService.get(this.QuoteTemplateId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.EntityPM = pmResponse.Result;
@@ -427,25 +427,25 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
     LoadData() {
-        this.IsLoadQuoteTemplateSectionRuning = true;
-        this.IsLoadQuoteTemplateTextCodeRuning = true;
-        this.IsLoadQuoteTemplateSettingsRuning = true;
+        this.IsLoadQuoteOPTemplateSectionRuning = true;
+        this.IsLoadQuoteOPTemplateTextCodeRuning = true;
+        this.IsLoadQuoteOPTemplateSettingsRuning = true;
         this.IsLoadPreviewSectionRuning = true;
 
-        this.LoadQuoteTemplateSectionLists();
-        this.LoadQuoteTemplateTextCodeLists();
+        this.LoadQuoteOPTemplateSectionLists();
+        this.LoadQuoteOPTemplateTextCodeLists();
         this.LoadSetting();
     }
 
     LoadSetting() {
     
 
-        this.quoteTemplateSettingPMService.get(this.EntityPM.QuoteTemplateSettingId).subscribe((res:any) => {
+        this.QuoteOPTemplateSettingPMService.get(this.EntityPM.QuoteOPTemplateSettingId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
-            this.IsLoadQuoteTemplateSettingsRuning = false;
+            this.IsLoadQuoteOPTemplateSettingsRuning = false;
             this.LoadCompleted();
             if (!pmResponse.HasError && pmResponse.Result) {
-                this.QuoteTemplateSettingPM = pmResponse.Result;
+                this.QuoteOPTemplateSettingPM = pmResponse.Result;
            
             }
         
@@ -453,18 +453,18 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     
     }
 
-    LoadQuoteTemplateSectionLists() {
+    LoadQuoteOPTemplateSectionLists() {
 
-        this.QuoteTemplateSectionLists = [];
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplateSectionByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+        this.QuoteOPTemplateSectionLists = [];
+        this.QuoteOPTemplateSectionExtendedPMService.GetQuoteOPTemplateSectionByQuoteOPTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
-            this.IsLoadQuoteTemplateSectionRuning = false;
+            this.IsLoadQuoteOPTemplateSectionRuning = false;
             this.LoadCompleted();
 
             if (!pmResponse.HasError) {
                 if (pmResponse.Result) {
-                    this.BuildingQuoteTemplateSection(pmResponse.Result);
+                    this.BuildingQuoteOPTemplateSection(pmResponse.Result);
                 }
 
             }
@@ -474,14 +474,14 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
-    LoadQuoteTemplateTextCodeLists() {
-        this.QuoteTemplateTextCodeLists = [];
-        this.quoteTemplateTextCodeExtendedPMService.GetQuoteTemplateTextCodeByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+    LoadQuoteOPTemplateTextCodeLists() {
+        this.QuoteOPTemplateTextCodeLists = [];
+        this.QuoteOPTemplateTextCodeExtendedPMService.GetQuoteOPTemplateTextCodeByQuoteOPTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
-            this.IsLoadQuoteTemplateTextCodeRuning = false;
+            this.IsLoadQuoteOPTemplateTextCodeRuning = false;
             this.LoadCompleted();
             if (!pmResponse.HasError) {
-                this.QuoteTemplateTextCodeLists = pmResponse.Result;
+                this.QuoteOPTemplateTextCodeLists = pmResponse.Result;
             }
             
         });
@@ -489,7 +489,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     }
   
     LoadSectionPreviewData() {
-        if (this.selectQuoteTemplateSection != null) {
+        if (this.selectQuoteOPTemplateSection != null) {
             if (this.froalaEditorSetting && this.froalaEditorSetting.froalaEditorComponent) {
                 this.froalaEditorSetting.froalaEditorComponent.SetHtml("");
                 this.ReloadFroalaEditor();
@@ -497,23 +497,23 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
 
-            if (this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode != "PB") {
-                if (!this.selectQuoteTemplateSection.IsLoaded) {
-                    this.selectQuoteTemplateSection.IsLoaded = true;
+            if (this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PB") {
+                if (!this.selectQuoteOPTemplateSection.IsLoaded) {
+                    this.selectQuoteOPTemplateSection.IsLoaded = true;
                     if (!this.IsLoadPreviewSectionRuning) {
                         this.IsLoadPreviewSectionRuning = true;
-                        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+                        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
                     }
-                    var quoteId: string = this.QuotePM != null ? this.QuotePM.Id : "";
-                    var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteTemplateSection.SectionDocId) ? this.selectQuoteTemplateSection.SectionDocId : "";
+                    var quoteId: string = this.QuoteOPPM != null ? this.QuoteOPPM.Id : "";
+                    var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteOPTemplateSection.SectionDocId) ? this.selectQuoteOPTemplateSection.SectionDocId : "";
 
-                    this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
+                    this.QuoteOPTemplateSectionExtendedPMService.DownloadQuoteOPTemplateSectionPdfFile(this.selectQuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteOPTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         this.IsLoadPreviewSectionRuning = false;
                         this.LoadCompleted();
 
                         if (!pmResponse.HasError && pmResponse.Result) {
-                            this.selectQuoteTemplateSection.HtmlBody = pmResponse.Result;
+                            this.selectQuoteOPTemplateSection.HtmlBody = pmResponse.Result;
                             if (this.froalaEditorSetting && this.froalaEditorSetting.froalaEditorComponent) {
                                 this.froalaEditorSetting.froalaEditorComponent.SetHtml(pmResponse.Result);
                                 this.ReloadFroalaEditor();
@@ -532,7 +532,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     this.IsLoadPreviewSectionRuning = false;
                     this.LoadCompleted();
                     if (this.froalaEditorSetting && this.froalaEditorSetting.froalaEditorComponent) {
-                        this.froalaEditorSetting.froalaEditorComponent.SetHtml(this.selectQuoteTemplateSection.HtmlBody);
+                        this.froalaEditorSetting.froalaEditorComponent.SetHtml(this.selectQuoteOPTemplateSection.HtmlBody);
                         this.ReloadFroalaEditor();
                     }
                 }
@@ -563,7 +563,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
     LoadCompleted() {
-        if (!this.IsLoadQuoteTemplateSectionRuning && !this.IsLoadQuoteTemplateTextCodeRuning && !this.IsLoadQuoteTemplateSettingsRuning && !this.IsLoadPreviewSectionRuning) {
+        if (!this.IsLoadQuoteOPTemplateSectionRuning && !this.IsLoadQuoteOPTemplateTextCodeRuning && !this.IsLoadQuoteOPTemplateSettingsRuning && !this.IsLoadPreviewSectionRuning) {
           
             this.CurrentSession.StopBusyIndicator();
         }
@@ -574,38 +574,38 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
    
     AddPageBreakSection() {
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
 
         var order: number = 0;
 
-        if (this.SelectQuoteTemplateSection != null && !this.SelectQuoteTemplateSection.IsCancel) order = (this.SelectQuoteTemplateSection.Order + 1);
+        if (this.SelectQuoteOPTemplateSection != null && !this.SelectQuoteOPTemplateSection.IsCancel) order = (this.SelectQuoteOPTemplateSection.Order + 1);
         else {
-            var footerItem = this.AllQuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "PF")[0];
+            var footerItem = this.AllQuoteOPTemplateSectionLists.filter(d => d.QuoteOPTemplateSectionTypeCode == "PF")[0];
             order = footerItem.Order;
         }
         
 
-        var newQuoteTemplateSectionPM: QuoteTemplateSectionPM = new QuoteTemplateSectionPM();
-        newQuoteTemplateSectionPM.Tenant = SessionLocator.TenantPM.Id;
-        newQuoteTemplateSectionPM.QuoteTemplateId = this.QuoteTemplateId;
-        newQuoteTemplateSectionPM.QuoteTemplateSectionTypeCode = "PB";
-        newQuoteTemplateSectionPM.Name = "Page Break";
-        newQuoteTemplateSectionPM.Order = order;
+        var newQuoteOPTemplateSectionPM: QuoteOPTemplateSectionPM = new QuoteOPTemplateSectionPM();
+        newQuoteOPTemplateSectionPM.Tenant = SessionLocator.TenantPM.Id;
+        newQuoteOPTemplateSectionPM.QuoteTemplateId = this.QuoteTemplateId;
+        newQuoteOPTemplateSectionPM.QuoteOPTemplateSectionTypeCode = "PB";
+        newQuoteOPTemplateSectionPM.Name = "Page Break";
+        newQuoteOPTemplateSectionPM.Order = order;
     
 
 
-        this.quoteTemplateSectionPMService.insert(newQuoteTemplateSectionPM).subscribe((res:any) => {
+        this.QuoteOPTemplateSectionPMService.insert(newQuoteOPTemplateSectionPM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
-            var pageBreakSection: QuoteTemplateSectionViewModel = new QuoteTemplateSectionViewModel(pmResponse.Result);
+            var pageBreakSection: QuoteOPTemplateSectionViewModel = new QuoteOPTemplateSectionViewModel(pmResponse.Result);
 
             if (!pmResponse.HasError) {
 
                 var items: any[] = [];
-                this.AllQuoteTemplateSectionLists.forEach((item) => {
-                    if (item.Order == (newQuoteTemplateSectionPM.Order-1)) {
+                this.AllQuoteOPTemplateSectionLists.forEach((item) => {
+                    if (item.Order == (newQuoteOPTemplateSectionPM.Order-1)) {
 
-                        if (item.QuoteTemplateSectionTypeCode != "PF") {
+                        if (item.QuoteOPTemplateSectionTypeCode != "PF") {
                             items.push(item);
                             items.push(pageBreakSection);
                         } else {
@@ -632,20 +632,20 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     }
 
-    RemoveQuoteTemplateSectionClicked(item: QuoteTemplateSectionViewModel) {
+    RemoveQuoteOPTemplateSectionClicked(item: QuoteOPTemplateSectionViewModel) {
 
 
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("QuoteTemplate.M.DeleteSectionConfirmMessage"));
+        confirmWindow.Show(TextCodeTranslator.Translate("QuoteOPTemplate.M.DeleteSectionConfirmMessage"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 item.IsCancel = true;
-                this.QuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => d.IsCancel == false);
+                this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => d.IsCancel == false);
                 //if (this.froalaEditorSetting && this.froalaEditorSetting.froalaEditorComponent) {
                 //    this.froalaEditorSetting.froalaEditorComponent.SetHtml("");
                 //    this.ReloadFroalaEditor();
                 //}
-                this.SelectQuoteTemplateSection = this.QuoteTemplateSectionLists.filter(d => d.Order == (item.Order + 1))[0];
+                this.SelectQuoteOPTemplateSection = this.QuoteOPTemplateSectionLists.filter(d => d.Order == (item.Order + 1))[0];
 
             }
         });
@@ -660,19 +660,19 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     SaveDirtySections(previewPdfAfterSave: boolean) {
 
-        var quoteTemplateSectionChangedLists: QuoteTemplateSectionPM[] = [];
+        var QuoteOPTemplateSectionChangedLists: QuoteOPTemplateSectionPM[] = [];
 
-        this.AllQuoteTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
-            quoteTemplateSectionChangedLists.push(item.EntityPM);
+        this.AllQuoteOPTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
+            QuoteOPTemplateSectionChangedLists.push(item.EntityPM);
         });
 
-        if (quoteTemplateSectionChangedLists.length > 0) {
+        if (QuoteOPTemplateSectionChangedLists.length > 0) {
 
-            this.AllQuoteTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
+            this.AllQuoteOPTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
                 item.EntityPM.IsDirty = false;
             });
 
-            this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe((res:any) => {
+            this.QuoteOPTemplateSectionExtendedPMService.updateSections(QuoteOPTemplateSectionChangedLists).subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (previewPdfAfterSave) this.PreviewPdf();
             });
@@ -697,9 +697,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             order += 1;
 
         });
-        this.AllQuoteTemplateSectionLists = items;
+        this.AllQuoteOPTemplateSectionLists = items;
 
-        this.QuoteTemplateSectionLists = this.AllQuoteTemplateSectionLists.filter(d => d.IsCancel == false);
+        this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => d.IsCancel == false);
 
 
         this.SaveDirtySections(false);
@@ -712,31 +712,31 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
        
      this.ValidationErrorsList = [];
    
-        var quoteTemplateSectionChangedLists: QuoteTemplateSectionPM[] = [];
-        this.AllQuoteTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
-            quoteTemplateSectionChangedLists.push(item.EntityPM);
+        var QuoteOPTemplateSectionChangedLists: QuoteOPTemplateSectionPM[] = [];
+        this.AllQuoteOPTemplateSectionLists.filter(d => d.EntityPM.IsDirty).forEach((item) => {
+            QuoteOPTemplateSectionChangedLists.push(item.EntityPM);
         });
 
 
-        if (quoteTemplateSectionChangedLists.length > 0) this.IsSaveQuoteTemplateSectionRuning = true;
-        if (this.EntityPM.IsDirty) this.IsSaveQuoteTemplateRuning = true;
+        if (QuoteOPTemplateSectionChangedLists.length > 0) this.IsSaveQuoteOPTemplateSectionRuning = true;
+        if (this.EntityPM.IsDirty) this.IsSaveQuoteOPTemplateRuning = true;
 
 
 
-        if (this.IsSaveQuoteTemplateSectionRuning || this.IsSaveQuoteTemplateRuning) {
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-            this.SaveQuoteTemplateSection(quoteTemplateSectionChangedLists);
-            this.SaveQuoteTemplate();
+        if (this.IsSaveQuoteOPTemplateSectionRuning || this.IsSaveQuoteOPTemplateRuning) {
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
+            this.SaveQuoteOPTemplateSection(QuoteOPTemplateSectionChangedLists);
+            this.SaveQuoteOPTemplate();
         }
         else this.SaveCompleted();
 
     }
 
-    SaveQuoteTemplateSection(sections: any) {
+    SaveQuoteOPTemplateSection(sections: any) {
 
-        if (this.IsSaveQuoteTemplateSectionRuning) {
-            this.quoteTemplateSectionExtendedPMService.updateSections(sections).subscribe((res:any) => {
-                this.IsSaveQuoteTemplateSectionRuning = false;
+        if (this.IsSaveQuoteOPTemplateSectionRuning) {
+            this.QuoteOPTemplateSectionExtendedPMService.updateSections(sections).subscribe((res:any) => {
+                this.IsSaveQuoteOPTemplateSectionRuning = false;
 
                 this.SaveCompleted();
                 
@@ -746,23 +746,23 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     }
 
 
-    RefreshQuoteTemplate: boolean = false;
-    SaveQuoteTemplate() {
+    RefreshQuoteOPTemplate: boolean = false;
+    SaveQuoteOPTemplate() {
 
-        if (this.IsSaveQuoteTemplateRuning) {
-            this.RefreshQuoteTemplate = true;
-            this.quoteTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
-                this.IsSaveQuoteTemplateRuning = false;
+        if (this.IsSaveQuoteOPTemplateRuning) {
+            this.RefreshQuoteOPTemplate = true;
+            this.QuoteOPTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
+                this.IsSaveQuoteOPTemplateRuning = false;
                 this.SaveCompleted();
             });
         }
     }
 
 
-    SaveQuoteTemplateSetting() {
-        if (this.IsSaveQuoteTemplateSettingsRuning) {
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
-                this.IsSaveQuoteTemplateSettingsRuning = false;
+    SaveQuoteOPTemplateSetting() {
+        if (this.IsSaveQuoteOPTemplateSettingsRuning) {
+            this.QuoteOPTemplateSettingPMService.update(this.QuoteOPTemplateSettingPM).subscribe((res:any) => {
+                this.IsSaveQuoteOPTemplateSettingsRuning = false;
                 this.SaveCompleted("RefreshPreviewData");
             });
 
@@ -771,14 +771,14 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
     SaveCompleted(proess:string= null) {
-        if (!this.IsSaveQuoteTemplateSectionRuning && !this.IsSaveQuoteTemplateRuning && !this.IsSaveQuoteTemplateSettingsRuning) {
+        if (!this.IsSaveQuoteOPTemplateSectionRuning && !this.IsSaveQuoteOPTemplateRuning && !this.IsSaveQuoteOPTemplateSettingsRuning) {
             this.CurrentSession.StopBusyIndicator();
-            if (this.QuotePM == null && this.RefreshQuoteTemplate) {
+            if (this.QuoteOPPM == null && this.RefreshQuoteOPTemplate) {
                 this.CurrentSession.FireEvent("ReloadAllList");
             }
 
             if (proess == "RefreshPreviewData") {
-                this.AllQuoteTemplateSectionLists.forEach((item) => {
+                this.AllQuoteOPTemplateSectionLists.forEach((item) => {
                     item.IsLoaded = false;
                 });
                 this.LoadSectionPreviewData();
@@ -795,22 +795,22 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
 
-    BuildingQuoteTemplateSection(list: QuoteTemplateSectionPM[]) {
+    BuildingQuoteOPTemplateSection(list: QuoteOPTemplateSectionPM[]) {
         if (list) {
             list = list.sort((a, b) => { return a.Order - b.Order });
         
             list.forEach((item) => {
-                var viewModelSection: QuoteTemplateSectionViewModel = new QuoteTemplateSectionViewModel(item);
-                this.QuoteTemplateSectionLists.push(viewModelSection);
-                this.AllQuoteTemplateSectionLists.push(viewModelSection);
+                var viewModelSection: QuoteOPTemplateSectionViewModel = new QuoteOPTemplateSectionViewModel(item);
+                this.QuoteOPTemplateSectionLists.push(viewModelSection);
+                this.AllQuoteOPTemplateSectionLists.push(viewModelSection);
 
             });
 
-            if (this.QuoteTemplateSectionLists && this.QuoteTemplateSectionLists.length > 0) {
-                this.SelectQuoteTemplateSection = this.QuoteTemplateSectionLists[0];
+            if (this.QuoteOPTemplateSectionLists && this.QuoteOPTemplateSectionLists.length > 0) {
+                this.SelectQuoteOPTemplateSection = this.QuoteOPTemplateSectionLists[0];
             }
 
-            this.QuoteTemplateSectionLists = this.QuoteTemplateSectionLists.filter(d => d.IsCancel == false);
+            this.QuoteOPTemplateSectionLists = this.QuoteOPTemplateSectionLists.filter(d => d.IsCancel == false);
         }
     }
 
@@ -827,18 +827,18 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 }
 
-export class QuoteTemplateSectionViewModel {
+export class QuoteOPTemplateSectionViewModel {
 
     Background: string = "white";
     IsShowArrowUpDown: boolean= false;
     Id: string;
-    EntityPM: QuoteTemplateSectionPM;
+    EntityPM: QuoteOPTemplateSectionPM;
     IsSection: boolean = false;
     IsLoaded: boolean = false;
     HtmlBody: string;
     Description: string;
     SectionDocId: string = "";
-    QuoteTemplateSectionTypeCode: string;
+    QuoteOPTemplateSectionTypeCode: string;
     quotationComponent: QuotationComponent;
     IsShowDeleteButton: boolean;
     IsPagebrackSession: boolean = false;
@@ -946,29 +946,29 @@ export class QuoteTemplateSectionViewModel {
     
     ToolTipDisplay: string;
     DisplayName: string;
-    constructor(quoteTemplateSection: QuoteTemplateSectionPM, quotationComponent: QuotationComponent = null) {
-        this.EntityPM = quoteTemplateSection;
+    constructor(QuoteOPTemplateSection: QuoteOPTemplateSectionPM, quotationComponent: QuotationComponent = null) {
+        this.EntityPM = QuoteOPTemplateSection;
         this.quotationComponent = quotationComponent;
-        this.Id = quoteTemplateSection.Id;
-        this.SectionDocId = quoteTemplateSection.SectionDocId;
-        this.QuoteTemplateSectionTypeCode = quoteTemplateSection.QuoteTemplateSectionTypeCode;
-        this.Description = quoteTemplateSection.Description;
-        this.Templatedata = quoteTemplateSection.Templatedata;
-        this.Order = quoteTemplateSection.Order;
-        this.Name = quoteTemplateSection.Name;
-        this.IsCancel = quoteTemplateSection.IsCancel;
+        this.Id = QuoteOPTemplateSection.Id;
+        this.SectionDocId = QuoteOPTemplateSection.SectionDocId;
+        this.QuoteOPTemplateSectionTypeCode = QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode;
+        this.Description = QuoteOPTemplateSection.Description;
+        this.Templatedata = QuoteOPTemplateSection.Templatedata;
+        this.Order = QuoteOPTemplateSection.Order;
+        this.Name = QuoteOPTemplateSection.Name;
+        this.IsCancel = QuoteOPTemplateSection.IsCancel;
 
-        var code = this.EntityPM.QuoteTemplateSectionTypeCode;
+        var code = this.EntityPM.QuoteOPTemplateSectionTypeCode;
         this.DisplayName = this.EntityPM.Name;
 
         if (code == "PP" || code == "PC" || code == "PF" || code == "PH" || code == "QH" || code == "QD" || code == "PB") {
-             this.TranslationTextCode(this.EntityPM.QuoteTemplateSectionTypeCode);
+             this.TranslationTextCode(this.EntityPM.QuoteOPTemplateSectionTypeCode);
          }
 
-         if (quoteTemplateSection.QuoteTemplateSectionTypeCode != "PP" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PC" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "QH" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "QD" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PH" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PF" && quoteTemplateSection.QuoteTemplateSectionTypeCode != "PB") {
+         if (QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PP" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PC" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "QH" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "QD" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PH" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PF" && QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode != "PB") {
 
              this.IsSection = true;
-         } else if (quoteTemplateSection.QuoteTemplateSectionTypeCode == "PB") {
+         } else if (QuoteOPTemplateSection.QuoteOPTemplateSectionTypeCode == "PB") {
              this.IsPagebrackSession = true;
          }
          if (this.IsPagebrackSession || this.IsSection) this.IsShowDeleteButton = true;
@@ -981,8 +981,8 @@ export class QuoteTemplateSectionViewModel {
 
         var result = "";
 
-        var textCode: string = "QuoteTemplate.S.";
-        var textCodeToolTip: string = "QuoteTemplate.M.";
+        var textCode: string = "QuoteOPTemplate.S.";
+        var textCodeToolTip: string = "QuoteOPTemplate.M.";
         if (sectionTypeCode == "PP") {
             textCode += "PricingPackages";
             textCodeToolTip += "PricingTableDescriptionMessage";
@@ -1009,7 +1009,7 @@ export class QuoteTemplateSectionViewModel {
         }
 
         else if (sectionTypeCode == "PB") {
-            textCode = "QuoteTemplate.B.PageBreak";
+            textCode = "QuoteOPTemplate.B.PageBreak";
             textCodeToolTip = null;//To avoid alert missing textcode
         }
 

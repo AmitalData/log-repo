@@ -4795,6 +4795,7 @@
     <TypeScriptCompile Include="QuoteOPM\Components\Workspaces\QuotesComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\BorderOPTypeList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\MarkUpOPTypeList.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityLists\OPSpecialServicesTypeList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPClosingReasonList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPComputedFieldList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPCostChargeList.ts" />
@@ -4818,6 +4819,7 @@
     <TypeScriptCompile Include="QuoteOPM\EntityPMInitServices\QuoteOPPMInitService.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\BorderOPTypePM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\MarkUpOPTypePM.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPDocumentVersionPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPFollowUpPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPChargePM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPClosingReasonPM.ts" />
@@ -4842,11 +4844,21 @@
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPTotalVatPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPTypePM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPVATsTotalPM.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPTemplateDetailsFieldPM.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPTemplateHeaderFieldPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="QuoteOPM\ModuleProviders.ts" />
     <TypeScriptCompile Include="QuoteOPM\Module_QUPM.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPDocumentVersionExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateDetailsFieldExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateHeaderFieldExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateSectionExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateTextCodeExtendedPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\ExtendedPMs\QuoteOPTemplateTextDesignExtendedPMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\QuoteDomainService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\MarkUpOPTypeListService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\OPSpecialServicesTypeListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPClosingReasonListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPCustomerTypeListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPListService.ts" />
@@ -4854,6 +4866,7 @@
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPStageListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPTemplateListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPTypeListService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\OPSpecialServicesTypePMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPClosingReasonPMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPPMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPStagePMService.ts" />
@@ -8781,7 +8794,6 @@
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="QuoteOPM\DataContracts\" />
     <Folder Include="QuoteOPM\EntityPMCustomCode\" />
-    <Folder Include="QuoteOPM\Services\ExtendedPMs\" />
     <Folder Include="QuoteOPM\Services\QuoteDashboard\" />
     <Folder Include="Quote\Services\ExtendedLists\" />
     <Folder Include="Report\Components\FiltersComponent\Quotes\" />

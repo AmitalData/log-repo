@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import { QuoteModule } from '../../Quote/Module_QUOT';
+import { QuoteModule } from '../../QuoteOPM/Module_QUPM';
 import { InfrastructureModule } from '../../Infrastructure/Module_INFR';
 import {Components, ModuleDeclarations} from './ModuleDeclarations';
 

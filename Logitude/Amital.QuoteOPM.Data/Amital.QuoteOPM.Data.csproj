@@ -77,6 +77,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="EntityKeys\BorderOPTypeKeys.cs" />
     <Compile Include="EntityKeys\MarkUpOPTypeKeys.cs" />
+    <Compile Include="EntityKeys\OPSpecialServicesTypeKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPChargeKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPClosingReasonKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPComputedFieldKeys.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="EntityListQueryServices\BorderOPTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\BorderOPTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MarkUpOPTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OPSpecialServicesTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPClosingReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPComputedFieldListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPCustomerTypeListQueryService.Generated.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="EntityListQueryServices\Generated\QuoteOPTemplateTextDesignListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\MarkUpOPTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OPSpecialServicesTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPChargeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPClosingReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPComputedFieldListQueryService.cs" />
@@ -141,6 +144,7 @@
     <Compile Include="EntityListQueryServices\QuoteOPVATsTotalListQueryService.cs" />
     <Compile Include="EntityLists\Generated\BorderOPTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MarkUpOPTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OPSpecialServicesTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPChargeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPClosingReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPComputedFieldList.Generated.cs" />
@@ -166,6 +170,7 @@
     <Compile Include="EntityLists\Generated\QuoteOPVATsTotalList.Generated.cs" />
     <Compile Include="EntityMapping\BorderOPTypeMap.cs" />
     <Compile Include="EntityMapping\MarkUpOPTypeMap.cs" />
+    <Compile Include="EntityMapping\OPSpecialServicesTypeMap.cs" />
     <Compile Include="EntityMapping\QuoteOPChargeMap.cs" />
     <Compile Include="EntityMapping\QuoteOPClosingReasonMap.cs" />
     <Compile Include="EntityMapping\QuoteOPComputedFieldMap.cs" />
@@ -191,6 +196,7 @@
     <Compile Include="EntityMapping\QuoteOPVATsTotalMap.cs" />
     <Compile Include="EntityPOCOs\BorderOPType.cs" />
     <Compile Include="EntityPOCOs\MarkUpOPType.cs" />
+    <Compile Include="EntityPOCOs\OPSpecialServicesType.cs" />
     <Compile Include="EntityPOCOs\QuoteOP.cs" />
     <Compile Include="EntityPOCOs\QuoteOPCharge.cs" />
     <Compile Include="EntityPOCOs\QuoteOPClosingReason.cs" />
@@ -220,6 +226,7 @@
     <Compile Include="Repsitories\BorderOPTypeRepository.cs" />
     <Compile Include="Repsitories\Generated\BorderOPTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MarkUpOPTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\OPSpecialServicesTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPChargeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPClosingReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPComputedFieldRepository.Generated.cs" />
@@ -240,6 +247,7 @@
     <Compile Include="Repsitories\Generated\QuoteOPTotalVatRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\MarkUpOPTypeRepository.cs" />
+    <Compile Include="Repsitories\OPSpecialServicesTypeRepository.cs" />
     <Compile Include="Repsitories\QuoteOPChargeRepository.cs" />
     <Compile Include="Repsitories\QuoteOPClosingReasonRepository.cs" />
     <Compile Include="Repsitories\QuoteOPComputedFieldRepository.cs" />

@@ -56,7 +56,7 @@
                         <ul style="margin-left: 2px;">
                             <li [class.Selected]="SelectedTabCode == 'TAC'" (click)="SelectedTabCode = 'TAC'" style="margin-left:2px;">
                                 <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'Tablecolumns'}}">
-                                    <span>{{'QuoteTemplate.S.Tablecolumns' | TextCodeTranslationPipe}}  </span>
+                                    <span>{{'QuoteOPTemplate.S.Tablecolumns' | TextCodeTranslationPipe}}  </span>
                                 </div>
                             </li>
 
@@ -64,7 +64,7 @@
                                 <div class="InnerChild" style="color:black;width:70px">
 
                                     <div style="width:70px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'Labels'}}">
-                                        <span>{{'QuoteTemplate.S.Labels' | TextCodeTranslationPipe}} </span>
+                                        <span>{{'QuoteOPTemplate.S.Labels' | TextCodeTranslationPipe}} </span>
                                     </div>
                                 </div>
                             </li>
@@ -73,7 +73,7 @@
                                 <div class="InnerChild" style="color:black;width:100px">
 
                                     <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'TableDesign'}}">
-                                        <span>{{'QuoteTemplate.S.TableDesign' | TextCodeTranslationPipe}}  </span>
+                                        <span>{{'QuoteOPTemplate.S.TableDesign' | TextCodeTranslationPipe}}  </span>
                                     </div>
                                 </div>
                             </li>
@@ -98,7 +98,7 @@
                                               <table>
 
                                                 
-                                                  <tr *ngIf="QuoteTemplateSectionTypeCode=='QD'" style="height:20px">
+                                                  <tr *ngIf="QuoteOPTemplateSectionTypeCode=='QD'" style="height:20px">
                                                      <td>
                                                          <table>
                                                              <tr>
@@ -106,7 +106,7 @@
                                                                  <td>
                                                                      <div class="CheckBox">
                                                                          <input [(ngModel)]="ShowTitleQuoteDetails" class="LeftCenter" style="text-align:center" [attr.id]="ShowTitleQuoteDetailsKey" type="checkbox" />
-                                                                         <label style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitleQuoteDetailsKey">{{'QuoteTemplate.S.ShowTitle(GeneralDetails)' | TextCodeTranslationPipe}} </label>
+                                                                         <label style="color:black;margin-top:-3px" class="LeftCenter" [attr.for]="ShowTitleQuoteDetailsKey">{{'QuoteOPTemplate.S.ShowTitle(GeneralDetails)' | TextCodeTranslationPipe}} </label>
                                                                      </div>
                                                                  </td>
                                                              </tr>
@@ -115,7 +115,7 @@
                                                    
 
                                                   </tr>
-                                                  <tr *ngIf="QuoteTemplateSectionTypeCode=='QD'" style="height:7px;"><td style="height:7px" colspan="2"><div></div></td></tr>
+                                                  <tr *ngIf="QuoteOPTemplateSectionTypeCode=='QD'" style="height:7px;"><td style="height:7px" colspan="2"><div></div></td></tr>
 
                                                   <tr style="height:330px">
                                                       <td>
@@ -123,7 +123,7 @@
                                                               <tr>
                                                                   <td style="width:120px"></td>
                                                                   <td style="width:265px">
-                                                                      <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:265px;text-align:center;">{{'QuoteTemplate.S.AvaiLabelFields' | TextCodeTranslationPipe}}  </div>
+                                                                      <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:265px;text-align:center;">{{'QuoteOPTemplate.S.AvaiLabelFields' | TextCodeTranslationPipe}}  </div>
                                                                       <div style="border:1px solid gray;height:300px;width:265px;" attr.data-cy="{{'AvaiLabelFields'}}" >
                                                                           <!---->
                                                                           <div (drop)="DropItemToObjectFieldTextList($event)" dropzone="true" (dragover)="allowDropObjectFieldTextList($event)" style="overflow:auto; height:295px;vertical-align:top;">
@@ -150,7 +150,7 @@
                                                                   <td style="width:30px"></td>
 
                                                                   <td style="width:180px">
-                                                                      <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:180px;text-align:center;">{{'QuoteTemplate.S.Column1' | TextCodeTranslationPipe}}</div>
+                                                                      <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:180px;text-align:center;">{{'QuoteOPTemplate.S.Column1' | TextCodeTranslationPipe}}</div>
                                                                       <div style="border:1px solid gray;height:300px;width:180px" attr.data-cy="{{'Column1'}}">
 
                                                                           <div (drop)="DropItemToObjectFieldTextColumn1List($event)" dropzone="true" (dragover)="allowDropObjectFieldTextColumn1List($event)" style="overflow:auto; height:295px;vertical-align:top;">
@@ -178,7 +178,7 @@
 
                                                                   <td style="width:30px"></td>
                                                                   <td style="width:180px">
-                                                                      <div style="font-size:14px;color:gray;height:30px;vertical-align:central;width:180px;text-align:center">{{'QuoteTemplate.S.Column2' | TextCodeTranslationPipe}}</div>
+                                                                      <div style="font-size:14px;color:gray;height:30px;vertical-align:central;width:180px;text-align:center">{{'QuoteOPTemplate.S.Column2' | TextCodeTranslationPipe}}</div>
                                                                       <div style="border:1px solid gray;height:300px;width:180px" attr.data-cy="{{'Column2'}}">
 
                                                                           <div (drop)="DropItemToObjectFieldTextColumn2List($event)" dropzone="true" (dragover)="allowDropObjectFieldTextColumn2List($event)" style="overflow:auto; height:295px;vertical-align:top;">
@@ -225,7 +225,7 @@
                                                                               <table>
                                                                                   <tr>
                                                                                       <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                      <td style="width:50px;"><div style="width:50px;font-size:14px;color:#7E7A76">{{'QuoteTemplate.S.ColumnsWidthOptions' | TextCodeTranslationPipe}} </div></td>
+                                                                                      <td style="width:50px;"><div style="width:50px;font-size:14px;color:#7E7A76">{{'QuoteOPTemplate.S.ColumnsWidthOptions' | TextCodeTranslationPipe}} </div></td>
                                                                                       <td></td>
                                                                                   </tr>
                                                                               </table>
@@ -256,7 +256,7 @@
 
 
 
-                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteTemplate.S.Column1Labels' | TextCodeTranslationPipe}} :</div></td>
+                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteOPTemplate.S.Column1Labels' | TextCodeTranslationPipe}} :</div></td>
                                                                         <td style="width:85px">
                                                                             
                                                             
@@ -264,7 +264,7 @@
                                                                                 <tr>
                                                                                     <td style="width:60px"><input type="number" [(ngModel)]="TableColumn1LabelWidth" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                     <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -272,7 +272,7 @@
 
                                                                         <td style="width:20px"></td>
 
-                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteTemplate.S.Column2Labels' | TextCodeTranslationPipe}} :</div></td>
+                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteOPTemplate.S.Column2Labels' | TextCodeTranslationPipe}} :</div></td>
                                                                         <td style="width:85px">
                                                                           
                                                                             
@@ -280,7 +280,7 @@
                                                                                 <tr>
                                                                                     <td style="width:60px"><input type="number" [(ngModel)]="TableColumn2LabelWidth" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                     <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -293,7 +293,7 @@
 
 
 
-                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteTemplate.S.Column1Values' | TextCodeTranslationPipe}} :</div></td>
+                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteOPTemplate.S.Column1Values' | TextCodeTranslationPipe}} :</div></td>
                                                                         <td style="width:85px">
                                                                             
                                                                            
@@ -301,7 +301,7 @@
                                                                                 <tr>
                                                                                     <td style="width:60px"><input type="number" [(ngModel)]="TableColumn1ValueWidth" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                     <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -309,14 +309,14 @@
 
                                                                         <td style="width:20px"></td>
 
-                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteTemplate.S.Column2Values' | TextCodeTranslationPipe}} :</div></td>
+                                                                        <td style="width:130px;"><div style="width:130px;font-size:14px;color:#7E7A76">{{'QuoteOPTemplate.S.Column2Values' | TextCodeTranslationPipe}} :</div></td>
                                                                         <td style="width:85px">
 
                                                                             <table>
                                                                                 <tr>
                                                                                     <td style="width:60px"><input type="number" [(ngModel)]="TableColumn2ValueWidth" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
                                                                                     <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteOPTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -382,7 +382,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                        <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteTemplate.S.QuoteLabels' | TextCodeTranslationPipe}}</div></td>
+                                                                        <td style="width:50px;"><div style="width:50px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.QuoteLabels' | TextCodeTranslationPipe}}</div></td>
                                                                         <td></td>
 
                                                                     </tr>
@@ -416,7 +416,7 @@
                                                                                             </div>
                                                                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true" attr.data-cy="{{'LogTextBox_' + item.EnglishName}}"></LogTextBox>
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteOPTemplateTextCode'" [HideColumns]="true" attr.data-cy="{{'LogTextBox_' + item.EnglishName}}"></LogTextBox>
                                                                                             </div>
                                                                                         </td>
 
@@ -459,7 +459,7 @@
                                                                                             </div>
                                                                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteOPTemplateTextCode'" [HideColumns]="true"></LogTextBox>
                                                                                             </div>
                                                                                         </td>
 
@@ -537,7 +537,7 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TableDesign' | TextCodeTranslationPipe}}</div></td>
+                                                                            <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.TableDesign' | TextCodeTranslationPipe}}</div></td>
                                                                             <td></td>
                                                                         </tr>
                                                                     </table>
@@ -563,7 +563,7 @@
                                                                     <tr style="height:15px"><td colspan="3"></td></tr>
                                                                     <!--abed-->
 
-                                                                    <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="QuoteTemplateSectionTypeName"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                                    <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteOPTemplateSettingPM"  [SectionType]="QuoteOPTemplateSectionTypeName"></TextDesignComponent></td> <td style="width:10px"></td></tr>
 
 
                                                                     <tr><td colspan="3"></td></tr>
@@ -602,7 +602,7 @@
                                                                                 <table>
                                                                                     <tr>
                                                                                         <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteTemplate.S.TitleDesign' | TextCodeTranslationPipe}}</div></td>
+                                                                                        <td style="width:50px;"><div style="width:50px;">{{'QuoteOPTemplate.S.TitleDesign' | TextCodeTranslationPipe}}</div></td>
                                                                                         <td></td>
                                                                                     </tr>
                                                                                 </table>
@@ -674,7 +674,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -682,7 +682,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteOPTemplate.B.Save' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

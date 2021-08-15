@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteTool} from '../../../../Quote/Tools';
-import { QuoteSettingPM } from '../../../../Quote/EntityPMs/QuoteSettingPM';
-import { QuoteDomainService } from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteTool} from '../../../../QuoteOPM/Tools';
+import { QuoteOPSettingPM } from '../../../../QuoteOPM/EntityPMs/QuoteOPSettingPM';
+import { QuoteDomainService } from '../../../../QuoteOPM/Services/QuoteDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 import { ServiceLocator } from 'Infrastructure/Locators/ServiceLocator';
@@ -21,10 +21,10 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 
 export class OrdersTabComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
    
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public DataContext: OrdersTabComponent = this;
     public ObjectTableName: string = "QuoteOP";
-    public QuoteSetting: QuoteSettingPM = null;
+    public QuoteSetting: QuoteOPSettingPM = null;
     public TransportModeId: string;
     public IsQuoteClosedAutomaticallyEnabled: boolean;
 
@@ -229,15 +229,15 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
     
-    //get SpecialServiceId() { return this.EntityPM.SpecialServiceId; }
-    //set SpecialServiceId(newValue: string) {
-    //    if (this.EntityPM.SpecialServiceId!= newValue) {
-    //        this.EntityPM.SpecialServiceId= newValue;
+    get SpecialServiceId() { return this.EntityPM.SpecialServiceId; }
+    set SpecialServiceId(newValue: string) {
+        if (this.EntityPM.SpecialServiceId!= newValue) {
+            this.EntityPM.SpecialServiceId= newValue;
 
-    //        this.ComputeDimFactor();
-    //        this.OnMeasurmentsSettingsChanged();
-    //    }
-    //}
+            this.ComputeDimFactor();
+            this.OnMeasurmentsSettingsChanged();
+        }
+    }
 
     get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
     set ChargeableWeightUnitCode(newValue: string) {

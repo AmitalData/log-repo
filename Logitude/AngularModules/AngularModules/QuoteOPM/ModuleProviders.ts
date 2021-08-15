@@ -12,6 +12,7 @@ import {QuoteOPStagePMService} from './Services/StandardPMs/QuoteOPStagePMServic
 import {QuoteOPMenuButtonsHandler} from './Components/MenuButtons/QuoteOPMenuButtonsHandler';
 //  veiw !! import { QuoteOPFollowUpListService } from './Services/StandardLists/QuoteOPFollowUpListService';
 import { QuoteOPClosingReasonPMService } from './Services/StandardPMs/QuoteOPClosingReasonPMService';
+import { OPSpecialServicesTypeListService } from './Services/StandardLists/OPSpecialServicesTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -33,6 +34,8 @@ export class ModuleProviders {
             case "QuoteOPMenuButtonsHandler": { myResult = new QuoteOPMenuButtonsHandler(); break; }
             // view todo case "QuoteOPFollowUpListService": { myResult = new QuoteOPFollowUpListService(); break; }
             case "QuoteOPClosingReasonPMService": { myResult = new QuoteOPClosingReasonPMService(); break; }
+            case "OPSpecialServicesTypeListService": { myResult = new OPSpecialServicesTypeListService(); break; }
+                
         }
 
         return myResult;

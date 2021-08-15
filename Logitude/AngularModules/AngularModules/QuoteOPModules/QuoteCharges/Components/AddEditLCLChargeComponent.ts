@@ -8,14 +8,14 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {QuoteChargeItem} from './LCLChargesComponent';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
-import {QuotePriceStepsPM} from '../../../Quote/EntityPMs/QuotePriceStepsPM';
+import {QuoteOPChargePM} from '../../../QuoteOPM/EntityPMs/QuoteOPChargePM';
+import {QuoteOPPriceStepsPM} from '../../../QuoteOPM/EntityPMs/QuoteOPPriceStepsPM';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
+import {QuoteOPPM} from '../../../QuoteOPM/EntityPMs/QuoteOPPM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
-import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { QuoteOPValidator } from '../../../QuoteOPM/Validators/QuoteOPValidator';
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 import { CommonTool } from '../../../Common/Tools';
@@ -26,8 +26,8 @@ import { CommonTool } from '../../../Common/Tools';
 })
 
 export class AddEditLCLChargeComponent extends BaseComponent implements OnDestroy {
-    public QuotePM: QuotePM;
-    public EntityPM: QuoteChargePM;
+    public QuoteOPPM: QuoteOPPM;
+    public EntityPM: QuoteOPChargePM;
     public DataContext: QuoteChargeItem;
     public DataContext2 = this;
     public Father: any;
@@ -87,13 +87,13 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     SetDataContext(dataContext: QuoteChargeItem) {
-        this.QuotePM = dataContext.QuotePM;
+        this.QuoteOPPM = dataContext.QuoteOPPM;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
-        this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
+        this.IsVATVisible = this.IsAdhoc && this.QuoteOPPM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;
         this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
 
@@ -129,7 +129,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
 
-        switch (this.DataContext.QuotePM.TransportModeId) {
+        switch (this.DataContext.QuoteOPPM.TransportModeId) {
             case "A": {
                 this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
                 break;
@@ -145,7 +145,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                 break;
             }
         }
-        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.QuotePM.DirectionId);
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.QuoteOPPM.DirectionId);
     }
     BuildStepItemsSource() {
         if (this.StepsItemsSource == null) {
@@ -159,7 +159,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
 
         var itemsCollection: QuoteStepItem[] = [];
 
-        this.EntityPM.QuoteChargePriceSteps.sort((a, b) => { return a.Step - b.Step }).forEach((item) => {
+        this.EntityPM.QuoteOPChargePriceSteps.sort((a, b) => { return a.Step - b.Step }).forEach((item) => {
             itemsCollection.push(new QuoteStepItem(item, this, false));
         });
 
@@ -177,11 +177,11 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     AddStepItemMethod() {
-        var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+        var newItem: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
         newItem.Tenant = SessionLocator.Tenant;
-        newItem.QuoteId = this.EntityPM.Id;
+        newItem.QuoteOPId = this.EntityPM.Id;
         newItem.MarkupValue = this.EntityPM.MarkUpValue;
-        newItem.QuoteChargeId = this.EntityPM.Id;
+        newItem.QuoteOPChargeId = this.EntityPM.Id;
         this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
     }
 
@@ -202,8 +202,8 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditPriceStepComponent');
     }
     DeleteStepClicked(item: QuoteStepItem) {
-        if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) != -1) {
-            this.DataContext.EntityPM.RemoveQuotePriceStepsPM(item.EntityPM);
+        if (this.DataContext.EntityPM.QuoteOPChargePriceSteps.indexOf(item.EntityPM) != -1) {
+            this.DataContext.EntityPM.RemoveQuoteOPPriceSteps(item.EntityPM);
         }
 
         if (this.StepsItemsSource.Collection.indexOf(item) != -1) {
@@ -242,8 +242,8 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.CheckChargeTypeDuplication();
 
         if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
-            var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
+            var myQuoteOPValidator: QuoteOPValidator = new QuoteOPValidator();
+            myQuoteOPValidator.CheckDuplicateInCharges(this.QuoteOPPM, this.EntityPM, this.errors);
         }
 
         if (this.DataContext.IsChargeBySteps) {
@@ -255,7 +255,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                     this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("QuotePriceSteps.F.SaleUnitPrice")));
                 }
 
-                this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
+                this.DataContext.EntityPM.QuoteOPChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
                     if (item != priceStep.EntityPM) {
                         this.errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
                     }
@@ -270,12 +270,12 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+            if (this.DataContext.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
                 this.errors.push("Freight Charge already added");
             }
         }
 
-        if (this.QuotePM.IsChargesByVAT) {
+        if (this.QuoteOPPM.IsChargesByVAT) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
 
                 if (this.EntityPM.VatIsMultiPercentage) {
@@ -295,8 +295,8 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
 
         var freightLineCostCurrencyId: string = "";
         var freightLineSaleCurrencyId: string = "";
-        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+        if (this.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+            var quoteCharge = this.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
             if (quoteCharge) {
                 freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
                 freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
@@ -346,7 +346,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
 
     ValidateAddingPFCLUOM() {
         if (this.EntityPM.CostMeasurementCode == "PFCL" || this.EntityPM.SaleMeasurementCode == "PFCL") {
-            if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d.Id != this.EntityPM.Id).length > 0) {
+            if (this.QuoteOPPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d.Id != this.EntityPM.Id).length > 0) {
                 this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
             }
         }
@@ -356,22 +356,22 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.StepsItemsSource.Collection.forEach(item => {
             if (item != null) {
                 if (item.IsNew) {
-                    if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
+                    if (this.DataContext.EntityPM.QuoteOPChargePriceSteps.indexOf(item.EntityPM) == -1) {
                         item.IsNewEntity = false;
-                        this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
+                        this.DataContext.EntityPM.AddQuoteOPPriceSteps(item.EntityPM);
                     }
                 }
             }
         });
 
         if (this.DataContext.IsNew) {
-            this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
+            this.DataContext.QuoteOPPM.AddQuoteOPCharge(this.EntityPM);
             this.DataContext.fatherComponent.BuildItemsSource();
         }
 
         if (!this.DataContext.IsChargeBySteps) {
-            if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
-                this.EntityPM.QuoteChargePriceSteps = [];
+            if (this.EntityPM.QuoteOPChargePriceSteps.length > 0) {
+                this.EntityPM.QuoteOPChargePriceSteps = [];
             }
         }
 
@@ -397,13 +397,13 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     private myCloner: Cloner;
-    private oldPriceSteps: QuotePriceStepsPM[] = [];
+    private oldPriceSteps: QuoteOPPriceStepsPM[] = [];
     private Clone() {
-        this.EntityPM.QuoteChargePriceSteps.forEach((item) => {
-            var stepItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+        this.EntityPM.QuoteOPChargePriceSteps.forEach((item) => {
+            var stepItem: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
             stepItem.Id = item.Id;
-            stepItem.QuoteId = this.DataContext.QuotePM.Id;
-            stepItem.QuoteChargeId = this.EntityPM.Id;
+            stepItem.QuoteOPId = this.DataContext.QuoteOPPM.Id;
+            stepItem.QuoteOPChargeId = this.EntityPM.Id;
             stepItem.Step = item.Step;
             stepItem.CostUnitPrice = item.CostUnitPrice;
             stepItem.SaleUnitPrice = item.SaleUnitPrice;
@@ -442,7 +442,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.myCloner.AddField('SaleExchangeRate');
         this.myCloner.AddField('SaleIsFixedRate');
         this.myCloner.AddEntity(this.EntityPM);
-        this.myCloner.AddEntity(this.DataContext.QuotePM);
+        this.myCloner.AddEntity(this.DataContext.QuoteOPPM);
     }
     private RejectChanges() {
 
@@ -450,13 +450,13 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         var removedItems: any[] = [];
 
         this.oldPriceSteps.forEach(item => {
-            var existingItem = this.EntityPM.QuoteChargePriceSteps.filter(f => f == item)[0];
+            var existingItem = this.EntityPM.QuoteOPChargePriceSteps.filter(f => f == item)[0];
             if (!existingItem) {
                 removedItems.push(item);
             }
         });
 
-        this.EntityPM.QuoteChargePriceSteps.forEach(item => {
+        this.EntityPM.QuoteOPChargePriceSteps.forEach(item => {
             var oldItem = this.oldPriceSteps.filter(f => f == item)[0];
             if (oldItem) {
                 if (item.Step != oldItem.Step) {
@@ -482,11 +482,11 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         });
 
         addedItems.forEach(item => {
-            this.EntityPM.RemoveQuotePriceStepsPM(item);
+            this.EntityPM.RemoveQuoteOPPriceSteps(item);
         });
 
         removedItems.forEach(item => {
-            this.EntityPM.AddQuotePriceStepsPM(item);
+            this.EntityPM.AddQuoteOPPriceSteps(item);
         });
 
         this.myCloner.RejectChanges();
@@ -522,11 +522,11 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                 var steps: string[] = this.SelectedPriceStepList.Steps.split(',');
 
                 steps.forEach((step: string) => {
-                    var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+                    var newItem: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
                     newItem.Tenant = SessionLocator.Tenant;
-                    newItem.QuoteId = this.EntityPM.Id;
+                    newItem.QuoteOPId = this.EntityPM.Id;
                     newItem.Step = +step;
-                    newItem.QuoteChargeId = this.EntityPM.Id;
+                    newItem.QuoteOPChargeId = this.EntityPM.Id;
                     this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
                 });
 
@@ -542,11 +542,11 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                 //        var steps: string[] = s.split(',');
 
                 //        steps.forEach((step: string) => {
-                //            var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
+                //            var newItem: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
                 //            newItem.Tenant = SessionLocator.Tenant;
-                //            newItem.QuoteId = this.EntityPM.Id;
+                //            newItem.QuoteOPId = this.EntityPM.Id;
                 //            newItem.Step = +step;
-                //            newItem.QuoteChargeId = this.EntityPM.Id;
+                //            newItem.QuoteOPChargeId = this.EntityPM.Id;
                 //            this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
                 //        });
                 //    }
@@ -572,15 +572,15 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 }
 export class QuoteStepItem extends BaseComponent {
-    public EntityPM: QuotePriceStepsPM;
-    public QuoteChargePM: QuoteChargePM;
+    public EntityPM: QuoteOPPriceStepsPM;
+    public QuoteOPChargePM: QuoteOPChargePM;
     public ObjectTableName: string = "QuoteOPPriceSteps";
     public IsNew: boolean = false;
-    constructor(entity: QuotePriceStepsPM, public fatherComponent: AddEditLCLChargeComponent, isNew: boolean) {
+    constructor(entity: QuoteOPPriceStepsPM, public fatherComponent: AddEditLCLChargeComponent, isNew: boolean) {
         super();
         this.IsNew = isNew;
         this.EntityPM = entity;
-        this.QuoteChargePM = fatherComponent.EntityPM;
+        this.QuoteOPChargePM = fatherComponent.EntityPM;
 
         this.SetWeightUnitCode();
     }
@@ -589,10 +589,10 @@ export class QuoteStepItem extends BaseComponent {
     public SetWeightUnitCode() {
         var code: string;
 
-        switch (this.QuoteChargePM.CostMeasurementCode) {
-            case "GRWT":  { code = this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; break; }
-            case "CHWT": case "PDCW":{ code = this.fatherComponent.DataContext.QuotePM.ChargeableWeightUnitCode; break; }
-            case "VOLU": { code = this.fatherComponent.DataContext.QuotePM.VolumeUnitCode; break; }
+        switch (this.QuoteOPChargePM.CostMeasurementCode) {
+            case "GRWT":  { code = this.fatherComponent.DataContext.QuoteOPPM.GrossWeightUnitCode; break; }
+            case "CHWT": case "PDCW":{ code = this.fatherComponent.DataContext.QuoteOPPM.ChargeableWeightUnitCode; break; }
+            case "VOLU": { code = this.fatherComponent.DataContext.QuoteOPPM.VolumeUnitCode; break; }
             case "BTEU": { code = "TEU"; break; }
             case "PRVL": { code = "Value of Goods" ; break; }
             case "PRFR": { code = "Freight Value"; break; }
@@ -609,14 +609,14 @@ export class QuoteStepItem extends BaseComponent {
     get MarkUpType() {
         var myResult = "";
 
-        if (this.QuoteChargePM.MarkUpTypeCode == "P") {
+        if (this.QuoteOPChargePM.MarkUpTypeCode == "P") {
             myResult = "Percentage(%)";
         }
 
         else {
             myResult = "Fixed";
-            if (!AppTool.IsNullOrEmpty(this.QuoteChargePM.CostCurrencyCode)) {
-                myResult = myResult + " (" + this.QuoteChargePM.CostCurrencyCode + ")";
+            if (!AppTool.IsNullOrEmpty(this.QuoteOPChargePM.CostCurrencyCode)) {
+                myResult = myResult + " (" + this.QuoteOPChargePM.CostCurrencyCode + ")";
             }
         }
 
@@ -670,7 +670,7 @@ export class QuoteStepItem extends BaseComponent {
         var markup = this.EntityPM.MarkupValue == null ? 0 : this.EntityPM.MarkupValue;
 
         if (this.EntityPM.CostUnitPrice != null) {
-            if (this.QuoteChargePM.MarkUpTypeCode == "P") {
+            if (this.QuoteOPChargePM.MarkUpTypeCode == "P") {
                 result = this.EntityPM.CostUnitPrice + (this.EntityPM.CostUnitPrice * (markup / 100));
             }
 
@@ -686,7 +686,7 @@ export class QuoteStepItem extends BaseComponent {
         var result = this.EntityPM.MarkupValue;
 
         if (this.EntityPM.CostUnitPrice != null && this.EntityPM.SaleUnitPrice != null) {
-            if (this.QuoteChargePM.MarkUpTypeCode == "P") {
+            if (this.QuoteOPChargePM.MarkUpTypeCode == "P") {
                 result = ((this.EntityPM.SaleUnitPrice - this.EntityPM.CostUnitPrice) * 100) / this.EntityPM.CostUnitPrice;
             }
 

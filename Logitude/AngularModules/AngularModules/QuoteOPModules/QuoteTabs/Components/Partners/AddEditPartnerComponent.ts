@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnerItem} from './PartnersTabComponent';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
@@ -13,7 +13,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 })
 
 export class AddEditPartnerComponent implements OnInit {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public DataContext: PartnerItem;
     public ObjectTableName: string = "QuoteOP";
     private isMyCustomer: boolean = false;

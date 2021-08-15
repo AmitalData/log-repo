@@ -4972,6 +4972,36 @@ namespace Amital.QuoteOPM.Def.EntityPMs
               }
              set {  deletedFollowUps = value; }
 	    }
+	  
+	   private List<QuoteOPDocumentVersionPM> quoteDocumentVersions;
+	 
+	   [DataMember]
+	   public virtual List<QuoteOPDocumentVersionPM> QuoteDocumentVersions  
+	   {
+	        get
+             {
+                 if (quoteDocumentVersions == null)
+                 {
+                     quoteDocumentVersions = new List<QuoteOPDocumentVersionPM>();
+                 }
+                 return quoteDocumentVersions;
+              }
+             set { quoteDocumentVersions = value; }
+	    }
+		   
+	   private List<QuoteOPDocumentVersionPM>  deletedQuoteDocumentVersions;
+	   public virtual List<QuoteOPDocumentVersionPM> DeletedQuoteDocumentVersions  
+	   {
+	        get
+             {
+                 if ( deletedQuoteDocumentVersions == null)
+                 {
+                      deletedQuoteDocumentVersions = new List<QuoteOPDocumentVersionPM>();
+                 }
+                 return  deletedQuoteDocumentVersions;
+              }
+             set {  deletedQuoteDocumentVersions = value; }
+	    }
 	  	  private bool markFollowUpsAsDone ;
 	  	  
        
