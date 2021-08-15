@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { InterestReportPM } from '../../EntityPMs/InterestReportPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { CashBookPM } from '../../EntityPMs/CashBookPM';
 
 @Component({
     
     templateUrl: "./CashBookShortTitleComponent.html",
 })
 export class CashBookShortTitleComponent {
-    public EntityPM: InterestReportPM;
+    public EntityPM: CashBookPM;
     public isRTL: boolean = false;
     public IsVisibile: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
