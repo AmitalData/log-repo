@@ -50,13 +50,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationPM _MyDeclarationPMOrg;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
- 
 
-        //public INF_MSG_GenericResponseData Update8237(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams  )
-        //{
-        //     Update( customResponse , requestParams);
-        //    return this.MyResponseData;
-        //}
+
+        public INF_MSG_GenericResponseData Update8237(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
+        {
+            Update(customResponse, requestParams);
+            return this.MyResponseData;
+        }
         public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);

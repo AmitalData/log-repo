@@ -44,11 +44,11 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
-using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class DF_MSG8235_ExportDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, GenericRequestParams>
+    public class DF_MSG8235_TransshipmentDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, GenericRequestParams>
     {
         private ICustomContext _context;
         private DeclarationPM _DeclarationPM;
@@ -289,7 +289,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
 
-             req.Response = new UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response();
+             req.Response = new UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.Response();
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
@@ -333,7 +333,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         }
 
-        private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response ,string LoggingUserId)
+        private void UpdateDeclaration(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.Response response ,string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;

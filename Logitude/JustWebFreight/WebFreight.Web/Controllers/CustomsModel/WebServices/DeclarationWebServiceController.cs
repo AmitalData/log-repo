@@ -477,6 +477,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 INF_MSG_GenericResponseData responseData;
                 if (requestParamsData.RequestName.StartsWith("Export"))
                 {
+                    //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                     var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
                     responseData = messagingService.Send(requestParamsData);
                 }
