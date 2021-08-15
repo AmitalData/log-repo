@@ -6,7 +6,9 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentConversionContext } from "../../models/ShipmentConversionContext";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-
+import { ShipmentSelectors } from '../../../../Shipment/cypress/selectors/Selectors';
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import { PayableDetails } from "cypress/models/PayableDetails"
 
 Given("the user logged in and navigate to shipments workspace", () => {
     cy.Login();
@@ -108,4 +110,39 @@ Then("the button {string} should appear in packages tab", (buttonContains: strin
     Actions.ValidateAddButtonInPackagesTab(buttonContains);
 });
 
+Given("the user navigates Payables Tab add payable with the following details", (dataTable) => {
+    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
+    Actions.FillPayablesTab(PayableData)
+});
 
+Given("the user navigates Recevabile Tab and add Recevabile", () => {
+    cy.Click(ShipmentSelectors.ReceivablesTab, null)
+    Actions.AddReceivable()
+});
+
+Given("the user navigates Routings Tab and set departure and arrival dates", () => {
+    cy.Navigate(ShipmentSelectors.RoutingsTab)
+    Actions.SetActualArrivalDate()
+});
+
+When("save shipment", () => {
+    cy.Click(ShipmentSelectors.ShipmentSaveButton, null)
+});
+
+When("the user open LCL to FCL conversion wizard", () => {
+    Actions.OpenFclAndLclConversionWizard("FCL");
+});
+
+Then("a validation message error should appear", () => {
+    BaseAssertion.AssertElementExist(BaseSelectors.SingleError)
+    cy.Click(ShipmentSelectors.CancelActionButton, null)
+});
+
+When("the user open convert shipment direction wizard", () => {
+    Actions.OpenDirectionConversionWizard()
+});
+
+Then("a validation message with {string} error should appear", (validationMessage) => {
+    BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
+    cy.Click(".Button", "Cancel")
+});

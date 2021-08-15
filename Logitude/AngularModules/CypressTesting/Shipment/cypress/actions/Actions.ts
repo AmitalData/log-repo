@@ -1068,4 +1068,17 @@ function ConvertShipment() {
     cy.Click(BaseSelectors.RedButton + ":last", null);
 }
 
+export function SetActualArrivalDate() {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATDDate, ".")
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate, ".")
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AddReceivable() {
+    cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
+    cy.FillLogLov(ShipmentSelectors.ReceivableChargesType, "BLF", true)
+    cy.FillLogTextBox(ShipmentSelectors.ReceivableUnitPrice, "1")
+    cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
+}
 //#endregion
