@@ -75,15 +75,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string PONumber { get; set; }
         [Column("DescriptionOfGoods")]
 	    public string DescriptionOfGoods { get; set; }
-        [ForeignKey("ShipmentType")]
-        [Column("ShipmentTypeId")]
-	    public string ShipmentTypeId { get; set; }
-	      
-        public virtual ShipmentType ShipmentType { get; set; }
         [Column("Master")]
 	    public string Master { get; set; }
         [Column("House")]
 	    public string House { get; set; }
+        [Column("CarrierNumber")]
+	    public string CarrierNumber { get; set; }
         [ForeignKey("Vessel")]
         [Column("VesselId")]
 	    public string VesselId { get; set; }
@@ -122,6 +119,43 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
         public virtual Card FreightForwarderCard { get; set; }
         [Column("BookingConfirmationDate")]
 	    public DateTime? BookingConfirmationDate { get; set; }
+        [Column("ShipmentNumber")]
+	    public string ShipmentNumber { get; set; }
+        [Column("SupplyDateTime")]
+	    public DateTime? SupplyDateTime { get; set; }
+        [ForeignKey("OriginPort")]
+        [Column("OriginPortId")]
+	    public string OriginPortId { get; set; }
+	      
+        public virtual Port OriginPort { get; set; }
+        [ForeignKey("DestinationPort")]
+        [Column("DestinationPortId")]
+	    public string DestinationPortId { get; set; }
+	      
+        public virtual Port DestinationPort { get; set; }
+        [ForeignKey("Gateway")]
+        [Column("GatewayId")]
+	    public string GatewayId { get; set; }
+	      
+        public virtual Port Gateway { get; set; }
+        [Column("CasualImporterName")]
+	    public string CasualImporterName { get; set; }
+        [Column("CasualSupplierName")]
+	    public string CasualSupplierName { get; set; }
+        [ForeignKey("ShipmentLevel")]
+        [Column("ShipmentLevelCode")]
+	    public string ShipmentLevelCode { get; set; }
+	      
+        public virtual ShipmentLevel ShipmentLevel { get; set; }
+        [Column("PODate")]
+	    public DateTime? PODate { get; set; }
+        [Column("BookingConfirmationNumber")]
+	    public string BookingConfirmationNumber { get; set; }
+        [ForeignKey("Direction")]
+        [Column("DirectionId")]
+	    public string DirectionId { get; set; }
+	      
+        public virtual Direction Direction { get; set; }
     }
 }
 	 

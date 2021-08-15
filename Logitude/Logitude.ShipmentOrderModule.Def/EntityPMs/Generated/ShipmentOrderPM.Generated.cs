@@ -388,29 +388,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-	  private string shipmentTypeId ;
-	  	  
-       
-	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTypeId  
-	   {
-	    
-	     get
-		{
-		   return shipmentTypeId;
-		 }
-		 set
-		 {
-		   if(shipmentTypeId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeId",OldValue=shipmentTypeId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shipmentTypeId=value;
-		   }
-			
-		 }
-	   }
 	  private string master ;
 	  	  
        
@@ -453,6 +430,29 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="House",OldValue=house,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   house=value;
+		   }
+			
+		 }
+	   }
+	  private string carrierNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CarrierNumber  
+	   {
+	    
+	     get
+		{
+		   return carrierNumber;
+		 }
+		 set
+		 {
+		   if(carrierNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierNumber",OldValue=carrierNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   carrierNumber=value;
 		   }
 			
 		 }
@@ -660,29 +660,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeName",OldValue=transportModeName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   transportModeName=value;
-		   }
-			
-		 }
-	   }
-	  private string shipmentTypeName ;
-	  	  
-       
-	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTypeName  
-	   {
-	    
-	     get
-		{
-		   return shipmentTypeName;
-		 }
-		 set
-		 {
-		   if(shipmentTypeName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeName",OldValue=shipmentTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shipmentTypeName=value;
 		   }
 			
 		 }
@@ -1005,6 +982,374 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderName",OldValue=forwarderName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   forwarderName=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return shipmentNumber;
+		 }
+		 set
+		 {
+		   if(shipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNumber",OldValue=shipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? supplyDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? SupplyDateTime  
+	   {
+	    
+	     get
+		{
+		   return supplyDateTime;
+		 }
+		 set
+		 {
+		   if(supplyDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SupplyDateTime",OldValue=supplyDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   supplyDateTime=value;
+		   }
+			
+		 }
+	   }
+	  private string originPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortId  
+	   {
+	    
+	     get
+		{
+		   return originPortId;
+		 }
+		 set
+		 {
+		   if(originPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortId",OldValue=originPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortId  
+	   {
+	    
+	     get
+		{
+		   return destinationPortId;
+		 }
+		 set
+		 {
+		   if(destinationPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortId",OldValue=destinationPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string gatewayId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GatewayId  
+	   {
+	    
+	     get
+		{
+		   return gatewayId;
+		 }
+		 set
+		 {
+		   if(gatewayId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatewayId",OldValue=gatewayId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gatewayId=value;
+		   }
+			
+		 }
+	   }
+	  private string casualImporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CasualImporterName  
+	   {
+	    
+	     get
+		{
+		   return casualImporterName;
+		 }
+		 set
+		 {
+		   if(casualImporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualImporterName",OldValue=casualImporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   casualImporterName=value;
+		   }
+			
+		 }
+	   }
+	  private string casualSupplierName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CasualSupplierName  
+	   {
+	    
+	     get
+		{
+		   return casualSupplierName;
+		 }
+		 set
+		 {
+		   if(casualSupplierName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualSupplierName",OldValue=casualSupplierName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   casualSupplierName=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentLevelCode ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentLevelCode  
+	   {
+	    
+	     get
+		{
+		   return shipmentLevelCode;
+		 }
+		 set
+		 {
+		   if(shipmentLevelCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentLevelCode",OldValue=shipmentLevelCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentLevelCode=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentLevelName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentLevelName  
+	   {
+	    
+	     get
+		{
+		   return shipmentLevelName;
+		 }
+		 set
+		 {
+		   if(shipmentLevelName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentLevelName",OldValue=shipmentLevelName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentLevelName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? pODate ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PODate  
+	   {
+	    
+	     get
+		{
+		   return pODate;
+		 }
+		 set
+		 {
+		   if(pODate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PODate",OldValue=pODate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   pODate=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingConfirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return bookingConfirmationNumber;
+		 }
+		 set
+		 {
+		   if(bookingConfirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingConfirmationNumber",OldValue=bookingConfirmationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingConfirmationNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string originPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortName  
+	   {
+	    
+	     get
+		{
+		   return originPortName;
+		 }
+		 set
+		 {
+		   if(originPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortName",OldValue=originPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortName  
+	   {
+	    
+	     get
+		{
+		   return destinationPortName;
+		 }
+		 set
+		 {
+		   if(destinationPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortName",OldValue=destinationPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string gatewayName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GatewayName  
+	   {
+	    
+	     get
+		{
+		   return gatewayName;
+		 }
+		 set
+		 {
+		   if(gatewayName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatewayName",OldValue=gatewayName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gatewayName=value;
+		   }
+			
+		 }
+	   }
+	  private string directionName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionName  
+	   {
+	    
+	     get
+		{
+		   return directionName;
+		 }
+		 set
+		 {
+		   if(directionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionName",OldValue=directionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionName=value;
+		   }
+			
+		 }
+	   }
+	  private string directionId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionId  
+	   {
+	    
+	     get
+		{
+		   return directionId;
+		 }
+		 set
+		 {
+		   if(directionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionId",OldValue=directionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionId=value;
 		   }
 			
 		 }
