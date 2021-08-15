@@ -113,18 +113,23 @@
     <Compile Include="Services\TariffOceanFCLFreightCostServices.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostServices.cs" />
+    <Compile Include="Services\TariffOceanLCLSurchargeCostDataPreparation.cs" />
+    <Compile Include="Services\TariffOceanLCLSurchargeCostServices.cs" />
     <Compile Include="Steps\CreateTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\CreateTariffAirSurchargeCostSteps.cs" />
     <Compile Include="Steps\CreateTariffOceanFCLFreightCostSteps.cs" />
     <Compile Include="Steps\CreateTariffOceanLCLFreightCostSteps.cs" />
+    <Compile Include="Steps\CreateTariffOceanLCLSurchargeCostSteps.cs" />
     <Compile Include="Steps\GetTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffAirSurchargeCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanFCLFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanLCLFreightCostSteps.cs" />
+    <Compile Include="Steps\GetTariffOceanLCLSurchargeCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffAirSurchargeCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffOceanFCLFreightCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffOceanLCLFreightCostSteps.cs" />
+    <Compile Include="Steps\UpdateTariffOceanLCLSurchargeCostSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -132,14 +137,17 @@
     <None Include="Features\CreateTariffAirSurchargeCost.feature" />
     <None Include="Features\CreateTariffOceanFCLFreightCost.feature" />
     <None Include="Features\CreateTariffOceanLCLFreightCost.feature" />
+    <None Include="Features\CreateTariffOceanLCLSurchargeCost.feature" />
     <None Include="Features\GetTariffAirFreightCost.feature" />
     <None Include="Features\GetTariffAirSurchargeCost.feature" />
     <None Include="Features\GetTariffOceanFCLFreightCost.feature" />
     <None Include="Features\GetTariffOceanLCLFreightCost.feature" />
+    <None Include="Features\GetTariffOceanLCLSurchargeCost.feature" />
     <None Include="Features\UpdateTariffAirFreightCost.feature" />
     <None Include="Features\UpdateTariffAirSurchargeCost.feature" />
     <None Include="Features\UpdateTariffOceanFCLFreightCost.feature" />
     <None Include="Features\UpdateTariffOceanLCLFreightCost.feature" />
+    <None Include="Features\UpdateTariffOceanLCLSurchargeCost.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

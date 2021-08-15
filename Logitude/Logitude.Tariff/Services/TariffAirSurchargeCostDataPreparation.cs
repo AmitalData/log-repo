@@ -40,9 +40,9 @@ namespace Logitude.Tariff.Services
                 .Filter1Name("SellerId")
                 .Filter1Operator("equals")
                 .Filter1Value(sellerId)
-                .Filter1Name("TypeCode")
-                .Filter1Operator("equals")
-                .Filter1Value("ASC").Build();
+                .Filter2Name("TypeCode")
+                .Filter2Operator("equals")
+                .Filter2Value("ASC").Build();
 
             ApiResponse<IEnumerable<TariffPM>> response = APICaller.CallGetByFilters<IEnumerable<TariffPM>>(Urls.TariffViews, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();

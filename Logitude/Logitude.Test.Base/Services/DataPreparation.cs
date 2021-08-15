@@ -380,7 +380,7 @@ namespace Logitude.Test.Base.Services
             return response.Data?.FirstOrDefault()?["Id"];
         }
 
-        private static string CreatePartnerForUserTenant(PartnerParameters partnerParameters)
+        public static string CreatePartnerForUserTenant(PartnerParameters partnerParameters)
         {
             Partner partner = BuildPartner(partnerParameters);
             ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);

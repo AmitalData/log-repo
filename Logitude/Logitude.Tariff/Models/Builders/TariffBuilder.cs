@@ -19,6 +19,7 @@ namespace Logitude.Tariff.Models.Builders
             {"Ocean LCL", "OLC"},
             {"Ocean FCL", "OFC"},
             {"Air Surcharge", "ASC"},
+            {"Ocean LCL Surcharge", "OSC"},
         };
         public TariffBuilder()
         {
