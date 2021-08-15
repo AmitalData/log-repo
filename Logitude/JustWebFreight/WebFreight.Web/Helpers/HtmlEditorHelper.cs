@@ -1080,7 +1080,7 @@ namespace WebFreight.Web.Helpers
                     document = new HtmlDocument();
                     document.LoadHtml(htmlString);
                     CorrectingBuildingHtml(document, htmlString);
-                    HtmlNodeCollection spansList = document.DocumentNode.SelectNodes("//span");
+                    IEnumerable<HtmlNode> spansList = document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
                     if (spansList != null)
                     {
                         foreach (HtmlNode node in spansList)
@@ -1094,7 +1094,7 @@ namespace WebFreight.Web.Helpers
                                     string[] properties = textValue.Split('[');
                                     foreach (string property in properties)
                                     {
-                                        if (!string.IsNullOrEmpty(property))
+                                        if (!string.IsNullOrEmpty(property) && property.Contains(']'))
                                         {
                                             string[] array = property.Split(']');
                                             string propertyName = array[0];
@@ -5522,9 +5522,12 @@ namespace WebFreight.Web.Helpers
                             if (rowNode != null && rowNode.ParentNode != null)
                             {
                                 tableNode = rowNode.ParentNode;
-                                ObjectTable multiTable = tablesRepository.GetObjectTableById(objectField.MultiTableId, tenant);
-                                localObjectFields = GetEntityObjectFields(multiTable.Name, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(objectField.ObjectTable_MultiTable.Name, tenant).ToList();
-                                newTable = GetNewTableHtml(rowNode, tableNode, collection, localObjectFields, theEntity, theEntityObjectFields, generalService, tenant, systemEntity, systemEntityObjectFields, objectField);
+                                if (!tablesDic.Keys.Contains(tableNode))
+                                {
+                                    ObjectTable multiTable = tablesRepository.GetObjectTableById(objectField.MultiTableId, tenant);
+                                    localObjectFields = GetEntityObjectFields(multiTable.Name, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(objectField.ObjectTable_MultiTable.Name, tenant).ToList();
+                                    newTable = GetNewTableHtml(rowNode, tableNode, collection, localObjectFields, theEntity, theEntityObjectFields, generalService, tenant, systemEntity, systemEntityObjectFields, objectField);
+                                }
                             }
                         }
                     }
