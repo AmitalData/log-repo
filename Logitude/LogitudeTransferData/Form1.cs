@@ -1,6 +1,10 @@
 ﻿using Confluent.Kafka;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Newtonsoft.Json;
 using System;
@@ -76,6 +80,64 @@ namespace LogitudeTransferData
             List<DocumentTypePM> documentTypePMs = GetAllDocumentTypes(tenant);
 
             ProduceKafkaMessages<DocumentTypePM>(documentTypePMs, KakaMessageTypes.DocumentType);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CurrencyPM> currencyPMs = GetAllCurrencies(tenant);
+
+            ProduceKafkaMessages<CurrencyPM>(currencyPMs, KakaMessageTypes.Currency);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<SpecialServicesTypePM> specialServicesTypePMs = GetAllSpecialServicesTypes(tenant);
+
+            ProduceKafkaMessages<SpecialServicesTypePM>(specialServicesTypePMs, KakaMessageTypes.SpecialServicesType);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<EntityStatusPM> entityStatusPMs = GetAllEntityStatus(tenant);
+
+            ProduceKafkaMessages<EntityStatusPM>(entityStatusPMs, KakaMessageTypes.EntityStatus);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<PackageTypePM> packageTypePMs = GetAllPackageTypes(tenant);
+
+            ProduceKafkaMessages<PackageTypePM>(packageTypePMs, KakaMessageTypes.PackageType);
+        }
+
+        private List<PackageTypePM> GetAllPackageTypes(int tenant)
+        {
+            PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
+            List<PackageTypePM> packageTypePMs = packageTypeQuery.GetPackageTypePMsByTenant(tenant).ToList();
+            return packageTypePMs;
+        }
+
+        private List<CurrencyPM> GetAllCurrencies(int tenant)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            List<CurrencyPM> currencyPMs = currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
+            return currencyPMs;
+        }
+        private List<EntityStatusPM> GetAllEntityStatus(int tenant)
+        {
+            EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
+            List<EntityStatusPM> entityStatusPMs = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
+            return entityStatusPMs;
+        }
+        private List<SpecialServicesTypePM> GetAllSpecialServicesTypes(int tenant)
+        {
+            SpecialServicesTypeQuery specialServicesTypeQuery = new SpecialServicesTypeQuery(tenant);
+            List<SpecialServicesTypePM> specialServicesTypePMs = specialServicesTypeQuery.GetSpecialServicesTypePMsByTenant(tenant).ToList();
+            return specialServicesTypePMs;
         }
 
         private List<DocumentTypePM> GetAllDocumentTypes(int tenant)

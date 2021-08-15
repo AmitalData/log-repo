@@ -396,7 +396,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
 
                     this.UpdateShipmentProductItems();
-                    this.UpdateShipmentProductItems();
                     this.ComputeIsHTSMissingField();
                     this.UpdateShipmentPackagesCollection();
                     this.UpdateShipmentPickUpsCollection();
@@ -2357,6 +2356,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     otherObjectTableName = "Shipment";
                 }
 
+                MapMainCarriageLegsForAutomation(); //temp Solution
                 GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
                 object externalEntity = (entityPM.ShipmentLevelCode != "H" && entityMasterData != null) ? this.entityPM : null;
                 if (type == "OnCreate")
@@ -2406,6 +2406,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     #endregion
                 }
             }
+        }
+
+        private void MapMainCarriageLegsForAutomation()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(entityRepository);
+            shipmentQuery.MapMainCarriageLegsForAPI(entityPM);
         }
 
         private ShipmentChangeTracking BuildShipmentChangeTracking()

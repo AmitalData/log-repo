@@ -398,7 +398,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              AccountLocalName = acc.LocalName,
                              AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                              AccountPhone = card.Phone,
-                             InsuredCreditLimit = card != null ? card.InsuredcreditLimit : 0
+                             InsuredCreditLimit = card != null ? (card.InsuredcreditLimit != null ? (double)card.InsuredcreditLimit : 0) : 0
 
                          }
 

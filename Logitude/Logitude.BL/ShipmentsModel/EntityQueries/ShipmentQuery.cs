@@ -2550,7 +2550,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        private void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
+        public void MapMainCarriageLegsForAPI(ShipmentPM shipmentPM)
         {
             shipmentPM.MainCarriageLegs = new List<TransshipmentLeg>();
 
@@ -11143,6 +11143,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         PlannedCargoReadyDate = view.PlannedCargoReadyDate,
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
                         HandlerUserId = view.HandlerUserId,
+                        HandlerUserName = view.HandlerUserName,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12355,6 +12356,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                                ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                                HandlerUserId = f.HandlerUserId,
+                               HandlerUserName = f.HandlerUserName,
                            };
             return myResult;
         }
@@ -12721,6 +12723,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
+                    HandlerUserName = f.HandlerUserName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12988,6 +12991,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
+                    HandlerUserName = f.HandlerUserName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13609,6 +13613,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id);
                 shipmentPM.NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id);
                 shipmentPM.Volume = GetShipmentPackagesVolume(tenant, shipment.Id);
+                shipmentPM.ContainersNumbers = GetShipmentContainersNumbers(tenant, shipment.Id);
             }
         }
 
@@ -13634,6 +13639,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
             string combinedPackagesTypesNames = GetCombinedPackagesTypesNames(shipmentPackages);
             return combinedPackagesTypesNames;
+        }
+
+        private string GetShipmentContainersNumbers(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            var ContainersNumbers = shipmentPackages.Select(package => package.ContainerNumber).ToList();
+            return string.Join(",", ContainersNumbers);
         }
         private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
         {
@@ -13709,11 +13721,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return new CargoTrackingShipmentCustomsData()
             {
                 DeclarationNumber = cloudCustomData.DeclarationNo,
+                ImporterId = cloudCustomData.ImporterId,
                 TotalValueInNIS = Convert.ToDecimal(cloudCustomData.GoodsValue),
                 TotalValueInForeignCurrency = cloudCustomData.GoodsValueDetails == null ? 0 : cloudCustomData.GoodsValueDetails.Sum(good => Convert.ToDecimal(good.Value)),
                 GoodsDescription = cloudCustomData.MishgorDescOfGoods1,
                 TotalTax = Convert.ToDecimal(cloudCustomData.TotalTax),
-                ImporterVatAmount = CalculateImporterVatAmountFromCloudCustomData(cloudCustomData),
                 TaxDetails = BuildCargoTrackingShipmentCustomTaxDetails(cloudCustomData),
                 CurrencyCode = cloudCustomData.GoodsValueDetails == null ? null : cloudCustomData.GoodsValueDetails.FirstOrDefault()?.CurrencyName,
                 CurrencySign = GetCurrencySignFromCloudCustomData(cloudCustomData, tenant),
@@ -13734,13 +13746,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return sign;
         }
 
-        private decimal CalculateImporterVatAmountFromCloudCustomData(ShipmentAdditionalCloudCustomData cloudCustomData)
-        {
-            if (cloudCustomData.TaxesDetails == null)
-                return 0;
-            return cloudCustomData.TaxesDetails.Where(detail => detail.TaxTypeCode == "15")
-                                                .Sum(detail => Convert.ToDecimal(detail.TaxAmount));
-        }
         private List<CargoTrackingShipmentCustomTaxDetails> BuildCargoTrackingShipmentCustomTaxDetails(ShipmentAdditionalCloudCustomData cloudCustomData)
         {
             if (cloudCustomData.TaxesDetails == null)
@@ -13987,7 +13992,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TotalValueInNIS { get; set; }
         public decimal TotalValueInForeignCurrency { get; set; }
         public decimal TotalTax { get; set; }
-     
+        public string ImporterId { get; set; }
+
 
         public List<CargoTrackingShipmentCustomTaxDetails> TaxDetails;
     }

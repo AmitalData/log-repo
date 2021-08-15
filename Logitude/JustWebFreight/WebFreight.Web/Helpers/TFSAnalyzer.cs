@@ -77,6 +77,8 @@ namespace WebFreight.Web.Helpers
                                 response.ChangedBy = data.resource.revision != null ? data.resource.revision.fields["System.ChangedBy"] : "";
                                 response.AssignedTo = data.resource.revision != null ? data.resource.revision.fields["System.AssignedTo"] : "";
                                 response.TaskState = data.resource.revision != null ? data.resource.revision.fields["System.State"] : "";
+                                response.WorkItemType= data.resource.revision != null ? data.resource.revision.fields["System.WorkItemType"] : "";
+                                response.Area = data.resource.revision != null ? data.resource.revision.fields["System.AreaPath"] : "";
 
                                 if (response.CreatedBy != null && response.CreatedBy.Contains('<'))
                                 {
@@ -119,12 +121,12 @@ namespace WebFreight.Web.Helpers
                                         }
                                     }
                                 }
-
-                                response.Relations = JsonConvert.DeserializeObject<RelationClass[]>(data.resource.revision.relations.ToString());
+                                if (data.resource.revision.relations != null)
+                                {
+                                    response.Relations = JsonConvert.DeserializeObject<RelationClass[]>(data.resource.revision.relations.ToString());
+                                }
                             }
-
                         }
-
                     }
                 }
 
@@ -176,7 +178,7 @@ namespace WebFreight.Web.Helpers
 
                 myAnalyzeQueue.AWBNumber = this.WiId;
                 myAnalyzeQueue.Log = this.WiId != null ? ("Task " + this.WiId + " Updated") : "";
-                myAnalyzeQueue.Subject = TFSWebhook.projectNo;
+                myAnalyzeQueue.Subject = TFSWebhook?.projectNo;
                 myAnalyzeQueue.Status = "D";
                 myAnalyzeQueue.ErrorMessage = null;
                 analyzeQueueRepository.Update(myAnalyzeQueue);
@@ -252,6 +254,7 @@ namespace WebFreight.Web.Helpers
     {
         // Resource
         public string WorkItemId { get; set; }
+        public string WorkItemType { get; set; }
         public string UniqueName { get; set; }
         public string ProjectNumber { get; set; }
 
@@ -264,6 +267,7 @@ namespace WebFreight.Web.Helpers
         public double? RemainingWork { get; set; }
         public string IterationPath { get; set; }
         public string TaskState { get; set; }
+        public string Area { get; set; }
         public RelationClass[] Relations { get; set; }
     }
 

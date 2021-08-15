@@ -122,8 +122,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     private SetInsuredCreditLimitEnablitity() {
-        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
-        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
+        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
+        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
     }
 
     public CreditLimitAmountLabel: string;

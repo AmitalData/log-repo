@@ -9,6 +9,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -526,6 +527,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
             DocumentsFilingPM myResult = documentsFilingQuery.GetSinglePMByCode(Code, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        }
+
+        public HttpResponseMessage GetShipmentDocumentsByShipmentNumberToCTool(string shipmentNumber)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+            List<DocumentsFilingPM> myResult = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, "", ObjectTableRepository.GetObjectTableByName("Shipment"), "I", tenant);
+
+            myResult = myResult.Where(d => d.DocumentId != null && d.HasFile == true).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }

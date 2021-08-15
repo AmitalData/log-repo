@@ -212,6 +212,7 @@
     <None Include="DBScripts\GlobalModel\202105301502_AddContainerStatusesMonitorWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106060833_AddContainerStatusesReceiverWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106081600_AddContainerStatusesConnecterWR.sxml" />
+    <None Include="DBScripts\GlobalModel\202108021331_AddWebHookWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentCreateSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentUpdateSgipmentUpdateBatchService.sxml" />
@@ -330,6 +331,7 @@
     </None>
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
@@ -342,9 +344,6 @@
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
     <None Include="DBScripts\QuoteModel\202103081133_CalculateReceivablesPayablesQuoteComputedFileds.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="DBScripts\QuoteModel\202103071234_CalculateCostAmountInSaleCurrencyInQouteCharges.sxml">

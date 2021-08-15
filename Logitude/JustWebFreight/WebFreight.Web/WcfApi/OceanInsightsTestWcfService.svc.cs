@@ -51,12 +51,12 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "ScacCode must have value";
                         return response;
                     }
-                    if (string.IsNullOrEmpty(ReferenceNo))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "ReferenceNo # must have value";
-                        return response;
-                    }
+                    //if (string.IsNullOrEmpty(ReferenceNo))
+                    //{
+                    //    response.HasError = true;
+                    //    response.ErrorMessage = "ReferenceNo # must have value";
+                    //    return response;
+                    //}
                     if (response.HasError)
                     {
                         return response;

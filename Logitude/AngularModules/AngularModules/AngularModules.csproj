@@ -133,6 +133,7 @@
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
+    <Content Include="Accounting\Components\ShortTitles\CashBookShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\TaxReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\GLAccountShortTitleComponent.html" />
@@ -346,6 +347,7 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\JournalCSVLoadComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyInvoiceComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ShortTitles\CashBookShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\GLAccountFollowUpDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalMoreDataPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\GLaccountFollowUpDataExtendedPMService.ts" />
@@ -7456,6 +7458,10 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Tariffs\TariffsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
+    <TypeScriptCompile Include="ShipmentOrder\EntityLists\ShipmentOrderList.ts" />
+    <TypeScriptCompile Include="ShipmentOrder\EntityPMs\ShipmentOrderPM.ts" />
+    <TypeScriptCompile Include="ShipmentOrder\Services\StandardLists\ShipmentOrderListService.ts" />
+    <TypeScriptCompile Include="ShipmentOrder\Services\StandardPMs\ShipmentOrderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\ContainerHelperComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
@@ -8463,6 +8469,7 @@
     <Folder Include="Quote\Services\ExtendedLists\" />
     <Folder Include="Report\Components\FiltersComponent\Quotes\" />
     <Folder Include="Report\Components\FiltersComponent\Statistics\" />
+    <Folder Include="ShipmentOrder\Services\ExtendedPMs\" />
     <Folder Include="Shipment\Services\ExtendedLists\" />
     <Folder Include="Test\e2e\Contact\" />
     <Folder Include="Test\e2e\Customer\" />

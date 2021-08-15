@@ -110,5 +110,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LineNumber = a.LineNumber,
                     }).FirstOrDefault();
         }
+
+        public List<HTSCodePM> GetHTSCodeByProductItemIdsAndCountry(string itemsIds, string countryId, int tenant)
+        {
+            List<HTSCodePM> hTSCodes = new List<HTSCodePM>();
+            List<string> itemsIdsList = itemsIds.Split(',').Select(p => p.Trim()).ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            if (itemsIdsList.Count() > 0)
+            {
+                hTSCodes = (from a in repository.context.HTSCodes.Include("Country")
+                            where itemsIdsList.Contains(a.ItemId) && a.DestinationCountryId == countryId && a.Tenant == tenant && !a.InActive
+                            select new HTSCodePM()
+                            {
+                                Id = a.Id,
+                                Tenant = a.Tenant,
+                                Code = a.Code,
+                                ItemId = a.ItemId,
+                                DestinationCountryId = a.DestinationCountryId,
+                                CountryEnglishName = a.Country == null ? null : a.Country.EnglishName,
+                                ApprovedByCustomer = a.ApprovedByCustomer,
+                                InActive = a.InActive,
+                                LineNumber = a.LineNumber,
+                            }).ToList();
+            }
+
+            return hTSCodes;
+        }
     }
 }

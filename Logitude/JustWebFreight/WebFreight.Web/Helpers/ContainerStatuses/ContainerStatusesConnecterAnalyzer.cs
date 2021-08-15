@@ -46,7 +46,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerPM container;
         private string communicationLogTo = "OceanInsightStatusRequest";
         private string communicationLogSubject = "Shipment Containers Statuses";
-        private string containerObjectTableId;
+        private string objectTableId;
         private string loggedContactId;
         private string containerId;
         private string oceanInsightsEnvelopeParameters;
@@ -101,7 +101,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (analyzeQueue != null)
             {
                 this.Deserialize();
-            }
+             }
         }
         private void Deserialize()
         {
@@ -303,7 +303,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.shipmentRepository = new ShipmentRepository(shipmentContext);
                             this.shipmentQuery = new ShipmentQuery(shipmentRepository);
                             this.GetContainerDataByContainerNumber(item);
-                            this.AddContainerStatusCommunicationLog();
+                            this.AddContainerStatusCommunicationLog(item);
                             if (this.eventCode == "0")
                             {
                                 this.CreateShipmentContainerStatus(item);
@@ -316,37 +316,38 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-       
+
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             var containerNumber = oceanInsight.ContainerNumber;
-            if (!string.IsNullOrEmpty(containerNumber))
-            {
-                container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
-                containerId = container?.Id;
-                container_number = container?.ContainerNumber;
-            }
+            //if (!string.IsNullOrEmpty(containerNumber))
+            //{
+            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
+            containerId = container?.Id;
+            container_number = container?.ContainerNumber;
+            //}
         }
-        private void AddContainerStatusCommunicationLog()
-        {
-            if (!string.IsNullOrEmpty(containerId))
-            {
-                this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
-                this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
-
-                this.GetCommuniactionLogObjectTableId();
-                this.GetLoggedContactId();
-                this.BuildCommunicationLog();
-            }
-        }
-        private void GetCommuniactionLogObjectTableId()
+        private void AddContainerStatusCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
             var objectTableName = "Container";
+            this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
+            this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
+            if (string.IsNullOrEmpty(container_number))
+            {
+                objectTableName = "Shipment";
+            }
+            this.GetCommuniactionLogObjectTableId(objectTableName);
+            this.GetLoggedContactId();
+            this.BuildCommunicationLog(oceanInsight);
+        }
+        private void GetCommuniactionLogObjectTableId(string objectTableName)
+        {
+
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(logitudeTenant.Value);
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)
             {
-                containerObjectTableId = objectTable.Id;
+                objectTableId = objectTable.Id;
             }
         }
         private void GetLoggedContactId()
@@ -364,7 +365,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             var loggedContact = contactRepository.GetSingleContactByEmail(email, logitudeTenant.Value);
             this.loggedContactId = loggedContact.Id;
         }
-        private void BuildCommunicationLog()
+        private void BuildCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
             CommunicationsParams logParams = new CommunicationsParams()
             {
@@ -376,9 +377,9 @@ namespace WebFreight.Web.Helpers.Analyzers
                 InOut = "I",
                 Status = "D",
                 LoggingUserId = this.loggedContactId,
-                LoggingObjectTableId = containerObjectTableId,
-                LoggingEntityId = containerId,
-                LoggingEntityReference = container_number,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId,
+                LoggingEntityReference = string.IsNullOrEmpty(container_number) ? oceanInsight?.BLNumber : container_number,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
                 ByteData = GetXMLByteDataFromText(),

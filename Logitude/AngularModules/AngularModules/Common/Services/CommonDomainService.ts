@@ -1256,6 +1256,26 @@ export class CommonDomainService {
             return pmresponse;
         }), catchError(ServiceHelper.HandleServiceError));
     }
+
+    GetHTSCodesForProductItemsIds(productItemIds: string, toCountryId: string) {
+        var callTime = new Date();
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetHTSCodesForProductItemsIds?productItemIds=' + productItemIds + '&toCountryId=' + toCountryId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.CallTime = callTime;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TranslationHeader {

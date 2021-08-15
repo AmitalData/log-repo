@@ -1,3 +1,27 @@
+
+<!-- Web Header -->
+<div class="web-header-wrapper">
+    <div class="web-header hide-mobile">
+        <div class="logo-wrapper">
+            <div class="logo">
+                <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
+            </div>
+        </div>
+
+
+        <div  class="nav">
+            <!-- <ul class="left-nav" [class.show]="displayMenu" style="margin-top: 11px;"> -->
+
+                <!-- <li  (click)="GoToPrivateSite()" style="float: right;">cargo-tracking</li> -->
+
+
+            <!-- </ul> -->
+        </div>
+
+    </div>
+</div>
+
+
 <div *ngIf="IsBrandingDataLoaded" class="sidebar">
 
     <div class="hide-mobile nav" [class.nav-opened]="isNavOpened">
@@ -34,7 +58,7 @@
 
     <div class="logo">
         <img class="hide-mobile" [src]="InvertedLogoURL" alt="" />
-        <img class="mobile-only" [src]="InvertedLogoURL" alt="" />
+        <img class="mobile-only" [src]="ComapnyLogo" alt="" />
         <!-- <img src="./assets/images/logo/path3410@1x.png" routerLinkActive="active" routerLink="/search" alt="" /> -->
     </div>
 

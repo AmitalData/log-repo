@@ -42,6 +42,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     HasReferences: boolean = false;
     HasContainersDetails: boolean = false;
     InlandTransportMode = 'I';
+    WarehouseTransportMode ='W'
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
@@ -130,14 +131,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.HasReferences = this.SetHasReferences(); 
-               
+                this.HasReferences = this.SetHasReferences();
+
                 this.SetRoutingVariables();
                 this.GetShipmentPM();
                 this.GetShipmentCustomsData();
                 this.GetShipmentPackages();
                 this.GetDocumentsFilingsConnectedToShipment();
-                this.SetContainersNumbers(result);
                 this.SetCustomsOrForwarderFields();
 
             }
@@ -190,6 +190,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
+                this.SetContainersNumbers(result);
                 this.InitRoutes();
             }
         });
@@ -221,7 +222,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     private SetContainersNumbers(result: any) {
-        this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
+        this.ContainersNumbers = [];
+        this.ContainersNumbers = result.ContainersNumbers ? result.ContainersNumbers.split(',') : null;
     }
 
     SetCustomsOrForwarderFields() {
@@ -245,7 +247,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
 
         if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
-            var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? " - " + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
+            var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? "\n" + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
             this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber + ForwardingShipmentNumber;
         }
     }
@@ -394,8 +396,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
         //     this.SliderCards.push(newCard);
         // });
-       
-      
+
+
         this.SliderCards = this.Shipment.Milestones
             .filter(milstone =>
             {
@@ -504,8 +506,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.selectedNavButton = panelName;
         var panelElement = document.getElementById(panelName) as HTMLElement;
-        if (panelElement)
+        if (panelElement){
             panelElement.scrollIntoView();
+            document.getElementsByTagName('html')[0].scrollTop -= 103;
+
+    }
+
+
     }
 
     BackLinkClicked()
@@ -778,7 +785,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     private CreateSingleWarehouseLegRoute() {
         var step = new RoutingStep();
-        step.TransportModeCode = this.InlandTransportMode;
+        step.TransportModeCode = this.WarehouseTransportMode;
         step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "WarehouseLeg" : this.ShipmentPM.WarehouseLegRemarks;
         step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
 
@@ -904,7 +911,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA"));
         }
     }
-  
+
     BuildExportRouteDirection(fieldValue, fieldName: string) {
         if (fieldValue != null) {
             return new RouteDirection(fieldValue, fieldName, "out");
@@ -943,7 +950,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 description: messageDescription,
             }
         });
-    } 
+    }
 }
 
 

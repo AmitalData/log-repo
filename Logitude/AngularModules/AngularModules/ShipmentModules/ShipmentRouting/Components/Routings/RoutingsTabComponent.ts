@@ -24,6 +24,8 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 
 @Component({    
     templateUrl: './RoutingsTabComponent.html',
@@ -45,12 +47,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public IsAddingPreOnCarriageVisible: boolean = false
     public CardLOVDependencyProperty1IsList: boolean = true;
     public IsAddingStandaloneShipmentVisible: boolean = false;
+    private oldCountryId: string = null;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.ShipmentLevelCode = this.EntityPM.ShipmentLevelCode;
         this.TransportModeId = this.EntityPM.TransportModeId;
+        this.oldCountryId = this.EntityPM.ToCountryId;
+
         this.SetUIProperties();
         this.Listen();
 
@@ -1071,6 +1076,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    private toPartnerAddressChanged: boolean = false;
     get MainCarriageToPartnerId() { return this.EntityPM.MainCarriageToPartnerId; }
     set MainCarriageToPartnerId(value: string) {
         if (this.EntityPM.MainCarriageToPartnerId != value) {
@@ -1097,6 +1103,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     set MainCarriageToAddressId(value: string) {
         if (this.EntityPM.MainCarriageToAddressId != value) {
             this.EntityPM.MainCarriageToAddressId = value;
+
+            this.toPartnerAddressChanged = true;
             this.LoadToAddress();
         }
     }
@@ -1104,6 +1112,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public ToAddressList: AddressList;
     public FromAddressList: AddressList;
     private LoadToAddress() {
+        this.oldCountryId = this.EntityPM.ToCountryId;
+
         if (AppTool.IsNullOrEmpty(this.MainCarriageToAddressId)) {
             this.ToAddressList = null;
 
@@ -1130,11 +1140,70 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         if (this.EntityPM.ToCountryIsEC != list.CountryEC) {
                             this.EntityPM.ToCountryIsEC = list.CountryEC;
                         }
+
+                        if (this.toPartnerAddressChanged) {
+                            this.CheckToUpdateProductItems();                            
+                        }
                     }
                 }
             });
         }
     }
+    CheckToUpdateProductItems() {
+        var updateProductItems: boolean = false;
+        if (this.oldCountryId != this.EntityPM.ToCountryId) {
+            if (this.EntityPM.ShipmentProductItems.length > 0) {
+                if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
+                    updateProductItems = true;
+                }
+            }
+        }
+
+        if (updateProductItems) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Title = "Country Changed";
+            confirmWindow.Show("All product items in this shipment will be updated");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.GetHTSCodes();                    
+                }
+            });
+        }
+    }
+
+    private GetHTSCodes() {
+        var productItemIds: string = "";
+        this.EntityPM.ShipmentProductItems.forEach(item => {
+            productItemIds += item.ProductItemId + ",";
+        });
+
+        var commonService: CommonDomainService = new CommonDomainService();
+        commonService.GetHTSCodesForProductItemsIds(productItemIds, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var htsCodes: HTSCodePM[] = myResponse.Result;
+                this.UpdateShipmentProductItems(htsCodes);
+            }
+        });
+    }
+    UpdateShipmentProductItems(htsCodes: HTSCodePM[]) {
+        this.EntityPM.ShipmentProductItems.forEach(item => {
+            var hTSCodePM: HTSCodePM = htsCodes.filter(d => d.ItemId == item.ProductItemId)[0];
+
+            if (hTSCodePM) {
+                item.HTSCode = hTSCodePM.Code;
+                item.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+            }
+
+            else {
+                item.HTSCode = null;
+                item.ApprovedByCustomer = false;
+            }
+        });
+
+        this.toPartnerAddressChanged = false;
+        this.CurrentSession.FireEvent("ShipmentProductItemsUpdated");
+    }
+
     private LoadFromAddress() {
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromAddressId)) {
             this.FromAddressList = null;
@@ -1248,7 +1317,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
+
+            if (myCode == "F") {
+                logeWindow.WindowArgs = { EntityId: myAddressId };
+            }
+
+            else {
+                logeWindow.WindowArgs = { EntityId: myAddressId, ShipmentPM: this.EntityPM };
+            }
+
             logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {

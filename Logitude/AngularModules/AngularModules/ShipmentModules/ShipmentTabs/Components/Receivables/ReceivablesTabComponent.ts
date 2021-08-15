@@ -15,7 +15,6 @@ import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {MeasurementList} from '../../../../Common/EntityLists/MeasurementList';
 import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
 import {PackageTypeList} from '../../../../Common/EntityLists/PackageTypeList';
-import {UserList} from '../../../../Common/EntityLists/UserList';
 import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {MeasurementListService} from '../../../../Common/Services/StandardLists/MeasurementListService';
@@ -35,8 +34,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 
-@Component({
-    
+@Component({    
     templateUrl: './ReceivablesTabComponent.html',
 })
 
@@ -63,7 +61,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     private CurrentSession = SessionLocator.SelectedSession;
     public CommonDomainService: CommonDomainService;
     public CardListService: CardListService;
-
+    private UserListService: UserListService;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -78,6 +76,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.myDomainService = new ShipmentDomainService();
         this.CommonDomainService = new CommonDomainService();
         this.CardListService = new CardListService();
+        this.UserListService = new UserListService();
+
         this.Listen();
         this.Initialize();
         this.SetEditEnabled();
@@ -132,6 +132,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 else if (s == "StorageReceivableCalculationsChanged") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
+                }
+
+                else if (s == "ShipmentCustomerChanged") {
+                    this.InitializeShipmentGenerator();
                 }
             });
 
@@ -207,9 +211,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         var myCurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
         myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.AllRates = myResponse.Result;
+                this.AllRates = myResponse.Result;                
             }
 
+            this.InitializeShipmentGenerator();
             this.entityArgs.EditComponent.StopBusyIndicator();
         });
     }
@@ -230,7 +235,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             });
         }
     }
-
+    
     public SelectedRow: ShipmentReceivableItem = null;
     OnRowSelected(itemComponent: ShipmentReceivableItem) {
         this.SelectedRow = itemComponent;
@@ -557,6 +562,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 if (s) {
                     this.AllRates = comp.RatesList;
                     this.ProfitExchangeRate = AppTool.Round(comp.Rate, 5);
+                    this.InitializeShipmentGenerator();
                 }
             });
         });
@@ -745,29 +751,31 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             this.StartGenerating(myCommandCode);
         }
     }
+
+    public ShipmentGenerator: ShipmentGenerator;
+    private InitializeShipmentGenerator() {
+        this.ShipmentGenerator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+    }
     StartGenerating(myCommandCode: string) {
         switch (myCommandCode) {
             case "ATDS": {
                 // AutoDisplay                
-                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                Generator.GenerateReceivablesAutoDisplay();
+                this.ShipmentGenerator.GenerateReceivablesAutoDisplay();
                 this.OnEntityDataGenerated();
                 break;
             }
 
             case "QTRC": {
                 // FromQuoteReceivablesOnly
-                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                Generator.GenerateReceivablesFromQuote(this.BaseQuote);
+                this.ShipmentGenerator.GenerateReceivablesFromQuote(this.BaseQuote);
                 this.OnEntityDataGenerated();
                 break;
             }
 
             case "QTRP": {
                 // FromQuoteReceivablesAndPayables
-                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                Generator.GeneratePayablesFromQuote(this.BaseQuote);
-                Generator.GenerateReceivablesFromQuote(this.BaseQuote);
+                this.ShipmentGenerator.GeneratePayablesFromQuote(this.BaseQuote);
+                this.ShipmentGenerator.GenerateReceivablesFromQuote(this.BaseQuote);
                 this.OnEntityDataGenerated();
                 this.CurrentSession.FireEvent("PayablesGenerated");
                 break;
@@ -812,8 +820,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 // FromOriginShipment
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginShipmentId)) {
                     if (this.OriginShipment) {
-                        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                        Generator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
+                        this.ShipmentGenerator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
                         this.OnEntityDataGenerated();
 
                         this.ItemsSource.Collection.forEach((item: ShipmentReceivableItem) => {
@@ -833,8 +840,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                                 this.entityArgs.OriginEntity = myResponse.Result;
                                 this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
-                                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-                                Generator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
+                                this.ShipmentGenerator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
                                 this.OnEntityDataGenerated();
 
                                 this.ItemsSource.Collection.forEach((item: ShipmentReceivableItem) => {
@@ -1917,8 +1923,10 @@ export class ShipmentReceivableItem extends BaseComponent {
             newEntity.ProfitCurrencyExchangeRate = this.EntityPM.ProfitCurrencyExchangeRate;
             newEntity.CreateDate = DateTool.GetCurrentDateAsUtc();
             newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
+            newEntity.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
             newEntity.UpdateDate = DateTool.GetCurrentDateAsUtc();
             newEntity.UpdateByUserId = SessionLocator.LoggedUserId;
+            newEntity.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
             newEntity.Quantity = item.Quantity;
             newEntity.MeasurementId = item.MeasurementId;
             newEntity.MeasurementCode = item.MeasurementCode;
@@ -1930,8 +1938,6 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
 
             else {
-                //var acctEntity = byContainersItemsSource.filter(f => f.ChargesTypeId == newEntity.ChargesTypeId && f.MeasurementId == newEntity.MeasurementId && (f.ShipmentReceivableLineStatusCode == "ACCT" || f.ShipmentReceivableLineStatusCode == "DRFT"))[0];
-                //var openEntity = byContainersItemsSource.filter(f => f.ChargesTypeId == newEntity.ChargesTypeId && f.MeasurementId == newEntity.MeasurementId && (f.ShipmentReceivableLineStatusCode == "EMPT" || f.ShipmentReceivableLineStatusCode == "OAMT"))[0];
                 var acctEntity = byContainersItemsSource.filter(f => f.ChargesTypeId == newEntity.ChargesTypeId && f.MeasurementId == newEntity.MeasurementId && f.ShipmentReceivableLineStatusCode == "ACCT")[0];
                 var openEntity = byContainersItemsSource.filter(f => f.ChargesTypeId == newEntity.ChargesTypeId && f.MeasurementId == newEntity.MeasurementId && f.ShipmentReceivableLineStatusCode != "ACCT")[0];
 
@@ -2085,8 +2091,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             });
 
             this.ComputeInsideReceivablesData();
-            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
-            Generator.CalculateReceivableVatAmount(this.EntityPM);
+            this.fatherComponent.ShipmentGenerator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2094,8 +2099,7 @@ export class ShipmentReceivableItem extends BaseComponent {
     set AmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.AmountInProfitCurrency != newVaule) {
             this.EntityPM.AmountInProfitCurrency = AppTool.Round(newVaule, 2);
-            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
-            Generator.CalculateReceivableVatAmount(this.EntityPM);
+            this.fatherComponent.ShipmentGenerator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2104,6 +2108,20 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.EntityPM.ProfitCurrencyExchangeRate != newVaule) {
             this.EntityPM.ProfitCurrencyExchangeRate = AppTool.Round(newVaule, 5);
             this.ComputeTotalAmountInProfitCurrency();
+        }
+    }
+
+    get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
+    set CreatedByUserName(newVaule: string) {
+        if (this.EntityPM.CreatedByUserName != newVaule) {
+            this.EntityPM.CreatedByUserName = newVaule;
+        }
+    }
+
+    get UpdatedByUserName() { return this.EntityPM.UpdateByUserName; }
+    set UpdatedByUserName(newVaule: string) {
+        if (this.EntityPM.UpdateByUserName != newVaule) {
+            this.EntityPM.UpdateByUserName = newVaule;
         }
     }
 
@@ -2222,69 +2240,14 @@ export class ShipmentReceivableItem extends BaseComponent {
     }
 
     // Line Summary
-    private myUserListService: UserListService = null;
     get CreateDate() { return this.EntityPM.CreateDate; }
     get UpdateDate() { return this.EntityPM.UpdateDate; }
-    public CreatedByUserName: string = null;
-    public UpdatedByUserName: string = null;
     public ReceivableSummary: number = null;
     public PayableSummary: number = null;
     public ProfitSummary: number = null;
     SetLineSummary() {
-
-        if (this.myUserListService == null) {
-            this.myUserListService = new UserListService();
-
-            this.myUserListService.getSingleFromCache(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var list: UserList = myResponse.Result;
-                    if (list) {
-                        this.CreatedByUserName = list.EnglishName;
-                    }
-
-                    else {
-                        this.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var list: UserList = myResponse.Result;
-                                if (list) {
-                                    this.CreatedByUserName = list.EnglishName;
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-
-            if (this.EntityPM.UpdateByUserId == this.EntityPM.CreatedByUserId) {
-                this.UpdatedByUserName = this.CreatedByUserName;
-            }
-
-            else {
-                this.myUserListService.getSingleFromCache(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: UserList = myResponse.Result;
-                        if (list) {
-                            this.UpdatedByUserName = list.EnglishName;
-                        }
-
-                        else {
-                            this.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
-                                if (!myResponse.HasError) {
-                                    var list: UserList = myResponse.Result;
-                                    if (list) {
-                                        this.UpdatedByUserName = list.EnglishName;
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
-
         var myReceivableSummary = 0;
         var myPayableSummary = 0;
-        var myProfitSummary = 0;
 
         if (this.ShipmentPM.ShipmentReceivables.length > 0) {
             myReceivableSummary = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == this.ChargesTypeId), "TotalAmountLocal");

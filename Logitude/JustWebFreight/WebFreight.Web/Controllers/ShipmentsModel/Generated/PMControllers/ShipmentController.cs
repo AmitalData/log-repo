@@ -854,7 +854,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant,true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
             }

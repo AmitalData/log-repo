@@ -691,6 +691,7 @@
                                                                                         <option>Pending Decision</option>
                                                                                         <option>Approved</option>
                                                                                         <option>Rejected</option>
+                                                                                        <option>All</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;min-width:35px;color:black">From:</div>
@@ -927,12 +928,12 @@
                             </div>        
                         </div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Quote \#:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}   <p style="display: inline-block; font-size: 10px; color: indianred;">${CreateDate}</p></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Subject:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:200px;min-width:200px;height:22px;" title="${Subject}">${Subject}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Status:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:195px;min-width:195px;height:22px;">${Status}</div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Comments:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:195px;min-width:195px;height:22px;color: #= QuotationStatusColor #;">${Status}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Last Comments:</div>
                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px;visibility: #= QuotationPreparedTickVisibility #;">
                             <textarea readonly id="OLDComment#= Id #" style="height: 22px;max-height: 18px;max-width: 400px;" rows = "5" cols = "60">${Comments}</textarea>
                         </div>
@@ -1117,7 +1118,7 @@
 
         function ViewQuotationDocument(QuotationDocumentSecurityId) {
 
-            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&cardId=" + $.CurrentCardId + "&tempId=";
             $.ajax({
                 url: "api/DocumentDownloadToken",
                 type: 'GET',
