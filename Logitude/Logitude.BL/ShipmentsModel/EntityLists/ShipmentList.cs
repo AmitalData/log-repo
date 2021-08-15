@@ -57,6 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TruckNumber { get; set; }
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
+        public string Agent { get; set; }
         public string AgentComputed { get; set; }
         public string AgentComputedName { get; set; }
 

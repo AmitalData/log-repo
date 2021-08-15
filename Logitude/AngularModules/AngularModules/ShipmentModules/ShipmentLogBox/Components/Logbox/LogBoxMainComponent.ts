@@ -599,18 +599,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private DisplayAgentColumn() {
         this.columns.push({
-            FieldName: 'AgentName',
+            FieldName: 'Agent',
             DataTypeCode: 'String',
             Display: 'Agent',
-            Styles: { width: '150px' },
+            Styles: { width: '150px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: "AgentName"
+            SortByName: "Agent"
         });
+        this.QueryColumns.push(this.GetQueryColumn("Agent", 'Text', 'Agent'));
 
-        this.QueryColumns.push(
-            this.GetQueryColumn("AgentName", 'Text', 'Agent')
-        );
     }
 
     private showComputedStatusDateField() {

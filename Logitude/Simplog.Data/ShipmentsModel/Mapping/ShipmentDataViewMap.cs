@@ -191,6 +191,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperNote).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.Consignee).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.Agent).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ConsigneeNote).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.AgentName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.AgentNote).HasMaxLength(250).IsUnicode(false);
@@ -618,6 +619,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperNote).HasColumnName("ShipperNote");
             this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName");
             this.Property(t => t.ConsigneeNote).HasColumnName("ConsigneeNote");
+            this.Property(t => t.Agent).HasColumnName("Agent");
             this.Property(t => t.AgentName).HasColumnName("AgentName");
             this.Property(t => t.AgentNote).HasColumnName("AgentNote");
             this.Property(t => t.CustomAgentExportName).HasColumnName("CustomAgentExportName");
