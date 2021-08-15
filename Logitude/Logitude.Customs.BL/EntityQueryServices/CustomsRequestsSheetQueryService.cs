@@ -176,6 +176,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
+"DCAMU", // multi update 
 
             };
 
@@ -316,6 +317,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCBCMSS", //שינוי אתר איחסון לבלדר
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
+"DCAMU" // multi update 
 
 
             };

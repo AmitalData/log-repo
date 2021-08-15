@@ -228,6 +228,22 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
 
                     }
+                    if (button.EventCode == "MultiUpdate") {
+                        if (this.IsDisplayOnly) {
+                            button.IsDisabled = true;
+                            button.IsHidden = false;
+                        }
+                        else {
+                            button.IsDisabled = false;
+
+                            button.IsHidden = false;
+
+                        }
+
+
+
+
+                    }
 
                     if (button.EventCode == "SendManifest") {
                         if (this.IsDisplayOnly) {
