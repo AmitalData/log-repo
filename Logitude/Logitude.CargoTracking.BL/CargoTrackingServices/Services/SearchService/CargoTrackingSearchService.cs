@@ -93,14 +93,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipperName");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingConsigneeName");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber");
 
             AddSplittedData(new SplittedDataArguments
-            .Builder()
-            .TableRow(tableRow)
-            .DataTable(bulkDataPreperation.InnerDataTable)
-            .CoulmnName("ForwardingCustomerReference1")
-            .Delimiter(',')
-            .Build());
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("ForwardingCustomerReference1")
+                .Delimiter(',')
+                .Build());
 
             AddSplittedData(new SplittedDataArguments
                 .Builder()
@@ -125,8 +126,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .CoulmnName("ForwardingHouse")
                 .Delimiter('-')
                 .Build());
-
-            AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
 
         }
 
