@@ -118,7 +118,7 @@
                                 </td>
                                 <td class="Tbl1Col1">
 
-                                    <LogTextBox [ObjectFieldName]="'CheckAuthorityAttenderTypeName'" [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'CheckAuthorityAttenderTypeName'" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'"
                                                 [HideColumns]="true" [DataContext]="DataContext" [Text]="CheckAuthorityAttenderTypeName"></LogTextBox>
                                 </td>
                                
@@ -132,7 +132,7 @@
                                 </td>
                                 <td class="Tbl1Col1">
 
-                                    <LogTextBox [ObjectFieldName]="'CheckAnwserStatus'" [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'CheckAnwserStatus'" [ObjectTableName]="ObjectTableName"  [InputType]="'ntext'"
                                                 [HideColumns]="true" [DataContext]="DataContext" [Text]="CheckAnwserStatus"></LogTextBox>
                                 </td>
                                
@@ -142,7 +142,7 @@
 
                             <tr>
                                  <td colspan="2">
-                                    <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
+                                    <custom-send-options
                                                          (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
                                 </td>
