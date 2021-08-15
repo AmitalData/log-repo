@@ -236,9 +236,9 @@
 	inner JOIN DIM_Partners mainCarriageCarrierPartners ON dw_ShipmentMasterDatas.MainCarriageCarrierId = mainCarriageCarrierPartners.Id
     inner JOIN DIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = DIM_SpecialServicesTypes.Id
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
-    inner JOIN DIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = DIM_ChargesTypes.Id
-    left JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
+    inner JOIN DIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = DIM_ChargesTypes.Id 
 	inner JOIN DIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
+    left JOIN DIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id 
 	left JOIN DIM_Currencies ForiegnCurrencyId ON ShipmentPayablesReceivables.ForiegnCurrencyId = ForiegnCurrencyId.Id
  
 

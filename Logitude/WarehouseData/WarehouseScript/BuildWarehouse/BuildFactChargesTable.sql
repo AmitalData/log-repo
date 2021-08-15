@@ -215,10 +215,11 @@
     inner JOIN NewDIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = NewDIM_SpecialServicesTypes.Id
     inner JOIN ShipmentPayablesReceivables ON dw_Shipments.Id = ShipmentPayablesReceivables.ShipmentId
     inner JOIN NewDIM_ChargesTypes  ON ShipmentPayablesReceivables.ChargesTypeId = NewDIM_ChargesTypes.Id
+	 inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
     left JOIN NewDIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
  --   inner JOIN NewDIM_Partners billToPartners ON ShipmentPayablesReceivables.BillTo = billToPartners.Id
 	--inner JOIN NewDIM_Partners VendoroPartners ON ShipmentPayablesReceivables.Vendor = VendoroPartners.Id
-	 inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
+	 
 
 	 left JOIN NewDIM_Currencies ForiegnCurrencyId ON ShipmentPayablesReceivables.ForiegnCurrencyId = ForiegnCurrencyId.Id
 	 
