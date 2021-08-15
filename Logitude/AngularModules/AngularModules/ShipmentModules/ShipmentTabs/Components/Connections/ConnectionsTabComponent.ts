@@ -528,13 +528,16 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     DisconnectStandaloneShipment() {
+        this.CurrentSession.StartBusyIndicator("Disconnecting...");
         this.myDomainService.DisconnectStandaloneShipment(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+    
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ReloadEntityPM();
                     this.LoadData();
                 }
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
