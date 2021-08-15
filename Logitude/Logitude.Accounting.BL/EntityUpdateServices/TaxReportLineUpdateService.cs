@@ -1,5 +1,8 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -56,6 +59,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             else
             {
                 entityPM.IsManuallyChanged = true;
+                RecalculateReportTotals(entityPM);
             }
 
             UpdateJournalJournalAdditionalData(entityPM);
@@ -66,6 +70,37 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             entityPM.LastUpdateDateTime = DateTime.Now;
             base.OnUpdating(entityPM, entityPOCO);
+        }
+        private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
+        {
+            TaxReportPM taxReportPM = GetTaxReport(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
+            List<TaxReportLinePM> taxReportLinesPM = GetTaxReportLines(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
+
+            TaxReportService.CalculateReportTotals(taxReportPM, taxReportLinesPM);
+            SubmitTaxReportChanges(taxReportPM);
+        }
+
+        private static void SubmitTaxReportChanges(TaxReportPM taxReportPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+            taxReportUpdateService.Update(taxReportPM, true);
+        }
+
+        private static List<TaxReportLinePM> GetTaxReportLines(string taxReportId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
+            var taxReportLinesPM = taxReportQuery.GetReportLinesPMs(taxReportId, tenant);
+            return taxReportLinesPM;
+        }
+
+        private static TaxReportPM GetTaxReport(string taxReportId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
+            var taxReportPM = taxReportQuery.GetSingle(taxReportId, false, false);
+            return taxReportPM;
         }
 
         private static void UpdateJournalJournalAdditionalData(TaxReportLinePM taxReportLine)

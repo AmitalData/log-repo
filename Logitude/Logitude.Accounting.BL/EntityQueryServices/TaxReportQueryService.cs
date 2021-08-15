@@ -53,6 +53,37 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a);
             return query;
         }
+        public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)
+        {
+            IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
+                                               where a.TaxReportId == taxReportId && a.Tenant == tenant
+                                               select a);
+
+            var listQuery  = query.Select(d => new TaxReportLinePM()
+            {
+                Tenant = d.Tenant,
+                LastUpdateDateTime = d.LastUpdateDateTime,
+                UpdatedByUserId = d.UpdatedByUserId,
+                SearchFields = d.SearchFields,
+                TaxReportId = d.TaxReportId,
+                Line = d.Line,
+                OutputOrInput = d.OutputOrInput,
+                LineTypeCode = d.LineTypeCode,
+                VatNumber = d.VatNumber,
+                Reference = d.Reference,
+                ReferecneGroup = d.ReferecneGroup,
+                ReferenceDate = d.ReferenceDate,
+                VatAmount = d.VatAmount,
+                VatableInvoiceAmount = d.VatableInvoiceAmount,
+                StatusCode = d.StatusCode,
+                TransmitStatusCode = d.TransmitStatusCode,
+                JournalId = d.JournalId,
+                IsManuallyChanged = d.IsManuallyChanged,
+                IsEquipment = d.IsEquipment,
+                TotalInvoiceAmount = d.TotalInvoiceAmount
+            }).ToList();
+            return listQuery;
+        }
         public bool CheckIfThereIsLineWithoutTransmit(string taxReportId, int tenant)
         {
             return (from a in context.TaxReportLines
