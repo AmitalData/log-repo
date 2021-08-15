@@ -29,6 +29,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private string mainCarriageFinalDestinationPortId = null;
         private string clearingAgentId = null;
         private string consigneeId = null;
+        private string shipperId = null;
+        private DateTime? cutOffDate;
         private PortRepository portRepository;
         private CardRepository cardRepository;
         private ContactRepository contactRepository;
@@ -59,6 +61,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             QueryFilterItem filterItem_FinalDestinationPortId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
             QueryFilterItem filterItem_ClearingAgentId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ClearingAgentId").FirstOrDefault();
             QueryFilterItem filterItem_ConsigneeId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ConsigneeId").FirstOrDefault();
+            QueryFilterItem filterItem_ShipperId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipperId").FirstOrDefault();
+            QueryFilterItem filterItem_CutOffDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CutOffDate").FirstOrDefault();
 
             if (filterItem_FromDate != null)
             {
@@ -107,6 +111,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                 if (filterItem_ConsigneeId.FieldValue != null)
                 {
                     consigneeId = filterItem_ConsigneeId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ShipperId != null)
+            {
+                if (filterItem_ShipperId.FieldValue != null)
+                {
+                    shipperId = filterItem_ShipperId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CutOffDate != null)
+            {
+                if (filterItem_CutOffDate.FieldValue != null)
+                {
+                    cutOffDate = Convert.ToDateTime(filterItem_CutOffDate.FieldValue);
                 }
             }
         }
@@ -166,6 +186,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
                     myDataRecord.Routing = shipmentPackage.Routing;
+                    myDataRecord.ShipperId = shipmentPackage.ShipperId;
+                    myDataRecord.CutOffDate = shipmentPackage.CutOffDate;
+
+                    string flightNumber = null;
+                    if(!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierCode))
+                    {
+                        flightNumber = shipmentPackage.MainCarriageCarrierCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierNumber))
+                    {
+                        if (string.IsNullOrEmpty(flightNumber))
+                        {
+                            flightNumber = shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                        else
+                        {
+                            flightNumber = flightNumber + shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                    }
+
+                    myDataRecord.FlightNumber = flightNumber;
 
                     if (shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
@@ -195,7 +237,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
                     List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
                                                                      group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
-                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD} 
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.FlightNumber } 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -209,6 +251,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          ATD = g.Key.ATD,
                                                                          ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
+                                                                         FlightNumber = g.Key.FlightNumber,
                                                                      }).ToList();
 
                     List<ReportGroup> reference4Results = (from p in myDataList
@@ -360,7 +403,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
-                     
+                     CutOffDate = master.CutoffDate,
                  });
 
             return dataList;
@@ -406,6 +449,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             if (!string.IsNullOrEmpty(consigneeId))
             {
                 shipmentPackageList = shipmentPackageList.Where(d => d.ConsigneeId == consigneeId);
+            }
+
+            if (!string.IsNullOrEmpty(shipperId))
+            {
+                shipmentPackageList = shipmentPackageList.Where(d => d.ShipperId == shipperId);
+            }
+
+            if (cutOffDate != null)
+            {
+                shipmentPackageList = shipmentPackageList.Where(d => d.CutOffDate != null && d.CutOffDate == cutOffDate);
             }
 
             return shipmentPackageList.ToList();

@@ -58,6 +58,8 @@ export class FlightBookingsManifestFilterComponent extends BaseComponent {
     public MainCarriageFinalDestinationPortId: string;
     public ClearingAgentId: string;
     public ConsigneeId: string;
+    public ShipperId: string;
+    public CutOffDate: Date;
 
     RunReport() {
         this.ValidationErrorsList = [];
@@ -128,6 +130,24 @@ export class FlightBookingsManifestFilterComponent extends BaseComponent {
                 this.queryFilterItem.DisplayInList = false;
                 this.queryFilterItem.FieldName = "ConsigneeId";
                 this.queryFilterItem.FieldValue = this.ConsigneeId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ShipperId";
+                this.queryFilterItem.FieldValue = this.ShipperId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.CutOffDate) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "CutOffDate";
+                this.queryFilterItem.FieldValue = this.CutOffDate;
                 this.queryFilterItem.Operator = "Equals";
                 this.queryFilterItems.push(this.queryFilterItem);
             }
