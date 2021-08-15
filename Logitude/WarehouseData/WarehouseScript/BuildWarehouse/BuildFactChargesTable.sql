@@ -218,10 +218,10 @@
     left JOIN NewDIM_Currencies InvoiceCurrency ON ShipmentPayablesReceivables.InvoiceCurrencyId = InvoiceCurrency.Id
  --   inner JOIN NewDIM_Partners billToPartners ON ShipmentPayablesReceivables.BillTo = billToPartners.Id
 	--inner JOIN NewDIM_Partners VendoroPartners ON ShipmentPayablesReceivables.Vendor = VendoroPartners.Id
+	 inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
 
 	 left JOIN NewDIM_Currencies ForiegnCurrencyId ON ShipmentPayablesReceivables.ForiegnCurrencyId = ForiegnCurrencyId.Id
-	 left JOIN NewDIM_Partners HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
-
+	 
 	where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D','C') 
 
 	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 

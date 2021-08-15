@@ -435,7 +435,7 @@
    inner JOIN NewDIM_Ports PreForwardingFromPort  ON dw_Shipments.PreForwardingFromPortId = PreForwardingFromPort.Id
    inner JOIN NewDIM_Ports PreForwardingToPort  ON dw_Shipments.PreForwardingToPortId = PreForwardingToPort.Id
    inner JOIN NewDIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
-    left JOIN NewDIM_Partners HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
+   inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
 	 
 	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') 
 

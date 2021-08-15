@@ -447,8 +447,9 @@
     inner JOIN DIM_Partners PreForwardingCarrier  ON dw_Shipments.PreForwardingCarrierId = PreForwardingCarrier.Id
    inner JOIN DIM_Ports PreForwardingFromPort  ON dw_Shipments.PreForwardingFromPortId = PreForwardingFromPort.Id
    inner JOIN DIM_Ports PreForwardingToPort  ON dw_Shipments.PreForwardingToPortId = PreForwardingToPort.Id
+   inner JOIN DIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
    inner JOIN DIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
-  left JOIN DIM_Partners HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
+   
 
 	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C')
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type, @OBLType,@Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
