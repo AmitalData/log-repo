@@ -110,16 +110,7 @@ Then("the button {string} should appear in packages tab", (buttonContains: strin
     Actions.ValidateAddButtonInPackagesTab(buttonContains);
 });
 
-Given("the user navigates Payables Tab add payable with the following details", (dataTable) => {
-    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
-    Actions.FillPayablesTab(PayableData)
-});
-
-Given("the user navigates Recevabile Tab and add Recevabile", () => {
-    cy.Click(ShipmentSelectors.ReceivablesTab, null)
-    Actions.AddReceivable()
-});
-
+//#region 
 Given("the user navigates Routings Tab and set departure and arrival dates", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab)
     Actions.SetActualArrivalDate()
@@ -137,12 +128,38 @@ Then("a validation message error should appear", () => {
     BaseAssertion.AssertElementExist(BaseSelectors.SingleError)
     cy.Click(ShipmentSelectors.CancelActionButton, null)
 });
+//#endregion
 
+//#region 
 When("the user open convert shipment direction wizard", () => {
     Actions.OpenDirectionConversionWizard()
 });
 
 Then("a validation message with {string} error should appear", (validationMessage) => {
     BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
-    cy.Click(".Button", "Cancel")
 });
+//#endregion
+
+//#region 
+Given("remove the actual departure and arrival dates", () => {
+    cy.Click(".Button", "Cancel")
+    Actions.RemoveActualArrivalDate()
+    cy.Click(ShipmentSelectors.ShipmentSaveButton, null)
+});
+
+Given("the user navigates Payables Tab add payable with the following details", (dataTable) => {
+    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
+    Actions.FillPayablesTab(PayableData)
+});
+//#endregion
+
+//#region 
+Given("the user navigates Recevabile Tab", () => {
+    cy.Click(".Button", "Cancel")
+    cy.Click(ShipmentSelectors.ReceivablesTab, null)
+});
+
+Given("add Recevabile", () => {
+    Actions.AddReceivable()
+});
+//#endregion

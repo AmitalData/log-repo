@@ -74,8 +74,19 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
             | Event                     | Notes                   |
             | Converted From LCL to FCL | Convert LCL to FCL test |
 
+    Scenario: Assert change shipment type to LCL while actual departure/arrival dates are set
+        Given the user navigates Routings Tab and set departure and arrival dates
+        When save shipment
+        And the user open FCL to LCL conversion wizard
+        Then a validation message error should appear
+
+    Scenario: Assert convert shipment direction while actual departure/arrival dates are set
+        When the user open convert shipment direction wizard
+        Then a validation message with "Shipment has departed/arrived, can't change direction" error should appear
+
     Scenario: Assert change shipment direction while shipment has Payable
-        Given the user navigates Payables Tab add payable with the following details
+        Given remove the actual departure and arrival dates
+        And the user navigates Payables Tab add payable with the following details
             | ChargesType  | BAF  |
             | UOM          | GRWT |
             | Quantity     | 5    |
@@ -87,18 +98,9 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         Then a validation message with "Shipment has Payables amounts, can't change direction" error should appear
 
     Scenario: Assert change shipment type to LCL while shipment has Payable and Recevable
-        Given the user navigates Recevabile Tab and add Recevabile
+        Given the user navigates Recevabile Tab
+        And add Recevabile
         When save shipment
         And the user open FCL to LCL conversion wizard
         And convert shipment type
         Then a validation message with "Cannot change shipment type when shipment has Payables and Receivables amounts" error should appear
-
-    Scenario: Assert change shipment type to LCL while actual departure/arrival dates are set
-        Given the user navigates Routings Tab and set departure and arrival dates
-        When save shipment
-        And the user open FCL to LCL conversion wizard
-        Then a validation message error should appear
-
-    Scenario: Assert convert shipment direction while actual departure/arrival dates are set
-        When the user open convert shipment direction wizard
-        Then a validation message with "Shipment has departed/arrived, can't change direction" error should appear

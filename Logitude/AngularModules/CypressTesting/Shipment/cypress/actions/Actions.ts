@@ -1075,6 +1075,13 @@ export function SetActualArrivalDate() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
+export function RemoveActualArrivalDate() {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.get(ShipmentSelectors.MainCarriageATDDate).clear()
+    cy.get(ShipmentSelectors.MainCarriageATADate).clear()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
 export function AddReceivable() {
     cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
     cy.FillLogLov(ShipmentSelectors.ReceivableChargesType, "BLF", true)
