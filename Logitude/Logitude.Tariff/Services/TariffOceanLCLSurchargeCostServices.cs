@@ -25,7 +25,7 @@ namespace Logitude.Tariff.Services
                 .WithDefualtValues()
                 .TypeCode((string)dataTable.Freight)
                 .Name((string)dataTable.Name)
-                .SellerId(new PartnerService().GetAgentId())
+                .SellerId(new TariffOceanLCLSurchargeCostDataPreparation().GetAgentId())
                 .CurrencyId((string)dataTable.Currency)
                 .Notes((string)dataTable.Notes)
                 .Surcharge1Id(BillingData.ChargeTypeOFTId)

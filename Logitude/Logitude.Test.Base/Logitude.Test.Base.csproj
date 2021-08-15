@@ -101,7 +101,6 @@
     <Compile Include="Models\PackageTypesPreparation\PackageTypesVariables.cs" />
     <Compile Include="Services\ObjectTableService.cs" />
     <Compile Include="Services\PackageTypesDataPreparation.cs" />
-    <Compile Include="Services\PartnerService.cs" />
     <Compile Include="Services\RandomGeneratorService.cs" />
     <Compile Include="Models\LocationsPreparation\City.cs" />
     <Compile Include="Models\LocationsPreparation\GlobalZone.cs" />

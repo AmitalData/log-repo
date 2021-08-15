@@ -34,13 +34,18 @@ namespace Logitude.Tariff.Services
                    .WithDefualtValues()
                    .TypeCode("Ocean LCL Surcharge")
                    .Name("pre specflow name")
-                   .SellerId(new PartnerService().GetAgentId())
+                   .SellerId(GetAgentId())
                    .CurrencyId("EUR")
                    .Notes("pre specflow notes")
                    .Surcharge1Id(BillingData.ChargeTypeOFTId)
                    .Surcharge1UOM(BillingData.MeasurementGRWTId)
                    .ContractNumber("2324232")
                    .Build();
+        }
+
+        public string GetAgentId()
+        {
+            return DataPreparation.CreatePartnerForUserTenant(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" });
         }
 
         private void TariffDataMap(TariffPM tariff)
