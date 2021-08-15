@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsConDeclarUpdateClass
    {  		
-		public const string HashString = "7e4a1b94508da608e83f43f4cdf225ec";
+		public const string HashString = "1f4c19b31a82505bcae899bfac6d7459";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הצהרות קשורות לפרט מכס",
 			      				    DefaultText =  "Supplier Invoice Items Connected Declaration",
-			      				    Code =  "b8f4",
+			      				    Code =  "caa9",
 			      				    Name =  "Customs.SupplierInvoiceItemsConDeclar Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -562,7 +562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationTypeCode",
 					  						DefaultText =  "Declaration Type",
-					  						FullLocalDefaultText =  "סוג ההכרזה",
+					  						FullLocalDefaultText =  "סוג הצהרה",
 					  						ListFieldLable =  "DeclarationTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Type ",
 					  						ListLocalDefaultText =  "סוג הצהרה",
