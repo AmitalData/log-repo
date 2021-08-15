@@ -67,10 +67,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
-                MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
-                eventTracker.TrackEvent(searchEvent);
-
+                CreateSearchEventForMixPanel(searchKey, tenant, shipments);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
@@ -81,6 +78,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private static void CreateSearchEventForMixPanel(string searchKey, int tenant, List<CargoTrackingShipmentList> shipments)
+        {
+            if (searchKey != null)
+            {
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+                MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
+                eventTracker.TrackEvent(searchEvent);
+            }
         }
 
         private static MixPanelEvent BuildMixPanelSearchEvent(string searchKey, List<CargoTrackingShipmentList> shipments)
@@ -98,17 +105,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
 
-              
+
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
-                if (shipment == null) 
+                if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
 
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
-       
+
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
@@ -116,11 +123,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 };
 
-                MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
-
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId,tenant);
-                eventTracker.TrackEvent(zoomEvent);
-
+                CreateZoomEventForMixPanel(tenant, shipment);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
 
@@ -132,13 +135,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
-        private MixPanelTrackingEvent CreateShipmentZoomMixPanelEvent(string searchKey)
+
+        private static void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment)
         {
-            int shipmentCount = 1;
-            MixPanelTrackingService trackingService = new MixPanelTrackingService();
-            MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipmentCount, "Zoom");
-            return trackingEvent;
+            MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber);
+
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+            eventTracker.TrackEvent(zoomEvent);
         }
+
         private static MixPanelEvent BuildMixPanelZoomEvent(string shipmentNumber)
         {
             MixPanelEvent mixPanelEvent = new MixPanelEvent();
@@ -147,13 +152,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return mixPanelEvent;
         }
 
-        private MixPanelTrackingEvent CreateSearchMixPanelEvent(string searchKey, int shipmentsCount)
-        {
-           
-            MixPanelTrackingService trackingService = new MixPanelTrackingService();
-            MixPanelTrackingEvent trackingEvent = trackingService.CreateMixPanelEvent(searchKey, shipmentsCount, "Search");
-            return trackingEvent;
-        }
         [HttpGet]
         public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
@@ -162,6 +160,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
                 CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
 
+                CreateSearchEventForMixPanel(shipmentFilters.SearchText, shipmentFilters.Tenant, response.Shipments);
+            
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
