@@ -75,11 +75,17 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsConDeclarUpdateClass
    {  		
-		public const string HashString = "b240cab925713ea42c26c7504679469d";
+		public const string HashString = "7e4a1b94508da608e83f43f4cdf225ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -87,10 +93,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "Customs.SupplierInvoiceItemsConDeclar",
+			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.SupplierInvoiceItemsConDeclars",
 			      				    ObjectTableSingular =  "SupplierInvoiceItemsConnectedDeclaration",
 			      				    ObjectTablePlural =  "SupplierInvoiceItemsConnectedDeclarations",
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "DeclarationId",
@@ -116,11 +127,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הצהרות קשורות לפרט מכס",
 			      				    DefaultText =  "Supplier Invoice Items Connected Declaration",
-			      				    Code =  "8845",
+			      				    Code =  "b8f4",
 			      				    Name =  "Customs.SupplierInvoiceItemsConDeclar Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    HashString =  SupplierInvoiceItemsConDeclarUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -138,7 +157,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -158,8 +179,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -174,6 +201,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -187,7 +218,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -207,8 +240,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -223,6 +262,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -236,7 +279,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -256,8 +301,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -272,6 +323,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -285,7 +340,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -305,8 +362,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -321,6 +384,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -334,7 +401,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  35,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -354,8 +423,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -372,6 +447,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -385,7 +464,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -405,8 +486,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -423,6 +510,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -436,7 +527,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -456,8 +549,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -466,7 +565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "סוג ההכרזה",
 					  						ListFieldLable =  "DeclarationTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Type ",
-					  						ListLocalDefaultText =  "סוג ההכרזה",
+					  						ListLocalDefaultText =  "סוג הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -474,6 +573,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -487,7 +590,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -507,8 +612,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -525,6 +636,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -538,7 +653,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -558,8 +675,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  14,
 					  						DigitsAfterPoint =  3,
 					  						InActive =  false,
@@ -577,6 +700,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -590,7 +717,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -609,8 +738,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.SupplierInvoiceItemsConnectedDeclaration",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationTypeName",
@@ -626,6 +761,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -640,7 +779,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -659,7 +800,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuantityTypeCode",
@@ -672,6 +819,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -685,7 +836,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -704,7 +857,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuantityTypeName",
@@ -717,6 +876,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -727,7 +890,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable SupplierInvoiceItemsConDeclarObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsConDeclar" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> SupplierInvoiceItemsConDeclarObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SupplierInvoiceItemsConDeclar").ToList();
+		       
+	      
+
+	         Screen SupplierInvoiceItemsConDeclarCustomsSupplierInvoiceItemsConDeclarHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupplierInvoiceItemsConDeclar.HeaderScreen", Name = "Customs.SupplierInvoiceItemsConDeclarHeaderScreen", ObjectTableId = SupplierInvoiceItemsConDeclarObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    SupplierInvoiceItemsConDeclarObjectTable.HeaderScreenId = SupplierInvoiceItemsConDeclarCustomsSupplierInvoiceItemsConDeclarHeaderScreenScreen0.Id;
+		    SupplierInvoiceItemsConDeclarObjectTable.HeaderScreenCode = SupplierInvoiceItemsConDeclarCustomsSupplierInvoiceItemsConDeclarHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -746,10 +921,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -765,10 +940,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPEV",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Updated",
                 EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

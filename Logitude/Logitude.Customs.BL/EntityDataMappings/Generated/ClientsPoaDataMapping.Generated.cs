@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -78,10 +78,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoaID))
             {
-
 				entityPOCO.PoaID = entityPM.PoaID;
-
-
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorizedExternalId))

@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
-using Devart.Data.Oracle.Entity;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -30,7 +29,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
-            
+
             IQueryable<Containerization> iQueryable = (from a in context.Containerizations
                                               
                    where a.Tenant == tenant select a);
