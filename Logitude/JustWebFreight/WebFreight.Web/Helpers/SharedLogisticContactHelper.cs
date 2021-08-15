@@ -28,7 +28,7 @@ namespace WebFreight.Web.Helpers
 
         public void InternetAccessInvitation(SharedLogisticContactPM sharedLogisticsContact, ICommonDataContext objectContext)
         {
-            
+
             if (objectContext == null)
             {
                 objectContext = CommonDataContext.GetContext(sharedLogisticsContact.Tenant);
@@ -80,7 +80,7 @@ namespace WebFreight.Web.Helpers
                 }
 
                 string emailMessage = "";
-                
+
                 Tenant tenantCompany = objectContext.Tenants.Where(t => t.Id == sharedLogisticsContact.Tenant).FirstOrDefault();
 
 
@@ -136,8 +136,8 @@ namespace WebFreight.Web.Helpers
 
                         if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && !tenantCompany.IsMobileActivated)
                         {
-                            string password =  newPassword + "  (you will need to change the password on your first login)";
-                           
+                            string password = newPassword + "  (you will need to change the password on your first login)";
+
                             emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, password, ref messageArgs);
                             subject = tenantCompany.Company + " invites you to “Shared Logistics” with Logitude";
                             ActivityDescription = "Web Access Activated";
@@ -182,12 +182,12 @@ namespace WebFreight.Web.Helpers
                     }
 
 
-                  /////////  Area  contactPassword not  null
+                    /////////  Area  contactPassword not  null
 
                     else
                     {
                         string passwordString = "";
-                   
+
                         if (contactPassword.Password == "123")
                         {
                             string newPassword = PasswordGenerator.Generate(8);
@@ -199,7 +199,7 @@ namespace WebFreight.Web.Helpers
 
                             if (LogitudeSettings.WorkEnvironment == "cloud") passwordString = newPassword;
 
-                            else passwordString =  newPassword + "  (you will need to change the password on your first login)";
+                            else passwordString = newPassword + "  (you will need to change the password on your first login)";
 
                         }
                         else
@@ -207,7 +207,7 @@ namespace WebFreight.Web.Helpers
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
                                 passwordString = passwordString = "הסיסמה הנוכחית שלך";
-                               
+
                             }
 
                             else passwordString = "your current password (If you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password)";
@@ -295,12 +295,12 @@ namespace WebFreight.Web.Helpers
 
                     if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
                     {
-                    
-                         subject = !string.IsNullOrEmpty(messageArgs.Subject) ? messageArgs.Subject : subject;
-                         from = !string.IsNullOrEmpty(messageArgs.From) ? messageArgs.From : from;
+
+                        subject = !string.IsNullOrEmpty(messageArgs.Subject) ? messageArgs.Subject : subject;
+                        from = !string.IsNullOrEmpty(messageArgs.From) ? messageArgs.From : from;
                     }
 
-                  
+
                     EmailCommunicationParams emailParams = new EmailCommunicationParams()
                     {
                         Subject = subject,
@@ -312,7 +312,7 @@ namespace WebFreight.Web.Helpers
                         Tenant = sharedLogisticsContact.Tenant,
                         LoggingUserId = contact.Id,
                         IsBodySecured = true,
-                        
+
                     };
                     Communications.AddEmailCommunicationLogQueue(emailParams, sharedLogisticsContact.Tenant);
 
@@ -348,7 +348,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private static string ResolveInvitationvariable(string htmlTemplate, Contact contact ,string  password )
+        private static string ResolveInvitationvariable(string htmlTemplate, Contact contact, string password)
         {
             if (contact != null)
             {
@@ -357,7 +357,7 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                htmlTemplate = htmlTemplate.Replace("[InvitationEmail]","");
+                htmlTemplate = htmlTemplate.Replace("[InvitationEmail]", "");
                 htmlTemplate = htmlTemplate.Replace("[InviteeName]", "");
             }
 
@@ -369,8 +369,8 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-      
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
+
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -379,7 +379,7 @@ namespace WebFreight.Web.Helpers
                     messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
                     return messageArgs.HtmlTemplate;
                 }
-              
+
             }
 
 
@@ -419,7 +419,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -428,7 +428,7 @@ namespace WebFreight.Web.Helpers
                     messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
                     return messageArgs.HtmlTemplate;
                 }
-               
+
 
             }
 
@@ -472,7 +472,7 @@ namespace WebFreight.Web.Helpers
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -523,8 +523,8 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs)
         {
- 
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
+
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -533,7 +533,7 @@ namespace WebFreight.Web.Helpers
                     messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
                     return messageArgs.HtmlTemplate;
                 }
-              
+
 
             }
             string logo = GetLogoInvitation(tenantCompany.Id, "Cloud");
@@ -568,7 +568,7 @@ namespace WebFreight.Web.Helpers
 
             HtmlTemplate.Append("</div>");
 
-  
+
 
             HtmlTemplate.Append("<br /><br />");
 
@@ -610,8 +610,8 @@ namespace WebFreight.Web.Helpers
             // English
 
             HtmlTemplate.Append("<div  dir='ltr'  style='text-align:left;  font-size: 15px ; font-family:Arial'>");
-         
-            HtmlTemplate.Append( currentUsername + " from / " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
+
+            HtmlTemplate.Append(currentUsername + " from / " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
             HtmlTemplate.Append("<br /><br />");
 
             HtmlTemplate.Append("Please use the following:");
@@ -620,11 +620,11 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
             HtmlTemplate.Append("<br />");
 
-            var  englishPassword = password;
+            var englishPassword = password;
 
             if (password == "הסיסמה הנוכחית שלך")
             {
-                 englishPassword = "your current password (If you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password)";
+                englishPassword = "your current password (If you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password)";
             }
 
             HtmlTemplate.Append("<b>Password: </b>" + englishPassword);
@@ -651,14 +651,14 @@ namespace WebFreight.Web.Helpers
 
             return message;
         }
-         
+
         private static string GetLogoInvitation(int tenant, string workEnvironment)
         {
             string filename = "logo" + tenant.ToString();
 
 
-            if (workEnvironment == "cloud") filename = "smalllogo" + tenant.ToString(); 
-       
+            if (workEnvironment == "cloud") filename = "smalllogo" + tenant.ToString();
+
 
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
@@ -680,22 +680,16 @@ namespace WebFreight.Web.Helpers
 
         }
 
-         
 
-        private static DocumentType GetDocumentTypeForInvitation(Tenant tenant)
+
+
+        private static DocumentType GetDocumentTypeForInvitation(int tenant)
         {
             DocumentType documentType = null;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant.Id);
-                if (tenant.IsCargoTrackWebAccessActivated)
-                {
-                    documentType = documentTypeRepository.GetDocumentTypeByCode("CTIM", tenant.Id);
-                }
-                else if(!tenant.IsCargoTrackWebAccessActivated || documentType == null)
-                {
-                    documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant.Id);
-                } 
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
+                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
                 scope.Complete();
 
             }
@@ -704,8 +698,8 @@ namespace WebFreight.Web.Helpers
 
         }
 
-     
-  
+
+
 
 
 
