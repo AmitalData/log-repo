@@ -370,7 +370,7 @@ namespace WebFreight.Web.Helpers
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
 
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -419,7 +419,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -470,9 +470,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+        //    using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+        //    {
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -515,16 +515,16 @@ namespace WebFreight.Web.Helpers
                 // HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
                 emailMessage = HtmlTemplate.ToString();
 
-                scope.Complete();
+          //      scope.Complete();
 
                 return emailMessage;
-            }
+          //  }
         }
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs)
         {
 
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+            var documenttype = GetDocumentTypeForInvitation(tenantCompany);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -682,14 +682,20 @@ namespace WebFreight.Web.Helpers
 
 
 
-
-        private static DocumentType GetDocumentTypeForInvitation(int tenant)
+        private static DocumentType GetDocumentTypeForInvitation(Tenant tenant)
         {
             DocumentType documentType = null;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
+                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant.Id);
+                if (tenant.IsCargoTrackWebAccessActivated)
+                {
+                    documentType = documentTypeRepository.GetDocumentTypeByCode("CTIM", tenant.Id);
+                }
+                else if (!tenant.IsCargoTrackWebAccessActivated || documentType == null)
+                {
+                    documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant.Id);
+                }
                 scope.Complete();
 
             }
