@@ -229,7 +229,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string AmountForeign { get; set; }
             public string Wip { get; set; }
             public string Currency { get; set; }
-            public string LineNumber { get; set; }
+            public decimal LineNumber { get; set; }
 
         }
 
