@@ -207,7 +207,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceBillToCard { get; set; }
             public string InvoiceTypeCode { get; set; }
             public string InvoiceCurrency { get; set; }
-            public decimal InvoiceAmount { get; set; }
+            public string InvoiceAmount { get; set; }
 
         }
         public class StatusData
@@ -229,7 +229,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string AmountForeign { get; set; }
             public string Wip { get; set; }
             public string Currency { get; set; }
-            public decimal LineNumber { get; set; }
+            public string LineNumber { get; set; }
 
         }
 
@@ -240,8 +240,8 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceNumber { get; set; }
             public string ForwarderFile { get; set; }
             public string InvoiceCurrency { get; set; }
-            public decimal InvoiceAmount { get; set; }
-            public decimal BillTo { get; set; }
+            public string InvoiceAmount { get; set; }
+            public string BillTo { get; set; }
 
         }
         public class MessagesData
