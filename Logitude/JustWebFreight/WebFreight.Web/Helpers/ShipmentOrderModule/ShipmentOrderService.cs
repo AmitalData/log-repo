@@ -30,7 +30,6 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
             service.Update(shipmentOrderPM, true);
 
-
             return shipmentOrderPM;
         }
 
@@ -42,7 +41,6 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
             service.Update(shipmentOrderPM, true);
 
-
             return shipmentOrderPM;
         }
 
@@ -52,7 +50,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
 
             if (changeSetOp == ChangeSetOperation.Update)
             {
-                entity.Id = new Logitude.ShipmentOrderModule.BL.EntityQueryServices.ShipmentOrderQueryService(entity.Tenant).GetIdByOrderNumber(entity.OrderNumber);
+                entity.Id = new ShipmentOrderQueryService(entity.Tenant).GetByOrderNumber(entity.OrderNumber, entity.Tenant)?.Id;
                 if (entity.Id == null)
                 {
                     throw new ApplicationException("ShipmentOrder with orderNumber " + entity.OrderNumber + " doesn't exist");
