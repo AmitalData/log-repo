@@ -322,6 +322,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="ShipmentModules\ShipmentContainers\Components\EditTabs\StatusesTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddPrivateLabelShipmentComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
@@ -4597,6 +4598,9 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\Components\EditTabs\StatusesTabComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentContainers\ModuleShipmentContainers.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
@@ -7509,6 +7513,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferHeaderPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferLinePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\FBLStockPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\LastStatusItem.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockUsageHistoryPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\PickUpDeliveryPackageHarmonizePM.ts" />
