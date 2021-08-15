@@ -124,6 +124,18 @@
                                 <td><div></div></td>
                             </tr>
 
+                            <!-- IsEquipment -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment" (Checked)="TaxReportLinePM.IsEquipment = $event" [IsEnabled]="TaxReportLinePM.OutputOrInput=='I'"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
                             <tr><td><div></div></td></tr>
                         </table>
                     </td>

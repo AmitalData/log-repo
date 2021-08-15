@@ -22,7 +22,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 
 @Component({
-    
+
     templateUrl: './TaxReportDetailsTabComponent.html',
 })
 
@@ -101,9 +101,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     this._TaxReportExtendedPMService.CreateNewTaxReportLine(this.EntityPM).subscribe((myResult: ServiceResponse) => {
       this.CurrentSession.StopBusyIndicator();
       this.EntityPM = myResult.Result;
-      
+
       this.ReloadScreen();
-   
+
     });
 
 
@@ -140,7 +140,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
-   
+
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
@@ -408,7 +408,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     BuildColumns() {
         this.columns = [];
-     
+
         this.columns.push({
             FieldName: 'TransmitStatusCode',
             DataTypeCode: 'String',
@@ -537,7 +537,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
-          
+
         });
       this.columns.push({
         FieldName: 'IsExternalLine',
@@ -645,7 +645,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
-            logWindow.Height = 350;
+            logWindow.Height = 400;
             logWindow.Title = windowTitle;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe((event: any) => {
