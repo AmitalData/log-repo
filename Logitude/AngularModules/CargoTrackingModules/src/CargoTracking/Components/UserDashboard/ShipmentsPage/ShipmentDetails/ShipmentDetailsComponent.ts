@@ -42,6 +42,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     HasReferences: boolean = false;
     HasContainersDetails: boolean = false;
     InlandTransportMode = 'I';
+    WarehouseTransportMode ='W'
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
@@ -784,7 +785,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     private CreateSingleWarehouseLegRoute() {
         var step = new RoutingStep();
-        step.TransportModeCode = this.InlandTransportMode;
+        step.TransportModeCode = this.WarehouseTransportMode;
         step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "WarehouseLeg" : this.ShipmentPM.WarehouseLegRemarks;
         step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
 
