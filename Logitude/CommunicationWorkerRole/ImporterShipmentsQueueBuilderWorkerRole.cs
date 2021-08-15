@@ -48,7 +48,7 @@ namespace CommunicationWorkerRole
     {
         IQueueService queueservice;
         int Tenant;
-        string URI = "";//"http://localhost:9996/api/";
+        string URI =   "http://localhost:9996/api/";
         //UserData User;
         APILogsService apiLogsService;
         IWebFreightContext webFreightContext;
@@ -293,7 +293,7 @@ namespace CommunicationWorkerRole
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment)))
+                                                        if (true)
                                                             IdsList.Add(item);
                                                         else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
                                                             ImportIdsList.Add(item);
@@ -364,7 +364,7 @@ namespace CommunicationWorkerRole
                                                 LogPM.EntityId = Shipment.Id;
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
-                                                if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
+                                              //  if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
                                                 { 
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                                                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
