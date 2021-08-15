@@ -96,6 +96,7 @@ export class CashBookMenuButtonsHandler {
                             this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.BalanceOfCashbookUnequalZeroCantBlocked"));//"The balance of the cashbook is unequal to zero, can’t be blocked");
                         } else {
                             this.EntityPM.Inactive = true;
+                            this.EntityPM.IsDirty = true;
                             this.entityArgs.EditComponent.SaveChanges();
                         }
                         break;

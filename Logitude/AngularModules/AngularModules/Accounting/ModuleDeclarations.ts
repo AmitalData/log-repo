@@ -128,6 +128,7 @@ import { InterestReportGeneralTabComponent } from './Components/EditTabs/Interes
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
+import { CashBookShortTitleComponent } from './Components/ShortTitles/CashbookShortTitleComponent';
 import { UserDefinedReportShortTitleComponent } from './Components/ShortTiTles/UserDefinedReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
@@ -289,6 +290,7 @@ export const Components =
         InterestReportLineByDateDetailsComponent,
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
+        CashBookShortTitleComponent,
         InterestReportEditOpenBalanceComponent,
         CargoTrackingBuildShipmentComponent,
         CargoTrackingIncrementalStatistics,
@@ -461,7 +463,8 @@ export class ModuleDeclarations {
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
             case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
-            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
+            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break; }
+            case "CashBookShortTitleComponent": { myResult = CashBookShortTitleComponent; break; }
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
             case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
