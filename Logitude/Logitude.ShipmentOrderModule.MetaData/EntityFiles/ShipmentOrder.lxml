@@ -660,7 +660,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1"
-    DisplayInList="false"
+    DisplayInList="true"
     DataTemplateName="&quot;TransportModeTemplete&quot;"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
@@ -689,6 +689,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TransportModeId&quot;"
     DefaultText="&quot;Transport Mode&quot;"
+    ListFieldLable="&quot;TransportModeIdListLable&quot;"
+    ListLableDefaultText="&quot;Transport Mode&quot;"
     ShortFieldLable="&quot;TransportModeId&quot;"
     ShortFieldLableDefaultText="&quot;Transport&quot;"
     IsNullable="false"
@@ -2064,7 +2066,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="10"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -4165,7 +4167,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="40"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -4239,6 +4241,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="1"
     DisplayInList="true"
+    DataTemplateName="&quot;DirectionDataTemplate&quot;"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -4262,6 +4265,7 @@
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
     InActive="false"
+    ColumnHeaderTemplateName="&quot;DirectionHeaderTemplate&quot;"
     DisplayLongName="false"
     FullFieldLable="&quot;DirectionId&quot;"
     DefaultText="&quot;Direction&quot;"
@@ -4286,7 +4290,8 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HtmlListComponentName="&quot;DirectionCellDisplayListTemplate&quot;"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -4316,26 +4321,21 @@
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;TransportModeName&quot;"
-        ColumnWidth="137" />
-      <QueryColumn
-        QueryCode="&quot;ALSO&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;ShipmentLevelName&quot;"
         ColumnWidth="153" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -5190,6 +5190,21 @@
       <DCField
         DCFieldName="&quot;BookingConfirmationNumber&quot;"
         FieldName="&quot;BookingConfirmationNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;CarrierNumber&quot;"
+        FieldName="&quot;CarrierNumber&quot;"
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"

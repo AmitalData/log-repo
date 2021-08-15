@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ShipmentOrderUpdateClass
    {  		
-		public const string HashString = "af89995ba607029dea3713ab6fb6c118";
+		public const string HashString = "059dc510e1ecc35de8559f3038c3a3b3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -508,7 +508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						DataTemplateName =  "TransportModeTemplete",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -537,6 +537,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
 					  						DefaultText =  "Transport Mode",
+					  						ListFieldLable =  "TransportModeIdListLable",
+					  						ListLableDefaultText =  "Transport Mode",
 					  						ShortFieldLable =  "TransportModeId",
 					  						ShortFieldLableDefaultText =  "Transport",
 					  						IsMaxLength =  false,
@@ -1647,7 +1649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  10,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3062,7 +3064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
@@ -3082,7 +3084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "ShipmentOrder",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -3361,7 +3363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  40,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3422,6 +3424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
+					  						DataTemplateName =  "DirectionDataTemplate",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -3445,6 +3448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
+					  						ColumnHeaderTemplateName =  "DirectionHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DirectionId",
 					  						DefaultText =  "Direction",
@@ -3458,7 +3462,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HtmlListComponentName =  "DirectionCellDisplayListTemplate",
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -3501,15 +3506,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ALSOQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ShipmentOrder.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShipmentOrder.TransportModeName" , ColumnWidth = 137 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShipmentOrder.ShipmentLevelName" , ColumnWidth = 153 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShipmentOrder.ShipmentLevelName" , ColumnWidth = 153 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShipmentOrder.OrderNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShipmentOrder.OrderNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShipmentOrder.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShipmentOrder.Master" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ALSOQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShipmentOrder.House" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShipmentOrder.House" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

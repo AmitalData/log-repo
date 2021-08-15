@@ -1,8 +1,8 @@
 
-
+import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 export const Components =
     [
-
+        FieldTemplateComponent,
     ];
 
 export class ModuleDeclarations {
@@ -11,7 +11,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
-
+            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
 
         }
 

@@ -191,7 +191,8 @@ using Logitude.ShipmentOrderModule.Data;
 					   				   }
 				   
 				   temp.PODate = MyEntityPM.PODate;
-				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;					
+				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
+				   temp.CarrierNumber = MyEntityPM.CarrierNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -423,7 +424,8 @@ using Logitude.ShipmentOrderModule.Data;
 			
 					
 					temp.PODate = MyEntity.PODate;
-					temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;					   
+					temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
+					temp.CarrierNumber = MyEntity.CarrierNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)

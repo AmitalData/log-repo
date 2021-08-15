@@ -95,5 +95,7 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public DateTime? PODate { get; set; }
     
     public string BookingConfirmationNumber { get; set; }
+    
+    public string CarrierNumber { get; set; }
     }
 } 
