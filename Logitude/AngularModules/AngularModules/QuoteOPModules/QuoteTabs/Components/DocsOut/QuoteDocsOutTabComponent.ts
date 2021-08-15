@@ -5,7 +5,7 @@ import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/cor
 
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentTypeListService} from '../../../../Common/Services/StandardLists/DocumentTypeListService';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
@@ -24,7 +24,7 @@ export class QuoteDocsOutTabComponent implements OnInit {
     public TransportModeId: string;
     public EntityReference: string
     //IdentityKey: string;
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
 
     constructor(
         public entityArgs: EntityArgs

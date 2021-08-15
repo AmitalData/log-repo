@@ -1,15 +1,17 @@
-﻿import {AddEditQuoteTemplateSectionComponent} from './Components/AddEditQuoteTemplateSectionComponent';
+import {AddEditQuoteTemplateSectionComponent} from './Components/AddEditQuoteTemplateSectionComponent';
 import {AddQuoteTemplateFromLibraryComponent} from './Components/AddQuoteTemplateFromLibraryComponent';
 import {AdvanceDesignTableComponent} from './Components/AdvanceDesignTableComponent';
 import {EditQuoteTemplateComponent} from './Components/EditQuoteTemplateComponent';
-import {NewQuoteTemplateComponent} from './Components/NewQuoteTemplateComponent';
+
 import {PageAreaHeaderFooterComponent} from './Components/PageAreaHeaderFooterComponent';
-import {PreviewQuoteTemplateReportComponent} from './Components/PreviewQuoteTemplateReportComponent';
+
 import {QuoteTemplateGeneralSetting} from './Components/QuoteTemplateGeneralSetting';
 import {QuoteTemplateHeaderDetailsSettingComponent} from './Components/QuoteTemplateHeaderDetailsSettingComponent';
 import {QuoteTemplateHeaderFooterSettingComponent} from './Components/QuoteTemplateHeaderFooterSettingComponent';
 import {QuoteTemplatePricingSettingComponent} from './Components/QuoteTemplatePricingSettingComponent';
 import {QuoteTemplateTotalPerContainerSetting} from './Components/QuoteTemplateTotalPerContainerSetting';
+import { NewQuoteTemplateComponent } from './Components/NewQuoteTemplateComponent';
+import { PreviewQuoteTemplateReportComponent } from '../../QuoteModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent';
 
 export const Components =
     [

@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
-import {QuoteUtilities} from '../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteUtilities} from '../../../QuoteOPM/Utilities/QuoteUtilities';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -25,7 +25,7 @@ import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirectiv
 })
 
 export class ChargesTabComponent implements AfterViewInit, OnDestroy {
-  public EntityPM: QuotePM = null;
+  public EntityPM: QuoteOPPM = null;
   public ObjectTableName: string = "QuoteOP";
   @ViewChild(ChildDirective) Child: ChildDirective;
   constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {

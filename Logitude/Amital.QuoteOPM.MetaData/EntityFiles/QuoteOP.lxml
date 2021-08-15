@@ -19376,7 +19376,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
-    HasPMField="false"
+    HasPMField="true"
     ThisKey="&quot;Id&quot;"
     OtherKey="&quot;QuoteId&quot;"
     AssociationName="&quot;QuoteOPTemplateQuoteDocumentVersion&quot;"

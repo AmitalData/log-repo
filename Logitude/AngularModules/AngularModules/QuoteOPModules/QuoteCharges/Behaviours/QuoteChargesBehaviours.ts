@@ -1,9 +1,9 @@
 import { Output, EventEmitter } from '@angular/core';
-import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
-import { QuoteChargePM } from '../../../Quote/EntityPMs/QuoteChargePM';
-import { QuoteTotalVATPM } from '../../../Quote/EntityPMs/QuoteTotalVATPM';
+import { QuoteOPPM } from '../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import { QuoteOPChargePM } from '../../../QuoteOPM/EntityPMs/QuoteOPChargePM';
+import { QuoteOPTotalVATPM } from '../../../QuoteOPM/EntityPMs/QuoteOPTotalVATPM';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { QuoteUtilities } from '../../../Quote/Utilities/QuoteUtilities';
+import { QuoteUtilities } from '../../../QuoteOPM/Utilities/QuoteUtilities';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -27,11 +27,11 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 export class QuoteChargesBehaviours {
-    public EntityPM: QuotePM = null;
+    public EntityPM: QuoteOPPM = null;
     @Output() DeleteChargeCompleted = new EventEmitter();
     @Output() PackageTypesLoadCompleted = new EventEmitter();
 
-    constructor(entityPM: QuotePM) {
+    constructor(entityPM: QuoteOPPM) {
         this.EntityPM = entityPM;
 
         this.Translate();
@@ -239,7 +239,7 @@ export class QuoteChargesBehaviours {
 
         return output;
     }
-    GetSaleCurrencyOnChargeTypeChanged(list: ChargesTypeList, itemPM: QuoteChargePM) {
+    GetSaleCurrencyOnChargeTypeChanged(list: ChargesTypeList, itemPM: QuoteOPChargePM) {
 
         var output: string = null;
 
@@ -289,10 +289,10 @@ export class QuoteChargesBehaviours {
 
         return myResult;
     }
-    CreateQuoteCharge(): QuoteChargePM {
-        var newItem = new QuoteChargePM(null);
+    CreateQuoteCharge(): QuoteOPChargePM {
+        var newItem = new QuoteOPChargePM(null);
         newItem.Tenant = SessionLocator.Tenant;
-        newItem.QuoteId = this.EntityPM.Id;
+        newItem.QuoteOPId = this.EntityPM.Id;
         newItem.UpdatedByUserId = SessionLocator.LoggedUserId;
         newItem.MarkUpTypeCode = "F";
         newItem.MarkUpValue = 0;
@@ -306,7 +306,7 @@ export class QuoteChargesBehaviours {
         newItem.IsChargeBySteps = false;
         return newItem;
     }
-    DeleteCharge(itemPM: QuoteChargePM) {
+    DeleteCharge(itemPM: QuoteOPChargePM) {
 
         if ((itemPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
             (itemPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
@@ -324,7 +324,7 @@ export class QuoteChargesBehaviours {
             confirmWindow.Show(TextCodeTranslator.Translate("QuoteOP.M.DeleteThisCharge"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.EntityPM.RemoveQuoteChargePM(itemPM);
+                    this.EntityPM.RemoveQuoteOPCharge(itemPM);
                     this.DeleteChargeCompleted.emit();
                 }
             });
@@ -335,7 +335,7 @@ export class QuoteChargesBehaviours {
 
         if (this.EntityPM.QuoteTypeCode == "A") {
             if (this.EntityPM.IsChargesByVAT) {
-                var myCharges: QuoteChargePM[] = this.EntityPM.QuoteCharges.filter(f => f.IsAllIN == false && f.VatTypeId != null);
+                var myCharges: QuoteOPChargePM[] = this.EntityPM.QuoteCharges.filter(f => f.IsAllIN == false && f.VatTypeId != null);
                 if (myCharges.length > 0) {
 
                     var entityRegionalTaxPercentage: number = 0;
@@ -345,7 +345,7 @@ export class QuoteChargesBehaviours {
                     }
 
                     // Build Group Source
-                    var group_Source: QuoteTotalVATPM[] = [];
+                    var group_Source: QuoteOPTotalVATPM[] = [];
                     myCharges.forEach(item => {
                         var lineVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
                         if (lineVatType) {
@@ -364,11 +364,11 @@ export class QuoteChargesBehaviours {
 
                             if (!lineVatType.IsMultiPercentage) {
                                 if (item.VatPercentage != null) {
-                                    var myQroupItem = new QuoteTotalVATPM(null);
+                                    var myQroupItem = new QuoteOPTotalVATPM(null);
                                     myQroupItem.Tenant = SessionLocator.Tenant;
-                                    myQroupItem.QuoteId = this.EntityPM.Id;
+                                    myQroupItem.QuoteOPId = this.EntityPM.Id;
                                     myQroupItem.Id = item.VatTypeId;
-                                    myQroupItem.VatTypeId = item.VatTypeId;
+                                    myQroupItem.VatOPTypeId = item.VatTypeId;
                                     myQroupItem.VatPercent = item.VatPercentage;
                                     myQroupItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                     myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
@@ -379,11 +379,11 @@ export class QuoteChargesBehaviours {
                                         myQroupItem.QuoteCurrencyVatableAmount = item.SaleAmountInSaleCurrency + item.SaleAmountInSaleCurrency * (entityRegionalTaxPercentage / 100);
                                         myQroupItem.LocalCurrencyVatableAmount = item.SaleTotalAmountLocal + item.SaleTotalAmountLocal * (entityRegionalTaxPercentage / 100);
 
-                                        var regionalTaxItem = new QuoteTotalVATPM(null);
+                                        var regionalTaxItem = new QuoteOPTotalVATPM(null);
                                         regionalTaxItem.Tenant = SessionLocator.Tenant;
-                                        regionalTaxItem.QuoteId = this.EntityPM.Id;
+                                        regionalTaxItem.QuoteOPId = this.EntityPM.Id;
                                         regionalTaxItem.Id = this.EntityPM.RegionalTaxId;
-                                        regionalTaxItem.VatTypeId = this.EntityPM.RegionalTaxId;
+                                        regionalTaxItem.VatOPTypeId = this.EntityPM.RegionalTaxId;
                                         regionalTaxItem.VatPercent = entityRegionalTaxPercentage;
                                         regionalTaxItem.ExternalVATCard = lineVatType.ReceivablesExternalId;
                                         regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
@@ -405,11 +405,11 @@ export class QuoteChargesBehaviours {
 
                                     if (lineSingleVatType) {
 
-                                        var myQroupItem = new QuoteTotalVATPM(null);
+                                        var myQroupItem = new QuoteOPTotalVATPM(null);
                                         myQroupItem.Tenant = SessionLocator.Tenant;
-                                        myQroupItem.QuoteId = this.EntityPM.Id;
+                                        myQroupItem.QuoteOPId = this.EntityPM.Id;
                                         myQroupItem.Id = itemGroup.SingleVATTypeId;
-                                        myQroupItem.VatTypeId = itemGroup.SingleVATTypeId;
+                                        myQroupItem.VatOPTypeId = itemGroup.SingleVATTypeId;
                                         myQroupItem.VatPercent = this.GetVatTypePercentage(itemGroup.SingleVATTypeId);
                                         myQroupItem.ExternalVATCard = lineSingleVatType.ReceivablesExternalId;
                                         myQroupItem.ExternalTAXItemId = lineSingleVatType.ExternalTAXItemId;
@@ -423,18 +423,18 @@ export class QuoteChargesBehaviours {
                     });
 
                     // Build Grouped Data
-                    var group_data: QuoteTotalVATPM[] = [];
+                    var group_data: QuoteOPTotalVATPM[] = [];
                     group_Source.forEach(item => {
-                        var record: QuoteTotalVATPM = group_data.filter(f => f.VatTypeId == item.VatTypeId && f.VatPercent == item.VatPercent && f.ExternalVATCard == item.ExternalVATCard && f.ExternalTAXItemId == item.ExternalTAXItemId)[0];
+                        var record: QuoteOPTotalVATPM = group_data.filter(f => f.VatOPTypeId == item.VatOPTypeId && f.VatPercent == item.VatPercent && f.ExternalVATCard == item.ExternalVATCard && f.ExternalTAXItemId == item.ExternalTAXItemId)[0];
                         if (record) {
                             record.QuoteCurrencyVatableAmount += item.QuoteCurrencyVatableAmount;
                             record.LocalCurrencyVatableAmount += item.LocalCurrencyVatableAmount;
                         }
 
                         else {
-                            record = new QuoteTotalVATPM(null);
+                            record = new QuoteOPTotalVATPM(null);
                             record.Id = item.Id;
-                            record.VatTypeId = item.VatTypeId;
+                            record.VatOPTypeId = item.VatOPTypeId;
                             record.VatPercent = item.VatPercent;
                             record.ExternalVATCard = item.ExternalVATCard;
                             record.ExternalTAXItemId = item.ExternalTAXItemId;
@@ -447,12 +447,12 @@ export class QuoteChargesBehaviours {
                     // Build Quote Total VATs
                     group_data.forEach(item => {
 
-                        var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+                        var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatOPTypeId)[0];
 
-                        var itemTotalVAT = new QuoteTotalVATPM(null);
+                        var itemTotalVAT = new QuoteOPTotalVATPM(null);
                         itemTotalVAT.Tenant = SessionLocator.Tenant;
-                        itemTotalVAT.QuoteId = this.EntityPM.Id;
-                        itemTotalVAT.VatTypeId = item.VatTypeId;
+                        itemTotalVAT.QuoteOPId = this.EntityPM.Id;
+                        itemTotalVAT.VatOPTypeId = item.VatOPTypeId;
                         itemTotalVAT.VatTypeName = itemVatType ? itemVatType.EnglishName : "";
                         itemTotalVAT.VatPercent = AppTool.Round(item.VatPercent, 3);
                         itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
@@ -462,14 +462,14 @@ export class QuoteChargesBehaviours {
                         itemTotalVAT.QuoteCurrencyVatableAmount = AppTool.Round(item.QuoteCurrencyVatableAmount, 2);
                         itemTotalVAT.LocalCurrencyVATAmount = AppTool.Round((itemTotalVAT.LocalCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                         itemTotalVAT.QuoteCurrencyVATAmount = AppTool.Round((itemTotalVAT.QuoteCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-                        this.EntityPM.AddQuoteTotalVATPM(itemTotalVAT);
+                        this.EntityPM.AddQuoteOPTotalVAT(itemTotalVAT);
                     });
                 }
             }
         }
     }
 
-    ComputeMarkUp(itemPM: QuoteChargePM, index: number = 0) {
+    ComputeMarkUp(itemPM: QuoteOPChargePM, index: number = 0) {
 
         var value: number = itemPM.MarkUpValue;
         var valueCode: string = itemPM.MarkUpTypeCode;
@@ -499,7 +499,7 @@ export class QuoteChargesBehaviours {
 
         return value;
     }
-    GetMarkUpString(itemPM: QuoteChargePM, index: number = 0) {
+    GetMarkUpString(itemPM: QuoteOPChargePM, index: number = 0) {
 
         var output: string = null;
 
@@ -549,7 +549,7 @@ export class QuoteChargesBehaviours {
 
         return output;
     }
-    ComputeCostPriceInSaleCurrency(itemPM: QuoteChargePM, index: number = 0) {
+    ComputeCostPriceInSaleCurrency(itemPM: QuoteOPChargePM, index: number = 0) {
 
         var output: number = null
 

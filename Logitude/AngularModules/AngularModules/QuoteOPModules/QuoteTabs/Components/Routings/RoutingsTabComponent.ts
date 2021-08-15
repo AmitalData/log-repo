@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 
@@ -25,7 +25,7 @@ import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirec
 })
 
 export class RoutingsTabComponent implements AfterViewInit {
-  public EntityPM: QuotePM = null;
+  public EntityPM: QuoteOPPM = null;
   public ObjectTableName: string = null;
   @ViewChild(ChildDirective) Child: ChildDirective;
 

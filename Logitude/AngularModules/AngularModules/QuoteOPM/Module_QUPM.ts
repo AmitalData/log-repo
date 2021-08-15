@@ -9,7 +9,7 @@ import {ModuleProviders} from './ModuleProviders';
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],
 })
-
+    /// change to QuoteModule
 export class QuoteModule {
     public static GetComponent(name: string) {
         return ModuleDeclarations.Get(name);

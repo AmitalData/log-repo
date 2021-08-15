@@ -90,7 +90,7 @@
                                                     <td style="width:285px;">
                                                         <table>
                                                             <tr>
-                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</span></td>
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.Width' | TextCodeTranslationPipe}}:</span></td>
                                                                 <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageWidth" /></td>
                                                                 <td style="width: 15px;">
                                                                     <div class="NumericButton" (mousedown)="ImageNumericButtonClicked('ImageWidth' , true)">
@@ -106,7 +106,7 @@
 
                                                                 <td style="width:10px;"><span></span></td>
 
-                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}: </span></td>
+                                                                <td style="width:55px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.Height' | TextCodeTranslationPipe}}: </span></td>
                                                                 <td><input style="width:50px;height:22px;" type="text" [(ngModel)]="ImageHeight" /></td>
 
                                                                 <td style="width: 15px;">
@@ -121,7 +121,7 @@
 
                                                                 <td style="width:5px;"><span></span></td>
 
-                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}} </span></td>
+                                                                <td style="width:7px;"><span style="width:55px;font-size:14px;color:gray">{{'QuoteOPTemplate.S.px' | TextCodeTranslationPipe}} </span></td>
 
 
                                                                 <td></td>
@@ -185,7 +185,7 @@
                 <tr style="height:100%">
                     <td>
                         <div style="height:100%;width:100%;">
-                            <TextDesignComponent [QuoteTemplateTextDesignPM]="DesignAreaFreeTextPM"></TextDesignComponent>
+                            <TextDesignComponent [QuoteOPTemplateTextDesignPM]="DesignAreaFreeTextPM"></TextDesignComponent>
                         </div>
                     </td>
                 </tr>
@@ -207,7 +207,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                         </div>
                     </td>
 
@@ -216,7 +216,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteOPTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

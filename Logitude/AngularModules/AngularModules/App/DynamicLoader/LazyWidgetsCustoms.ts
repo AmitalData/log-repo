@@ -65,7 +65,7 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
     { loadChildren: () => import('../../QuoteOPModules/QuoteCharges/ModuleQuoteCharges').then(m => m.ModuleQuoteCharges), path: 'QuoteCharges' },
     { loadChildren: () => import('../../QuoteOPModules/QuoteOthers/ModuleQuoteOthers').then(m => m.ModuleQuoteOthers), path: 'QuoteOthers' },
     { loadChildren: () => import('../../QuoteOPModules/QuoteTabs/ModuleQuoteTabs').then(m => m.ModuleQuoteTabs), path: 'QuoteTabs' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteTemplates), path: 'QuoteTemplates' },
+    { loadChildren: () => import('../../QuoteOPModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteOPTemplates), path: 'QuoteTemplates' },
 
 ];
 

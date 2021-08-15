@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteTotalVATPM} from '../../../Quote/EntityPMs/QuoteTotalVATPM';
+import {QuoteOPTotalVATPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTotalVATPM';
 
 @Component({
     
@@ -13,7 +13,7 @@ export class QuoteVATDetailsComponent {
     public SelectedCurrencyCode: string = null;
     public IsByLocalCurrency: boolean = false;
     public IsCurrencyFilterVisible: boolean = false;
-    public ItemsSource: QuoteTotalVATPM[] = [];
+    public ItemsSource: QuoteOPTotalVATPM[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;

@@ -1,9 +1,9 @@
-import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
+import { QuoteOPPM } from '../../../QuoteOPM/EntityPMs/QuoteOPPM';
 
 export class QuoteTariffsBehaviours {
-    public EntityPM: QuotePM = null;
+    public EntityPM: QuoteOPPM = null;
 
-    constructor(entityPM: QuotePM) {
+    constructor(entityPM: QuoteOPPM) {
         this.EntityPM = entityPM;
     }
 }

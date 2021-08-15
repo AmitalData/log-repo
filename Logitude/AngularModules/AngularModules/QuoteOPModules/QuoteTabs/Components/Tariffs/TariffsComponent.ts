@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteChargePM} from '../../../../Quote/EntityPMs/QuoteChargePM';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteOPChargePM} from '../../../../QuoteOPM/EntityPMs/QuoteOPChargePM';
 import {LCLChargesComponent, QuoteChargeItem} from '../../../QuoteCharges/Components/LCLChargesComponent';
 import {TarrifHeaderPM} from '../../../../Common/EntityPMs/TarrifHeaderPM';
 import {TarrifChargePM} from '../../../../Common/EntityPMs/TarrifChargePM';
@@ -19,7 +19,7 @@ import {CardListService} from '../../../../Common/Services/StandardLists/CardLis
 })
 
 export class TariffsComponent {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     private ObjectTableName: string = "TarrifHeader";
     public ItemsSource: TariffsItem[] = [];
     public TarrifCharges: TarrifChargePM[] = [];
@@ -161,9 +161,9 @@ export class TariffsComponent {
                 }
 
                 else {
-                    var chargePM = new QuoteChargePM(this.EntityPM);
+                    var chargePM = new QuoteOPChargePM(this.EntityPM);
                     chargePM.Tenant = this.EntityPM.Tenant;
-                    chargePM.QuoteId = this.EntityPM.Id;
+                    chargePM.QuoteOPId = this.EntityPM.Id;
                     chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
                     chargePM.MarkUpTypeCode = "F";
                     chargePM.MarkUpValue = 0;
@@ -171,7 +171,7 @@ export class TariffsComponent {
                     chargePM.SaleCurrencyId = this.EntityPM.SaleCurrencyId;
                     chargePM.SaleCurrencyCode = this.fatherComponent.EntityPM.SaleCurrencyCode;
                     chargePM.SaleExchangeRate = this.fatherComponent.EntityPM.ExchangeRate;                    
-                    this.EntityPM.AddQuoteChargePM(chargePM);
+                    this.EntityPM.AddQuoteOPCharge(chargePM);
                     
                     chargeItem = new QuoteChargeItem(chargePM, this.fatherComponent, false);
                     chargeItem.ChargesTypeId = item.ChargesTypeId;

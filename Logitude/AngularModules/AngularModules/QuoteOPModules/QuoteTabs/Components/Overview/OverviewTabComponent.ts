@@ -4,11 +4,11 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {DateTool,AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
+import {QuoteOPPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPPM';
+import {QuoteUtilities} from '../../../../QuoteOPM/Utilities/QuoteUtilities';
 import {ActivityList} from '../../../../CRM/EntityLists/ActivityList';
 import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe';
-import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteDomainService} from '../../../../QuoteOPM/Services/QuoteDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {OpportunityArgs, ActivityInputArgs} from '../../../../CRM/Args'; 
@@ -25,7 +25,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 })
 
 export class OverviewTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public EntityPM: QuotePM;
+    public EntityPM: QuoteOPPM;
     public DataContext: OverviewTabComponent = this;
     public ObjectTableName: string = "QuoteOP";
     public ActivitiesList: ActivityItemClass[] = [];
@@ -191,7 +191,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         }
         //windowArgs.IsAddCustomerAllowed = true;
         windowArgs.CustomerId = this.EntityPM.CustomerId;
-        windowArgs.QuoteId = this.EntityPM.Id;
+        windowArgs.QuoteOPId = this.EntityPM.Id;
         logWindow.Title = windowTitle;
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;

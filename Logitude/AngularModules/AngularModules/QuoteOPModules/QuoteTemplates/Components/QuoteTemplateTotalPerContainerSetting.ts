@@ -1,26 +1,26 @@
 declare var window: any;
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
+import {QuoteOPTemplateSectionPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSectionPM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {QuoteTemplateSectionPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSectionPMService';
+import {QuoteOPTemplateSectionPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSectionPMService';
 import {EditQuoteTemplateComponent} from './EditQuoteTemplateComponent';
 import {FroalaEditorSetting} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
+import {QuoteOPTemplateSettingPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateSettingPM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {QuoteTemplateTextCodePM} from '../../../Quote/EntityPMs/QuoteTemplateTextCodePM';
+import {QuoteOPTemplateTextCodePM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateTextCodePM';
 import {TextCodeData} from './QuoteTemplatePricingSettingComponent';
-import {QuoteTemplateTextDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTextDesignPM';
-import {QuoteTemplateTableDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTableDesignPM';
-import {QuoteTemplateTableDesignPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateTableDesignPMService';
-import {QuoteTemplateTextDesignPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateTextDesignPMService';
-import {QuoteTemplateSettingPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateSettingPMService';
-import {QuoteTemplateTextCodeExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateTextCodeExtendedPMService';
-import {QuoteTemplateTextDesignExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateTextDesignExtendedPMService';
+import {QuoteOPTemplateTextDesignPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateTextDesignPM';
+import {QuoteOPTemplateTableDesignPM} from '../../../QuoteOPM/EntityPMs/QuoteOPTemplateTableDesignPM';
+import {QuoteOPTemplateTableDesignPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateTableDesignPMService';
+import {QuoteOPTemplateTextDesignPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateTextDesignPMService';
+import {QuoteOPTemplateSettingPMService} from '../../../QuoteOPM/Services/StandardPMs/QuoteOPTemplateSettingPMService';
+import {QuoteOPTemplateTextCodeExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateTextCodeExtendedPMService';
+import {QuoteOPTemplateTextDesignExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateTextDesignExtendedPMService';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -31,35 +31,35 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class QuoteTemplateTotalPerContainerSetting extends BaseComponent implements OnInit {
-    QuoteTemplateSettingPM: QuoteTemplateSettingPM;
-    QuoteTemplateId: string;
+    QuoteOPTemplateSettingPM: QuoteOPTemplateSettingPM;
+    QuoteOPTemplateId: string;
     public ItemsSource: ObservableCollection;
-    QuoteTemplateTextCodePMList: QuoteTemplateTextCodePM[] = [];
+    QuoteOPTemplateTextCodePMList: QuoteOPTemplateTextCodePM[] = [];
 
-    QuoteTemplateTextDesignPMLists: QuoteTemplateTextDesignPM[] = [];
+    QuoteOPTemplateTextDesignPMLists: QuoteOPTemplateTextDesignPM[] = [];
     IsLoadPage: boolean = false;
-    quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
-    quoteTemplateTextDesignPMService: QuoteTemplateTextDesignPMService;
-    quoteTemplateTableDesignPMService: QuoteTemplateTableDesignPMService;
-    quoteTemplateTextCodeExtendedPMService: QuoteTemplateTextCodeExtendedPMService;
-    quoteTemplateTextDesignExtendedPMService: QuoteTemplateTextDesignExtendedPMService;
-    TableDesignPM: QuoteTemplateTableDesignPM;
-    HeaderTextDesignPM: QuoteTemplateTextDesignPM;
-    RowTextDesignPM: QuoteTemplateTextDesignPM;
-    TitleTextDesignPM: QuoteTemplateTextDesignPM;
+    QuoteOPTemplateSettingPMService: QuoteOPTemplateSettingPMService;
+    QuoteOPTemplateTextDesignPMService: QuoteOPTemplateTextDesignPMService;
+    QuoteOPTemplateTableDesignPMService: QuoteOPTemplateTableDesignPMService;
+    QuoteOPTemplateTextCodeExtendedPMService: QuoteOPTemplateTextCodeExtendedPMService;
+    QuoteOPTemplateTextDesignExtendedPMService: QuoteOPTemplateTextDesignExtendedPMService;
+    TableDesignPM: QuoteOPTemplateTableDesignPM;
+    HeaderTextDesignPM: QuoteOPTemplateTextDesignPM;
+    RowTextDesignPM: QuoteOPTemplateTextDesignPM;
+    TitleTextDesignPM: QuoteOPTemplateTextDesignPM;
 
-    IsSaveQuoteTemplateTextDesignRuning: boolean = false;
-    IsSaveQuoteTemplateTableDesignRuning: boolean = false;
-    IsSaveQuoteTemplateTextCodeRuning: boolean = false;
+    IsSaveQuoteOPTemplateTextDesignRuning: boolean = false;
+    IsSaveQuoteOPTemplateTableDesignRuning: boolean = false;
+    IsSaveQuoteOPTemplateTextCodeRuning: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
-        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
-        this.quoteTemplateTableDesignPMService = new QuoteTemplateTableDesignPMService();
-        this.quoteTemplateTextDesignPMService = new QuoteTemplateTextDesignPMService();
-        this.quoteTemplateTextDesignExtendedPMService = new QuoteTemplateTextDesignExtendedPMService();
-        this.quoteTemplateTextCodeExtendedPMService = new QuoteTemplateTextCodeExtendedPMService();
+        this.QuoteOPTemplateSettingPMService = new QuoteOPTemplateSettingPMService();
+        this.QuoteOPTemplateTableDesignPMService = new QuoteOPTemplateTableDesignPMService();
+        this.QuoteOPTemplateTextDesignPMService = new QuoteOPTemplateTextDesignPMService();
+        this.QuoteOPTemplateTextDesignExtendedPMService = new QuoteOPTemplateTextDesignExtendedPMService();
+        this.QuoteOPTemplateTextCodeExtendedPMService = new QuoteOPTemplateTextCodeExtendedPMService();
 
     }
 
@@ -70,15 +70,15 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     SetWindowArgs(args: any) {
 
         if (args) {
-            this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
+            this.QuoteOPTemplateSettingPM = args.QuoteOPTemplateSettingPM;
 
-            if (args.QuoteTemplateTextCodePMList) {
-                this.QuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList.filter(d => d.Area == "TotalPerContainers");
+            if (args.QuoteOPTemplateTextCodePMList) {
+                this.QuoteOPTemplateTextCodePMList = args.QuoteOPTemplateTextCodePMList.filter(d => d.Area == "TotalPerContainers");
                 this.BuildItemsSource();
             }
 
             
-            if (!AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId)){
+            if (!AppTool.IsNullOrEmpty(this.QuoteOPTemplateSettingPM.TotalPerContainersTableDesignId)){
                 this.LoadData();
             }
             else this.IsLoadPage = false;
@@ -91,39 +91,39 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     //ShowTotalSplitToMultipleCurrencies
     get TotalPerContainersCurrencyType() {
         var totalPerContainersCurrencyType: string = "";
-        if (this.QuoteTemplateSettingPM) totalPerContainersCurrencyType = this.QuoteTemplateSettingPM.TotalPerContainersCurrencyType;
+        if (this.QuoteOPTemplateSettingPM) totalPerContainersCurrencyType = this.QuoteOPTemplateSettingPM.TotalPerContainersCurrencyType;
         return totalPerContainersCurrencyType;
     }
     set TotalPerContainersCurrencyType(value: string) {
-        if (this.QuoteTemplateSettingPM != null) {
-            this.QuoteTemplateSettingPM.TotalPerContainersCurrencyType = value;
+        if (this.QuoteOPTemplateSettingPM != null) {
+            this.QuoteOPTemplateSettingPM.TotalPerContainersCurrencyType = value;
         }
     }
 
 
     get ShowTitleTotalPerContainersTable() {
         var showTitleTotalPerContainersTable: boolean = false;
-        if (this.QuoteTemplateSettingPM) {
-            showTitleTotalPerContainersTable = this.QuoteTemplateSettingPM.ShowTitleTotalPerContainersTable;
+        if (this.QuoteOPTemplateSettingPM) {
+            showTitleTotalPerContainersTable = this.QuoteOPTemplateSettingPM.ShowTitleTotalPerContainersTable;
         }
         return showTitleTotalPerContainersTable;
     }
     set ShowTitleTotalPerContainersTable(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            this.QuoteTemplateSettingPM.ShowTitleTotalPerContainersTable = value;
+        if (this.QuoteOPTemplateSettingPM != null) {
+            this.QuoteOPTemplateSettingPM.ShowTitleTotalPerContainersTable = value;
         }
     }
 
     get ShowPageBreakBeforeTotalPerContainersTable() {
         var showPageBreakBeforeTotalPerContainersTable: boolean = false;
-        if (this.QuoteTemplateSettingPM) {
-            showPageBreakBeforeTotalPerContainersTable = this.QuoteTemplateSettingPM.ShowPageBreakBeforeTotalPerContainersTable;
+        if (this.QuoteOPTemplateSettingPM) {
+            showPageBreakBeforeTotalPerContainersTable = this.QuoteOPTemplateSettingPM.ShowPageBreakBeforeTotalPerContainersTable;
         }
         return showPageBreakBeforeTotalPerContainersTable;
     }
     set ShowPageBreakBeforeTotalPerContainersTable(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            this.QuoteTemplateSettingPM.ShowPageBreakBeforeTotalPerContainersTable = value;
+        if (this.QuoteOPTemplateSettingPM != null) {
+            this.QuoteOPTemplateSettingPM.ShowPageBreakBeforeTotalPerContainersTable = value;
         }
     }
 
@@ -132,21 +132,21 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     get ShowIncludedChargesPerContainers() {
         var showIncludedChargesPerContainers: boolean = false;
-        if (this.QuoteTemplateSettingPM) {
-            showIncludedChargesPerContainers = this.QuoteTemplateSettingPM.ShowIncludedChargesPerContainers;
+        if (this.QuoteOPTemplateSettingPM) {
+            showIncludedChargesPerContainers = this.QuoteOPTemplateSettingPM.ShowIncludedChargesPerContainers;
         }
         return showIncludedChargesPerContainers;
     }
     set ShowIncludedChargesPerContainers(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            this.QuoteTemplateSettingPM.ShowIncludedChargesPerContainers = value;
+        if (this.QuoteOPTemplateSettingPM != null) {
+            this.QuoteOPTemplateSettingPM.ShowIncludedChargesPerContainers = value;
         }
     }
 
     BuildItemsSource() {
         var itemsCollection: TextCodeData[] = [];
 
-        this.QuoteTemplateTextCodePMList.forEach((item) => {
+        this.QuoteOPTemplateTextCodePMList.forEach((item) => {
             itemsCollection.push(new TextCodeData(item));
         })
         this.ItemsSource.AppendCollection(itemsCollection);
@@ -155,15 +155,15 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     LoadData() {
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.QuoteTemplateTextDesignPMLists = [];
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
+        this.QuoteOPTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
     }
 
 
     LoadTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.get(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId).subscribe((res:any) => {
+        this.QuoteOPTemplateTableDesignPMService.get(this.QuoteOPTemplateSettingPM.TotalPerContainersTableDesignId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
@@ -177,7 +177,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     LoadTextDesign() {
        
-        var titleTextDesignId: string = this.QuoteTemplateSettingPM.TotalPerContainersAdditionalTextDesignId;
+        var titleTextDesignId: string = this.QuoteOPTemplateSettingPM.TotalPerContainersAdditionalTextDesignId;
 
         var ids: string = titleTextDesignId;
         if (this.TableDesignPM) {
@@ -185,29 +185,29 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             ids += ("," + this.TableDesignPM.LinesDesignId);
         }
 
-        this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe((res:any) => {
+        this.QuoteOPTemplateTextDesignExtendedPMService.GetQuoteOPTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
-                this.QuoteTemplateTextDesignPMLists = pmResponse.Result;
+                this.QuoteOPTemplateTextDesignPMLists = pmResponse.Result;
 
                 if (this.TableDesignPM) {
-                    this.HeaderTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.HeaderDesignId)[0];
+                    this.HeaderTextDesignPM = this.QuoteOPTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.HeaderDesignId)[0];
                     if (this.HeaderTextDesignPM) {
                         this.HeaderTextDesignPM.Title = "Header";
                     }
 
-                    this.RowTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
+                    this.RowTextDesignPM = this.QuoteOPTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
                     if (this.RowTextDesignPM) {
                         this.RowTextDesignPM.Title = "Rows";
-                        this.RowTextDesignPM.HideAlignment = true;
+                        this.RowTextDesignPM.HideAlignment = 'true';
                     }
                 }
               
 
 
 
-                this.TitleTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == titleTextDesignId)[0];
+                this.TitleTextDesignPM = this.QuoteOPTemplateTextDesignPMLists.filter(d => d.Id == titleTextDesignId)[0];
                 if (this.TitleTextDesignPM) {
                     this.TitleTextDesignPM.Title = "Title";
                 }
@@ -227,24 +227,24 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         this.ValidationErrorsList = [];
 
 
-        var textDesignPmLists = this.QuoteTemplateTextDesignPMLists.filter(d => d.IsDirty == true);
-        if (textDesignPmLists.length > 0) this.IsSaveQuoteTemplateTextDesignRuning = true;
-        if (this.TableDesignPM.IsDirty) this.IsSaveQuoteTemplateTableDesignRuning = true;
+        var textDesignPmLists = this.QuoteOPTemplateTextDesignPMLists.filter(d => d.IsDirty == true);
+        if (textDesignPmLists.length > 0) this.IsSaveQuoteOPTemplateTextDesignRuning = true;
+        if (this.TableDesignPM.IsDirty) this.IsSaveQuoteOPTemplateTableDesignRuning = true;
 
 
 
         var textCodeDataLists: TextCodeData[] = this.ItemsSource.Collection.filter(d => d.EntityPM.IsDirty == true);
-        if (textCodeDataLists.length > 0) this.IsSaveQuoteTemplateTextCodeRuning = true;
+        if (textCodeDataLists.length > 0) this.IsSaveQuoteOPTemplateTextCodeRuning = true;
 
 
 
-        if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning) {
+        if (this.IsSaveQuoteOPTemplateTextDesignRuning || this.IsSaveQuoteOPTemplateTableDesignRuning || this.IsSaveQuoteOPTemplateTextCodeRuning) {
 
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
 
-            if (this.QuoteTemplateSettingPM.IsDirty) {
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
-                    this.QuoteTemplateSettingPM.IsDirty = false;
+            if (this.QuoteOPTemplateSettingPM.IsDirty) {
+                this.QuoteOPTemplateSettingPMService.update(this.QuoteOPTemplateSettingPM).subscribe((res:any) => {
+                    this.QuoteOPTemplateSettingPM.IsDirty = false;
                     this.SaveOthers(textDesignPmLists, textCodeDataLists);
                 });
             } else this.SaveOthers(textDesignPmLists, textCodeDataLists);
@@ -253,8 +253,8 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
         } else {
 
-            if (this.QuoteTemplateSettingPM.IsDirty) {
-                this.SaveQuoteTemplateSetting();
+            if (this.QuoteOPTemplateSettingPM.IsDirty) {
+                this.SaveQuoteOPTemplateSetting();
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
@@ -274,56 +274,56 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveOthers(textDesignPmLists: any[], textCodeDataLists: any[]) {
 
-        if (this.IsSaveQuoteTemplateTextDesignRuning) this.SaveQuoteTemplateTextDesign(textDesignPmLists);
-        if (this.IsSaveQuoteTemplateTableDesignRuning) this.SaveQuoteTemplateTableDesign();
-        if (this.IsSaveQuoteTemplateTextCodeRuning) this.SaveQuoteTemplateTextCode(textCodeDataLists);
+        if (this.IsSaveQuoteOPTemplateTextDesignRuning) this.SaveQuoteOPTemplateTextDesign(textDesignPmLists);
+        if (this.IsSaveQuoteOPTemplateTableDesignRuning) this.SaveQuoteOPTemplateTableDesign();
+        if (this.IsSaveQuoteOPTemplateTextCodeRuning) this.SaveQuoteOPTemplateTextCode(textCodeDataLists);
     }
 
-    SaveQuoteTemplateTextDesign(items: any) {
+    SaveQuoteOPTemplateTextDesign(items: any) {
 
         items.forEach((item) => { item.IsDirty = false; });
 
 
-        this.quoteTemplateTextDesignExtendedPMService.updateQuoteTemplateTextDesignPMs(items).subscribe((res:any) => {
-            this.IsSaveQuoteTemplateTextDesignRuning = false;
+        this.QuoteOPTemplateTextDesignExtendedPMService.updateQuoteOPTemplateTextDesignPMs(items).subscribe((res:any) => {
+            this.IsSaveQuoteOPTemplateTextDesignRuning = false;
             this.SaveCompleted();
 
         });
 
     }
 
-    SaveQuoteTemplateTableDesign() {
+    SaveQuoteOPTemplateTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.update(this.TableDesignPM).subscribe((res:any) => {
-            this.IsSaveQuoteTemplateTableDesignRuning = false;
+        this.QuoteOPTemplateTableDesignPMService.update(this.TableDesignPM).subscribe((res:any) => {
+            this.IsSaveQuoteOPTemplateTableDesignRuning = false;
             this.SaveCompleted();
 
         });
     }
 
-    SaveQuoteTemplateSetting() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
-            this.QuoteTemplateSettingPM.IsDirty = false;
+    SaveQuoteOPTemplateSetting() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
+        this.QuoteOPTemplateSettingPMService.update(this.QuoteOPTemplateSettingPM).subscribe((res:any) => {
+            this.QuoteOPTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
 
         });
 
     }
 
-    SaveQuoteTemplateTextCode(items: TextCodeData[]) {
+    SaveQuoteOPTemplateTextCode(items: TextCodeData[]) {
 
-        var quoteTemplateTextCodePMLists: QuoteTemplateTextCodePM[] = [];
+        var QuoteOPTemplateTextCodePMLists: QuoteOPTemplateTextCodePM[] = [];
         items.forEach((item) => {
             if (item.EntityPM) {
                 item.EntityPM.IsDirty = false;
-                quoteTemplateTextCodePMLists.push(item.EntityPM);
+                QuoteOPTemplateTextCodePMLists.push(item.EntityPM);
             }
         });
 
 
-        this.quoteTemplateTextCodeExtendedPMService.updateTextCodes(quoteTemplateTextCodePMLists).subscribe((res:any) => {
-            this.IsSaveQuoteTemplateTextCodeRuning = false;
+        this.QuoteOPTemplateTextCodeExtendedPMService.updateTextCodes(QuoteOPTemplateTextCodePMLists).subscribe((res:any) => {
+            this.IsSaveQuoteOPTemplateTextCodeRuning = false;
             this.SaveCompleted();
 
         });
@@ -333,7 +333,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
 
     SaveCompleted() {
-        if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
+        if (!this.IsSaveQuoteOPTemplateTextDesignRuning && !this.IsSaveQuoteOPTemplateTableDesignRuning && !this.IsSaveQuoteOPTemplateTextCodeRuning) {
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CurrentWindow.Close("Refresh");
 

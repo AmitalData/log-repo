@@ -8,7 +8,7 @@ import {Components, ModuleDeclarations} from './ModuleDeclarations';
     entryComponents: [...Components],
 })
 
-export class ModuleQuoteTemplates {
+export class ModuleQuoteOPTemplates {
     public static GetComponent(name: string) {
         return ModuleDeclarations.Get(name);
     }

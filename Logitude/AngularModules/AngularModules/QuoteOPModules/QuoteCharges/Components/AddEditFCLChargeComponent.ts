@@ -7,10 +7,10 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {FCLQuoteChargeItem} from './FCLChargesComponent';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
-import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
+import {QuoteOPChargePM} from '../../../QuoteOPM/EntityPMs/QuoteOPChargePM';
+import {QuoteOPPM} from '../../../QuoteOPM/EntityPMs/QuoteOPPM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
-import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { QuoteOPValidator } from '../../../QuoteOPM/Validators/QuoteOPValidator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { CommonTool } from '../../../Common/Tools';
 
@@ -20,8 +20,8 @@ import { CommonTool } from '../../../Common/Tools';
 })
 
 export class AddEditFCLChargeComponent implements OnDestroy {
-    public QuotePM: QuotePM;
-    public EntityPM: QuoteChargePM;
+    public QuoteOPPM: QuoteOPPM;
+    public EntityPM: QuoteOPChargePM;
     public DataContext: FCLQuoteChargeItem;
     public Father: any;
     public IsAdhoc: boolean = false;
@@ -64,13 +64,13 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
-        this.QuotePM = dataContext.QuotePM;
+        this.QuoteOPPM = dataContext.QuoteOPPM;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
-        this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
+        this.IsVATVisible = this.IsAdhoc && this.QuoteOPPM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;
         this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
         this.DataContext.SetUIProperties();
@@ -91,7 +91,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
 
-        switch (this.QuotePM.TransportModeId) {
+        switch (this.QuoteOPPM.TransportModeId) {
             case "A": {
                 this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
                 break;
@@ -107,7 +107,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
                 break;
             }
         }
-        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.QuotePM.DirectionId); 
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.QuoteOPPM.DirectionId); 
 
     }
 
@@ -139,17 +139,17 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.CheckChargeTypeDuplication();
 
         if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
-            var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
+            var MYQuoteOPValidator: QuoteOPValidator = new QuoteOPValidator();
+            MYQuoteOPValidator.CheckDuplicateInCharges(this.QuoteOPPM, this.EntityPM, this.errors);
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+            if (this.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
                 this.errors.push("Freight Charge already added");
             }
         }
 
-        if (this.QuotePM.IsChargesByVAT) {
+        if (this.QuoteOPPM.IsChargesByVAT) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
 
                 if (this.EntityPM.VatIsMultiPercentage) {
@@ -169,8 +169,8 @@ export class AddEditFCLChargeComponent implements OnDestroy {
 
         var freightLineCostCurrencyId: string = "";
         var freightLineSaleCurrencyId: string = "";
-        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+        if (this.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+            var quoteCharge = this.QuoteOPPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
             if (quoteCharge) {
                 freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
                 freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
@@ -203,13 +203,13 @@ export class AddEditFCLChargeComponent implements OnDestroy {
 
         if (this.errors.length == 0) {
             if (this.DataContext.IsNew) {
-                this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
+                this.DataContext.QuoteOPPM.AddQuoteOPCharge(this.EntityPM);
                 this.DataContext.fatherComponent.BuildItemsSource();
             }
 
             if (!this.DataContext.IsChargeBySteps) {
-                if (this.EntityPM.QuoteChargePriceSteps.length > 0) {
-                    this.EntityPM.QuoteChargePriceSteps = [];
+                if (this.EntityPM.QuoteOPChargePriceSteps.length > 0) {
+                    this.EntityPM.QuoteOPChargePriceSteps = [];
                 }
             }
 
@@ -238,7 +238,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
 
     ValidateAddingPFCLUOM() {
         if (this.EntityPM.CostMeasurementCode == "PFCL" || this.EntityPM.SaleMeasurementCode == "PFCL") {
-            if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d.Id != this.EntityPM.Id).length > 0) {
+            if (this.QuoteOPPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d.Id != this.EntityPM.Id).length > 0) {
                 this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
             }
         }
@@ -294,7 +294,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.myCloner.AddField('SaleExchangeRate');
         this.myCloner.AddField('SaleIsFixedRate');
         this.myCloner.AddEntity(this.EntityPM);
-        this.myCloner.AddEntity(this.DataContext.QuotePM);
+        this.myCloner.AddEntity(this.DataContext.QuoteOPPM);
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();

@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {QuoteSettingPM} from '../../../../Quote/EntityPMs/QuoteSettingPM';
-import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteOPSettingPM} from '../../../../QuoteOPM/EntityPMs/QuoteOPSettingPM';
+import {QuoteDomainService} from '../../../../QuoteOPM/Services/QuoteDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
@@ -13,7 +13,7 @@ import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/Featur
 })
 
 export class QuoteSettingsComponent extends BaseComponent {
-    public EntityPM: QuoteSettingPM;
+    public EntityPM: QuoteOPSettingPM;
     public ObjectTableName = "QuoteSetting";
     public DataContext = this;
     public IsResourcesReady: boolean = false;
@@ -45,7 +45,7 @@ export class QuoteSettingsComponent extends BaseComponent {
                     this.EntityPM = myResponse.Result;
 
                     if (!this.EntityPM) {
-                        this.EntityPM = new QuoteSettingPM();
+                        this.EntityPM = new QuoteOPSettingPM();
                         this.EntityPM.Tenant = SessionLocator.Tenant;
                     }
 

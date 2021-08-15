@@ -21,7 +21,7 @@
                                     <div class="RadioButton" style="width:60px;">
                                         <input [attr.id]="NewRadioButton"  type="radio" (change)="RadioButtonChoice('New')" name="RadioButtonChoice" [checked]="true" />
                                         <label [attr.for]="NewRadioButton" style="font-size: 12px">
-                                            {{'QuoteTemplate.B.New' | TextCodeTranslationPipe}} 
+                                            {{'QuoteOPTemplate.B.New' | TextCodeTranslationPipe}} 
                                         </label>
                                     </div>
                                 </td>
@@ -30,7 +30,7 @@
                                     <div class="RadioButton" style="width:64px;">
                                         <input [attr.id]="CopyRadioButton"   type="radio" (change)="RadioButtonChoice('Copy')" name="RadioButtonChoice" [checked]="false" />
                                         <label [attr.for]="CopyRadioButton"   style="font-size: 12px">
-                                            {{'QuoteTemplate.B.Copy' | TextCodeTranslationPipe}}
+                                            {{'QuoteOPTemplate.B.Copy' | TextCodeTranslationPipe}}
  
                                         </label>
                                     </div>
@@ -42,7 +42,7 @@
                                         <input  [attr.id]="FromAllTenantRadioButton"   type="radio" (change)="RadioButtonChoice('FromAllTenant')" name="RadioButtonChoice" [checked]="false" />
                                         <label [attr.for]="FromAllTenantRadioButton" style="font-size: 12px">
                                             
-                                            {{'QuoteTemplate.B.FromAllTenant' | TextCodeTranslationPipe}}
+                                            {{'QuoteOPTemplate.B.FromAllTenant' | TextCodeTranslationPipe}}
                                         </label>
                                     </div>
                                 </td>
@@ -62,16 +62,16 @@
                         <table style="vertical-align:top;height:100%">
                             <tr style="vertical-align:top;height:30px">
                                 <td style="width:5px"><div></div></td>
-                                <td *ngIf="AddType=='New'" style="width:150px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="EntityPM"></LogLabel></td>
-                                <td *ngIf="AddType!='New'" style="width:50px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="EntityPM"></LogLabel></td>
-                                <td style="width:180px"><LogTextBox style="width:180px" [IsNewEntityCall]="IsNewEntityCall" [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="EntityPM"></LogTextBox></td>
+                                <td *ngIf="AddType=='New'" style="width:150px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="EntityPM"></LogLabel></td>
+                                <td *ngIf="AddType!='New'" style="width:50px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="EntityPM"></LogLabel></td>
+                                <td style="width:180px"><LogTextBox style="width:180px" [IsNewEntityCall]="IsNewEntityCall" [ObjectFieldName]="'Name'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="EntityPM"></LogTextBox></td>
                                 <td><div></div></td>
                             </tr>
 
                             <tr  style="vertical-align:top;height:30px">
                                 <td style="width:5px"><div></div></td>
-                                <td style="width:150px;">  <LogLabel [ObjectFieldName]="'TemplateTypeCode'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="DataContext"></LogLabel></td>
-                                <td style="width:180px"><LogLov style="width:180px" [ObjectFieldName]="'TemplateTypeCode'" [SelectedValuePath]="'Code'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="DataContext" [LookUpTableName]="'QuoteType'"></LogLov></td>
+                                <td style="width:150px;">  <LogLabel [ObjectFieldName]="'TemplateTypeCode'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="DataContext"></LogLabel></td>
+                                <td style="width:180px"><LogLov style="width:180px" [ObjectFieldName]="'TemplateTypeCode'" [SelectedValuePath]="'Code'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="DataContext" [LookUpTableName]="'QuoteType'"></LogLov></td>
                                 <td><div></div></td>
                             </tr>
 
@@ -81,8 +81,8 @@
 
                             <tr *ngIf="AddType=='New'" style="vertical-align:top;height:30px">
                                 <td style="width:5px"><div></div></td>
-                                <td style="width:150px;">  <LogLabel [ObjectFieldName]="'IsDefault'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="EntityPM"></LogLabel></td>
-                                <td style="width:180px;text-align:left"><LogCheckBox [ObjectFieldName]="'IsDefault'" [ObjectTableName]="'QuoteTemplate'" [DataContext]="EntityPM"></LogCheckBox></td>
+                                <td style="width:150px;">  <LogLabel [ObjectFieldName]="'IsDefault'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="EntityPM"></LogLabel></td>
+                                <td style="width:180px;text-align:left"><LogCheckBox [ObjectFieldName]="'IsDefault'" [ObjectTableName]="'QuoteOPTemplate'" [DataContext]="EntityPM"></LogCheckBox></td>
                                 <td><div></div></td>
                             </tr>
 
@@ -98,11 +98,11 @@
                                             <table>
                                                 <tr>
 
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.Name' | TextCodeTranslationPipe}} </td>
-                                                    <td *ngIf="VisibilityRadioFromTenant && AddType == 'FromAllTenant'" style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.TenantName' | TextCodeTranslationPipe}} </td>
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.CreateDate' | TextCodeTranslationPipe}} </td>
-                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.UpdateDate' | TextCodeTranslationPipe}}  </td>
-                                                    <td style="width: 60px; min-width: 60px;max-width: 60px">{{'QuoteTemplate.F.IsDefault' | TextCodeTranslationPipe}} </td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteOPTemplate.F.Name' | TextCodeTranslationPipe}} </td>
+                                                    <td *ngIf="VisibilityRadioFromTenant && AddType == 'FromAllTenant'" style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteOPTemplate.F.TenantName' | TextCodeTranslationPipe}} </td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteOPTemplate.F.CreateDate' | TextCodeTranslationPipe}} </td>
+                                                    <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteOPTemplate.F.UpdateDate' | TextCodeTranslationPipe}}  </td>
+                                                    <td style="width: 60px; min-width: 60px;max-width: 60px">{{'QuoteOPTemplate.F.IsDefault' | TextCodeTranslationPipe}} </td>
 
 
                                                     <td style="width:100%;">
@@ -118,10 +118,10 @@
                                                 <tr style="height: 1px;">
                                                     <td>
                                                         <table>
-                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuoteTemplateLists">
+                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuoteOPTemplateLists">
                                                                 <td>
                                                                     <table>
-                                                                        <tr style="height:25px;" (click)="OnSelectQuoteTemplateChange(item)" [class.RowSelected]="item === SelectedQuoteTemplate">
+                                                                        <tr style="height:25px;" (click)="OnSelectQuoteOPTemplateChange(item)" [class.RowSelected]="item === SelectedQuoteOPTemplate">
 
 
 
@@ -217,7 +217,7 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
+                            <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Cancel' | TextCodeTranslationPipe}} </button>
                         </div>
                     </td>
 
@@ -226,7 +226,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="NextButtonClicked()">{{'QuoteTemplate.B.Next' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="NextButtonClicked()">{{'QuoteOPTemplate.B.Next' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

@@ -18,10 +18,10 @@
                 <tr style="height:20px;">
 
                     <td style="height:20px">
-                        <span style="width:200px;color:gray;float: left;font-size:11px">{{'QuoteTemplate.M.AddNewQuoteTemplateMessage' | TextCodeTranslationPipe}} </span>
+                        <span style="width:200px;color:gray;float: left;font-size:11px">{{'QuoteOPTemplate.M.AddNewQuoteOPTemplateMessage' | TextCodeTranslationPipe}} </span>
 
 
-                        <SearchTextBox style="float: right;margin-right:0px;width:150px" [ObjectTableName]="'Shipment'" [PlaceHolder]="'QuoteTemplate.S.Search' | TextCodeTranslationPipe" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                        <SearchTextBox style="float: right;margin-right:0px;width:150px" [ObjectTableName]="'Shipment'" [PlaceHolder]="'QuoteOPTemplate.S.Search' | TextCodeTranslationPipe" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
 
                     </td>
 
@@ -43,23 +43,23 @@
                                 <table>
                                     <tr>
                  
-                                        <td style="width: 220px; min-width: 220px;">{{'QuoteTemplate.F.Template' | TextCodeTranslationPipe}} </td>
-                                        <td style="width: 144px; min-width: 144px;">{{'QuoteTemplate.F.LastUpdate' | TextCodeTranslationPipe}} </td>
+                                        <td style="width: 220px; min-width: 220px;">{{'QuoteOPTemplate.F.Template' | TextCodeTranslationPipe}} </td>
+                                        <td style="width: 144px; min-width: 144px;">{{'QuoteOPTemplate.F.LastUpdate' | TextCodeTranslationPipe}} </td>
                                         <td style="width:100%;min-width:100%;max-width:100%"></td>
                                  
                                     </tr>
                                 </table>
                             </div>
-                            <div class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;" *ngIf="IsShowMessageNoQuoteTemplate"><span style="font-size:15px;color:gray;margin-top:10px">{{'QuoteOP.Quotation.M.HaveAllTheQuoteTemplatesMessage' | TextCodeTranslationPipe}}</span></div>
-                            <div *ngIf="!IsShowMessageNoQuoteTemplate" class="SimpleGridViewBody">
+                            <div class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;" *ngIf="IsShowMessageNoQuoteOPTemplate"><span style="font-size:15px;color:gray;margin-top:10px">{{'QuoteOP.Quotation.M.HaveAllTheQuoteOPTemplatesMessage' | TextCodeTranslationPipe}}</span></div>
+                            <div *ngIf="!IsShowMessageNoQuoteOPTemplate" class="SimpleGridViewBody">
                                 <table>
                                     <tr style="height: 1px;">
                                         <td>
                                             <table>
-                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuoteTemplateLists">
+                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuoteOPTemplateLists">
                                                     <td>
                                                         <table>
-                                                            <tr (click)="OnSelectedQuoteTemplateLists(item)" [class.RowSelected]="item === QuoteTemplateViewModelSelected">
+                                                            <tr (click)="OnSelectedQuoteOPTemplateLists(item)" [class.RowSelected]="item === QuoteOPTemplateViewModelSelected">
                                                                 <!--(mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)-->
 
                                                                
@@ -80,8 +80,8 @@
                                                                 </td>
                                                                 <td class="CellStretched" style="width: 100%; min-width: 100%; max-width: 100%; ">
                                                                     <div style="text-align:left;display:inline;width:125px;vertical-align:middle;float:left">
-                                                                        <span><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewFromLibraryButtonClicked(item)">{{'QuoteTemplate.B.Preview' | TextCodeTranslationPipe}} </button></span>
-                                                                        <span><button  class="GreenButton" style="width:55px;height:22px;display:inline;" (click)="AddFromLibraryButtonClicked(item)">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}}</button></span>
+                                                                        <span><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewFromLibraryButtonClicked(item)">{{'QuoteOPTemplate.B.Preview' | TextCodeTranslationPipe}} </button></span>
+                                                                        <span><button  class="GreenButton" style="width:55px;height:22px;display:inline;" (click)="AddFromLibraryButtonClicked(item)">{{'QuoteOPTemplate.B.Add' | TextCodeTranslationPipe}}</button></span>
 
 
                                                                     </div>
@@ -139,7 +139,7 @@
                     </td>
 
                     <td d style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteTemplate.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">{{'QuoteOPTemplate.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
