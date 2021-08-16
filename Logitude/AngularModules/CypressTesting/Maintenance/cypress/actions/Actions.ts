@@ -1931,7 +1931,15 @@ export function FillCardsCityAndCountryFeilds() {
     cy.FillLogTextBox(MaintenanceSelectors.CardCity, "city");
     cy.FillLogLov(MaintenanceSelectors.CardCountry, "AE", true);
 }
+
+export function FillTruckerRequiredFeilds() {
+    cy.get(MaintenanceSelectors.CardCode).clear()
+    cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, "company");
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, "city");
+    cy.FillLogLov(MaintenanceSelectors.CardCountry, "AE", true);
+}
 //#endregion
+
 //#region  trucker
 export function FillTruckerDetails(truckerDetails: CardDetails) {
     FillCardDetails(truckerDetails, 6)
