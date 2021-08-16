@@ -5053,6 +5053,12 @@
       LocalDefaultText="&quot;טען פקודת יומן מ CSV&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ForeignDiffLocalAmountButTenantCurrency&quot;"
+      DefaultText="&quot;Although the currency is accounting currency,The foreign amount is different from local amount &quot;"
+      LocalDefaultText="&quot;למרות שהמטבע היינו מטבע חשבונאי הסכום במטז שונה מסכום מקומי&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
