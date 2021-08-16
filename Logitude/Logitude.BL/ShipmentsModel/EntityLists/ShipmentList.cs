@@ -566,5 +566,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string HandlerUserName { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
 
+        public string GrossWeightUnitCode { get; set; }
+
     }
 }
