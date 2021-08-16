@@ -111,6 +111,7 @@
     <Compile Include="Services\TariffAirSurchargeCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanFCLFreightCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanFCLFreightCostServices.cs" />
+    <Compile Include="Services\TariffOceanFCLSurchargeCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanFCLSurchargeCostServices.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostDataPreparation.cs" />
     <Compile Include="Services\TariffOceanLCLFreightCostServices.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Steps\GetTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffAirSurchargeCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanFCLFreightCostSteps.cs" />
+    <Compile Include="Steps\GetTariffOceanFCLSurchargeCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanLCLFreightCostSteps.cs" />
     <Compile Include="Steps\GetTariffOceanLCLSurchargeCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffAirFreightCostSteps.cs" />
@@ -144,6 +146,7 @@
     <None Include="Features\GetTariffAirFreightCost.feature" />
     <None Include="Features\GetTariffAirSurchargeCost.feature" />
     <None Include="Features\GetTariffOceanFCLFreightCost.feature" />
+    <None Include="Features\GetTariffOceanFCLSurchargeCost.feature" />
     <None Include="Features\GetTariffOceanLCLFreightCost.feature" />
     <None Include="Features\GetTariffOceanLCLSurchargeCost.feature" />
     <None Include="Features\UpdateTariffAirFreightCost.feature" />
