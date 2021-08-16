@@ -334,7 +334,6 @@
     </None>
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
-    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
@@ -950,6 +949,7 @@
     <None Include="DBTables\InvoiceModel\SATInvoiceStatus.dxml" />
     <None Include="DBTables\InvoiceModel\SATPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\SATTransferStatus.dxml" />
+    <None Include="DBTables\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBTables\QuoteModel\BorderType.dxml" />
     <None Include="DBTables\QuoteModel\MarkUpType.dxml" />
     <None Include="DBTables\QuoteModel\Quote.dxml" />

@@ -151,7 +151,14 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.DescriptionOfGoods = MyEntityPM.DescriptionOfGoods;
 				   temp.TransportModeName = MyEntityPM.TransportModeName;
 				   temp.ShipmentTypeName = MyEntityPM.ShipmentTypeName;
-				   temp.CustomerReferences = MyEntityPM.CustomerReferences;					
+				   temp.CustomerReferences = MyEntityPM.CustomerReferences;
+				   temp.PickupEstimatedDateTime = MyEntityPM.PickupEstimatedDateTime;
+				   temp.PickupActualDateTime = MyEntityPM.PickupActualDateTime;
+				   temp.BookingConfirmationDate = MyEntityPM.BookingConfirmationDate;
+				   temp.ETD = MyEntityPM.ETD;
+				   temp.ETA = MyEntityPM.ETA;
+				   temp.ATD = MyEntityPM.ATD;
+				   temp.ATA = MyEntityPM.ATA;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -323,7 +330,14 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					temp.TransportModeName = MyEntity.TransportModeName;
 					temp.ShipmentTypeName = MyEntity.ShipmentTypeName;
-					temp.CustomerReferences = MyEntity.CustomerReferences;					   
+					temp.CustomerReferences = MyEntity.CustomerReferences;
+					temp.PickupEstimatedDateTime = MyEntity.PickupEstimatedDateTime;
+					temp.PickupActualDateTime = MyEntity.PickupActualDateTime;
+					temp.BookingConfirmationDate = MyEntity.BookingConfirmationDate;
+					temp.ETD = MyEntity.ETD;
+					temp.ETA = MyEntity.ETA;
+					temp.ATD = MyEntity.ATD;
+					temp.ATA = MyEntity.ATA;					   
 					   return temp;
 		    }
             catch (Exception ex)

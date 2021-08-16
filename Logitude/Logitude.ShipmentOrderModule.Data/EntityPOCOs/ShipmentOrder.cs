@@ -89,6 +89,14 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string VesselId { get; set; }
 	      
         public virtual Vessel Vessel { get; set; }
+        [Column("ETD")]
+	    public DateTime? ETD { get; set; }
+        [Column("ETA")]
+	    public DateTime? ETA { get; set; }
+        [Column("ATD")]
+	    public DateTime? ATD { get; set; }
+        [Column("ATA")]
+	    public DateTime? ATA { get; set; }
         [ForeignKey("CustomsAgentCard")]
         [Column("CustomsAgentId")]
 	    public string CustomsAgentId { get; set; }

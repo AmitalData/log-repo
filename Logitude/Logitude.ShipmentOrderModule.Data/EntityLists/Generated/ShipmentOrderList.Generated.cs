@@ -55,11 +55,13 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        [DataMember]
        public string CarrierNumber  { get; set; }
        [DataMember]
-       public DateTime ETD  { get; set; }
+       public DateTime? ETD  { get; set; }
        [DataMember]
-       public DateTime ATD  { get; set; }
+       public DateTime? ETA  { get; set; }
        [DataMember]
-       public DateTime ATA  { get; set; }
+       public DateTime? ATD  { get; set; }
+       [DataMember]
+       public DateTime? ATA  { get; set; }
        [DataMember]
        public string CustomsAgentId  { get; set; }
        [DataMember]
@@ -80,6 +82,24 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string ForwarderId  { get; set; }
        [DataMember]
        public DateTime? BookingConfirmationDate  { get; set; }
+       [DataMember]
+       public string ConsigneeName  { get; set; }
+       [DataMember]
+       public string ShipperName  { get; set; }
+       [DataMember]
+       public string AgentName  { get; set; }
+       [DataMember]
+       public string IncotermCode  { get; set; }
+       [DataMember]
+       public string AccountManagerName  { get; set; }
+       [DataMember]
+       public string VesselName  { get; set; }
+       [DataMember]
+       public string CustomsAgentName  { get; set; }
+       [DataMember]
+       public string SpecialServicesTypeName  { get; set; }
+       [DataMember]
+       public string ForwarderName  { get; set; }
    }
 
 }

@@ -83,6 +83,22 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        ForwarderId = a.ForwarderId,
 
+                                                       ConsigneeName = a.ConsigneeCard == null ? "" : a.ConsigneeCard.EnglishName,
+
+                                                       ShipperName = a.ShipperCard == null ? "" : a.ShipperCard.EnglishName,
+
+                                                       AgentName = a.AgentCard == null ? "" : a.AgentCard.EnglishName,
+
+                                                       VesselName = a.Vessel == null ? "" : a.Vessel.EnglishName,
+
+                                                       CustomsAgentName = a.CustomsAgentCard == null ? "" : a.CustomsAgentCard.EnglishName,
+
+                                                       SpecialServicesTypeName = a.SpecialServicesType == null ? "" : a.SpecialServicesType.EnglishName,
+
+                                                       ForwarderName = a.FreightForwarderCard == null ? "" : a.FreightForwarderCard.EnglishName,
+
+                                                       IncotermCode = a.Incoterm == null ? "" : a.Incoterm.Code,
+
                                                    });
             return query;
         }
