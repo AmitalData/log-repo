@@ -74,7 +74,7 @@ export class NewViewComponent {
     ObjectTableId: string;
     IsNew: boolean = true;
     removedQueryFilters: any[];
-    public myForm: FormGroup;
+    public myForm: FormGroup; 
    public SpotlightFeatureEnabled: boolean = false;
     GeneralEntitiesArgs: GeneralEntitiesArgs;
     pubSubAdvanceQueryFiltersService: PubSubService;
@@ -966,13 +966,13 @@ export class NewViewComponent {
 
             if (this.ObjectFields) {
 
-                this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
+                this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
 
-                this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
+                this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
 
-                this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.UniqueCode, myResult);
+                this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)  )), this.currentQuery.UniqueCode, myResult);
 
-                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true))), this.currentQuery.UniqueCode, myResult);
+                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true))), this.currentQuery.UniqueCode, myResult);
 
             }
             else {
