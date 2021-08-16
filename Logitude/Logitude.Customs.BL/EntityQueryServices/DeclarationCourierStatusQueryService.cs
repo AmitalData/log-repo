@@ -282,6 +282,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
             var counters = (from a in declarationCourierStatuses
+
                             group a by 1 into groupBy1
                             select new DeclarationCourierStatusSummary
                             {
@@ -300,6 +301,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
       declarationCourierStatusSummary= counters.FirstOrDefault();
+
+                        
+
 
 
             //declarationCourierStatusSummary.OpenCourierMasterCount = declarationCourierStatuses.Where(x => x.IsClosedForFollowUp == false).Count();
