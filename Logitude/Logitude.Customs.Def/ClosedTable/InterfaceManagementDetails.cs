@@ -540,7 +540,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false,
             });
-
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8237",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מענה לבקשה לתיקון הצהרה יצוא",
+                //DcaPrefixName = "SendDF_MSG5117_ImportDeclerationAmendmentReplyMsg_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //  NeedSignature = false,
+            });
             //DCAInCH_NG_196_MSG7_CargoExitFromCheckSiteMassageService
             all.Add(
             new InterfaceManagementDetails()
@@ -1955,7 +1969,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "8235",
                 InOut = InOutEnum.O.ToString(),
-                Description = "מסר תקן/בטל",
+                Description = "מסר תקן/בטל יצוא",
                 DcaPrefixName = "",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
                 DefaultPriority = 5,

@@ -123,10 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.39\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.40\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.39\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.40\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -232,6 +232,7 @@
     <Compile Include="MessagingServices\DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService.cs" />
     <Compile Include="MessagingServices\DF_9070_ExportDeclarationDataMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG8235_ExportDeclarationAmendmentMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService.cs" />
     <Compile Include="MessagingServices\DF_NG_2751_MSG10000_ExportDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
     <Compile Include="RequestServices\DF_9070_ExportDeclarationDataRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
+    <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitExportDeclarationRequestService .cs" />

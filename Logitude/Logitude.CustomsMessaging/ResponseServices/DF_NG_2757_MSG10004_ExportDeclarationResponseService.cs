@@ -434,7 +434,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //     return;
             // }
             if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
-            if (requestParams.ResponseName != "5117" && customResponse.ResponseContentHeader.Exception != null)
+            if (requestParams.ResponseName != "5117" && requestParams.ResponseName != "8237" && customResponse.ResponseContentHeader.Exception != null)
             {
                 string userMessage = "";
                 this._MyDeclarationPM.MarkAsChanged = false;
@@ -579,7 +579,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             LogMessagingUtil.Instance.AppendLine("IsFastDelete:" + _FastDelete.ToString() + ",Took :" + sw.ElapsedMilliseconds);
 
-            if (requestParams.ResponseName != "5117")
+            if (requestParams.ResponseName != "5117" && requestParams.ResponseName != "8237")
             {
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.DeclarationNumber))
                 {
