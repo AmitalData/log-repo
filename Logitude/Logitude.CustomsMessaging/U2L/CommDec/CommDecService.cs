@@ -988,9 +988,14 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = string.Concat(casualImportelTel.Where(c => !char.IsWhiteSpace(c)));
 
-            if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
+            //if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
 
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, ResolvedTenant()))
+            if (!string.IsNullOrWhiteSpace(casualImportelTel) && casualImportelTel.StartsWith("5"))//If the number start with 5 add 0 
+            {
+                casualImportelTel = "0" + casualImportelTel;//Task 139114: בדיקת חוקיות של הזנת מספר טלפון והעלאת PENDING 903- טלפון לא חוקי + טיפול נוסף
+            }
+
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, _MyDeclarationPM.Tenant))
             {
                 this.IsAutonomy = true;
                 return;
