@@ -24,5 +24,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                                 }).ToList();
             return interestReportLinePMs;
         }
+
+        public List<InterestTransactionPM> GetInterestTransactionForReport(string interestReportId, int tenant)
+        {
+            //InterestReportLineRepository interestReportLineRepository = new InterestReportLineRepository(tenant);
+
+            List<InterestTransactionPM> transactions = (from reportLine in context.InterestReportLines
+                                join intrestTransaction in context.InterestTransactions on reportLine.InterestTransactionId equals intrestTransaction.Id
+                                where reportLine.InterestReportId == interestReportId && reportLine.Tenant == tenant
+                                select new InterestTransactionPM()
+                                {
+                                    Id = intrestTransaction.Id,
+                                    Tenant = intrestTransaction.Tenant,
+                                    GLAccountId = intrestTransaction.GLAccountId,
+                                    InterestEntityTypeCode = intrestTransaction.InterestEntityTypeCode,
+                                    
+
+
+                                }).ToList();
+
+
+
+            return transactions;
+        }
     }
 }

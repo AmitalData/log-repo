@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
@@ -19,7 +20,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             List <InterestTransactionPM> interestTransactionPMs = MapInterestTransactionsPocosToPMs(interestTransactions);
             return interestTransactionPMs;
-
         }
  
         public List<InterestTransactionPM> GetInterestTransactionsByInterestReportId(string interestReportId, int tenant)
@@ -76,5 +76,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return interestTransactionPMs;
         }
+
+        public InterestTransactionPM GetTransactionByUniqueConstraintFields(InterestTransactionUniqueConstraintFields uniqueConstraintFields)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(uniqueConstraintFields.Tenant);
+            InterestTransaction interestTransactions = (from a in context.InterestTransactions
+                                                              where
+                                                                  a.InterestEntityTypeCode == uniqueConstraintFields.InterestEntityTypeCode
+                                                                  && a.OriginalEntityLineNumber == uniqueConstraintFields.OriginalEntityLineNumber
+                                                                  && a.Tenant == uniqueConstraintFields.Tenant
+                                                                  && a.GLAccountId == uniqueConstraintFields.GLAccountId
+                                                                  && a.EntityId == uniqueConstraintFields.EntityId
+                                                              select a).FirstOrDefault();
+
+            InterestTransactionPM interestTransactionPMs = GetEntityPM(interestTransactions);
+            return interestTransactionPMs;
+
+        }
+
     }
 }
