@@ -162,11 +162,11 @@
         }
 
         .column .circle-image div{
-            top: 20px;
+            top: 10px;
         }
 
         .column .circle-image div svg{
-            height: 13px;
+            height: 26px;
             width: 30px;
         }
 
