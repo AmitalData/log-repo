@@ -279,13 +279,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK")
             {
                 UpdatePickUpFieldsOnStandaloneShipmentUpdate(this.GetShipmentPickUpPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
-                this.UpdateShipment(forwarderShipment);
             }
             else if (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "DELV")
             {
                 UpdateDeliveryFieldsOnStandaloneShipmentUpdate(this.GetShipmentDeliveryPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
-                this.UpdateShipment(forwarderShipment);
-            }
+            }  
+            this.UpdateShipment(forwarderShipment);
         }
 
         private void UpdatePickUpFieldsOnStandaloneShipmentUpdate(ShipmentPickUpPM shipmentPickUpPM)
