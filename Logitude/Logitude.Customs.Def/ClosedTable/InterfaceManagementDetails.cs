@@ -1969,7 +1969,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "8235",
                 InOut = InOutEnum.O.ToString(),
-                Description = "מסר תקן/בטל",
+                Description = "מסר תקן/בטל יצוא",
                 DcaPrefixName = "",
                 DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
                 DefaultPriority = 5,
