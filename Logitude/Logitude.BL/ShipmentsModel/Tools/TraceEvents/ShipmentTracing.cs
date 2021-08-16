@@ -1365,7 +1365,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (eventDateTime != null && (eventTypeCode == "DLAR" || eventTypeCode == "PCAR"))
                     {
-                        AllEventTraces = GetPickupDeliveryArrangedEventTracesToBeDeleted(AllEventTraces,  eventDateTime);
+                        AllEventTraces = GetPickupDeliveryArrangedTraceEventsByEventDate(AllEventTraces,  eventDateTime);
                     }
 
                     if (AllEventTraces.Count > 0)
@@ -2351,7 +2351,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return false;
         }
 
-        private List<TraceEvent> GetPickupDeliveryArrangedEventTracesToBeDeleted(List<TraceEvent> traceEvents, DateTime? eventDateTime)
+        private List<TraceEvent> GetPickupDeliveryArrangedTraceEventsByEventDate(List<TraceEvent> traceEvents, DateTime? eventDateTime)
         {
             if (traceEvents == null)
             {
