@@ -855,7 +855,12 @@ accountingValidationContextServiceProvider
                 bool useLocal = ToUseLocalText(tenant);
 
                 //trans = TextCodesTranslator.TranslateText(textCodeCode, tenant);
-                trans = TranslateTextsClass.Translate(textCodeCode, tenant, useLocal) + " " + _JLineNumberTExt;
+                trans = TranslateTextsClass.Translate(textCodeCode, tenant, useLocal) /*+ " " + _JLineNumberTExt*/;
+                if (string.IsNullOrWhiteSpace(trans))
+                {
+                    trans = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention
+                }
+                trans += " " + _JLineNumberTExt; // shoul use string builder !!!!
             }
             if (string.IsNullOrWhiteSpace(trans))
             {
