@@ -216,6 +216,9 @@
                                         {{item}}
                                     </span>
 
+                                    <span class="more-mobile" *ngIf="references?.length > 1 && i == 0">
+                                        <a (click)="OpenMessageWindow(shipment.CustomerReference?.split(','))"><u>+ {{references?.length - 1}} More</u></a>
+                                    </span>
                                 </div>
                                 <span *ngIf="references?.length > 4" [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
