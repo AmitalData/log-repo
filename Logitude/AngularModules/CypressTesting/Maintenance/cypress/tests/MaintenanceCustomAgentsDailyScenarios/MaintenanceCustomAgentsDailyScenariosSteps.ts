@@ -1,6 +1,7 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
@@ -12,15 +13,40 @@ import { Constants } from '../../constants/Constants'
 let customAgentDetails: CardDetails
 let contactDetails: ContactDetails
 let customAgentBillingTabDetails:CardBillingTabDetails
-//#region Create new custom agent
+
+//#region Add custom agent city with lenght more than 25
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemCustomAgents)
 });
 
+When("add {string} as city", (city) => {
+    MaintenanceActions.OpenNewWizard(Constants.CustomAgent);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, city);
+});
+
+Then("a validation message with {string} error should appear", (ValidationMessage) => {
+    MaintenanceActions.ValidateErrorPopUpMessage(ValidationMessage)
+});
+//#endregion
+
+//#region Assert create custom agent without compnay name
+Given("the user fill the required fields except the company", () => {
+    MaintenanceActions.FillCustomAgentRequiredFeilds()
+});
+
+When("create custom agent", () => {
+    MaintenanceActions.CreateCustomAgent()
+});
+
+Then("a validation single message with {string} error should appear", (validationMessage) => {
+    GeneralActions.ValidateSingleErrorMessage(validationMessage)
+});
+//#endregion
+
+//#region Create new custom agent
 Given("a custom agent with the following details", (dataTable) => {
     customAgentDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.CustomAgent);
     MaintenanceActions.FillCustomAgentsDetails(customAgentDetails)
 });
 
