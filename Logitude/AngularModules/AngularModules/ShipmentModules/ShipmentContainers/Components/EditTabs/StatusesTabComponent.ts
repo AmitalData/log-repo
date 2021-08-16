@@ -42,7 +42,7 @@ export class StatusesTabComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var items: any[] = myResponse.Result;
+                var items: any[] = myResponse.Result.filter(a => a.StatusSource == "OIN");
                 items.forEach(item => {
                     itemsSource.push(new LastStatusItem(item));
                 });
