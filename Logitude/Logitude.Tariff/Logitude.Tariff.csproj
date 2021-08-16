@@ -132,6 +132,7 @@
     <Compile Include="Steps\UpdateTariffAirFreightCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffAirSurchargeCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffOceanFCLFreightCostSteps.cs" />
+    <Compile Include="Steps\UpdateTariffOceanFCLSurchargeCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffOceanLCLFreightCostSteps.cs" />
     <Compile Include="Steps\UpdateTariffOceanLCLSurchargeCostSteps.cs" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <None Include="Features\UpdateTariffAirFreightCost.feature" />
     <None Include="Features\UpdateTariffAirSurchargeCost.feature" />
     <None Include="Features\UpdateTariffOceanFCLFreightCost.feature" />
+    <None Include="Features\UpdateTariffOceanFCLSurchargeCost.feature" />
     <None Include="Features\UpdateTariffOceanLCLFreightCost.feature" />
     <None Include="Features\UpdateTariffOceanLCLSurchargeCost.feature" />
     <None Include="packages.config" />

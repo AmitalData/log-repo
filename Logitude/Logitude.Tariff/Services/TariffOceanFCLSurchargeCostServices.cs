@@ -36,9 +36,28 @@ namespace Logitude.Tariff.Services
                 .Build();
         }
 
+
+        public TariffPM UpdateInstance(Table tariffTable, TariffPM tariff)
+        {
+            dynamic dataTable = tariffTable.CreateDynamicInstance();
+            return new TariffBuilder()
+                .WithModel(tariff)
+                .Name((string)dataTable.Name)
+                .Notes((string)dataTable.Notes)
+                .Build();
+        }
+
+
         public string GetAgentId()
         {
             return DataPreparation.CreatePartnerForUserTenant(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" });
+        }
+
+        public void AssertUpdate(TariffPM tariff, TariffPM updatedTariff)
+        {
+            updatedTariff.Id.Should().NotBeNull();
+            updatedTariff.Name.Should().Equals(tariff.Name);
+            updatedTariff.Notes.Should().Equals(tariff.Notes);
         }
     }
 }
