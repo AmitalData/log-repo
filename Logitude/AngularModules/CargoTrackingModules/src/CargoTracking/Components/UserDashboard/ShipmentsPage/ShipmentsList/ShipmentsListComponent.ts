@@ -320,10 +320,13 @@ export class ShipmentsListComponent implements AfterViewInit
 
     ItemClicked(item)
     {
-        var SecurityKey = item.SecurityKey;
-        SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
+        var selection = window.getSelection();
+        if (selection.toString().length === 0) {
+            var SecurityKey = item.SecurityKey;
+            SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
 
-        this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
+            this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
+        }
 
     }
 
