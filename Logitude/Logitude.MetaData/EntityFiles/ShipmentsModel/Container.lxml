@@ -2496,6 +2496,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Statuses&quot;"
+    TabLocalName="&quot;Statuses&quot;"
+    ObjectTableName="&quot;Container&quot;"
+    Code="&quot;COST&quot;"
+    ControlPath="&quot;./ShipmentModules/ShipmentContainers/Components/EditTabs/StatusesTabComponent&quot;"
+    TextCode="&quot;Container.TH.Statuses&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./ShipmentModules/ShipmentContainers/Components/EditTabs/StatusesTabComponent&quot;"
+    HtmlComponentName="&quot;&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Communication&quot;"
     ObjectTableName="&quot;Container&quot;"
     Code="&quot;SCCM&quot;"

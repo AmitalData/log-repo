@@ -43,7 +43,9 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox').then(m => m.ModuleShipmentLogBox), path: 'ShipmentLogBox' },
   { loadChildren: () => import('../../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
   { loadChildren: () => import('../../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
+  { loadChildren: () => import('../../ShipmentModules/ShipmentContainers/ModuleShipmentContainers').then(m => m.ModuleShipmentContainers), path: 'ShipmentContainers' },
 
+    
   // Invoice Modules
   { loadChildren: () => import('../../Invoice/Module_INVC').then(m => m.InvoiceModule), path: 'Invoice' },
   { loadChildren: () => import('../../InvoiceModules/APInvoice/ModuleAPInvoice').then(m => m.ModuleAPInvoice), path: 'APInvoice' },
