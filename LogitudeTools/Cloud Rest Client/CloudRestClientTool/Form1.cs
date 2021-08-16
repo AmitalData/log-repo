@@ -24,6 +24,7 @@ namespace CloudRestClientTool
 
             this.SetDefaultValues();
             BuildOperationList();
+
         }
 
 
@@ -35,37 +36,54 @@ namespace CloudRestClientTool
             this.operationCombo.Items.Add("Create (POST)");
             this.operationCombo.Items.Add("Update (PUT)");
             this.operationCombo.Items.Add("Get");
+
+            this.operationCombo.SelectedIndex = 0;
         }
 
 
         private void SetDefaultValues()
         {
-            txtServerUrl.Text = "http://localhost:9996/api/";
-            txtCredentialsPrimary.Text = "518eb8ea-ad91-48ea-8b0a-fe7b736ea0c8";
-            string requestText = @"<ShipmentOrder xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
-            xmlns:xsd='http://www.w3.org/2001/XMLSchema'><Tenant>1</Tenant><OrderNumber>1</OrderNumber>
-            <TransportMode Code='A'><Name>Air</Name></TransportMode><Consignee Code='10011'>
-            <EnglishName>AyahAgent</EnglishName><LocalName>AyahAgent</LocalName><MainAddress><Name>AyahAgent</Name>
-            <Address1>add1</Address1><Address2>add2</Address2><Country Code='ES'><EnglishName>Spain225</EnglishName>
-            <LocalName>Spain</LocalName></Country><City>City</City><ZipCode>213</ZipCode><PhoneNumber>0598078666</PhoneNumber>
-            <FaxNumber>12321312</FaxNumber><AddressType><Name>Main</Name></AddressType></MainAddress>
-            <IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount><ICAO /></Consignee><Shipper Code='10011'>
-            <EnglishName>AyahAgent</EnglishName><LocalName>AyahAgent</LocalName><MainAddress><Name>AyahAgent</Name><Address1>add1</Address1>
-            <Address2>add2</Address2><Country Code='ES'><EnglishName>Spain225</EnglishName><LocalName>Spain</LocalName></Country><City>City
-            </City><ZipCode>213</ZipCode><PhoneNumber>0598078666</PhoneNumber><FaxNumber>12321312</FaxNumber><AddressType><Name>Main</Name>
-            </AddressType></MainAddress><IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount><ICAO /></Shipper><Agent Code='10011'>
-            <EnglishName>AyahAgent</EnglishName><LocalName>AyahAgent</LocalName><MainAddress><Name>AyahAgent</Name><Address1>add1</Address1>
-            <Address2>add2</Address2><Country Code='ES'><EnglishName>Spain225</EnglishName><LocalName>Spain</LocalName></Country><City>City</City>
-            <ZipCode>213</ZipCode><PhoneNumber>0598078666</PhoneNumber><FaxNumber>12321312</FaxNumber><AddressType><Name>Main</Name></AddressType>
-            </MainAddress><IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount><ICAO /></Agent><Incoterm Code='CFR'><Name>Cost &amp; Freight 5555</Name>
-            </Incoterm><AccountManager Code='mog@mail.com'><EnglishName>luffy1 </EnglishName><LocalName>luffy</LocalName></AccountManager><PONumber>1234</PONumber>
-            <ShipmentType Code='Air'><Name>Air</Name></ShipmentType><House>house test</House><Vessel Code='rrr'><EnglishName>123</EnglishName></Vessel><CustomsAgent Code='10011'>
-            <EnglishName>AyahAgent</EnglishName><LocalName>AyahAgent</LocalName><MainAddress><Name>AyahAgent</Name><Address1>add1</Address1><Address2>add2</Address2><Country Code='ES'>
-            <EnglishName>Spain225</EnglishName><LocalName>Spain</LocalName></Country><City>City</City><ZipCode>213</ZipCode><PhoneNumber>0598078666</PhoneNumber><FaxNumber>12321312</FaxNumber>
-            <AddressType><Name>Main</Name></AddressType></MainAddress><IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount><ICAO /></CustomsAgent><SpecialServicesType Code='5'>
-            <Name>Air Express</Name></SpecialServicesType><Forwarder Code='TW'><EnglishName>Trans World Airlines</EnglishName><LocalName>Trans World Airlines</LocalName>
-            <IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount></Forwarder><IsReadyForPickup>false</IsReadyForPickup>
-            <DescriptionOfGoods>desc test</DescriptionOfGoods><CustomerReferences>customer ref test</CustomerReferences></ShipmentOrder>";
+            txtServerUrl.Text = "https://test.logitudeworld.com/test/api/";
+            txtCredentialsPrimary.Text = "1859482b-755c-4259-a2be-8b4dc2e531f0";
+            string requestText = @"<?xml version='1.0' encoding='UTF-8'?>
+                                    <ShipmentOrder xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                                       <Tenant>1311</Tenant>
+                                       <OrderNumber>1</OrderNumber>
+                                       <TransportMode Code='A'/>
+                                       <Consignee Code='10011'/>
+                                       <Shipper Code='10011'/>
+                                       <Agent Code='10011'/>
+                                       <Incoterm Code='CFR'/>
+                                       <AccountManager Code='mog@mail.com'/>
+                                       <PONumber>1234</PONumber>
+                                       <Master>master test</Master>
+                                       <House>house test</House>
+                                       <Vessel Code='rrr'/>
+                                       <CustomsAgent Code='10011'/>
+                                       <SpecialServicesType Code='5'/>
+                                       <Forwarder Code='TW'/>
+                                       <IsReadyForPickup>false</IsReadyForPickup>
+                                       <DescriptionOfGoods>desc test</DescriptionOfGoods>
+                                       <CustomerReferences>customer ref test</CustomerReferences>
+                                       <PickupEstimatedDateTime>2021-08-15T11:29:10.12</PickupEstimatedDateTime>
+                                       <PickupActualDateTime>2021-08-15T11:29:10.12</PickupActualDateTime>
+                                       <BookingConfirmationDate>2021-08-15T00:00:00</BookingConfirmationDate>
+                                       <ETD>2021-08-15T11:29:10.12</ETD>
+                                       <ETA>2021-08-15T11:29:10.12</ETA>
+                                       <ATD>2021-08-15T11:29:10.12</ATD>
+                                       <ATA>2021-08-15T11:29:10.12</ATA>
+                                       <Direction Code='E'/>
+                                       <ShipmentNumber>32</ShipmentNumber>
+                                       <SupplyDateTime>2021-08-15T11:29:10.12</SupplyDateTime>
+                                       <OriginPort Code='ILASH'/>
+                                       <DestinationPort Code='ILASH'/>
+                                       <Gateway Code='ILASH'/>
+                                       <CasualImporterName>imp test</CasualImporterName>
+                                       <CasualSupplierName>sup test</CasualSupplierName>
+                                       <ShipmentLevel Code='A'/>
+                                       <PODate>2021-08-15T00:00:00</PODate>
+                                       <BookingConfirmationNumber>2323</BookingConfirmationNumber>
+                                    </ShipmentOrder>";
 
             txtRequestBody.Text = requestText;
         }
@@ -185,10 +203,10 @@ namespace CloudRestClientTool
         private void operationCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            isSendButtonEnabled = operationCombo.SelectedIndex != -1 ? true:false;
+            isSendButtonEnabled = operationCombo.SelectedIndex != -1 ? true : false;
             ShipmentOrderParameterTextBox.Visible = operationCombo.SelectedIndex == 2 ? true : false;
-            lblParameter.Visible =  operationCombo.SelectedIndex == 2 ? true : false;
-            
+            lblParameter.Visible = operationCombo.SelectedIndex == 2 ? true : false;
+
             ChangeFormState();
         }
 
@@ -223,7 +241,12 @@ namespace CloudRestClientTool
                         {
                             response = await client.GetAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
                         }
-                   
+                        else {
+                            MessageBox.Show("Please insert order number");
+                            this.Cursor = Cursors.Default;
+                            return;
+                        }
+
                     }
 
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();
@@ -240,7 +263,7 @@ namespace CloudRestClientTool
                         this.SetXmlBrouserXml(resultData2);
                     }
 
-                 
+
                 }
 
             }

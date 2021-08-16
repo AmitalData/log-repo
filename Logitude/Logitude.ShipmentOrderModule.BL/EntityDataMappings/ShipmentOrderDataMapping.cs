@@ -32,7 +32,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
         public void CustomPOCOToPM(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
             entityPM.TransportModeName = GetTransportModeNameById(entityPOCO.TransportModeId, entityPM.Tenant);
-            entityPM.ShipmentTypeName = GetShipmentTypeNameById(entityPOCO.ShipmentTypeId, entityPM.Tenant);
             entityPM.ConsigneeName = GetCardNameById(entityPOCO.ConsigneeId, entityPM.Tenant);
             entityPM.ShipperName = GetCardNameById(entityPOCO.ShipperId, entityPM.Tenant);
             entityPM.AgentName = GetCardNameById(entityPOCO.AgentId, entityPM.Tenant);
@@ -42,6 +41,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.VesselName = GetVesselNameById(entityPOCO.VesselId, entityPM.Tenant);
             entityPM.SpecialServicesTypeName = GetSpecialServicesTypeNameById(entityPOCO.SpecialServicesTypeId, entityPM.Tenant);
             entityPM.IncotermCode = GetIncotermCodeById(entityPOCO.IncotermId, entityPM.Tenant);
+            entityPM.ShipmentLevelName = GetShipmentLevelNameByCode(entityPOCO.ShipmentLevelCode, entityPM.Tenant);
+            entityPM.OriginPortName = GetPortNameById(entityPOCO.OriginPortId, entityPM.Tenant);
+            entityPM.DestinationPortName = GetPortNameById(entityPOCO.DestinationPortId, entityPM.Tenant);
+            entityPM.GatewayName = GetPortNameById(entityPOCO.GatewayId, entityPM.Tenant);
+            entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPM.Tenant);
         }
 
         private string GetTransportModeNameById(string transportModeId, int tenant)
@@ -55,13 +59,13 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             return null;
         }
 
-        private string GetShipmentTypeNameById(string shipmentTypeId, int tenant)
+        private string GetShipmentLevelNameByCode(string shipmentLevelCode, int tenant)
         {
-            if (!string.IsNullOrEmpty(shipmentTypeId))
+            if (!string.IsNullOrEmpty(shipmentLevelCode))
             {
-                ShipmentTypeQuery shipmentTypeQuery = new ShipmentTypeQuery(tenant);
-                ShipmentTypePM shipmentTypePM = shipmentTypeQuery.GetSinglePM(shipmentTypeId, tenant);
-                return shipmentTypePM.Name;
+                ShipmentLevelQuery shipmentLevelQuery = new ShipmentLevelQuery(tenant);
+                ShipmentLevelPM shipmentLevelPM = shipmentLevelQuery.GetSinglePM(shipmentLevelCode, tenant);
+                return shipmentLevelPM.Name;
             }
             return null;
         }
@@ -117,6 +121,28 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 IncotermPM incotermPM = incotermQuery.GetSinglePM(incotermId, tenant);
                 return incotermPM.Code;
+            }
+            return null;
+        }
+
+        private string GetPortNameById(string portId, int tenant)
+        {
+            if (!string.IsNullOrEmpty(portId))
+            {
+                PortQuery portQuery = new PortQuery(tenant);
+                PortPM portPM = portQuery.GetSinglePM(portId, tenant);
+                return portPM?.EnglishName;
+            }
+            return null;
+        }
+
+        private string GetDirectionNameById(string directionId, int tenant)
+        {
+            if (!string.IsNullOrEmpty(directionId))
+            {
+                DirectionQuery directionQuery = new DirectionQuery(tenant);
+                DirectionPM directionPM = directionQuery.GetSinglePM(directionId, tenant);
+                return directionPM?.Name;
             }
             return null;
         }

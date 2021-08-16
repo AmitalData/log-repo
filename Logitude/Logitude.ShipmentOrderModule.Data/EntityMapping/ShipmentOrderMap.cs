@@ -55,11 +55,11 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(2000).IsUnicode(true);
 
-            this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId").HasMaxLength(4).IsUnicode(false);
-
             this.Property(t => t.Master).HasColumnName("Master").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.House).HasColumnName("House").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.CarrierNumber).HasColumnName("CarrierNumber").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.VesselId).HasColumnName("VesselId").HasMaxLength(15).IsUnicode(false);
 
@@ -86,6 +86,28 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.ForwarderId).HasColumnName("ForwarderId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.BookingConfirmationDate).HasColumnName("BookingConfirmationDate");
+
+            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber").IsRequired().HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.SupplyDateTime).HasColumnName("SupplyDateTime");
+
+            this.Property(t => t.OriginPortId).HasColumnName("OriginPortId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DestinationPortId).HasColumnName("DestinationPortId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.GatewayId).HasColumnName("GatewayId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CasualImporterName).HasColumnName("CasualImporterName").HasMaxLength(2000).IsUnicode(false);
+
+            this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(2000).IsUnicode(false);
+
+            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.PODate).HasColumnName("PODate");
+
+            this.Property(t => t.BookingConfirmationNumber).HasColumnName("BookingConfirmationNumber").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsFixedLength();
         }
     }
 }

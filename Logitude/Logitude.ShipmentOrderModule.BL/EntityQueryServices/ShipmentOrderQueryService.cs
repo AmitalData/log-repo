@@ -41,7 +41,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 AccountManagerId = shipmentOrder.AccountManagerId,
                 PONumber = shipmentOrder.PONumber,
                 DescriptionOfGoods = shipmentOrder.DescriptionOfGoods,
-                ShipmentTypeId = shipmentOrder.ShipmentTypeId,
                 House = shipmentOrder.House,
                 VesselId = shipmentOrder.VesselId,
                 CustomsAgentId = shipmentOrder.CustomsAgentId,
@@ -57,6 +56,18 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 ATD = shipmentOrder.ATD,
                 ETD = shipmentOrder.ETD,
                 ETA = shipmentOrder.ETA,
+                ShipmentNumber = shipmentOrder.ShipmentNumber,
+                SupplyDateTime = shipmentOrder.SupplyDateTime,
+                OriginPortId = shipmentOrder.OriginPortId,
+                DestinationPortId = shipmentOrder.DestinationPortId,
+                GatewayId = shipmentOrder.GatewayId,
+                CasualImporterName = shipmentOrder.CasualImporterName,
+                CasualSupplierName = shipmentOrder.CasualSupplierName,
+                ShipmentLevelCode = shipmentOrder.ShipmentLevelCode,
+                PODate = shipmentOrder.PODate,
+                BookingConfirmationNumber = shipmentOrder.BookingConfirmationNumber,
+                DirectionId = shipmentOrder.DirectionId,
+                CarrierNumber = shipmentOrder.CarrierNumber,
 
             };
         }

@@ -24,7 +24,6 @@ export class ShipmentOrderList {
 	AccountManagerId: string;
 	PONumber: string;
 	DescriptionOfGoods: string;
-	ShipmentTypeId: string;
 	Master: string;
 	House: string;
 	CarrierNumber: string;
@@ -36,7 +35,6 @@ export class ShipmentOrderList {
 	SpecialServicesTypeId: string;
 	CustomerReferences: string;
 	TransportModeName: string;
-	ShipmentTypeName: string;
 	IsReadyForPickup: boolean;
 	PickupEstimatedDateTime: Date;
 	PickupActualDateTime: Date;
@@ -51,6 +49,22 @@ export class ShipmentOrderList {
 	CustomsAgentName: string;
 	SpecialServicesTypeName: string;
 	ForwarderName: string;
+	ShipmentNumber: string;
+	SupplyDateTime: Date;
+	OriginPortId: string;
+	DestinationPortId: string;
+	GatewayId: string;
+	CasualImporterName: string;
+	CasualSupplierName: string;
+	ShipmentLevelCode: string;
+	ShipmentLevelName: string;
+	PODate: Date;
+	BookingConfirmationNumber: string;
+	OriginPortName: string;
+	DestinationPortName: string;
+	GatewayName: string;
+	DirectionName: string;
+	DirectionId: string;
 	
 }
  

@@ -57,8 +57,6 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        DescriptionOfGoods = a.DescriptionOfGoods,
 
-                                                       ShipmentTypeId = a.ShipmentTypeId,
-
                                                        House = a.House,
 
                                                        Master = a.Master,
@@ -66,8 +64,6 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
                                                        CustomsAgentId = a.CustomsAgentId,
 
                                                        SpecialServicesTypeId = a.SpecialServicesTypeId,
-
-                                                       ShipmentTypeName = a.ShipmentType == null ? "" : a.ShipmentType.Name,
 
                                                        TransportModeName = a.TransportMode == null ? "" : a.TransportMode.Name,
 
@@ -82,6 +78,14 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
                                                        PickupActualDateTime = a.PickupActualDateTime,
 
                                                        ForwarderId = a.ForwarderId,
+
+                                                       ATA = a.ATA,
+
+                                                       ATD = a.ATD,
+
+                                                       ETD = a.ETD,
+
+                                                       ETA = a.ETA,
 
                                                        ConsigneeName = a.ConsigneeCard == null ? "" : a.ConsigneeCard.EnglishName,
 
@@ -98,6 +102,40 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
                                                        ForwarderName = a.FreightForwarderCard == null ? "" : a.FreightForwarderCard.EnglishName,
 
                                                        IncotermCode = a.Incoterm == null ? "" : a.Incoterm.Code,
+
+                                                       ShipmentNumber = a.ShipmentNumber,
+
+                                                       SupplyDateTime = a.SupplyDateTime,
+
+                                                       OriginPortId = a.OriginPortId,
+
+                                                       OriginPortName = a.OriginPort == null ? "" : a.OriginPort.EnglishName,
+
+                                                       DestinationPortId = a.DestinationPortId,
+
+                                                       DestinationPortName = a.DestinationPort == null ? "" : a.DestinationPort.EnglishName,
+
+                                                       GatewayId = a.GatewayId,
+
+                                                       GatewayName = a.Gateway == null ? "" : a.Gateway.EnglishName,
+
+                                                       CasualImporterName = a.CasualImporterName,
+
+                                                       CasualSupplierName = a.CasualSupplierName,
+
+                                                       ShipmentLevelCode= a.ShipmentLevelCode,
+
+                                                       ShipmentLevelName = a.ShipmentLevel == null ? "" : a.ShipmentLevel.Name,
+
+                                                       PODate = a.PODate,
+
+                                                       BookingConfirmationNumber = a.BookingConfirmationNumber,
+
+                                                       DirectionId = a.DirectionId,
+
+                                                       DirectionName = a.Direction == null ? "" : a.Direction.Name,
+
+                                                       CarrierNumber = a.CarrierNumber,
 
                                                    });
             return query;
