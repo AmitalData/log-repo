@@ -10,25 +10,28 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.Faults;
+using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.TheGateway;
 
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-using RequestHeader = UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.RequestHeader;
+using UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference;
+using RequestHeader = UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.RequestHeader;
+using ESBRequestSigned = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.ESBRequestSigned;
 using Logitude.CustomsMessaging.FakeMessagingServices;
-using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    public class DF_MSG8235_ExportDeclarationAmendmentMessagingService
+    public class DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService
         : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,
         DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg,
         DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg,
-        DF_MSG8235_ExportDeclarationAmendmentRequestService,
-        DF_NG_8235_MSG14000_ExportDeclarationResponseService, RequestHeader>
+        DF_MSG8235_TransshipmentDeclarationAmendmentRequestService,
+        DF_NG_8237_ExportDeclerationAmendmentReplyResponseService, RequestHeader>
     {
 
         
@@ -162,8 +165,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<UnifreightIIG.Common.TheGateway.IExportDeclarationAmendmentRequestMsgRequestOperation>()
-                    .ExportDeclarationAmendmentRequestMsgRequest(
+                _ResponseHeader = uifreightSdkGateway.GetChannel<UnifreightIIG.Common.TheGateway.ITransshipmenDeclarationAmendmentRequestMsgRequestOperation>()
+                    .TransshipmenDeclarationAmendmentRequestMsgRequest(
                     this.RequestsSheetExternalId,
                     base.CustomsSetting.CustomsAgentId,
                     customRequest,
