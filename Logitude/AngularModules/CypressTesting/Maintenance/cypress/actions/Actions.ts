@@ -1927,7 +1927,7 @@ export function AssertUpdateCustomAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCustomAgent, 200);
 }
 
-export function FillCustomAgentRequiredFeilds() {
+export function FillCardsCityAndCountryFeilds() {
     cy.FillLogTextBox(MaintenanceSelectors.CardCity, "city");
     cy.FillLogLov(MaintenanceSelectors.CardCountry, "AE", true);
 }

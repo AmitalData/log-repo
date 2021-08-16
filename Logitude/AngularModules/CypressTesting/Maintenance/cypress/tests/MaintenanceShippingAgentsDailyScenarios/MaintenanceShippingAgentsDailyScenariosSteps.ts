@@ -1,6 +1,7 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
@@ -12,15 +13,40 @@ import { Constants } from '../../constants/Constants'
 let shippingAgentDetails: CardDetails
 let contactDetails: ContactDetails
 let shippingAgentBillingTabDetails: CardBillingTabDetails
-//#region Create new shipping agent
+
+//#region Add shipping agent city with lenght more than 25
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemShippingAgents)
 });
 
+When("add {string} as city", (city) => {
+    MaintenanceActions.OpenNewWizard(Constants.ShippingAgent);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, city);
+});
+
+Then("a validation message with {string} error should appear", (ValidationMessage) => {
+    MaintenanceActions.ValidateErrorPopUpMessage(ValidationMessage)
+});
+//#endregion
+
+//#region Assert create shipping agent without compnay name
+Given("the user fill the required fields except the company", () => {
+    MaintenanceActions.FillCardsCityAndCountryFeilds()
+});
+
+When("create shipping agent", () => {
+    MaintenanceActions.CreateShippingAgentMockCreate()
+});
+
+Then("a validation single message with {string} error should appear", (validationMessage) => {
+    GeneralActions.ValidateSingleErrorMessage(validationMessage)
+});
+//#endregion
+
+//#region Create new shipping agent
 Given("a shipping agent with the following details", (dataTable) => {
     shippingAgentDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
-    MaintenanceActions.OpenNewWizard(Constants.ShippingAgent);
     MaintenanceActions.FillShippingAgentsDetails(shippingAgentDetails)
 });
 
@@ -29,15 +55,11 @@ Given("a shipping agent contact with the following details", (dataTable) => {
     MaintenanceActions.FillShippingAgentsContactDetails(contactDetails)
 });
 
-When("create shipping agent", () => {
-    MaintenanceActions.CreateShippingAgentMockCreate()
-});
-
 Then("the shipping agent should create successfully", () => {
     MaintenanceActions.AssertCreateShippingAgentMockCreate()
 });
-
 //#endregion
+
 //#region Search for the shipping agent by code
 When("search for {string} shipping agent", (shippingAgent) => {
     MaintenanceActions.SearchCardByValue(shippingAgent)
@@ -46,8 +68,8 @@ When("search for {string} shipping agent", (shippingAgent) => {
 Then("the {string} shipping agent should appear successfully", (shippingAgent) => {
     MaintenanceActions.AssertSearchShippingAgent(shippingAgent)
 });
-
 //#endregion
+
 //#region Open the shipping agent
 When("open shipping agent", () => {
     MaintenanceActions.OpenCard(Constants.ShippingAgent)
@@ -57,6 +79,7 @@ Then("the shipping agent should open successfully", () => {
     MaintenanceActions.AssertOpenShippingAgent()
 });
 //#endregion
+
 //#region Edit the shipping agent
 Given("{string} as shipping agent notes", (notes) => {
     MaintenanceActions.FillShippingAgentGenaralTabNotes(notes)

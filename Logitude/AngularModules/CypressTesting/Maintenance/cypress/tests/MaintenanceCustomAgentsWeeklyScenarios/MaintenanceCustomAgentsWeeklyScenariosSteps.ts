@@ -32,7 +32,7 @@ Then("a validation message with {string} error should appear", (ValidationMessag
 
 //#region Assert create custom agent without compnay name
 Given("the user fill the required fields except the company", () => {
-    MaintenanceActions.FillCustomAgentRequiredFeilds()
+    MaintenanceActions.FillCardsCityAndCountryFeilds()
 });
 
 When("create custom agent", () => {
@@ -68,8 +68,8 @@ When("search custom agent", () => {
 Then("the custom agent should appear successfully", () => {
     MaintenanceActions.AssertSearchCustomAgent(customAgentDetails.CompanyName)
 });
-
 //#endregion
+
 //#region Open the custom agent
 When("open custom agent", () => {
     MaintenanceActions.OpenCard(Constants.CustomAgent)
@@ -89,6 +89,7 @@ Then("the custom agent contact should have the following details", (dataTable) =
     MaintenanceActions.AssertCustomAgentContact(contactDetails)
 });
 //#endregion
+
 //#region Edit the custom agent
 Given("{string} as custom agent notes", (notes) => {
     MaintenanceActions.FillCustomAgentGeneralTabNotes(notes)
