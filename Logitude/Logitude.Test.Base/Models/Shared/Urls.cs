@@ -44,6 +44,7 @@
         public static string OpportunitiesController = "Opportunities";
         public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
+        public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
 
         //public static string QuotesGetSingle(string id)
         //{
@@ -54,7 +55,7 @@
         public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
-
+        public static string Tariffsettings = "tariffsettings";
 
 
         #region Shipment Prepare Data URls
