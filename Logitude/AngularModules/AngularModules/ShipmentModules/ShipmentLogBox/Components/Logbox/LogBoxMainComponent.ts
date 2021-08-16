@@ -448,7 +448,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = 5;
+            this.HoverTemplateIndex = this.isPrivateLabel ? 6 : 5;
 
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
