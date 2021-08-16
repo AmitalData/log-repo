@@ -278,17 +278,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK")
             {
-                UpdatePickUpStandaloneFieldsOnShipmentUpdate(this.GetShipmentPickUpPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
+                UpdatePickUpFieldsOnStandaloneShipmentUpdate(this.GetShipmentPickUpPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
                 this.UpdateShipment(forwarderShipment);
             }
             else if (shipmentPickUpDelivery.PickUpDeliveryTypeCode == "DELV")
             {
-                UpdateDeliveryStandaloneFieldsOnShipmentUpdate(this.GetShipmentDeliveryPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
+                UpdateDeliveryFieldsOnStandaloneShipmentUpdate(this.GetShipmentDeliveryPMByStandAloneShipmentId(forwarderShipment, shipmentPickUpDelivery.Id));
                 this.UpdateShipment(forwarderShipment);
             }
         }
 
-        private void UpdatePickUpStandaloneFieldsOnShipmentUpdate(ShipmentPickUpPM shipmentPickUpPM)
+        private void UpdatePickUpFieldsOnStandaloneShipmentUpdate(ShipmentPickUpPM shipmentPickUpPM)
         {
             if (shipmentPickUpPM == null)
             {
@@ -298,7 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             this.HandelStandalonePackagesChangeSets(shipmentPickUpPM.Id);
         }
 
-        private void UpdateDeliveryStandaloneFieldsOnShipmentUpdate(ShipmentDeliveryPM shipmentDeliveryPM)
+        private void UpdateDeliveryFieldsOnStandaloneShipmentUpdate(ShipmentDeliveryPM shipmentDeliveryPM)
         {
             if (shipmentDeliveryPM == null)
             {
