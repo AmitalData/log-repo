@@ -248,107 +248,204 @@ namespace CommunicationWorkerRole
                                                 DepartmentCode = Department.Code;
                                             }
 
-
-                                            ShipmentAM shipmentAM = new ShipmentAM()
+                                            // 
+                                            if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
-                                                Id = ForwarderShipment.Id,
-                                                ImporterTenant = tenant,
-                                                Tenant = (int)Partner.PartnerTenant,
-                                                MainCarriageATA = ForwarderShipment.MainCarriageATA,
-                                                MainCarriageETA = ForwarderShipment.MainCarriageETA,
-                                                MainCarriageATD = ForwarderShipment.MainCarriageATD,
-                                                OnCarriageATA = ForwarderShipment.OnCarriageATA,
-                                                OnCarriageATD = ForwarderShipment.OnCarriageATD,
-                                                PreCarriageATA = ForwarderShipment.PreCarriageATA,
-                                                PreCarriageATD = ForwarderShipment.PreCarriageATD,
-                                                StatusCode = status.Code,
-                                                StatusDate = ForwarderShipment.StatusDate,
-                                                TransportModeId = ForwarderShipment.TransportModeId,
-                                                DirectionId = ForwarderShipment.DirectionId,
-                                                ShipmentLevelCode = ForwarderShipment.ShipmentLevelCode,
-                                                ForwarderShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
-                                                CustomerShipmentNumber = ForwarderShipment.ShipmentNumber,
-                                                ShipmentTypeId = ForwarderShipment.ShipmentTypeId,
-                                                House = ForwarderShipment.House,
-                                                Master = ForwarderShipment.Master,
-                                                DescriptionOfGoods = ForwarderShipment.DescriptionOfGoods,
-                                                ConsigneeReference1 = ForwarderShipment.ConsigneeReference1,
-                                                CustomerReference1 = ForwarderShipment.CustomerReference1,
-                                                ConsigneeReference2 = ForwarderShipment.ConsigneeReference2,
-                                                CustomerReference2 = ForwarderShipment.CustomerReference2,
-                                                ShipmentCustomerTypeCode = ForwarderShipment.ShipmentCustomerTypeCode,
-                                                IsCancelled = ForwarderShipment.IsCancelled,
-                                                ShipperName = ForwarderShipment.ShipperName,
-                                                CarrierTransportDocumentNumber = ForwarderShipment.CarrierTransportDocumentNumber,
-                                                //ForwarderPartnerId = Partner.Id,
-                                                FreightPrepaidCollectId = ForwarderShipment.FreightPrepaidCollectId,
-                                                OtherPrepaidCollectId = ForwarderShipment.OtherPrepaidCollectId,
-                                                Notes = ForwarderShipment.Notes,
-                                                ShipmentAddtionalDataXML = ForwarderShipment.ShipmentAddtionalDataXML,
-                                                //IsOperationalClosed = Shipment.IsOperationalClosed,
-                                                ForwarderCode = Partner.PartnerTenant,
-                                                Quantity = ForwarderShipment.PackagesQuantity,
-                                                Weight = ForwarderShipment.GrossWeight,
-                                                SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
-                                                Customer = new CodeProperties()
+                                                NewAExporterShipmentAM newAExporterShipmentAM = new NewAExporterShipmentAM()
                                                 {
-                                                    Code = CustomerCode
-                                                },
-                                                Branch = new CodeProperties()
+                                                    Id = ForwarderShipment.Id,
+                                                    ExporterTenant = tenant,
+                                                    Tenant = (int)Partner.PartnerTenant,
+                                                    TransportModeId = ForwarderShipment.TransportModeId,
+                                                    DirectionId = ForwarderShipment.DirectionId,
+                                                    CustomerShipmentNumber = ForwarderShipment.ShipmentNumber,
+                                                    ShipmentTypeId = ForwarderShipment.ShipmentTypeId,
+                                                    ConsigneeName = ForwarderShipment.ConsigneeName,
+                                                    InvoiceReference = ForwarderShipment.PrivateLabelInvoiceNumber,
+                                                    CustomerReference = ForwarderShipment.CustomerReference1,
+                                                    IncludePickup = ForwarderShipment.PrivateLabelIncludePickup,
+                                                    IncludeDelivery = ForwarderShipment.PrivateLabelIncludeDelivery,
+                                                    DangerousGoods = ForwarderShipment.IsDangerous,
+                                                    ReqFlightDate = ForwarderShipment.RequestedFlightDate,
+                                                    Quantity = ForwarderShipment.PackagesQuantity,
+                                                    Weight = ForwarderShipment.GrossWeight,
+                                                    SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
+                                                    Customer = new CodeProperties()
+                                                    {
+                                                        Code = CustomerCode
+                                                    },
+
+                                                    Shipper = new CodeProperties()
+                                                    {
+                                                        Code = ShipperCode
+                                                    },
+
+                                                    FromPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.FromPort,
+                                                        CountryCode = ForwarderShipment.FromCountryCode
+                                                    },
+                                                    ToPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.ToPort,
+                                                        CountryCode = ForwarderShipment.ToCountryCode
+                                                    },
+
+                                                };
+
+                                                newAExporterShipmentAM.ShipmentPackages = new List<Packages>();
+                                                foreach (var item in ForwarderShipment.ShipmentPackages)
                                                 {
-                                                    Code = BranchCode
-                                                },
-                                                Department = new CodeProperties()
-                                                {
-                                                    Code = DepartmentCode
-                                                },
-                                                Shipper = new CodeProperties()
-                                                {
-                                                    Code = ShipperCode
-                                                },
-                                                Consignee = new CodeProperties()
-                                                {
-                                                    Code = ConsigneeCode
-                                                },
-                                                FromPort = new CodeProperties()
-                                                {
-                                                    Code = ForwarderShipment.FromPort,
-                                                    CountryCode = ForwarderShipment.FromCountryCode
-                                                },
-                                                ToPort = new CodeProperties()
-                                                {
-                                                    Code = ForwarderShipment.ToPort,
-                                                    CountryCode = ForwarderShipment.ToCountryCode
-                                                },
-                                                PreCarriageFromPort = new CodeProperties()
-                                                {
-                                                    Code = ForwarderShipment.PreCarriageFromPortCode,
-                                                    CountryCode = ForwarderShipment.PreCarriageFromPortCountryCode
-                                                },
-                                                PreCarriageToPort = new CodeProperties()
-                                                {
-                                                    Code = ForwarderShipment.PreCarriageToPortCode,
-                                                    CountryCode = ForwarderShipment.PreCarriageToPortCountryCode
-                                                },
-                                                OnCarriageToPort = new CodeProperties()
-                                                {
-                                                    Code = ForwarderShipment.OnCarriageToPortCode,
-                                                    CountryCode = ForwarderShipment.OnCarriageToPortCountryCode
+
+                                                    Packages MyPackage = new Packages();
+                                                    MyPackage.Quantity = item.Quantity;
+                                                    //  MyPackage.GrossWeight = item.GrossWeight;
+                                                    MyPackage.Length = item.Length;
+                                                    MyPackage.Width = item.Width;
+                                                    MyPackage.Height = item.Height;
+
                                                 }
 
-                                            };
-                                            shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
-                                            foreach (var item in ForwarderShipment.ShipmentPackages)
-                                            {
-                                                ShipmentPackageAM MyPackage = new ShipmentPackageAM();
-                                                MyPackage.ContainerNumber = item.ContainerNumber;
-                                                MyPackage.Quantity = item.Quantity;
-                                                MyPackage.Weight = item.Weight;
-                                                MyPackage.PackageTypeId = item.PackageTypeId;
-                                                MyPackage.PackageTypeCode = item.PackageTypeCode;
-                                                shipmentAM.ShipmentPackagesAM.Add(MyPackage);
+
+                                                LogPM.Subject = "Send Shipment To Forwarder By ForwarderShipments Controller";
+                                                if (IsNewLog)
+                                                {
+                                                    //LogPM.CustomerId = CustomerId;
+                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                    LogPM.QueueType = "Shipment";
+                                                    apiLogsService.Create(LogPM);
+                                                }
+                                                var msg = "Start Sending Shipment To Forwarder " + DateTime.Now;
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), null, null, "");
+
+                                                var serializedObject = JsonConvert.SerializeObject(newAExporterShipmentAM);
+                                                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                                                ImporterShipmentsURI = URI + "ForwarderExportShipments";
+                                                var result = client.PostAsync(ImporterShipmentsURI, content);
+                                                result.Wait();
+                                                if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                {
+                                                    var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                    msg = "Shipment sent To Forwarder " + DateTime.Now;
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), temp1, null, "");
+                                                    queue.Complete();
+                                                }
+                                                else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                                                {
+                                                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                    if (EXC != null)
+                                                    {
+                                                        var Failmsg = EXC.ErrorType + " Fail To Send Shipment To Forwarder Tenant " + DateTime.Now;
+                                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+                                                        throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                                                    }
+                                                }
+
                                             }
-                                           
+                                            else
+                                            {
+
+
+                                                ShipmentAM shipmentAM = new ShipmentAM()
+                                                {
+                                                    Id = ForwarderShipment.Id,
+                                                    ImporterTenant = tenant,
+                                                    Tenant = (int)Partner.PartnerTenant,
+                                                    MainCarriageATA = ForwarderShipment.MainCarriageATA,
+                                                    MainCarriageETA = ForwarderShipment.MainCarriageETA,
+                                                    MainCarriageATD = ForwarderShipment.MainCarriageATD,
+                                                    OnCarriageATA = ForwarderShipment.OnCarriageATA,
+                                                    OnCarriageATD = ForwarderShipment.OnCarriageATD,
+                                                    PreCarriageATA = ForwarderShipment.PreCarriageATA,
+                                                    PreCarriageATD = ForwarderShipment.PreCarriageATD,
+                                                    StatusCode = status.Code,
+                                                    StatusDate = ForwarderShipment.StatusDate,
+                                                    TransportModeId = ForwarderShipment.TransportModeId,
+                                                    DirectionId = ForwarderShipment.DirectionId,
+                                                    ShipmentLevelCode = ForwarderShipment.ShipmentLevelCode,
+                                                    ForwarderShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
+                                                    CustomerShipmentNumber = ForwarderShipment.ShipmentNumber,
+                                                    ShipmentTypeId = ForwarderShipment.ShipmentTypeId,
+                                                    House = ForwarderShipment.House,
+                                                    Master = ForwarderShipment.Master,
+                                                    DescriptionOfGoods = ForwarderShipment.DescriptionOfGoods,
+                                                    ConsigneeReference1 = ForwarderShipment.ConsigneeReference1,
+                                                    CustomerReference1 = ForwarderShipment.CustomerReference1,
+                                                    ConsigneeReference2 = ForwarderShipment.ConsigneeReference2,
+                                                    CustomerReference2 = ForwarderShipment.CustomerReference2,
+                                                    ShipmentCustomerTypeCode = ForwarderShipment.ShipmentCustomerTypeCode,
+                                                    IsCancelled = ForwarderShipment.IsCancelled,
+                                                    ShipperName = ForwarderShipment.ShipperName,
+                                                    CarrierTransportDocumentNumber = ForwarderShipment.CarrierTransportDocumentNumber,
+                                                    //ForwarderPartnerId = Partner.Id,
+                                                    FreightPrepaidCollectId = ForwarderShipment.FreightPrepaidCollectId,
+                                                    OtherPrepaidCollectId = ForwarderShipment.OtherPrepaidCollectId,
+                                                    Notes = ForwarderShipment.Notes,
+                                                    ShipmentAddtionalDataXML = ForwarderShipment.ShipmentAddtionalDataXML,
+                                                    //IsOperationalClosed = Shipment.IsOperationalClosed,
+                                                    ForwarderCode = Partner.PartnerTenant,
+                                                    Quantity = ForwarderShipment.PackagesQuantity,
+                                                    Weight = ForwarderShipment.GrossWeight,
+                                                    SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
+                                                    Customer = new CodeProperties()
+                                                    {
+                                                        Code = CustomerCode
+                                                    },
+                                                    Branch = new CodeProperties()
+                                                    {
+                                                        Code = BranchCode
+                                                    },
+                                                    Department = new CodeProperties()
+                                                    {
+                                                        Code = DepartmentCode
+                                                    },
+                                                    Shipper = new CodeProperties()
+                                                    {
+                                                        Code = ShipperCode
+                                                    },
+                                                    Consignee = new CodeProperties()
+                                                    {
+                                                        Code = ConsigneeCode
+                                                    },
+                                                    FromPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.FromPort,
+                                                        CountryCode = ForwarderShipment.FromCountryCode
+                                                    },
+                                                    ToPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.ToPort,
+                                                        CountryCode = ForwarderShipment.ToCountryCode
+                                                    },
+                                                    PreCarriageFromPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.PreCarriageFromPortCode,
+                                                        CountryCode = ForwarderShipment.PreCarriageFromPortCountryCode
+                                                    },
+                                                    PreCarriageToPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.PreCarriageToPortCode,
+                                                        CountryCode = ForwarderShipment.PreCarriageToPortCountryCode
+                                                    },
+                                                    OnCarriageToPort = new CodeProperties()
+                                                    {
+                                                        Code = ForwarderShipment.OnCarriageToPortCode,
+                                                        CountryCode = ForwarderShipment.OnCarriageToPortCountryCode
+                                                    }
+
+                                                };
+                                                shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
+                                                foreach (var item in ForwarderShipment.ShipmentPackages)
+                                                {
+                                                    ShipmentPackageAM MyPackage = new ShipmentPackageAM();
+                                                    MyPackage.ContainerNumber = item.ContainerNumber;
+                                                    MyPackage.Quantity = item.Quantity;
+                                                    MyPackage.Weight = item.Weight;
+                                                    MyPackage.PackageTypeId = item.PackageTypeId;
+                                                    MyPackage.PackageTypeCode = item.PackageTypeCode;
+                                                    shipmentAM.ShipmentPackagesAM.Add(MyPackage);
+                                                }
+                                            
 
                                             LogPM.Subject = "Send Shipment To Forwarder By ForwarderShipments Controller";
                                             if (IsNewLog)
@@ -363,23 +460,25 @@ namespace CommunicationWorkerRole
 
                                             var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+
                                             var result = client.PostAsync(ImporterShipmentsURI, content);
                                             result.Wait();
-                                            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                                            {
-                                                var temp1 = result.Result.Content.ReadAsStringAsync().Result;
-                                                msg = "Shipment sent To Forwarder " + DateTime.Now;
-                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
-                                                queue.Complete();
-                                            }
-                                            else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                                            {
-                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-                                                if (EXC != null)
+                                                if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
-                                                    var Failmsg = EXC.ErrorType + " Fail To Send Shipment To Forwarder Tenant " + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
-                                                    throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                                                    var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                    msg = "Shipment sent To Forwarder " + DateTime.Now;
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), temp1, null, "");
+                                                    queue.Complete();
+                                                }
+                                                else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                                                {
+                                                    APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                    if (EXC != null)
+                                                    {
+                                                        var Failmsg = EXC.ErrorType + " Fail To Send Shipment To Forwarder Tenant " + DateTime.Now;
+                                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+                                                        throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                                                    }
                                                 }
                                             }
 

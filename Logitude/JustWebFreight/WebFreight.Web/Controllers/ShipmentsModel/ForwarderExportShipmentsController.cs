@@ -45,11 +45,12 @@ using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
-    public class ForwarderShipmentsController : ApiController
+    public class ForwarderExportShipmentsController : ApiController
     {
 
+         
 
-        public HttpResponseMessage Post(ShipmentAM Shipment)
+        public HttpResponseMessage Post(NewAExporterShipmentAM Shipment)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
                 CustomerTenantAccessQuery CAQuery = new CustomerTenantAccessQuery(Shipment.Tenant);
                 CustomerTenantAccessCardQuery CTACQuery = new CustomerTenantAccessCardQuery(Shipment.Tenant);
-                var TenantAccess = CAQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(Shipment.Tenant, Shipment.ImporterTenant);
+                var TenantAccess = CAQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(Shipment.Tenant, Shipment.ExporterTenant);
                 CustomerTenantAccessCardPM card = CTACQuery.GetCustomerTenantAccessCardPMByCustomerTenantAccessId(TenantAccess.Id, Shipment.Tenant).Where(a => a.StatusTypeCode.ToUpper() != "IA").FirstOrDefault();
                 //ShipmentQuery shipmentQuery = new ShipmentQuery(Shipment.Tenant);
 
@@ -78,10 +79,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 {
                     List<QueueTask> tasks = new List<QueueTask>();
                     var data = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(Shipment);
-                    string myAction = "NewImporterShipment";
+                    string myAction = "NewExporterShipment";
                     if (Shipment.SendUpdatesToAgentEnabled)
                     {
-                        myAction = "UpdateImporterShipment";
+                        myAction = "UpdateExporterShipment";
                     }
 
                     tasks.Add(new QueueTask() { Action = myAction, Parameters = new List<Logitude.Server.Tools.Parameter>() { new Logitude.Server.Tools.Parameter { Name = "ImporterShipment", Value = data } } });
@@ -158,7 +159,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         }
                     }
                 }
-               
+
                 return Request.CreateResponse(HttpStatusCode.OK, commLog.Id);
 
             }
@@ -168,13 +169,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
         }
 
+
         private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
         {
             try
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() }}, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
                 //BrokeredMessage message = new BrokeredMessage();
 
                 //message.Properties["CommunicationLogId"] = communicationLogId;
@@ -190,28 +192,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SendCommunicationLogMessageToQueue Forwarder Shipment", null, null);
             }
-        }
-
-        private QueueClient GetQueueClient(string queuename)
-        {
-            queuename = WebFreightEntryPoint.GetQueueByEnviroment(queuename);
-
-            if (!StorageAcountDetails.NameSpaceManager.QueueExists(queuename))
-            {
-                QueueDescription queueDescription = new QueueDescription(queuename);
-                queueDescription.MaxSizeInMegabytes = 5120;
-                queueDescription.MaxDeliveryCount = 99999;
-                queueDescription.LockDuration = new TimeSpan(0, 5, 0);
-
-                //queueDescription.LockDuration
-                //queueDescription.DefaultMessageTimeToLive = new TimeSpan(3, 1, 0);
-
-                StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
-            }
-
-            QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(queuename, ReceiveMode.PeekLock);
-
-            return client;
         }
 
     }
