@@ -1480,7 +1480,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 if (entityPM.ShipmentPackages != null && entityPM.ShipmentPackages.Count() > 0)
                 {
-                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
+                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber.Trim()).Any(g => g.Count() > 1);
                     if (IsDuplicate)
                     {
                         throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");
