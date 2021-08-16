@@ -219,7 +219,7 @@
                                         {{item}}
                                     </span>
                                     <span class="more-mobile" *ngIf="references?.length > 1 && i == 0">
-                                        <a (click)="OpenMessageWindow(references.slice(1, references.length + 1))"><u>+ {{references?.length - 1}} More</u></a>
+                                        <a (click)="OpenMessageWindow(shipment.CustomerReference?.split(','))"><u>+ {{references?.length - 1}} More</u></a>
                                     </span>
                                 </div>
                                 <span class="hide-mobile" *ngIf="references?.length > 4" [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">

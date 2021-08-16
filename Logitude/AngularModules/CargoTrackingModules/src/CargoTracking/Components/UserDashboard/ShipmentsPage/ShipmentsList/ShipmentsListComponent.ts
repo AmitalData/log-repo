@@ -491,7 +491,7 @@ export class ShipmentsListComponent implements AfterViewInit
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: references.toString().split(',').join("\n"),
+                description: references.slice(1, references.length + 1).join("\n"),
             }
         });
     } 
