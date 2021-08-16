@@ -87,6 +87,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.TaxExemptCode != null)
                     {
                         invoice.TaxExemptCode = customResponse.TaxExemptCode;
+                        invoice.ChangeSetOp = ChangeSetOperation.Update;
+
                     }
 
                     updateService.Update(invoice, true);
