@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_BlockedGLAccount = "Journal.M.AccountIsBlocked";//"Blocked GLAccounts(Inactive=True)";
 
         public const string M_GLAccountIsControl = "GLAccount IsControl=True";
+        public const string M_ForeignDiffLocalAmountButTenantCurrency= "Journal.M.ForeignDiffLocalAmountButTenantCurrency";
 
         //public const string M_ButAccountCurrencyisDifferent =
         //    ///" But Account Currency is Different ";
@@ -340,6 +341,22 @@ namespace Logitude.Accounting.BL.Validators
                     if ((currJournalLinePM.ActionTypeCode == "3" || currJournalLinePM.ActionTypeCode == "4") && ((currJournalLinePM.DebitAccountId == null) || (currJournalLinePM.CreditAccountId == null)))
                     {
                         errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ActionCodeCreditAndCreditMeanDebit, myJournalPM.Tenant));
+                    }
+
+                    if (TenantCurrency == currJournalLinePM.CurrencyId)
+                    {
+                        if (currJournalLinePM.ForeignAmount != currJournalLinePM.LocalAmount)
+                        {
+                            if (myJournalPM.ExternalSystem == "AMITAL" && !string.IsNullOrWhiteSpace(myJournalPM.ExternalNo))
+                            {
+                                /// LET IT GO !!
+                            }
+                            else
+                            {
+                                //המטבע הוא שח והסכום במטז שונה מסכום שח
+                                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ForeignDiffLocalAmountButTenantCurrency, myJournalPM.Tenant));
+                            }
+                        }
                     }
                     //if (!currJournalLinePM.DueDate.HasValue)
                     //{
