@@ -66,10 +66,6 @@ Given("a trucker contact with the following details", (dataTable) => {
     MaintenanceActions.FillTruckerContactDetails(contactDetails)
 });
 
-When("create trucker", () => {
-    MaintenanceActions.CreateTruckerMockCreate()
-});
-
 Then("the trucker should create successfully", () => {
     MaintenanceActions.AssertCreateTruckerMockCreate()
 });
