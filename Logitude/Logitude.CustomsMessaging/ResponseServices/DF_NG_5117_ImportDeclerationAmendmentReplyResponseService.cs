@@ -708,9 +708,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                if(_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="6" || _MyDeclarationPM.AmendmentStatus == "3" ) && _MyDeclarationPM.HatraDate ==null)
+
+                if (_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="6" || _MyDeclarationPM.AmendmentStatus == "3" ) && _MyDeclarationPM.HatraDate ==null)
 
                 {
+                    if( _MyDeclarationPM.Consignments==null || _MyDeclarationPM.Consignments.Count()==0)
+
+                    {
+                        _MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                    }
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                     mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
 
