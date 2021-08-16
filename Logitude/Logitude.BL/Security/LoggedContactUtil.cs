@@ -56,7 +56,10 @@ namespace Logitude.BL.Security
                 }
                 else
                 {
-                    loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+                    if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+                    else
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
                 }
             }
             catch { }

@@ -216,6 +216,7 @@ namespace WebFreight.Web.Security
             }
         }
 
+        [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
        
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail=null)
@@ -979,6 +980,11 @@ namespace WebFreight.Web.Security
 
         public static string GetAuthenticatedUser()
         {
+            if (IsWorkerRoleCall && !string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail)) //for calling the excel export data from WR 
+            {
+                return AuthenticationUtil.AuthenticatedUserEmail;
+            }
+
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
             {
                 var loggedContact = LoggedContactResolver.GetLoggedContact(0);

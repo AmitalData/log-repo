@@ -25,9 +25,15 @@ namespace Logitude.BL.Security
 {
     public class SecurityUtility
     {
+        [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
         public static string GetAuthenticatedUser()
         {
+            if (IsWorkerRoleCall && !string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail)) //for calling the excel export data from WR 
+            {
+                return AuthenticationUtil.AuthenticatedUserEmail;
+            }
+
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
             {
                 var loggedContact = LoggedContactResolver.GetLoggedContact(0);
