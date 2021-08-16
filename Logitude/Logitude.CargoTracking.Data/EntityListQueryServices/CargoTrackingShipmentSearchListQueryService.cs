@@ -52,17 +52,31 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         public List<CargoTrackingShipmentList> GetShipments(string searchText, int tenant)
         {
-            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
-            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = repo.GetShipmentSearchEntities(searchText, tenant);
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = GetShipmentsSearchEntities(searchText, tenant);
 
             List<string> shipmentsIds = shipmentsSearchEntities.Select(d => d.ShipmentId).ToList();
 
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds, tenant);
 
-          
             return shipments;
         }
+
+        private static IQueryable<CargoTrackingShipmentSearch> GetShipmentsSearchEntities(string searchText, int tenant)
+        {
+            Boolean isContainsSlashORDash = searchText.Contains('-') || searchText.Contains('/');
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntitiesMatchWhole = repo.GetShipmentSearchEntities(searchText, tenant);
+
+            if (!isContainsSlashORDash) { return shipmentsSearchEntitiesMatchWhole; }
+            else
+            {
+                var partOfSearchText = searchText.Contains('-') ? searchText.Substring(searchText.IndexOf('-') + 1) : searchText.Substring(searchText.IndexOf('/') + 1);
+                IQueryable<CargoTrackingShipmentSearch>  ShipmentsSearchEntitiesMatchSecondPart = repo.GetShipmentSearchEntities(partOfSearchText, tenant);
+                return shipmentsSearchEntitiesMatchWhole.Union(ShipmentsSearchEntitiesMatchSecondPart);
+            }
+        }
+
         public List<CargoTrackingShipmentList> GetTop500Shipments(int pageIndex, int pageSize, int tenant)
         {
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
