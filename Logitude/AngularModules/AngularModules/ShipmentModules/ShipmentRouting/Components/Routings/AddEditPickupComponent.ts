@@ -119,6 +119,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private SessionEvent: any = null;
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -135,6 +136,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             });
+
 
             if (this.LoadCompletedEvent == null) {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -826,7 +828,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 let isEditComponentSaved = false;
 
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {                        
+                    if (isEditComponentSaved) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
