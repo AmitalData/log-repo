@@ -134,7 +134,7 @@ namespace Logitude.Customs.BL.BL
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
-                
+
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
                 updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
@@ -496,14 +496,17 @@ namespace Logitude.Customs.BL.BL
                 // Set Pending 902- Missing ID
                 // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
                 if (declarationPendingPM_902 == null)
-
                 {
-                    declarationPendingPM_902 = new DeclarationPendingPM();
-                    declarationPendingPM_902.CourierPendingReasonCode = "902";
-                    declarationPendingPM_902.Status = "A";
-                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
-                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
-                    
+                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("902", myDeclarationCourierStatusPM.Tenant);
+                    if (isActive)
+                    {
+                        declarationPendingPM_902 = new DeclarationPendingPM();
+                        declarationPendingPM_902.CourierPendingReasonCode = "902";
+                        declarationPendingPM_902.Status = "A";
+                        declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
+                    }
                 }
                 else if (declarationPendingPM_902.Status != "A")
                 {
@@ -559,11 +562,11 @@ namespace Logitude.Customs.BL.BL
                     //UPDATE to solve
                     declarationPending903PM.Status = "S";
                     declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
-                    if (myDeclarationCourierStatusPM.ChangeSetOp== ChangeSetOperation.None)
+                    if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
                     {
                         myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    
+
                 }
 
             }
@@ -571,20 +574,24 @@ namespace Logitude.Customs.BL.BL
             {
                 if (declarationPending903PM == null)
                 {
-
-                    declarationPending903PM = new DeclarationPendingPM()
+                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, myDeclarationCourierStatusPM.Tenant);
+                    if (isActive)
                     {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        DeclarationID = declarationPM.Id,
-                        Tenant = declarationPM.Tenant,
-                        CourierPendingReasonCode = courierReasonCode,
-                        Status = "A",
-                    };
+                        declarationPending903PM = new DeclarationPendingPM()
+                        {
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            DeclarationID = declarationPM.Id,
+                            Tenant = declarationPM.Tenant,
+                            CourierPendingReasonCode = courierReasonCode,
+                            Status = "A",
+                        };
 
-                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);
-                    if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
-                    {
-                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);
+                        if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                        {
+                            myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
 
 

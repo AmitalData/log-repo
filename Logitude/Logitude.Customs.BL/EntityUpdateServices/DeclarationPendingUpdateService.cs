@@ -27,12 +27,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool IsUpdateComposition { get; set; }
         protected override void OnCreating(DeclarationPendingPM entityPM, DeclarationCourierStatusPM entityParentPM)
         {
-            CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
-            Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(entityPM.CourierPendingReasonCode, entityPM.Tenant);
-            if (!isActive)
-            {
-                throw new Exception($"מיסיבת Pending");
-            }
             if (entityParentPM != null)
             {
                 entityPM.DeclarationID = entityParentPM.DeclarationId;

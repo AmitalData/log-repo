@@ -851,11 +851,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isSetPendingTo901 = true;
                                 if (declarationPendingPM_901 == null)
                                 {
-                                    declarationPendingPM_901 = new DeclarationPendingPM();
-                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
-                                    declarationPendingPM_901.Status = "A";
-                                    declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
-                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
+                                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(_MyDeclarationCourierStatusPM.Tenant);
+                                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("901", _MyDeclarationCourierStatusPM.Tenant);
+                                    if (isActive)
+                                    {
+                                        declarationPendingPM_901 = new DeclarationPendingPM();
+                                        declarationPendingPM_901.CourierPendingReasonCode = "901";
+                                        declarationPendingPM_901.Status = "A";
+                                        declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
+                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
+                                    }
                                 }
                                 else if (declarationPendingPM_901.Status != "A")
                                 {
