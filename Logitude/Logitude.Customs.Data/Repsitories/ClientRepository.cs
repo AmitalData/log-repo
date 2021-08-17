@@ -34,6 +34,18 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
+        public string GetIdByCodeOrPassport(int tenant, string code, string passport)
+        {
+            if (String.IsNullOrWhiteSpace(code)) return "";
+            return
+                  (
+                  from rec in context.Clients
+                  where (rec.Code == code || rec.PassportNumber == passport) && rec.Tenant == tenant
+                  select rec.Id
+                  )
+                  .FirstOrDefault();
+        }
+
         public string GetIdByPassportNumberOrCountry(int tenant, string passportNumber, string passportCountryCode)
         {
             if (string.IsNullOrEmpty(passportNumber) && string.IsNullOrEmpty(passportCountryCode)) return "";
