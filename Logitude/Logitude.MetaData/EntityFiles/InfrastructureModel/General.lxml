@@ -2650,7 +2650,14 @@
       LocalDefaultText="&quot;רשימת בלדרים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-    <TextCode
+	  <TextCode
+  Code="&quot;General.MC.Tables.CouriersVat&quot;"
+  DefaultText="&quot;Couriers Vat&quot;"
+  LocalDefaultText="&quot;רשימת בלדרים&quot;"
+  TextCodeTypeCode="&quot;MC&quot;"
+  IsSpellChecked="false" />
+
+	  <TextCode
       Code="&quot;General.MH.DocumentsFiling&quot;"
       DefaultText="&quot;Documents&quot;"
       LocalDefaultText="&quot;מסמכים&quot;"

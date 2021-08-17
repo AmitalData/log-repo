@@ -1621,7 +1621,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCTablesCouriersVat = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.CouriersVat", DefaultText = "Couriers Vat",LocalDefaultText = @"רשימת בלדרים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHDocumentsFiling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DocumentsFiling", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            #region QuoteOP
+
+            TextCode GeneralTextCode_GeneralMCTablesQuotesOP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes(OP)", LocalDefaultText = @"הצעות מחיר(OP)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            //MenusTable - teaxtcode
+            TextCode GeneralTextCode_GeneralMCOPSpecialServiceTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.OPSpecialServiceTypes", DefaultText = "Special Service Types (OP)", LocalDefaultText = "סוגי שירות מיוחדים(OP)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, TextCodes);
+            #endregion
+
+            //Feature GeneralSpecialServicesTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SPECIALSERVICESTYPES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SpecialServicesType", NameTextCodeDefaultText = "Special Service Types", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            TextCode GeneralTextCode_GeneralMHDocumentsFiling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DocumentsFiling", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCRMIntegrationSystemsSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CRM.IntegrationSystemsSetting", DefaultText = "Integration Systems Setting",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
