@@ -617,7 +617,7 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
 }
-                }
+                
             }
 
         }
