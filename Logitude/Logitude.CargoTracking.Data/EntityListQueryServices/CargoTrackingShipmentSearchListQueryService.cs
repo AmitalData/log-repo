@@ -66,14 +66,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             Boolean isContainsSlashORDash = searchText.Contains('-') || searchText.Contains('/');
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
-            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntitiesMatchWhole = repo.GetShipmentSearchEntities(searchText, tenant);
+            IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntitiesThatMatchWhole = repo.GetShipmentSearchEntities(searchText, tenant);
 
-            if (!isContainsSlashORDash) { return shipmentsSearchEntitiesMatchWhole; }
+            if (!isContainsSlashORDash) { return shipmentsSearchEntitiesThatMatchWhole; }
             else
             {
                 var partOfSearchText = searchText.Contains('-') ? searchText.Substring(searchText.IndexOf('-') + 1) : searchText.Substring(searchText.IndexOf('/') + 1);
-                IQueryable<CargoTrackingShipmentSearch>  ShipmentsSearchEntitiesMatchSecondPart = repo.GetShipmentSearchEntities(partOfSearchText, tenant);
-                return shipmentsSearchEntitiesMatchWhole.Union(ShipmentsSearchEntitiesMatchSecondPart);
+                IQueryable<CargoTrackingShipmentSearch>  shipmentsSearchEntitiesThatMatchSecondPart = repo.GetShipmentSearchEntities(partOfSearchText, tenant);
+                return shipmentsSearchEntitiesThatMatchWhole.Union(shipmentsSearchEntitiesThatMatchSecondPart);
             }
         }
 
