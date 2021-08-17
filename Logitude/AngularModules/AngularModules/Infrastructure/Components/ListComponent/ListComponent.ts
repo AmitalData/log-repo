@@ -3000,6 +3000,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
 
+            if (this.ObjectTableName == "Vendor") {
+                str = TextCodeTranslator.Translate("General.B.Add") + " Vendor";
+            }
 
 
             if (this.ObjectTableName == "Customs.CustomsVendor") {
