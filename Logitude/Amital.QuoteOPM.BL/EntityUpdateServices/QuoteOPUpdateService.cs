@@ -1,4 +1,5 @@
 ﻿using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.Data.Repsitories;
 using Amital.QuoteOPM.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -19,14 +20,17 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
         
         protected override void OnCreating(QuoteOPPM entityPM, EntityPM entityParentPM)
         {
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant).Date;
 
-            EntityPM.Id = IdCounter.GetNumber("Quote", entityPM.Tenant).ToString();
+            EntityPM.Id = IdCounter.GetNumber("QuoteOP", entityPM.Tenant).ToString();
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
             string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
             var contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
             entityPM.CreatedByUserId = contact.Id;
             ;
-
+            entityPM.OpenDate = entityPM.IsHybrid ? entityPM.OpenDate : todayDateTime;
+            entityPM.LastStageDate = todayDateTime;
             //entityPM.OpenDate;
             //this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
             //entityPoco.Tenant = entityPM.Tenant;
@@ -34,11 +38,70 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             //entityPoco.DirectionId = entityPM.DirectionId;
             //this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ProductCode);
             //entityPoco.ProductCode = entityPM.ProductCode;
+            GetQuoteSettings(entityPM);
             if (!entityPM.IsHybrid)
             {
-                entityPM.QuoteNumber = TableCounter.GetNumber(entityPM.Tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
+                entityPM.QuoteNumber = TableCounter.GetNumber(entityPM.Tenant, "QUOTOP", entityPM.DirectionId, entityPM.TransportModeId);
             }
+            if (entityPM.IsCreatedFromTicket)
+            {
+                entityPM.RequestDate = entityPM.TicketCreateDate;
+            }
+            else
+            {
+                entityPM.RequestDate = entityPM.OpenDate;
+            }
+
             base.OnCreating(entityPM, entityParentPM);
+        }
+
+        private void InitializeStage(QuoteOPPM entityPM)
+        {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert  /*isNewEntity*/)
+            {
+                QuoteOPStage myStage = null;
+                string myStageId = null;
+                DateTime? stageDueDate = null;
+                var stageRepository = new QuoteOPStageRepository(entityPM.Tenant);
+
+                if (!string.IsNullOrEmpty(entityPM.StageId))
+                {
+                    myStage = stageRepository.GetSingleQuoteOPStage(entityPM.StageId, entityPM.Tenant);
+                }
+
+                else
+                {
+                    myStage = stageRepository.GetSingleQuoteOPStageByCode("QTCR", entityPM.Tenant);
+                }
+
+                if (myStage != null)
+                {
+                    myStageId = myStage.Id;
+
+                    if (myStage.MaxDays != null)
+                    {
+                        DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                        stageDueDate = todayDateTime.Value.Date.AddDays(Convert.ToDouble(myStage.MaxDays));
+                    }
+                }
+
+                entityPM.StageId = myStageId;
+                entityPM.StageDueDate = stageDueDate;
+            }
+        }
+        private void GetQuoteSettings(QuoteOPPM entityPM)
+        {
+            var iQuoteSettingRepository = new QuoteOPSettingRepository(this.currentContext);
+            var iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(entityPM.Tenant);
+
+            if (iQuoteSetting != null)
+            {
+                if (!entityPM.IsCopy)
+                {
+                    entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                    entityPM.IsMultiCurrency = iQuoteSetting.IsMultiCurrency;
+                }
+            }
         }
 #if false
 

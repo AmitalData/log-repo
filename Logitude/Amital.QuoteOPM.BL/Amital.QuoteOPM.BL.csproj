@@ -153,6 +153,7 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTotalVatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuoteOPBusinessUnitFilter.cs" />
