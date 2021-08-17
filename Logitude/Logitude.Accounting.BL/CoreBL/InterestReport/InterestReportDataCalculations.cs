@@ -161,6 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
             SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
             interestReportPM.CalCreditAllotmentCommission = (interestReportPM.GLAccountInterestCreditLimit == null ? 0 : interestReportPM.GLAccountInterestCreditLimit) * interestReportPM.CreditAllotmentPercentage * (decimal?)0.01;
+            interestReportPM.CalculatedPostponedChequesCommision = GetInterestReportCalculatedPostponedChequesCommision();
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
@@ -328,6 +329,31 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                     + d.CalculatedExcepInterestAmount
                                     + d.CalculatedCreditInterestAmount));
             return totalAmount;
+        }
+
+        private decimal? GetInterestReportCalculatedPostponedChequesCommision()
+        {
+            var aRPaymentIds = interestTransactionPMs.Where(x => x.InterestEntityTypeCode == InterestEntities.ARPayment).Select(x => x.EntityId).ToList();
+            var gLAccount = GetGLAccount(interestReportPM.GLAccountId, interestReportPM.Tenant);
+
+            int aRPaymentChequesCount = GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(aRPaymentIds, interestReportPM.Tenant);
+            decimal? postponedChequesCommision = gLAccount != null ? gLAccount.PostponedChequesCommission * aRPaymentChequesCount : null;
+
+            return postponedChequesCommision;
+        }
+
+        private GLAccountPM GetGLAccount(string id, int tenant)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);
+            GLAccountPM account = gLAccountQueryService.GetSinglePM(id, tenant);
+            return account;
+        }
+
+        private int GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(List<string> aRPaymentIds, int tenant)
+        {
+            ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(interestReportPM.Tenant);
+            var aRPaymentChequesCount = aRPaymentChequeQueryService.GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(aRPaymentIds, tenant);
+            return aRPaymentChequesCount;
         }
 
         private void SetInterestReportStatusDraft()
