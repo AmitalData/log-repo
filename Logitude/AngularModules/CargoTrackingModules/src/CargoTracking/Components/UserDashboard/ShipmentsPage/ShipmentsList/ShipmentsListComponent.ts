@@ -461,6 +461,7 @@ export class ShipmentsListComponent implements AfterViewInit
         else if (shipment.ForwardingShipmentLevelCode == 'H') {
             this.ConsignmentNumber = shipment.ForwardingHouse;
         }
+        return this.ConsignmentNumber;
     }
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
