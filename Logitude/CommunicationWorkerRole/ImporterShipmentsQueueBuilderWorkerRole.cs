@@ -293,7 +293,7 @@ namespace CommunicationWorkerRole
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        if (true)
+                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment)))
                                                             IdsList.Add(item);
                                                         else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
                                                             ImportIdsList.Add(item);
@@ -364,8 +364,8 @@ namespace CommunicationWorkerRole
                                                 LogPM.EntityId = Shipment.Id;
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
-                                              //  if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
-                                                { 
+                                                if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
+                                                {
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                                                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
                                                 }

@@ -51,7 +51,7 @@ namespace CommunicationWorkerRole
     {
         IQueueService queueservice;
         int Tenant;
-        string URI = "";//"http://localhost:9996/api/";
+        string URI = "";//"http://localhost:9996";
         APILogsService apiLogsService;
         IWebFreightContext webFreightContext;
 
