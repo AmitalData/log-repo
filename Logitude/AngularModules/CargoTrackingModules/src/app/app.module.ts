@@ -35,8 +35,6 @@ import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/C
 import { DocumentDownloadService } from '../CargoTracking/Services/Others/DocumentDownloadService';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MessageWindowComponent } from '../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import { ToolTipComponent } from 'src/Infrastructure/Components/ToolTip/ToolTipComponent';
-import { OverlayModule } from '@angular/cdk/overlay';
 
 
 export function getBaseUrl() {
@@ -65,7 +63,6 @@ export function getBaseUrl() {
         ResetPasswordComponent,
         ChangePasswordComponent,
         MessageWindowComponent,
-        ToolTipComponent,
 
 
         //Erros
@@ -81,7 +78,6 @@ export function getBaseUrl() {
         MatDialogModule,
         ReactiveFormsModule,
         ScrollingModule,
-        OverlayModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
     ],
     providers: [
