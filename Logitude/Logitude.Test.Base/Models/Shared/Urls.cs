@@ -44,18 +44,18 @@
         public static string OpportunitiesController = "Opportunities";
         public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
-
-        //public static string QuotesGetSingle(string id)
-        //{
-        //    return "Quotes/GetSingle?id=" + id;
-        //}
-
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
-        //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
-
-
+        public static string TMProjectViewsGetByFilters = "TMProjectViews/GetByFilters";
+        public static string TmprojectsController = "Tmprojects";
+        public static string TMBudgetViewsGetByFilters = "TMBudgetViews/GetByFilters";
+        public static string TMBudgetsController = "TMBudgets";
+        public static string TmprojectcategoryViewsByFilters = "TmprojectcategoryViews/GetByFilters";
+        public static string TmprojectcategoriesController = "Tmprojectcategories";
+        public static string SprintViewsByFilters = "SprintViewsByFilters/GetByFilters";
+        public static string SprintsController = "Sprints";
+        public static string TimeManagementDomainController = "TimeManagementDomain";
 
         #region Shipment Prepare Data URls
         //locations
