@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="1">
+    <![CDATA[
+
+    UPDATE ARPayments SET SearchFields = ARPayments.SearchFields + ','+ payments.chequesNumbers
+    FROM ARPayments inner join
+    (SELECT PaymentId, STRING_AGG ( ISNULL(ChequeNumber,'N/A'), ',') AS chequesNumbers 
+    FROM ARPaymentCheques
+    GROUP BY PaymentId) AS payments ON ARPayments.Id = payments.PaymentId
+     ]]>
+ </Sql>
+</Script>
