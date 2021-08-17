@@ -383,7 +383,6 @@
     <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
-    <Compile Include="NewExporterShipmentWorkerRole.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
