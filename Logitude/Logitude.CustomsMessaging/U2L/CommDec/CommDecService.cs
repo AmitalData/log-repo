@@ -886,11 +886,16 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 if (_declarationPendingPM == null)
                 {
-                    _declarationPendingPM = new DeclarationPendingPM();
-                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
-                    _declarationPendingPM.Status = "A";
-                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(_declarationPendingPM.Tenant);
+                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(declarationPendingCode, _declarationPendingPM.Tenant);
+                    if (isActive)
+                    {
+                        _declarationPendingPM = new DeclarationPendingPM();
+                        _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
+                        _declarationPendingPM.Status = "A";
+                        _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                    }
                 }
                 else if (_declarationPendingPM.Status != "A")
                 {
