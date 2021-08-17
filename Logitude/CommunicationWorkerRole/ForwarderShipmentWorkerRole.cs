@@ -7,6 +7,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityAMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -131,6 +132,8 @@ namespace CommunicationWorkerRole
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                            string LogSubject = "Send Shipment To Forwarder By ForwarderExportShipments Controller";
+                            string NewExportShipmentURI = "ForwarderExportShipments";
 
                             #region APILogs
                             var aPILogsRepository = new APILogsRepository(webFreightContext);
@@ -248,89 +251,34 @@ namespace CommunicationWorkerRole
                                                 DepartmentCode = Department.Code;
                                             }
 
-                                            // 
                                             if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
-                                                NewAExporterShipmentAM newAExporterShipmentAM = new NewAExporterShipmentAM()
-                                                {
-                                                    Id = ForwarderShipment.Id,
-                                                    ExporterTenant = tenant,
-                                                    Tenant = (int)Partner.PartnerTenant,
-                                                    TransportModeId = ForwarderShipment.TransportModeId,
-                                                    DirectionId = ForwarderShipment.DirectionId,
-                                                    CustomerShipmentNumber = ForwarderShipment.ShipmentNumber,
-                                                    ShipmentTypeId = ForwarderShipment.ShipmentTypeId,
-                                                    ConsigneeName = ForwarderShipment.ConsigneeName,
-                                                    InvoiceReference = ForwarderShipment.PrivateLabelInvoiceNumber,
-                                                    CustomerReference = ForwarderShipment.CustomerReference1,
-                                                    IncludePickup = ForwarderShipment.PrivateLabelIncludePickup,
-                                                    IncludeDelivery = ForwarderShipment.PrivateLabelIncludeDelivery,
-                                                    DangerousGoods = ForwarderShipment.IsDangerous,
-                                                    ReqFlightDate = ForwarderShipment.RequestedFlightDate,
-                                                    Quantity = ForwarderShipment.PackagesQuantity,
-                                                    Weight = ForwarderShipment.GrossWeight,
-                                                    SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
-                                                    Customer = new CodeProperties()
-                                                    {
-                                                        Code = CustomerCode
-                                                    },
-
-                                                    Shipper = new CodeProperties()
-                                                    {
-                                                        Code = ShipperCode
-                                                    },
-
-                                                    FromPort = new CodeProperties()
-                                                    {
-                                                        Code = ForwarderShipment.FromPort,
-                                                        CountryCode = ForwarderShipment.FromCountryCode
-                                                    },
-                                                    ToPort = new CodeProperties()
-                                                    {
-                                                        Code = ForwarderShipment.ToPort,
-                                                        CountryCode = ForwarderShipment.ToCountryCode
-                                                    },
-
-                                                };
-
-                                                newAExporterShipmentAM.ShipmentPackages = new List<Packages>();
-                                                foreach (var item in ForwarderShipment.ShipmentPackages)
-                                                {
-
-                                                    Packages MyPackage = new Packages();
-                                                    MyPackage.Quantity = item.Quantity;
-                                                    //  MyPackage.GrossWeight = item.GrossWeight;
-                                                    MyPackage.Length = item.Length;
-                                                    MyPackage.Width = item.Width;
-                                                    MyPackage.Height = item.Height;
-
-                                                }
-
-
-                                                LogPM.Subject = "Send Shipment To Forwarder By ForwarderShipments Controller";
+                                                ExporterShipmentAMMappingServie exporterShipmentMappingServie = new ExporterShipmentAMMappingServie(ForwarderShipment); 
+                                                NewAExporterShipmentAM newAExporterShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM(tenant);
+                                                 
+                                                LogPM.Subject = LogSubject;
                                                 if (IsNewLog)
                                                 {
-                                                    //LogPM.CustomerId = CustomerId;
-                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                    LogPM.QueueType = "Shipment";
-                                                    apiLogsService.Create(LogPM);
+                                                    CreateNewExportShipmentLog(response, LogPM);
                                                 }
                                                 var msg = "Start Sending Shipment To Forwarder " + DateTime.Now;
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), null, null, "");
 
                                                 var serializedObject = JsonConvert.SerializeObject(newAExporterShipmentAM);
                                                 var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                ImporterShipmentsURI = URI + "ForwarderExportShipments";
+                                                ImporterShipmentsURI = URI + NewExportShipmentURI;
                                                 var result = client.PostAsync(ImporterShipmentsURI, content);
+
                                                 result.Wait();
+
                                                 if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
-                                                    var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                    var responseData = result.Result.Content.ReadAsStringAsync().Result;
                                                     msg = "Shipment sent To Forwarder " + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), temp1, null, "");
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), responseData, null, "");
                                                     queue.Complete();
                                                 }
-                                                else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                                                else
                                                 {
                                                     APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                     if (EXC != null)
@@ -343,8 +291,7 @@ namespace CommunicationWorkerRole
 
                                             }
                                             else
-                                            {
-
+                                            { 
 
                                                 ShipmentAM shipmentAM = new ShipmentAM()
                                                 {
@@ -587,6 +534,13 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void CreateNewExportShipmentLog(QueueResponse response, APILogsPM LogPM)
+        {
+            LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+            LogPM.QueueType = "Shipment";
+            apiLogsService.Create(LogPM);
+        }
+  
         private void ConnectClient()
         {
             try

@@ -32,9 +32,9 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public DateTime? ReqFlightDate { get; set; }
         public int? Quantity { get; set; }
         public double? Weight { get; set; }
-        public string Volume { get; set; }
+        public double? Volume { get; set; }
         public List<Packages> ShipmentPackages { get; set; }
-        public bool SendUpdatesToAgentEnabled { get; set; }
+        //public bool SendUpdatesToAgentEnabled { get; set; }
 
     }
 }
