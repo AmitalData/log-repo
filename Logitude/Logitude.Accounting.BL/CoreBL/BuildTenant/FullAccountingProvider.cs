@@ -819,6 +819,18 @@ namespace Logitude.Accounting.BL
         WorkersIsAlsoWorkAsProject = 6,
         DebtorsAndCreditors = 7//חייבים ונושים
     }
+
+    public enum PaymentChequeStatuses
+    {
+        InCashbook = 1,
+        InBank = 2,
+        InBankAccount = 3,
+        ReturnedFromBank = 4,
+        ReturnedToCustomer = 5,
+        Redeemed = 6,
+        CashbookedReturnedFromTheBank = 7
+    }
+
     public enum GLAccountTypeEnum
     {
         Card = 1,
@@ -826,7 +838,6 @@ namespace Logitude.Accounting.BL
         Vendor = 3,
         Job = 4,
         File = 5
-
     }
     public enum RevenueExpenseTypeEnum
     {

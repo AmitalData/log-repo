@@ -39,14 +39,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public int GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(List<string> paymentIds, int tenant)
         {
-
-
-
             List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques.Include("Payment")
                                                     where paymentIds.Contains(a.PaymentId) 
                                                     && a.ValueDate > a.Payment.RegisterDate
                                                     && a.Tenant == tenant 
-                                                    && a.StatusCode != "6" && a.StatusCode != "5"
+                                                    && a.StatusCode != PaymentChequeStatuses.Redeemed.ToString() && a.StatusCode != PaymentChequeStatuses.ReturnedToCustomer.ToString()
                                                     select a).ToList();
             return paymentCheques.Count();
         }
