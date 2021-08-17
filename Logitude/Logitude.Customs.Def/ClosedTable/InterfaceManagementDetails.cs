@@ -545,7 +545,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "8237",
                 InOut = InOutEnum.I.ToString(),
                 Description = "מענה לבקשה לתיקון הצהרה יצוא",
-                //DcaPrefixName = "SendDF_MSG5117_ImportDeclerationAmendmentReplyMsg_Out.",
+                DcaPrefixName = "SendDF_MSG8237_ExportDeclarationAmendmentReplyMsg_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
