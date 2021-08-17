@@ -99,6 +99,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ConsigneeName = consignee == null ? null : consignee.EnglishName,
                                                                CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
                                                                ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
+                                                               ForwardingShipmentLevelCode = shipment.ForwardingShipmentLevelCode,
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
                                                                FromPortCountryCode = fromPort.CountryCode,
@@ -114,6 +115,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
                                                                ShipperName = shipper == null ? null : shipper.EnglishName,
+                                                               ForwardingMaster = shipment.ForwardingMaster,
+                                                               ForwardingHouse = shipment.ForwardingHouse,
 
 
                                                            });

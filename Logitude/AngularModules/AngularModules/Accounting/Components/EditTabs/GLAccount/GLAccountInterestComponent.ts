@@ -275,6 +275,12 @@ export class GLAccountInterestComponent extends BaseComponent {
         }
     }
 
+
+    get PostponedChequesCommission() { return this.EntityPM.PostponedChequesCommission; }
+    set PostponedChequesCommission(newValue: number) {
+        this.EntityPM.PostponedChequesCommission = newValue;
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);

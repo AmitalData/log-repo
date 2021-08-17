@@ -108,6 +108,7 @@ export class CargoTrackingShipmentList {
 	ForwardingCustomFileNumber: string;
 	ForwardingShipperName: string;
 	ForwardingConsigneeName: string;
+	ForwardingShipmentLevelCode: string;
 	
 }
  
