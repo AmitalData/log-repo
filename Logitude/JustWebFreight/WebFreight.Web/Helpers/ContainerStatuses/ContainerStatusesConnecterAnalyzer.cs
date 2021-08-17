@@ -334,11 +334,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             var containerNumber = oceanInsight.ContainerNumber;
             container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
             containerId = container?.Id;
-            container_number = this.SetContainerNumber(container, oceanInsight);
-            shipmentPackagesId = this.SetShipmentPackagesId(container, oceanInsight);
+            container_number = this.GetContainerNumber(container, oceanInsight);
+            shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
 
-        private string SetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        private string GetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = ""; 
             if(container != null)
@@ -347,13 +347,13 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             else
             {
-                containerNumber = this.SetContainerNumberFromShipmentContainers(oceanInsight);
+                containerNumber = this.GetContainerNumberFromShipmentContainers(oceanInsight);
             }
 
             return containerNumber;
         }
 
-        private string SetShipmentPackagesId(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        private string GetShipmentPackagesId(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
         {
             string shipmentPackagesId = "";
             if (container != null)
@@ -362,13 +362,13 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             else
             {
-                shipmentPackagesId = this.SetShipmentPackagesIdFromShipmentContainers(oceanInsight);
+                shipmentPackagesId = this.GetShipmentPackagesIdFromShipmentContainers(oceanInsight);
             }
 
             return shipmentPackagesId;
         }
 
-        private string SetContainerNumberFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        private string GetContainerNumberFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = "";
             var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
@@ -383,7 +383,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             return containerNumber;
         }
 
-        private string SetShipmentPackagesIdFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        private string GetShipmentPackagesIdFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
         {
             string shipmentPackagesId = "";
             var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
