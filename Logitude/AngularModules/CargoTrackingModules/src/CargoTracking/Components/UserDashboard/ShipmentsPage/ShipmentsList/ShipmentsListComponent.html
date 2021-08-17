@@ -232,7 +232,7 @@
                                     <span *ngIf="shipment.ForwardingShipmentLevelCode == 'D'">Master</span>
                                     <span *ngIf="shipment.ForwardingShipmentLevelCode == 'H'">House</span>
                                     <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House" >House</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House" >House</span>
+                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House" >Master</span>
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">
