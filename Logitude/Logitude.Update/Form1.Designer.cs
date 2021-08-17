@@ -220,6 +220,7 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
+            this.tESTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -386,7 +387,8 @@
             this.textCodesToolStripMenuItem,
             this.internationalSiteToolStripMenuItem,
             this.createDecToolStripMenuItem,
-            this.accountingTesterToolStripMenuItem});
+            this.accountingTesterToolStripMenuItem,
+            this.tESTToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
             this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
@@ -394,21 +396,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -419,7 +421,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -446,21 +448,21 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
             // accountingTesterToolStripMenuItem
             // 
             this.accountingTesterToolStripMenuItem.Name = "accountingTesterToolStripMenuItem";
-            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.accountingTesterToolStripMenuItem.Text = "AccountingTester";
             this.accountingTesterToolStripMenuItem.Click += new System.EventHandler(this.accountingTesterToolStripMenuItem_Click);
             // 
@@ -2198,6 +2200,13 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
+            // tESTToolStripMenuItem
+            // 
+            this.tESTToolStripMenuItem.Name = "tESTToolStripMenuItem";
+            this.tESTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTToolStripMenuItem.Text = "TEST";
+            this.tESTToolStripMenuItem.Click += new System.EventHandler(this.tESTToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2444,6 +2453,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button UpdateQuoteOPM;
         private System.Windows.Forms.Button buttonQuoteOPMZIP;
+        private System.Windows.Forms.ToolStripMenuItem tESTToolStripMenuItem;
     }
 }
 

@@ -4737,6 +4737,11 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void tESTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateModule(0, "customs", UpdateCustomslbl);
+        }
     }
 
     public class TenantMailBox

@@ -30831,12 +30831,7 @@
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MH.QuotesOP&quot;"
-      DefaultText="&quot;Quotes(OP)&quot;"
-      LocalDefaultText="&quot;הצעות מחיר(OP)&quot;"
-      TextCodeTypeCode="&quot;M&quot;"
-      IsSpellChecked="false" />
+  
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
