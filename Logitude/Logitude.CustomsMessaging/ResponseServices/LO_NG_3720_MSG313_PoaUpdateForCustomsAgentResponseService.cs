@@ -35,7 +35,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var commonContext = CommonDataContext.GetContext(requestParams.Tenant);
             var clientQueryService = new ClientQueryService(requestParams.Tenant);
             var clientPoaQueryService = new ClientsPoaQueryService(requestParams.Tenant);
-            var clientPoaUpdateService = new ClientsPoaUpdateService(requestParams.Tenant);
+            var clientUpdateService = new ClientUpdateService(requestParams.Tenant);
             var vendorQueryService = new CustomsVendorQueryService(requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData(); //moran 1.3.15 - Task 9921
             MyResponseData.Succeeded = true; //moran 1.3.15 - Task 9921
@@ -45,8 +45,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (setting.IsConnectedToUniFreight)
                 {
-                    string client = null;
-                    client = clientQueryService.GetIdByCode(customResponse.POA.authorizerExternalId.ToString(), requestParams.Tenant);
+                    string clientId = null;
+                    clientId = clientQueryService.GetIdByCodeOrPassport(customResponse.POA.authorizerExternalId.ToString(), customResponse.POA.authorizerPassportNumber, requestParams.Tenant);
                     //if (String.IsNullOrWhiteSpace(client))
                     {
                         var clientSearchResponseData = new ClientSearchResponseData();
@@ -54,19 +54,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myClientSearchResponseData = SendGetCustomer(customResponse, requestParams);
                         if (myClientSearchResponseData.Succeeded) //moran 25.3.15 - Task 9921
                         {
-                            client = clientQueryService.GetIdByCode(customResponse.POA.authorizerExternalId.ToString(), requestParams.Tenant);
+                            clientId = clientQueryService.GetIdByCodeOrPassport(customResponse.POA.authorizerExternalId.ToString(), customResponse.POA.authorizerPassportNumber, requestParams.Tenant);
                         }
                     }
                     if (customResponse.POA != null  
                         && (customResponse.POA.authorizerExternalId.HasValue || !string.IsNullOrEmpty(customResponse.POA.authorizerPassportNumber))
                         && customResponse.PoaAuthorization != null && customResponse.PoaAuthorization.Length > 0)
                     {
-                        var client1 = clientQueryService.GetIdByCode(customResponse.POA.authorizedExternalId.ToString(), requestParams.Tenant);
-                        var toUpdate = clientPoaQueryService.GetPoas(customResponse.POA.authorizerExternalId.ToString(), customResponse.POA.authorizerPassportNumber, customResponse.POA.poaID.ToString(), requestParams.Tenant);
-
+                        var client = clientQueryService.GetSingle(clientId, true, false);
+                        var poaToUpdate = client.ClientPoas?.Where(x => x.PoaID == customResponse.POA.poaID.ToString());
                         foreach (var item in customResponse.PoaAuthorization)
                         {
-                            var entity = toUpdate.FirstOrDefault(x => x.PoaAuthorizationType == item.poaAuthorizationType.ToString());
+                            var entity = poaToUpdate?.FirstOrDefault(x => x.PoaAuthorizationType == item.poaAuthorizationType.ToString());
                             if(entity != null)
                             {
                                 entity.AuthorizedExternalId = customResponse.POA.authorizedExternalId.ToString();
@@ -89,12 +88,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     EndDate = item.endDate ?? customResponse.POA.endDate.GetValueOrDefault(),
                                     PoaAuthorizationType = item.poaAuthorizationType.ToString(),
                                     PoaStatus = customResponse.POA.poaStatus.ToString(),
-                                    ClientId = client1
+                                    ClientId = clientId
                                 };
                                 entity.ChangeSetOp = ChangeSetOperation.Insert;
+                                client.ClientPoas.Add(entity);
                             }
-                            clientPoaUpdateService.Update(entity, true);
                         }
+                        client.ChangeSetOp = ChangeSetOperation.Update;
+                        clientUpdateService.Update(client, true);
                     }
                 }
             }
