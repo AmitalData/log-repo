@@ -277,9 +277,6 @@ export class MultiUpdateComponent extends BaseComponent {
         if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
             errors.push("חובה להזין שדה קוד");
         }
-        if (this.UpdateSelected ) {
-            errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.SelectItems"));
-        }
         if (!this.UpdateAll && !this.UpdateSelected) {
             errors.push("בחר פריטים לעדכון");
         }
