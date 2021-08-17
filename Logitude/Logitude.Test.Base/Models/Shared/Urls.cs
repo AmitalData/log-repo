@@ -54,6 +54,7 @@
         public static string ARInvoicesController = "ARInvoices";
         //public static string APInvoiceViewsGetByFilters = "APInvoiceViews/getbyfilters";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
+        public static string ShipmentOrderController = "ShipmentOrder";
 
 
 
