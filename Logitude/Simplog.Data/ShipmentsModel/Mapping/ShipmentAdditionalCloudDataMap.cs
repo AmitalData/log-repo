@@ -72,6 +72,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UserIdNumberXMLData).HasColumnName("UserIdNumberXMLData");
             this.Property(t => t.UserIdNumber).HasColumnName("UserIdNumber");
 
+            this.Property(t => t.DocumentInspection).HasColumnName("DocumentInspection");
+            this.Property(t => t.GatepassDocumentsReady).HasColumnName("GatepassDocumentsReady");
+            this.Property(t => t.GoodsClassification).HasColumnName("GoodsClassification");
+
+
             this.HasRequired(t => t.Shipment);
 
         }
