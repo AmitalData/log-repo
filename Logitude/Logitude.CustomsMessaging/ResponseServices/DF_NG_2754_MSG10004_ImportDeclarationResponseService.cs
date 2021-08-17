@@ -367,6 +367,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                                     ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(context);
                                     var referantExceptionPMs = referantExceptionQueryService.GetByDecId(_MyDeclarationPM.Id);
+
                                     if (referantExceptionPMs.FirstOrDefault(x => x.ExceptionReasonsCode == "901") == null)
                                     {
                                         referantExceptionPM.ExceptionReasonsCode = "901";
@@ -901,8 +902,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                             CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
-                            if (courierPendingReasonPM == null)
+ 
+                            if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive==true)
                             {
+ 
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
                                 isCollectActive = false;
                             }
