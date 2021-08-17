@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private JournalAdditionalDataPM GetJournalAdditionalData(string journalId, int lineNumber)
         {
             JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
-            return journalAdditionalDataQueryService.GetSingle(journalId, lineNumber, false, false);
+            return journalAdditionalDataQueryService.GetJournalAdditionalData(journalId, lineNumber, tenant);
 
         }
         private void UpdateJournalAdditionalData(JournalAdditionalDataPM journalAdditionalData)
