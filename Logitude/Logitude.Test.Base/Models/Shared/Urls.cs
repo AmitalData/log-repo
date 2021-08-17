@@ -212,5 +212,9 @@
         {
             return "Tariffs/GetSingle?id=" + id;
         }
+        public static string ShipmentOrderSingle(string orderNumber)
+        {
+            return "ShipmentOrder?orderNumber=" + orderNumber;
+        }
     }
 }
