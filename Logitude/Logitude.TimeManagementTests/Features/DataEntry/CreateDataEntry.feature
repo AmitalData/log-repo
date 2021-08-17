@@ -6,7 +6,6 @@ Scenario: Create data entry
 		| property    | Value           |
 		| Employee    | SpecflowTest    |
 		| Project     | specflow prject |
-		| WINumber    | 100001          |
 		| Description | specflow desc   |
 		| Sprint      | specflow sprint |
 		| Location    | Office          |

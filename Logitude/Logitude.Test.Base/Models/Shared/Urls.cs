@@ -53,7 +53,7 @@
         public static string TMBudgetsController = "TMBudgets";
         public static string TmprojectcategoryViewsByFilters = "TmprojectcategoryViews/GetByFilters";
         public static string TmprojectcategoriesController = "Tmprojectcategories";
-        public static string SprintViewsByFilters = "SprintViewsByFilters/GetByFilters";
+        public static string SprintViewsByFilters = "SprintViews/GetByFilters";
         public static string SprintsController = "Sprints";
         public static string TimeManagementDomainController = "TimeManagementDomain";
 

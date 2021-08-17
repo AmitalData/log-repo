@@ -30,7 +30,7 @@ namespace Logitude.TimeManagementTests.Services
         {
             return new TimeSheetItemBuilder().WithDefualtValues()
                 .LocationCode((string)dataTable.Location)
-                .WINumber((string)dataTable.Description)
+                .Description((string)dataTable.Description)
                 .Day(GetTimeSheetItemDay(dataTable))
                 .Build();
         }
@@ -38,7 +38,7 @@ namespace Logitude.TimeManagementTests.Services
         {
             return new TMEmployeeTimePMBuilder().WithDefualtValues()
                 .LocationCode((string)dataTable.Location)
-                .WINumber((string)dataTable.Description)
+                .Description((string)dataTable.Description)
                 .TimeInMinutes((int)dataTable.Minuts)
                 .DateOfWork(DateTime.Now)
                 .Build();

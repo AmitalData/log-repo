@@ -24,8 +24,7 @@ namespace Logitude.TimeManagementTests.Services
         private string GetProjectId(string name, string ownerId)
         {
             ApiQueryFilters apiQueryFilters = BuildProjectApiQueryFilters(name, ownerId);
-           // string projectId = GetProjectIdFromUserTenant(apiQueryFilters);
-            string projectId = "";
+            string projectId = GetProjectIdFromUserTenant(apiQueryFilters);
             if (string.IsNullOrEmpty(projectId))
             {
                 projectId = GetCreatedProjectFromTenantZero(name, ownerId);
@@ -69,10 +68,10 @@ namespace Logitude.TimeManagementTests.Services
         private ApiQueryFilters BuildProjectApiQueryFilters(string name, string ownerId)
         {
             return new ApiQueryFiltersBuilder().WithDefualtValues()
-                .Filter1Name("name")
+                .Filter1Name("Name")
                 .Filter1Operator("equals")
                 .Filter1Value(name)
-                .Filter2Name("ownerId")
+                .Filter2Name("OwnerId")
                 .Filter2Operator("equals")
                 .Filter2Value(ownerId)
                 .Build();

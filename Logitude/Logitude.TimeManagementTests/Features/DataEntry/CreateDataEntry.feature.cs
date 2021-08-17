@@ -118,9 +118,6 @@ this.ScenarioInitialize(scenarioInfo);
                             "Project",
                             "specflow prject"});
                 table1.AddRow(new string[] {
-                            "WINumber",
-                            "100001"});
-                table1.AddRow(new string[] {
                             "Description",
                             "specflow desc"});
                 table1.AddRow(new string[] {
@@ -138,10 +135,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
  testRunner.Given("a data entry with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 15
+#line 14
  testRunner.When("create data entry", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 15
  testRunner.Then("the data entry should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
