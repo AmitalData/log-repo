@@ -10,6 +10,7 @@ using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Logitude.Test.Base.Models.Infrastructure;
+using FluentAssertions;
 
 namespace Logitude.ShipmentOrderTests.Services
 {
@@ -54,5 +55,21 @@ namespace Logitude.ShipmentOrderTests.Services
         }
 
 
+        public ShipmentOrder UpdateInstance(Table table, ShipmentOrder shipmentOrder)
+        {
+            dynamic dataTable = table.CreateDynamicInstance();
+            return new ShipmentOrderBuilder()
+                .WithModel(shipmentOrder)
+                .DescriptionOfGoods((string)dataTable.DescriptionOfGoods)
+                .CustomerReferences((string)dataTable.CustomerReferences)
+                .Build();
+        }
+
+        public void AssertUpdate(ShipmentOrder shipmentOrder, ShipmentOrder updatedShipmentOrder)
+        {
+            updatedShipmentOrder.Id.Should().NotBeNull();
+            updatedShipmentOrder.DescriptionOfGoods.Should().Equals(shipmentOrder.DescriptionOfGoods);
+            updatedShipmentOrder.CustomerReferences.Should().Equals(shipmentOrder.CustomerReferences);
+        }
     }
 }

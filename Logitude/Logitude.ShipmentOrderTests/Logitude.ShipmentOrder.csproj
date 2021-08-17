@@ -109,11 +109,13 @@
     <Compile Include="Services\ShipmentOrderServices.cs" />
     <Compile Include="Steps\CreateShipmentOrderSteps.cs" />
     <Compile Include="Steps\GetShipmentOrderSteps.cs" />
+    <Compile Include="Steps\UpdateShipmentOrderSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\CreateShipmentOrder.feature" />
     <None Include="Features\GetShipmentOrder.feature" />
+    <None Include="Features\UpdateShipmentOrder.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
