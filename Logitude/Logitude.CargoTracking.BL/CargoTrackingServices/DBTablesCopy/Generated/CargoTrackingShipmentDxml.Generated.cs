@@ -240,6 +240,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='CurrentMilestoneExceptions' Type='nvarchar' Size='500'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='ForwardingHouse' Type='nvarchar' Size='200'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ForwardingMaster' Type='nvarchar' Size='222'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ForwardingShipmentLevelCode' Type='varchar' Size='100'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

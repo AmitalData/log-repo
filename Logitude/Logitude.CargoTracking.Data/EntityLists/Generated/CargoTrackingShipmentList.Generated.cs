@@ -214,6 +214,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ForwardingShipperName  { get; set; }
        [DataMember]
        public string ForwardingConsigneeName  { get; set; }
+       [DataMember]
+       public string ForwardingShipmentLevelCode  { get; set; }
    }
 
 }

@@ -98,7 +98,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GrossWeightUnitCode, 
 	         ForwardingShipmentNumber, 
 	         ShipmentTypeCode, 
-	         CurrentMilestoneExceptions,
+	         CurrentMilestoneExceptions, 
+	         ForwardingHouse, 
+	         ForwardingMaster, 
+	         ForwardingShipmentLevelCode,
 	      }
 
 
@@ -194,7 +197,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         FromPortCode, 
 	         ToPortCode, 
 	         NumberOfPackages, 
-	         CurrentMilestoneExceptions,
+	         CurrentMilestoneExceptions, 
+	         ForwardingShipmentLevelCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -581,6 +585,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneExceptions))
             {
 				entityPOCO.CurrentMilestoneExceptions = entityPM.CurrentMilestoneExceptions;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentLevelCode))
+            {
+				entityPOCO.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
 			}
 			}
 
@@ -972,6 +981,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.CurrentMilestoneExceptions = entityPOCO.CurrentMilestoneExceptions;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentLevelCode))
+            {
+					entityPM.ForwardingShipmentLevelCode = entityPOCO.ForwardingShipmentLevelCode;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1356,6 +1370,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneExceptions))
             {
                 oldEntityPM.CurrentMilestoneExceptions = entityPM.CurrentMilestoneExceptions;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentLevelCode))
+            {
+                oldEntityPM.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
             }
 			
 		}
