@@ -2493,15 +2493,15 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code))
                 {
-                    EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
-                    updatedEntityStatus.Name = entityStatus.Name;
-                    updatedEntityStatus.DisplayName = !string.IsNullOrEmpty(entityStatus.DisplayName) ? entityStatus.DisplayName : entityStatus.Name;  
-                    updatedEntityStatus.ObjectTableId = entityStatus.ObjectTableId;
-                    updatedEntityStatus.Tenant = tenant;
-                    updatedEntityStatus.StatusWeight = entityStatus.StatusWeight;
-                    updatedEntityStatus.InActive = entityStatus.InActive;
-                    updatedEntityStatus.SearchFields = entityStatus.SearchFields;
-                    entityStatusRepository.Update(updatedEntityStatus);
+                    //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
+                    //updatedEntityStatus.Name = entityStatus.Name;
+                    //updatedEntityStatus.DisplayName = !string.IsNullOrEmpty(entityStatus.DisplayName) ? entityStatus.DisplayName : entityStatus.Name;  
+                    //updatedEntityStatus.ObjectTableId = entityStatus.ObjectTableId;
+                    //updatedEntityStatus.Tenant = tenant;
+                    //updatedEntityStatus.StatusWeight = entityStatus.StatusWeight;
+                    //updatedEntityStatus.InActive = entityStatus.InActive;
+                    //updatedEntityStatus.SearchFields = entityStatus.SearchFields;
+                    //entityStatusRepository.Update(updatedEntityStatus);
                 }
                 else
                 {
@@ -2551,25 +2551,25 @@ namespace WebFreight.Web.MetaDataUpdate
                     EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
                     if((updatedEventType.UpdateDate != eventType.UpdateDate))
                     {
-                        updatedEventType.EnglishName = eventType.EnglishName;
-                        updatedEventType.AddedManually = eventType.AddedManually;
-                        if (!updatedEventType.IsStatusNotModified)
-                            updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
-                        updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
-                        updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
-                        updatedEventType.InActive = eventType.InActive;
-                        updatedEventType.IsFollowUp = eventType.IsFollowUp;
-                        updatedEventType.IsManualEntry = eventType.IsManualEntry;
-                        updatedEventType.LocalName = eventType.LocalName;
-                        updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
-                        updatedEventType.ObjectTableId = eventType.ObjectTableId;
-                        updatedEventType.ShortView = eventType.ShortView;
-                        updatedEventType.Tenant = tenant;
-                        updatedEventType.SearchFields = eventType.SearchFields;
-                        updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
-                        updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
-                        updatedEventType.UpdateDate = eventType.UpdateDate;
-                        eventTypesRepository.Update(updatedEventType);
+                        //updatedEventType.EnglishName = eventType.EnglishName;
+                        //updatedEventType.AddedManually = eventType.AddedManually;
+                        //if (!updatedEventType.IsStatusNotModified)
+                        //    updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
+                        //updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
+                        //updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
+                        //updatedEventType.InActive = eventType.InActive;
+                        //updatedEventType.IsFollowUp = eventType.IsFollowUp;
+                        //updatedEventType.IsManualEntry = eventType.IsManualEntry;
+                        //updatedEventType.LocalName = eventType.LocalName;
+                        //updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
+                        //updatedEventType.ObjectTableId = eventType.ObjectTableId;
+                        //updatedEventType.ShortView = eventType.ShortView;
+                        //updatedEventType.Tenant = tenant;
+                        //updatedEventType.SearchFields = eventType.SearchFields;
+                        //updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
+                        //updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
+                        //updatedEventType.UpdateDate = eventType.UpdateDate;
+                        //eventTypesRepository.Update(updatedEventType);
                     }
                 }
                 else
