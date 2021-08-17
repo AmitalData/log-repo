@@ -81,6 +81,7 @@ export class DeclarationReferantDataList {
 	TeamName: string;
 	CancelRequestStatusCode: string;
 	IsExceptionReasonsListNull: boolean;
+	IsManualPayment: boolean;
 	
 }
  

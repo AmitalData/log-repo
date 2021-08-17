@@ -38,7 +38,47 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CourierMasterController : ApiController
     {
+        public HttpResponseMessage GetExportCourierSuspention2Excel(string CourierMasterId, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                var o = new CourierMasterWSheetExport();
+                var result = o.ExportCourierSuspentionReport(CourierMasterId, tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StreamContent(new MemoryStream(result));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =
+                    Guid.NewGuid().ToString() + "_" + CourierMasterId + ".xls";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
+        public HttpResponseMessage GetExportCourierPending2Excel(string CourierMasterId, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                var o = new CourierMasterWSheetExport();
+                var result = o.ExportCourierPendingReport(CourierMasterId, tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StreamContent(new MemoryStream(result));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =
+                    Guid.NewGuid().ToString() + "_" + CourierMasterId + ".xls";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetExportCourierMaster2Excel(string CourierMasterId, int tenant)
         {
