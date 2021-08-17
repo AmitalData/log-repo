@@ -55,6 +55,7 @@ export class ShipmentList {
 		TruckNumber: string;
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
+		Agent: string;
 		AgentComputed: string;
 		AgentComputedName: string;
 		CustomFieldId: string;
@@ -471,4 +472,4 @@ export class ShipmentList {
 		StandalonePickupDeliveryId: string;
 		GrossWeightUnitCode: string;
 	
-}
+}
