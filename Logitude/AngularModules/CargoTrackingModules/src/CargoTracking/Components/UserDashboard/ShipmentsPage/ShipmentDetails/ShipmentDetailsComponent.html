@@ -373,16 +373,16 @@
                     <div class="description">{{ShipmentCustomsData.ImporterId | number}}</div>
                 </div>
                 <div>
-                    <div class="title">total value nis</div>
-                    <div class="description">{{ShipmentCustomsData.TotalValueInNIS||0 | number}} ₪</div>
+                    <div class="title">Cargo Identifier 1</div>
+                    <div class="description">{{ShipmentCustomsData.CargoIdentifier1 }}</div>
                 </div>
                 <div>
-                    <div class="title">total value {{ShipmentCustomsData.CurrencyCode }}</div>
-                    <div class="description">{{ShipmentCustomsData.TotalValueInForeignCurrency||0 | number}} {{ShipmentCustomsData.CurrencySign }}</div>
+                    <div class="title">Cargo Identifier 2</div>
+                    <div class="description">{{ShipmentCustomsData.CargoIdentifier2 }}</div>
                 </div>
                 <div>
-                    <div class="title">consignment #</div>
-                    <div class="description">-</div>
+                    <div class="title">Cargo Identifier 3</div>
+                    <div class="description">{{ShipmentCustomsData.CargoIdentifier3 }}</div>
                 </div>
                 <div>
                     <div class="title">goods description</div>
@@ -391,6 +391,14 @@
                 <div>
                     <div class="title">total taxes</div>
                     <div class="description">{{ShipmentCustomsData.TotalTax||0 | number}}</div>
+                </div>
+                <div>
+                    <div class="title">total value nis</div>
+                    <div class="description">{{ShipmentCustomsData.TotalValueInNIS||0 | number}} ₪</div>
+                </div>
+                <div>
+                    <div class="title">total value {{ShipmentCustomsData.CurrencyCode }}</div>
+                    <div class="description">{{ShipmentCustomsData.TotalValueInForeignCurrency||0 | number}} {{ShipmentCustomsData.CurrencySign }}</div>
                 </div>
 
 
