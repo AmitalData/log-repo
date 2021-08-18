@@ -3803,8 +3803,19 @@ export class ShipmentPM {
     private declarationXMLData: string;
     public get DeclarationXMLData() { return this.declarationXMLData; }
     public set DeclarationXMLData(newValue: string) { if (this.declarationXMLData != newValue) { this.declarationXMLData = newValue; this.MarkAsDirty("DeclarationXMLData"); } }
-       
-	 
+
+    private documentInspection: Date;
+    public get DocumentInspection() { return this.documentInspection; }
+    public set DocumentInspection(newValue: Date) { if (this.documentInspection != newValue) { this.documentInspection = newValue; this.MarkAsDirty("DocumentInspection"); } }
+
+    private gatepassDocumentsReady: Date;
+    public get GatepassDocumentsReady() { return this.gatepassDocumentsReady; }
+    public set GatepassDocumentsReady(newValue: Date) { if (this.gatepassDocumentsReady != newValue) { this.gatepassDocumentsReady = newValue; this.MarkAsDirty("GatepassDocumentsReady"); } }
+
+    private goodsClassification: Date;
+    public get GoodsClassification() { return this.goodsClassification; }
+    public set GoodsClassification(newValue: Date) { if (this.goodsClassification != newValue) { this.goodsClassification = newValue; this.MarkAsDirty("GoodsClassification"); } }
+
     private isImporterApprovalRequired: boolean;
     public get IsImporterApprovalRequired() { return this.isImporterApprovalRequired; }
     public set IsImporterApprovalRequired(newValue: boolean) { if (this.isImporterApprovalRequired != newValue) { this.isImporterApprovalRequired = newValue; this.MarkAsDirty("IsImporterApprovalRequired"); } }
