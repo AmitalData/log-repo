@@ -6289,7 +6289,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="true"
     DisplayInAutomationAsEnitity="false"
-    RecordType="&quot;Master&quot;"
+    RecordType="&quot;Shipment&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;MasterShipmentNumber&quot;"

@@ -142,17 +142,24 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 return AutomationChangedFields.ChangedFields;
             }
-            
+
 
             newValue = IsNewValueShouldBeNull(AutomationChangedFields, newValue) ? null : newValue;
 
+            newValue = GetCustomFieldNewValue(AutomationChangedFields, newValue);
+            AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
+            return AddFieldToChangedFieldsList(AutomationChangedFields, oldValue, newValue);
+        }
+
+        private static object GetCustomFieldNewValue(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
+        {
             if (AutomationChangedFields.SetValueItem.IsCustomField)
             {
                 AutomationChangedFields.SetValueItem.Value = newValue.ToString();
                 newValue = GetNewCustomField(AutomationChangedFields.SetValueItem);
             }
-            AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
-            return AddFieldToChangedFieldsList(AutomationChangedFields, oldValue, newValue);
+
+            return newValue;
         }
 
         private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
