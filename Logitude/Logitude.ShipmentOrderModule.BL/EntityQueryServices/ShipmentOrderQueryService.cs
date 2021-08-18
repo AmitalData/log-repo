@@ -12,15 +12,15 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
     {
         public ShipmentOrderPM GetSinglePM(string id, int tenant)
         {
-            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.Id == id).ToList().Select(a => PocoToPM(a)).FirstOrDefault();
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.Id == id).ToList().Select(a => MapPocoToPM(a)).FirstOrDefault();
         }
 
         public ShipmentOrderPM GetSinglePMByOrderNumber(string orderNumber, int tenant)
         {
-            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).ToList().Select(a => PocoToPM(a)).FirstOrDefault();
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).ToList().Select(a => MapPocoToPM(a)).FirstOrDefault();
         }
 
-        private static ShipmentOrderPM PocoToPM(ShipmentOrder shipmentOrder)
+        private static ShipmentOrderPM MapPocoToPM(ShipmentOrder shipmentOrder)
         {
             return new ShipmentOrderPM
             {
