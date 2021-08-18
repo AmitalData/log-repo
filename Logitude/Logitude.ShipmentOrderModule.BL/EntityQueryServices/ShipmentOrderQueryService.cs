@@ -12,15 +12,15 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
     {
         public ShipmentOrderPM GetSinglePM(string id, int tenant)
         {
-            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.Id == id).ToList().Select(a => CustomPOCOToPM(a)).FirstOrDefault();
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.Id == id).ToList().Select(a => PocoToPM(a)).FirstOrDefault();
         }
 
         public ShipmentOrderPM GetSinglePMByOrderNumber(string orderNumber, int tenant)
         {
-            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).ToList().Select(a => CustomPOCOToPM(a)).FirstOrDefault();
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).ToList().Select(a => PocoToPM(a)).FirstOrDefault();
         }
 
-        private static ShipmentOrderPM CustomPOCOToPM(ShipmentOrder shipmentOrder)
+        private static ShipmentOrderPM PocoToPM(ShipmentOrder shipmentOrder)
         {
             return new ShipmentOrderPM
             {
@@ -68,7 +68,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 BookingConfirmationNumber = shipmentOrder.BookingConfirmationNumber,
                 DirectionId = shipmentOrder.DirectionId,
                 CarrierNumber = shipmentOrder.CarrierNumber,
-
+                CarrierId = shipmentOrder.CarrierId,           
             };
         }
 

@@ -314,6 +314,16 @@ export class ShipmentOrderPM {
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
        
 	 
+    private carrierId: string;
+    public get CarrierId() { return this.carrierId; }
+    public set CarrierId(newValue: string) { if (this.carrierId != newValue) { this.carrierId = newValue; this.MarkAsDirty("CarrierId"); } }
+       
+	 
+    private carrierName: string;
+    public get CarrierName() { return this.carrierName; }
+    public set CarrierName(newValue: string) { if (this.carrierName != newValue) { this.carrierName = newValue; this.MarkAsDirty("CarrierName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

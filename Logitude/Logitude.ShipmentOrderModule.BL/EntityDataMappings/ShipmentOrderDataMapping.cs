@@ -46,6 +46,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.DestinationPortName = GetPortNameById(entityPOCO.DestinationPortId, entityPM.Tenant);
             entityPM.GatewayName = GetPortNameById(entityPOCO.GatewayId, entityPM.Tenant);
             entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPM.Tenant);
+            entityPM.CarrierName = GetCardNameById(entityPOCO.CarrierId, entityPM.Tenant);
         }
 
         private string GetTransportModeNameById(string transportModeId, int tenant)

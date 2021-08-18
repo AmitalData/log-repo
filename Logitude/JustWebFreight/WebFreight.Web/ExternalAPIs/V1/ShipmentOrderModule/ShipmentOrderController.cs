@@ -30,7 +30,7 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
             {
                 int tenant = GetTenantFromAuthenticationToken();
                 Authentication(tenant);
-                ShipmentOrder shipmentOrder = new ShipmentOrderService().GetByOrderNumber(tenant, orderNumber);
+                ShipmentOrder shipmentOrder = new ShipmentOrderService(tenant).GetByOrderNumber(tenant, orderNumber);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentOrder);
             }
             catch (Exception ex)
@@ -53,11 +53,11 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
                         int tenant = GetTenantFromAuthenticationToken();
                         Authentication(tenant);
 
-                        var entityPM = new ShipmentOrderService().Create(entity);
+                        var entityPM = new ShipmentOrderService(tenant).Create(entity);
                
-                        var result = new ShipmentOrderQueryService(entity.Tenant).GetShipmentOrderById(entityPM.Id, tenant);
+                        var result = new ShipmentOrderQueryService(tenant).GetShipmentOrderById(entityPM.Id, tenant);
 
-                        APIHelper.AddCommunicationLog("D", entity, result, "ShipmentOrder", entityPM.Id, "ShipmentOrder API", entity.Tenant);
+                        APIHelper.AddCommunicationLog("D", entity, result, "ShipmentOrder", entityPM.Id, "ShipmentOrder API", tenant);
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, result);
                     }
@@ -91,13 +91,11 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
                     int tenant = GetTenantFromAuthenticationToken();
                     Authentication(tenant);
 
-                    var entityPM = new ShipmentOrderService().Update(entity);
+                    var entityPM = new ShipmentOrderService(tenant).Update(entity);
 
+                    var result = new ShipmentOrderQueryService(tenant).GetShipmentOrderById(entityPM.Id, tenant);
 
-                    var result = new ShipmentOrderQueryService(entity.Tenant).GetShipmentOrderById(entityPM.Id, tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "ShipmentOrder", entityPM.Id, "ShipmentOrder API", tenant);
-
-
                     return Request.CreateResponse(HttpStatusCode.OK, result);
 
                 }

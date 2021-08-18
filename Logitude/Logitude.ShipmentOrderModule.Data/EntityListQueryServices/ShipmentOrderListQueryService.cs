@@ -137,6 +137,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        CarrierNumber = a.CarrierNumber,
 
+                                                       CarrierId = a.CarrierId,
+
+                                                       CarrierName = a.Carrier == null ? "" : a.Carrier.EnglishName,
+
                                                    });
             return query;
         }

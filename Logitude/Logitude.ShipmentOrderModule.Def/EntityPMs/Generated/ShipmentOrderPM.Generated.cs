@@ -1354,6 +1354,52 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private string carrierId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CarrierId  
+	   {
+	    
+	     get
+		{
+		   return carrierId;
+		 }
+		 set
+		 {
+		   if(carrierId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierId",OldValue=carrierId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   carrierId=value;
+		   }
+			
+		 }
+	   }
+	  private string carrierName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CarrierName  
+	   {
+	    
+	     get
+		{
+		   return carrierName;
+		 }
+		 set
+		 {
+		   if(carrierName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierName",OldValue=carrierName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   carrierName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

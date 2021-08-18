@@ -14,6 +14,13 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
 {
     public class ShipmentOrderService
     {
+        private readonly int tenant;
+
+        public ShipmentOrderService(int tenant)
+        {
+            this.tenant = tenant;
+        }
+
         public ShipmentOrder GetByOrderNumber(int tenant, string orderNumber)
         {
             if (string.IsNullOrEmpty(orderNumber))
@@ -25,7 +32,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
         public ShipmentOrderPM Create(ShipmentOrder entity)
         {
 
-            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(entity.Tenant);
+            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(tenant);
             ShipmentOrderPM shipmentOrderPM = MapPocoToPM(entity, ChangeSetOperation.Insert);
             ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
             service.Update(shipmentOrderPM, true);
@@ -36,7 +43,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
         public ShipmentOrderPM Update(ShipmentOrder entity)
         {
 
-            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(entity.Tenant);
+            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(tenant);
             ShipmentOrderPM shipmentOrderPM = MapPocoToPM(entity, ChangeSetOperation.Update);
             ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
             service.Update(shipmentOrderPM, true);
@@ -50,16 +57,16 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
 
             if (changeSetOp == ChangeSetOperation.Update)
             {
-                entity.Id = new ShipmentOrderQueryService(entity.Tenant).GetByOrderNumber(entity.OrderNumber, entity.Tenant)?.Id;
+                entity.Id = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant)?.Id;
                 if (entity.Id == null)
                 {
                     throw new ApplicationException("ShipmentOrder with orderNumber " + entity.OrderNumber + " doesn't exist");
                 }
             }
 
-            var shipmentOrderQueryService = new ShipmentOrderQueryService(entity.Tenant);
-            ShipmentOrderPM entityPM = shipmentOrderQueryService.ShipmentOrderDataMappingAndValidatin(entity, entity.Tenant);
-            entityPM.Tenant = entity.Tenant;
+            var shipmentOrderQueryService = new ShipmentOrderQueryService(tenant);
+            ShipmentOrderPM entityPM = shipmentOrderQueryService.ShipmentOrderDataMappingAndValidatin(entity, tenant);
+            entityPM.Tenant = tenant;
             entityPM.ChangeSetOp = changeSetOp;
             return entityPM;
         }

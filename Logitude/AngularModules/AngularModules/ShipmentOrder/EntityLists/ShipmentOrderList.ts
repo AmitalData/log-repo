@@ -65,6 +65,8 @@ export class ShipmentOrderList {
 	GatewayName: string;
 	DirectionName: string;
 	DirectionId: string;
+	CarrierId: string;
+	CarrierName: string;
 	
 }
  
