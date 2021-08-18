@@ -6,7 +6,8 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
+
 
 @Injectable()
 
@@ -60,5 +61,20 @@ export class TaxReportLineExtendedListService {
       
     }
 
+    PostCreateTaxReportLines(fileUploadParamerter: ImageParameter) {
 
+        return defer(() => {
+            return this.httpClient.post(this._apiUrl + '/PostCreateTaxReportLines', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+
+    }
 }

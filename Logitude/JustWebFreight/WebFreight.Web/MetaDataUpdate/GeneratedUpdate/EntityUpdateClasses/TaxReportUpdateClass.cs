@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "703a78e800b2df3ade1525c1bc959236";
+		public const string HashString = "5627410d2af640ddd3ede4a6b3fab0c0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2402,6 +2402,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOInvoiceErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.InvoiceErrors", DefaultText = "Can't download the report. Lines (#lines) has an invalid invoice number error. Fix it then try again.",LocalDefaultText = ".לא ניתן להוריד את הקובץ שורה (#lines) ישנה הודעת שגיאה ''אסמכתא שגויה .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportONewTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.NewTaxReport", DefaultText = "New Tax Report",LocalDefaultText = "דוח מע''מ חדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUploaded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Uploaded", DefaultText = "The 874.txt file you produced in a related company should be uploaded,",LocalDefaultText = @"יש לטעון את קובץ  874.txt  שהפקת בחברה הקשורה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOMark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Mark", DefaultText = "after loading the file, additional lines will be created in the VAT report that will be marked with a mark ",LocalDefaultText = "לאחר טעינת הקובץ יווצרו בדו''ח המע''מ שורות נוספות לדיווח שיסומנו בסימן", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOCantBeEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantBeEdited", DefaultText = "These lines cannot be edited.",LocalDefaultText = @"לא ניתן לבצע עריכה בשורות אלו.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOExternalLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ExternalLines", DefaultText = "Loading another external file into this report will delete the existing external rows and create new rows according to the new file.",LocalDefaultText = @"טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורות החיצוניות הקיימות וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUpload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Upload", DefaultText = "Upload",LocalDefaultText = @"טעינה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

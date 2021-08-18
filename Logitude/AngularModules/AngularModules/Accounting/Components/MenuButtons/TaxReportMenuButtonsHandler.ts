@@ -16,6 +16,7 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -23,7 +24,7 @@ export class TaxReportMenuButtonsHandler {
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "TaxReport"
-
+    private fullAccountingSettingListService: FullAccountingSettingListService;
     _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -31,6 +32,7 @@ export class TaxReportMenuButtonsHandler {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        this.fullAccountingSettingListService = new FullAccountingSettingListService();
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -64,6 +66,11 @@ export class TaxReportMenuButtonsHandler {
                             }
                             break;
                         }
+                        case "UPLD": {
+                            this.SetUploadButtonEnabilityAccordingToConsolidationVAT(button);
+                            
+                            break;
+                        }
                     }
                 }
             }
@@ -71,7 +78,20 @@ export class TaxReportMenuButtonsHandler {
 
         return menuButtons;
     }
-
+    private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
+        this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((res: any) => {
+            this.CurrentSession.StopBusyIndicator();         
+                if (res != null) {
+                    var res = res.Result;
+                    if (res.ConsolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E")) {
+                        button.IsDisabled = false;
+                    }
+                    else {
+                        button.IsDisabled = true;
+                    }
+                }
+        });
+    }
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         switch (menuButton.EventCode) {
@@ -123,10 +143,14 @@ export class TaxReportMenuButtonsHandler {
                 {
                     //this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
-                        logitudeWindow.Width = 650;
-                        logitudeWindow.Height = 350;
-                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Receiving1000");
-                        logitudeWindow.Show('./Accounting/Components/Maintenance/Receiving1000Component');
+                        logitudeWindow.Width = 780;
+                    logitudeWindow.Height = 350;
+                    var windowArgs: any = {};
+                    windowArgs.ObjectTableName = "TaxReport";
+                    windowArgs.EntityPM = this.EntityPM;
+                    logitudeWindow.WindowArgs = windowArgs;
+                    logitudeWindow.Title = TextCodeTranslator.Translate("TaxReport.B.UploadRows");
+                    logitudeWindow.Show('./Accounting/Components/Others/TaxReportUploadLinesComponent');
                     //});
                     break;
                 }

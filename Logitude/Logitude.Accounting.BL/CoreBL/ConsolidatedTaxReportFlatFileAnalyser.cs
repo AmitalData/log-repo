@@ -93,6 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<TaxReportLineList> lines = taxReportLineListQueryService.GetReportLines(taxReportId, tenant).ToList();
                 if (lines != null && lines.Count > 0)
                 {
+                    lines= lines.Where(d => !d.IsExternalLine).ToList();
                     maxLine = lines.Max(l => l.Line);
                 }
 
@@ -164,10 +165,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         externalLines.ForEach(line => { line.ChangeSetOp = ChangeSetOperation.Delete; });
                     }
-
+                  
                     TaxReportLineUpdateService taxReportLineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
-                    taxReportLineUpdateService.UpdateMulti(newLines, externalLines, MyTaxReportPM, true);
+                    taxReportLineUpdateService.UpdateMulti(new List<TaxReportLinePM>(), externalLines, MyTaxReportPM, true);
+                    taxReportLineUpdateService.UpdateMulti(newLines, new List<TaxReportLinePM>(), MyTaxReportPM, true);
 
                     TaxReportPM RefreshedTaxReportPM = taxReportQueryService.GetSingle(taxReportId, true, false);
                     RefreshedTaxReportPM.ChangeSetOp = ChangeSetOperation.Update;

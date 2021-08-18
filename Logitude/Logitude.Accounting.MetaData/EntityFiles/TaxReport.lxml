@@ -2791,6 +2791,36 @@
       LocalDefaultText="&quot;דוח מע&quot;מ חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Uploaded&quot;"
+      DefaultText="&quot;The 874.txt file you produced in a related company should be uploaded,&quot;"
+      LocalDefaultText="&quot;יש לטעון את קובץ  874.txt  שהפקת בחברה הקשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Mark&quot;"
+      DefaultText="&quot;after loading the file, additional lines will be created in the VAT report that will be marked with a mark &quot;"
+      LocalDefaultText="&quot;לאחר טעינת הקובץ יווצרו בדו&quot;ח המע&quot;מ שורות נוספות לדיווח שיסומנו בסימן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CantBeEdited&quot;"
+      DefaultText="&quot;These lines cannot be edited.&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע עריכה בשורות אלו.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.ExternalLines&quot;"
+      DefaultText="&quot;Loading another external file into this report will delete the existing external rows and create new rows according to the new file.&quot;"
+      LocalDefaultText="&quot;טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורות החיצוניות הקיימות וייצור שורות חדשות בהתאם לקובץ החדש.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Upload&quot;"
+      DefaultText="&quot;Upload&quot;"
+      LocalDefaultText="&quot;טעינה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
