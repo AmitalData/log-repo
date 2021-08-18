@@ -1,4 +1,5 @@
 ﻿using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.Infrastructure;
 using Logitude.Test.Base.Models.LocationsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -58,7 +59,7 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
         {
             _shipmentOrder.CustomerReferences = customerReferences;
             return this;
-        }     
+        }
 
         public ShipmentOrderBuilder ShipmentNumber(string shipmentNumber)
         {
@@ -108,10 +109,11 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
         {
             _shipmentOrder = new ShipmentOrder
             {
-                Shipper = new Card { Id = PartnersData.ShipperExportId },
-                Agent = new Card { Id = PartnersData.AgentId },
-                Incoterm = new Incoterm{ Id = BillingData.IncotermLDEId },
+                Shipper = new Card { Code = PartnersData.ShipperExportCode },
+                Agent = new Card { Code = PartnersData.AgentCode },
+                Incoterm = new Incoterm { Code = "LDE" },
                 OriginPort = new Port { Id = LocationsData.PortAirJFKId },
+                OrderNumber = (RandomGeneratorService.RandomGuid().Substring(15) + RandomGeneratorService.RandomNumber(5))
             };
             return this;
         }
