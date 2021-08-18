@@ -100,10 +100,18 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\ShipmentOrderBuilder.cs" />
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\Incoterm.cs" />
+    <Compile Include="Models\Port.cs" />
+    <Compile Include="Models\ShipmentLevel.cs" />
     <Compile Include="Models\ShipmentOrder.cs" />
     <Compile Include="Models\ShipmentOrderContext.cs" />
-    <Compile Include="Models\ShipmentOrderCustomProperty.cs" />
     <Compile Include="Models\ShipmentOrderData.cs" />
+    <Compile Include="Models\SpecialServicesType.cs" />
+    <Compile Include="Models\TransportMode.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Vessel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ShipmentOrderDataPreparation.cs" />
     <Compile Include="Services\ShipmentOrderServices.cs" />

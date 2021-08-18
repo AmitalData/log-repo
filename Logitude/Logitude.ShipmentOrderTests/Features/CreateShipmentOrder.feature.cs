@@ -141,13 +141,16 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "OriginPort",
                             "John F.Kennedy Apt/New York"});
+                table1.AddRow(new string[] {
+                            "CreateDate",
+                            "Today"});
 #line 5
  testRunner.Given("a shipment order with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 17
+#line 18
  testRunner.When("create shipment order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
+#line 19
  testRunner.Then("the shipment order should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

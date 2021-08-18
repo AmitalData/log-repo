@@ -25,6 +25,7 @@ namespace Logitude.ShipmentOrderTests.Services
                 .TransportModeCode((string)dataTable.TransportMode)
                 .DescriptionOfGoods((string)dataTable.DescriptionOfGoods)
                 .CustomerReferences((string)dataTable.CustomerReferences)
+                .CreateDate(DateTime.Now)
                 .ShipmentNumber((dataTable.ShipmentNumber).ToString())
                 .PONumber((dataTable.PONumber).ToString())
                 .Build();

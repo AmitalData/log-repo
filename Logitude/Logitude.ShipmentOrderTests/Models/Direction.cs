@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.ShipmentOrderTests.Models
 {
-    public class ShipmentOrderCustomProperty
+    public class Direction
     {
-        public string Id { get; set; }
         public string Code { get; set; }
+
         public string Name { get; set; }
-        public string EnglishName { get; set; }
-        public string LocalName { get; set; }
+
+        public string ComputingPartnerCode { get; set; }
     }
 }

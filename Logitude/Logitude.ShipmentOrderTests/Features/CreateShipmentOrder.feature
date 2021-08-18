@@ -14,5 +14,6 @@ Scenario: Create shipment order
 		| Agent              | TestAgentExport             |
 		| Incoterm           | LDE Incoterm                |
 		| OriginPort         | John F.Kennedy Apt/New York |
+		| CreateDate         | Today                       |
 	When create shipment order
 	Then the shipment order should create successfully

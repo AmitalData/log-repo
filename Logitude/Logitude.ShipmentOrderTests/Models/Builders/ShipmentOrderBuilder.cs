@@ -66,10 +66,16 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
             return this;
         }
 
+        public ShipmentOrderBuilder CreateDate(DateTime createDate)
+        {
+            _shipmentOrder.CreateDate = createDate;
+            return this;
+        }
+
         public ShipmentOrderBuilder DirectionCode(string directionCode)
         {
             if (_shipmentOrder.Direction == null)
-                _shipmentOrder.Direction = new ShipmentOrderCustomProperty();
+                _shipmentOrder.Direction = new Direction();
 
             _shipmentOrder.Direction.Code = directionCode;
             return this;
@@ -78,7 +84,7 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
         public ShipmentOrderBuilder TransportModeCode(string transportModeCode)
         {
             if (_shipmentOrder.TransportMode == null)
-                _shipmentOrder.TransportMode = new ShipmentOrderCustomProperty();
+                _shipmentOrder.TransportMode = new TransportMode();
 
             _shipmentOrder.TransportMode.Code = transportModeCode;
             return this;
@@ -102,12 +108,10 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
         {
             _shipmentOrder = new ShipmentOrder
             {
-                Tenant = UserTenant.Tenant,
-                Shipper = new ShipmentOrderCustomProperty { Id = PartnersData.ShipperExportId },
-                Agent = new ShipmentOrderCustomProperty { Id = PartnersData.AgentId },
-                Incoterm = new ShipmentOrderCustomProperty { Id = BillingData.IncotermLDEId },
-                OriginPort = new ShipmentOrderCustomProperty { Id = LocationsData.PortAirJFKId },
-
+                Shipper = new Card { Id = PartnersData.ShipperExportId },
+                Agent = new Card { Id = PartnersData.AgentId },
+                Incoterm = new Incoterm{ Id = BillingData.IncotermLDEId },
+                OriginPort = new Port { Id = LocationsData.PortAirJFKId },
             };
             return this;
         }

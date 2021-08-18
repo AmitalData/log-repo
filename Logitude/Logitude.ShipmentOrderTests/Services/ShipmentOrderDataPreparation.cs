@@ -29,6 +29,7 @@ namespace Logitude.ShipmentOrderTests.Services
                   .CustomerReferences("pre specflow references")
                   .ShipmentNumber("222")
                   .PONumber("111")
+                  .CreateDate(DateTime.Now)
                   .Build();
         }
 
