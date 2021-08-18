@@ -2689,7 +2689,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrivateLabelInvoiceNumber { get; set; }
-         
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string PrivateLabelConsigneeName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
         public DateTime? RequestedFlightDate { get; set; }

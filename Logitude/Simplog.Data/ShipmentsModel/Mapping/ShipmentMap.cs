@@ -342,6 +342,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
 
+            this.Property(t => t.PrivateLabelConsigneeName).HasMaxLength(40).IsUnicode(false); 
             this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);  
 
 
@@ -997,6 +998,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.OnForwardingToPort).WithMany().HasForeignKey(d => d.OnForwardingToPortId);
             this.HasOptional(t => t.OnForwardingVessel).WithMany().HasForeignKey(d => d.OnForwardingVesselId);
             this.HasOptional(t => t.OnForwardingAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnForwardingAdditionalTransportModeCode);
+            this.Property(t => t.PrivateLabelConsigneeName).HasColumnName("PrivateLabelConsigneeName");
         }
     }
 }

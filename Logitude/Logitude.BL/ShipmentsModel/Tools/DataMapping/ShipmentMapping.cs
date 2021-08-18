@@ -474,7 +474,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.HandlerUserId = entityPM.HandlerUserId;
             entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
             entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate;
-
+            entityPoco.PrivateLabelConsigneeName = entityPM.PrivateLabelConsigneeName;
             entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
             entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;

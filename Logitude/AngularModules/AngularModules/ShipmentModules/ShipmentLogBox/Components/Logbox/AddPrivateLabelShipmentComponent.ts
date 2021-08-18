@@ -457,10 +457,10 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    get ConsigneeName() { return this.EntityPM.ConsigneeName; }
-    set ConsigneeName(newValue: string) {
-        if (this.EntityPM.ConsigneeName != newValue) {
-            this.EntityPM.ConsigneeName = newValue;
+    get PrivateLabelConsigneeName() { return this.EntityPM.PrivateLabelConsigneeName; }
+    set PrivateLabelConsigneeName(newValue: string) {
+        if (this.EntityPM.PrivateLabelConsigneeName != newValue) {
+            this.EntityPM.PrivateLabelConsigneeName = newValue;
         }
     }
 
