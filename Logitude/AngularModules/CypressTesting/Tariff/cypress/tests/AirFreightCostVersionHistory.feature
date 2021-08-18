@@ -20,7 +20,7 @@ Feature: Air Freight Cost Tariff Version History
         And add the following tariff lines
             | FromPort | ToPort | MinPrice | Step1Price | Step2Price | Step3Price |
             | LHR      | MIA    | 10       | 20         | 30         | 40         |
-            | AMM      | TLV    | 20       | 30         | 40         | 50         |
+            | NYC      | SOU    | 20       | 30         | 40         | 50         |
         When approve version
         Then the version should approve successfully
 
