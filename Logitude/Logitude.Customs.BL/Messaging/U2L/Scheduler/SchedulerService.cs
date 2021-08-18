@@ -764,8 +764,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     email = contact.Email;
 
                 }
-                InjectionUtil.Instance.CheckContactFeature("General", "CUSTOMREFERANT", tenant, email);
-
+                InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ReferantData", tenant, email);
+                
                 var responseXML = new isReferantAddOnResponseXML();
                 responseXML.isReferantAddOn = "T";
                 if (responseXML != null)
