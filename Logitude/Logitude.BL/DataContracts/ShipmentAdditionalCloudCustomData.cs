@@ -34,6 +34,9 @@ namespace Logitude.BL.DataContracts
         public string DocumentsApprovedByUserName { get; set; }
         public string DeclarationStatus { get; set; }
         public string ImporterId { get; set; }
+        public string CargoIdentifier1 { get; set; }
+        public string CargoIdentifier2 { get; set; }
+        public string CargoIdentifier3 { get; set; }
 
 
         //public string VersionId { get; set; }
