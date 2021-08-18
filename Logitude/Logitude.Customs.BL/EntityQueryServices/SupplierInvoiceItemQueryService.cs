@@ -316,6 +316,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             
         }
 
+        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsForMultiUpdate(string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);
+            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsForDeclaration(string declarationId, int tenant)
         {
             List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);
@@ -365,24 +371,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
                         InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
                         StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
+                        ItemAdditionalStatus=a.ItemAdditionalStatus,
                     }).ToList();
         }
 
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
         {
             List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByClassificationCode(declarationId, tenant, classificationCode);
-            return (from a in supplierInvoiceItems
-                    select new SupplierInvoiceItemPM()
-                    {
-                        DeclarationId = a.DeclarationId,
-                        CounterKey = a.CounterKey,
-                        Tenant = a.Tenant,
-                        LineNumber = a.LineNumber,
-                        SequenceNumeric = a.SequenceNumeric,
-                        ItemCode = a.ItemCode,
-                        ClassificationCode = a.ClassificationCode,
-                        TaxExemptCode = a.TaxExemptCode,
-                    }).ToList();
+            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
         }
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByInvoiceNumber(int tenant, string declarationId, string ItemCode)
         {

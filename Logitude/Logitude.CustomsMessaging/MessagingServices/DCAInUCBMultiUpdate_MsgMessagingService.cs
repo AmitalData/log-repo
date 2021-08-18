@@ -41,7 +41,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBMultiUpdateWithResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.SupplierInvoice");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CreateCRS(int tenant, string LoggingUserId, MultiUpdateRequestParams multiUpdateRequestParams)
         {
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.SupplierInvoice");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.Declarationid, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)

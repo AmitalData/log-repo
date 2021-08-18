@@ -44,6 +44,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData();
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var mySupplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
+            var mySupplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(context);
             var mySupplierInvoiceItemProcesTypeQueryService = new SupplierInvoiceItemProcesTypeQueryService(context);
             SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
@@ -58,10 +59,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else // Update ALL
                 {
-                    invoiceitems = mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemsForDeclaration(declarationPM.Id, declarationPM.Tenant);
+                    invoiceitems = mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemsForMultiUpdate(declarationPM.Id, declarationPM.Tenant);
                 }
-                foreach (var invoice in invoiceitems)
+                foreach (var item in invoiceitems)
                 {
+
+                    var invoice = mySupplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(item.DeclarationId, item.CounterKey, (int)item.SequenceNumeric);
+                    invoice.SupplierInvioceItemCertificats = mySupplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatesForSupplierInvoiceItem(item.DeclarationId, item.CounterKey, invoice.LineNumber, invoice.Tenant);
                     procestypesExist = false;
                     if (customResponse.ProcessTypeCode != null)
                     {

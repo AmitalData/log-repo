@@ -277,9 +277,6 @@ export class MultiUpdateComponent extends BaseComponent {
         if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
             errors.push("חובה להזין שדה קוד");
         }
-        if (this.UpdateSelected ) {
-            errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.SelectItems"));
-        }
         if (!this.UpdateAll && !this.UpdateSelected) {
             errors.push("בחר פריטים לעדכון");
         }
@@ -317,6 +314,7 @@ export class MultiUpdateComponent extends BaseComponent {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CancelButtonClicked();
                 });
             });
