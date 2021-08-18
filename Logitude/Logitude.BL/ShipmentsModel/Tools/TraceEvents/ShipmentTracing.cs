@@ -2355,7 +2355,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceETALegDateDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) && IsETDLegDateAdded(null, itemPM, itemPOCO) || IsETDLegDateEdited(null, itemPM, itemPOCO))
+            if (IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) &&(IsETDLegDateAdded(null, itemPM, itemPOCO) || IsETDLegDateEdited(null, itemPM, itemPOCO)))
             {
                 this.DeleteTraceEvent("DLAR", null, itemPOCO.ETA);
                 this.CreateTraceEvent("DLAR", itemPM.ETD, itemPM);
@@ -2372,7 +2372,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceETDLegDateDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
-            if (IsEventExistInTraceEvents("DLAR", itemPOCO.ETD) && IsETALegDateAdded(null, itemPM, itemPOCO) || IsETALegDateEdited(null, itemPM, itemPOCO))
+            if (IsEventExistInTraceEvents("DLAR", itemPOCO.ETD) && (IsETALegDateAdded(null, itemPM, itemPOCO) || IsETALegDateEdited(null, itemPM, itemPOCO)))
             {
                 this.DeleteTraceEvent("DLAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("DLAR", itemPM.ETA, itemPM);
