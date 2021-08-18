@@ -202,6 +202,8 @@ export class UserDashboardComponent implements AfterViewInit
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
 
-
+    BackLinkClicked() {
+        this.router.navigate(['cargo-tracking', 'shipments']);
+    }
 
 }
