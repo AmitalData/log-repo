@@ -172,6 +172,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
             container.ShipmentId = shipmentPackage.ShipmentId;
+            this.MapContainerFieldsFromShipmentComputedFields(container, shipmentPackage.ShipmentId);
+
         }
 
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
@@ -252,6 +254,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
 
             return packages;
+        }
+
+        private void MapContainerFieldsFromShipmentComputedFields(ContainerPM entityPM, string shipmentId)
+        {
+
         }
     }
 }
