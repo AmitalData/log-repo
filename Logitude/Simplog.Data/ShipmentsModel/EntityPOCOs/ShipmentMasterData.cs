@@ -233,6 +233,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string InlandDomesticToCountryId { get; set; }
         public string InlandDomesticFromTypeCode { get; set; }
         public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
 
         [ForeignKey("InlandDomesticFromTypeCode")]
         public PickUpDeliveryFromToType InlandDomesticFromType { get; set; }

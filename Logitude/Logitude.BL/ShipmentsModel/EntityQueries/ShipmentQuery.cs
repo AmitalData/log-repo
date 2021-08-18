@@ -336,6 +336,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.InlandDomesticToCountryId = masterData.InlandDomesticToCountryId;
                     shipmentPM.InlandDomesticFromTypeCode = masterData.InlandDomesticFromTypeCode;
                     shipmentPM.InlandDomesticToTypeCode = masterData.InlandDomesticToTypeCode;
+                    shipmentPM.MainCarriageFromPortAddress = masterData.MainCarriageFromPortAddress;
+                    shipmentPM.MainCarriageToPortAddress = masterData.MainCarriageToPortAddress;
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromAddressId))
                     {

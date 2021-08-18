@@ -5021,6 +5021,14 @@ export class ShipmentPM {
     public get InlandDomesticToTypeCode() { return this.inlandDomesticToTypeCode; }
     public set InlandDomesticToTypeCode(newValue: string) { if (this.inlandDomesticToTypeCode != newValue) { this.inlandDomesticToTypeCode = newValue; this.MarkAsDirty("InlandDomesticToTypeCode"); } }
 
+    private mainCarriageFromPortAddress: string;
+    public get MainCarriageFromPortAddress() { return this.mainCarriageFromPortAddress; }
+    public set MainCarriageFromPortAddress(newValue: string) { if (this.mainCarriageFromPortAddress != newValue) { this.mainCarriageFromPortAddress = newValue; this.MarkAsDirty("MainCarriageFromPortAddress"); } }
+
+    private mainCarriageToPortAddress: string;
+    public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
+    public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
