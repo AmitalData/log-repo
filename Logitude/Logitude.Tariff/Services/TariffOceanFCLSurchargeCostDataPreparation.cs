@@ -5,15 +5,15 @@ using Logitude.Tariff.Models;
 using Logitude.Tariff.Models.Builders;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Test.Base.Models.PackageTypesPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 
-
 namespace Logitude.Tariff.Services
 {
-    public class TariffOceanLCLSurchargeCostDataPreparation
+    public class TariffOceanFCLSurchargeCostDataPreparation
     {
         public void Prepar()
         {
@@ -24,7 +24,7 @@ namespace Logitude.Tariff.Services
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Failed Creating Ocean LCL Surcharges Tariff Before Feature Run :" + e.InnerException);
+                throw new InvalidOperationException("Failed Creating Ocean FCL Surcharges Tariff Before Feature Run :" + e.InnerException);
             }
         }
 
@@ -32,20 +32,21 @@ namespace Logitude.Tariff.Services
         {
             return new TariffBuilder()
                    .WithDefualtValues()
-                   .TypeCode("Ocean LCL Surcharge")
+                   .TypeCode("Ocean FCL Surcharge")
                    .Name("pre specflow name")
-                   .SellerId(new TariffOceanLCLSurchargeCostServices().GetAgentId())
+                   .SellerId(new TariffOceanFCLSurchargeCostServices().GetAgentId())
                    .CurrencyId("EUR")
                    .Notes("pre specflow notes")
                    .Surcharge1Id(BillingData.ChargeTypeOFTId)
                    .Surcharge1UOM(BillingData.MeasurementGRWTId)
+                   .ContainerType1Id(PackageTypesData.PackageTypeOceanPC2Id)
                    .ContractNumber("2324232")
                    .Build();
         }
 
         private void TariffDataMap(TariffPM tariff)
         {
-            TariffData.OceanLCLSurchargeCostId = tariff.Id;
+            TariffData.OceanFCLSurchargeCostId = tariff.Id;
         }
     }
 }
