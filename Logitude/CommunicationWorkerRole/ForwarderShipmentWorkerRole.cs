@@ -253,7 +253,7 @@ namespace CommunicationWorkerRole
 
                                             if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
-                                                ExporterShipmentAMMappingServie exporterShipmentMappingServie = new ExporterShipmentAMMappingServie(ForwarderShipment); 
+                                                ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment); 
                                                 NewAExporterShipmentAM newAExporterShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM(tenant);
                                                  
                                                 LogPM.Subject = LogSubject;
