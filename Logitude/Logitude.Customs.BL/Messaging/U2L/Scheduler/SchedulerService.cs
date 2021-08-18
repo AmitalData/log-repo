@@ -764,19 +764,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     email = contact.Email;
 
                 }
-                InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ReferantData", tenant, email);
-                
-                var responseXML = new isReferantAddOnResponseXML();
-                responseXML.isReferantAddOn = "T";
-                if (responseXML != null)
+                //InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ReferantData", tenant, email);
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "UniReferantData");
+
+                if(feature != null)
                 {
-                    var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
-                    MyGenericResponseObj.ResponseXml = xml;
+                    var responseXML = new isReferantAddOnResponseXML();
+                    responseXML.isReferantAddOn = "T";
+                    if (responseXML != null)
+                    {
+                        var xml = XmlGenericUtil<isReferantAddOnResponseXML>.SerializeObject(responseXML);
+                        MyGenericResponseObj.ResponseXml = xml;
+                    }
+                }
+                else
+                {
+                    AppendLogLine("Check for UniReferantData Feature Failed, Referant Data will not be transfered from unifreight");
                 }
             }
             catch (SecurityException ex)
             {
-                AppendLogLine("Check for CUSTOMREFERANT Feature Failed, Referant related features will not be shown, Message: " + ex.Message);
+                AppendLogLine("Check for UniReferantData Feature Failed,  Referant Data will not be transfered from unifreight, Message: " + ex.Message);
             }
         }
 

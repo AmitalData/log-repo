@@ -23856,10 +23856,10 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;ReferantData&quot;"
+      Code="&quot;UniReferantData&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.ReferantData&quot;"
-      FeatureDefaultText="&quot;Referant Data&quot;"
+      FeatureDefaultText="&quot;Unifreight Referant Data&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
