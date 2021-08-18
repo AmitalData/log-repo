@@ -314,6 +314,7 @@ export class MultiUpdateComponent extends BaseComponent {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CancelButtonClicked();
                 });
             });
