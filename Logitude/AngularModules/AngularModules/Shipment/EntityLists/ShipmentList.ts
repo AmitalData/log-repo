@@ -469,6 +469,10 @@ export class ShipmentList {
 		HandlerUserId: string;
 		HandlerUserName: string;
 		StandalonePickupDeliveryId: string;
+
 		GrossWeightUnitCode: string;
+
+		PrivateLabelConsigneeName: string;
+
 	
 }

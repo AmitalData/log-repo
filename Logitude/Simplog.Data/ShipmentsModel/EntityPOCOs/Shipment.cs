@@ -695,6 +695,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string ForwarderPickUpDeliveryType { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
+        public string PrivateLabelConsigneeName { get; set; }
 
     }
 }

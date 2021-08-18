@@ -3211,6 +3211,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="Notify1Reference2"
     Type="varchar"
@@ -3218,6 +3219,15 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Column
+    Name="PrivateLabelConsigneeName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

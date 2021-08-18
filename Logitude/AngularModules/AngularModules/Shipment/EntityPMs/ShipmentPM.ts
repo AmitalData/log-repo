@@ -1244,7 +1244,11 @@ export class ShipmentPM {
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
-	 
+     
+    private privateLabelConsigneeName: string;
+    public get PrivateLabelConsigneeName() { return this.privateLabelConsigneeName; }
+    public set PrivateLabelConsigneeName(newValue: string) { if (this.privateLabelConsigneeName != newValue) { this.privateLabelConsigneeName = newValue; this.MarkAsDirty("PrivateLabelConsigneeName"); } }
+
     private shipperNote: string;
     public get ShipperNote() { return this.shipperNote; }
     public set ShipperNote(newValue: string) { if (this.shipperNote != newValue) { this.shipperNote = newValue; this.MarkAsDirty("ShipperNote"); } }
