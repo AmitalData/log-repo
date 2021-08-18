@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VendorUpdateClass
    {  		
-		public const string HashString = "0c297bee07f5d69876a6db585386e46a";
+		public const string HashString = "2f6669284b81b7e4a6a95616b0153e9f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,6 +120,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewVendorCommand",
 			      				    DefaultText =  "Vendor",
+			      				    NewButtonLocalDefaultText =  "הוסף ספק",
+			      				    NewButtonDefaultText =  "New Vendor",
 			      				    Code =  "VNDR",
 			      				    Name =  "Vendors",
 			      				    GenerateDomainService =  false,
@@ -3017,7 +3019,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable VendorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Vendor" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode VendorTextCode_VendorONewVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.O.NewVendor", DefaultText = "New Vendor",LocalDefaultText = @"הוסף ספק", ObjectTableId = VendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
