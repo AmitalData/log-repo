@@ -27,7 +27,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public bool IncludeDelivery { get; set; }
 
         public bool DangerousGoods { get; set; }
-        public CodeProperties Incoterm { get; set; }
+        public string Incoterm { get; set; }
 
         public DateTime? ReqFlightDate { get; set; }
         public int? Quantity { get; set; }

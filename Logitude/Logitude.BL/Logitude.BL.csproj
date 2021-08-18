@@ -2858,7 +2858,7 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\CustomsTransferHeaderService.cs" />
-    <Compile Include="ShipmentsModel\Tools\EntityService\ExporterShipmentAMMappingServie.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ExporterShipmentAMMappingService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ForwarderExportShipmentsServie.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\LogitudeOceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\MessagingStockService.cs" />
