@@ -8,7 +8,7 @@ export  class ServiceHelper{
 
 
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
-    private static testDomain: string;
+    private static testDomain: string = 'tracking.dsv.co.il/CargoTracking';
     
     constructor(){
 
@@ -16,7 +16,7 @@ export  class ServiceHelper{
     public static GetAppURL(baseUrl:string){
 
         if (window.location.origin.indexOf('localhost') > -1)
-            return 'http://localhost:9996/';
+            return 'http://localhost:9992/';
         else{
             if(baseUrl.includes('/CargoTracking')){
                 baseUrl = baseUrl.replace("/CargoTracking","");

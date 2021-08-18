@@ -6,6 +6,7 @@ import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBran
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from './../../Utilities/ServiceHelper';
 import { CargoTrackingBrandingDataRequest } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingDataRequest';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 
 @Injectable()
@@ -56,6 +57,27 @@ export class CargoTrackingBrandingDataExtendedService {
             catchError(null));
     }
 
+    
+    GetLoggedContact(tenant: number) {
+        var url = this._apiUrl + '/GetLoggedContact?tenant=' + SessionInfo.LoggedUserTenant;
+
+        var token = SessionInfo.Token || sessionStorage.getItem('Token');
+
+        const authHeader = {
+            headers: new HttpHeaders({
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Token': token
+            })
+        };
+
+        return this._http.get(url, authHeader).pipe(map(response => {
+            var result = response;
+            return result;
+        }), catchError(error => {
+            return error;
+        }));
+    }
 
 
 }
