@@ -873,7 +873,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
                 CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
-                if (courierPendingReasonPM == null)
+                if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive==true )
                 {
                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
                     return;
@@ -886,11 +886,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 if (_declarationPendingPM == null)
                 {
-                    _declarationPendingPM = new DeclarationPendingPM();
-                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
-                    _declarationPendingPM.Status = "A";
-                    _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                        _declarationPendingPM = new DeclarationPendingPM();
+                        _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
+                        _declarationPendingPM.Status = "A";
+                        _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+                   
                 }
                 else if (_declarationPendingPM.Status != "A")
                 {

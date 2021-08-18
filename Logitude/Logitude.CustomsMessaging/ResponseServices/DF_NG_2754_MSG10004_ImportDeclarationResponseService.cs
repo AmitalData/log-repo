@@ -367,6 +367,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                                     ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(context);
                                     var referantExceptionPMs = referantExceptionQueryService.GetByDecId(_MyDeclarationPM.Id);
+
                                     if (referantExceptionPMs.FirstOrDefault(x => x.ExceptionReasonsCode == "901") == null)
                                     {
                                         referantExceptionPM.ExceptionReasonsCode = "901";
@@ -851,11 +852,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isSetPendingTo901 = true;
                                 if (declarationPendingPM_901 == null)
                                 {
-                                    declarationPendingPM_901 = new DeclarationPendingPM();
-                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
-                                    declarationPendingPM_901.Status = "A";
-                                    declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
-                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
+                                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(_MyDeclarationCourierStatusPM.Tenant);
+                                    Boolean isActive = courierPendingReasonRepositoryRepository.IsActive("901", _MyDeclarationCourierStatusPM.Tenant);
+                                    if (isActive)
+                                    {
+                                        declarationPendingPM_901 = new DeclarationPendingPM();
+                                        declarationPendingPM_901.CourierPendingReasonCode = "901";
+                                        declarationPendingPM_901.Status = "A";
+                                        declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
+                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
+                                    }
                                 }
                                 else if (declarationPendingPM_901.Status != "A")
                                 {
@@ -896,8 +902,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                             CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
-                            if (courierPendingReasonPM == null)
+ 
+                            if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive==true)
                             {
+ 
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
                                 isCollectActive = false;
                             }
