@@ -1977,7 +1977,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
                 Active = true,
                 SendAsDual = false,
-                ResponseInterfaceCode = "8235",
+                ResponseInterfaceCode = "8237",
                 //   NeedSignature = false,
                 //     SignatureTypeCode = "C"
             });
