@@ -2221,8 +2221,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (IsETALegDateAddedOrModefied( null, itemPM,itemPOCO))
                 {
-                    this.DeleteTraceEvent("DLAR", null, itemPOCO.ETA);
                     this.DeleteTraceEvent("DLAR", null, itemPOCO.ETD);
+                    this.DeleteTraceEvent("DLAR", null, itemPOCO.ETA);
                     this.CreateTraceEvent("DLAR", itemPM.ETA, itemPM);
                 }
                 else if (IsETDLegDateAddedOrModefied( null, itemPM, itemPOCO))
@@ -2242,8 +2242,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (IsETALegDateAddedOrModefied(itemPM, null, itemPOCO))
                 {
-                    this.DeleteTraceEvent("PCAR", null, itemPOCO.ETA);
                     this.DeleteTraceEvent("PCAR", null, itemPOCO.ETD);
+                    this.DeleteTraceEvent("PCAR", null, itemPOCO.ETA);
                     this.CreateTraceEvent("PCAR", itemPM.ETA, itemPM);
                 }
                 else if (IsETDLegDateAddedOrModefied(itemPM, null, itemPOCO))
@@ -2337,14 +2337,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("PCAR");
             }
-            else if (IsFirstPickup(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETA, itemPOCO.ETA) && itemPM.ETD != null)
+            else if (IsFirstPickup(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETA, itemPOCO.ETA) && itemPM.ETD != null && itemPM.ETD == itemPOCO.ETD)
             {
                 this.DeleteTraceEvent("PCAR", null, itemPOCO.ETA);
+                this.DeleteTraceEvent("PCAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("PCAR", itemPM.ETD, itemPM);
             }
-            else if (IsFirstPickup(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETD, itemPOCO.ETD) && itemPM.ETA != null)
+            else if (IsFirstPickup(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETD, itemPOCO.ETD) && itemPM.ETA != null && itemPM.ETA == itemPOCO.ETA)
             {
                 this.DeleteTraceEvent("PCAR", null, itemPOCO.ETD);
+                this.DeleteTraceEvent("PCAR", null, itemPOCO.ETA);
                 this.CreateTraceEvent("PCAR", itemPM.ETA, itemPM);
             }
         }
@@ -2355,13 +2357,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("DLAR");
             }
-            else if (IsFirstDelivery(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETA, itemPOCO.ETA) && itemPM.ETD != null)
+            else if (IsFirstDelivery(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETA, itemPOCO.ETA) && itemPM.ETD != null && itemPM.ETD == itemPOCO.ETD)
             {
                 this.DeleteTraceEvent("DLAR", null, itemPOCO.ETA);
+                this.DeleteTraceEvent("DLAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("DLAR", itemPM.ETD, itemPM);
             }
-            else if (IsFirstDelivery(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETD, itemPOCO.ETD) && itemPM.ETA != null)
+            else if (IsFirstDelivery(itemPM, shipmentPM) && RoutingDate.IsDateRemoved(itemPM.ETD, itemPOCO.ETD) && itemPM.ETA != null && itemPM.ETA == itemPOCO.ETA)
             {
+                this.DeleteTraceEvent("DLAR", null, itemPOCO.ETA);
                 this.DeleteTraceEvent("DLAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("DLAR", itemPM.ETA, itemPM);
             }
