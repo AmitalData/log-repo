@@ -67,9 +67,61 @@ namespace WebFreight.Web
                 authenticationTokenRepository.Add(Primaryauthentication);
                 //authenticationTokenRepository.Add(Secondaryauthentication);
                 authenticationTokenRepository.SubmitChanges();
+                if (Key.WithDocumentDownloadToken)
+                {
+                    data.DocumentDownloadToken = GetDocumentDownloadTokenReal(null, Primaryauthentication.Token);
+                }
                 //data.Token = token;
             }
             return data;
+        }
+
+        private static string GetDocumentDownloadTokenReal(string documentToken, string headerToken)
+        {
+            string result = "";
+
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(/*token*/headerToken);
+
+            if (authToken != null)
+            {
+                AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
+
+                if (!string.IsNullOrEmpty(documentToken))
+                {
+                    AuthenticationToken documentAuthenticationToken = AuthenticationTokenRepository.GetSingleTokenFromCache(documentToken);
+                    if (documentAuthenticationToken != null)
+                    {
+                        DateTime nowDate = DateTime.Now;
+                        DateTime endDate = (DateTime)documentAuthenticationToken.ExpirationDate;
+                        if (endDate.AddMinutes(-5) > nowDate)
+                        {
+                            result = documentAuthenticationToken.Token;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    AuthenticationToken authenticationDocument = new AuthenticationToken()
+                    {
+                        CreateDate = DateTime.Now,
+                        ExpirationDate = DateTime.Now.AddMinutes(15),
+                        Email = authToken.Email,
+                        Password = authToken.Password,
+                        Token = AuthenticationUtil.GenerateToken(),
+                        Tenant = authToken.Tenant
+                        ,
+                        ClientType = "DocumentDownload"
+                    };
+
+                    authenticationTokenRepository.Add(authenticationDocument);
+                    authenticationTokenRepository.SubmitChanges();
+                    result = authenticationDocument.Token;
+                }
+            }
+
+            return result;
         }
 
 
