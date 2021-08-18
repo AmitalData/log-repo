@@ -51,10 +51,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public string GetIdByCodeOrPassport(string code,string passport, int tenant, bool insertIfNotFount = false)
         {
-            if (string.IsNullOrEmpty(code))
-            {
-                return null;
-            }
+            //if (string.IsNullOrEmpty(code))
+            //{
+            //    return null;
+            //}
             string id = repository.GetIdByCodeOrPassport(tenant, code,passport);
 
             if (string.IsNullOrWhiteSpace(id) && insertIfNotFount == true)

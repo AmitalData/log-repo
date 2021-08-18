@@ -35,7 +35,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var commonContext = CommonDataContext.GetContext(requestParams.Tenant);
             var clientQueryService = new ClientQueryService(requestParams.Tenant);
             var clientPoaQueryService = new ClientsPoaQueryService(requestParams.Tenant);
-            var clientUpdateService = new ClientUpdateService(requestParams.Tenant);
+            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            var clientUpdateService = new ClientUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var vendorQueryService = new CustomsVendorQueryService(requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData(); //moran 1.3.15 - Task 9921
             MyResponseData.Succeeded = true; //moran 1.3.15 - Task 9921
@@ -57,7 +58,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             clientId = clientQueryService.GetIdByCodeOrPassport(customResponse.POA.authorizerExternalId.ToString(), customResponse.POA.authorizerPassportNumber, requestParams.Tenant);
                         }
                     }
-                    if (customResponse.POA != null  
+                    if (!string.IsNullOrEmpty(clientId) &&
+                        customResponse.POA != null  
                         && (customResponse.POA.authorizerExternalId.HasValue || !string.IsNullOrEmpty(customResponse.POA.authorizerPassportNumber))
                         && customResponse.PoaAuthorization != null && customResponse.PoaAuthorization.Length > 0)
                     {
