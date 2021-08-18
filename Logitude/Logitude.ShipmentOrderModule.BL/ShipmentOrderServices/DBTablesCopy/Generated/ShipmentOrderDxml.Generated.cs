@@ -120,10 +120,10 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='GatewayId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CasualImporterName' Type='varchar' Size='2000'>"+
+"  <Column Name='CasualImporterName' Type='varchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CasualSupplierName' Type='varchar' Size='2000'>"+
+"  <Column Name='CasualSupplierName' Type='varchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
@@ -137,6 +137,9 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  </Column>"+
 "  <Column Name='DirectionId' Type='char' Size='1'>"+
 "    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='CarrierId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='UpdatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
@@ -155,6 +158,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='GatewayId' ReferencedTable='Ports' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='ShipmentLevelCode' ReferencedTable='ShipmentLevels' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='DirectionId' ReferencedTable='Directions' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='CarrierId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='Tenant,OrderNumber' />"+
 "  <UniqueConstraint Columns='Tenant,OrderNumber' />"+
 "</Table>";

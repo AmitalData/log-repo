@@ -47,12 +47,13 @@ namespace CloudRestClientTool
             txtCredentialsPrimary.Text = "1859482b-755c-4259-a2be-8b4dc2e531f0";
             string requestText = @"<?xml version='1.0' encoding='UTF-8'?>
                                     <ShipmentOrder xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-                                       <Tenant>1311</Tenant>
+                                       <CreateDate>2021-03-12T11:29:10.12</CreateDate>
                                        <OrderNumber>1</OrderNumber>
                                        <TransportMode Code='A'/>
                                        <Consignee Code='10011'/>
                                        <Shipper Code='10011'/>
                                        <Agent Code='10011'/>
+                                       <Carrier Code='10011'/>
                                        <Incoterm Code='CFR'/>
                                        <AccountManager Code='mog@mail.com'/>
                                        <PONumber>1234</PONumber>

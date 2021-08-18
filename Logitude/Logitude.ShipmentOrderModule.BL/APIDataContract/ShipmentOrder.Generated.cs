@@ -22,8 +22,6 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
 	    
     public string Id { get; set; }
     
-    public int Tenant { get; set; }
-    
     public string OrderNumber { get; set; }
     
     public TransportMode TransportMode { get; set; }
@@ -97,5 +95,9 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public string BookingConfirmationNumber { get; set; }
     
     public string CarrierNumber { get; set; }
+    
+    public Card Carrier { get; set; }
+    
+    public DateTime CreateDate { get; set; }
     }
 } 

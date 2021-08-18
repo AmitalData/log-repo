@@ -256,14 +256,14 @@
   <Column
     Name="CasualImporterName"
     Type="varchar"
-    Size="2000">
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CasualSupplierName"
     Type="varchar"
-    Size="2000">
+    Size="70">
     <Constraints
       Nullable="true" />
   </Column>
@@ -293,6 +293,13 @@
     Size="1">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
@@ -377,6 +384,11 @@
   <Relation
     ForeignKeyColumn="DirectionId"
     ReferencedTable="Directions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CarrierId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
