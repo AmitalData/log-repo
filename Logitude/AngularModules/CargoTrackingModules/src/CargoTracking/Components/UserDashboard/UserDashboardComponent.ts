@@ -94,14 +94,14 @@ export class UserDashboardComponent implements AfterViewInit
                 this.UserName = SessionInfo.LoggedUserPM.EnglishName;
                 this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
             }else{
-                this.GetLoggedContact(email);
+                this.GetLoggedContact();
             }
         });
     }
     
-    private GetLoggedContact(email: any)
+    private GetLoggedContact()
     {
-        this.brandingService.GetLoggedContact(email).subscribe((loggedContact: any) =>
+        this.brandingService.GetLoggedContact().subscribe((loggedContact: any) =>
         {
             if (loggedContact) {
                 SessionInfo.LoggedContact = loggedContact;

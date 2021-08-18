@@ -58,7 +58,7 @@ export class CargoTrackingBrandingDataExtendedService {
     }
 
     
-    GetLoggedContact(tenant: number) {
+    GetLoggedContact() {
         var url = this._apiUrl + '/GetLoggedContact?tenant=' + SessionInfo.LoggedUserTenant;
 
         var token = SessionInfo.Token || sessionStorage.getItem('Token');

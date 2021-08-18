@@ -196,14 +196,14 @@ export class LoginComponent implements OnInit {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
             }else{
-                this.GetLoggedContact(email);
+                this.GetLoggedContact();
             }
         });
     }
 
-    private GetLoggedContact(email: any)
+    private GetLoggedContact()
     {
-        this.cargoTrackingBrandingDataExtendedService.GetLoggedContact(SessionInfo.LoggedUserTenant).subscribe((loggedContact: any) =>
+        this.cargoTrackingBrandingDataExtendedService.GetLoggedContact().subscribe((loggedContact: any) =>
         {
             if (loggedContact) {
                 SessionInfo.LoggedContact = loggedContact;
