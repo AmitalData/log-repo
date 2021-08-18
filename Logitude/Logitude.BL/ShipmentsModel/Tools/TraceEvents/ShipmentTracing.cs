@@ -2099,7 +2099,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             if (myEventList.Count > 0)
             {
-                TraceEvent myHigherEvent = myEventList.OrderByDescending(d => d.EventDateTime).FirstOrDefault();
+                TraceEvent myHigherEvent = myEventList.OrderByDescending(d => d.LogDateTime).FirstOrDefault();
                 if (myHigherEvent != null)
                 {
                     entityPM.LastSharedEventId = myHigherEvent.EventTypeId;
