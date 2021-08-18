@@ -3001,7 +3001,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
 
             if (this.ObjectTableName == "Vendor") {
-                str = TextCodeTranslator.Translate("General.B.Add") + " Vendor";
+                str = TextCodeTranslator.Translate("Vendor.O.NewVendor");
             }
 
 
