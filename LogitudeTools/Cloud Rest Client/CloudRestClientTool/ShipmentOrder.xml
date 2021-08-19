@@ -1,0 +1,226 @@
+﻿<ShipmentOrder xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<OrderNumber>31</OrderNumber>
+	<TransportMode Code="A">
+		<Name>Air</Name>
+	</TransportMode>
+	<AccountManager Code="specflowtest@logitudeworld.com">
+      <EnglishName>SpecflowTest</EnglishName>
+      <LocalName>SpecflowTest</LocalName>
+   </AccountManager>
+	<Consignee Code="10011">
+		<EnglishName>agent 55</EnglishName>
+		<MainAddress>
+			<Name>Main Address</Name>
+			<Address1>address1</Address1>
+			<Address2>address2</Address2>
+			<Country Code="MX">
+				<EnglishName>Mexico</EnglishName>
+				<LocalName>Mexico</LocalName>
+			</Country>
+			<City>city</City>
+			<ZipCode>zip</ZipCode>
+			<PhoneNumber>phoneNumber</PhoneNumber>
+			<FaxNumber>fax</FaxNumber>
+			<State Code="JAL">
+				<EnglishName>Jalisco</EnglishName>
+				<LocalName>Jalisco</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<VatNumber>agentvat 5</VatNumber>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO />
+	</Consignee>
+	<Shipper Code="10011">
+		<EnglishName>agent 55</EnglishName>
+		<MainAddress>
+			<Name>Main Address</Name>
+			<Address1>address1</Address1>
+			<Address2>address2</Address2>
+			<Country Code="MX">
+				<EnglishName>Mexico</EnglishName>
+				<LocalName>Mexico</LocalName>
+			</Country>
+			<City>city</City>
+			<ZipCode>zip</ZipCode>
+			<PhoneNumber>phoneNumber</PhoneNumber>
+			<FaxNumber>fax</FaxNumber>
+			<State Code="JAL">
+				<EnglishName>Jalisco</EnglishName>
+				<LocalName>Jalisco</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<VatNumber>agentvat 5</VatNumber>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO />
+	</Shipper>
+	<Agent Code="10011">
+		<EnglishName>agent 55</EnglishName>
+		<MainAddress>
+			<Name>Main Address</Name>
+			<Address1>address1</Address1>
+			<Address2>address2</Address2>
+			<Country Code="MX">
+				<EnglishName>Mexico</EnglishName>
+				<LocalName>Mexico</LocalName>
+			</Country>
+			<City>city</City>
+			<ZipCode>zip</ZipCode>
+			<PhoneNumber>phoneNumber</PhoneNumber>
+			<FaxNumber>fax</FaxNumber>
+			<State Code="JAL">
+				<EnglishName>Jalisco</EnglishName>
+				<LocalName>Jalisco</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<VatNumber>agentvat 5</VatNumber>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO />
+	</Agent>
+	<Incoterm Code="CFR">
+		<Name>Cost &amp; Freight</Name>
+	</Incoterm>
+	<PONumber>1234</PONumber>
+	<Master>master test</Master>
+	<House>house test</House>
+	<Vessel Code="3z4z2">
+		<EnglishName>3z4z2</EnglishName>
+	</Vessel>
+	<CustomsAgent Code="10011">
+		<EnglishName>agent 55</EnglishName>
+		<MainAddress>
+			<Name>Main Address</Name>
+			<Address1>address1</Address1>
+			<Address2>address2</Address2>
+			<Country Code="MX">
+				<EnglishName>Mexico</EnglishName>
+				<LocalName>Mexico</LocalName>
+			</Country>
+			<City>city</City>
+			<ZipCode>zip</ZipCode>
+			<PhoneNumber>phoneNumber</PhoneNumber>
+			<FaxNumber>fax</FaxNumber>
+			<State Code="JAL">
+				<EnglishName>Jalisco</EnglishName>
+				<LocalName>Jalisco</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<VatNumber>agentvat 5</VatNumber>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO />
+	</CustomsAgent>
+	<SpecialServicesType Code="2u0bid58">
+		<Name>Testing Special Services Type Daily Scenario</Name>
+	</SpecialServicesType>
+	<Forwarder Code="AA">
+		<EnglishName>American Airlines</EnglishName>
+		<LocalName>American Airlines</LocalName>
+		<MainAddress>
+			<Name>Testing Airlines</Name>
+			<Address1 />
+			<Address2 />
+			<Country Code="US">
+				<EnglishName>United States</EnglishName>
+				<LocalName>United States</LocalName>
+			</Country>
+			<City>Anchorage</City>
+			<ZipCode />
+			<PhoneNumber>18004337300</PhoneNumber>
+			<FaxNumber>18179674162</FaxNumber>
+			<State Code="AR">
+				<EnglishName>Arkansas</EnglishName>
+				<LocalName>Arkansas</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO>AAL</ICAO>
+	</Forwarder>
+	<IsReadyForPickup>false</IsReadyForPickup>
+	<DescriptionOfGoods>desc test</DescriptionOfGoods>
+	<CustomerReferences>customer ref test</CustomerReferences>
+	<PickupEstimatedDateTime>2021-08-15T11:29:10.12</PickupEstimatedDateTime>
+	<PickupActualDateTime>2021-08-15T11:29:10.12</PickupActualDateTime>
+	<BookingConfirmationDate>2021-08-15T00:00:00</BookingConfirmationDate>
+	<ETD>2021-08-15T11:29:10.12</ETD>
+	<ETA>2021-08-15T11:29:10.12</ETA>
+	<ATD>2021-08-15T11:29:10.12</ATD>
+	<ATA>2021-08-15T11:29:10.12</ATA>
+	<Direction Code="E">
+		<Name>Export</Name>
+	</Direction>
+	<ShipmentNumber>23</ShipmentNumber>
+	<SupplyDateTime>2021-08-15T11:29:10.12</SupplyDateTime>
+	<OriginPort Code="ILASH">
+		<LocalName>Ashdod</LocalName>
+		<EnglishName>Ashdod</EnglishName>
+		<Country Code="IL">
+			<EnglishName>Israel</EnglishName>
+			<LocalName>Israel</LocalName>
+		</Country>
+	</OriginPort>
+	<DestinationPort Code="ILASH">
+		<LocalName>Ashdod</LocalName>
+		<EnglishName>Ashdod</EnglishName>
+		<Country Code="IL">
+			<EnglishName>Israel</EnglishName>
+			<LocalName>Israel</LocalName>
+		</Country>
+	</DestinationPort>
+	<Gateway Code="ILASH">
+		<LocalName>Ashdod</LocalName>
+		<EnglishName>Ashdod</EnglishName>
+		<Country Code="IL">
+			<EnglishName>Israel</EnglishName>
+			<LocalName>Israel</LocalName>
+		</Country>
+	</Gateway>
+	<CasualImporterName>imp test</CasualImporterName>
+	<CasualSupplierName>sup test</CasualSupplierName>
+	<ShipmentLevel Code="D">
+		<Name>Direct</Name>
+	</ShipmentLevel>
+	<PODate>2021-08-15T00:00:00</PODate>
+	<BookingConfirmationNumber>2323</BookingConfirmationNumber>
+	<CarrierNumber>101</CarrierNumber>
+	<Carrier Code="10011">
+		<EnglishName>agent 55</EnglishName>
+		<MainAddress>
+			<Name>Main Address</Name>
+			<Address1>address1</Address1>
+			<Address2>address2</Address2>
+			<Country Code="MX">
+				<EnglishName>Mexico</EnglishName>
+				<LocalName>Mexico</LocalName>
+			</Country>
+			<City>city</City>
+			<ZipCode>zip</ZipCode>
+			<PhoneNumber>phoneNumber</PhoneNumber>
+			<FaxNumber>fax</FaxNumber>
+			<State Code="JAL">
+				<EnglishName>Jalisco</EnglishName>
+				<LocalName>Jalisco</LocalName>
+			</State>
+			<AddressType>
+				<Name>Main</Name>
+			</AddressType>
+		</MainAddress>
+		<VatNumber>agentvat 5</VatNumber>
+		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
+		<ICAO />
+	</Carrier>
+	<CreateDate>2021-03-12T11:29:10.12</CreateDate>
+</ShipmentOrder>

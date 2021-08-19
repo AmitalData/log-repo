@@ -47,19 +47,19 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        [DataMember]
        public string DescriptionOfGoods  { get; set; }
        [DataMember]
-       public string ShipmentTypeId  { get; set; }
-       [DataMember]
        public string Master  { get; set; }
        [DataMember]
        public string House  { get; set; }
        [DataMember]
        public string CarrierNumber  { get; set; }
        [DataMember]
-       public DateTime ETD  { get; set; }
+       public DateTime? ETD  { get; set; }
        [DataMember]
-       public DateTime ATD  { get; set; }
+       public DateTime? ETA  { get; set; }
        [DataMember]
-       public DateTime ATA  { get; set; }
+       public DateTime? ATD  { get; set; }
+       [DataMember]
+       public DateTime? ATA  { get; set; }
        [DataMember]
        public string CustomsAgentId  { get; set; }
        [DataMember]
@@ -68,8 +68,6 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string CustomerReferences  { get; set; }
        [DataMember]
        public string TransportModeName  { get; set; }
-       [DataMember]
-       public string ShipmentTypeName  { get; set; }
        [DataMember]
        public bool IsReadyForPickup  { get; set; }
        [DataMember]
@@ -80,6 +78,60 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string ForwarderId  { get; set; }
        [DataMember]
        public DateTime? BookingConfirmationDate  { get; set; }
+       [DataMember]
+       public string ConsigneeName  { get; set; }
+       [DataMember]
+       public string ShipperName  { get; set; }
+       [DataMember]
+       public string AgentName  { get; set; }
+       [DataMember]
+       public string IncotermCode  { get; set; }
+       [DataMember]
+       public string AccountManagerName  { get; set; }
+       [DataMember]
+       public string VesselName  { get; set; }
+       [DataMember]
+       public string CustomsAgentName  { get; set; }
+       [DataMember]
+       public string SpecialServicesTypeName  { get; set; }
+       [DataMember]
+       public string ForwarderName  { get; set; }
+       [DataMember]
+       public string ShipmentNumber  { get; set; }
+       [DataMember]
+       public DateTime? SupplyDateTime  { get; set; }
+       [DataMember]
+       public string OriginPortId  { get; set; }
+       [DataMember]
+       public string DestinationPortId  { get; set; }
+       [DataMember]
+       public string GatewayId  { get; set; }
+       [DataMember]
+       public string CasualImporterName  { get; set; }
+       [DataMember]
+       public string CasualSupplierName  { get; set; }
+       [DataMember]
+       public string ShipmentLevelCode  { get; set; }
+       [DataMember]
+       public string ShipmentLevelName  { get; set; }
+       [DataMember]
+       public DateTime? PODate  { get; set; }
+       [DataMember]
+       public string BookingConfirmationNumber  { get; set; }
+       [DataMember]
+       public string OriginPortName  { get; set; }
+       [DataMember]
+       public string DestinationPortName  { get; set; }
+       [DataMember]
+       public string GatewayName  { get; set; }
+       [DataMember]
+       public string DirectionName  { get; set; }
+       [DataMember]
+       public string DirectionId  { get; set; }
+       [DataMember]
+       public string CarrierId  { get; set; }
+       [DataMember]
+       public string CarrierName  { get; set; }
    }
 
 }
