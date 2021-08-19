@@ -127,7 +127,11 @@ namespace WebFreight.Web.ReportsWebServices
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);
                 SATInterfaceSetting satSetting = satInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-              
+
+                VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
+                VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+                List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+
                 if (tenantSettings != null)
                 {
                     invoicedataprovider.TenantName = tenantSettings.Company;
@@ -1925,6 +1929,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 else
                                 {
+                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, allVatTypesPercentages, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
                                 }
@@ -2114,6 +2119,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 else
                                 {
+                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, allVatTypesPercentages, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
                                 }
@@ -2377,6 +2383,26 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoicedataprovider;
+        }
+
+        private double? ComputeVatAmount_MultiVat(List<VATTypesGroup> allVatGroups, List<VatType> allVatTypes, List<VatTypePercentage> allVatPercentages, double? invoiceAmount, string VATTypeId, int tenant)
+        {
+            double? allLineVATAmount = 0;
+
+            List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == VATTypeId).ToList();
+            
+            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+            {
+                VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                VatTypePercentage myPercentage = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentage != null)
+                {
+                    var vatTypePercentage = MethodHelper.GetValue(myPercentage.Percentage);
+                    allLineVATAmount += MethodHelper.Round(invoiceAmount * vatTypePercentage / 100, 2);
+                }
+            }
+
+            return allLineVATAmount;
         }
 
         private  string GetBillToSalesManUserName( Card billToCard)
@@ -2700,6 +2726,9 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
+                List<VATTypesGroup> allVatGroups = (from d in commonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
+                List<VatType> allVatTypes = (from d in commonContext.VatTypes where d.Tenant == tenant select d).ToList();
+
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -3146,6 +3175,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             else
                             {
+                                reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, allVatTypesPercentages, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
                             }
@@ -3315,6 +3345,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             else
                             {
+                                reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, allVatTypesPercentages, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
                             }
