@@ -1152,6 +1152,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
             case "PORT": {
                 this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
                 break;
             }
 
@@ -1181,6 +1182,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
             case "PORT": {
                 this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
                 break;
             }
 
@@ -1200,48 +1202,62 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     set ShipperId(newValue: string) {
         if (this.EntityPM.ShipperId != newValue) {
             this.EntityPM.ShipperId = newValue;
+            this.OnShipperChanged();            
+        }
+    }
 
-            if (this.ShipmentCustomerTypeCode == "SHI") {
-                this.CustomerId = newValue;
+    private OnShipperChanged() {
+        if (this.ShipmentCustomerTypeCode == "SHI") {
+            this.CustomerId = this.ShipperId;
+        }
+
+        this.SetUIProperties_Shipper();
+
+        if (AppTool.IsNullOrEmpty(this.ShipperId)) {
+            this.ShipperPartnerTypeId = null;
+            this.ShipperContactId = null;
+            this.EntityPM.ShipperName = null;
+            this.EntityPM.ShipperNote = null;
+            this.EntityPM.ShipperReference1 = null;
+            this.EntityPM.ShipperReference2 = null;
+            this.EntityPM.ShipperMainAddressId = null;
+            this.EntityPM.ShipperPickAddressId = null;
+            this.EntityPM.KnownConsignorNumber = null;
+            this.EntityPM.KCExpirationDate = null;
+            this.ShipperAddressId = null;
+            this.ShipperCardList = null;
+
+            if (this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
+                this.SetUIProperties_From();
+                this.MainCarriageFromPartnerId = null;
+                this.MainCarriageFromAddressId = null;
             }
+        }   
 
-            this.SetUIProperties_Shipper();
-
-            if (AppTool.IsNullOrEmpty(newValue)) {
-                this.ShipperPartnerTypeId = null;
-                this.ShipperContactId = null;
-                this.EntityPM.ShipperName = null;
-                this.EntityPM.ShipperNote = null;
-                this.EntityPM.ShipperReference1 = null;
-                this.EntityPM.ShipperReference2 = null;
-                this.EntityPM.ShipperMainAddressId = null;
-                this.EntityPM.ShipperPickAddressId = null;
-                this.EntityPM.KnownConsignorNumber = null;
-                this.EntityPM.KCExpirationDate = null;
-                this.ShipperAddressId = null;
-                this.ShipperCardList = null;
-            }
-
-            else {
-                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var myCardList: CardList = myResponse.Result;
-                        if (myCardList) {
-                            this.ShipperPartnerTypeId = myCardList.PartnerTypeId;
-                            this.ShipperContactId = myCardList.PrimaryContactId;
-                            this.EntityPM.ShipperName = myCardList.EnglishName;
-                            this.EntityPM.ShipperNote = myCardList.Notes;
-                            this.EntityPM.ShipperMainAddressId = myCardList.MainAddressId;
-                            this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
-                            this.EntityPM.KnownConsignorNumber = myCardList.KnownConsignor;
-                            this.EntityPM.KCExpirationDate = myCardList.KCExpirationDate;
-                            this.ShipperAddressId = myCardList.MainAddressId;
-                            this.ShipperIsCustomer = myCardList.IsCustomer;
-                            this.ShipperCardList = myCardList;
+        if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
+            this.myCardListService.getSingle(this.ShipperId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var myCardList: CardList = myResponse.Result;
+                    if (myCardList) {
+                        if (this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
+                            this.MainCarriageFromPartnerId = this.ShipperId;
+                            this.MainCarriageFromAddressId = myCardList.MainAddressId;
                         }
+
+                        this.ShipperPartnerTypeId = myCardList.PartnerTypeId;
+                        this.ShipperContactId = myCardList.PrimaryContactId;
+                        this.EntityPM.ShipperName = myCardList.EnglishName;
+                        this.EntityPM.ShipperNote = myCardList.Notes;
+                        this.EntityPM.ShipperMainAddressId = myCardList.MainAddressId;
+                        this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
+                        this.EntityPM.KnownConsignorNumber = myCardList.KnownConsignor;
+                        this.EntityPM.KCExpirationDate = myCardList.KCExpirationDate;
+                        this.ShipperAddressId = myCardList.MainAddressId;
+                        this.ShipperIsCustomer = myCardList.IsCustomer;
+                        this.ShipperCardList = myCardList;
                     }
-                });
-            }
+                }
+            });
         }
     }
 
@@ -1307,44 +1323,58 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     set ConsigneeId(newValue: string) {
         if (this.EntityPM.ConsigneeId != newValue) {
             this.EntityPM.ConsigneeId = newValue;
+            this.OnConsigneeChanged();
+        }
+    }
 
-            if (this.ShipmentCustomerTypeCode == "CON") {
-                this.CustomerId = newValue;
+    private OnConsigneeChanged() {
+        if (this.ShipmentCustomerTypeCode == "CON") {
+            this.CustomerId = this.ConsigneeId;
+        }
+
+        this.SetUIProperties_Consignee();
+
+        if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
+            this.ConsigneePartnerTypeId = null;
+            this.ConsigneeContactId = null;
+            this.EntityPM.ConsigneeName = null;
+            this.EntityPM.ConsigneeNote = null;
+            this.EntityPM.ConsigneeReference1 = null;
+            this.EntityPM.ConsigneeReference2 = null;
+            this.EntityPM.ConsigneeMainAddressId = null;
+            this.EntityPM.ConsigneePickAddressId = null;
+            this.ConsigneeAddressId = null;
+            this.ConsigneeCardList = null;
+
+            if (this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
+                this.SetUIProperties_To();
+                this.MainCarriageToPartnerId = null;
+                this.MainCarriageToAddressId = null;
             }
+        }
 
-            this.SetUIProperties_Consignee();
-
-            if (AppTool.IsNullOrEmpty(newValue)) {
-                this.ConsigneePartnerTypeId = null;
-                this.ConsigneeContactId = null;
-                this.EntityPM.ConsigneeName = null;
-                this.EntityPM.ConsigneeNote = null;
-                this.EntityPM.ConsigneeReference1 = null;
-                this.EntityPM.ConsigneeReference2 = null;
-                this.EntityPM.ConsigneeMainAddressId = null;
-                this.EntityPM.ConsigneePickAddressId = null;
-                this.ConsigneeAddressId = null;
-                this.ConsigneeCardList = null;
-            }
-
-            else {
-                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var myCardList: CardList = myResponse.Result;
-                        if (myCardList) {
-                            this.ConsigneePartnerTypeId = myCardList.PartnerTypeId;
-                            this.ConsigneeContactId = myCardList.PrimaryContactId;
-                            this.EntityPM.ConsigneeName = myCardList.EnglishName;
-                            this.EntityPM.ConsigneeNote = myCardList.Notes;
-                            this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
-                            this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
-                            this.ConsigneeAddressId = myCardList.MainAddressId;
-                            this.ConsigneeIsCustomer = myCardList.IsCustomer;
-                            this.ConsigneeCardList = myCardList;
+        if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
+            this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var myCardList: CardList = myResponse.Result;
+                    if (myCardList) {
+                        if (this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
+                            this.MainCarriageToPartnerId = this.ConsigneeId;
+                            this.MainCarriageToAddressId = myCardList.MainAddressId;
                         }
+
+                        this.ConsigneePartnerTypeId = myCardList.PartnerTypeId;
+                        this.ConsigneeContactId = myCardList.PrimaryContactId;
+                        this.EntityPM.ConsigneeName = myCardList.EnglishName;
+                        this.EntityPM.ConsigneeNote = myCardList.Notes;
+                        this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
+                        this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
+                        this.ConsigneeAddressId = myCardList.MainAddressId;
+                        this.ConsigneeIsCustomer = myCardList.IsCustomer;
+                        this.ConsigneeCardList = myCardList;
                     }
-                });
-            }
+                }
+            });
         }
     }
 
@@ -4079,7 +4109,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId;
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
-        this.SetInlandDomesticOnFinish();
+        //this.SetInlandDomesticOnFinish();
 
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
@@ -4158,19 +4188,19 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
     }
-    SetInlandDomesticOnFinish() {
-        if (this.IsInlandDomestic) {
-            this.IncludePickUp = false;
-            this.IncludeDelivery = false;
-            this.MainCarriageFromPortId = null;
-            this.MainCarriageToPortId = null;
-            this.EntityPM.MainCarriageFinalDestinationPortId = null;
-            this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
-            this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
-            this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
-            this.EntityPM.MainCarriageToAddressId = this.ConsigneeAddressId;
-        }
-    }
+    //SetInlandDomesticOnFinish() {
+    //    if (this.IsInlandDomestic) {
+    //        this.IncludePickUp = false;
+    //        this.IncludeDelivery = false;
+    //        this.MainCarriageFromPortId = null;
+    //        this.MainCarriageToPortId = null;
+    //        this.EntityPM.MainCarriageFinalDestinationPortId = null;
+    //        this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
+    //        this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
+    //        this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
+    //        this.EntityPM.MainCarriageToAddressId = this.ConsigneeAddressId;
+    //    }
+    //}
     SetOrderPackagesOnFinish() {
         if (this.IsFCLEntity) {
             var numberOfPackages = 0;
