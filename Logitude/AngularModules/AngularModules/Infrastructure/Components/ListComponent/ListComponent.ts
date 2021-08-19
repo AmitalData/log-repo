@@ -952,7 +952,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
       this.MethodName = args.MethodName;
       this.BackBtnTitle = args.BackButtonTitle;
       this.ShowViews = args.ShowViews;
-      this.MenuTableQuerySection = args.QuerySection;
+      this.MenuTableQuerySection = args.QuerySection ? args.QuerySection : args.ObjectTableName ;
 
       this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
       this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
@@ -1428,11 +1428,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         //this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId));
         //this.Queries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId == null);
-        if (this.MenuTableQuerySection != null) {
-            this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
-        } else {
-            this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant);
-        }
+        this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
         this.QueryListSourceChanged.emit(this.UserQueries);
         var SelectedQuery: any = {};
         //if (this.listArgs.Perspective != null) {
