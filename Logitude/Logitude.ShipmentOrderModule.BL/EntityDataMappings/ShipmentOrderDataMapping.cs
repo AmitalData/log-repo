@@ -16,13 +16,14 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.Helpers;
 
 namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 {
 
     public partial class ShipmentOrderDataMapping : IMapping<ShipmentOrderPM, ShipmentOrder>
     {
-
         public void CustomPMToPOCO(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
             entityPOCO.Id = entityPM.Id;
@@ -31,22 +32,62 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
-            entityPM.TransportModeName = GetTransportModeNameById(entityPOCO.TransportModeId, entityPM.Tenant);
-            entityPM.ConsigneeName = GetCardNameById(entityPOCO.ConsigneeId, entityPM.Tenant);
-            entityPM.ShipperName = GetCardNameById(entityPOCO.ShipperId, entityPM.Tenant);
-            entityPM.AgentName = GetCardNameById(entityPOCO.AgentId, entityPM.Tenant);
-            entityPM.CustomsAgentName = GetCardNameById(entityPOCO.CustomsAgentId, entityPM.Tenant);
-            entityPM.ForwarderName = GetCardNameById(entityPOCO.ForwarderId, entityPM.Tenant);
-            entityPM.AccountManagerName = GetAccountManagerNameById(entityPOCO.AccountManagerId, entityPM.Tenant);
-            entityPM.VesselName = GetVesselNameById(entityPOCO.VesselId, entityPM.Tenant);
-            entityPM.SpecialServicesTypeName = GetSpecialServicesTypeNameById(entityPOCO.SpecialServicesTypeId, entityPM.Tenant);
-            entityPM.IncotermCode = GetIncotermCodeById(entityPOCO.IncotermId, entityPM.Tenant);
-            entityPM.ShipmentLevelName = GetShipmentLevelNameByCode(entityPOCO.ShipmentLevelCode, entityPM.Tenant);
-            entityPM.OriginPortName = GetPortNameById(entityPOCO.OriginPortId, entityPM.Tenant);
-            entityPM.DestinationPortName = GetPortNameById(entityPOCO.DestinationPortId, entityPM.Tenant);
-            entityPM.GatewayName = GetPortNameById(entityPOCO.GatewayId, entityPM.Tenant);
-            entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPM.Tenant);
-            entityPM.CarrierName = GetCardNameById(entityPOCO.CarrierId, entityPM.Tenant);
+            List<CardList> cards = GetCardList(entityPOCO.Tenant, entityPOCO);
+            List<PortList> ports = GetPortList(entityPOCO.Tenant, entityPOCO);
+
+            entityPM.ConsigneeName = cards.Where(d => d.Id == entityPOCO.ConsigneeId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.ShipperName = cards.Where(d => d.Id == entityPOCO.ShipperId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.AgentName = cards.Where(d => d.Id == entityPOCO.AgentId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.CustomsAgentName = cards.Where(d => d.Id == entityPOCO.CustomsAgentId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.ForwarderName = cards.Where(d => d.Id == entityPOCO.ForwarderId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.CarrierName = cards.Where(d => d.Id == entityPOCO.CarrierId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.OriginPortName = ports.Where(d => d.Id == entityPOCO.OriginPortId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.DestinationPortName = ports.Where(d => d.Id == entityPOCO.DestinationPortId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.GatewayName = ports.Where(d => d.Id == entityPOCO.GatewayId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.TransportModeName = GetTransportModeNameById(entityPOCO.TransportModeId, entityPOCO.Tenant);
+            entityPM.AccountManagerName = GetAccountManagerNameById(entityPOCO.AccountManagerId, entityPOCO.Tenant);
+            entityPM.VesselName = GetVesselNameById(entityPOCO.VesselId, entityPOCO.Tenant);
+            entityPM.SpecialServicesTypeName = GetSpecialServicesTypeNameById(entityPOCO.SpecialServicesTypeId, entityPOCO.Tenant);
+            entityPM.IncotermCode = GetIncotermCodeById(entityPOCO.IncotermId, entityPOCO.Tenant);
+            entityPM.ShipmentLevelName = GetShipmentLevelNameByCode(entityPOCO.ShipmentLevelCode, entityPOCO.Tenant);
+            entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPOCO.Tenant);
+
+        }
+
+        private List<CardList> GetCardList(int tenant, ShipmentOrder entityPOCO)
+        {
+            List<string> cardIds = BuildCardIds(entityPOCO);
+            CardQuery cardQuery = new CardQuery(tenant);
+            return cardQuery.GetCardListsByListIds(cardIds, tenant).ToList();
+        }
+        private List<string> BuildCardIds(ShipmentOrder entityPOCO)
+        {
+            return new List<string>
+            {
+                entityPOCO.ConsigneeId,
+                entityPOCO.ShipperId,
+                entityPOCO.AgentId,
+                entityPOCO.CustomsAgentId,
+                entityPOCO.ForwarderId,
+                entityPOCO.CarrierId,
+            };
+        }
+
+        private List<PortList> GetPortList(int tenant, ShipmentOrder entityPOCO)
+        {
+
+            List<string> portIds = BuildPortIds(entityPOCO);
+            PortQuery portQuery = new PortQuery(tenant);
+            return portQuery.GetPortListsByListIds(portIds, tenant).ToList();
+        }
+        private List<string> BuildPortIds(ShipmentOrder entityPOCO)
+        {
+            return new List<string>
+            {
+                entityPOCO.OriginPortId,
+                entityPOCO.DestinationPortId,
+                entityPOCO.GatewayId,
+            };
         }
 
         private string GetTransportModeNameById(string transportModeId, int tenant)
@@ -67,17 +108,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 ShipmentLevelQuery shipmentLevelQuery = new ShipmentLevelQuery(tenant);
                 ShipmentLevelPM shipmentLevelPM = shipmentLevelQuery.GetSinglePM(shipmentLevelCode, tenant);
                 return shipmentLevelPM.Name;
-            }
-            return null;
-        }
-
-        private string GetCardNameById(string cardId, int tenant)
-        {
-            if (!string.IsNullOrEmpty(cardId))
-            {
-                CardQuery cardQuery = new CardQuery(tenant);
-                CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
-                return cardPM?.EnglishName;
             }
             return null;
         }
@@ -126,17 +156,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             return null;
         }
 
-        private string GetPortNameById(string portId, int tenant)
-        {
-            if (!string.IsNullOrEmpty(portId))
-            {
-                PortQuery portQuery = new PortQuery(tenant);
-                PortPM portPM = portQuery.GetSinglePM(portId, tenant);
-                return portPM?.EnglishName;
-            }
-            return null;
-        }
-
         private string GetDirectionNameById(string directionId, int tenant)
         {
             if (!string.IsNullOrEmpty(directionId))
@@ -154,16 +173,30 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.OrderNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerReferences);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PONumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.House);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Master);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.BookingConfirmationNumber);
+            QueryHelper.AddFullPortToSearchFields(ref mySearchFields, entityPM.Tenant, entityPM.OriginPortId);
+            QueryHelper.AddFullPortToSearchFields(ref mySearchFields, entityPM.Tenant, entityPM.DestinationPortId);
+            QueryHelper.AddFullPortToSearchFields(ref mySearchFields, entityPM.Tenant, entityPM.GatewayId);
 
-            mySearchFields = AddCardNameToSearchField(entityPM.ConsigneeId, entityPM.Tenant, mySearchFields);
-            mySearchFields = AddCardNameToSearchField(entityPM.ShipperId, entityPM.Tenant, mySearchFields);
-            mySearchFields = AddCardNameToSearchField(entityPM.AgentId, entityPM.Tenant, mySearchFields);
-            mySearchFields = AddCardNameToSearchField(entityPM.ForwarderId, entityPM.Tenant, mySearchFields);
+            AddPartnerToSearchField(entityPM, ref mySearchFields);
 
             entityPM.SearchFields = mySearchFields;
         }
 
-        private string AddCardNameToSearchField(string cardId, int tenant, string mySearchFields)
+        private void AddPartnerToSearchField(ShipmentOrderPM entityPM, ref string mySearchFields)
+        {
+            AddCardNameToSearchField(ref mySearchFields, entityPM.ConsigneeId, entityPM.Tenant);
+            AddCardNameToSearchField(ref mySearchFields, entityPM.ShipperId, entityPM.Tenant);
+            AddCardNameToSearchField(ref mySearchFields, entityPM.AgentId, entityPM.Tenant);
+            AddCardNameToSearchField(ref mySearchFields, entityPM.ForwarderId, entityPM.Tenant);
+            AddCardNameToSearchField(ref mySearchFields, entityPM.CustomsAgentId, entityPM.Tenant);
+            AddCardNameToSearchField(ref mySearchFields, entityPM.CarrierId, entityPM.Tenant);
+        }
+
+        private void AddCardNameToSearchField(ref string mySearchFields, string cardId, int tenant)
         {
             if (!string.IsNullOrEmpty(cardId))
             {
@@ -173,7 +206,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
                 }
             }
-            return mySearchFields;
         }
 
 

@@ -87,7 +87,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.BookingConfirmationDate).HasColumnName("BookingConfirmationDate");
 
-            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber").IsRequired().HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.SupplyDateTime).HasColumnName("SupplyDateTime");
 
@@ -101,7 +101,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.PODate).HasColumnName("PODate");
 

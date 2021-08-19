@@ -106,7 +106,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ShipmentNumber' Type='varchar' Size='20'>"+
-"    <Constraints Nullable='false' />"+
+"    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='SupplyDateTime' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
@@ -127,7 +127,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
-"    <Constraints Nullable='true' />"+
+"    <Constraints Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='PODate' Type='date'>"+
 "    <Constraints Nullable='true' />"+
