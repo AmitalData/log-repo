@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -333,7 +334,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private decimal? GetInterestReportCalculatedPostponedChequesCommision()
         {
-            var aRPaymentIds = interestTransactionPMs.Where(x => x.InterestEntityTypeCode == InterestEntities.ARPayment).Select(x => x.EntityId).ToList();
+            List<string> aRPaymentIds = interestTransactionPMs.Where(x => x.InterestEntityTypeCode == InterestEntities.ARPayment).Select(x => x.EntityId).ToList();
+            aRPaymentIds = ExcludeCancellePayments(aRPaymentIds);
             var gLAccount = GetGLAccount(interestReportPM.GLAccountId, interestReportPM.Tenant);
 
             int aRPaymentChequesCount = GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(aRPaymentIds, interestReportPM.Tenant);
@@ -342,6 +344,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return postponedChequesCommision;
         }
 
+        private List<string> ExcludeCancellePayments(List<string> paymentIds)
+        {
+            IInvoiceContext accountingContext = InvoiceContext.GetContext(tenant);
+           return (from a in accountingContext.ARPayments
+             where a.Tenant == tenant && a.StatusCode != PaymentStatuses.Void  && paymentIds.Contains(a.Id)
+             select a.Id).ToList();
+        }
         private GLAccountPM GetGLAccount(string id, int tenant)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);
