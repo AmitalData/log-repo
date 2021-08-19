@@ -25,7 +25,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-   }
+        //public List<ClientsPoa> GetPoas(string authorizerExternalId, string authorizerPassportNumber, string poaID, int tenant)
+        //{
+        //    return (from a in context.ClientsPoas
+        //            where (a.AuthorizerExternalId == authorizerExternalId || a.AuthorizerPassportNumber == authorizerPassportNumber) && a.PoaID == poaID
+        //            select a).ToList();
+        //}
+
+    }
 
 }
    

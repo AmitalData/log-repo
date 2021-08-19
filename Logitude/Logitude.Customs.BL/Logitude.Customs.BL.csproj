@@ -1045,6 +1045,7 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
@@ -1549,6 +1550,7 @@
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClientsPoaUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ContainerizationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoIdentifireTypeUpdateService.cs" />

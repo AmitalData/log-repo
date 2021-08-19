@@ -49,6 +49,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return id;
         }
 
+        public string GetIdByCodeOrPassport(string code,string passport, int tenant, bool insertIfNotFount = false)
+        {
+            //if (string.IsNullOrEmpty(code))
+            //{
+            //    return null;
+            //}
+            string id = repository.GetIdByCodeOrPassport(tenant, code,passport);
+
+            if (string.IsNullOrWhiteSpace(id) && insertIfNotFount == true)
+            {
+                ICustomContext dbContext = CustomContext.GetContext(tenant);
+                var clientUpdateService = new ClientUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+
+                ClientPM newClientPM = new ClientPM();
+                newClientPM.Tenant = tenant;
+                newClientPM.Code = code;
+                clientUpdateService.InsertNewClientOnlyByCode(newClientPM, true);
+                id = newClientPM.Id;
+            }
+            return id;
+        }
+
         public string GetIdByPassportNumberOrCountry(string passportNumber,string passportCountryCode, int tenant)
         {
             if (string.IsNullOrEmpty(passportNumber) && string.IsNullOrEmpty(passportCountryCode))

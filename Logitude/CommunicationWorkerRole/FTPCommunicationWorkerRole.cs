@@ -16,6 +16,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -339,11 +340,42 @@ namespace CommunicationWorkerRole
                             waitingCommLog.Logs += p_message;
                             if (p_status == "0")
                             {
+                                try
+                                {
 
-                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+                                    sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+                                }
+                                finally
+                                {
+
+                                    try
+                                    {
+                                        string p_more1=""; string p_status1; string p_message1;
+                                        if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
+                                        {
+                                            Debug.WriteLine("sftpService.Logoff");
+                                            sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
+                                        }
+
+                                        
+                                    }
+                                    catch //(Exception)
+                                    {
+
+                                        ///throw;
+                                    }
+
+                                }
 
                                 if (p_status == "-1")
+                                {
+                                    Debug.WriteLine("sftpService.Upload-failed");
                                     throw new FTPServiceException("SFTP upload file failed: " + p_message);
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("sftpService.Upload-success");
+                                }
                             }
                             else
                                 throw new FTPServiceException("SFTP Login failed: " + p_message);

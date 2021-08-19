@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "5faf6882ab3671f7b35ddc138437f8cb";
+		public const string HashString = "b10a06e6c5db6579368bd887e8f2eb84";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "46bf",
+			      				    Code =  "6abe",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
