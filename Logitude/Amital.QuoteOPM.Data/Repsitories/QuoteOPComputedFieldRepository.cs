@@ -21,7 +21,39 @@ namespace Amital.QuoteOPM.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public IQueryable<QuoteOPComputedField> GetQuoteComputedField(int tenant)
+        {
+            return context.QuoteOPComputedFields.Where(s => s.Tenant == tenant);
+        }
+        public IQueryable<QuoteOPComputedField> GetQuoteComputedField()
+        {
+            return context.QuoteOPComputedFields;
+        }
+        public QuoteOPComputedField GetSingleQuoteComputedField(string Id, int tenant)
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+
+                var quoteComputedFieldEntity = (from quoteComputedField in context.QuoteOPComputedFields
+                                                               where quoteComputedField.Id == Id && quoteComputedField.Tenant == tenant
+                                                               select quoteComputedField).FirstOrDefault();
+                return quoteComputedFieldEntity;
+            }
+            return null;
+        }
+
+        public QuoteOPComputedField GetSingleQuoteComputedField(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var quoteComputedFieldEntity = (from quoteComputedField in context.QuoteOPComputedFields
+                                                               where quoteComputedField.Id == id
+                                                               select quoteComputedField).FirstOrDefault();
+                return quoteComputedFieldEntity;
+            }
+            return null;
+        }
+    }
 
 }
    

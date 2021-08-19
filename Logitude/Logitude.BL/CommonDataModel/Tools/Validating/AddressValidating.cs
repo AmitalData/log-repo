@@ -50,6 +50,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             }
         }
 
+        
+
         private static void ValidateAddressType(AddressPM entityPM)
         {
             if (entityPM.CardId != null)
@@ -263,7 +265,74 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
+        public static void ValidateQuotePickupDelivery(QuoteDTO entityPM)
+        {
+            CountryRepository countryRepository = new CountryRepository(entityPM.Tenant);
 
+            if (entityPM.IncludePickUp)
+            {
+                if (string.IsNullOrEmpty(entityPM.PickUpAddressId))
+                {
+                    if (!string.IsNullOrEmpty(entityPM.FromAddressCountryId))
+                    {
+                        Country myCountry = countryRepository.GetSingleCountry(entityPM.FromAddressCountryId, entityPM.Tenant);
+                        if (myCountry != null)
+                        {
+                            if (myCountry.HasCitiesList)
+                            {
+                                if (!string.IsNullOrEmpty(entityPM.FromAddressCity))
+                                {
+                                    entityPM.FromAddressCity = entityPM.FromAddressCity.Trim();
+
+                                    CountryCityRepository citiesRepository = new CountryCityRepository(entityPM.Tenant);
+                                    IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
+
+                                    bool isCityExists = CheckIsCityExists(entityPM.FromAddressCity, allCities);
+
+                                    if (!isCityExists)
+                                    {
+                                        string msg = "Pickup city doesn't exist in cities table";
+                                        throw new ApplicationException(msg);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (entityPM.IncludeDelivery)
+            {
+                if (string.IsNullOrEmpty(entityPM.DeliveryAddressId))
+                {
+                    if (!string.IsNullOrEmpty(entityPM.ToAddressCountryId))
+                    {
+                        Country myCountry = countryRepository.GetSingleCountry(entityPM.ToAddressCountryId, entityPM.Tenant);
+                        if (myCountry != null)
+                        {
+                            if (myCountry.HasCitiesList)
+                            {
+                                if (!string.IsNullOrEmpty(entityPM.ToAddressCity))
+                                {
+                                    entityPM.ToAddressCity = entityPM.ToAddressCity.Trim();
+
+                                    CountryCityRepository citiesRepository = new CountryCityRepository(entityPM.Tenant);
+                                    IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
+
+                                    bool isCityExists = CheckIsCityExists(entityPM.ToAddressCity, allCities);
+
+                                    if (!isCityExists)
+                                    {
+                                        string msg = "Delivery city doesn't exist in cities table";
+                                        throw new ApplicationException(msg);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public static void ValidateQuotePickupDelivery(QuotePM entityPM)
         {
             CountryRepository countryRepository = new CountryRepository(entityPM.Tenant);
@@ -345,5 +414,18 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
             return isCityExists;
         }
+    }
+    public class QuoteDTO
+    {
+        public int Tenant;
+        public bool IncludePickUp;
+        public string PickUpAddressId;
+        public string FromAddressCountryId;
+        public string FromAddressCity;
+        public bool IncludeDelivery;
+        public string DeliveryAddressId;
+        public string ToAddressCountryId;
+        public string ToAddressCity;
+        
     }
 }
