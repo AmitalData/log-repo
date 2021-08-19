@@ -101,7 +101,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").IsRequired().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.PODate).HasColumnName("PODate");
 
