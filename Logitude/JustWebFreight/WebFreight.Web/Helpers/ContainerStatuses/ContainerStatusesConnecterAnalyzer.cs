@@ -10,12 +10,10 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools;
 using System.Collections.Generic;
-using System.Net;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.Security;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,7 +22,6 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.Server.Tools.Counters;
 using System.Security.Cryptography;
 using System.Reflection;
-using System.Globalization;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -87,7 +84,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string gateInDate_actual;
         private string departureLocation;
         private string destinationLocation;
-
         private string origin_loc_locode;
         string origin_pickup_planned_initial = null;
         string origin_pickup_planned_last = null;
@@ -110,12 +106,10 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp1_vsldeparture_planned_last = null;
         string tsp1_vsldeparture_actual = null;
         string tsp1_discharge_planned_initial = null;
-
         string tsp2_loc_locode = null;
         string tsp2_vslarrival_planned_initial = null;
         string tsp2_vslarrival_planned_last = null;
         string tsp2_vslarrival_actual = null;
-        string tsp2_vslarrival_detected = null;
         string tsp2_discharge_planned_initial = null;
         string tsp2_discharge_planned_last = null;
         string tsp2_discharge_actual = null;
@@ -125,7 +119,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp2_vsldeparture_planned_initial = null;
         string tsp2_vsldeparture_planned_last = null;
         string tsp2_vsldeparture_actual = null;
-
         string tsp3_loc_locode = null;
         string tsp3_vslarrival_planned_initial = null;
         string tsp3_vslarrival_planned_last = null;
@@ -139,13 +132,10 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp3_vsldeparture_planned_initial = null;
         string tsp3_vsldeparture_planned_last = null;
         string tsp3_vsldeparture_actual = null;
-        string tsp3_vsldeparture_detected = null;
-
         string tsp4_loc_locode = null;
         string tsp4_vslarrival_planned_initial = null;
         string tsp4_vslarrival_planned_last = null;
         string tsp4_vslarrival_actual = null;
-        string tsp4_vslarrival_detected = null;
         string tsp4_discharge_planned_initial = null;
         string tsp4_discharge_planned_last = null;
         string tsp4_discharge_actual = null;
@@ -155,8 +145,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp4_vsldeparture_planned_initial = null;
         string tsp4_vsldeparture_planned_last = null;
         string tsp4_vsldeparture_actual = null;
-        string tsp4_vsldeparture_detected = null;
-
         string leg1_vessel_name = null;
         string leg1_voyage = null;
         string leg2_vessel_name = null;
@@ -167,20 +155,16 @@ namespace WebFreight.Web.Helpers.Analyzers
         string leg4_voyage = null;
         string leg5_vessel_name = null;
         string leg5_voyage = null;
-
         string pod_discharge_planned_initial = null;
         string pod_discharge_planned_last = null;
         string pod_discharge_actual = null;
-
         string pod_departure_planned_initial = null;
         string pod_departure_planned_last = null;
         string pod_departure_actual = null;
-
         string dlv_loc_locode = null;
         string dlv_delivery_planned_initial = null;
         string dlv_delivery_planned_last = null;
         string dlv_delivery_actual = null;
-
         string lif_loc_locode = null;
         string lif_arrival_planned_initial = null;
         string lif_arrival_planned_last = null;
@@ -188,13 +172,10 @@ namespace WebFreight.Web.Helpers.Analyzers
         string lif_departure_planned_initial = null;
         string lif_departure_planned_last = null;
         string lif_departure_actual = null;
-
         string empty_return_loc_locode = null;
         string empty_return_planned_initial = null;
         string empty_return_planned_last = null;
         string empty_return_actual = null;
-        string empty_return_customer = null;
-
         string customs_release_date = null;
         string carrier_release_date = null;
         string customs_release_state = null;
@@ -295,11 +276,11 @@ namespace WebFreight.Web.Helpers.Analyzers
                 if (oceanInsightsParameters != null)
                 {
                     oceanInsightsEnvelopeParameters = oceanInsightsParameters.Value;
-                    this.ReadOceanInsightsParametersXMLFields();
+                    this.GetOceanInsightsParametersXMLFields();
                 }
             }
         }
-        private void ReadOceanInsightsParametersXMLFields()
+        private void GetOceanInsightsParametersXMLFields()
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(oceanInsightsEnvelopeParameters);
@@ -308,12 +289,12 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 foreach (XmlNode item in xn.ChildNodes)
                 {
-                    this.ReadEventSectionFields(item);
-                    this.ReadShipmentSectionFields(item);
+                    this.GetEventSectionFields(item);
+                    this.GetShipmentSectionFields(item);
                 }
             }
         }
-        private void ReadEventSectionFields(XmlNode node)
+        private void GetEventSectionFields(XmlNode node)
         {
             if (node.ChildNodes != null && node.Name == "event")
             {
@@ -327,218 +308,264 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-        private void ReadShipmentSectionFields(XmlNode node)
+        private void GetShipmentSectionFields(XmlNode node)
         {
             if (node.ChildNodes != null && node.Name == "shipment")
             {
-                oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
-                container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
-                container_number_FromXML = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
-                carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
-                container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
-                weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
-                ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
-                ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
-                ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
-                ATA_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
-                ATA_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
-                emptyPickup_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
-                emptyPickup_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
-                emptyPickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
-                gateInDate_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
-                gateInDate_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
-                gateInDate_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
-                origin_pickup_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_initial").FirstOrDefault()?.InnerText;
-                origin_pickup_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_last").FirstOrDefault()?.InnerText;
-                origin_pickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_actual").FirstOrDefault()?.InnerText;
-                pol_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_initial").FirstOrDefault()?.InnerText;
-                pol_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_last").FirstOrDefault()?.InnerText;
-                pol_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_actual").FirstOrDefault()?.InnerText;
-                ts_count = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "ts_count").FirstOrDefault()?.InnerText;
-                pod_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_last").FirstOrDefault()?.InnerText;
-                pod_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_initial").FirstOrDefault()?.InnerText;
-                pod_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_initial").FirstOrDefault()?.InnerText;
-                pod_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_last").FirstOrDefault()?.InnerText;
-                pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
-                XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
-                XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
-
-                if (emptyPickupLocationElement != null)
-                {
-                    emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-
-                if (departureLocationElement != null)
-                {
-                    departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                    pol_loc_locode = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-
-                if (destinationLocationElement != null)
-                {
-                    destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-
-                XmlElement origin_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_loc").FirstOrDefault();
-                if (origin_locElement != null)
-                {
-                    origin_loc_locode = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-
-                XmlElement tsp1_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loc").FirstOrDefault();
-                if (tsp1_locElement != null)
-                {
-                    tsp1_loc_locode = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
-                tsp1_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_initial").FirstOrDefault()?.InnerText;
-                tsp1_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_last").FirstOrDefault()?.InnerText;
-                tsp1_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_actual").FirstOrDefault()?.InnerText;
-                tsp1_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_initial").FirstOrDefault()?.InnerText;
-                tsp1_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_last").FirstOrDefault()?.InnerText;
-                tsp1_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_actual").FirstOrDefault()?.InnerText;
-                tsp1_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                tsp1_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement tsp2_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loc").FirstOrDefault();
-                if (tsp2_locElement != null)
-                {
-                    tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
-                tsp2_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_detected").FirstOrDefault()?.InnerText;
-                tsp2_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_initial").FirstOrDefault()?.InnerText;
-                tsp2_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_last").FirstOrDefault()?.InnerText;
-                tsp2_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_actual").FirstOrDefault()?.InnerText;
-                tsp2_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_initial").FirstOrDefault()?.InnerText;
-                tsp2_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_last").FirstOrDefault()?.InnerText;
-                tsp2_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_actual").FirstOrDefault()?.InnerText;
-                tsp2_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                tsp2_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                tsp2_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement tsp3_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loc").FirstOrDefault();
-                if (tsp3_locElement != null)
-                {
-                    tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
-                tsp3_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_initial").FirstOrDefault()?.InnerText;
-                tsp3_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_last").FirstOrDefault()?.InnerText;
-                tsp3_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_actual").FirstOrDefault()?.InnerText;
-                tsp3_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_initial").FirstOrDefault()?.InnerText;
-                tsp3_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_last").FirstOrDefault()?.InnerText;
-                tsp3_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_actual").FirstOrDefault()?.InnerText;
-                tsp3_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                tsp3_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                tsp3_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_actual").FirstOrDefault()?.InnerText;
-                tsp3_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_detected").FirstOrDefault()?.InnerText;
-
-                XmlElement tsp4_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loc").FirstOrDefault();
-                if (tsp4_locElement != null)
-                {
-                    tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
-                tsp4_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_detected").FirstOrDefault()?.InnerText;
-                tsp4_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_initial").FirstOrDefault()?.InnerText;
-                tsp4_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_last").FirstOrDefault()?.InnerText;
-                tsp4_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_actual").FirstOrDefault()?.InnerText;
-                tsp4_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_initial").FirstOrDefault()?.InnerText;
-                tsp4_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_last").FirstOrDefault()?.InnerText;
-                tsp4_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_actual").FirstOrDefault()?.InnerText;
-                tsp4_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                tsp4_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
-                tsp4_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_detected").FirstOrDefault()?.InnerText;
-
-                XmlElement leg1_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_vessel").FirstOrDefault();
-                if (leg1_vessel_Element != null)
-                {
-                    leg1_vessel_name = leg1_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-                leg1_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_voyage").FirstOrDefault()?.InnerText;
-
-                XmlElement leg2_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_vessel").FirstOrDefault();
-                if (leg2_vessel_Element != null)
-                {
-                    leg2_vessel_name = leg2_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-                leg2_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_voyage").FirstOrDefault()?.InnerText;
-
-                XmlElement leg3_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_vessel").FirstOrDefault();
-                if (leg3_vessel_Element != null)
-                {
-                    leg3_vessel_name = leg3_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-                leg3_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_voyage").FirstOrDefault()?.InnerText;
-
-                XmlElement leg4_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_vessel").FirstOrDefault();
-                if (leg4_vessel_Element != null)
-                {
-                    leg4_vessel_name = leg4_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-                leg4_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_voyage").FirstOrDefault()?.InnerText;
-
-                XmlElement leg5_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_vessel").FirstOrDefault();
-                if (leg5_vessel_Element != null)
-                {
-                    leg5_vessel_name = leg5_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-                leg5_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_voyage").FirstOrDefault()?.InnerText;
-
-                XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
-                if (dlv_locElement != null)
-                {
-                    dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
-                dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
-                dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
-                if (lif_locElement != null)
-                {
-                    lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                lif_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_last").FirstOrDefault()?.InnerText;
-                lif_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_initial").FirstOrDefault()?.InnerText;
-                lif_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_actual").FirstOrDefault()?.InnerText;
-                lif_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_initial").FirstOrDefault()?.InnerText;
-                lif_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_last").FirstOrDefault()?.InnerText;
-                lif_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
-                if (empty_return_locElement != null)
-                {
-                    empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
-                }
-                empty_return_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_initial").FirstOrDefault()?.InnerText;
-                empty_return_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_last").FirstOrDefault()?.InnerText;
-                empty_return_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_actual").FirstOrDefault()?.InnerText;
-                empty_return_customer = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_customer").FirstOrDefault()?.InnerText;
-                customs_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_date").FirstOrDefault()?.InnerText;
-                customs_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_state").FirstOrDefault()?.InnerText;
-
-                carrier_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_date").FirstOrDefault()?.InnerText;
-                carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
-                availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
+                this.GetDirectFieldsOfShipment(node);
+                this.GetEmptyPickupLocationElement(node);
+                this.GetDepartureLocationElement(node);
+                this.GetDestinationLocationElement(node);
+                this.GetOriginLocationElement(node);
+                this.GetTransshipment1Leg(node);
+                this.GetTransshipment2Leg(node);
+                this.GetTransshipment3Leg(node);
+                this.GetTransshipment4Leg(node);
+                this.GetLeg1Element(node);
+                this.GetLeg2Element(node);
+                this.GetLeg3Element(node);
+                this.GetLeg4Element(node);
+                this.GetLeg5Element(node);
+                this.GetDeliveryLocationElement(node);
+                this.GetLifLocationElement(node);
+                this.GetEmptyReturnElement(node);
             }
+        }
+        private void GetDirectFieldsOfShipment(XmlNode node)
+        {
+            oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
+            container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+            container_number_FromXML = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+            carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
+            container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
+            weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
+            ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
+            ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
+            ATA_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
+            ATA_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
+            emptyPickup_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
+            emptyPickup_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
+            emptyPickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
+            gateInDate_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
+            gateInDate_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
+            gateInDate_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
+            origin_pickup_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_initial").FirstOrDefault()?.InnerText;
+            origin_pickup_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_last").FirstOrDefault()?.InnerText;
+            origin_pickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_actual").FirstOrDefault()?.InnerText;
+            pol_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            pol_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_last").FirstOrDefault()?.InnerText;
+            pol_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_actual").FirstOrDefault()?.InnerText;
+            ts_count = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "ts_count").FirstOrDefault()?.InnerText;
+            pod_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_last").FirstOrDefault()?.InnerText;
+            pod_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            pod_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_initial").FirstOrDefault()?.InnerText;
+            pod_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_last").FirstOrDefault()?.InnerText;
+            pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetEmptyPickupLocationElement(XmlNode node)
+        {
+            XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
+            if (emptyPickupLocationElement != null)
+            {
+                emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetDepartureLocationElement(XmlNode node)
+        {
+            XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
+            if (departureLocationElement != null)
+            {
+                departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                pol_loc_locode = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetDestinationLocationElement(XmlNode node)
+        {
+            XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
+            if (destinationLocationElement != null)
+            {
+                destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetOriginLocationElement(XmlNode node)
+        {
+            XmlElement origin_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_loc").FirstOrDefault();
+            if (origin_locElement != null)
+            {
+                origin_loc_locode = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetTransshipment1Leg(XmlNode node)
+        {
+            XmlElement tsp1_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loc").FirstOrDefault();
+            if (tsp1_locElement != null)
+            {
+                tsp1_loc_locode = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp1_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp1_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
+
+        }
+        private void GetTransshipment2Leg(XmlNode node)
+        {
+            XmlElement tsp2_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loc").FirstOrDefault();
+            if (tsp2_locElement != null)
+            {
+                tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp2_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp2_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetTransshipment3Leg(XmlNode node)
+        {
+            XmlElement tsp3_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loc").FirstOrDefault();
+            if (tsp3_locElement != null)
+            {
+                tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp3_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp3_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetTransshipment4Leg(XmlNode node)
+        {
+            XmlElement tsp4_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loc").FirstOrDefault();
+            if (tsp4_locElement != null)
+            {
+                tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp4_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp4_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg1Element(XmlNode node)
+        {
+            XmlElement leg1_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_vessel").FirstOrDefault();
+            if (leg1_vessel_Element != null)
+            {
+                leg1_vessel_name = leg1_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg1_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg2Element(XmlNode node)
+        {
+            XmlElement leg2_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_vessel").FirstOrDefault();
+            if (leg2_vessel_Element != null)
+            {
+                leg2_vessel_name = leg2_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg2_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg3Element(XmlNode node)
+        {
+            XmlElement leg3_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_vessel").FirstOrDefault();
+            if (leg3_vessel_Element != null)
+            {
+                leg3_vessel_name = leg3_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg3_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg4Element(XmlNode node)
+        {
+            XmlElement leg4_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_vessel").FirstOrDefault();
+            if (leg4_vessel_Element != null)
+            {
+                leg4_vessel_name = leg4_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg4_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg5Element(XmlNode node)
+        {
+            XmlElement leg5_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_vessel").FirstOrDefault();
+            if (leg5_vessel_Element != null)
+            {
+                leg5_vessel_name = leg5_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg5_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetDeliveryLocationElement(XmlNode node)
+        {
+            XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
+            if (dlv_locElement != null)
+            {
+                dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
+            dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
+            dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetLifLocationElement(XmlNode node)
+        {
+            XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
+            if (lif_locElement != null)
+            {
+                lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            lif_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_last").FirstOrDefault()?.InnerText;
+            lif_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_initial").FirstOrDefault()?.InnerText;
+            lif_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_actual").FirstOrDefault()?.InnerText;
+            lif_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_initial").FirstOrDefault()?.InnerText;
+            lif_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_last").FirstOrDefault()?.InnerText;
+            lif_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetEmptyReturnElement(XmlNode node)
+        {
+            XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
+            if (empty_return_locElement != null)
+            {
+                empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+            empty_return_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_initial").FirstOrDefault()?.InnerText;
+            empty_return_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_last").FirstOrDefault()?.InnerText;
+            empty_return_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_actual").FirstOrDefault()?.InnerText;
+            customs_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_date").FirstOrDefault()?.InnerText;
+            customs_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_state").FirstOrDefault()?.InnerText;
+            carrier_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_date").FirstOrDefault()?.InnerText;
+            carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
+            availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
         }
         private void GetLogitudeOceanInsights()
         {
@@ -603,12 +630,10 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
         private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
         {
             shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);
         }
-
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             var containerNumber = oceanInsight.ContainerNumber;
@@ -617,7 +642,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             container_number = this.GetContainerNumber(container, oceanInsight);
             shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
-
         private string GetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = "";
@@ -632,7 +656,6 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return containerNumber;
         }
-
         private string GetShipmentPackagesId(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
         {
             string shipmentPackagesId = "";
@@ -647,7 +670,6 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return shipmentPackagesId;
         }
-
         private string GetContainerNumberFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = "";
@@ -662,7 +684,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             return containerNumber;
         }
-
         private string GetShipmentPackagesIdFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
         {
             string shipmentPackagesId = "";
@@ -675,7 +696,6 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return shipmentPackagesId;
         }
-
         private void AddContainerStatusCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
             this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
@@ -978,7 +998,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.ActualTransshipment1Loaded = containerUpdatedFields.ActualTransshipment1Loaded;
                 container.EstimatedTrans1VesselDeparture = containerUpdatedFields.EstimatedTrans1VesselDeparture;
                 container.ActualTrans1VesselDeparture = containerUpdatedFields.ActualTrans1VesselDeparture;
-
                 container.Transshipment2Location = containerUpdatedFields.Transshipment2Location;
                 container.EstimatedTrans2VesselArrival = containerUpdatedFields.EstimatedTrans2VesselArrival;
                 container.ActualTransshipment2VesselArrival = containerUpdatedFields.ActualTransshipment2VesselArrival;
@@ -988,7 +1007,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.ActualTransshipment2Loaded = containerUpdatedFields.ActualTransshipment2Loaded;
                 container.EstimatedTrans2VesselDeparture = containerUpdatedFields.EstimatedTrans2VesselDeparture;
                 container.ActualTrans2VesselDeparture = containerUpdatedFields.ActualTrans2VesselDeparture;
-
                 container.Transshipment3Location = containerUpdatedFields.Transshipment3Location;
                 container.EstimatedTrans3VesselArrival = containerUpdatedFields.EstimatedTrans3VesselArrival;
                 container.ActualTransshipment3VesselArrival = containerUpdatedFields.ActualTransshipment3VesselArrival;
@@ -998,7 +1016,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.ActualTransshipment3Loaded = containerUpdatedFields.ActualTransshipment3Loaded;
                 container.EstimatedTrans3VesselDeparture = containerUpdatedFields.EstimatedTrans3VesselDeparture;
                 container.ActualTrans3VesselDeparture = containerUpdatedFields.ActualTrans3VesselDeparture;
-
                 container.Transshipment4Location = containerUpdatedFields.Transshipment4Location;
                 container.EstimatedTrans4VesselArrival = containerUpdatedFields.EstimatedTrans4VesselArrival;
                 container.ActualTransshipment4VesselArrival = containerUpdatedFields.ActualTransshipment4VesselArrival;
@@ -1008,7 +1025,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.ActualTransshipment4Loaded = containerUpdatedFields.ActualTransshipment4Loaded;
                 container.EstimatedTrans4VesselDeparture = containerUpdatedFields.EstimatedTrans4VesselDeparture;
                 container.ActualTrans4VesselDeparture = containerUpdatedFields.ActualTrans4VesselDeparture;
-
                 container.Leg1Vessel = containerUpdatedFields.Leg1Vessel;
                 container.Leg1Voyage = containerUpdatedFields.Leg1Voyage;
                 container.Leg2Vessel = containerUpdatedFields.Leg2Vessel;
@@ -1025,14 +1041,11 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.ActualPODVesselArrival = containerUpdatedFields.ActualPODVesselArrival;
                 container.EstimatedPODDischarge = containerUpdatedFields.EstimatedPODDischarge;
                 container.ActualPODDischarge = containerUpdatedFields.ActualPODDischarge;
-
                 container.EstimatedPODDeparture = containerUpdatedFields.EstimatedPODDeparture;
                 container.ActualPODDeparture = containerUpdatedFields.ActualPODDeparture;
-
                 container.DeliveryLocation = containerUpdatedFields.DeliveryLocation;
                 container.EstimatedDelivery = containerUpdatedFields.EstimatedDelivery;
                 container.ActualDelivery = containerUpdatedFields.ActualDelivery;
-
                 container.LIFLocation = containerUpdatedFields.LIFLocation;
                 container.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
                 container.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
@@ -1046,7 +1059,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.CarrierReleaseState = containerUpdatedFields.CarrierReleaseState;
                 container.CarrierReleaseDate = containerUpdatedFields.CarrierReleaseDate;
                 container.AvailablityDate = containerUpdatedFields.AvailablityDate;
-
                 this.SaveContainer();
             }
         }
@@ -1106,7 +1118,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.EstimatedPOLVesselDeparture = this.ComputeEstimatedPOLVesselDeparture();
             containerUpdatedFields.ActualPOLVesselDeparture = ComputeActualPOLVesselDeparture();
             containerUpdatedFields.TransshipmentCount = ts_count;
-
             containerUpdatedFields.Transshipment1Location = tsp1_loc_locode;
             containerUpdatedFields.EstimatedTrans1VesselArrival = this.ComputeEstimatedTrans1VesselArrival();
             containerUpdatedFields.ActualTransshipment1VesselArrival = this.ComputeActualTransshipment1VesselArrival();
@@ -1116,7 +1127,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment1Loaded = ComputeActualTransshipment1Loaded();
             containerUpdatedFields.EstimatedTrans1VesselDeparture = this.ComputeEstimatedTransshipment1VesselDeparture();
             containerUpdatedFields.ActualTrans1VesselDeparture = ComputeActualTransshipment1VesselDeparture();
-
             containerUpdatedFields.Transshipment2Location = tsp2_loc_locode;
             containerUpdatedFields.EstimatedTrans2VesselArrival = this.ComputeEstimatedTrans2VesselArrival();
             containerUpdatedFields.ActualTransshipment2VesselArrival = this.ComputeActualTransshipment2VesselArrival();
@@ -1126,7 +1136,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment2Loaded = ComputeActualTransshipment2Loaded();
             containerUpdatedFields.EstimatedTrans2VesselDeparture = this.ComputeEstimatedTransshipment2VesselDeparture();
             containerUpdatedFields.ActualTrans2VesselDeparture = ComputeActualTransshipment2VesselDeparture();
-
             containerUpdatedFields.Transshipment3Location = tsp3_loc_locode;
             containerUpdatedFields.EstimatedTrans3VesselArrival = this.ComputeEstimatedTrans3VesselArrival();
             containerUpdatedFields.ActualTransshipment3VesselArrival = this.ComputeActualTransshipment3VesselArrival();
@@ -1136,7 +1145,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment3Loaded = ComputeActualTransshipment3Loaded();
             containerUpdatedFields.EstimatedTrans3VesselDeparture = this.ComputeEstimatedTransshipment3VesselDeparture();
             containerUpdatedFields.ActualTrans3VesselDeparture = ComputeActualTransshipment3VesselDeparture();
-
             containerUpdatedFields.Transshipment4Location = tsp4_loc_locode;
             containerUpdatedFields.EstimatedTrans4VesselArrival = this.ComputeEstimatedTrans4VesselArrival();
             containerUpdatedFields.ActualTransshipment4VesselArrival = this.ComputeActualTransshipment4VesselArrival();
@@ -1146,7 +1154,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment4Loaded = ComputeActualTransshipment4Loaded();
             containerUpdatedFields.EstimatedTrans4VesselDeparture = this.ComputeEstimatedTransshipment4VesselDeparture();
             containerUpdatedFields.ActualTrans4VesselDeparture = ComputeActualTransshipment4VesselDeparture();
-
             containerUpdatedFields.Leg1Vessel = leg1_vessel_name;
             containerUpdatedFields.Leg1Voyage = leg1_voyage;
             containerUpdatedFields.Leg2Vessel = leg2_vessel_name;
@@ -1162,30 +1169,24 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualPODVesselArrival = ComputeActualPODVesselArrival();
             containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
             containerUpdatedFields.ActualPODDischarge = ComputeActualPODDischarge();
-
             containerUpdatedFields.EstimatedPODDeparture = ComputeEstimatedPODDeparture();
             containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();
-
             containerUpdatedFields.DeliveryLocation = dlv_loc_locode;
             containerUpdatedFields.EstimatedDelivery = ComputeEstimatedDelivery();
             containerUpdatedFields.ActualDelivery = ComputeActualDelivery();
-
             containerUpdatedFields.LIFLocation = lif_loc_locode;
             containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
             containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
             containerUpdatedFields.EstimatedLIFDeparture = ComputeEstimatedLIFDeparture();
             containerUpdatedFields.ActualLIFDeparture = this.ComputeActualLIFDeparture();
-
             containerUpdatedFields.EmptyReturnLocation = empty_return_loc_locode;
             containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
             containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();
-
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-
             return containerUpdatedFields;
         }
         private DateTime? ComputeMainCarriageETD()
@@ -2146,13 +2147,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string CurrentLocation { get; set; }
         public DateTime? CurrentStatusDate { get; set; }
         public bool HasContainerException { get; set; }
-
         public DateTime? ActualEmptyPickup { get; set; }
         public DateTime? EstimatedEmptyPickup { get; set; }
         public string OriginLocation { get; set; }
         public DateTime? EstimatedOriginPickup { get; set; }
         public DateTime? ActualOriginPickup { get; set; }
-
         public string POLLocation { get; set; }
         public DateTime? EstimatedPOLArrival { get; set; }
         public DateTime? ActualPOLArrival { get; set; }
@@ -2161,7 +2160,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
         public string TransshipmentCount { get; set; }
-
         public string Transshipment1Location { get; set; }
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }
@@ -2171,7 +2169,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualTransshipment1Loaded { get; set; }
         public DateTime? EstimatedTrans1VesselDeparture { get; set; }
         public DateTime? ActualTrans1VesselDeparture { get; set; }
-
         public string Transshipment2Location { get; set; }
         public DateTime? EstimatedTrans2VesselArrival { get; set; }
         public DateTime? ActualTransshipment2VesselArrival { get; set; }
@@ -2181,7 +2178,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualTransshipment2Loaded { get; set; }
         public DateTime? EstimatedTrans2VesselDeparture { get; set; }
         public DateTime? ActualTrans2VesselDeparture { get; set; }
-
         public string Transshipment3Location { get; set; }
         public DateTime? EstimatedTrans3VesselArrival { get; set; }
         public DateTime? ActualTransshipment3VesselArrival { get; set; }
@@ -2191,7 +2187,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualTransshipment3Loaded { get; set; }
         public DateTime? EstimatedTrans3VesselDeparture { get; set; }
         public DateTime? ActualTrans3VesselDeparture { get; set; }
-
         public string Transshipment4Location { get; set; }
         public DateTime? EstimatedTrans4VesselArrival { get; set; }
         public DateTime? ActualTransshipment4VesselArrival { get; set; }
@@ -2201,7 +2196,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualTransshipment4Loaded { get; set; }
         public DateTime? EstimatedTrans4VesselDeparture { get; set; }
         public DateTime? ActualTrans4VesselDeparture { get; set; }
-
         public string Leg1Vessel { get; set; }
         public string Leg1Voyage { get; set; }
         public string Leg2Vessel { get; set; }
@@ -2212,7 +2206,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string Leg4Voyage { get; set; }
         public string Leg5Vessel { get; set; }
         public string Leg5Voyage { get; set; }
-
         public string PODLocation { get; set; }
         public DateTime? EstimatedPODVesselArrival { get; set; }
         public DateTime? ActualPODVesselArrival { get; set; }
@@ -2220,30 +2213,23 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualPODDischarge { get; set; }
         public DateTime? EstimatedPODDeparture { get; set; }
         public DateTime? ActualPODDeparture { get; set; }
-
         public string DeliveryLocation { get; set; }
         public DateTime? EstimatedDelivery { get; set; }
         public DateTime? ActualDelivery { get; set; }
-
         public string LIFLocation { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedLIFDeparture { get; set; }
         public DateTime? ActualLIFDeparture { get; set; }
-
         public string GateIn { get; set; }
         public string GateOut { get; set; }
-
         public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
         public DateTime? ActualEmptyReturn { get; set; }
-
         public string CustomsReleaseState { get; set; }
         public DateTime? CustomsReleaseDate { get; set; }
-
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
-
     }
 }
