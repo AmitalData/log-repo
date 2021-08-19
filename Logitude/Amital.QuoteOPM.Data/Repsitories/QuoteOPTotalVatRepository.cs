@@ -20,8 +20,11 @@ namespace Amital.QuoteOPM.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public IQueryable<QuoteOPTotalVAT> GetTotalVATs(string quoteId, int tenant)
+        {
+            return (from a in context.QuoteOPTotalVATs where a.Tenant == tenant && a.QuoteOPId == quoteId select a);
+        }
+    }
 
 }
    

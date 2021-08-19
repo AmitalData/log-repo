@@ -1,5 +1,6 @@
 ﻿using Amital.QuoteOPM.Def.EntityPMs;
 using Logitude.Server.Tools.Counters;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,22 +17,21 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             entityPM.QuoteOPId = entityParentPM.Id;
             entityPM.Id= IdCounter.GetNumber("QuoteOPCharge", entityParentPM.Tenant).ToString();
 
+
+            if (!string.IsNullOrEmpty(entityPM.TariffId))
+            {
+                //NO TARIFF !!!this.UpdateTariffUsedDate(itemPM.TariffId);
+            }
             base.OnCreating(entityPM, entityParentPM);
         }
+        
         protected override void UpdateComposition(QuoteOPChargePM entityPM)
         {
-            //if (itemPM.IsChargeBySteps)
-            //{
-            //    if (itemPM.QuoteChargePriceSteps != null)
-            //    {
-            //        foreach (QuotePriceStepsPM insideItemPM in itemPM.QuoteChargePriceSteps)
-            //        {
-            //            insideItemPM.QuoteId = entityPM.Id;
-            //            insideItemPM.QuoteChargeId = itemPM.Id;
-            //            this.CreateQuotePriceSteps(insideItemPM);
-            //        }
-            //    }
-            //}
+            if (entityPM.IsChargeBySteps)//????  
+            {
+                QuoteOPPriceStepsUpdateService quoteOPPriceStepsUpdateService = new QuoteOPPriceStepsUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                quoteOPPriceStepsUpdateService.UpdateMulti(entityPM.QuoteOPChargePriceSteps, entityPM.DeletedQuoteOPChargePriceSteps, entityPM, false);
+            }
             base.UpdateComposition(entityPM);
         }
     }
