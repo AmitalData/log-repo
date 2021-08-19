@@ -57,21 +57,10 @@ export class CargoTrackingBrandingDataExtendedService {
             catchError(null));
     }
 
-    
+
     GetLoggedContact() {
         var url = this._apiUrl + '/GetLoggedContact?tenant=' + SessionInfo.LoggedUserTenant;
-
-        var token = SessionInfo.Token || sessionStorage.getItem('Token');
-
-        const authHeader = {
-            headers: new HttpHeaders({
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Token': token
-            })
-        };
-
-        return this._http.get(url, authHeader).pipe(map(response => {
+        return this._http.get(url, this.GetHTTPHeadersWithToken()).pipe(map(response => {
             var result = response;
             return result;
         }), catchError(error => {
@@ -80,4 +69,15 @@ export class CargoTrackingBrandingDataExtendedService {
     }
 
 
+
+    private GetHTTPHeadersWithToken()
+    {
+        return {
+            headers: new HttpHeaders({
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Token': SessionInfo.Token || sessionStorage.getItem('Token')
+            })
+        };
+    }
 }
