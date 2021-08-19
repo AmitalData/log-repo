@@ -5,6 +5,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -62,6 +63,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             CreateCustomerStatusesByAgingPeriods(agingPeriods);
 
             SortCustomerStatuses();
+            FillPrintingInformation();
 
             return dataProvider;
         }
@@ -433,6 +435,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             return default(T);
+        }
+
+        private void FillPrintingInformation()
+        {
+            var loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+            var loggedContactName = GetContactName(loggedContact);
+            dataProvider.PrintedByUser = loggedContactName;
+        }
+
+        private string GetContactName(ContactPM loggedContact)
+        {
+            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
+        }
+
+        private ContactPM GetContactByEmail(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return contactQuery.GetContactByEmailOnly(email, tenant);
         }
 
     }
