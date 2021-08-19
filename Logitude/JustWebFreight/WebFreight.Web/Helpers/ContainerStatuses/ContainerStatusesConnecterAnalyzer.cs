@@ -969,10 +969,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.FillFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation, container);
                 this.FillFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate, container);
                 this.FillFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate, container);
-                this.FillFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate, container);
-                this.FillFieldsNewValues("EstimatedPOLArrival", containerUpdatedFields.EstimatedGateInDate, container);
-                this.FillFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate, container);
-                this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualGateInDate, container);
+                this.FillFieldsNewValues("EstimatedPOLArrival", containerUpdatedFields.EstimatedPOLArrival, container);
+                this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, container);
                 this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
                 this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
@@ -1101,8 +1099,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.MainCarriageATA = this.ComputeMainCarriageATA();
             containerUpdatedFields.EstimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
             containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
-            containerUpdatedFields.EstimatedGateInDate = this.ComputeEstimatedGateInDate();
-            containerUpdatedFields.ActualGateInDate = this.ComputeActualGateInDate();
+            containerUpdatedFields.EstimatedPOLArrival = this.ComputeEstimatedGateInDate();
+            containerUpdatedFields.ActualPOLArrival = this.ComputeActualGateInDate();
             containerUpdatedFields.EmptyPickupLocation = this.emptyPickupLocation;
             containerUpdatedFields.DepartureLocation = this.departureLocation;
             containerUpdatedFields.DestinationLocation = this.destinationLocation;
@@ -2138,8 +2136,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
-        public DateTime? EstimatedGateInDate { get; set; }
-        public DateTime? ActualGateInDate { get; set; }
+        public DateTime? EstimatedPOLArrival { get; set; }
+        public DateTime? ActualPOLArrival { get; set; }
         public string EmptyPickupLocation { get; set; }
         public string DepartureLocation { get; set; }
         public string DestinationLocation { get; set; }
@@ -2153,8 +2151,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? EstimatedOriginPickup { get; set; }
         public DateTime? ActualOriginPickup { get; set; }
         public string POLLocation { get; set; }
-        public DateTime? EstimatedPOLArrival { get; set; }
-        public DateTime? ActualPOLArrival { get; set; }
         public DateTime? EstimatedPOLLoaded { get; set; }
         public DateTime? ActualPOLLoaded { get; set; }
         public DateTime? EstimatedPOLVesselDeparture { get; set; }

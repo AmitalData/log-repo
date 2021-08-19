@@ -37,8 +37,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentId = containerPM.ShipmentId;
             container.ActualEmptyPickupDate = containerPM.ActualEmptyPickupDate;
             container.EstimatedEmptyPickupDate = containerPM.EstimatedEmptyPickupDate;
-            container.EstimatedGateInDate = containerPM.EstimatedGateInDate;
-            container.ActualGateInDate = containerPM.ActualGateInDate;
             container.CurrentStatus = containerPM.CurrentStatus;
             container.CurrentStatusDate = containerPM.CurrentStatusDate;
             container.HasContainerException = containerPM.HasContainerException;
@@ -62,8 +60,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentOnCarriageTo = containerPM.ShipmentOnCarriageTo;
             container.ShipmentLastDeliveryFrom = containerPM.ShipmentLastDeliveryFrom;
             container.ShipmentLastDeliveryTo = containerPM.ShipmentLastDeliveryTo;
-            container.EstimatedEmptyPickup = containerPM.EstimatedEmptyPickup;
-            container.ActualEmptyPickup = containerPM.ActualEmptyPickup;
             container.OriginLocation = containerPM.OriginLocation;
             container.EstimatedOriginPickup = containerPM.EstimatedOriginPickup;
             container.ActualOriginPickup = containerPM.ActualOriginPickup;

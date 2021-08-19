@@ -42,8 +42,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string EmptyPickupLocation { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
-        public DateTime? EstimatedGateInDate { get; set; }
-        public DateTime? ActualGateInDate { get; set; }
         public string DepartureLocation { get; set; }
         public string DestinationLocation { get; set; }
         public string CurrentStatus { get; set; }
@@ -67,8 +65,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentOnCarriageTo { get; set; }
         public string ShipmentLastDeliveryFrom { get; set; }
         public string ShipmentLastDeliveryTo { get; set; }
-        public DateTime? ActualEmptyPickup { get; set; }
-        public DateTime? EstimatedEmptyPickup { get; set; }
+
         public string OriginLocation { get; set; }
         public DateTime? EstimatedOriginPickup { get; set; }
         public DateTime? ActualOriginPickup { get; set; }

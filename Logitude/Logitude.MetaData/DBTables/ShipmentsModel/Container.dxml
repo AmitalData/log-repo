@@ -143,18 +143,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EstimatedGateInDate"
-    Type="date">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActualGateInDate"
-    Type="date">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="EmptyPickupLocation"
     Type="varchar"
     Size="100">
@@ -310,18 +298,6 @@
     Name="ShipmentLastDeliveryTo"
     Type="varchar"
     Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActualEmptyPickup"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="EstimatedEmptyPickup"
-    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

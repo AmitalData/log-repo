@@ -31,8 +31,6 @@ export class ContainerList {
 		EmptyPickupLocation: string;
 		EstimatedEmptyPickupDate: Date;
 		ActualEmptyPickupDate: Date;
-		EstimatedGateInDate: Date;
-		ActualGateInDate: Date;
 		DepartureLocation: string;
 		DestinationLocation: string;
 		CurrentStatus: string;
@@ -55,8 +53,6 @@ export class ContainerList {
 		ShipmentOnCarriageTo: string;
 		ShipmentLastDeliveryFrom: string;
 		ShipmentLastDeliveryTo: string;
-		ActualEmptyPickup: Date;
-		EstimatedEmptyPickup: Date;
 		OriginLocation: string;
 		EstimatedOriginPickup: Date;
 		ActualOriginPickup: Date;

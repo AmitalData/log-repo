@@ -145,16 +145,6 @@ export class ContainerPM {
     public set ActualEmptyPickupDate(newValue: Date) { if (this.actualEmptyPickupDate != newValue) { this.actualEmptyPickupDate = newValue; this.MarkAsDirty("ActualEmptyPickupDate"); } }
        
 	 
-    private estimatedGateInDate: Date;
-    public get EstimatedGateInDate() { return this.estimatedGateInDate; }
-    public set EstimatedGateInDate(newValue: Date) { if (this.estimatedGateInDate != newValue) { this.estimatedGateInDate = newValue; this.MarkAsDirty("EstimatedGateInDate"); } }
-       
-	 
-    private actualGateInDate: Date;
-    public get ActualGateInDate() { return this.actualGateInDate; }
-    public set ActualGateInDate(newValue: Date) { if (this.actualGateInDate != newValue) { this.actualGateInDate = newValue; this.MarkAsDirty("ActualGateInDate"); } }
-       
-	 
     private departureLocation: string;
     public get DepartureLocation() { return this.departureLocation; }
     public set DepartureLocation(newValue: string) { if (this.departureLocation != newValue) { this.departureLocation = newValue; this.MarkAsDirty("DepartureLocation"); } }
@@ -263,16 +253,6 @@ export class ContainerPM {
     private shipmentLastDeliveryTo: string;
     public get ShipmentLastDeliveryTo() { return this.shipmentLastDeliveryTo; }
     public set ShipmentLastDeliveryTo(newValue: string) { if (this.shipmentLastDeliveryTo != newValue) { this.shipmentLastDeliveryTo = newValue; this.MarkAsDirty("ShipmentLastDeliveryTo"); } }
-       
-	 
-    private actualEmptyPickup: Date;
-    public get ActualEmptyPickup() { return this.actualEmptyPickup; }
-    public set ActualEmptyPickup(newValue: Date) { if (this.actualEmptyPickup != newValue) { this.actualEmptyPickup = newValue; this.MarkAsDirty("ActualEmptyPickup"); } }
-       
-	 
-    private estimatedEmptyPickup: Date;
-    public get EstimatedEmptyPickup() { return this.estimatedEmptyPickup; }
-    public set EstimatedEmptyPickup(newValue: Date) { if (this.estimatedEmptyPickup != newValue) { this.estimatedEmptyPickup = newValue; this.MarkAsDirty("EstimatedEmptyPickup"); } }
        
 	 
     private originLocation: string;
