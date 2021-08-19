@@ -224,7 +224,7 @@
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SupplyDateTime"
@@ -272,7 +272,7 @@
     Type="varchar"
     Size="1">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PODate"

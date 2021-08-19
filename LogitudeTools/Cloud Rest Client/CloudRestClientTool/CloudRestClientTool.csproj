@@ -104,6 +104,9 @@
     <Content Include="dlls\Interop.MSXML2.dll" />
     <Content Include="dlls\Json2KeyValue.dll" />
     <Content Include="dlls\XmlRender.dll" />
+    <Content Include="ShipmentOrder.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
