@@ -76,7 +76,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         }
 
         int _tenant = 0;
-        string _oldCourierMasterId = "";
 
         public override void ProccessGenericRequest(
               string xmlLOGICOMMDEC,
@@ -645,39 +644,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Declaration Request will not be Sent due to permission issues");
             }
-
-
-            if(!string.IsNullOrEmpty( _oldCourierMasterId))
-
-            {
-                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
-                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _oldCourierMasterId, true);
-
-                if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                {
-                    AppendLogLine("open UCUDO");
-
-                    customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _oldCourierMasterId, true);
-                    customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                    {
-
-                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
-                    {
-
-                        LoggingUserId = Curruser,
-                        Tenant = _tenant,
-                        LoggingEntityId = _oldCourierMasterId,
-
-                    };
-
-                    string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
-                    }
-                }
-            }
-
-
             MyGenericResponseObj.Stage = "Done All ";
             MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
@@ -1185,9 +1151,32 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
-                                _oldCourierMasterId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId;
+ 
+                                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
+                                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
 
-                                         
+                                if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                {
+                                    AppendLogLine("open UCUDO");
+
+                                    // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                    //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                    //  {
+
+                                    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                        UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                        {
+
+                                            LoggingUserId = Curruser,
+                                            Tenant = _tenant,
+                                            LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+
+                                        };
+
+                                        string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                    //}
+                                }
                             }
                             catch (DbEntityValidationException ex)
                             {
