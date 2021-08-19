@@ -28,6 +28,7 @@ export class SATInterfaceSettingsComponent {
     //public SATFolderName = "FromLogitude\SAT";
     IsDropboxConnected: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsCartaPorteSettingsEnabled: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         this._entityResourceService = new EntityResourceService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
@@ -35,6 +36,9 @@ export class SATInterfaceSettingsComponent {
         //entityResourceService.getEntityResourceByTableName("SATInterfaceSetting").subscribe(res1 => {
             this.LoadData();
         //});
+
+
+        this.IsCartaPorteSettingsEnabled = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CPT");
     }
 
     private LoadData() {

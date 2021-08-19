@@ -312,9 +312,9 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "CPT", 
-                Name = "CPT,Carta Porte", 
+                Name = "Carta Porte", 
                 Description = "Carta Porte", 
-                SearchFields = "Carta Porte", 
+                SearchFields = "CPT,Carta Porte", 
 			});
 			
             return all;
