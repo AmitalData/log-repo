@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Invoice" TargetTableName="SATInterfaceSettings">
+  <Sql Version="2">
+    <![CDATA[
+
+		   update SATInterfaceSettings set  IsARInvoiceTransferEnabled  = 1 where SATInterfaceCode = 'PROF33'
+       --
+    ]]>
+  </Sql>
+</Script>

@@ -96176,6 +96176,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="24"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;SendCartaPorte&quot;"
+        DefaultText="&quot;Transmit to SAT&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="25"
+        LocalDefaultText="&quot;Transmit to SAT&quot;"
+        IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

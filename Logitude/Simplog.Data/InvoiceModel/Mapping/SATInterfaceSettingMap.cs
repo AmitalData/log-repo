@@ -39,6 +39,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Token).HasColumnName("Token");
             this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
+            this.Property(t => t.IsARInvoiceTransferEnabled).HasColumnName("IsARInvoiceTransferEnabled");
+            this.Property(t => t.IsCartaPorteTransferEnabled).HasColumnName("IsCartaPorteTransferEnabled");
 
 
 

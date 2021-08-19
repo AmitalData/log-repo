@@ -43,6 +43,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         SATInterfaceName = a.SATInterface.Name,
                         ActivationDate = a.ActivationDate,
                         MetodoPagoCode = a.MetodoPagoCode,
+                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                     }).FirstOrDefault();
         }
 
@@ -60,7 +62,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         SATInterfaceName = a.SATInterface.Name,
                         ActivationDate = a.ActivationDate,
                         MetodoPagoCode = a.MetodoPagoCode,
-
+                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                     }).FirstOrDefault();
         }
 
@@ -75,7 +78,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        SATInterfaceName = a.SATInterface.Name,
                        ActivationDate = a.ActivationDate,
                        MetodoPagoCode = a.MetodoPagoCode,
-
+                       IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                       IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
                    };
         }
 
@@ -90,7 +94,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                              Token = entity.Token,
                                                              ActivationDate = entity.ActivationDate,
                                                              MetodoPagoCode = entity.MetodoPagoCode,
-
+                                                             IsARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled,
+                                                             IsCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled,
                                                          };
             return result;
         }
