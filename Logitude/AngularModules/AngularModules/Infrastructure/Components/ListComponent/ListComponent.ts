@@ -2768,14 +2768,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         this.IsNewEntityButtonVisible = isVisible;
     }
+
     HaveFeatureNewExportDeclararion(): boolean {
-        var MenuTableQuerySection = SessionLocator.SelectedSession.CurrentListComponent.MenuTableQuerySection;
-        let b1=FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
+        let b1 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
         let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
-        if (MenuTableQuerySection == "Customs.ExportDeclaration") {
+        if (this.MenuTableQuerySection == "Customs.ExportDeclaration") {
             return b1 && b2;
         }
     }
+
     AddNewEntity() {
         if (this.SelectedQuery != null) {
 
