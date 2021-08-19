@@ -157,13 +157,13 @@ export class ShipmentPMService {
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(
-                map(response => {
+            return this._http.get(myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
+                map((response: HttpResponse <any>) => {
 
                 //var servertime = response.headers.get('ServerExecutionTime');
                 //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "getSingleBySecurityKey", SecurityKey);
 
-                var pm = response;
+                var pm = response.body;
                 var entity: ShipmentPM;
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
@@ -171,6 +171,7 @@ export class ShipmentPMService {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
+                pmresponse.Data = response.headers.get('WhatsAppMessagingPhoneNumber');
                 return pmresponse;
 
             }),catchError(ServiceHelper.HandleServiceError));

@@ -628,6 +628,14 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+    get WhatsAppMessagingPhoneNumber() { return this.EntityPM.WhatsAppMessagingPhoneNumber; }
+    set WhatsAppMessagingPhoneNumber(newValue) {
+        if (this.EntityPM.WhatsAppMessagingPhoneNumber != newValue) {
+            this.EntityPM.WhatsAppMessagingPhoneNumber = newValue;
+
+        }
+    }
+
     get DistributorCode() { return this.EntityPM.DistributorCode; }
     set DistributorCode(newValue: string) {
         if (this.EntityPM.DistributorCode != newValue) {
