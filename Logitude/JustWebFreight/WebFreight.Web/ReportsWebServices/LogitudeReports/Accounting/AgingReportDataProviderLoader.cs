@@ -102,20 +102,39 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             string groupBy = GetFilterValue<string>("GroupByDate"); // filter_Due, filter_Accounting
             string filterBy = GetFilterValue<string>("BalanceFilter"); // Debtors, DebtAbove, filter_All
             decimal balanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("BalanceFilterValue"));
+            decimal FromBalanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("FromBalanceFilterValue"));
+            decimal ToBalanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("ToBalanceFilterValue"));
+            Boolean applayAboveBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount == null;
+            Boolean applayBelowBalanceFillter = FromBalanceFilterAmount == null && ToBalanceFilterAmount != null;
+            Boolean applayBetweenBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount != null;
+
 
             if (groupBy == "filter_Due")
             {
                 if(filterBy == "Debtors")
                     resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
-                else if (filterBy == "DebtAbove")
-                    resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= balanceFilterAmount).ToList();
+                else if (filterBy == "DebtBetween")
+                {
+                    if (applayAboveBalanceFillter)
+                    {
+                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= FromBalanceFilterAmount).ToList();
+                    }
+                    else if (applayBelowBalanceFillter)
+                    {
+                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue <= ToBalanceFilterAmount).ToList();
+                    }
+                    else if (applayBetweenBalanceFillter)
+                    {
+                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue <= ToBalanceFilterAmount && d.LocalBalanceInDue >= FromBalanceFilterAmount).ToList();
+                    }
+                }
 
             }
             else
             {
                 if (filterBy == "Debtors")
                     resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency > 0).ToList();
-                else if (filterBy == "DebtAbove")
+                else if (filterBy == "DebtBetween")
                     resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency >= balanceFilterAmount).ToList();
 
             }

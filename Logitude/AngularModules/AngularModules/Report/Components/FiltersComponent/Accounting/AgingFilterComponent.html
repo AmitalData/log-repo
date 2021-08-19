@@ -240,33 +240,34 @@
                                         [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_Debtors'">
                                         {{ 'GLAccount.O.DebtorsOnly' | TextCodeTranslationPipe }}
                                     </li>
-                                    <li float-start id="filter_DebtAbove"
-                                        (click)="BalanceFilterItemClicked('filter_DebtAbove')"
+                                    <li float-start id="filter_DebtBetween"
+                                        (click)="BalanceFilterItemClicked('filter_DebtBetween')"
                                         style="height: 22px;width: 90px;"
-                                        [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_DebtAbove'">
-                                        {{ 'GLaccount.O.DebtAbove' | TextCodeTranslationPipe }}
+                                        [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_DebtBetween'">
+                                        {{ 'GLaccount.O.DebtBetween' | TextCodeTranslationPipe }}
                                     </li>
                                 </ul>
                             </td>
-                            <td [style.width.px]="IsSalesmanRestricted?'305':'120'" >
-                                <div style="max-width: 120px;">
-                                    <LogTextBox *ngIf="balanceFilterSelectedValue === 'filter_DebtAbove'"
-                                        [ObjectFieldName]="'Balance'" [InputType]="'decimal'" [DataContext]="DataContext"
-                                        [Text]="Balance" [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
-                                        [HideColumns]="true">
+                            <td colspan="3" [style.width.px]="IsSalesmanRestricted?'305':'120'" *ngIf="balanceFilterSelectedValue === 'filter_DebtBetween'">
+
+                                <LogLabel style="display:inline-block;width:20px" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.To'"
+                                          [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
+                                <div style="max-width: 60px; display:inline-block">
+                                    <LogTextBox [ObjectFieldName]="'FromBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
+                                                [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
+                                                [HideColumns]="true">
+                                    </LogTextBox>
+                                </div>
+
+                                <LogLabel style="display:inline-block;width:20px" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.To'"
+                                          [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
+                                <div style="max-width: 60px;display:inline-block">
+                                    <LogTextBox [ObjectFieldName]="'ToBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
+                                                [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
+                                                [HideColumns]="true">
                                     </LogTextBox>
                                 </div>
                             </td>
-
-
-                            <td style="width: 35px;"></td>
-                            <td style="width: 100px; padding-right: 5px;" class="Label">
-                                <div style="width: 90px;">
-                                    <button class="GreenButton" (click)="RunButtonClicked()">{{
-                                        'AgingReport.O.RunReport' | TextCodeTranslationPipe }}</button>
-                                </div>
-                            </td>
-                            <td></td>
 
                         </tr>
 
@@ -319,7 +320,7 @@
 
 
                             <!-- NumberOfMonths -->
-                            <td colspan="2" style="width: 120px; padding-right: 5px;" class="Label">
+                            <td colspan="3" style="width: 120px; padding-right: 5px;" class="Label">
 
                                 <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"   float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
@@ -331,6 +332,15 @@
                                 </div>
                             </td>
 
+                            <td>
+                                <div style="width: 90px;">
+                                    <button class="GreenButton" (click)="RunButtonClicked()">
+                                        {{
+                                        'AgingReport.O.RunReport' | TextCodeTranslationPipe
+                                        }}
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
 
                         <tr>

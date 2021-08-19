@@ -331,6 +331,21 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
     }
 
+    private fromBalance: number;
+    public get FromBalance() { return this.fromBalance; }
+    public set FromBalance(value: number) {
+        if (this.fromBalance != value) {
+            this.fromBalance = value;
+        }
+    }
+
+    private toBalance: number;
+    public get ToBalance() { return this.toBalance; }
+    public set ToBalance(value: number) {
+        if (this.toBalance != value) {
+            this.toBalance = value;
+        }
+    }
 
     //#endregion
 
@@ -386,6 +401,11 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+
+            if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
+                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance || 0, "decimal"));
+                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance || 0, "decimal"));
+            }
 
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
@@ -487,7 +507,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             case 'filter_Debtors':
                 //   this.AccountTypeCode = '2';
                 break;
-            case 'filter_DebtAbove':
+            case 'filter_DebtBetween':
                 this.balance = 0;
                 break;
             default:
