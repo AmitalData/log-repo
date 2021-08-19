@@ -83,9 +83,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		
 
 
-		public const string HashString = "a674943b9494bd7d4c0324341d3a2c3a";
 
-
+		public const string HashString = "94d960743ced048b2ff2207ab4290200";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -48776,6 +48775,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB016 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTTOCUSTOMFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertToCustomFile", NameTextCodeDefaultText = "Convert To Custom File", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB017 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
              			   Feature ShipmentFeature_MB018 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
+             			   Feature ShipmentFeature_MB019 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendCartaPorte", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.TransmittoSAT", NameTextCodeDefaultText = "Transmit to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -49245,6 +49245,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ShipmentFeature_MB018.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ShipmentMenuButton022 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendCartaPorte",
+						Index = 25, 
+						IsActive = true,
+						LabelTextCodeCode = "Shipment.B.TransmittoSAT",
+						LabelTextCodeDefaultText = "Transmit to SAT",
+						Tenant = 0,
+						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
+						ParentMenuButtonId = ShipmentMenuButton0.Id,
+						ObjectTableId = ShipmentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShipmentFeature_MB019.Id,
+						Style = null,
+						LocalDefaultText = "Transmit to SAT",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ShipmentFeature_MB019.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
