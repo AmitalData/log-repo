@@ -3,6 +3,10 @@
 	<TransportMode Code="A">
 		<Name>Air</Name>
 	</TransportMode>
+	<AccountManager Code="specflowtest@logitudeworld.com">
+      <EnglishName>SpecflowTest</EnglishName>
+      <LocalName>SpecflowTest</LocalName>
+   </AccountManager>
 	<Consignee Code="10011">
 		<EnglishName>agent 55</EnglishName>
 		<MainAddress>
