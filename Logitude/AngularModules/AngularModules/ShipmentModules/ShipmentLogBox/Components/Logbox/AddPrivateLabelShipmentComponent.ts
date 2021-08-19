@@ -496,7 +496,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     MainCarriageFromPortId = null;
     SetUIProperties_Ports() { 
         var isToRequired: boolean = false; 
-        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
             isToRequired = true;
         } 
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, isToRequired);
