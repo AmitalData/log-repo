@@ -7,6 +7,7 @@ import { defer } from 'rxjs';
 import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 @Injectable()
 export class CargoTrackingSearchService {
@@ -169,6 +170,7 @@ export class CargoTrackingSearchService {
         //     }),
         //     catchError(null));
     }
+
 
 
 }

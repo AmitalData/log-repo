@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -50,8 +51,6 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
- 
-
         public HttpResponseMessage GetCargoTrackingBrandingTenantByDomain(string domain)
         {
             try
@@ -65,6 +64,18 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetLoggedContact(int tenant)
+        {
+            try
+            {
+                var contact = LoggedContactResolver.GetLoggedContact(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, contact);
             }
             catch (Exception ex)
             {
