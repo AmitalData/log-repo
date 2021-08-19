@@ -2,11 +2,11 @@
   <Sql Version="1">
     <![CDATA[
 
-    UPDATE ARPayments SET SearchFields = ARPayments.SearchFields + ','+ paymentsWithChequesNumbers.chequesNumbers
-    FROM ARPayments inner join
-    (SELECT PaymentId, STRING_AGG ( ISNULL(ChequeNumber,'N/A'), ',') AS chequesNumbers 
-    FROM ARPaymentCheques
-    GROUP BY PaymentId) AS paymentsWithChequesNumbers ON ARPayments.Id = paymentsWithChequesNumbers.PaymentId
+    --UPDATE ARPayments SET SearchFields = ARPayments.SearchFields + ','+ paymentsWithChequesNumbers.chequesNumbers
+   -- FROM ARPayments inner join
+    --(SELECT PaymentId, STRING_AGG ( ISNULL(ChequeNumber,'N/A'), ',') AS chequesNumbers 
+    --FROM ARPaymentCheques
+    --GROUP BY PaymentId) AS paymentsWithChequesNumbers ON ARPayments.Id = paymentsWithChequesNumbers.PaymentId
      ]]>
  </Sql>
 </Script>
