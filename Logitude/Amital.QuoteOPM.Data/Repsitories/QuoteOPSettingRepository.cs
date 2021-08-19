@@ -20,8 +20,18 @@ namespace Amital.QuoteOPM.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public QuoteOPSetting GetSingleQuoteSetting(string id)
+        {
+            return (from a in context.QuoteOPSettings where a.Id == id select a).FirstOrDefault();
+        }
 
-   }
+        public QuoteOPSetting GetSingleQuoteSetting(int tenant)
+        {
+            return (from a in context.QuoteOPSettings where a.Tenant == tenant select a).FirstOrDefault();
+        }
+
+
+    }
 
 }
    

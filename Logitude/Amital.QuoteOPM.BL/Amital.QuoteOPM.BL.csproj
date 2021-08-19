@@ -43,6 +43,7 @@
     <Reference Include="System.ServiceModel.DomainServices.Server">
       <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -153,9 +154,20 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTotalVatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPPackageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPPriceStepsUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuoteOPBusinessUnitFilter.cs" />
+    <Compile Include="Tools\Behaviours\EntityAutomationQuoteOPMappingPMFields.cs" />
+    <Compile Include="Tools\Behaviours\QuoteBehaviours\QuoteOPFieldsBehaviour.cs" />
+    <Compile Include="Tools\Behaviours\QuoteBehaviours\QuoteOPSalesmanBehavior.cs" />
+    <Compile Include="Tools\Behaviours\UpdateQuoteOPComputedFieldBehaviour.cs" />
+    <Compile Include="Tools\EntityService\QuoteOPSubjectService.cs" />
+    <Compile Include="Tools\Initializers\QuoteOPServiceInitializer.cs" />
+    <Compile Include="Tools\QuoteOPEmailAlert.cs" />
+    <Compile Include="Tools\Validating\QuoteOPValidating.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Amital.QuoteOPM.Data\Amital.QuoteOPM.Data.csproj">
@@ -178,6 +190,10 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
@@ -185,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Compile Include="EntityUpdateServices\QuoteOPUpdateService.Charges.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

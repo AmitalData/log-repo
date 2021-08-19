@@ -26,19 +26,27 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
         {
             //throw new NotImplementedException();\
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.QuoteNumber);
-            entityPoco.QuoteNumber = entityPM.QuoteNumber;
+            
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
-            entityPoco.CreatedByUserId = entityPM.CreatedByUserId;
+            
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.OpenDate);
-            entityPoco.OpenDate = entityPM.OpenDate;
+            
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
-            entityPoco.Tenant = entityPM.Tenant;
+            
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.DirectionId);
-            entityPoco.DirectionId = entityPM.DirectionId;
+            
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ProductCode);
-            entityPoco.ProductCode = entityPM.ProductCode;
+            
 
-
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPoco.Tenant = entityPM.Tenant;
+                entityPoco.QuoteNumber = entityPM.QuoteNumber;
+                entityPoco.CreatedByUserId = entityPM.CreatedByUserId;
+                entityPoco.OpenDate = entityPM.OpenDate;
+                entityPoco.DirectionId = entityPM.DirectionId;
+                entityPoco.ProductCode = entityPM.ProductCode;
+            }
 
             entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
@@ -237,9 +245,27 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             entityPM.SearchFields = mySearchFields;
             entityPoco.SearchFields = mySearchFields;
         }
-        public void CustomPOCOToPM(QuoteOPPM entityPM, QuoteOP entityPOCO)
+        public void CustomPOCOToPM(QuoteOPPM quotepm, QuoteOP quote)
         {
             //throw new NotImplementedException();
+            string myIncotermCode = null;
+            string myIncotermName = null;
+
+
+            if (!string.IsNullOrEmpty(quote.IncotermId))
+            {
+                IncotermRepository incotermRepository = new IncotermRepository(quote.Tenant);
+                Incoterm incoterm = incotermRepository.GetSingleIncoterm(quote.IncotermId, quote.Tenant);//no cache !!! ??
+                if (incoterm != null)
+                {
+                    myIncotermCode = incoterm.Code;
+                    myIncotermName = incoterm.Name;
+                }
+            }
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermCode);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermName);
+            quotepm.IncotermCode = myIncotermCode;
+            quotepm.IncotermName = myIncotermName;
         }
    }
 
