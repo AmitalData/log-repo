@@ -150,7 +150,7 @@
                                     <td style="width:85px;">
                                         <LogCheckBox [Text]="'AR Invoices'"
                                                      [ObjectFieldName]="'IsARInvoiceTransferEnabled'"
-                                                     [Checked]="IsARInvoiceTransferEnabled"
+                                                     [Checked]="EntityPM.IsARInvoiceTransferEnabled"
                                                      [ObjectTableName]="ObjectTableName"
                                                      [DataContext]="EntityPM"
                                                      [HideColumns]="true"></LogCheckBox>
@@ -164,7 +164,7 @@
                                     <td style="width:85px;">
                                         <LogCheckBox [Text]="'Carta Porte'"
                                                      [ObjectFieldName]="'IsCartaPorteTransferEnabled'"
-                                                     [Checked]="IsCartaPorteTransferEnabled"
+                                                     [Checked]="EntityPM.IsCartaPorteTransferEnabled"
                                                      [ObjectTableName]="ObjectTableName"
                                                      [DataContext]="EntityPM"
                                                      [HideColumns]="true"></LogCheckBox>
