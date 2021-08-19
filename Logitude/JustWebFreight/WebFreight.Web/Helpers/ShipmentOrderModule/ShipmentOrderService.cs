@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             if (changeSetOp == ChangeSetOperation.Update)
             {
                 entity.Id = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant)?.Id;
-                if (entity.Id == null)
+                if (string.IsNullOrEmpty( entity.Id))
                 {
                     throw new ApplicationException("ShipmentOrder with orderNumber " + entity.OrderNumber + " doesn't exist");
                 }
