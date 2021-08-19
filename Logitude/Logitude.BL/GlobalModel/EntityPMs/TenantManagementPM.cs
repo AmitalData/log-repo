@@ -384,5 +384,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
 
         public int ScheduledTasksLimitPerReport { get; set; }
         public bool IsHybrid { get; set; }
+        public string WhatsAppMessagingPhoneNumber { get; set; }
     }
 }

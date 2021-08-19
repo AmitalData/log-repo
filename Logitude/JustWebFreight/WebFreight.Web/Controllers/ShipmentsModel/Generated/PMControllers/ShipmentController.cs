@@ -2,6 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
@@ -623,6 +625,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 ShipmentAdditionalCloudCustomData CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
+                    AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant);
                     TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
                     if (MyAdditionalData != null)
@@ -661,7 +664,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     }
 
                 }
-                 
+
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, CustomData); ;
@@ -670,6 +673,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null)
+            {
+                HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
             }
         }
 

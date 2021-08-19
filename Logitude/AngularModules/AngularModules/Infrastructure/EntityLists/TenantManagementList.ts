@@ -156,5 +156,6 @@ export class TenantManagementList {
 		LastMonthCreatedTariffs: number;
 		ScheduledTasksLimitPerReport: number;
 		IsHybrid: boolean;
+		WhatsAppMessagingPhoneNumber: string;
 	
 }
