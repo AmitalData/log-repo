@@ -569,10 +569,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string StandalonePickupDeliveryId { get; set; }
 
 
+
         public string GrossWeightUnitCode { get; set; }
 
 
-        public string PrivateLabelConsigneeName { get; set; }
 
     }
 }

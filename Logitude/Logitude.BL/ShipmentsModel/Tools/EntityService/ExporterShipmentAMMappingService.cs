@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 DirectionId = shipmentPM.DirectionId,
                 CustomerShipmentNumber = shipmentPM.ShipmentNumber,
                 ShipmentTypeId = shipmentPM.ShipmentTypeId,
-                ConsigneeName = shipmentPM.PrivateLabelConsigneeName,
+                ConsigneeName = shipmentPM.ShipperName,
                 InvoiceReference = shipmentPM.PrivateLabelInvoiceNumber,
                 CustomerReference = shipmentPM.CustomerReference1,
                 IncludePickup = shipmentPM.PrivateLabelIncludePickup,
