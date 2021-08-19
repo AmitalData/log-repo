@@ -118,18 +118,19 @@ namespace Logitude.Update.SandBox
             ///RevaluationBatch revaluationBatch = new RevaluationBatch();
             //revaluationBatch.RunAllOpenRevaluations(28);
             //return;
+            List<string> Last_journalBufferKeys = new List<string>();
+            JournalApproveService.WorkWithoutQueue(62, "1-16309384", ref Last_journalBufferKeys);
+
+            return;
+
+            var myGateWayTester = new GateWayTester();
+            myGateWayTester.ImmediateYearTransferthod(20, 62);
+            return;
 
             YearTest();
             return;
             var myReverseEngineerCashBook = new ReverseEngineerCashBook(69);
             myReverseEngineerCashBook.CheckDbIntegrity();
-            return;
-            var myGateWayTester = new GateWayTester();
-            myGateWayTester.ImmediateYearTransferthod(16, 4);
-            return;
-            List<string> Last_journalBufferKeys = new List<string>();
-            JournalApproveService.WorkWithoutQueue(18, "1-12164556", ref Last_journalBufferKeys);
-
             return;
             GLaccountCreateTester();
 
