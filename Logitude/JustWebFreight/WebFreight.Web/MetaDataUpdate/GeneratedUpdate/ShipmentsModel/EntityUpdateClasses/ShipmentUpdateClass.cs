@@ -81,7 +81,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
    {  		
 
 		
-		public const string HashString = "8b4eee9fbb8f9c90bcc51bbd8ef5d668";
+
+		public const string HashString = "153ec540be4b09b94975db9cd98066de";
+
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -2554,10 +2556,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Shipment",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MasterShipmentNumber",

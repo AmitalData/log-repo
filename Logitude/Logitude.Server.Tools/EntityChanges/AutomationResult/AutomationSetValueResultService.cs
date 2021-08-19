@@ -143,24 +143,28 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 return AutomationChangedFields.ChangedFields;
             }
 
+
             newValue = IsNewValueShouldBeNull(AutomationChangedFields, newValue) ? null : newValue;
+
+            newValue = GetCustomFieldNewValue(AutomationChangedFields, newValue);
             AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
             return AddFieldToChangedFieldsList(AutomationChangedFields, oldValue, newValue);
+        }
+
+        private static object GetCustomFieldNewValue(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
+        {
+            if (AutomationChangedFields.SetValueItem.IsCustomField)
+            {
+                AutomationChangedFields.SetValueItem.Value = newValue.ToString();
+                newValue = GetNewCustomField(AutomationChangedFields.SetValueItem);
+            }
+
+            return newValue;
         }
 
         private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
         {
             object result = null;
-
-             if (item.IsCustomField)
-             {
-                if (hasDateTypeField(item))
-                {
-                    item.Value = GetDateValue(item);
-                }
-
-                return GetNewCustomField(item);
-             }
 
             if (item.OperatorCode.Contains("F"))
             {
@@ -172,11 +176,19 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 }
             }
 
+
+            else if (item.IsCustomField && hasDateTypeField(item))
+            {
+                item.Value = GetDateValue(item);
+                return GetNewCustomField(item);
+            }
+
             else if (hasDateTypeField(item))
             {
                 var dateSplitParts = item.Value.Split('*');
                 result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
             }
+
 
             else if (item.DataTypeCode.Trim() == "Boolean")
             {
