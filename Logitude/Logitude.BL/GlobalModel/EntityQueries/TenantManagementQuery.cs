@@ -248,6 +248,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                      LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                                     WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -445,6 +446,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                   LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                                  WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
 
                                               }).FirstOrDefault();
 
@@ -635,6 +637,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                         LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                         ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
 
                     });
         }
@@ -774,6 +777,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
                     LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
+                    WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
 
                 };
             }
@@ -912,6 +916,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                       WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                    };
         }
 
@@ -1186,6 +1191,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                              LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                              ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                             WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                          }).FirstOrDefault();
 
             return tenant;

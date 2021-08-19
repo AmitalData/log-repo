@@ -165,5 +165,6 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int LastMonthCreatedTariffs { get; set; }
         public int ScheduledTasksLimitPerReport { get; set; }
         public bool IsHybrid { get; set; }
+        public string WhatsAppMessagingPhoneNumber { get; set; }
     }
 }
