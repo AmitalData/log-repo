@@ -1783,8 +1783,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.TruckerId = shipment.TruckerId;
             shipmentPM.AssignedToTruckerDate = shipment.AssignedToTruckerDate;
             shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate;
-            shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId;
-            shipmentPM.PrivateLabelConsigneeName = shipment.PrivateLabelConsigneeName;
+            shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId; 
             shipmentPM.PrivateLabelInvoiceNumber = shipment.PrivateLabelInvoiceNumber; 
             shipmentPM.PrivateLabelIncludePickup = shipment.PrivateLabelIncludePickup;
             shipmentPM.PrivateLabelIncludeDelivery = shipment.PrivateLabelIncludeDelivery;

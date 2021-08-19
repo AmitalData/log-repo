@@ -468,6 +468,5 @@ export class ShipmentList {
 		HandlerUserId: string;
 		HandlerUserName: string;
 		StandalonePickupDeliveryId: string;
-		PrivateLabelConsigneeName: string;
 	
 }
