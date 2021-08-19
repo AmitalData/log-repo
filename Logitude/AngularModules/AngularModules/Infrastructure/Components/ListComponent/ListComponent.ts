@@ -1428,7 +1428,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         //this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId));
         //this.Queries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId == null);
-        this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
+        if (this.MenuTableQuerySection != null) {
+            this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
+        } else {
+            this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant);
+        }
         this.QueryListSourceChanged.emit(this.UserQueries);
         var SelectedQuery: any = {};
         //if (this.listArgs.Perspective != null) {
