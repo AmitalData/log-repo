@@ -24,15 +24,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 			var declarations =
-	   from dec in context.Declarations.Include("Card")
-	   group dec by new { dec.ExportFile, dec.ExportContainerizationID , dec.TransportModeId , ImporterName = dec.CustomerCard.LocalName}
+	   (from dec in context.Declarations.Include("Card")
+	   group dec by new { dec.ExportContainerizationID}
 			into newgroup
-	   select newgroup;// new Declaration {ExportFile = newgroup.Key.ExportFile };
+	   select new
+	   { 
+		   newgroup.Key.ExportContainerizationID,
+		   dec=newgroup.GroupBy(x=> x.TransportModeId).Select(grp=> grp.FirstOrDefault()),
+	   });// new Declaration {ExportFile = newgroup.Key.ExportFile };
 
 
 			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("DeclarationStatusType")
 													  join d in declarations
-													  on a.Id equals d.Key.ExportContainerizationID into EmpCont
+													  on a.Id equals d.ExportContainerizationID into EmpCont
 													  from ed in EmpCont.DefaultIfEmpty()
 						
 
@@ -59,10 +63,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 														  OperationMode = a.OperationMode,
 
 														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,
-											              ExportFile = a.IsMultiExportFiles ? "List" : ed.Key.ExportFile,
+											              ExportFile = a.IsMultiExportFiles ? "List" : ed.dec.FirstOrDefault().ExportFile,
 														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
-														  ImporterName = a.IsMultiCustomers ? "List" : ed.Key.ImporterName,
-														  TransportModeForExport = ed.Key.TransportModeId ,
+														  ImporterName = a.IsMultiCustomers ? "List" : ed.dec.FirstOrDefault().CustomerCard.LocalName,
+														  TransportModeForExport = ed.dec.FirstOrDefault().TransportModeId ,
 														  HataraStatusIsNull = a.HataraStatus != null ? false :true
 													  }); ;
             return query;
