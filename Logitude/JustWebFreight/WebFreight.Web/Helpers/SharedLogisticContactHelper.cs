@@ -369,8 +369,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -414,12 +415,17 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
             emailMessage = HtmlTemplate.ToString();
 
-            return emailMessage;
+                scope.Complete();
+
+                return emailMessage;
+            }
         }
 
         private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -464,7 +470,10 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
 
             emailMessage = HtmlTemplate.ToString();
-            return emailMessage;
+                scope.Complete();
+
+                return emailMessage;
+            }
 
         }
 
@@ -523,8 +532,9 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs)
         {
-
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
             if (documenttype != null)
             {
                 messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -648,8 +658,11 @@ namespace WebFreight.Web.Helpers
                 message.Replace("}", "");
                 message.Replace("{", "");
             }
+             
+                scope.Complete();
 
-            return message;
+                return message;
+            }
         }
 
         private static string GetLogoInvitation(int tenant, string workEnvironment)
