@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.EntityChanges.AutomationResult
-{
+{//
    public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
     {
 
