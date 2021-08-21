@@ -73,6 +73,7 @@
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
+    <None Include="DBScripts\202108211409_UpdateARPAymentSearchFields.sxml" />
     <None Include="DBScripts\202108171446_UpdateSearchFieldsForARPayments.sxml" />
     <None Include="DBScripts\202107041359_SumUpGLAccountCardsDataAmounts.sxml" />
     <None Include="DBScripts\202104211213_UpdateGLAccountCardDataTable.sxml" />
