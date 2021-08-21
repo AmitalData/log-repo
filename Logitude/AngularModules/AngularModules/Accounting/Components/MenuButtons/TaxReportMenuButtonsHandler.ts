@@ -79,11 +79,11 @@ export class TaxReportMenuButtonsHandler {
         return menuButtons;
     }
     private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
-        this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((res: any) => {
+        this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((response: any) => {
             this.CurrentSession.StopBusyIndicator();         
-                if (res != null) {
-                    var res = res.Result;
-                    if (res.ConsolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E")) {
+            if (response != null) {
+                var response = response.Result;
+                if (response.ConsolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E")) {
                         button.IsDisabled = false;
                     }
                     else {
@@ -139,7 +139,7 @@ export class TaxReportMenuButtonsHandler {
                     break;
                 }
 
-            case "UPLD": // upload 
+            case ManuButton.Upload: // upload 
                 {
                     //this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
@@ -167,4 +167,9 @@ export class TaxReportMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
+}
+
+enum ManuButton {
+   
+    Upload ="UPLD",
 }

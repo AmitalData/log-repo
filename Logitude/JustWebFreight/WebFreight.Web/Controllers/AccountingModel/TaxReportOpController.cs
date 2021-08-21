@@ -316,16 +316,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-               
+
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
-                    byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);                 
-                    var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
-                    var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");              
-                    var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dataBytes);
-                    string winHebrewString = winHebrewEncoding.GetString(hebBytes);
-                    winHebrewString = winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
-                  
+                    string winHebrewString = EncodeStringFromImageParameter(fileUploadParamerter);
+
                     var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
                     myConsolidatedTaxReportFlatFileAnalyser.Analyse(authToken.Tenant, fileUploadParamerter.EntityId, winHebrewString);
 
@@ -345,7 +340,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+        private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
+        {
+            byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+            var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dataBytes);
+            string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+            return winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
 
+        }
 
     }
 }

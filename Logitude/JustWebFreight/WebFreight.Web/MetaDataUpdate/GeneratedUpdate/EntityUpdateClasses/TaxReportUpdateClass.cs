@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "5627410d2af640ddd3ede4a6b3fab0c0";
+		public const string HashString = "a6676f987d80e577db14f7bd67f2eabe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2412,6 +2412,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOExternalLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ExternalLines", DefaultText = "Loading another external file into this report will delete the existing external rows and create new rows according to the new file.",LocalDefaultText = @"טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורות החיצוניות הקיימות וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportOUpload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Upload", DefaultText = "Upload",LocalDefaultText = @"טעינה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOTextFileAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.TextFileAllowed", DefaultText = "Required TXT file",LocalDefaultText = @"חובה קובץ TXT", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUploadFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.UploadFile", DefaultText = "Upload file before uploading",LocalDefaultText = @"טען קובץ לפני העלאה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

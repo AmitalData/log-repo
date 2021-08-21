@@ -61,7 +61,7 @@ export class TaxReportLineExtendedListService {
       
     }
 
-    PostCreateTaxReportLines(fileUploadParamerter: ImageParameter) {
+    PostCreateTaxReportLinesByTextFile(fileUploadParamerter: ImageParameter) {
 
         return defer(() => {
             return this.httpClient.post(this._apiUrl + '/PostCreateTaxReportLines', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {

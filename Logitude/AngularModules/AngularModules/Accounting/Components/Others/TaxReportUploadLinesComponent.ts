@@ -10,6 +10,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { TaxReportPM } from '../../EntityPMs/TaxReportPM';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var attachmentUploader, ResultAsArray: any;
 declare var window;
 
@@ -22,21 +23,21 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
     public DataContext:any  = this;
 
     public UploadFileId: string = Guid.NewRandomString();
-    FileName: string;
-    FileSize: string;
-    FileExtension: string;
-    File: any;
+   public  FileName: string;
+    fileSize: string;
+    fileExtension: string;
+    file: any;
     fileUploadParamerter: ImageParameter;
-    FileData: number;
-    ProgressBarPercentText: string;
-    IsShowProgressBar: boolean = false;
-    IsUploadCanceled: boolean;
-    IsUploadInProgress: boolean;
-    Placeholder: any;
+    public FileData: number;
+    progressBarPercentText: string;
+    public IsShowProgressBar: boolean = false;
+    isUploadCanceled: boolean;
+    isUploadInProgress: boolean;
+    placeholder: any;
     entityPM: TaxReportPM;
-    ResponseMessage: any;
-    UploadButtonIsEnabled: boolean = true;
-    _DecodedLoadedString: string;
+    responseMessage: any;
+    public UploadButtonIsEnabled: boolean = true;
+    decodedLoadedString: string;
 
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
@@ -56,17 +57,17 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
         }
     }
 
-    FillErrors() {
+    CheckIfThereIsUploadedFile() {
         this.ValidationErrorsList = [];
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {           
             this.ValidationErrorsList = [];
 
         } else {
-            this.ValidationErrorsList.push("טען קובץ לפני העלאה ");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("TaxReport.O.UploadFile"));
         }
     }
     OkButtonClicked() {
-        this.FillErrors();
+        this.CheckIfThereIsUploadedFile();
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
@@ -76,7 +77,7 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
     CreateTaxReportLines() {
         this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
-            this.taxReportLineExtendedListService.PostCreateTaxReportLines(this.fileUploadParamerter)
+            this.taxReportLineExtendedListService.PostCreateTaxReportLinesByTextFile(this.fileUploadParamerter)
                 .subscribe((myServiceResponse: ServiceResponse) => {
                     console.log("[Send] Response/PostCreateTaxReportLines: ", myServiceResponse.Result);
                     var response = myServiceResponse.Result;
@@ -99,46 +100,45 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
         messageWindow.Show(message);
     }
 
-    OpenUpLoadFile() {
+    OpenUploadFile() {
         document.getElementById(this.UploadFileId).click();
     }
-    file: any;
+  
     UploadFile(event: any) {
         this.file = attachmentUploader(this.UploadFileId);
         if (this.file) {
             var temp = this.file.name.split('.');
-            this.FileExtension = temp[temp.length - 1];
-            this.FileName = this.file.name.replace("." + this.FileExtension, "");
+            this.fileExtension = temp[temp.length - 1];
+            this.FileName = this.file.name.replace("." + this.fileExtension, "");
             this.ValidateFile();        
             if (this.valid) {
                 this.IsShowProgressBar = true;
                 this.UploadButtonIsEnabled = false;
-                this.MapFileParameters();
+                this.CreateImageParameters();
                 this.ArrayBufferToBase64(this.file, this);
             }
+            else { this.UploadButtonIsEnabled = true;}
             }
         }
     
     valid: boolean = true;
     ValidateFile() {
-        if (this.FileExtension.toLowerCase() != "txt") {
-            this.ShowMessage("חובה קובץ TXT");
-            return;
-        }
-        if (this.FileExtension && this.FileExtension.length > 10) {
-            this.ShowMessage("File extension should be less than or equal 10 characters");
+        if (this.fileExtension.toLowerCase() != FileType.TextFile) {
             this.valid = false;
+            this.ShowMessage(TextCodeTranslator.Translate("TaxReport.O.TextFileAllowed"));
         }
+        else this.valid = true;
+       
     }
-    MapFileParameters() {
+    CreateImageParameters() {
         this.fileUploadParamerter = new ImageParameter();
         this.fileUploadParamerter.Key = Guid.newGuid();
         this.fileUploadParamerter.IsFirstTry = true;
-        this.fileUploadParamerter.Extension = this.FileExtension;
-        this.fileUploadParamerter.UploadMode = "Block";
+        this.fileUploadParamerter.Extension = this.fileExtension;
         this.fileUploadParamerter.FileSize = this.file.size;
         this.fileUploadParamerter.Tenant = SessionLocator.Tenant;
         this.fileUploadParamerter.EntityId = this.entityPM.Id;
+        this.fileUploadParamerter.UploadMode = UploadMode.BlockMode;
     }
     ArrayBufferToBase64(file: any, viewmodel: TaxReportUploadLinesComponent) {
         var reader: FileReader = new FileReader();
@@ -150,7 +150,7 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
             for (var i = 0; i < len; i++) {
                 decodedString += String.fromCharCode(bytes[i]);
             }
-            viewmodel._DecodedLoadedString = decodedString;
+            viewmodel.decodedLoadedString = decodedString;
             viewmodel.fileUploadParamerter.Base64String = window.btoa(decodedString);
 
         };
@@ -162,4 +162,11 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
     }
   
   
+}
+
+enum FileType {
+    TextFile = "txt",
+}
+enum UploadMode {
+    BlockMode="Block",
 }

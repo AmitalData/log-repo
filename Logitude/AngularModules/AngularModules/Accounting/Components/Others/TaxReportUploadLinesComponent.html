@@ -50,7 +50,7 @@
                                 <td style="width:10px;"><div></div></td>
 
                                 <td style="width:60px;text-align:left">
-                                    <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">{{'TaxReport.O.Upload' | TextCodeTranslationPipe}}</button>
+                                    <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUploadFile()">{{'TaxReport.O.Upload' | TextCodeTranslationPipe}}</button>
                                     <input accept=".txt,.TXT" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                                 </td>
                                 <td style="width:30px;color:gray;">{{ProgressBarPercentText}}</td>

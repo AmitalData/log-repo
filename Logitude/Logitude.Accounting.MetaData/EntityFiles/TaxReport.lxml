@@ -2821,6 +2821,18 @@
       LocalDefaultText="&quot;טעינה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.TextFileAllowed&quot;"
+      DefaultText="&quot;Required TXT file&quot;"
+      LocalDefaultText="&quot;חובה קובץ TXT&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.UploadFile&quot;"
+      DefaultText="&quot;Upload file before uploading&quot;"
+      LocalDefaultText="&quot;טען קובץ לפני העלאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
