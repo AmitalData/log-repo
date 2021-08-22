@@ -907,9 +907,16 @@ export class RulesValidator {
             fieldCurrentValue = entity[condfield.ObjectFieldName];
 
 
-            if (fieldPM && (fieldPM.DataTypeCode === "Integer" || fieldPM.DataTypeCode === "Double" || fieldPM.DataTypeCode === "Decimal")) {
+            if (fieldPM && (fieldPM.DataTypeCode === "Integer" ||
+                fieldPM.DataTypeCode === "Double" ||
+                fieldPM.DataTypeCode === "Decimal" ||
+                fieldPM.DataTypeCode === "DateTime" || fieldPM.DataTypeCode === "Date"
+            )) {
                 conditionValue = FieldValueResolver.GetFieldDataValue(fieldPM, condfield.Value);
                 fieldCurrentValue = entity[condfield.ObjectFieldName];
+                if (!(fieldCurrentValue instanceof Date) && fieldCurrentValue) {
+                    fieldCurrentValue = new Date(fieldCurrentValue);
+                }
             }
             else {
                 fieldCurrentValue = FieldValueResolver.GetFieldStringValue(fieldPM, fieldCurrentValue);
