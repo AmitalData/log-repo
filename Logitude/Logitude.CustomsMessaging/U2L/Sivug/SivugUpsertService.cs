@@ -861,7 +861,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         AppendLogLine("SupplierInvoiceItemPM.ClassificationCode:" + SupplierInvoiceItemPM.ClassificationCode + ",invoiceItem.CLASSIFICATIONCODE:" + invoiceItem.CLASSIFICATIONCODE);
 
-                        if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                        if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode)
+                        {
+                            SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
+                            SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
                         {
                             if ((String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE) || invoiceItem.TRADEAGREEMENTCODE == "1") && SupplierInvoiceItemPM.TradeAgreementCode != null)
@@ -872,6 +876,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             else if (!String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE))
                             {
                                 SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
+                                SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                             }
                         }
                     }
