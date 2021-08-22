@@ -134,6 +134,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 stanAloneShipmentPM.IsStandalonePickupDelivery = false;
                 stanAloneShipmentPM.StandalonePickupDeliveryId = null;
                 stanAloneShipmentPM.ForwarderStandaloneShipmentId = null;
+                stanAloneShipmentPM.ParentShipmentDirectionId = null;
+                stanAloneShipmentPM.ParentShipmentNumber = null;
+                stanAloneShipmentPM.ParentShipmentType = null;
                 this.UpdateShipment(stanAloneShipmentPM);                
             }
         }
@@ -404,6 +407,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             shipmentPM.IsStandalonePickupDelivery = false;
             shipmentPM.ForwarderStandaloneShipmentId = null;
+            shipmentPM.ParentShipmentDirectionId = null;
+            shipmentPM.ParentShipmentNumber = null;
+            shipmentPM.ParentShipmentType = null;
             shipmentPM.StandalonePickupDeliveryId = null;
         }
         private void DeleteStanadAlonePickupDeliveryPackages()

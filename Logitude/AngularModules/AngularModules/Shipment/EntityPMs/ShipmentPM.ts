@@ -4976,7 +4976,18 @@ export class ShipmentPM {
     public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
     public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
+    private parentShipmentDirectionId: string;
+    public get ParentShipmentDirectionId() { return this.parentShipmentDirectionId; }
+    public set ParentShipmentDirectionId(newValue: string) { if (this.parentShipmentDirectionId != newValue) { this.parentShipmentDirectionId = newValue; this.MarkAsDirty("ParentShipmentDirectionId"); } }      
 
+    private parentShipmentNumber: string;
+    public get ParentShipmentNumber() { return this.parentShipmentNumber; }
+    public set ParentShipmentNumber(newValue: string) { if (this.parentShipmentNumber != newValue) { this.parentShipmentNumber = newValue; this.MarkAsDirty("ParentShipmentNumber"); } }      
+
+    private parentShipmentType: string;
+    public get ParentShipmentType() { return this.parentShipmentType; }
+    public set ParentShipmentType(newValue: string) { if (this.parentShipmentType != newValue) { this.parentShipmentType = newValue; this.MarkAsDirty("ParentShipmentType"); } }      
+ 
     private isProductItemsUpdated: boolean;
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
