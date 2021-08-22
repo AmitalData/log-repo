@@ -65,7 +65,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         PODate, 
 	         BookingConfirmationNumber, 
 	         DirectionId, 
-	         CarrierId,
+	         CarrierId, 
+	         IsCancelled,
 	      }
 
 
@@ -131,7 +132,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         DirectionName, 
 	         DirectionId, 
 	         CarrierId, 
-	         CarrierName,
+	         CarrierName, 
+	         IsCancelled,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -353,6 +355,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierId))
             {
 				entityPOCO.CarrierId = entityPM.CarrierId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+				entityPOCO.IsCancelled = entityPM.IsCancelled;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -581,6 +588,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.CarrierId = entityPOCO.CarrierId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCancelled))
+            {
+					entityPM.IsCancelled = entityPOCO.IsCancelled;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -800,6 +812,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CarrierId))
             {
                 oldEntityPM.CarrierId = entityPM.CarrierId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+                oldEntityPM.IsCancelled = entityPM.IsCancelled;
             }
 			
 		}

@@ -1,4 +1,5 @@
 ﻿using Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,35 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
 
         public ShipmentOrder GetByOrderNumber(string orderNumber, int Tenant)
         {
-            try
-            {
-                var temp = query.GetSinglePMByOrderNumber(orderNumber, Tenant);
-                if (temp == null)
-                    throw new ApplicationException("ShipmentOrder with orderNumber " + orderNumber + " doesn't exist");
 
-                return ShipmentOrderDataMapping(temp, Tenant);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var temp = query.GetSinglePMByOrderNumber(orderNumber, Tenant);
+            if (temp == null)
+                throw new ApplicationException("ShipmentOrder with orderNumber " + orderNumber + " doesn't exist");
+
+            return ShipmentOrderDataMapping(temp, Tenant);
+
         }
+
+        public ShipmentOrderPM GetSinglePMByOrderNumber(string orderNumber, int Tenant)
+        {
+
+            var temp = query.GetSinglePMByOrderNumber(orderNumber, Tenant);
+            if (temp == null)
+                throw new ApplicationException("ShipmentOrder with orderNumber " + orderNumber + " doesn't exist");
+
+            return temp;
+
+        }
+
+        public string GetIdByOrderNumber(string orderNumber, int Tenant)
+        {
+
+            var id = query.GetIdByOrderNumber(orderNumber, Tenant);
+            if (string.IsNullOrEmpty(id))
+                throw new ApplicationException("ShipmentOrder with orderNumber " + orderNumber + " doesn't exist");
+            return id;
+        }
+
 
     }
 }

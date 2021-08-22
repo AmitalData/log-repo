@@ -324,6 +324,11 @@ export class ShipmentOrderPM {
     public set CarrierName(newValue: string) { if (this.carrierName != newValue) { this.carrierName = newValue; this.MarkAsDirty("CarrierName"); } }
        
 	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

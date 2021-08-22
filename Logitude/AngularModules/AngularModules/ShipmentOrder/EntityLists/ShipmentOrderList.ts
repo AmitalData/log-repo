@@ -67,6 +67,7 @@ export class ShipmentOrderList {
 	DirectionId: string;
 	CarrierId: string;
 	CarrierName: string;
+	IsCancelled: boolean;
 	
 }
  

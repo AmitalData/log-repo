@@ -161,6 +161,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string CarrierId { get; set; }
 	      
         public virtual Card Carrier { get; set; }
+        [Column("IsCancelled")]
+	    public bool IsCancelled { get; set; }
     }
 }
 	 

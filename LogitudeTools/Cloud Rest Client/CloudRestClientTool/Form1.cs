@@ -37,6 +37,7 @@ namespace CloudRestClientTool
             this.operationCombo.Items.Add("Create (POST)");
             this.operationCombo.Items.Add("Update (PUT)");
             this.operationCombo.Items.Add("Get");
+            this.operationCombo.Items.Add("Cancel");
 
             this.operationCombo.SelectedIndex = 0;
         }
@@ -166,7 +167,7 @@ namespace CloudRestClientTool
         {
 
             isSendButtonEnabled = operationCombo.SelectedIndex != -1 ? true : false;
-            ShipmentOrderParameterTextBox.Visible = operationCombo.SelectedIndex == 2 ? true : false;
+            ShipmentOrderParameterTextBox.Visible = (operationCombo.SelectedIndex == 2 || operationCombo.SelectedIndex == 3) ? true : false;
             lblParameter.Visible = operationCombo.SelectedIndex == 2 ? true : false;
 
             ChangeFormState();
@@ -203,6 +204,22 @@ namespace CloudRestClientTool
                             if (!string.IsNullOrEmpty(ShipmentOrderParameterTextBox.Text))
                             {
                                 response = await client.GetAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Please insert order number");
+                                this.Cursor = Cursors.Default;
+                                return;
+                            }
+
+                        }
+                        else if (operationCombo.SelectedIndex == 3)
+                        {
+                            client.DefaultRequestHeaders.Add("Accept", "application/xml");
+
+                            if (!string.IsNullOrEmpty(ShipmentOrderParameterTextBox.Text))
+                            {
+                                response = await client.DeleteAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
                             }
                             else
                             {

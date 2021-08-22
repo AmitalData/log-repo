@@ -20,6 +20,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
             return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).ToList().Select(a => MapPocoToPM(a)).FirstOrDefault();
         }
 
+        public string GetIdByOrderNumber(string orderNumber, int tenant)
+        {
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).Select(a => a.Id).FirstOrDefault();
+        }
+
         private static ShipmentOrderPM MapPocoToPM(ShipmentOrder shipmentOrder)
         {
             return new ShipmentOrderPM
@@ -68,7 +73,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 BookingConfirmationNumber = shipmentOrder.BookingConfirmationNumber,
                 DirectionId = shipmentOrder.DirectionId,
                 CarrierNumber = shipmentOrder.CarrierNumber,
-                CarrierId = shipmentOrder.CarrierId,           
+                CarrierId = shipmentOrder.CarrierId,
+                IsCancelled = shipmentOrder.IsCancelled,
             };
         }
 

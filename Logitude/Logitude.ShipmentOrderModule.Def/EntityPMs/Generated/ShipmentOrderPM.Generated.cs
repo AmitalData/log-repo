@@ -1400,6 +1400,29 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isCancelled ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCancelled  
+	   {
+	    
+	     get
+		{
+		   return isCancelled;
+		 }
+		 set
+		 {
+		   if(isCancelled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCancelled",OldValue=isCancelled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCancelled=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
