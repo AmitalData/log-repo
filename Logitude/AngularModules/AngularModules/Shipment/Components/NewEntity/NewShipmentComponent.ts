@@ -532,8 +532,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.ComputeCustomerDependency();
 
         if (this.IsInlandDomestic) {
-            this.InlandDomesticFromTypeCode = "PART";
-            this.InlandDomesticToTypeCode = "PART";
+            if (!this.IsShipmentCreatedFromOtherEntity()) {
+                this.InlandDomesticFromTypeCode = "PART";
+                this.InlandDomesticToTypeCode = "PART";
+            }
 
             if (!this.IsShipmentLevelFixed) {
                 this.ShipmentLevelCode = "D";
@@ -2306,7 +2308,28 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
     // Select City
     SelectCityCommand(myAddressCode: string) {
-        var mySourceCountryId: string = myAddressCode == "P" ? this.FromAddressCountryId : this.ToAddressCountryId;
+        var mySourceCountryId: string = null;
+        switch (myAddressCode) {
+            case "P": {
+                mySourceCountryId = this.FromAddressCountryId;
+                break;
+            }
+
+            case "D": {
+                mySourceCountryId = this.ToAddressCountryId;
+                break;
+            }
+
+            case "F": {
+                mySourceCountryId = this.InlandDomesticFromCountryId;
+                break;
+            }
+
+            case "T": {
+                mySourceCountryId = this.InlandDomesticToCountryId;
+                break;
+            }
+        }
 
         var args = new CitySelectionArgs(mySourceCountryId);
         var logWindow = new LogitudeWindow();
@@ -2949,23 +2972,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.InlandDomesticFromCountryId != value) {
             this.EntityPM.InlandDomesticFromCountryId = value;
             this.SetUIProperties_From();
-
-            //if (AppTool.IsNullOrEmpty(value)) {
-            //    this.EntityPM.FromAddressCountryCode = null;
-            //    this.EntityPM.FromAddressCountryName = null;
-            //}
-
-            //else {
-            //    this.myCountryListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-            //        if (!myResponse.HasError) {
-            //            var list: PortList = myResponse.Result;
-            //            if (list) {
-            //                this.EntityPM.FromAddressCountryCode = list.Code;
-            //                this.EntityPM.FromAddressCountryName = list.EnglishName;
-            //            }
-            //        }
-            //    });
-            //}
         }
     }
 
@@ -3072,23 +3078,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.InlandDomesticToCountryId != value) {
             this.EntityPM.InlandDomesticToCountryId = value;
             this.SetUIProperties_To();
-
-            //if (AppTool.IsNullOrEmpty(value)) {
-            //    this.EntityPM.ToAddressCountryCode = null;
-            //    this.EntityPM.ToAddressCountryName = null;
-            //}
-
-            //else {
-            //    this.myCountryListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-            //        if (!myResponse.HasError) {
-            //            var list: PortList = myResponse.Result;
-            //            if (list) {
-            //                this.EntityPM.ToAddressCountryCode = list.Code;
-            //                this.EntityPM.ToAddressCountryName = list.EnglishName;
-            //            }
-            //        }
-            //    });
-            //}
         }
     }
 

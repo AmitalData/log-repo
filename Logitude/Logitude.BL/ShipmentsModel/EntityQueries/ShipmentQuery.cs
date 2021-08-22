@@ -322,6 +322,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (isInlandDomesticShipment)
                 {
+                    shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
+                    shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
                     shipmentPM.MainCarriageFromPartnerId = masterData.MainCarriageFromPartnerId;
                     shipmentPM.MainCarriageFromAddressId = masterData.MainCarriageFromAddressId;
                     shipmentPM.MainCarriageToPartnerId = masterData.MainCarriageToPartnerId;

@@ -456,6 +456,16 @@ export class ShipmentTool {
         shipmentPM.ValueOfGoods = oldShipment.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;
 
+        shipmentPM.InlandDomesticFromZipCode = oldShipment.InlandDomesticFromZipCode;
+        shipmentPM.InlandDomesticToZipCode = oldShipment.InlandDomesticToZipCode;
+        shipmentPM.InlandDomesticFromCity = oldShipment.InlandDomesticFromCity;
+        shipmentPM.InlandDomesticToCity = oldShipment.InlandDomesticToCity;
+        shipmentPM.InlandDomesticFromCountryId = oldShipment.InlandDomesticFromCountryId;
+        shipmentPM.InlandDomesticToCountryId = oldShipment.InlandDomesticToCountryId;
+        shipmentPM.InlandDomesticFromTypeCode = oldShipment.InlandDomesticFromTypeCode;
+        shipmentPM.InlandDomesticToTypeCode = oldShipment.InlandDomesticToTypeCode;
+        shipmentPM.MainCarriageFromPortAddress = oldShipment.MainCarriageFromPortAddress;
+        shipmentPM.MainCarriageToPortAddress = oldShipment.MainCarriageToPortAddress;
     }
     public static CopyShipmentPackages(shipmentPM: ShipmentPM, oldShipment: ShipmentPM, copyOtherProperties: boolean) {
         if (copyOtherProperties) {

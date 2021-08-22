@@ -3190,11 +3190,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                entityPM.FromPortId = null;
-                entityPM.ToPortId = null;
-                entityPM.MainCarriageFromPortId = null;
-                entityPM.MainCarriageToPortId = null;
-                entityPM.MainCarriageFinalDestinationPortId = null;
+                //entityPM.FromPortId = null;
+                //entityPM.ToPortId = null;
+                //entityPM.MainCarriageFromPortId = null;
+                //entityPM.MainCarriageToPortId = null;
+                //entityPM.MainCarriageFinalDestinationPortId = null;
                 entityPM.ShipmentLevelCode = "D";
             }
         }

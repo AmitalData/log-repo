@@ -1677,6 +1677,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         entityMasterData.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
                         entityMasterData.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
                         entityMasterData.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
+                        entityMasterData.MainCarriageFromPortId = entityPM.MainCarriageFromPortId;
+                        entityMasterData.MainCarriageToPortId = entityPM.MainCarriageToPortId;
+                        entityMasterData.MainCarriageFinalDestinationPortId = entityPM.MainCarriageToPortId;
                     }
 
                     if (entityPM.TransportModeId == "A")
