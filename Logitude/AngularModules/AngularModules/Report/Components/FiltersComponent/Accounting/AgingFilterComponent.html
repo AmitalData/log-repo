@@ -126,7 +126,7 @@
 
         <tr>
             <td>
-                <div style="width: 1375px;">
+                <div style="width: 1475px;">
 
                     <table class="AbdullahTable" *ngIf="isReady">
 
@@ -248,20 +248,20 @@
                                     </li>
                                 </ul>
                             </td>
-                            <td colspan="3" [style.width.px]="IsSalesmanRestricted?'305':'120'" *ngIf="balanceFilterSelectedValue === 'filter_DebtBetween'">
+                            <td colspan="2" style="width:380px"  *ngIf="balanceFilterSelectedValue === 'filter_DebtBetween'">
 
-                                <LogLabel style="display:inline-block;width:20px" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.To'"
+                                <LogLabel style="display:inline-block;width:60px" [ObjectTableName]="'GLAccount'" [TextCode]="'GLaccount.O.From'"
                                           [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
-                                <div style="max-width: 60px; display:inline-block">
+                                <div style="max-width: 90px; display:inline-block;position:relative;top:2px">
                                     <LogTextBox [ObjectFieldName]="'FromBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
                                                 [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
                                                 [HideColumns]="true">
                                     </LogTextBox>
                                 </div>
 
-                                <LogLabel style="display:inline-block;width:20px" [ObjectTableName]="'GLAccount'" [TextCode]="'Accounting.General.O.To'"
+                                <LogLabel style="display:inline-block;width:40px" [ObjectTableName]="'GLAccount'" [TextCode]="'GLaccount.O.To'"
                                           [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
-                                <div style="max-width: 60px;display:inline-block">
+                                <div style="max-width: 90px;display:inline-block;position:relative;top:2px">
                                     <LogTextBox [ObjectFieldName]="'ToBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
                                                 [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
                                                 [HideColumns]="true">
@@ -320,7 +320,7 @@
 
 
                             <!-- NumberOfMonths -->
-                            <td colspan="3" style="width: 120px; padding-right: 5px;" class="Label">
+                            <td colspan="3" style="width: 140px; padding-right: 5px;" class="Label">
 
                                 <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"   float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
@@ -333,7 +333,7 @@
                             </td>
 
                             <td>
-                                <div style="width: 90px;">
+                                <div  colspan="3" style="width: 90px;">
                                     <button class="GreenButton" (click)="RunButtonClicked()">
                                         {{
                                         'AgingReport.O.RunReport' | TextCodeTranslationPipe

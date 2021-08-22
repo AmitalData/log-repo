@@ -331,7 +331,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
     }
 
-    private fromBalance: number;
+    private fromBalance: number = null;
     public get FromBalance() { return this.fromBalance; }
     public set FromBalance(value: number) {
         if (this.fromBalance != value) {
@@ -339,7 +339,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
     }
 
-    private toBalance: number;
+    private toBalance: number = null;
     public get ToBalance() { return this.toBalance; }
     public set ToBalance(value: number) {
         if (this.toBalance != value) {
@@ -403,8 +403,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
 
             if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
-                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance || 0, "decimal"));
-                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance || 0, "decimal"));
+                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
+                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
             }
 
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));

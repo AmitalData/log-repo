@@ -102,32 +102,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             string groupBy = GetFilterValue<string>("GroupByDate"); // filter_Due, filter_Accounting
             string filterBy = GetFilterValue<string>("BalanceFilter"); // Debtors, DebtAbove, filter_All
             decimal balanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("BalanceFilterValue"));
-            decimal FromBalanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("FromBalanceFilterValue"));
-            decimal ToBalanceFilterAmount = Convert.ToDecimal(GetFilterValue<decimal>("ToBalanceFilterValue"));
-            Boolean applayAboveBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount == null;
-            Boolean applayBelowBalanceFillter = FromBalanceFilterAmount == null && ToBalanceFilterAmount != null;
-            Boolean applayBetweenBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount != null;
-
 
             if (groupBy == "filter_Due")
             {
                 if(filterBy == "Debtors")
                     resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
                 else if (filterBy == "DebtBetween")
-                {
-                    if (applayAboveBalanceFillter)
-                    {
-                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue >= FromBalanceFilterAmount).ToList();
-                    }
-                    else if (applayBelowBalanceFillter)
-                    {
-                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue <= ToBalanceFilterAmount).ToList();
-                    }
-                    else if (applayBetweenBalanceFillter)
-                    {
-                        resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue <= ToBalanceFilterAmount && d.LocalBalanceInDue >= FromBalanceFilterAmount).ToList();
-                    }
-                }
+                    resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods,true);
 
             }
             else
@@ -135,8 +116,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (filterBy == "Debtors")
                     resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency > 0).ToList();
                 else if (filterBy == "DebtBetween")
-                    resultedPeriods = resultedPeriods.Where(d => d.BalanceInLocalCurrency >= balanceFilterAmount).ToList();
+                    resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods, false);
 
+            }
+
+            return resultedPeriods;
+        }
+
+        private  List<PeriodMExtended> FilterPeriodsBetweenTwoValues(List<PeriodMExtended> resultedPeriods, Boolean useLocalBalanceInDue)
+        {
+            decimal? FromBalanceFilterAmount = GetNullableDecimalFilterValue("FromBalanceFilterValue");
+            decimal? ToBalanceFilterAmount = GetNullableDecimalFilterValue("ToBalanceFilterValue"); ;
+
+            Boolean applayAboveBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount == null;
+            Boolean applayBelowBalanceFillter = FromBalanceFilterAmount == null && ToBalanceFilterAmount != null;
+            Boolean applayBetweenBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount != null;
+            if (applayAboveBalanceFillter)
+            {
+                resultedPeriods =  resultedPeriods.Where(d => useLocalBalanceInDue ? d.LocalBalanceInDue >= FromBalanceFilterAmount: d.BalanceInLocalCurrency >= FromBalanceFilterAmount).ToList();
+            }
+            else if (applayBelowBalanceFillter)
+            {
+                resultedPeriods = resultedPeriods.Where(d => useLocalBalanceInDue ? d.LocalBalanceInDue <= ToBalanceFilterAmount : d.BalanceInLocalCurrency <= ToBalanceFilterAmount).ToList();
+            }
+            else if (applayBetweenBalanceFillter)
+            {
+                resultedPeriods = resultedPeriods.Where(d => useLocalBalanceInDue ? d.LocalBalanceInDue <= ToBalanceFilterAmount && d.LocalBalanceInDue >= FromBalanceFilterAmount : d.BalanceInLocalCurrency <= ToBalanceFilterAmount && d.BalanceInLocalCurrency >= FromBalanceFilterAmount).ToList();
             }
 
             return resultedPeriods;
@@ -743,7 +748,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
                 .Where(d => d.FieldName == FieldName).FirstOrDefault();
 
-            
+
 
             if (filterItem != null && filterItem.FieldValue != null)
             {
@@ -756,11 +761,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 }
                 else
                 {
-                    return (T)filterItem.FieldValue; 
+                    return (T)filterItem.FieldValue;
                 }
             }
 
             return default(T);
+        }
+        public decimal? GetNullableDecimalFilterValue(string FieldName)
+        {
+            QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
+                .Where(d => d.FieldName == FieldName).FirstOrDefault();
+
+
+
+            if (filterItem != null && filterItem.FieldValue != null)
+            {
+                    return Convert.ToDecimal(filterItem.FieldValue);
+            }
+
+            return null;
         }
 
     }
