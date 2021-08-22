@@ -185,6 +185,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ForwardingMaster { get; set; }
         [Column("ForwardingShipmentLevelCode")]
 	    public string ForwardingShipmentLevelCode { get; set; }
+        [Column("ImportManifest")]
+	    public string ImportManifest { get; set; }
     }
 }
 	 

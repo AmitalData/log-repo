@@ -117,7 +117,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ShipperName = shipper == null ? null : shipper.EnglishName,
                                                                ForwardingMaster = shipment.ForwardingMaster,
                                                                ForwardingHouse = shipment.ForwardingHouse,
-
+                                                               ImportManifest = shipment.ImportManifest,
 
                                                            });
             return query;

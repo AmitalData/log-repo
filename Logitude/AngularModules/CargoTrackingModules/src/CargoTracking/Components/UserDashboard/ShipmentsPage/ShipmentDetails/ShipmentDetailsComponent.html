@@ -301,8 +301,9 @@
                         <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
                             <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
-                                {{ShowDetailsSection?'Show less':'Show more'}}</a>
+                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
+                                {{ShowDetailsSection?'Show less':'Show more'}}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -317,8 +318,10 @@
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">{{Shipment.ShipmentList.GrossWeight }}
-                        {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
+                    <div class="description">
+                        {{Shipment.ShipmentList.GrossWeight }}
+                        {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
+                    </div>
                 </div>
                 <div>
                     <div class="title">volume</div>
@@ -338,6 +341,13 @@
                             <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
                         </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="title">Import Manifest</div>
+                    <div class="description">
+                        {{ShipmentPM?.ImportManifest}}
                     </div>
                 </div>
 
