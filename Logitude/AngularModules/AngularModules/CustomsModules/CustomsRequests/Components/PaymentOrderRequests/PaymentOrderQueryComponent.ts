@@ -425,7 +425,7 @@ export class PaymentOrderQueryComponent
         currRequestParams.PaymentType = this.PaymentType;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא להוראות תשלום", true)
             .then((res) => {
                 this.ResponseData = res;

@@ -236,7 +236,7 @@ export class StorageEntranceComponent
         currRequestParams.PackageTypeCode = storageEntranceItem.PackageTypeCode;
 
         CustomMessageProgressComponent
-                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר זמינות כניסה למחסן", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת מסר זמינות כניסה למחסן", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

@@ -253,7 +253,7 @@ export class CustomsClosedTablesComponent implements OnInit {
         
         
         //CustomMessageProgressComponent
-        //    .ShowProgressBar(systemTableRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
+        //    .ShowProgressBar(this.CurrentSession,systemTableRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
         //    .then((res) => {
         //        //this.ResponseData = res;
         //        //this.OnMassageDisplayMethod();

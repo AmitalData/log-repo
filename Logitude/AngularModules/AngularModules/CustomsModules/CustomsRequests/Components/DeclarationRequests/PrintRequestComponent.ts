@@ -249,7 +249,7 @@ export class PrintRequestComponent    extends BaseRequestsSheetMassaging    impl
         }
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;

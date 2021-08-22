@@ -479,7 +479,7 @@ this.CurrentSession.StopBusyIndicator();
         currRequestParams.ResponseName = "Manifest Status Query";
                                                                 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא למצהר"
             , true)
             .then((res) => {

@@ -294,7 +294,7 @@ export class DeficitFileFilterComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לגרעונות", true)
             .then((res) => {
                 

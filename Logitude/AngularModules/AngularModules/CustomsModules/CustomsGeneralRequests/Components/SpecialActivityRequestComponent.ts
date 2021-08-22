@@ -1246,7 +1246,7 @@ export class SpecialActivityRequestComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת בקשה לפעולות מיוחדות", true)
             .then((res) => {
                 this.ResponseData = res;

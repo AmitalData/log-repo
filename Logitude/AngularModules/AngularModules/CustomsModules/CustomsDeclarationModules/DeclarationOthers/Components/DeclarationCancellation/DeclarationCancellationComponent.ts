@@ -194,7 +194,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
                                         currRequestParams.TestCase.Param2 = comp.Param2;
 
                                         CustomMessageProgressComponent
-                                            .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
+                                            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
                                             .then((res) => {
                                                 //this.ResponseData = res;
                                                 //this.IsResponseMessageVisibility = true;
@@ -228,7 +228,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
 
                             CustomMessageProgressComponent
-                                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
+                                .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת מסר ביטול הצהרה", true)
                                 .then((res) => {
                                     //this.ResponseData = res;
                                     //this.IsResponseMessageVisibility = true;

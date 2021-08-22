@@ -184,7 +184,7 @@ export class SendContainerizationService implements OnDestroy {
             params.RequestName = "המכלה";
             params.ResponseName = "המכלה תשובה"
             CustomMessageProgressComponent
-                .ShowProgressBar(params.PBId,
+                .ShowProgressBar(this.CurrentSession,params.PBId,
                     "שליחת המכלה", false)
                 .then((res) => {
                     this.ResponseData = res;

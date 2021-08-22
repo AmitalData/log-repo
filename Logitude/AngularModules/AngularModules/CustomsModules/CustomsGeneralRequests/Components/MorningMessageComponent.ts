@@ -191,7 +191,7 @@ export class MorningMessageComponent
 
         
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

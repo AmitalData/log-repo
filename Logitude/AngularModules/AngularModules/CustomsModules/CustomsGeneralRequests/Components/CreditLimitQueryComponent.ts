@@ -181,7 +181,7 @@ export class CreditLimitQueryComponent
         currRequestParams.ExtertnalID = this.ImporterCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לתקרת אשראי", true)
             .then((res) => {
                 this.ResponseData = res;

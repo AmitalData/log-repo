@@ -360,7 +360,7 @@ export class AddEditAddressComponent extends BaseComponent{
                 }
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(currRequestParams.PBId,
+                    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                     "שליחת מסר הוספה/עדכון/מחיקה כתובת לקוח", false)
                     .then((res) => {
                         this.responseData = res;

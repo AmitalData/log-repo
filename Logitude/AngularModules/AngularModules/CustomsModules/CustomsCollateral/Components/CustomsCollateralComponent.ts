@@ -378,7 +378,7 @@ export class CustomsCollateralComponent extends BaseComponent {
                 LoggingObjectTableId = LoggingObjectTableId;
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(requestParams.PBId,
+                    .ShowProgressBar(this.CurrentSession,requestParams.PBId,
                     "שליחת מענה לדרישת בטוחה", true)
                     .then((res) => {
                         this.responseData = res;

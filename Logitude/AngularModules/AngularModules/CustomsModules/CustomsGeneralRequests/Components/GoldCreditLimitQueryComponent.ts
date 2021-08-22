@@ -212,7 +212,7 @@ export class GoldCreditLimitQueryComponent
         currRequestParams.ExtertnalID = this.ImporterCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לנתוני העברת זהב", true)
             .then((res) => {
                 this.ResponseData = res;

@@ -471,7 +471,7 @@ export class DeclarationStatusComponent
         }
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 "שליחת שאילתא לסטטוס הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;

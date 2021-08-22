@@ -188,7 +188,7 @@ export class BlockListInWarehouseComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לגושים במחסן", true)
             .then((res) => {
                 this.ResponseData = res;

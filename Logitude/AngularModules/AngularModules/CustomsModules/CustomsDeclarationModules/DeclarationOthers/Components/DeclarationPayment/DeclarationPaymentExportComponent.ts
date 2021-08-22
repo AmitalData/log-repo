@@ -106,6 +106,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
+    private CurrentSession = SessionLocator.SelectedSession;
      constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedInvoiceItems = new ObservableCollection([]);
@@ -1780,7 +1781,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                     }
                 }
             };
-        CustomMessageProgressComponent.ShowProgressBar(params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
             var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
             if (ResponseData && ResponseData.ContinueProcessInBackground) {
                 SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
@@ -1849,7 +1850,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
 
-        //CustomMessageProgressComponent.ShowProgressBar(params.PBId, "שליחת בקשת העברה לגובה", false).then((res) => {
+        //CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת בקשת העברה לגובה", false).then((res) => {
         //    console.log("[Send] Response/ShowProgressBar : ", res);
 
         //}).catch((err) => {
@@ -1929,7 +1930,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         params.RequestVIA = this.customSendOptions.RequestVIA;
         params.ForcePersonalSign = this.customSendOptions.ForcePersonalSign;
 
-        CustomMessageProgressComponent.ShowProgressBar(params.PBId, "שליחת בקשת העברה חוזרת לגובה", true).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת בקשת העברה חוזרת לגובה", true).then((res) => {
             console.log("[Send] Response/ShowProgressBar : ", res);
         }).catch((err) => {
             this.ValidationErrorsList = [];

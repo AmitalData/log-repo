@@ -369,7 +369,7 @@ export class ImporterDeclarationComponent
         }
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לתצהיר יבואן", true)
             .then((res) => {
                 this.ResponseData = res;

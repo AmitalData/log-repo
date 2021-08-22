@@ -133,7 +133,7 @@ export class SendVehicleComponent {
                                         currRequestParams.IsDelete = isDelete;
 
                                         CustomMessageProgressComponent
-                                            .ShowProgressBar(currRequestParams.PBId,
+                                            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                                                 "שליחת מסר עדכון פרטי רכב", false)
                                             .then((res) => {
                                                 console.log(res);

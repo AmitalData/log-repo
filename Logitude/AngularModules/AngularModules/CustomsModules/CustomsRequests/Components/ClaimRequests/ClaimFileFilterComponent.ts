@@ -192,7 +192,7 @@ export class ClaimFileFilterComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לתביעות", true)
             .then((res) => {
                 this.ResponseData = res;

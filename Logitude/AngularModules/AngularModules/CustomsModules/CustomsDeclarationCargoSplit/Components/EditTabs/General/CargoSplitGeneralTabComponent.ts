@@ -791,7 +791,7 @@ export class CargoSplitGeneralTabComponent
             LoggingObjectTableId = LoggingObjectTableId;
 
             CustomMessageProgressComponent
-                .ShowProgressBar(this.requestParams.PBId,
+                .ShowProgressBar(this.CurrentSession,this.requestParams.PBId,
                     "שליחת בקשה לפיצול מטען", false)
                 .then((res) => {
                     this.responseData = res;
@@ -1034,7 +1034,7 @@ export class CargoSplitGeneralTabComponent
                         } else {
                             /*
                             CustomMessageProgressComponent
-                                .ShowProgressBar("",
+                                .ShowProgressBar(this.CurrentSession,"",
                                 " ", true)
                                 .then((res) => {
                                     console.log(res);
@@ -1094,7 +1094,7 @@ export class CargoSplitGeneralTabComponent
                         } else {
                             /*
                             CustomMessageProgressComponent
-                                .ShowProgressBar("",
+                                .ShowProgressBar(this.CurrentSession,"",
                                 " ", true)
                                 .then((res) => {
                                     console.log(res);

@@ -204,7 +204,7 @@ export class ExportDeclarationDataComponent
         currRequestParams.ReshimonNubmer = this.ReshimonNubmer;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא להצהרה יצוא", true)
             .then((res) => {
                 this.ResponseData = res;

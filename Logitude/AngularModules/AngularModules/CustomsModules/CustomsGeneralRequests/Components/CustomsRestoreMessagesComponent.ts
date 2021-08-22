@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -41,7 +41,7 @@ export class CustomsRestoreMessagesComponent
     private _FromDateTime: Date;
     private _ToDateTime: Date;
     private _TodayDate: Date;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -364,7 +364,7 @@ export class CustomsRestoreMessagesComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לשיחזור מסרים"
             , false)
             .then((res) => {

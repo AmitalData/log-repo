@@ -349,7 +349,7 @@ export class DeclarationRestoreComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לשיחזור נתוני הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;

@@ -1182,7 +1182,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         currRequestParams.DeclarationNumber.push(this.EntityPM.DeclarationNumber);
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 let sub =

@@ -306,7 +306,7 @@ export class GuaranteeFileFilterQueryComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לערבויות", true)
             .then((res) => {
                 this.ResponseData = res;

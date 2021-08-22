@@ -237,7 +237,7 @@ export class ClientSearchByIDComponent
         currRequestParams.PassportCountryCode = this.PassportCountryCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לנתונים נוספים ליבואן", true)
             .then((res) => {
                 this.ResponseData = res;

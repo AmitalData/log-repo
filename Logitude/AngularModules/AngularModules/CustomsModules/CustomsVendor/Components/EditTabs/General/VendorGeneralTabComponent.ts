@@ -283,7 +283,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
             });
         }
 
-        CustomMessageProgressComponent.ShowProgressBar(deleteParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,deleteParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false).then((res) => {
 
             this.ResponseData = res;
             console.log("[Delete] Response/ShowProgressBar : ", this.ResponseData);
@@ -426,7 +426,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
                 }
                 return false;
             };
-        CustomMessageProgressComponent.ShowProgressBar(addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false
 
             ,
             //(res1) => {

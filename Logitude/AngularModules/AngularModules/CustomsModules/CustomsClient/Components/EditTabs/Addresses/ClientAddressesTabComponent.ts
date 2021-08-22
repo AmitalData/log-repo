@@ -213,7 +213,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
                 }
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(currRequestParams.PBId,
+                    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                     "שליחת מסר הוספה/עדכון/מחיקה כתובת לקוח", true)
                     .then((res) => {
                         this.responseData = res;

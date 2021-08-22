@@ -348,7 +348,7 @@ export class FaultQueryComponent
 */
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא ליקויים", true)
             .then((res) => {
                 this.ResponseData = res;

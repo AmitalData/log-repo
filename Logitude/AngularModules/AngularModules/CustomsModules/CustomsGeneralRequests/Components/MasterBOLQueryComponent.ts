@@ -283,7 +283,7 @@ export class MasterBOLQueryComponent
         currRequestParams.CustomFileNo = this.CustomFileNo;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לשטרי מטען", true)
             .then((res) => {
                 this.ResponseData = res;
