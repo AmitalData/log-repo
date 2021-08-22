@@ -292,7 +292,7 @@
     Type="char"
     Size="1">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CarrierId"

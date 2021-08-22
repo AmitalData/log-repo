@@ -4231,7 +4231,7 @@
     LookUpTableName="&quot;Direction&quot;"
     MinLength="0"
     MaxLength="1"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
