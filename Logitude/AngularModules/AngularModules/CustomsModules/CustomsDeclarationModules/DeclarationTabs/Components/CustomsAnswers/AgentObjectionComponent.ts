@@ -100,7 +100,7 @@ export class AgentObjectionComponent extends BaseComponent {
         //requestParams.//LoggingEntityReference = declarationPM.DeclarationNumber;
         requestParams.LoggingObjectTableId = ObjectTable.Id;
 
-        CustomMessageProgressComponent.ShowProgressBar(requestParams.PBId, "שליחת בקשת ערעור", false).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,requestParams.PBId, "שליחת בקשת ערעור", false).then((res) => {
 
             console.log("[Send] Response/ShowProgressBar : ", res);
 

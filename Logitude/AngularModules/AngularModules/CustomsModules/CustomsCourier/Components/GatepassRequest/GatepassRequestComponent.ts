@@ -45,7 +45,7 @@ export class GatepassRequestComponent extends BaseComponent {
             this.UpdateCode = this._MyUpdateCodeClass.EnumId.toString();
         }
     }
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -299,7 +299,7 @@ export class GatepassRequestComponent extends BaseComponent {
         currRequestParams.TransportationTypeCode = this.TransportationTypeCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 "שליחת בקשה העברה", true)
             .then((res) => {
                 this.SetGatepassRequest();

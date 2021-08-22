@@ -6,6 +6,7 @@ import { IIGGeneralMessagesService, ResultClientProgressBar } from '../../../Cus
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { SessionComponent } from '../../../Infrastructure/Components/Session/SessionComponent';
 
 //////////////////
 /// CustomMessageProgressComponent  is below 
@@ -25,16 +26,18 @@ export class CustomMessageProgressComponent {
     public _Message: string;
     public static CurrCustomMessageProgressHelper: CustomMessageProgressHelper = null;
     public static ShowProgressBar
-        (PBId: string, Title: string, OnSuccessCloseWin: boolean
+        (currentSession: SessionComponent ,PBId: string, Title: string, OnSuccessCloseWin: boolean
         //, OnSuccessCloseWinMethod?: (response: any) => boolean
-        , myShowProgressBarParams?: ShowProgressBarParams
+            , myShowProgressBarParams?: ShowProgressBarParams
+            
         )
         : Promise<any> {
 
         let alreadyDone = false;
 
         return new Promise<any>((resolve, reject) => {
-            SessionLocator.SelectedSession
+            currentSession
+            //SessionLocator.SelectedSession
             /*this.StaticCurrentSession*/.StartBusyIndicator("");
             var currCustomMessageProgressHelper = new CustomMessageProgressHelper();
             CustomMessageProgressComponent.CurrCustomMessageProgressHelper = currCustomMessageProgressHelper;
@@ -46,7 +49,8 @@ export class CustomMessageProgressComponent {
                     alreadyDone = true;
 
                     try {
-                        SessionLocator.SelectedSession
+                        currentSession
+                        //SessionLocator.SelectedSession
                         /*this.StaticCurrentSession*/.StopBusyIndicator();
                         var response = currCustomMessageProgressHelper.ResponseData;
                         resolve(response);
@@ -69,7 +73,8 @@ export class CustomMessageProgressComponent {
                                 return;
                             }
                         }
-                        SessionLocator.SelectedSession
+                        currentSession
+                        //SessionLocator.SelectedSession
                         /*this.StaticCurrentSession*/.StopBusyIndicator();
 
                         if (myShowProgressBarParams) {
@@ -99,7 +104,8 @@ export class CustomMessageProgressComponent {
 
 
                     } finally {
-                        SessionLocator.SelectedSession
+                        currentSession
+                        //SessionLocator.SelectedSession
                         /*this.StaticCurrentSession*/.StopBusyIndicator();
 
                         currCustomMessageProgressHelper.ngOnDestroy();

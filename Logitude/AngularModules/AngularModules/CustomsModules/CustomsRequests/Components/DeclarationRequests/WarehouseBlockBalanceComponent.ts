@@ -426,7 +426,7 @@ export class WarehouseBlockBalanceComponent
         currRequestParams.DisplayGoodsItemByInvoice = this.DisplayGoodsItemByInvoice;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא ליתרת מלאי בגוש", true)
             .then((res) => {
                 this.ResponseData = res;

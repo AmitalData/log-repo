@@ -202,7 +202,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
         currRequestParams.ClaimRelatedEntityCounterKey = this.EntityPM.EntityCounterKey.toString();
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 "שליחת בקשה ביטול/ערר תביעה", true)
             .then((res) => {
                 this.ResponseData = res;

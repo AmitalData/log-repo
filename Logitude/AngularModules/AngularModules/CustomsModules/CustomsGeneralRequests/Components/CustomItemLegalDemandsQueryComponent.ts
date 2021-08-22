@@ -237,7 +237,7 @@ export class CustomItemLegalDemandsQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

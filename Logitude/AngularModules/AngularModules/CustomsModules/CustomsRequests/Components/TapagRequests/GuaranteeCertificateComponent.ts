@@ -231,7 +231,7 @@ export class GuaranteeCertificateComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לנתוני כתב ערבות", true)
             .then((res) => {
                 this.ResponseData = res;

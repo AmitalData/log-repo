@@ -245,7 +245,7 @@ export class VehicleEditComponent extends BaseComponent {
 
 
                                     CustomMessageProgressComponent
-                                        .ShowProgressBar(currRequestParams.PBId,
+                                        .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                                             "שליחת מסר עדכון פרטי רכב", true)
                                         .then((res) => {
                                             console.log(res);
@@ -322,7 +322,7 @@ export class VehicleEditComponent extends BaseComponent {
 
 
                                     CustomMessageProgressComponent
-                                        .ShowProgressBar(currRequestParams.PBId,
+                                        .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                                         "שליחת מסר עדכון פרטי רכב", true)
                                         .then((res) => {
                                             console.log(res);

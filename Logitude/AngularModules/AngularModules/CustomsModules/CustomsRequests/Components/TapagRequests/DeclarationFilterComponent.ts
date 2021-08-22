@@ -40,7 +40,7 @@ export class DeclarationFilterComponent
     _MyResponseObjectToShow: any = null;
     _UserMessagehidden: boolean = true;
     _LastFetchDeclarationList: DeclarationList;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ClaimObservableCollection = new ObservableCollection([]);
@@ -303,7 +303,7 @@ export class DeclarationFilterComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 'שליחת שאילתא לנתוני תפ""ג עבור הצהרה', true)
             .then((res) => {
                 this.ResponseData = res;

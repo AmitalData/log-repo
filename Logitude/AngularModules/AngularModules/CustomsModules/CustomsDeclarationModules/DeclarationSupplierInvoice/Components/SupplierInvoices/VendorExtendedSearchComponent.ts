@@ -365,7 +365,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
 
         ////   //{"$id":"1","NumberOfResult":null,"VendorResults":null,"HasException":true,"UserMessage":"SendWS failed:FaultException.Detail:FaultException`1\r\nThe content type text/xml of the response message does not match the content type of the binding (application/soap+xml; charset=utf-8). If using a custom encoder, be sure that the IsContentTypeSupported method is implemented properly. The first 39 bytes of the response were: '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n'.","Succeeded":false,"ContinueProcessInBackground":false,"CustomsRequestsSheetId":"6614faa1-e053-4556-ae24-16825f120d2d","CorrelationId":""}
-        CustomMessageProgressComponent.ShowProgressBar(searchParams.PBId, "חיפוש ספק", true)
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,searchParams.PBId, "חיפוש ספק", true)
             .then((myServiceResponse) => {
 
                 console.log("[Send] Response/ShowProgressBar : ", myServiceResponse);

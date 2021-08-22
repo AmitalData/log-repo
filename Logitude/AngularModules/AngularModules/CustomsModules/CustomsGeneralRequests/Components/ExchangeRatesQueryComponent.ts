@@ -47,7 +47,8 @@ export class ExchangeRatesQueryComponent
 
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-        this.subscribeWrapperComponent()
+        this.subscribeWrapperComponent();
+        ///this.CurrentSession.StartBusyIndicator("Test");
     }
 
     OnMassageDisplayMethod() {
@@ -159,7 +160,8 @@ export class ExchangeRatesQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
+            //.ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;

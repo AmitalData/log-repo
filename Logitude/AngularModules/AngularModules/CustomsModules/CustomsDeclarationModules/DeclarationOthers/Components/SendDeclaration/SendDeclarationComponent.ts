@@ -862,7 +862,7 @@ export class SendDeclarationService implements OnDestroy {
                 };
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(searchParams.PBId,
+            .ShowProgressBar(this.CurrentSession,searchParams.PBId,
                 "שליחת תיקון הצהרת יבוא", false
                 , myShowProgressBarParams)
             .then((res) => {
@@ -937,7 +937,7 @@ export class SendDeclarationService implements OnDestroy {
                 };
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(searchParams.PBId,
+            .ShowProgressBar(this.CurrentSession,searchParams.PBId,
             "שליחת הצהרת יבוא", false
             , myShowProgressBarParams)
             .then((res) => {

@@ -232,7 +232,7 @@ export class NewVendorComponent extends BaseComponent {
 
 
             //
-            CustomMessageProgressComponent.ShowProgressBar(searchParams.PBId, "חיפוש ספק", true)
+            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,searchParams.PBId, "חיפוש ספק", true)
                 .then((myServiceResponse) => {
 
                     console.log("[Send] Response/ShowProgressBar : ", myServiceResponse);

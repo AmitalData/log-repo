@@ -254,7 +254,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
         currRequestParams.DeclarationId = this.parent.declarationPM.Id;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת תשובה להודעה", true)
             .then((res) => {
                 //this.responseData = res;

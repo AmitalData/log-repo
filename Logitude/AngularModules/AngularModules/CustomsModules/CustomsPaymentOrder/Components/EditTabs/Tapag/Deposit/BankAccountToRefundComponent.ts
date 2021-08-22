@@ -379,7 +379,7 @@ export class BankAccountToRefundComponent
         currRequestParams.DeclarationId = this.declarationId;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                 "שליחת בקשה להחזר פקדון", true)
             .then((res) => {
                 this.ResponseData = res;

@@ -203,7 +203,7 @@ export class CourierBOLQueryComponent
         currRequestParams.CustomFileNo = this.CustomFileNo;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשטרי מטען בלדר", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשטרי מטען בלדר", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

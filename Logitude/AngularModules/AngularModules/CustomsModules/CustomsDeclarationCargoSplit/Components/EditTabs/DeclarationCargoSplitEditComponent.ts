@@ -155,7 +155,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
                                 } else {
 
                                     CustomMessageProgressComponent
-                                        .ShowProgressBar("",
+                                        .ShowProgressBar(this.CurrentSession,"",
                                         " ", true)
                                         .then((res) => {
                                             console.log(res);

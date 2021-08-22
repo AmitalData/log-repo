@@ -178,7 +178,7 @@ export class CustomsBookQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, "עדכון ספר סיווג", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "עדכון ספר סיווג", true)
             .then((res) => {
                 //this.ResponseData = res;
                 

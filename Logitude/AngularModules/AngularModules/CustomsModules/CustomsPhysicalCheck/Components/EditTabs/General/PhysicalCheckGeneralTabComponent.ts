@@ -307,7 +307,7 @@ export class PhysicalCheckGeneralTabComponent
         //}
 
         CustomMessageProgressComponent
-            .ShowProgressBar(checkParams.PBId, "שליחת בקשה- בדיקה פיזית", true)
+            .ShowProgressBar(this.CurrentSession,checkParams.PBId, "שליחת בקשה- בדיקה פיזית", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.AnalyzeResponseMessage(this.ResponseData);

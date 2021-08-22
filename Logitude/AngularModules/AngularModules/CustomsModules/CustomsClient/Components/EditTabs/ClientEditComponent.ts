@@ -415,7 +415,7 @@ export class ClientEditComponent extends BaseComponent{
                 }
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(currRequestParams.PBId,
+                    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
                     "שליחת מסר הקמת ספק", false)
                     .then((res) => {
                         this.responseData = res;

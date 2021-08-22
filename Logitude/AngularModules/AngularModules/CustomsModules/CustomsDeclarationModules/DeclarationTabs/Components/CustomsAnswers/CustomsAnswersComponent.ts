@@ -672,7 +672,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         requestParams.RequestVIA = this.RequestVIA;
 
 
-        CustomMessageProgressComponent.ShowProgressBar(requestParams.PBId, "שליחת בקשה לאישור אילוץ", true).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,requestParams.PBId, "שליחת בקשה לאישור אילוץ", true).then((res) => {
 
             this.ResponseData = res;
             console.log("Response/ShowProgressBar : ", this.ResponseData);

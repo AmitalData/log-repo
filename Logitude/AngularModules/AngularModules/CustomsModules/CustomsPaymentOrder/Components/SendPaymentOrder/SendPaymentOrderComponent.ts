@@ -192,7 +192,7 @@ export class SendPaymentOrderComponent {
         currRequestParams.ForcePersonalSign = this.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת בקשת תשלום הוראה", false)
             .then((res) => {
                 console.log(res);

@@ -137,7 +137,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
         currRequestParams.ResponseName = "Manifest Status Query";
 
         //CustomMessageProgressComponent
-        //    .ShowProgressBar(currRequestParams.PBId,
+        //    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
         //        "שליחת שאילתא למצהר"
         //        , true)
         //    .then((res) => {
@@ -578,7 +578,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             });
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId, "שליחת מסר לעדכון סגרים", true)
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת מסר לעדכון סגרים", true)
             .then((res) => {
                  this.ResponseData = res;
                 this.IsResponseMessageVisibility = true;

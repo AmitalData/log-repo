@@ -133,7 +133,7 @@ export class NewPaymentOrderComponent
         currRequestParams.RequestParamsVersion = 0;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליפת הוראת תשלום", false)
             .then((res) => {
                 this.ResponseData = res;
