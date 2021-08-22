@@ -2567,40 +2567,47 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.MainCarriageFromPortId = value;
             this.EntityPM.FromPortId = value;
 
-            if (this.IsInlandDomestic) {
-                this.SetUIProperties_From();
+            this.OnMainCarrigeFromPortChanged();            
+        }
+    }
 
-                if (AppTool.IsNullOrEmpty(value)) {
-                    this.MainCarriageFromPortAddress = null;
-                }
+    private OnMainCarrigeFromPortChanged() {
+        if (this.IsInlandDomestic) {
+            this.OnMainCarrigeFromPortChanged_InlandDomestic();            
+        }
 
-                else {
-                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            var list: PortList = myResponse.Result;
-                            if (list) {
-                                this.MainCarriageFromPortAddress = "Port Of: " + list.EnglishName;
-                            }
-                        }
-                    });
-                }
+        else {
+            this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+                this.FromPortList = null;
             }
 
             else {
-                this.SetUIProperties_Ports();
-
-                if (AppTool.IsNullOrEmpty(value)) {
-                    this.FromPortList = null;
-                }
-
-                else {
-                    this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            this.FromPortList = myResponse.Result;
-                        }
-                    });
-                }
+                this.myPortListService.getSingle(this.MainCarriageFromPortId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.FromPortList = myResponse.Result;
+                    }
+                });
             }
+        }
+    }
+    private OnMainCarrigeFromPortChanged_InlandDomestic() {
+        this.SetUIProperties_From();
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+            this.MainCarriageFromPortAddress = null;
+        }
+
+        else {
+            this.myPortListService.getSingleFromCache(this.MainCarriageFromPortIdlue).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PortList = myResponse.Result;
+                    if (list) {
+                        this.MainCarriageFromPortAddress = "Port Of: " + list.EnglishName;
+                    }
+                }
+            });
         }
     }
 
@@ -2611,40 +2618,48 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.MainCarriageToPortId = value;
             this.EntityPM.ToPortId = value;
 
-            if (this.IsInlandDomestic) {
-                this.SetUIProperties_To();
+            this.OnMainCarrigeToPortChanged();
+            
+        }
+    }
 
-                if (AppTool.IsNullOrEmpty(value)) {
-                    this.MainCarriageToPortAddress = null;
-                }
+    private OnMainCarrigeToPortChanged() {
+        if (this.IsInlandDomestic) {
+            this.OnMainCarrigeToPortChanged_InlandDomestic();            
+        }
 
-                else {
-                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            var list: PortList = myResponse.Result;
-                            if (list) {
-                                this.MainCarriageToPortAddress = "Port Of: " + list.EnglishName;
-                            }
-                        }
-                    });
-                }
+        else {
+            this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
+                this.ToPortList = null;
             }
 
             else {
-                this.SetUIProperties_Ports();
-
-                if (AppTool.IsNullOrEmpty(value)) {
-                    this.ToPortList = null;
-                }
-
-                else {
-                    this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            this.ToPortList = myResponse.Result;
-                        }
-                    });
-                }
+                this.myPortListService.getSingle(this.MainCarriageToPortId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.ToPortList = myResponse.Result;
+                    }
+                });
             }
+        }
+    }
+    private OnMainCarrigeToPortChanged_InlandDomestic() {
+        this.SetUIProperties_To();
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
+            this.MainCarriageToPortAddress = null;
+        }
+
+        else {
+            this.myPortListService.getSingleFromCache(this.MainCarriageToPortId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PortList = myResponse.Result;
+                    if (list) {
+                        this.MainCarriageToPortAddress = "Port Of: " + list.EnglishName;
+                    }
+                }
+            });
         }
     }
 
@@ -4177,19 +4192,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
     }
-    //SetInlandDomesticOnFinish() {
-    //    if (this.IsInlandDomestic) {
-    //        this.IncludePickUp = false;
-    //        this.IncludeDelivery = false;
-    //        this.MainCarriageFromPortId = null;
-    //        this.MainCarriageToPortId = null;
-    //        this.EntityPM.MainCarriageFinalDestinationPortId = null;
-    //        this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
-    //        this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
-    //        this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
-    //        this.EntityPM.MainCarriageToAddressId = this.ConsigneeAddressId;
-    //    }
-    //}
+    SetInlandDomesticOnFinish() {
+        if (this.IsInlandDomestic) {
+            this.IncludePickUp = false;
+            this.IncludeDelivery = false;
+        }
+    }
     SetOrderPackagesOnFinish() {
         if (this.IsFCLEntity) {
             var numberOfPackages = 0;
