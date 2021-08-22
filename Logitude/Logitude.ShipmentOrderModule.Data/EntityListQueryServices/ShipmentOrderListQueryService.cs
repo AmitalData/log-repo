@@ -141,6 +141,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        CarrierName = a.Carrier == null ? "" : a.Carrier.EnglishName,
 
+                                                       IsCancelled = a.IsCancelled,
+
                                                    });
             return query;
         }
