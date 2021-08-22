@@ -230,7 +230,7 @@ export class NewClientComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לשליפת לקוח", false)
             .then((res) => {
                 this.ResponseData = res;

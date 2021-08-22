@@ -295,7 +295,7 @@ export class SendClaimComponent {
         currRequestParams.ForcePersonalSign = this.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת תביעה", false)
             .then((res) => {
                 console.log(res);
