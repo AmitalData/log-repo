@@ -337,7 +337,7 @@ export class SendManifestService {
                 };
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(sendParams.PBId,
+            .ShowProgressBar(this.CurrentSession,sendParams.PBId,
             "שליחת מצהר", false, myShowProgressBarParams)
             .then((res) => {
                 this.responseData = res;

@@ -473,7 +473,7 @@ export class NewContainerizationComponent extends BaseComponent {
                             });
                         if (!response.HasError) {
                             var params = this.getParams(response, event);
-                            CustomMessageProgressComponent.ShowProgressBar(params.PBId, "שליחת המכלה", false).then((res) => { });
+                            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "שליחת המכלה", false).then((res) => { });
                             this.containerizationMessagesService.SendContainerization(params)
                                 .subscribe(res1 => {
                                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

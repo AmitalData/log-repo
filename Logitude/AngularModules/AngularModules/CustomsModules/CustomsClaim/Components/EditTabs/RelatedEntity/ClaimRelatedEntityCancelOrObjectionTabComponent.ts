@@ -38,6 +38,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
     _ClaimWebService: ClaimWebService = new ClaimWebService()
 
     SaveCompletedEvent: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 

@@ -123,7 +123,7 @@ export class MasavPaymentsToAgentComponent
         currRequestParams.PaymentDate = this.PaymentDate;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(currRequestParams.PBId,
+            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לבקשת דוח קופה לסוכן", true)
             .then((res) => {
                 this.ResponseData = res;
