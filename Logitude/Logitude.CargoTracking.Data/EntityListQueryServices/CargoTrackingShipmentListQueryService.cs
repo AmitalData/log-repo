@@ -699,9 +699,29 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //IsEstimation = !Shipment.CustomsPaymentDone
             });
 
+
+            //9 Goods Classification
             milestones.Add(new Milestone()
             {
                 Id = 9,
+                Code = "GoodsClassification",
+                Name = "Goods Classification",
+                Date = shipment.AssignedCustomsAgentDate,
+                EstimationDate = shipment.AssignedCustomsAgentEstDate,
+                Done = shipment.AssignedCustomsAgentDone,
+                Notes = shipment.AssignedCustomsAgentNotes,
+                IsCurrent = false,
+                IsEstimation = shipment.AssignedCustomsAgentDate == null && shipment.AssignedCustomsAgentEstDate != null
+            });
+
+            //10 Document Inspection
+
+
+
+
+            milestones.Add(new Milestone()
+            {
+                Id = 11,
                 Code = "CustomsPayment",
                 Name = "Customs Payment",
                 Date = shipment.CustomsPaymentDate,
@@ -713,7 +733,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
             milestones.Add(new Milestone()
             {
-                Id = 10,
+                Id = 12,
                 Code = "Clearance",
                 Name = "Clearance",
                 Date = shipment.ClearanceDate,
@@ -723,9 +743,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 IsCurrent = false,
                 IsEstimation = shipment.ClearanceDone != true
             });
+
+            //13 Gatepass Arrived
+
             milestones.Add(new Milestone()
             {
-                Id = 11,
+                Id = 14,
                 Code = "AssignedToTrucker",
                 Name = "Assigned To Trucker",
                 Date = shipment.AssignedTruckerDate,
@@ -737,7 +760,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
             milestones.Add(new Milestone()
             {
-                Id = 12,
+                Id = 15,
                 Code = "DeliveryOut",
                 Name = "Delivery Out",
                 Date = shipment.DeliveryDate,
@@ -749,7 +772,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
             milestones.Add(new Milestone()
             {
-                Id = 13,
+                Id = 16,
                 Code = "Delivered",
                 Name = "Delivered",
                 Date = shipment.DeliveredDate,
@@ -761,7 +784,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
             milestones.Add(new Milestone()
             {
-                Id = 14,
+                Id = 17,
                 Code = "Invoiced",
                 Name = "Invoiced",
                 //Date = Shipment.invoi,
