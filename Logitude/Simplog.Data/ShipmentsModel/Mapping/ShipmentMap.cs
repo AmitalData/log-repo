@@ -341,7 +341,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
-             
+
+            this.Property(t => t.ParentShipmentDirectionId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.ParentShipmentNumber).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.ParentShipmentType).HasMaxLength(40).IsUnicode(false);
+
             this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);  
 
 
@@ -785,6 +789,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RequestedFlightDate).HasColumnName("RequestedFlightDate");
             this.Property(t => t.StandalonePickupDeliveryId).HasColumnName("StandalonePickupDeliveryId");
             this.Property(t => t.ForwarderPickUpDeliveryType).HasColumnName("ForwarderPickUpDeliveryType");
+
+            this.Property(t => t.ParentShipmentDirectionId).HasColumnName("ParentShipmentDirectionId");
+            this.Property(t => t.ParentShipmentNumber).HasColumnName("ParentShipmentNumber");
+            this.Property(t => t.ParentShipmentType).HasColumnName("ParentShipmentType");
 
             if (dbms == "oracle")
             {

@@ -2683,12 +2683,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        // Standalone shipment
         public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
         public string ForwarderPickUpDeliveryType { get; set; }
-
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrivateLabelInvoiceNumber { get; set; }

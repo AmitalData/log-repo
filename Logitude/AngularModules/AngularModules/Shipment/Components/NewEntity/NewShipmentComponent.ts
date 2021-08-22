@@ -254,6 +254,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
             this.EntityPM.ForwarderStandaloneShipmentId = args.ForwarderStandaloneShipmentId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ForwarderStandaloneShipmentId : args.ForwarderStandaloneShipmentId) : args.ForwarderStandaloneShipmentId;
+            this.EntityPM.ParentShipmentDirectionId = this.SourceEntityPM.ParentShipmentDirectionId;
+            this.EntityPM.ParentShipmentNumber = this.SourceEntityPM.ParentShipmentNumber;
+            this.EntityPM.ParentShipmentType = this.SourceEntityPM.ParentShipmentType;
             this.EntityPM.ForwarderPickUpDeliveryType = args.ForwarderShipmentPickUpDeliveryTypeCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
             this.IsBuildFromQuote = args.IsBuildFromQuote;

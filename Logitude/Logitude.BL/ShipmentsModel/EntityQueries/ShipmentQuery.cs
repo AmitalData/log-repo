@@ -1947,6 +1947,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
+            shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
+            shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
+            shipmentPM.ParentShipmentType = shipment.ParentShipmentType;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.ProductCode = shipment.ProductCode;
             shipmentPM.LastStatusLogDate = shipment.LastStatusLogDate;
@@ -3674,6 +3677,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
+            shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
+            shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
+            shipmentPM.ParentShipmentType = shipment.ParentShipmentType;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
             shipmentPM.RegistryDate = shipment.RegistryDate;
             shipmentPM.IsAssembly = shipment.IsAssembly;
@@ -3807,6 +3813,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
+            shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
+            shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
+            shipmentPM.ParentShipmentType = shipment.ParentShipmentType;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
             shipmentPM.ForwarderPickUpDeliveryType = shipment.ForwarderPickUpDeliveryType;
@@ -11140,6 +11149,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IsDangerous = view.IsDangerous,
                         DangerousUnNumber = view.DangerousUnNumber,
                         IsStandalonePickupDelivery = view.IsStandalonePickupDelivery,
+                        ParentShipmentDirectionId = view.ParentShipmentDirectionId,
+                        ParentShipmentNumber = view.ParentShipmentNumber,
+                        ParentShipmentType = view.ParentShipmentType,
                         IsHTSMissing = view.IsHTSMissing,
                         PlannedCargoReadyDate = view.PlannedCargoReadyDate,
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
@@ -11794,6 +11806,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BookingConfirmationNumber = m.BookingConfirmationNumber,
                                                          IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
                                                          StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
+                                                         ParentShipmentDirectionId = s.ParentShipmentDirectionId,
+                                                         ParentShipmentNumber = s.ParentShipmentNumber,
+                                                         ParentShipmentType = s.ParentShipmentType,
                                                          IsHTSMissing = s.IsHTSMissing,
                                                      };
 
@@ -12356,6 +12371,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ExactStatusName = f.StatusName,
                                PreForwardingETD = f.PreForwardingETD,
                                IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                               ParentShipmentDirectionId = f.ParentShipmentDirectionId,
+                               ParentShipmentNumber = f.ParentShipmentNumber,
+                               ParentShipmentType = f.ParentShipmentType,
                                IsHTSMissing = f.IsHTSMissing,
                                PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                                ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
@@ -12725,6 +12743,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ExactStatusName = f.StatusName,
                     PreForwardingETD = f.PreForwardingETD,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                    ParentShipmentDirectionId = f.ParentShipmentDirectionId,
+                    ParentShipmentNumber = f.ParentShipmentNumber,
+                    ParentShipmentType = f.ParentShipmentType,
                     IsHTSMissing = f.IsHTSMissing,
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
@@ -12994,6 +13015,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageVesselName = f.MainCarriageVesselName,
                     BookingConfirmationNumber = f.BookingConfirmationNumber,
                     IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                    ParentShipmentDirectionId = f.ParentShipmentDirectionId,
+                    ParentShipmentNumber = f.ParentShipmentNumber,
+                    ParentShipmentType = f.ParentShipmentType,
                     IsHTSMissing = f.IsHTSMissing,
                     PlannedCargoReadyDate = f.PlannedCargoReadyDate,
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
@@ -13520,6 +13544,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PreForwardingFromPortId = s.PreForwardingFromPortId,
                                                          OnForwardingToPortId = s.OnForwardingToPortId,
                                                          IsStandalonePickupDelivery = s.IsStandalonePickupDelivery,
+                                                         ParentShipmentDirectionId = s.ParentShipmentDirectionId,
+                                                         ParentShipmentNumber = s.ParentShipmentNumber,
+                                                         ParentShipmentType = s.ParentShipmentType,
                                                          StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
                                                      };
 
