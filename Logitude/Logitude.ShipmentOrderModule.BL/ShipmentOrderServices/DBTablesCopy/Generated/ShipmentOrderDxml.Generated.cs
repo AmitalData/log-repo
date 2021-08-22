@@ -144,6 +144,9 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='IsCancelled' Type='bit'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
+"  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='UpdatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='TransportModeId' ReferencedTable='TransportModes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+

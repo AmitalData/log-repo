@@ -329,6 +329,11 @@ export class ShipmentOrderPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    private securityKey: string;
+    public get SecurityKey() { return this.securityKey; }
+    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

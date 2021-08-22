@@ -199,7 +199,8 @@ using Logitude.ShipmentOrderModule.Data;
 			       
 					   				   }
 				   
-				   temp.CreateDate = MyEntityPM.CreateDate;					
+				   temp.CreateDate = MyEntityPM.CreateDate;
+				   temp.SecurityKey = MyEntityPM.SecurityKey;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -444,7 +445,8 @@ using Logitude.ShipmentOrderModule.Data;
 					}
 			
 					
-					temp.CreateDate = MyEntity.CreateDate;					   
+					temp.CreateDate = MyEntity.CreateDate;
+					temp.SecurityKey = MyEntity.SecurityKey;					   
 					   return temp;
 		    }
             catch (Exception ex)

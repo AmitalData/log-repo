@@ -112,6 +112,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.CarrierId).HasColumnName("CarrierId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
+
+            this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
         }
     }
 }
