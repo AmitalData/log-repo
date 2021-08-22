@@ -44,7 +44,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 msgCode = 5,
                 //msgString = myNotificationPM.ResponseNotes,
-                msgString = lastNotificationReplyPM.ResponseToCustoms,
+                msgString = lastNotificationReplyPM.ResponseToCustoms.Replace('"', '\''),
             };
 
             if (!string.IsNullOrWhiteSpace(myNotificationPM.Reference2Number))
