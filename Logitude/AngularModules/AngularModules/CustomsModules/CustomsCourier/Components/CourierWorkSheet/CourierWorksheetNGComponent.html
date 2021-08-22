@@ -1118,27 +1118,29 @@
                                                     <td *ngFor="let currIndex of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]"
                                                         [style.width]="columns[currIndex].Styles.width"
                                                         style="padding-left : 4px;padding-right : 4px;padding-top : 1px;padding-bottom:1px;cursor: pointer;"
-                                                        (click)="onColDataClick(rowData)">
+                                                        (click)="onColDataClick(columns[currIndex].FieldName,rowData)">
 
 
 
 
                                                         <CourierWorksheetNGListTemplate *ngIf="!fromCourierWSData && columns[currIndex].HtmlListComponentUrl !=null" [CourierWorksheet]="rowData" [fieldName]="columns[currIndex].FieldName">
                                                         </CourierWorksheetNGListTemplate>
-                                                        <div *ngIf="!fromCourierWSData &&  columns[currIndex].HtmlListComponentUrl ==null" (click)="onColDataClick(rowData)">
+                                                        <div *ngIf="!fromCourierWSData &&  columns[currIndex].HtmlListComponentUrl ==null" (click)="onColDataClick(columns[currIndex].FieldName,rowData)">
                                                             {{  rowData[columns[currIndex].FieldName]}}
                                                         </div>
 
-                                                        <div *ngIf="!fromCourierWSData && columns[currIndex].FieldName == 'CourierPendingReasonList'" >
-
-                                                            <button type="button" pButton icon="pi pi-bars" (click)="PendingReasonListOpenContextMenu($event,rowData)"></button>
+                                                        <div *ngIf="!fromCourierWSData && columns[currIndex].FieldName == 'CourierPendingReasonList'">
+                                                            <!---->
+                                                            <!--<button pButton icon="pi pi-bars" type="button" (click)="PendingReasonListOpenContextMenu($event,rowData)"> <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" /></button>-->
+                                                            <img (click)="OpenContextActionMenu($event,rowData)"  style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
                                                         </div>
                                                         <div *ngIf="!fromCourierWSData && columns[currIndex].FieldName == 'SendSplitButton'">
 
-                                                            <p-splitButton label="שלח" (onClick)="SplitButtonOpenContextMenu(rowData)" [model]="MyMenuItem" appendTo="body" ></p-splitButton>
+                                                            <!--<p-splitButton label="שלח" (onClick)="OpenContextMenuSplitButton($event,rowData)" [model]="MyMenuItem" appendTo="body"></p-splitButton>-->
+                                                            <p-splitButton label="שלח" (onDropdownClick)="OpenContextMenuSplitButton($event,rowData)"  (onClick)="OpenContextMenuSplitButton($event,rowData)" [model]="_SendMenuItem" appendTo="body"></p-splitButton>
 
-                                                            
-                                                       
+
+
                                                         </div>
 
 
