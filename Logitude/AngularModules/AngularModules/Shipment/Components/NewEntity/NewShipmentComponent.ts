@@ -2600,7 +2600,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         else {
-            this.myPortListService.getSingleFromCache(this.MainCarriageFromPortIdlue).subscribe((myResponse: ServiceResponse) => {
+            this.myPortListService.getSingleFromCache(this.MainCarriageFromPortId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
                     if (list) {
