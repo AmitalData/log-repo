@@ -2154,27 +2154,178 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     
     MyMenuItem: MenuItem[];
+    _SendMenuItem: MenuItem[];
     @ViewChild(ContextMenu) public contextMenu: ContextMenu;
     
-    public PendingReasonListOpenContextMenu(event: any, rowData: DeclarationCourierStatusList) {
+    public OpenContextActionMenu(event: any, rowData: DeclarationCourierStatusList) {
         event.stopPropagation();
         //CourierPendingReasonCommand($event, rowData['DeclarationId'], '')
         let myCourierWorksheetNGListTemplate = new CourierWorksheetNGListTemplate(this._CourierWorksheetSharedDataService, this.CD);
-        myCourierWorksheetNGListTemplate.CourierWorksheet = rowData;
-        myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList"; 
         this.MyMenuItem = [
-            {
-                label: 'Pending',
-                command:
-                    () => {
+            { label: 'Loading...', icon: 'pi pi-fw pi-plus', disabled: true },
 
-                        myCourierWorksheetNGListTemplate.CourierPendingReasonCommand(event, rowData.DeclarationId, '')
-                    }
-            },
-            { label: 'New', icon: 'pi pi-fw pi-plus', },
-            { label: 'Open', icon: 'pi pi-fw pi-download' },
-            { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+        //    { label: 'New', icon: 'pi pi-fw pi-plus', },
+        //    { label: 'Open', icon: 'pi pi-fw pi-download' },
+        //    { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
         ];
+
+        myCourierWorksheetNGListTemplate.CourierWorksheet = rowData;
+        myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList";
+        myCourierWorksheetNGListTemplate.PrepareDropdownMenuFilter(event, rowData.DeclarationId)
+            .subscribe((done) => {
+                this.MyMenuItem = [
+                    {
+                        label: 'Pending',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.CourierPendingReasonCommand(event, rowData.DeclarationId, '');
+                            }
+                    },
+                    { separator: true },
+                    {
+                        label: 'כניסה ל-F/U',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.ShowFollowUpStatus();
+                            }
+                    },
+
+                ];
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && !myCourierWorksheetNGListTemplate.IsReceivingDelayCertificate) {
+                    this.MyMenuItem.push({
+                        label: 'הפקת תעודת עיכוב',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'U', '2');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && myCourierWorksheetNGListTemplate.IsReceivingDelayCertificate ) {
+                    this.MyMenuItem.push({
+                        label: 'ביטול תעודת עיכוב',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'C', '2');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable ) {
+                    this.MyMenuItem.push({
+                        label: 'הפקת מדבקה',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.MamanStickerCommand(event, rowData.DeclarationId, 'Insert');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && myCourierWorksheetNGListTemplate.IsMamanSticker) {
+                    this.MyMenuItem.push({
+                        label: 'ביטול הפקת מדבקה',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'C', '2');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && !myCourierWorksheetNGListTemplate.IsPrintDocuments) {
+                    this.MyMenuItem.push({
+                        label: 'הדפסת מסמכים',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'U', '5');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && myCourierWorksheetNGListTemplate.IsPrintDocuments) {
+                    this.MyMenuItem.push({
+                        label: 'הדפסת מסמכים ביטול',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'C', '5');
+                            }
+                    })
+
+                }
+                if (myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable && myCourierWorksheetNGListTemplate.IsMamanEnabled) {
+                    this.MyMenuItem.push({
+                        label: 'סב"ן',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'U', '6');
+                            }
+                    })
+                    this.MyMenuItem.push({
+                        label: 'ביטול סב"ן',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendMamanSpecialAction(rowData.DeclarationId, 'U', '6');
+                            }
+                    })
+                }
+
+                if (myCourierWorksheetNGListTemplate.CourierWorksheet.HighLowValue == 'L' && myCourierWorksheetNGListTemplate.CourierWorksheet.FastIndividualProcessCode != 'I') {
+                    this.MyMenuItem.push({
+                        label: 'העברה לפרטני',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SetManualProcesscode(rowData.DeclarationId, 'I');
+                            }
+                    })
+                }
+                if (myCourierWorksheetNGListTemplate.CourierWorksheet.HighLowValue == 'L' && myCourierWorksheetNGListTemplate.CourierWorksheet.FastIndividualProcessCode == 'I') {
+                    this.MyMenuItem.push({
+                        label: 'העברה לפרטני',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SetManualProcesscode(rowData.DeclarationId, 'F');
+                            }
+                    })
+                }
+                if (myCourierWorksheetNGListTemplate.IsClosedForFollowUp) {
+                    this.MyMenuItem.push({
+                        label: 'ביטול סגירה ש.מ.ב',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SetCLSHWBEvent(0);
+                            }
+                    })
+
+                }
+                if (!myCourierWorksheetNGListTemplate.IsClosedForFollowUp) {
+                    this.MyMenuItem.push({
+                        label: 'סגירה ש.מ.ב',
+                        command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SetCLSHWBEvent(1);
+                            }
+                    })
+
+                }
+
+            });
+            ;//Sub...
+
+        this.contextMenu.model = this.MyMenuItem;
+        this.contextMenu.appendTo = 'body';
         this.contextMenu.toggle(event); 
 
     }
@@ -2325,42 +2476,74 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     //}
 
 
-    public SplitButtonOpenContextMenu(rowData: DeclarationCourierStatusList) {
+    public OpenContextMenuSplitButton(event,rowData: DeclarationCourierStatusList) {
         //event.stopPropagation();
-        this.MyMenuItem = [];
+        //this._SendMenuItem = [];
 
         
         
         let myCourierWorksheetNGListTemplate = new CourierWorksheetNGListTemplate(this._CourierWorksheetSharedDataService, this.CD);
         myCourierWorksheetNGListTemplate.CourierWorksheet = rowData;
-        myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList"; 
+        ///myCourierWorksheetNGListTemplate.fieldName = "CourierPendingReasonList"; 
 
 
         myCourierWorksheetNGListTemplate.fieldName = "SendSplitButton"; 
 
+        this._SendMenuItem= [
+            { label: 'Loading...', icon: 'pi pi-fw pi-plus', disabled: true },
 
+            //    { label: 'New', icon: 'pi pi-fw pi-plus', },
+            //    { label: 'Open', icon: 'pi pi-fw pi-download' },
+            //    { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+        ];
         myCourierWorksheetNGListTemplate.PrepareSplitButtonMenuFilterSub()
             .subscribe((isOk) => {
-                let isDisableManifest: boolean=
+                let CourierWorksheet = rowData;
+                let isDisableManifest: boolean =
                     !((rowData['CourierPaymentStatusCode'] != 'P' || rowData['CourierPaymentStatusCode'] == null) && (rowData['CourierManifestStatusCode'] == 'V' || rowData['CourierManifestStatusCode'] == 'R' ||
                         rowData['CourierManifestStatusCode'] == 'X' || rowData['CourierManifestStatusCode'] == 'M'));
                 //isDisableManifest = true;
                 let manifest = {
                     label: 'מצהר', disabled: isDisableManifest, command:
                         () => {
-                            
+
                             myCourierWorksheetNGListTemplate.SendManifest(event);
                         }
                 };
-                
-                this.MyMenuItem = [
+
+                let isDecDisabled: boolean =
+                    !(CourierWorksheet['CourierPaymentStatusCode'] == 'P' || CourierWorksheet['CourierPaymentStatusCode'] == 'O');
+                let isPayDisabled: boolean =
+                    !(CourierWorksheet['CourierPaymentStatusCode'] == 'P' || CourierWorksheet['CourierPaymentStatusCode'] == 'O');
+                this._SendMenuItem = [
                     manifest,
-                    { label: 'New', icon: 'pi pi-fw pi-plus',  },
-                    { label: 'Open', icon: 'pi pi-fw pi-download' },
-                    { label: 'Undo', icon: 'pi pi-fw pi-refresh' }
+                    {
+                        label: 'הצהרה', disabled: isDisableManifest, command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendDec(event);
+                            }
+                    },
+                    {
+                        label: 'תשלום', disabled: isPayDisabled, command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.SendPay(event);
+                            }
+                    },
+                    {
+                        label: 'תשלום', visible: myCourierWorksheetNGListTemplate.IsWebAPICourierGWMessageECTHRDataMamanEnable, command:
+                            () => {
+
+                                myCourierWorksheetNGListTemplate.GetSendECTHRDataMaman(event);
+                            }
+                    },
                 ];
-                this.contextMenu.toggle(); 
+
             });
+        this.contextMenu.model = this._SendMenuItem;
+        this.contextMenu.appendTo = 'body';
+        this.contextMenu.toggle(); 
 
     }
     ShowGrid: boolean = false;
@@ -2383,7 +2566,10 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     onRowUnselect(event) {
         //this.messageService.add({ severity: 'info', summary: 'Product Unselected', detail: event.data.name });
     }
-    onColDataClick(rowData) {
+    onColDataClick(fieldName,rowData) {
+        if (fieldName == 'SendSplitButton') {
+            return;
+        }
         console.log(rowData);
         if (this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction) {
             this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = false;

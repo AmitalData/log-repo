@@ -46,7 +46,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
 
 import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
-import { Observable, of } from 'rxjs';
+import { defer, Observable, of, ReplaySubject } from 'rxjs';
 
 @Component({
 
@@ -58,12 +58,12 @@ import { Observable, of } from 'rxjs';
 })
 
 export class CourierWorksheetNGListTemplate {
-    
-    
-   
+
+
+
     public entityPM: any;
 
-    
+
     private _CourierWorksheet: DeclarationCourierStatusList;
     @Input()
     public get CourierWorksheet(): DeclarationCourierStatusList {
@@ -76,7 +76,7 @@ export class CourierWorksheetNGListTemplate {
         }
     }
     _ReloadVariables: boolean = false;
-    
+
     private _fieldName: string;
     @Input()
     public get fieldName(): string {
@@ -86,9 +86,9 @@ export class CourierWorksheetNGListTemplate {
         this._fieldName = value;
         //console.log("CourierWorksheetNGListTemplate");
         //console.log(this._CourierWorksheet );
-        
+
         if (!AppTool.IsNullOrEmpty(this._CourierWorksheet)) {
-            
+
             this.ReloadVariables();
         }
 
@@ -185,8 +185,7 @@ export class CourierWorksheetNGListTemplate {
 
 
 
-    setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)
-        { }
+    setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string) { }
 
     ReloadVariables() {
         if (this._ReloadVariables) {
@@ -645,8 +644,10 @@ export class CourierWorksheetNGListTemplate {
             );
     }
 
+
     _IsDropdownMenuFilterReady: boolean = false;
     PrepareDropdownMenuFilter(event, declarationId) {
+        let project = new ReplaySubject(1);
         this._IsDropdownMenuFilterReady = false;
         this.IsWebAPICourierGWMessageECTHRDataMamanEnable = false;
         this.IsReceivingDelayCertificate = false;
@@ -659,70 +660,83 @@ export class CourierWorksheetNGListTemplate {
         this.IsMamanEnabled = false;
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
-        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
-            let entitypm: DeclarationPM = rsptPMget.Result;
-            if (entitypm != null && entitypm.Consignments != null) {
-                if (this.WebAPICourierGWMessageECTHRDataMaman.includes("ILMMN") && entitypm.Consignments[0].StorageSiteCode == "ILMMN") {
-                    this.IsMamanEnabled = true;
-                }
-                if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
-                    this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
-
-                    var filters = new ApiQueryFilters();
-                    filters.PageIndex = 0;
-                    filters.PageSize = 1000;
-                    filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
-
-                    this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError && response.Result != null) {
-                            response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
-                                switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
-                                    case "2": {
-                                        this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
-                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                            this.IsReceivingDelayCertificate = true;
-                                        }
-                                        break;
-                                    }
-                                    case "4": {
-                                        this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
-                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                            this.IsMamanSticker = true;
-                                        }
-                                        break;
-                                    }
-                                    case "5": {
-                                        this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
-                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                            this.IsPrintDocuments = true;
-                                        }
-                                        break;
-                                    }
-                                    case "6": {
-                                        this.SbanDetails = declarationMamanSpecialActionPMItem;
-                                        if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
-                                            this.IsSban = true;
-                                        }
-                                        break;
-                                    }
-                                }
-                            });
-
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
+            .subscribe(
+                rsptPMget => {
+                    let entitypm: DeclarationPM = rsptPMget.Result;
+                    if (entitypm != null && entitypm.Consignments != null) {
+                        if (this.WebAPICourierGWMessageECTHRDataMaman.includes("ILMMN") && entitypm.Consignments[0].StorageSiteCode == "ILMMN") {
+                            this.IsMamanEnabled = true;
                         }
+                        if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                            this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+
+                            var filters = new ApiQueryFilters();
+                            filters.PageIndex = 0;
+                            filters.PageSize = 1000;
+                            filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+
+                            this._DeclarationMamanSpecialActionListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+                                if (!response.HasError && response.Result != null) {
+                                    response.Result.forEach((declarationMamanSpecialActionPMItem: DeclarationMamanSpecialActionPM) => {
+                                        switch (declarationMamanSpecialActionPMItem.MamanSpecialActionCode) {
+                                            case "2": {
+                                                this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
+                                                if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                                    this.IsReceivingDelayCertificate = true;
+                                                }
+                                                break;
+                                            }
+                                            case "4": {
+                                                this.MamanStickerDetails = declarationMamanSpecialActionPMItem;
+                                                if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                                    this.IsMamanSticker = true;
+                                                }
+                                                break;
+                                            }
+                                            case "5": {
+                                                this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+                                                if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                                    this.IsPrintDocuments = true;
+                                                }
+                                                break;
+                                            }
+                                            case "6": {
+                                                this.SbanDetails = declarationMamanSpecialActionPMItem;
+                                                if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
+                                                    this.IsSban = true;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    });
+
+                                }
+                                this._IsDropdownMenuFilterReady = true;
+                                this.CD.detectChanges();
+                                project.next(1);
+                            });
+                        }
+
                         this._IsDropdownMenuFilterReady = true;
                         this.CD.detectChanges();
-                    });
-                }
+                        project.next(1);
+                    }
+                    else {
+                        this._IsDropdownMenuFilterReady = true;
+                        this.CD.detectChanges();
+                        project.next(1);
+                    }
+                    
+                },
+                () => { project.next(0);},
+                () => {  }
 
-                this._IsDropdownMenuFilterReady = true;
-                this.CD.detectChanges();
-            }
-            else {
-                this._IsDropdownMenuFilterReady = true;
-                this.CD.detectChanges();
-            }
-        });
-        this.CD.detectChanges();
+            );
+
+        return project;
+
+        //this.CD.detectChanges();
     }
 
 
