@@ -58,7 +58,7 @@
 </style>
 
 <table style="overflow-x:auto;overflow-y:hidden;">
-    <tr style="height: 62px;" [ngStyle]="MainColor != null ? {'background-color': MainColor} : {}">
+    <tr style="height: 62px;" [ngStyle]="SecondaryColor != null ? {'background-color': SecondaryColor} : {}">
         <!--background: #212E63;-->
         <td>
             <table>
@@ -70,8 +70,8 @@
                                     <table>
                                         <tr>
                                             <td style="vertical-align: middle;width:310px;">
-                                                <span class="Counter" *ngIf="DataSource.rowCount > 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="SecondaryColor != null ? {'color': SecondaryColor} : {}">1000+ {{SelectedFilter}}</span>
-                                                <span class="Counter" *ngIf="DataSource.rowCount <= 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="SecondaryColor != null ? {'color': SecondaryColor} : {}">{{DataSource.rowCount}} {{SelectedFilter}}</span>
+                                                <span class="Counter" *ngIf="DataSource.rowCount > 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="MainColor != null ? {'color': MainColor} : {}">1000+ {{SelectedFilter}}</span>
+                                                <span class="Counter" *ngIf="DataSource.rowCount <= 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="MainColor != null ? {'color': MainColor} : {}">{{DataSource.rowCount}} {{SelectedFilter}}</span>
                                             </td>
                                             <td *ngIf="!DontShowLogboxToolTip" style="width: 30px; vertical-align: top;">
                                                 <img style="height:30px;width:30px;margin-right:8px;margin-top:-5px;" src="./Images/lightbulb.png" />
