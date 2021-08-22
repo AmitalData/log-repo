@@ -133,7 +133,7 @@ export class ConsigmentTabContentComponent
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
-        if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType== 'E')
+        if (AppTool.IsNullOrEmpty(this.CargoTypeCode) && this.declarationPM.TransportModeId == 'A' && this.ConsignmentType== 'E')
         {
             this.CargoTypeCode = "16";
         }
@@ -243,7 +243,7 @@ export class ConsigmentTabContentComponent
 
         this.SetExcludeConsignmentVisibility();
 
-        if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
+        if (AppTool.IsNullOrEmpty(this.CargoTypeCode) && this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
             this.CargoTypeCode = "16";
         }
 
