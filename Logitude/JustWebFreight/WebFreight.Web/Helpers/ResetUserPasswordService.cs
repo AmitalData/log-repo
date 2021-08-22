@@ -293,6 +293,12 @@ namespace WebFreight.Web.Helpers
         {
             return (tenantManagementPM != null && tenantManagementPM.EnableBranding && !String.IsNullOrEmpty(tenantManagementPM.CustomerURL));
         }
+
+        private bool IsPrivateLabelDomain()
+        {
+            TenantManagmentPrivateLabelsPM privatelabel = GetPrivateLabelByLoggedDomain();
+            return privatelabel != null; 
+        }
         private PasswordResetRequest GetPasswordResetRequestForMobile(string email, string reqNumber)
         {
             Random generator = new Random();
@@ -324,14 +330,15 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment + " Software.");
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment);
+            if(!IsPrivateLabelDomain() && !IsCargoTrackingDomain()) { HtmlTemplate.Append(" Software."); }
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append(tenantName + emailBodyParams.EmailMessageParams.TeamName);
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<a href='http://" + emailBodyParams.EmailMessageParams.SiteUri + "'>" + emailBodyParams.EmailMessageParams.SiteUri + "<a>");
+            if (!IsPrivateLabelDomain() && !IsCargoTrackingDomain()) { HtmlTemplate.Append("<a href='http://" + emailBodyParams.EmailMessageParams.SiteUri + "'>" + emailBodyParams.EmailMessageParams.SiteUri + "<a>"); }
             HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
             HtmlTemplate.Append("</P>");
             if (!emailBodyParams.EmailMessageParams.IsLogBox && LogitudeSettings.WorkEnvironment != "cloud")
