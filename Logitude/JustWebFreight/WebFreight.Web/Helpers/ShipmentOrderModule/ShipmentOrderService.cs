@@ -47,13 +47,12 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             shipmentOrderUpdateService.Update(shipmentOrderPM, true);
             return shipmentOrderPM;
         }
-
         private ShipmentOrderPM ShipmentOrderDataMappingAndValidatin(ShipmentOrder entity, ChangeSetOperation changeSetOp)
         {
 
             if (!IsNewEntity(changeSetOp))
             {
-                entity.Id = new ShipmentOrderQueryService(tenant).GetIdByOrderNumber(entity.OrderNumber, tenant);
+                SetIgonrdModificationFields(entity);
             }
 
             var shipmentOrderQueryService = new ShipmentOrderQueryService(tenant);
@@ -62,6 +61,13 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             entityPM.ChangeSetOp = changeSetOp;
             return entityPM;
         }
+        private void SetIgonrdModificationFields(ShipmentOrder entity)
+        {
+            ShipmentOrder shipmentOrder = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant);
+            entity.Id = shipmentOrder.Id;
+            entity.SecurityKey = shipmentOrder.SecurityKey;
+        }
+
         private bool IsNewEntity(ChangeSetOperation changeSetOp)
         {
             return changeSetOp == ChangeSetOperation.Insert;
