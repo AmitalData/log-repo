@@ -2833,6 +2833,12 @@
       LocalDefaultText="&quot;טען קובץ לפני העלאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.File&quot;"
+      DefaultText="&quot;File&quot;"
+      LocalDefaultText="&quot;קובץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -24,7 +24,7 @@
                                 <td style="width:20px">
                                     {{'TaxReport.O.Mark' | TextCodeTranslationPipe}}
                                 </td>
-                                <td><img src="../../../Images/Warning_icon_24.png" /></td>
+                                <td><img src="./Images/External.png" style="margin:5px"/></td>
                             </tr>
                             <tr style="height:30px">
                                 <td colspan="2">
@@ -40,10 +40,11 @@
                             <tr style="height: 10px;"><td colspan="2"><div></div></td></tr>
                         </table>
                         <table>
+                            
                             <tr style="height:35px">
-                                <td style="width:40px;"><span style="font-size:11px;color:dimgray">קובץ:</span></td>
+                                <td style="width:40px;"><span style="font-size:11px;color:dimgray">  {{'TaxReport.O.File' | TextCodeTranslationPipe}}</span></td>
                                 <td style="width:150px; ">
-                                    <LogTextBox [ObjectFieldName]="'FileName'"  [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'FileName'" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
