@@ -10,6 +10,7 @@ using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
@@ -516,7 +517,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
-                    this.UpdateShipmentFollowUpsCollection();                    
+                    this.UpdateShipmentFollowUpsCollection();
+                    UpdateStandaloneShipments();
 
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
@@ -534,7 +536,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
-                    UpdatePayablesLinesVatAmounts();                    
+                    UpdatePayablesLinesVatAmounts();
+                 
                     #endregion
                 }
 
@@ -613,6 +616,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
                 payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
             }
+        }
+
+        private  void UpdateStandaloneShipments()
+        {
+            if (IsUpdatingStandaloneShipments())
+            {
+                List<Shipment> standaloneShipments = this.GetStandaloneShipments();
+                this.RunStandaloneShipmentBehaviour(standaloneShipments);
+            }
+        }
+
+        private bool IsUpdatingStandaloneShipments()
+        {
+            if (this.entityPM.DirectionId != this.entityPoco.DirectionId)
+                return true;
+            if (this.entityPM.ShipmentLevelCode != this.entityPoco.ShipmentLevelCode)
+                return true;
+            if (this.entityPM.ShipmentTypeId != this.entityPoco.ShipmentTypeId)
+                return true;
+
+            return false; 
+        }
+
+        private List<Shipment> GetStandaloneShipments()
+        {
+            List<Shipment> standaloneShipments = entityRepository.GetStandaloneShipments(entityPM.Id, tenant);
+            return standaloneShipments;
+        }
+        private void RunStandaloneShipmentBehaviour(List<Shipment> standaloneShipments)
+        {
+            StandaloneShipmentBehaviour standaloneShipmentBehaviour = new StandaloneShipmentBehaviour();
+            standaloneShipmentBehaviour.UpdateStandaloneShipmentsOfParentShipment(this.initializer, standaloneShipments);
         }
 
         private void RemoveDeletedItemsFromEntityPM()
