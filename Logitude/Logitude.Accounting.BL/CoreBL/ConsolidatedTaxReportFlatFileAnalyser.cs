@@ -94,7 +94,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (lines != null && lines.Count > 0)
                 {
                     lines= lines.Where(d => !d.IsExternalLine).ToList();
-                    maxLine = lines.Max(l => l.Line);
+                    maxLine = lines.Count > 0 ? lines.Max(l => l.Line) : 1;
+
                 }
 
                 int nextLine = maxLine;

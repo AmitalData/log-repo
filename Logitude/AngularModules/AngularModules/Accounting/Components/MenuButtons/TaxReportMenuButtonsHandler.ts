@@ -150,6 +150,9 @@ export class TaxReportMenuButtonsHandler {
                     windowArgs.EntityPM = this.EntityPM;
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Title = TextCodeTranslator.Translate("TaxReport.B.UploadRows");
+                    logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    });
                     logitudeWindow.Show('./Accounting/Components/Others/TaxReportUploadLinesComponent');
                     //});
                     break;
