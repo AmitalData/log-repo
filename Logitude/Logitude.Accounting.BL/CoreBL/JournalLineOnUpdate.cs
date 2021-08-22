@@ -52,17 +52,20 @@ namespace Logitude.Accounting.BL.CoreBL
                     journalLinePM.CurrencyName = currency.EnglishName;
                 }
             }
+            bool suppressInactiveCheck = journalPM.AccountingEntityCode == "11";//  העברת שנה   Year Transfer
             ///if (!journalPM.ConversionJournal)
             {
                 bool haveChange = false;
                 haveChange = FixCredit(journalLinePM, haveChange, 
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                    suppressInactiveCheck
                     );
 
                 FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
 
                 haveChange = FixDebit(journalLinePM, haveChange, accountingSettings,
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                    suppressInactiveCheck
                     );
 
                 if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
@@ -115,10 +118,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionlOrRevaluation_Journal)
+        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionlOrRevaluation_Journal, bool suppressInactive)
         {
             var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId, conversionlOrRevaluation_Journal);
+            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId, conversionlOrRevaluation_Journal, suppressInactive);
 
             if (IsFromMumps(journalLinePM) ||
                 journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
@@ -137,7 +140,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return haveChange;
         }
 
-        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionlOrRevaluation_Journal)
+        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionlOrRevaluation_Journal,bool suppressInactiveCheck)
         {
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -146,7 +149,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLinePM.DebitAccountId,
                 journalLinePM.DebitAccountNumber,
                 journalLinePM.CurrencyId,
-                conversionlOrRevaluation_Journal
+                conversionlOrRevaluation_Journal,
+                suppressInactiveCheck
                 );
 
             if (
@@ -267,7 +271,7 @@ namespace Logitude.Accounting.BL.CoreBL
     }
     public interface IVerifyGLAccountManager
     {
-        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId, bool conversionlOrRevaluation_Journal);
+        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId, bool conversionlOrRevaluation_Journal, bool suppressInactiveCheck);
 
         string AccountId { get; }
         string ControlAccountId { get; }
@@ -282,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId,
-            bool conversionlOrRevaluation_Journal)
+            bool conversionlOrRevaluation_Journal, bool suppressInactiveCheck)
         {
             this._MainContext = mainContext;
             this._tenant = tenant;
@@ -292,12 +296,12 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountPM myGLAccountPM = null;
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                myGLAccountPM = CheckAccountId(_tenant, _accountId);
+                myGLAccountPM = CheckAccountId(_tenant, _accountId, suppressInactiveCheck);
 
             }
             if (myGLAccountPM == null && !String.IsNullOrWhiteSpace(_accountNumber))
             {
-                myGLAccountPM = GetAccountIdByAccountNumber(_tenant, _accountNumber);
+                myGLAccountPM = GetAccountIdByAccountNumber(_tenant, _accountNumber, suppressInactiveCheck);
             }
             var why = JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640;//Task 40640: טיפול בסרביס לפקודת יומן - במקרה של כרטיס מפוצל לרשום על הפיצול
             if (why == JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640)//Task 40640: טיפול בסרביס לפקודת יומן - במקרה של כרטיס מפוצל לרשום על הפיצול
@@ -314,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (myGLAccountCurrency != null)
                         {
                             _accountId = myGLAccountCurrency.GLAccountId;
-                            myGLAccountPM = CheckAccountId(_tenant, _accountId);
+                            myGLAccountPM = CheckAccountId(_tenant, _accountId, suppressInactiveCheck);
                         }
                     }
                 }
@@ -342,7 +346,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        GLAccountPM CheckAccountId(int tenant, string accountId)
+        GLAccountPM CheckAccountId(int tenant, string accountId,bool suppressInactiveCheck)
         {
             var pm = GetSingleGLAccount(accountId);
             if (pm == null)
@@ -353,7 +357,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return null;
             }
-            if (pm.Inactive.GetValueOrDefault())
+            if (!suppressInactiveCheck && pm.Inactive.GetValueOrDefault())
             {
                 return null;
             }
@@ -362,14 +366,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        GLAccountPM GetAccountIdByAccountNumber(int tenant, string accountNumber)
+        GLAccountPM GetAccountIdByAccountNumber(int tenant, string accountNumber, bool suppressInactive)
         {
             var pm = GetByInternalNumberGLAccount(tenant, accountNumber);
             if (pm == null)
             {
                 return null;
             }
-            return CheckAccountId(tenant, pm.Id);
+            return CheckAccountId(tenant, pm.Id, suppressInactive);
         }
 
         public virtual GLAccountPM GetSingleGLAccount(string accountId)
