@@ -82,7 +82,7 @@ export class UserDashboardComponent implements AfterViewInit
             var email = sessionStorage.getItem("LoggedUserEmail");
             this.GetLoggedUserPM(email, tenant);
         }
-        
+
     }
 
     private GetLoggedUserPM(email: any, tenant: any)
@@ -98,7 +98,7 @@ export class UserDashboardComponent implements AfterViewInit
             }
         });
     }
-    
+
     private GetLoggedContact()
     {
         this.brandingService.GetLoggedContact().subscribe((loggedContact: any) =>
@@ -118,7 +118,7 @@ export class UserDashboardComponent implements AfterViewInit
             var splitted = userName.split(" ");
             if (splitted.length == 1)
                 this.UserNameFirstLetters = splitted[0][0];
-            else if (splitted.length == 2)
+            else if (splitted.length >= 2)
                 this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
             else if (splitted.length == 0)
                 this.UserNameFirstLetters = "Aa";
