@@ -134,7 +134,7 @@
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="(EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' && IsCartaPorteSettingsEnabled)">
+                    <tr class="FormFieldRow" *ngIf="(EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33') && IsCartaPorteSettingsEnabled)">
 
 
                         <td style="width:185px;">
@@ -176,35 +176,7 @@
                                 </tr>
                             </table>
                         </td>
-                        <!--<td style="width:230px; ">
-        <LogCheckBox [ObjectFieldName]="'IsARInvoiceTransferEnabled'"
-                     [Checked]="IsARInvoiceTransferEnabled"
-                     [ObjectTableName]="ObjectTableName"
-                     [DataContext]="EntityPM">
-
-        </LogCheckBox>
-
-    </td>
-    <td style="width:120px; ">
-        <LogLabel [ObjectFieldName]="'IsARInvoiceTransferEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
-    </td>
-
-    <td>
-        <div></div>
-    </td>
-
-    <td style="width:230px; ">
-        <LogCheckBox [ObjectFieldName]="'IsCartaPorteTransferEnabled'"
-                     [Checked]="IsCartaPorteTransferEnabled"
-                     [ObjectTableName]="ObjectTableName"
-                     [DataContext]="EntityPM">
-
-        </LogCheckBox>
-
-    </td>
-    <td style="width:120px; ">
-        <LogLabel [ObjectFieldName]="'IsCartaPorteTransferEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
-    </td>-->
+                
                     </tr>
 
                   
