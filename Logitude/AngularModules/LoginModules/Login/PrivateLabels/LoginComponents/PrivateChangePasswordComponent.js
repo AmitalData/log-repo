@@ -20,7 +20,7 @@ export var PrivateChangePasswordComponent = (function (_super) {
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
-        this.MainColor = null;
+        this.SecondaryColor = null;
     }
     PrivateChangePasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
@@ -31,7 +31,7 @@ export var PrivateChangePasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
-        this.MainColor = BrandingDataService.GetColor("MainColor");
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
     };
     PrivateChangePasswordComponent.prototype.GetPrivateLabelsImages = function (privateUrl) {
         var _this = this;

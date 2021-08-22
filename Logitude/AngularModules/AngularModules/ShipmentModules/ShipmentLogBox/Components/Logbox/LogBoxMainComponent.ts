@@ -33,8 +33,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private myShipmentDomainService: ShipmentDomainService;
     private myUserPMService: UserExtendedPMService;
     public LogoURL: string = ""
-    public MainColor: string = "transparent";
-    public SecondaryColor: string = "#1B90CB";
+    public MainColor: string = "#1B90CB";
+    public SecondaryColor: string = "transparent";  
     public IsDSV: boolean = false;
     public preventSelect: boolean = false;
     public DontShowLogboxToolTip: boolean = false;
