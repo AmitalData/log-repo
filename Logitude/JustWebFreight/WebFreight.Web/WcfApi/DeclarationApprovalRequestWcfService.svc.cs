@@ -1,5 +1,6 @@
 ﻿
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -88,7 +89,7 @@ namespace WebFreight.Web.WcfApi
                 shipmentPM.IsHybrid = true;
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;
                 shipmentPM.DeclarationXMLData = declarationApprovalRequestPM.DeclarationXmlData;
-                shipmentPM.IsImporterApprovalRequired = true;
+                shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequriedValue(declarationApprovalRequestPM);
                 shipmentPM.IsDeclarationApprovalRequest = true;
                 shipmentId = shipmentPM.Id;
                 string email =Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser(tenant);
@@ -98,6 +99,13 @@ namespace WebFreight.Web.WcfApi
             }
             return shipmentId;
 
+        }
+
+        private bool GetIsImporterApprovalRequriedValue(DeclarationApprovalRequestPM declarationApprovalRequestPM)
+        {
+            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
+            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(declarationApprovalRequestPM.DeclarationXmlData);
+            return IsImporterApprovalRequried;
         }
 
         private Response HandleExceptionAsResponse(Exception ex)

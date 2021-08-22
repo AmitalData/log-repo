@@ -7,6 +7,8 @@ using System.Xml;
 using Logitude.Server.Tools;
 using System.Text;
 using ICSharpCode.SharpZipLib.BZip2;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentCloudCustomDataDeserializer
@@ -16,43 +18,53 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentAdditionalCloudCustomData CustomData = new ShipmentAdditionalCloudCustomData();
             CustomData.IsPaymentRequired = data.IsPaymentRequired;
             CustomData.PaymentDateTime = data.PaymentDateTime;
+
             if (data != null && !string.IsNullOrEmpty(data.DeclarationXmlData))
             {
-                //byte[] myByteArray = Convert.FromBase64String(data.DeclarationXmlData);
-                //using (var mem = new MemoryStream(myByteArray))
-                //using (var zipStream = new ZipInputStream(mem))
-                //{
-                //    ZipEntry currentEntry;
-                //    while ((currentEntry = zipStream.GetNextEntry()) != null)
-                //    {
-                //        //Console.WriteLine("{0} is {1} bytes", currentEntry.Name, currentEntry.Size);
-                //        byte[] zipdata = new byte[currentEntry.Size];
-                //        //ZipEntry.Read(data, 0, zipdata.Length);
+                CustomData.ApprovedByUserName = data.ApprovedByUserName;
+                CustomData.VersionApproved = data.VersionApproved;
+                CustomData.ApproveDateTime = data.ApproveDateTime;
+                CustomData.DenyReason = data.DenyReason;
+                CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
+                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
+                MapDeclarationXmlDataToShipmentAdditionalCloudCustomData(CustomData, data.DeclarationXmlData);
+            }
 
-                //        // do what ever with the data
-                //    }
-                //}
+            if (data != null && !string.IsNullOrEmpty(data.PaymentRequestXML))
+            {
+                var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
+                CustomData.RequestPaymentData = MyPaymentData;
+            }
+
+            if(data != null && string.IsNullOrEmpty(data.PaymentRequestXML) && string.IsNullOrEmpty(data.DeclarationXmlData))
+            {
+                return null;
+            }
+
+            return CustomData;
+        }
+
+        private ShipmentAdditionalCloudCustomData MapDeclarationXmlDataToShipmentAdditionalCloudCustomData(ShipmentAdditionalCloudCustomData shipmentAdditionalCloudCustomData, string declarationXmlData)
+        {
+            ShipmentAdditionalCloudCustomData CustomData = shipmentAdditionalCloudCustomData;
+            if (!string.IsNullOrEmpty(declarationXmlData))
+            {
                 int MySize = 1024;
                 byte[] BytesUncompressed = new byte[MySize];
                 StringBuilder MyEncodedUncompressMessage = new StringBuilder();
                 try
                 {
-                    var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                    var MyMemoryStream = new MemoryStream(Convert.FromBase64String(declarationXmlData));
                     var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
                     StringBuilder MyUncompressMessage = new StringBuilder();
-
-
                     Encoding wind1252 = Encoding.GetEncoding(1255);
                     Encoding utf8 = Encoding.UTF8;
                     byte[] utf8Bytes = new byte[MySize];
-                    //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
                     while (true)
                     {
                         MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
-                        //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
                         if (MySize > 0)
                         {
-
                             utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
                             MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
                             MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
@@ -64,31 +76,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
                 catch (Exception)
                 {
-                    MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(data.DeclarationXmlData)));
+                    MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(declarationXmlData)));
                 }
-
-
-                //Encoding wind1252 = Encoding.GetEncoding(1255);
-                //Encoding utf8 = Encoding.UTF8;
-                //byte[] wind1252Bytes = MyBytesUncompressed;
-                //byte[] utf8Bytes = Encoding.Convert(wind1252, utf8, wind1252Bytes);
-                //string utf8String = Encoding.UTF8.GetString(utf8Bytes);
 
                 var data_out = MyEncodedUncompressMessage.ToString();
                 BytesUncompressed = null;
-                //MyBytesUncompressed = null;
-                //MyUncompressMessage.Remove(0, MyUncompressMessage.Length);
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.LoadXml(data_out);
 
-                CustomData.ApprovedByUserName = data.ApprovedByUserName;
-                CustomData.VersionApproved = data.VersionApproved;
-                CustomData.ApproveDateTime = data.ApproveDateTime;
-                CustomData.DenyReason = data.DenyReason;
-                CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
                 CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                 CustomData.TaxesDetails = new List<TaxesDetails>();
-                MapIsImporterApprovalRequriedField(data, CustomData, xmldoc);
+                MapIsImporterApprovalRequriedField(CustomData, xmldoc);
                 XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                 if (CustomsFileNo[0] != null)
                 {
@@ -214,11 +212,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomData.TaxesDetails.Add(TaxDetails);
                 }
 
-
                 ///////////////////////////////////////////////////
-
-
-                ////////////////////////////////
 
                 XmlNodeList GoodsDetailsList = xmldoc.GetElementsByTagName("acc_supplier");
                 for (int i = 0; i < GoodsDetailsList.Count; i++)
@@ -254,7 +248,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                     GoodValue.CurrencyName = ChildNodes[j].ChildNodes[x].InnerText;
                                 }
                             }
-                            //GoodValue.CurrencyName = ChildNodes[j].InnerText;
                         }
                         else if (ChildNodes[j].Name == "acc_supplier-country")
                         {
@@ -265,7 +258,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                     GoodValue.CountryName = ChildNodes[j].ChildNodes[x].InnerText;
                                 }
                             }
-                            //GoodValue.CountryName = ChildNodes[j].InnerText;
                         }
                         else if (ChildNodes[j].Name == "acc_supplier-supplier")
                         {
@@ -285,74 +277,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
                     CustomData.GoodsValueDetails.Add(GoodValue);
                 }
-                //XmlNodeList SupAccount = xmldoc.GetElementsByTagName("acc_supplier-sup_account");
-                //if (SupAccount[0] != null)
-                //{
-                //    GoodValue.SupAccount = SupAccount[0].InnerText;
-                //}
-
-                //XmlNodeList IncotermId = xmldoc.GetElementsByTagName("acc_supplier-incoterm-id");
-                //if (IncotermId[0] != null)
-                //{
-                //    GoodValue.IncotermId = IncotermId[0].InnerText;
-                //}
-
-                //XmlNodeList Value = xmldoc.GetElementsByTagName("Acc_supplierfreight");
-                //if (Value[0] != null)
-                //{
-                //    GoodValue.Value = Value[0].InnerText;
-                //}
-
-                //XmlNodeList CurrencyName = xmldoc.GetElementsByTagName("acc_supplier-currency-name");
-                //if (CurrencyName[0] != null)
-                //{
-                //    GoodValue.CurrencyName = CurrencyName[0].InnerText;
-                //}
-
-                //XmlNodeList CountryName = xmldoc.GetElementsByTagName("acc_supplier-country-name");
-                //if (CountryName[0] != null)
-                //{
-                //    GoodValue.CountryName = CountryName[0].InnerText;
-                //}
-
-                //XmlNodeList SupplierName = xmldoc.GetElementsByTagName("acc_supplier-supplier-name");
-                //if (SupplierName[0] != null)
-                //{
-                //    GoodValue.SupplierName = SupplierName[0].InnerText;
-                //}
-
-                //XmlNodeList SupplierFreight = xmldoc.GetElementsByTagName("Acc_supplierfreight");
-                //if (SupplierFreight[0] != null)
-                //{
-                //    GoodValue.SupplierFreight = SupplierFreight[0].InnerText;
-                //}
-                //CustomData.GoodsValueDetails.Add(GoodValue);
-
-            }
-            if (data != null && !string.IsNullOrEmpty(data.PaymentRequestXML))
-            {
-                var MyPaymentData = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(data.PaymentRequestXML);
-                CustomData.RequestPaymentData = MyPaymentData;
-            }
-
-            if(data != null && string.IsNullOrEmpty(data.PaymentRequestXML) && string.IsNullOrEmpty(data.DeclarationXmlData))
-            {
-                return null;
             }
 
             return CustomData;
         }
-
-        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudData data, ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
+        
+        public bool GetIsImporterApprovalRequriedValue(string declarationXmlData)
+        {
+            ShipmentAdditionalCloudCustomData shipmentAdditionalCloudCustomData = new ShipmentAdditionalCloudCustomData();
+            shipmentAdditionalCloudCustomData.IsImporterApprovalRequried = true;
+            shipmentAdditionalCloudCustomData = MapDeclarationXmlDataToShipmentAdditionalCloudCustomData(shipmentAdditionalCloudCustomData, declarationXmlData);
+            
+            return shipmentAdditionalCloudCustomData.IsImporterApprovalRequried;
+        }
+        
+        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
         {
             XmlNodeList IsImporterApprovalRequired = xmldoc.GetElementsByTagName("IsImporterApprovalRequired");
             if (IsImporterApprovalRequired[0]?.InnerText?.ToLower() == "false")
             {
                 CustomData.IsImporterApprovalRequried = false;
-            }
-            else
-            {
-                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
             }
         }
     }
