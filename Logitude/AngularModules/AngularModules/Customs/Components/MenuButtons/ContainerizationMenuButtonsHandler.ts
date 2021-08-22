@@ -286,7 +286,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         });
     }
 

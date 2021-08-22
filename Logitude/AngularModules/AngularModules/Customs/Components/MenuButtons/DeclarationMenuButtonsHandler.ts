@@ -1287,12 +1287,12 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.ShowCloseButton = true;
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
         } else {
                 //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({
@@ -1376,7 +1376,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
             myEnterViewUnifreightInstructionController
                 .GetPromise().then((e) => {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (e.UnifreightResponseStatus) {
                         
                         this.OpenDeclarationPaymentComponent();
@@ -1388,7 +1388,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
 
                 });
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             myEnterViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_ENTER");
         }
     }
@@ -1526,7 +1526,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = "בקשות מכס";
         logWindow.Show('./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent');
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }
 
