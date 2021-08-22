@@ -101,7 +101,6 @@
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\BudgetPM.cs" />
     <Compile Include="Models\Builders\TimeManagementAPIHelperBuilder.cs" />
-    <Compile Include="Models\Builders\TimeSheetItemBuilder.cs" />
     <Compile Include="Models\Builders\TMEmployeeTimePMBuilder.cs" />
     <Compile Include="Models\SprintPM.cs" />
     <Compile Include="Models\TimeManagementAPIHelper.cs" />

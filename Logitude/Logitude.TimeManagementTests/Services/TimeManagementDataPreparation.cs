@@ -24,29 +24,29 @@ namespace Logitude.TimeManagementTests.Services
         private string GetProjectId(string name, string ownerId)
         {
             ApiQueryFilters apiQueryFilters = BuildProjectApiQueryFilters(name, ownerId);
-            string projectId = GetProjectIdFromUserTenant(apiQueryFilters);
+            string projectId = GetProjectId(apiQueryFilters);
             if (string.IsNullOrEmpty(projectId))
             {
-                projectId = GetCreatedProjectFromTenantZero(name, ownerId);
+                projectId = CreateProject(name, ownerId);
             }
             return projectId;
         }
 
 
-        private string GetProjectIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        private string GetProjectId(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<TMProjectPM>> response = APICaller.CallGetByFilters<IEnumerable<TMProjectPM>>(Urls.TMProjectViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
-        private string GetCreatedProjectFromTenantZero(string name, string ownerId)
+        private string CreateProject(string name, string ownerId)
         {
-            TMProjectPM tMProject = CreateProject(name, ownerId);
+            TMProjectPM tMProject = GetNewProjectInstance(name, ownerId);
             ApiResponse<TMProjectPM> response = APICaller.CallPost<TMProjectPM>(tMProject, Urls.TmprojectsController, UserTenant.Token);
             return response.Data?.Id;
         }
 
-        private TMProjectPM CreateProject(string name, string ownerId)
+        private TMProjectPM GetNewProjectInstance(string name, string ownerId)
         {
             return new TMProjectPM
             {
@@ -83,29 +83,28 @@ namespace Logitude.TimeManagementTests.Services
         private string GetBudgetId(string name)
         {
             ApiQueryFilters apiQueryFilters = BuildBudgetApiQueryFilters(name);
-            string projectId = GetBudgetIdFromUserTenant(apiQueryFilters);
+            string projectId = GetBudgetId(apiQueryFilters);
             if (string.IsNullOrEmpty(projectId))
             {
-                projectId = GetCreatedBudgetFromTenantZero(name);
+                projectId = CreateBudget(name);
             }
             return projectId;
         }
 
-    
-        private string GetBudgetIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        private string GetBudgetId(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<BudgetPM>> response = APICaller.CallGetByFilters<IEnumerable<BudgetPM>>(Urls.TMBudgetViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
-        private string GetCreatedBudgetFromTenantZero(string name)
+        private string CreateBudget(string name)
         {
-            BudgetPM budget = CreateBudget(name);
+            BudgetPM budget = GetNewBudgetInstance(name);
             ApiResponse<BudgetPM> response = APICaller.CallPost<BudgetPM>(budget, Urls.TMBudgetsController, UserTenant.Token);
             return response.Data?.Id;
         }
 
-        private BudgetPM CreateBudget(string name)
+        private BudgetPM GetNewBudgetInstance(string name)
         {
             return new BudgetPM
             {
@@ -129,29 +128,28 @@ namespace Logitude.TimeManagementTests.Services
         private string GetCategoryId(string name)
         {
             ApiQueryFilters apiQueryFilters = BuildCategoryApiQueryFilters(name);
-            string categoryId = GetCategoryIdFromUserTenant(apiQueryFilters);
+            string categoryId = GetCategoryId(apiQueryFilters);
             if (string.IsNullOrEmpty(categoryId))
             {
-                categoryId = GetCreatedCategoryFromTenantZero(name);
+                categoryId = CreateCategory(name);
             }
             return categoryId;
         }
 
-
-        private string GetCategoryIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        private string GetCategoryId(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<TMProjectCategoryPM>> response = APICaller.CallGetByFilters<IEnumerable<TMProjectCategoryPM>>(Urls.TmprojectcategoryViewsByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
-        private string GetCreatedCategoryFromTenantZero(string name)
+        private string CreateCategory(string name)
         {
-            TMProjectCategoryPM category = CreateCategory(name);
+            TMProjectCategoryPM category = GetNewCategoryInstance(name);
             ApiResponse<TMProjectCategoryPM> response = APICaller.CallPost<TMProjectCategoryPM>(category, Urls.TmprojectcategoriesController, UserTenant.Token);
             return response.Data?.Id;
         }
 
-        private TMProjectCategoryPM CreateCategory(string name)
+        private TMProjectCategoryPM GetNewCategoryInstance(string name)
         {
             return new TMProjectCategoryPM
             {
@@ -175,36 +173,35 @@ namespace Logitude.TimeManagementTests.Services
         private string GetSprintId(string name)
         {
             ApiQueryFilters apiQueryFilters = BuildSprintApiQueryFilters(name);
-            string sprintId = GetSprintIdFromUserTenant(apiQueryFilters);
+            string sprintId = GetSprintId(apiQueryFilters);
             if (string.IsNullOrEmpty(sprintId))
             {
-                sprintId = GetCreatedSprintFromTenantZero(name);
+                sprintId = CreateSprint(name);
             }
             return sprintId;
         }
 
-
-        private string GetSprintIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        private string GetSprintId(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<SprintPM>> response = APICaller.CallGetByFilters<IEnumerable<SprintPM>>(Urls.SprintViewsByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
-        private string GetCreatedSprintFromTenantZero(string name)
+        private string CreateSprint(string name)
         {
-            SprintPM sprint = CreateSprint(name);
+            SprintPM sprint = GetNewSprintInstance(name);
             ApiResponse<SprintPM> response = APICaller.CallPost<SprintPM>(sprint, Urls.SprintsController, UserTenant.Token);
             return response.Data?.Id;
         }
 
-        private SprintPM CreateSprint(string name)
+        private SprintPM GetNewSprintInstance(string name)
         {
             return new SprintPM
             {
                 Name = name,
                 Tenant = UserTenant.Tenant,
                 FromDate = DateTime.Now,
-                ToDate = DateTime.Now.AddYears(1),
+                ToDate = DateTime.Now.AddDays(14),
                 UpdatedByUserId = UserTenant.UserId,
                 CreatedByUserId = UserTenant.UserId,
             };

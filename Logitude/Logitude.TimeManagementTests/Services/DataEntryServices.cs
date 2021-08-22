@@ -21,19 +21,10 @@ namespace Logitude.TimeManagementTests.Services
             return new TimeManagementAPIHelperBuilder()
                 .WithDefualtValues()
                 .LocationCode((string)dataTable.Location)
-                .Items(GetTimeSheetItem(dataTable))
                 .ItemsPM(GetTMEmployeeTime(dataTable))
                 .Build();
         }
 
-        private TimeSheetItem GetTimeSheetItem(dynamic dataTable)
-        {
-            return new TimeSheetItemBuilder().WithDefualtValues()
-                .LocationCode((string)dataTable.Location)
-                .Description((string)dataTable.Description)
-                .Day(GetTimeSheetItemDay(dataTable))
-                .Build();
-        }
         private TMEmployeeTimePM GetTMEmployeeTime(dynamic dataTable)
         {
             return new TMEmployeeTimePMBuilder().WithDefualtValues()
@@ -43,18 +34,6 @@ namespace Logitude.TimeManagementTests.Services
                 .DateOfWork(DateTime.Now)
                 .Build();
         }
-
-
-        private TimeSheetItemDay GetTimeSheetItemDay(dynamic dataTable)
-        {
-            return new TimeSheetItemDay
-            {
-                Date = DateTime.Now,
-                Minuts = (int)dataTable.Minuts
-            };
-        }
-
-
 
     }
 }

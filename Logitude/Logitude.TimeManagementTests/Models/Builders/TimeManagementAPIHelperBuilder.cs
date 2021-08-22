@@ -37,15 +37,6 @@ namespace Logitude.TimeManagementTests.Models.Builders
             return this;
         }
 
-        public TimeManagementAPIHelperBuilder Items(TimeSheetItem timeSheetItem)
-        {
-            if (_timeManagementAPIHelper.Items == null)
-                _timeManagementAPIHelper.Items = new List<TimeSheetItem>();
-
-            _timeManagementAPIHelper.Items.Add(timeSheetItem);
-            return this;
-        }
-
         public TimeManagementAPIHelperBuilder ItemsPM(TMEmployeeTimePM tMEmployeeTime)
         {
             if (_timeManagementAPIHelper.ItemsPM == null)
@@ -54,7 +45,6 @@ namespace Logitude.TimeManagementTests.Models.Builders
             _timeManagementAPIHelper.ItemsPM.Add(tMEmployeeTime);
             return this;
         }
-
 
         public TimeManagementAPIHelper Build()
         {
