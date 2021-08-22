@@ -365,7 +365,7 @@ namespace CommunicationWorkerRole
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
                                                 LogPM.Tenant = Shipment.Tenant;
                                                 if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
-                                                { 
+                                                {
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                                                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
                                                 }

@@ -569,6 +569,7 @@
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
+    <Compile Include="ShipmentsModel\EntityAMs\Packages.cs" />
     <Compile Include="QuoteModel\APIDataContract\QueryService\QuotePriceStepsQueryService.Generated.cs" />
     <Compile Include="QuoteModel\APIDataContract\QuotePriceSteps.Generated.cs" />
     <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
@@ -2596,6 +2597,7 @@
     <Compile Include="ShipmentsModel\CustomFilters\CustomsTransferHeaderCustomFilter.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\FollowUpsCustomFilter.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\ShipmentCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\EntityAMs\NewAExporterShipmentAM.cs" />
     <Compile Include="ShipmentsModel\EntityAMs\ShipmentAdditionalCloudDataAM.cs" />
     <Compile Include="ShipmentsModel\EntityAMs\ShipmentPackageAM.cs" />
     <Compile Include="ShipmentsModel\EntityAMs\ShipmentAM.cs" />
@@ -2855,6 +2857,8 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBAdditionalHandlingInfoService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ContainerService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\CustomsTransferHeaderService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ExporterShipmentAMMappingService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ForwarderExportShipmentsServie.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\LogitudeOceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\MessagingStockService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBSpecialHandlingCodeService.cs" />

@@ -1244,7 +1244,8 @@ export class ShipmentPM {
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
-	 
+     
+
     private shipperNote: string;
     public get ShipperNote() { return this.shipperNote; }
     public set ShipperNote(newValue: string) { if (this.shipperNote != newValue) { this.shipperNote = newValue; this.MarkAsDirty("ShipperNote"); } }
