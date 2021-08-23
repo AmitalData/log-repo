@@ -113,7 +113,7 @@ namespace Logitude.ShipmentOrderTests.Models.Builders
                 Agent = new Card { Code = PartnersData.AgentCode },
                 Incoterm = new Incoterm { Code = "LDE" },
                 OriginPort = new Port { Id = LocationsData.PortAirJFKId },
-                OrderNumber = (RandomGeneratorService.RandomGuid().Substring(15) + RandomGeneratorService.RandomNumber(5))
+                OrderNumber = (RandomGeneratorService.RandomGuid().Substring(0, 15) + RandomGeneratorService.RandomNumber(5))
             };
             return this;
         }

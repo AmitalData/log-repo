@@ -14,6 +14,7 @@ namespace Logitude.ShipmentOrderTests.Steps
     {
         private readonly ShipmentOrderContext shipmentOrderContext;
         private readonly ShipmentOrderServices shipmentOrderServices;
+        private string insertException;
 
         public CreateShipmentOrderSteps(ShipmentOrderContext shipmentOrderContext, ShipmentOrderServices shipmentOrderServices)
         {
@@ -30,14 +31,26 @@ namespace Logitude.ShipmentOrderTests.Steps
         [When(@"create shipment order")]
         public void WhenCreateShipmentOrder()
         {
-            shipmentOrderContext.ShipmentOrder = shipmentOrderServices.Create(shipmentOrderContext.ShipmentOrder);
+            try
+            {
+                shipmentOrderContext.ShipmentOrder = APICaller.CallPost<ShipmentOrder>(shipmentOrderContext.ShipmentOrder, Urls.ShipmentOrderController, UserTenant.Token)?.Data;
+            }
+            catch (Exception e)
+            {
+                insertException = e.InnerException.Message;
+            }
         }
 
         [Then(@"the shipment order should create successfully")]
         public void ThenTheShipmentOrderShouldCreateSuccessfully()
         {
+            if (!string.IsNullOrEmpty(insertException))
+            {
+                insertException.Should().Contain("Violation of UNIQUE KEY constraint 'UQ_ShipmentOrders_Tenant_OrderNumber'");
+                return;
+            }
             shipmentOrderContext.ShipmentOrder.Should().NotBeNull();
-            shipmentOrderContext.ShipmentOrder.Id.Should().NotBeNull();
+            shipmentOrderContext.ShipmentOrder?.Id.Should().NotBeNull();
         }
     }
 }

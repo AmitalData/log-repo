@@ -66,6 +66,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             ShipmentOrder shipmentOrder = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant);
             entity.Id = shipmentOrder.Id;
             entity.SecurityKey = shipmentOrder.SecurityKey;
+            entity.IsCancelled = shipmentOrder.IsCancelled;
         }
 
         private bool IsNewEntity(ChangeSetOperation changeSetOp)
