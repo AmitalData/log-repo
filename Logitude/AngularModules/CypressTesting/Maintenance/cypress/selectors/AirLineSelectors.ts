@@ -40,4 +40,7 @@ export class AirLineSelectors {
     public static readonly CodeDigitCount = 2
     public static readonly ICAODigitCount = 3
     public static readonly TariffCodeDigitCount = 10
+
+    public static readonly CodeFilterCheckBox = "input[data-cy='CheckBox_Airline.F.Code']"
+
 }
