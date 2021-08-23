@@ -104,11 +104,6 @@ export class ShipmentOrderPM {
     public set DescriptionOfGoods(newValue: string) { if (this.descriptionOfGoods != newValue) { this.descriptionOfGoods = newValue; this.MarkAsDirty("DescriptionOfGoods"); } }
        
 	 
-    private shipmentTypeId: string;
-    public get ShipmentTypeId() { return this.shipmentTypeId; }
-    public set ShipmentTypeId(newValue: string) { if (this.shipmentTypeId != newValue) { this.shipmentTypeId = newValue; this.MarkAsDirty("ShipmentTypeId"); } }
-       
-	 
     private master: string;
     public get Master() { return this.master; }
     public set Master(newValue: string) { if (this.master != newValue) { this.master = newValue; this.MarkAsDirty("Master"); } }
@@ -117,6 +112,11 @@ export class ShipmentOrderPM {
     private house: string;
     public get House() { return this.house; }
     public set House(newValue: string) { if (this.house != newValue) { this.house = newValue; this.MarkAsDirty("House"); } }
+       
+	 
+    private carrierNumber: string;
+    public get CarrierNumber() { return this.carrierNumber; }
+    public set CarrierNumber(newValue: string) { if (this.carrierNumber != newValue) { this.carrierNumber = newValue; this.MarkAsDirty("CarrierNumber"); } }
        
 	 
     private vesselId: string;
@@ -164,11 +164,6 @@ export class ShipmentOrderPM {
     public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
        
 	 
-    private shipmentTypeName: string;
-    public get ShipmentTypeName() { return this.shipmentTypeName; }
-    public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
-       
-	 
     private isReadyForPickup: boolean;
     public get IsReadyForPickup() { return this.isReadyForPickup; }
     public set IsReadyForPickup(newValue: boolean) { if (this.isReadyForPickup != newValue) { this.isReadyForPickup = newValue; this.MarkAsDirty("IsReadyForPickup"); } }
@@ -192,6 +187,151 @@ export class ShipmentOrderPM {
     private bookingConfirmationDate: Date;
     public get BookingConfirmationDate() { return this.bookingConfirmationDate; }
     public set BookingConfirmationDate(newValue: Date) { if (this.bookingConfirmationDate != newValue) { this.bookingConfirmationDate = newValue; this.MarkAsDirty("BookingConfirmationDate"); } }
+       
+	 
+    private consigneeName: string;
+    public get ConsigneeName() { return this.consigneeName; }
+    public set ConsigneeName(newValue: string) { if (this.consigneeName != newValue) { this.consigneeName = newValue; this.MarkAsDirty("ConsigneeName"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
+    private agentName: string;
+    public get AgentName() { return this.agentName; }
+    public set AgentName(newValue: string) { if (this.agentName != newValue) { this.agentName = newValue; this.MarkAsDirty("AgentName"); } }
+       
+	 
+    private incotermCode: string;
+    public get IncotermCode() { return this.incotermCode; }
+    public set IncotermCode(newValue: string) { if (this.incotermCode != newValue) { this.incotermCode = newValue; this.MarkAsDirty("IncotermCode"); } }
+       
+	 
+    private accountManagerName: string;
+    public get AccountManagerName() { return this.accountManagerName; }
+    public set AccountManagerName(newValue: string) { if (this.accountManagerName != newValue) { this.accountManagerName = newValue; this.MarkAsDirty("AccountManagerName"); } }
+       
+	 
+    private vesselName: string;
+    public get VesselName() { return this.vesselName; }
+    public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
+       
+	 
+    private customsAgentName: string;
+    public get CustomsAgentName() { return this.customsAgentName; }
+    public set CustomsAgentName(newValue: string) { if (this.customsAgentName != newValue) { this.customsAgentName = newValue; this.MarkAsDirty("CustomsAgentName"); } }
+       
+	 
+    private specialServicesTypeName: string;
+    public get SpecialServicesTypeName() { return this.specialServicesTypeName; }
+    public set SpecialServicesTypeName(newValue: string) { if (this.specialServicesTypeName != newValue) { this.specialServicesTypeName = newValue; this.MarkAsDirty("SpecialServicesTypeName"); } }
+       
+	 
+    private forwarderName: string;
+    public get ForwarderName() { return this.forwarderName; }
+    public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
+       
+	 
+    private shipmentNumber: string;
+    public get ShipmentNumber() { return this.shipmentNumber; }
+    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
+       
+	 
+    private supplyDateTime: Date;
+    public get SupplyDateTime() { return this.supplyDateTime; }
+    public set SupplyDateTime(newValue: Date) { if (this.supplyDateTime != newValue) { this.supplyDateTime = newValue; this.MarkAsDirty("SupplyDateTime"); } }
+       
+	 
+    private originPortId: string;
+    public get OriginPortId() { return this.originPortId; }
+    public set OriginPortId(newValue: string) { if (this.originPortId != newValue) { this.originPortId = newValue; this.MarkAsDirty("OriginPortId"); } }
+       
+	 
+    private destinationPortId: string;
+    public get DestinationPortId() { return this.destinationPortId; }
+    public set DestinationPortId(newValue: string) { if (this.destinationPortId != newValue) { this.destinationPortId = newValue; this.MarkAsDirty("DestinationPortId"); } }
+       
+	 
+    private gatewayId: string;
+    public get GatewayId() { return this.gatewayId; }
+    public set GatewayId(newValue: string) { if (this.gatewayId != newValue) { this.gatewayId = newValue; this.MarkAsDirty("GatewayId"); } }
+       
+	 
+    private casualImporterName: string;
+    public get CasualImporterName() { return this.casualImporterName; }
+    public set CasualImporterName(newValue: string) { if (this.casualImporterName != newValue) { this.casualImporterName = newValue; this.MarkAsDirty("CasualImporterName"); } }
+       
+	 
+    private casualSupplierName: string;
+    public get CasualSupplierName() { return this.casualSupplierName; }
+    public set CasualSupplierName(newValue: string) { if (this.casualSupplierName != newValue) { this.casualSupplierName = newValue; this.MarkAsDirty("CasualSupplierName"); } }
+       
+	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
+       
+	 
+    private shipmentLevelName: string;
+    public get ShipmentLevelName() { return this.shipmentLevelName; }
+    public set ShipmentLevelName(newValue: string) { if (this.shipmentLevelName != newValue) { this.shipmentLevelName = newValue; this.MarkAsDirty("ShipmentLevelName"); } }
+       
+	 
+    private pODate: Date;
+    public get PODate() { return this.pODate; }
+    public set PODate(newValue: Date) { if (this.pODate != newValue) { this.pODate = newValue; this.MarkAsDirty("PODate"); } }
+       
+	 
+    private bookingConfirmationNumber: string;
+    public get BookingConfirmationNumber() { return this.bookingConfirmationNumber; }
+    public set BookingConfirmationNumber(newValue: string) { if (this.bookingConfirmationNumber != newValue) { this.bookingConfirmationNumber = newValue; this.MarkAsDirty("BookingConfirmationNumber"); } }
+       
+	 
+    private originPortName: string;
+    public get OriginPortName() { return this.originPortName; }
+    public set OriginPortName(newValue: string) { if (this.originPortName != newValue) { this.originPortName = newValue; this.MarkAsDirty("OriginPortName"); } }
+       
+	 
+    private destinationPortName: string;
+    public get DestinationPortName() { return this.destinationPortName; }
+    public set DestinationPortName(newValue: string) { if (this.destinationPortName != newValue) { this.destinationPortName = newValue; this.MarkAsDirty("DestinationPortName"); } }
+       
+	 
+    private gatewayName: string;
+    public get GatewayName() { return this.gatewayName; }
+    public set GatewayName(newValue: string) { if (this.gatewayName != newValue) { this.gatewayName = newValue; this.MarkAsDirty("GatewayName"); } }
+       
+	 
+    private directionName: string;
+    public get DirectionName() { return this.directionName; }
+    public set DirectionName(newValue: string) { if (this.directionName != newValue) { this.directionName = newValue; this.MarkAsDirty("DirectionName"); } }
+       
+	 
+    private directionId: string;
+    public get DirectionId() { return this.directionId; }
+    public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
+       
+	 
+    private carrierId: string;
+    public get CarrierId() { return this.carrierId; }
+    public set CarrierId(newValue: string) { if (this.carrierId != newValue) { this.carrierId = newValue; this.MarkAsDirty("CarrierId"); } }
+       
+	 
+    private carrierName: string;
+    public get CarrierName() { return this.carrierName; }
+    public set CarrierName(newValue: string) { if (this.carrierName != newValue) { this.carrierName = newValue; this.MarkAsDirty("CarrierName"); } }
+       
+	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
+    private securityKey: string;
+    public get SecurityKey() { return this.securityKey; }
+    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
        
 	 
 

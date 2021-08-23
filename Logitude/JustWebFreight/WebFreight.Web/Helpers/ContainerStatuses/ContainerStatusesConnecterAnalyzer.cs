@@ -57,9 +57,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerStatusRepository containerStatusRepository;
         private ShipmentRepository shipmentRepository;
         private ShipmentQuery shipmentQuery;
-
+        private string objectTableName = "Container";
+        private ShipmentPM shipmentPM;
         private string oceanInsightsId;
         private string container_number;
+        private string shipmentPackagesId;
+        private string container_number_FromXML;
         private string carrier_scac;
         private string container_status;
         private string details;
@@ -217,6 +220,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
                 container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+                container_number_FromXML = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
                 carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
                 container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
                 weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
@@ -280,7 +284,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                oceanInsights = this.logitudeOceanInsightsRequestRepository.GetLogitudeOceanInsightsRequestByContainerNumberAndScac(this.container_number, this.carrier_scac);
+                oceanInsights = this.logitudeOceanInsightsRequestRepository.GetLogitudeOceanInsightsRequestByContainerNumberAndScac(container_number_FromXML, this.carrier_scac);
                 scope.Complete();
             }
         }
@@ -302,13 +306,16 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
                             this.shipmentRepository = new ShipmentRepository(shipmentContext);
                             this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+                            this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
-                            if (this.eventCode == "0")
+                            if (this.eventCode == "0" && !string.IsNullOrEmpty(this.container_number))
                             {
+
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
                                 this.UpdateShipment(item);
+
                             }
                         }
                     }
@@ -317,30 +324,87 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
         }
 
+        private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
+        {
+             shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);
+        }
+
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             var containerNumber = oceanInsight.ContainerNumber;
-            //if (!string.IsNullOrEmpty(containerNumber))
-            //{
             container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
             containerId = container?.Id;
-            container_number = container?.ContainerNumber;
-            //}
+            container_number = this.GetContainerNumber(container, oceanInsight);
+            shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
+
+        private string GetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string containerNumber = ""; 
+            if(container != null)
+            {
+                containerNumber = container.ContainerNumber;
+            }
+            else
+            {
+                containerNumber = this.GetContainerNumberFromShipmentContainers(oceanInsight);
+            }
+
+            return containerNumber;
+        }
+
+        private string GetShipmentPackagesId(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string shipmentPackagesId = "";
+            if (container != null)
+            {
+                shipmentPackagesId = container.ShipmentPackagesId;
+            }
+            else
+            {
+                shipmentPackagesId = this.GetShipmentPackagesIdFromShipmentContainers(oceanInsight);
+            }
+
+            return shipmentPackagesId;
+        }
+
+        private string GetContainerNumberFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string containerNumber = "";
+            var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
+            if (package != null)
+            {
+                containerNumber = package.ContainerNumber;
+            }
+            else 
+            {
+                this.objectTableName = "Shipment"; // Container number does not found; open the log under shipment 
+            }
+            return containerNumber;
+        }
+
+        private string GetShipmentPackagesIdFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string shipmentPackagesId = "";
+            var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
+            if (package != null)
+            {
+                shipmentPackagesId = package.Id;
+                containerId = package.ContainerEntityId;
+            }
+
+            return shipmentPackagesId;
+        }
+
         private void AddContainerStatusCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
-            var objectTableName = "Container";
             this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
             this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
-            if (string.IsNullOrEmpty(container_number))
-            {
-                objectTableName = "Shipment";
-            }
-            this.GetCommuniactionLogObjectTableId(objectTableName);
+            this.GetCommuniactionLogObjectTableId();
             this.GetLoggedContactId();
             this.BuildCommunicationLog(oceanInsight);
         }
-        private void GetCommuniactionLogObjectTableId(string objectTableName)
+        private void GetCommuniactionLogObjectTableId()
         {
 
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(logitudeTenant.Value);
@@ -406,7 +470,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         private void CreateShipmentContainerStatus(LogitudeOceanInsightsRequest oceanInsight)
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
-
             DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime? eventDate = this.GetEventDate();
             double containerWeight = this.GetContainerWeight();
@@ -428,7 +491,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 Weight = containerWeight,
                 ReceivingDate = logDate,
                 EventDate = eventDate,
-                ContainerId = this.container.ShipmentPackagesId,
+                ContainerId = this.shipmentPackagesId,
                 ContainerNumber = this.container_number,
                 DepartureDate = departureDate,
                 ArrivalDate = arrivalDate,
@@ -619,11 +682,11 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.SaveContainer();
             }
         }
-        private void UpdatePackage(ShipmentPM shipment)
+        private void UpdatePackage()
         {
             DateTime todatDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
             DateTime? eventData = this.GetEventDate();
-            ShipmentPackagePM package = shipment.ShipmentPackages.Where(a=>a.Id == this.container.ShipmentPackagesId).FirstOrDefault();
+            ShipmentPackagePM package = shipmentPM.ShipmentPackages.Where(a=>a.Id == this.shipmentPackagesId).FirstOrDefault();
             string oceanInsightsSource = "OIN";
             if (package != null)
             {
@@ -801,17 +864,14 @@ namespace WebFreight.Web.Helpers.Analyzers
         bool isSavingShipment = false;
         private void UpdateShipment(LogitudeOceanInsightsRequest oceanInsight)
         {
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(oceanInsight.ShipmentId, logitudeTenant.Value);
-
             if (shipmentPM == null)
             {
                 throw new Exception("Analyzing shipment faild, shipment not found");
             }
-
             else
             {
                 isSavingShipment = false;
-                this.UpdatePackage(shipmentPM);
+                this.UpdatePackage();
                 List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
                 if (shipmentContainers.Count() == 1)
                 {

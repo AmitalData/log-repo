@@ -98,6 +98,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     ShowErrorMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
+    WhatsAppMessagingNumber: string = "00";
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -123,6 +124,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         }
         this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+            this.MapFieldsFromResponseData(MyResult);
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
                 //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
@@ -175,6 +177,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     }
 
+    MapFieldsFromResponseData(responseResult) {
+        if (responseResult.Data) {
+            this.WhatsAppMessagingNumber = responseResult.Data;
+        }
+    }
+
     private SetTotalAmountInNIS() {
         let ammount = 0;
         let maxDigitsAfterPoint = 0;
@@ -196,6 +204,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 clearTimeout(this.RefreshTimer);
             }
             this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+                this.MapFieldsFromResponseData(MyResult);
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
                     //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {

@@ -468,13 +468,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AssginedToCustomsAgentDate = entityPM.AssginedToCustomsAgentDate; 
             entityPoco.IsStandalonePickupDelivery = entityPM.IsStandalonePickupDelivery;
             entityPoco.ForwarderStandaloneShipmentId = entityPM.ForwarderStandaloneShipmentId;
+            entityPoco.ParentShipmentDirectionId = entityPM.ParentShipmentDirectionId;
+            entityPoco.ParentShipmentNumber = entityPM.ParentShipmentNumber;
+            entityPoco.ParentShipmentType = entityPM.ParentShipmentType;
             entityPoco.StandalonePickupDeliveryId = entityPM.StandalonePickupDeliveryId;
             entityPoco.ForwarderPickUpDeliveryType = entityPM.ForwarderPickUpDeliveryType;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
             entityPoco.HandlerUserId = entityPM.HandlerUserId;
             entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
-            entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate;
-
+            entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate; 
             entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
             entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;

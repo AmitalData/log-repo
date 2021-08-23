@@ -1905,27 +1905,41 @@ export function AssertCustomAgentAddress(customAgentDetails: CardDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentAddressesTab, null, true)
     AssertCardAddress(customAgentDetails)
 }
+
 export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentContactsTab, null, true)
     AssertCardContact(conatactDetails)
 }
+
 export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
+
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentBillingTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentBankName, customAgentBillingTabDetails.BankName)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentIBANNumber, customAgentBillingTabDetails.IBANNo)
 }
+
 export function AssertUpdateCustomAgent() {
-    AssertPutCustomAgent()
-}
-function AssertPutCustomAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCustomAgent, 200);
 }
+
+export function FillCardsCityAndCountryFeilds() {
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, "city");
+    cy.FillLogLov(MaintenanceSelectors.CardCountry, "AE", true);
+}
+
+export function FillTruckerRequiredFeilds() {
+    cy.get(MaintenanceSelectors.CardCode).clear()
+    cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, "company");
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, "city");
+    cy.FillLogLov(MaintenanceSelectors.CardCountry, "AE", true);
+}
 //#endregion
+
 //#region  trucker
 export function FillTruckerDetails(truckerDetails: CardDetails) {
     FillCardDetails(truckerDetails, 6)

@@ -37,6 +37,8 @@
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;Simplog.FreightLib.NewVendorCommand&quot;"
   DefaultText="&quot;Vendor&quot;"
+  NewButtonLocalDefaultText="&quot;הוסף ספק&quot;"
+  NewButtonDefaultText="&quot;New Vendor&quot;"
   Code="&quot;VNDR&quot;"
   Name="&quot;Vendors&quot;"
   GenerateDomainService="false"
@@ -5168,6 +5170,13 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Vendor.O.NewVendor&quot;"
+      DefaultText="&quot;New Vendor&quot;"
+      LocalDefaultText="&quot;הוסף ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

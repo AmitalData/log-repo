@@ -1244,7 +1244,8 @@ export class ShipmentPM {
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
-	 
+     
+
     private shipperNote: string;
     public get ShipperNote() { return this.shipperNote; }
     public set ShipperNote(newValue: string) { if (this.shipperNote != newValue) { this.shipperNote = newValue; this.MarkAsDirty("ShipperNote"); } }
@@ -3803,8 +3804,19 @@ export class ShipmentPM {
     private declarationXMLData: string;
     public get DeclarationXMLData() { return this.declarationXMLData; }
     public set DeclarationXMLData(newValue: string) { if (this.declarationXMLData != newValue) { this.declarationXMLData = newValue; this.MarkAsDirty("DeclarationXMLData"); } }
-       
-	 
+
+    private documentInspection: Date;
+    public get DocumentInspection() { return this.documentInspection; }
+    public set DocumentInspection(newValue: Date) { if (this.documentInspection != newValue) { this.documentInspection = newValue; this.MarkAsDirty("DocumentInspection"); } }
+
+    private gatepassDocumentsReady: Date;
+    public get GatepassDocumentsReady() { return this.gatepassDocumentsReady; }
+    public set GatepassDocumentsReady(newValue: Date) { if (this.gatepassDocumentsReady != newValue) { this.gatepassDocumentsReady = newValue; this.MarkAsDirty("GatepassDocumentsReady"); } }
+
+    private goodsClassification: Date;
+    public get GoodsClassification() { return this.goodsClassification; }
+    public set GoodsClassification(newValue: Date) { if (this.goodsClassification != newValue) { this.goodsClassification = newValue; this.MarkAsDirty("GoodsClassification"); } }
+
     private isImporterApprovalRequired: boolean;
     public get IsImporterApprovalRequired() { return this.isImporterApprovalRequired; }
     public set IsImporterApprovalRequired(newValue: boolean) { if (this.isImporterApprovalRequired != newValue) { this.isImporterApprovalRequired = newValue; this.MarkAsDirty("IsImporterApprovalRequired"); } }
@@ -4964,7 +4976,18 @@ export class ShipmentPM {
     public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
     public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
+    private parentShipmentDirectionId: string;
+    public get ParentShipmentDirectionId() { return this.parentShipmentDirectionId; }
+    public set ParentShipmentDirectionId(newValue: string) { if (this.parentShipmentDirectionId != newValue) { this.parentShipmentDirectionId = newValue; this.MarkAsDirty("ParentShipmentDirectionId"); } }      
 
+    private parentShipmentNumber: string;
+    public get ParentShipmentNumber() { return this.parentShipmentNumber; }
+    public set ParentShipmentNumber(newValue: string) { if (this.parentShipmentNumber != newValue) { this.parentShipmentNumber = newValue; this.MarkAsDirty("ParentShipmentNumber"); } }      
+
+    private parentShipmentType: string;
+    public get ParentShipmentType() { return this.parentShipmentType; }
+    public set ParentShipmentType(newValue: string) { if (this.parentShipmentType != newValue) { this.parentShipmentType = newValue; this.MarkAsDirty("ParentShipmentType"); } }      
+ 
     private isProductItemsUpdated: boolean;
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }

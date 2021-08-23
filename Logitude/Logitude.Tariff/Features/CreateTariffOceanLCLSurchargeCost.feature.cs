@@ -108,35 +108,35 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Freight",
                             "Ocean LCL Surcharge"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Name",
                             "specflow name"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "ContractNumber",
                             "43242312"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Seller",
-                            "Yangming marine transport corp"});
-                table5.AddRow(new string[] {
+                            "TestAgentExport"});
+                table6.AddRow(new string[] {
                             "Currency",
                             "EUR"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Notes",
                             "specflow note"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "FreightCharge",
                             "Ocean Freight"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Measurement",
                             "Gross Weight"});
 #line 5
- testRunner.Given("an ocean LCL surcharge cost tariff with the following properties", ((string)(null)), table5, "Given ");
+ testRunner.Given("an ocean LCL surcharge cost tariff with the following properties", ((string)(null)), table6, "Given ");
 #line hidden
 #line 15
  testRunner.When("create ocean LCL surcharge cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

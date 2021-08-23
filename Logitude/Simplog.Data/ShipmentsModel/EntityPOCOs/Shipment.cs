@@ -680,6 +680,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Card OnForwardingCarrierCard { get; set; }
         public virtual PickUpDeliveryTransportMode OnForwardingAdditionalTransportMode { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
+        public virtual Direction ParentShipmentDirection { get; set; }
+
         public bool IsHTSMissing { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
          
@@ -694,7 +699,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string HandlerUserId { get; set; }
 
         public string ForwarderPickUpDeliveryType { get; set; }
-        public string StandalonePickupDeliveryId { get; set; }
+        public string StandalonePickupDeliveryId { get; set; } 
 
     }
 }

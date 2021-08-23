@@ -64,6 +64,7 @@
     <Compile Include="EntityQueryServices\Generated\ShipmentOrderQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ShipmentOrderQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ShipmentOrderUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\ShipmentOrderUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ShipmentOrderModuleClassLevelValidator.cs" />
     <Compile Include="Validators\ShipmentOrderModuleClassLevelValidator.Shared.cs" />

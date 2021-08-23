@@ -915,6 +915,11 @@ export class TenantManagementPM {
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
        
 	 
+    private whatsAppMessagingPhoneNumber: string;
+    public get WhatsAppMessagingPhoneNumber() { return this.whatsAppMessagingPhoneNumber; }
+    public set WhatsAppMessagingPhoneNumber(newValue: string) { if (this.whatsAppMessagingPhoneNumber != newValue) { this.whatsAppMessagingPhoneNumber = newValue; this.MarkAsDirty("WhatsAppMessagingPhoneNumber"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

@@ -65,7 +65,6 @@ using Logitude.ShipmentOrderModule.Data;
 				   
 				   var temp = new ShipmentOrder(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.OrderNumber = MyEntityPM.OrderNumber;			  
 				   if(MyEntityPM.TransportModeId != null)
 				   {
@@ -109,49 +108,99 @@ using Logitude.ShipmentOrderModule.Data;
 			       
 					   				   }
 				   
-				   temp.PONumber = MyEntityPM.PONumber;			  
-				   if(MyEntityPM.ShipmentTypeId != null)
-				   {
-					   ShipmentTypeQueryService ShipmentTypeService6 = new ShipmentTypeQueryService(Tenant);
-					   					   temp.ShipmentType = ShipmentTypeService6.GetShipmentTypeById(MyEntityPM.ShipmentTypeId,Tenant); 
-			       
-					   				   }
-				   
+				   temp.PONumber = MyEntityPM.PONumber;
 				   temp.Master = MyEntityPM.Master;
 				   temp.House = MyEntityPM.House;			  
 				   if(MyEntityPM.VesselId != null)
 				   {
-					   VesselQueryService VesselService7 = new VesselQueryService(Tenant);
-					   					   temp.Vessel = VesselService7.GetVesselById(MyEntityPM.VesselId,Tenant); 
+					   VesselQueryService VesselService6 = new VesselQueryService(Tenant);
+					   					   temp.Vessel = VesselService6.GetVesselById(MyEntityPM.VesselId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.CustomsAgentId != null)
 				   {
-					   CardQueryService CardService8 = new CardQueryService(Tenant);
-					   					   temp.CustomsAgent = CardService8.GetCardById(MyEntityPM.CustomsAgentId,Tenant); 
+					   CardQueryService CardService7 = new CardQueryService(Tenant);
+					   					   temp.CustomsAgent = CardService7.GetCardById(MyEntityPM.CustomsAgentId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.SpecialServicesTypeId != null)
 				   {
-					   SpecialServicesTypeQueryService SpecialServicesTypeService9 = new SpecialServicesTypeQueryService(Tenant);
-					   					   temp.SpecialServicesType = SpecialServicesTypeService9.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant); 
+					   SpecialServicesTypeQueryService SpecialServicesTypeService8 = new SpecialServicesTypeQueryService(Tenant);
+					   					   temp.SpecialServicesType = SpecialServicesTypeService8.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.ForwarderId != null)
 				   {
-					   CardQueryService CardService10 = new CardQueryService(Tenant);
-					   					   temp.Forwarder = CardService10.GetCardById(MyEntityPM.ForwarderId,Tenant); 
+					   CardQueryService CardService9 = new CardQueryService(Tenant);
+					   					   temp.Forwarder = CardService9.GetCardById(MyEntityPM.ForwarderId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.IsReadyForPickup = MyEntityPM.IsReadyForPickup;
 				   temp.DescriptionOfGoods = MyEntityPM.DescriptionOfGoods;
 				   temp.TransportModeName = MyEntityPM.TransportModeName;
-				   temp.ShipmentTypeName = MyEntityPM.ShipmentTypeName;
-				   temp.CustomerReferences = MyEntityPM.CustomerReferences;					
+				   temp.CustomerReferences = MyEntityPM.CustomerReferences;
+				   temp.PickupEstimatedDateTime = MyEntityPM.PickupEstimatedDateTime;
+				   temp.PickupActualDateTime = MyEntityPM.PickupActualDateTime;
+				   temp.BookingConfirmationDate = MyEntityPM.BookingConfirmationDate;
+				   temp.ETD = MyEntityPM.ETD;
+				   temp.ETA = MyEntityPM.ETA;
+				   temp.ATD = MyEntityPM.ATD;
+				   temp.ATA = MyEntityPM.ATA;			  
+				   if(MyEntityPM.DirectionId != null)
+				   {
+					   DirectionQueryService DirectionService10 = new DirectionQueryService(Tenant);
+					   					   temp.Direction = DirectionService10.GetDirectionById(MyEntityPM.DirectionId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;
+				   temp.SupplyDateTime = MyEntityPM.SupplyDateTime;			  
+				   if(MyEntityPM.OriginPortId != null)
+				   {
+					   PortQueryService PortService11 = new PortQueryService(Tenant);
+					   					   temp.OriginPort = PortService11.GetPortById(MyEntityPM.OriginPortId,Tenant); 
+			       
+					   				   }
+				   			  
+				   if(MyEntityPM.DestinationPortId != null)
+				   {
+					   PortQueryService PortService12 = new PortQueryService(Tenant);
+					   					   temp.DestinationPort = PortService12.GetPortById(MyEntityPM.DestinationPortId,Tenant); 
+			       
+					   				   }
+				   			  
+				   if(MyEntityPM.GatewayId != null)
+				   {
+					   PortQueryService PortService13 = new PortQueryService(Tenant);
+					   					   temp.Gateway = PortService13.GetPortById(MyEntityPM.GatewayId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.CasualImporterName = MyEntityPM.CasualImporterName;
+				   temp.CasualSupplierName = MyEntityPM.CasualSupplierName;			  
+				   if(MyEntityPM.ShipmentLevelCode != null)
+				   {
+					   ShipmentLevelQueryService ShipmentLevelService14 = new ShipmentLevelQueryService(Tenant);
+					   					   temp.ShipmentLevel = ShipmentLevelService14.GetShipmentLevelByCode(MyEntityPM.ShipmentLevelCode,Tenant); 
+			       
+					   				   }
+				   
+				   temp.PODate = MyEntityPM.PODate;
+				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
+				   temp.CarrierNumber = MyEntityPM.CarrierNumber;			  
+				   if(MyEntityPM.CarrierId != null)
+				   {
+					   CardQueryService CardService15 = new CardQueryService(Tenant);
+					   					   temp.Carrier = CardService15.GetCardById(MyEntityPM.CarrierId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.CreateDate = MyEntityPM.CreateDate;
+				   temp.SecurityKey = MyEntityPM.SecurityKey;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -182,7 +231,6 @@ using Logitude.ShipmentOrderModule.Data;
 					{
 						temp.Id = MyEntity.Id;
 					}
-					temp.Tenant = MyEntity.Tenant;
 					temp.OrderNumber = MyEntity.OrderNumber;
 					TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.TransportMode != null)
@@ -257,18 +305,6 @@ using Logitude.ShipmentOrderModule.Data;
 			
 					
 					temp.PONumber = MyEntity.PONumber;
-					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
-					if(MyEntity.ShipmentType != null)
-					{
-						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeDataMappingAndValidatin(MyEntity.ShipmentType,Tenant,ComputingPartnerName);
-												if(myShipmentTypePM != null)
-						{
-							temp.ShipmentTypeId = myShipmentTypePM.Id;
-						}
-						 
-					}
-			
-					
 					temp.Master = MyEntity.Master;
 					temp.House = MyEntity.House;
 					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
@@ -322,8 +358,95 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.IsReadyForPickup = MyEntity.IsReadyForPickup;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					temp.TransportModeName = MyEntity.TransportModeName;
-					temp.ShipmentTypeName = MyEntity.ShipmentTypeName;
-					temp.CustomerReferences = MyEntity.CustomerReferences;					   
+					temp.CustomerReferences = MyEntity.CustomerReferences;
+					temp.PickupEstimatedDateTime = MyEntity.PickupEstimatedDateTime;
+					temp.PickupActualDateTime = MyEntity.PickupActualDateTime;
+					temp.BookingConfirmationDate = MyEntity.BookingConfirmationDate;
+					temp.ETD = MyEntity.ETD;
+					temp.ETA = MyEntity.ETA;
+					temp.ATD = MyEntity.ATD;
+					temp.ATA = MyEntity.ATA;
+					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
+					if(MyEntity.Direction != null)
+					{
+						var myDirectionPM = DirectionDirectionService.DirectionDataMappingAndValidatin(MyEntity.Direction,Tenant,ComputingPartnerName);
+												if(myDirectionPM != null)
+						{
+							temp.DirectionId = myDirectionPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.ShipmentNumber = MyEntity.ShipmentNumber;
+					temp.SupplyDateTime = MyEntity.SupplyDateTime;
+					PortQueryService OriginPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.OriginPort != null)
+					{
+						var myOriginPortPM = OriginPortPortService.PortDataMappingAndValidatin(MyEntity.OriginPort,Tenant,ComputingPartnerName);
+												if(myOriginPortPM != null)
+						{
+							temp.OriginPortId = myOriginPortPM.Id;
+						}
+						 
+					}
+			
+					
+					PortQueryService DestinationPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.DestinationPort != null)
+					{
+						var myDestinationPortPM = DestinationPortPortService.PortDataMappingAndValidatin(MyEntity.DestinationPort,Tenant,ComputingPartnerName);
+												if(myDestinationPortPM != null)
+						{
+							temp.DestinationPortId = myDestinationPortPM.Id;
+						}
+						 
+					}
+			
+					
+					PortQueryService GatewayPortService = new PortQueryService(Tenant);
+					if(MyEntity.Gateway != null)
+					{
+						var myGatewayPM = GatewayPortService.PortDataMappingAndValidatin(MyEntity.Gateway,Tenant,ComputingPartnerName);
+												if(myGatewayPM != null)
+						{
+							temp.GatewayId = myGatewayPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.CasualImporterName = MyEntity.CasualImporterName;
+					temp.CasualSupplierName = MyEntity.CasualSupplierName;
+					ShipmentLevelQueryService ShipmentLevelShipmentLevelService = new ShipmentLevelQueryService(Tenant);
+					if(MyEntity.ShipmentLevel != null)
+					{
+						var myShipmentLevelPM = ShipmentLevelShipmentLevelService.ShipmentLevelDataMappingAndValidatin(MyEntity.ShipmentLevel,Tenant,ComputingPartnerName);
+												if(myShipmentLevelPM != null)
+						{
+							temp.ShipmentLevelCode = myShipmentLevelPM.Code;
+						}
+						 
+					}
+			
+					
+					temp.PODate = MyEntity.PODate;
+					temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
+					temp.CarrierNumber = MyEntity.CarrierNumber;
+					CardQueryService CarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.Carrier != null)
+					{
+						var myCarrierPM = CarrierCardService.CardDataMappingAndValidatin(MyEntity.Carrier,Tenant,ComputingPartnerName);
+												if(myCarrierPM != null)
+						{
+							temp.CarrierId = myCarrierPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.CreateDate = MyEntity.CreateDate;
+					temp.SecurityKey = MyEntity.SecurityKey;					   
 					   return temp;
 		    }
             catch (Exception ex)

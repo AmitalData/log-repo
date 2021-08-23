@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -99,8 +100,7 @@ namespace WebFreight.Web.App_Code
                     {
                         LogPM.Refrence = LogBoxShipment.ForwarderShipmentNumber;
                         apiLogsService.Update(LogPM);
-
-                        LogBoxShipment.IsImporterApprovalRequired = true;
+                        LogBoxShipment.IsImporterApprovalRequired = GetIsImporterApprovalRequriedValue(ApprovalRequest);
                         LogBoxShipment.DeclarationXMLData = ApprovalRequest.DeclarationXmlData;
                         string systemEmail = "system@tenant" + ApprovalRequest.Tenant + ".com";
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(ApprovalRequest.Tenant);
@@ -140,6 +140,13 @@ namespace WebFreight.Web.App_Code
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private bool GetIsImporterApprovalRequriedValue(DeclarationApprovalRequestPM ApprovalRequest)
+        {
+            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
+            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(ApprovalRequest.DeclarationXmlData);
+            return IsImporterApprovalRequried;
         }
     }
 }

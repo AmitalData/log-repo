@@ -1,4 +1,4 @@
-@release @all @stable @weekly
+@release @all @dev @weekly
 Feature: Special Services Type Create and Edit it in Maintenance Module
     The user creates a Special Services Type and edits it from the Maintenance Module.
 

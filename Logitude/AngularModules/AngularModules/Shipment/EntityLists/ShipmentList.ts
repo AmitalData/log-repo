@@ -55,6 +55,7 @@ export class ShipmentList {
 		TruckNumber: string;
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
+		Agent: string;
 		AgentComputed: string;
 		AgentComputedName: string;
 		CustomFieldId: string;
@@ -459,6 +460,9 @@ export class ShipmentList {
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
 		IsStandalonePickupDelivery: boolean;
+		ParentShipmentNumber: string;
+		ParentShipmentType: string;
+		ParentShipmentDirectionId: string;
 		IsHTSMissing: boolean;
 		PrivateLabelInvoiceNumber: string;
 		RequestedFlightDate: Date;
@@ -469,5 +473,6 @@ export class ShipmentList {
 		HandlerUserId: string;
 		HandlerUserName: string;
 		StandalonePickupDeliveryId: string;
+		GrossWeightUnitCode: string;
 	
 }

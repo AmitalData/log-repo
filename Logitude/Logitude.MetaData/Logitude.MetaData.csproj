@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBScripts\InvoiceModel\202119801206_UpdateSATInterfaceSettings.sxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APInvoices.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
@@ -321,6 +322,7 @@
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
     <None Include="DBScripts\InvoiceModel\202107111221_FillBankAccountLiteSearchFields.sxml" />
+    <None Include="DBScripts\InvoiceModel\202108161155_ClearReceivableIdFromAutoCreditInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
@@ -334,7 +336,6 @@
     </None>
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
-    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
@@ -950,6 +951,7 @@
     <None Include="DBTables\InvoiceModel\SATInvoiceStatus.dxml" />
     <None Include="DBTables\InvoiceModel\SATPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\SATTransferStatus.dxml" />
+    <None Include="DBTables\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBTables\QuoteModel\BorderType.dxml" />
     <None Include="DBTables\QuoteModel\MarkUpType.dxml" />
     <None Include="DBTables\QuoteModel\Quote.dxml" />

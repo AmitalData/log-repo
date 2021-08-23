@@ -18,6 +18,10 @@
                                     <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
                                 </div>
 
+                                <div *ngIf="FieldName == 'ParentShipmentDirectionId' && FieldValue != null" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['ParentShipmentDirectionId']" />
+                                </div>
+
                                 <div *ngIf="FieldName == 'Routing'" class="TemplateTrimming">
                                     <div class="TemplateTrimmingChild">{{FieldValue | ReplacePipe:',':'>'}}</div>
                                 </div>
@@ -151,6 +155,10 @@
                                     <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
                                 </div>
 
+                                <div *ngIf="FieldName == 'ParentShipmentDirectionId' && FieldValue != null" class="MediaFillRelative">
+                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['ParentShipmentDirectionId']" />
+                                </div>
+
                                 <div *ngIf="FieldName == 'IsDangerous' && Entity['IsDangerous'] == true" class="MediaFillRelative">
                                     <img class="CenterCenter" src="./Images/Nuke.png" />
                                 </div>
@@ -176,16 +184,16 @@
                                 </div>
 
                                 <!--<div *ngIf="FieldName == 'MarksAndNumbers' && FieldValue" style="height: 100%; width: 100%; position: relative;">
-                        <div class="CenterCenter" style="height: 16px; width: 16px;">
-                            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Marks And Numbers'" [Body]="FieldValue"></CellTooltip>
-                        </div>
-                    </div>
+        <div class="CenterCenter" style="height: 16px; width: 16px;">
+            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Marks And Numbers'" [Body]="FieldValue"></CellTooltip>
+        </div>
+    </div>
 
-                    <div *ngIf="FieldName == 'Description' && FieldValue" style="height: 100%; width: 100%; position: relative;">
-                        <div class="CenterCenter" style="height: 16px; width: 16px;">
-                            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Description'" [Body]="FieldValue"></CellTooltip>
-                        </div>
-                    </div>-->
+    <div *ngIf="FieldName == 'Description' && FieldValue" style="height: 100%; width: 100%; position: relative;">
+        <div class="CenterCenter" style="height: 16px; width: 16px;">
+            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Description'" [Body]="FieldValue"></CellTooltip>
+        </div>
+    </div>-->
 
                                 <div class="TemplateTrimming" *ngIf="FieldName == 'Description' && FieldValue" [title]="Entity['Description']">
                                     <div class="TemplateTrimmingChild">{{FieldValue}}</div>

@@ -952,7 +952,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 IsHybrid = true,
                 Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
                 PartnerTypeId = item.Type,
-                CustomerStatusCode = "ACT",
+                CustomerStatusCode = item.Type == "PO" ? "POT" : "ACT",
                 IsCustomer = true,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,

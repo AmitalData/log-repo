@@ -85,9 +85,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
-
-                if (s == "FollowupsChangedMainMenu") {
-                    this.entityArgs.EditComponent.ReloadEntityPM();
+                
+                if (s == "ReloadForwarderShipmentFromStandAlone") {
+                      this.entityArgs.EditComponent.ReloadEntityPM();
                 }
             });
 
@@ -108,6 +108,10 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsShowAddChildLeg = false;
                         this.ViewAddChildLedWindow();
                     }
+                } else {
+                    this.IsShowStanadAloneActionsWindow = false;
+                    this.IsShowEditLegWindow = false;
+                    this.IsShowAddChildLeg = false;
                 }
             });
 
@@ -535,7 +539,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     EditLeg(myRoutingItem: RoutingItem) {
         this.myRoutingItem = myRoutingItem;
-        if (this.IsAddingStandaloneShipmentVisible) {
+        if (this.IsAddingStandaloneShipmentVisible && ["Pick Up", "Delivery"].includes(myRoutingItem.LegType)) {
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
 

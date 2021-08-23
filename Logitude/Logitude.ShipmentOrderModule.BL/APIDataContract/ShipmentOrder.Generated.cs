@@ -22,8 +22,6 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
 	    
     public string Id { get; set; }
     
-    public int Tenant { get; set; }
-    
     public string OrderNumber { get; set; }
     
     public TransportMode TransportMode { get; set; }
@@ -39,8 +37,6 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public User AccountManager { get; set; }
     
     public string PONumber { get; set; }
-    
-    public ShipmentType ShipmentType { get; set; }
     
     public string Master { get; set; }
     
@@ -60,8 +56,50 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public string TransportModeName { get; set; }
     
-    public string ShipmentTypeName { get; set; }
-    
     public string CustomerReferences { get; set; }
+    
+    public DateTime? PickupEstimatedDateTime { get; set; }
+    
+    public DateTime? PickupActualDateTime { get; set; }
+    
+    public DateTime? BookingConfirmationDate { get; set; }
+    
+    public DateTime? ETD { get; set; }
+    
+    public DateTime? ETA { get; set; }
+    
+    public DateTime? ATD { get; set; }
+    
+    public DateTime? ATA { get; set; }
+    
+    public Direction Direction { get; set; }
+    
+    public string ShipmentNumber { get; set; }
+    
+    public DateTime? SupplyDateTime { get; set; }
+    
+    public Port OriginPort { get; set; }
+    
+    public Port DestinationPort { get; set; }
+    
+    public Port Gateway { get; set; }
+    
+    public string CasualImporterName { get; set; }
+    
+    public string CasualSupplierName { get; set; }
+    
+    public ShipmentLevel ShipmentLevel { get; set; }
+    
+    public DateTime? PODate { get; set; }
+    
+    public string BookingConfirmationNumber { get; set; }
+    
+    public string CarrierNumber { get; set; }
+    
+    public Card Carrier { get; set; }
+    
+    public DateTime CreateDate { get; set; }
+    
+    public string SecurityKey { get; set; }
     }
 } 

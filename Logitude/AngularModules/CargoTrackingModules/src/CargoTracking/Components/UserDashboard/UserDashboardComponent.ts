@@ -71,14 +71,18 @@ export class UserDashboardComponent implements AfterViewInit
 
     private GetLoggedUserIfNotSet()
     {
-        if (!SessionInfo.LoggedUserPM) {
+        if(SessionInfo.LoggedContact){
+            this.UserName = SessionInfo.LoggedContact.EnglishName;
+            this.SetFirstUserLetters(SessionInfo.LoggedContact.EnglishName);
+        }else if (SessionInfo.LoggedUserPM) {
+            this.UserName = SessionInfo.LoggedUserPM.EnglishName;
+            this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+        } else{
             var tenant = sessionStorage.getItem("LoggedUserTenant");
             var email = sessionStorage.getItem("LoggedUserEmail");
             this.GetLoggedUserPM(email, tenant);
-        }else{
-            this.UserName = SessionInfo.LoggedUserPM.EnglishName;
-            this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
         }
+
     }
 
     private GetLoggedUserPM(email: any, tenant: any)
@@ -89,16 +93,32 @@ export class UserDashboardComponent implements AfterViewInit
                 SessionInfo.LoggedUserPM = loggedUserPM;
                 this.UserName = SessionInfo.LoggedUserPM.EnglishName;
                 this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+            }else{
+                this.GetLoggedContact();
             }
         });
     }
+
+    private GetLoggedContact()
+    {
+        this.brandingService.GetLoggedContact().subscribe((loggedContact: any) =>
+        {
+            if (loggedContact) {
+                SessionInfo.LoggedContact = loggedContact;
+                this.UserName = SessionInfo.LoggedContact.EnglishName;
+                this.SetFirstUserLetters(SessionInfo.LoggedContact.EnglishName);
+
+            }
+        });
+    }
+
     private SetFirstUserLetters(userName: string)
     {
         if (userName) {
             var splitted = userName.split(" ");
             if (splitted.length == 1)
                 this.UserNameFirstLetters = splitted[0][0];
-            else if (splitted.length == 2)
+            else if (splitted.length >= 2)
                 this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
             else if (splitted.length == 0)
                 this.UserNameFirstLetters = "Aa";
@@ -202,6 +222,8 @@ export class UserDashboardComponent implements AfterViewInit
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
 
-
+    BackLinkClicked() {
+        this.router.navigate(['cargo-tracking', 'shipments']);
+    }
 
 }

@@ -249,7 +249,7 @@ h1{
 }
 
 .record-row .column .value {
-    height: 40px;
+    height: 20px;
     overflow: hidden;
 }
 
@@ -460,7 +460,7 @@ h1{
 
 
       .selected-filters{
-          margin-top: 30px;
+          margin-top: 10px;
       }
 
 
@@ -512,7 +512,7 @@ h1{
     }
 
 .row-count {
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 16px;
     color: var(--MainColor);
 }
@@ -795,7 +795,7 @@ h1{
 
 .direction-icon{
     position: relative;
-    bottom: -30px;
+    bottom: -10px;
     transform: rotate(45deg);
 }
 

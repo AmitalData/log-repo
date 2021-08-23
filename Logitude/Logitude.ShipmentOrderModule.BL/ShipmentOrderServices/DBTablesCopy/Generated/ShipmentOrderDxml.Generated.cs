@@ -57,16 +57,28 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='DescriptionOfGoods' Type='nvarchar' Size='2000'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ShipmentTypeId' Type='varchar' Size='4'>"+
-"    <Constraints Nullable='true' />"+
-"  </Column>"+
 "  <Column Name='Master' Type='varchar' Size='20'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='House' Type='varchar' Size='20'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='CarrierNumber' Type='varchar' Size='40'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='VesselId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ETD' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ETA' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ATD' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ATA' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CustomsAgentId' Type='varchar' Size='15'>"+
@@ -93,6 +105,48 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='BookingConfirmationDate' Type='date'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='ShipmentNumber' Type='varchar' Size='20'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='SupplyDateTime' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='OriginPortId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DestinationPortId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GatewayId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CasualImporterName' Type='varchar' Size='70'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CasualSupplierName' Type='varchar' Size='70'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='PODate' Type='date'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingConfirmationNumber' Type='varchar' Size='25'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DirectionId' Type='char' Size='1'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='CarrierId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='IsCancelled' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='UpdatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='TransportModeId' ReferencedTable='TransportModes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
@@ -101,12 +155,18 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='AgentId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='IncotermId' ReferencedTable='Incoterms' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='AccountManagerId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
-"  <Relation ForeignKeyColumn='ShipmentTypeId' ReferencedTable='ShipmentTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='VesselId' ReferencedTable='Vessels' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CustomsAgentId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='SpecialServicesTypeId' ReferencedTable='SpecialServicesTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='ForwarderId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='OriginPortId' ReferencedTable='Ports' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='DestinationPortId' ReferencedTable='Ports' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='GatewayId' ReferencedTable='Ports' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='ShipmentLevelCode' ReferencedTable='ShipmentLevels' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='DirectionId' ReferencedTable='Directions' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='CarrierId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='Tenant,OrderNumber' />"+
+"  <UniqueConstraint Columns='Tenant,OrderNumber' />"+
 "</Table>";
 		
 		   return dxmlFile;

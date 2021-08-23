@@ -379,6 +379,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
+
+
+                    if (button.EventCode == "SendCartaPorte") {
+                        button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || !SessionLocator.SATInterfaceSettings.IsCartaPorteTransferEnabled;
+
+                    }
                 }
 
                 return menuButtons;

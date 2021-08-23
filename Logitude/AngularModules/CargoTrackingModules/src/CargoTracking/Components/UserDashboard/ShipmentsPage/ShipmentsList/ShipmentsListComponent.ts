@@ -10,6 +10,8 @@ import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTra
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
+import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -71,6 +73,7 @@ export class ShipmentsListComponent implements AfterViewInit
         private changeDetector: ChangeDetectorRef,
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
 
@@ -456,7 +459,16 @@ export class ShipmentsListComponent implements AfterViewInit
         }
     }
 
+    GetConsignmentNumberForCustomsForwardingShipment(shipment: CargoTrackingShipmentList) {
+        if (shipment.ForwardingShipmentLevelCode == 'D') {
+            this.ConsignmentNumber = shipment.ForwardingMaster;
+        }
 
+        else if (shipment.ForwardingShipmentLevelCode == 'H') {
+            this.ConsignmentNumber = shipment.ForwardingHouse;
+        }
+        return this.ConsignmentNumber;
+    }
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
             this.TitleOfEstimationORActualDate = 'ATA'
@@ -487,6 +499,14 @@ export class ShipmentsListComponent implements AfterViewInit
 
     }
 
+    OpenMessageWindow(references) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.slice(1, references.length + 1).join("\n"),
+            }
+        });
+    } 
 
     GetModeIcon(mode: string)
     {

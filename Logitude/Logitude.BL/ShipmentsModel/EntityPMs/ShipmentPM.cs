@@ -2084,6 +2084,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsCreatedFromCustomerOverview { get; set; }
 
         public string DeclarationXMLData { get; set; }
+        public DateTime? DocumentInspection { get; set; }
+        public DateTime? GatepassDocumentsReady { get; set; }
+        public DateTime? GoodsClassification { get; set; }
         public bool IsImporterApprovalRequired { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public bool UpdateSendUpdatesToAgentEnabledField { get; set; }
@@ -2680,12 +2683,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        // Standalone shipment
         public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
         public string StandalonePickupDeliveryNumber { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
         public string ForwarderPickUpDeliveryType { get; set; }
-
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrivateLabelInvoiceNumber { get; set; }

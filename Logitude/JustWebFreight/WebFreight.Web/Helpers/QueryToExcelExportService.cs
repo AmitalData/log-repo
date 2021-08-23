@@ -96,7 +96,8 @@ namespace WebFreight.Web.Helpers
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
 
             SecurityUtility.IsWorkerRoleCall = Logitude.BL.Security.SecurityUtility.IsWorkerRoleCall = args.IsWorkerRoleCall;
-             
+            Logitude.CRM.Data.Helpers.Tools.AuthenticatedUserEmail = args.LoggedUserEmail;
+
             var data = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs()
             {
                 XmlFilters = arrayOfBytes,
