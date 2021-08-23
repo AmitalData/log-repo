@@ -24,7 +24,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     {  
         private NewAExporterShipmentAM shipment;
         private ICommonDataContext commonContext;
-        string action = "NewExporterShipment";
+        string action = "NewAExporterShipment";
 
         public ForwarderExportShipmentsServie(NewAExporterShipmentAM newAExporterShipmentAM)
         {
@@ -192,10 +192,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private string GetActionName()
         {
-            string action = "NewExporterShipment";
+            string action = "NewAExporterShipment";
             // if (Shipment.SendUpdatesToAgentEnabled)
             // {
-            //     myAction = "UpdateExporterShipment";
+            //     myAction = "UpdateAExporterShipment";
             // }
             return action;
         }

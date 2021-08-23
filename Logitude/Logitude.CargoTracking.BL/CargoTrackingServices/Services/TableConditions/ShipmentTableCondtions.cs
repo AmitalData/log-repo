@@ -28,7 +28,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA ";
+                ", Mas.MainCarriageETA  as MainCarriageETA " +
+                ", Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
                 "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
@@ -44,9 +45,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
 
+            var shipmentAdditionalDataFields =
+             "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
+             "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
+
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
-            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields}";
+            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}";
 
 
 
@@ -56,7 +62,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id ";
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
 
 
             List<string> whereConditions = new List<string>();
@@ -102,6 +109,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
+                    Mas.ImportManifest,
                     Mas.MainCarriageETA";
 
 
@@ -133,23 +141,29 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA";
+                ", Mas.MainCarriageETA  as MainCarriageETA"+
+                ", Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
-          "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
-          " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
-          " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
-          " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
-          " min(P.House) as ForwardingHouse, " +
-          " min(Mas.Master) as ForwardingMaster, " +
-          " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
-          " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
-          " min(P.ShipperName) as ForwardingShipperName, " +
-          " min(P.ConsigneeName) as ForwardingConsigneeName, " +
-          " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
+              "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
+              " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
+              " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
+              " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
+              " min(P.House) as ForwardingHouse, " +
+              " min(Mas.Master) as ForwardingMaster, " +
+              " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
+              " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
+              " min(P.ShipperName) as ForwardingShipperName, " +
+              " min(P.ConsigneeName) as ForwardingConsigneeName, " +
+              " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
+
+            var shipmentAdditionalDataFields =
+             "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
+             "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} ";
+            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} ";
 
 
 
@@ -160,7 +174,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
-                         LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId ";
+                            LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
+                            LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
 
 
 
@@ -211,6 +226,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
+                    Mas.ImportManifest,
                     Mas.MainCarriageETA";
 
 

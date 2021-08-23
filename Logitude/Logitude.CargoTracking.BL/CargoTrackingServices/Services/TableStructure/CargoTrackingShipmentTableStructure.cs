@@ -57,8 +57,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             columnsForCopy.Add("ExceptionDate");
             columnsForCopy.Add("ExceptionDescription");
-
-
+         
             return string.Join(",", columnsForCopy.ToArray());
         }
 

@@ -33,7 +33,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string UserIdNumberXMLData { get; set; }
         public string UserIdNumber { get; set; }
         public string DocumentsApprovedByUserName { get; set; }
-
+        public DateTime? DocumentInspection { get; set; }
+        public DateTime? GatepassDocumentsReady { get; set; }
+        public DateTime? GoodsClassification { get; set; }
 
         /*
                  IsUserIDNumberRequired (Bit)

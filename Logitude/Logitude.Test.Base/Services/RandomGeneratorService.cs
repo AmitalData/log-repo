@@ -22,7 +22,7 @@ namespace Logitude.Test.Base.Models.Infrastructure
 
         }
 
-        public string RandomGuid()
+        public static string RandomGuid()
         {
             return Guid.NewGuid().ToString();
         }

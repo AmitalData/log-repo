@@ -29,9 +29,10 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerAdditionalService", "READ", tenant);
-                CustomerAdditionalServiceQuery customerAdditionalServiceQuery = new CustomerAdditionalServiceQuery(tenant);
+                //CustomerAdditionalServiceQuery customerAdditionalServiceQuery = new CustomerAdditionalServiceQuery(tenant);
 
-                return customerAdditionalServiceQuery.GetCustomerAdditionalServicesDW(tenant);
+                //return customerAdditionalServiceQuery.GetCustomerAdditionalServicesDW(tenant);
+                return new List<CustomerAdditionalServiceDW>();
             }
 
             catch (Exception ex)

@@ -1,8 +1,9 @@
-
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
+import { ShipmentOrderHelperComponent } from './Components/Helpers/ShipmentOrderHelperComponent';
 export const Components =
     [
         FieldTemplateComponent,
+        ShipmentOrderHelperComponent
     ];
 
 export class ModuleDeclarations {
@@ -12,6 +13,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
+            case "ShipmentOrderHelperComponent": { myResult = ShipmentOrderHelperComponent; break; }
 
         }
 

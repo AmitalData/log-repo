@@ -1,9 +1,18 @@
-@release @all @stable @weekly 
+@release @all @dev @weekly
 Feature: Shipping Agent Create and Edit it in Maintenance Module
     The user creates a shipping agent and edits it from the Maintenance Module.
 
-    Scenario: Create a new shipping agent
+    Scenario: Add shipping agent city with lenght more than 25
         Given the user logged in and navigate to "Shipping Agents" in maintenance menu
+        When add "012345678901234567890123456789" as city
+        Then a validation message with "City Field must be less than 25" error should appear
+
+    Scenario: Assert create shipping agent without compnay name
+        Given the user fill the required fields except the company
+        When create shipping agent
+        Then a validation single message with "Name Field is Required" error should appear
+
+    Scenario: Create a new shipping agent
         And a shipping agent with the following details
             | CompanyName | Testing Shipping Agent Weekly Scenario |
             | LocalName   | Testing Shipping Agent Weekly Scenario |

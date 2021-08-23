@@ -1,15 +1,17 @@
 ﻿<Configurations>
 
-  <ServerSettings>
-    <Url>https://test.logitudeworld.com/test/api</Url>
-  </ServerSettings>
+	<ServerSettings>
+		<Url>https://test.logitudeworld.com/test/api</Url>
+	</ServerSettings>
 
-  <Users>
-    <User Default="true" Email="specflowtest@logitudeworld.com" Password="Spec_Flow21" />
-    <User Email="protractor@test.com" Password="!P123t456" />
-  </Users>
+	<Users>
+		<User Default="true" Email="specflowtest@logitudeworld.com" Password="Spec_Flow21" />
+		<User Email="protractor@test.com" Password="!P123t456" />
+		<!--<User Email="specflowtest_customercare@logitudeworld.com" Password="Spec_Flow_CC21" />-->
 
- <!--<ServerSettings>
+	</Users>
+
+	<!--<ServerSettings>
     <Url>http://localhost:9996/api</Url>
   </ServerSettings>
 

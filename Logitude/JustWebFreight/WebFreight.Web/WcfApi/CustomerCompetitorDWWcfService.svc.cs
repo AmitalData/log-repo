@@ -29,9 +29,10 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerCompetitor", "READ", tenant);
-                CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(tenant);
+                //CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(tenant);
 
-                return customerCompetitorQuery.GetCustomerCompetitorsDW(tenant);
+                //return customerCompetitorQuery.GetCustomerCompetitorsDW(tenant);
+                return new List<CustomerCompetitorDW>();
             }
 
             catch (Exception ex)

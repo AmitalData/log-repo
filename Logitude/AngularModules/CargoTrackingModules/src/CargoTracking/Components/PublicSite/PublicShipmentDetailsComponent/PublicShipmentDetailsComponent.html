@@ -134,34 +134,53 @@
                         </div>
                         <div class="end">
 
-                            <svg width="24px" height="33px" viewBox="0 0 24 33" version="1.1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <svg *ngIf="Delivered || (!Delivered && !AssignedTruckerDone)" width="24px" height="33px" viewBox="0 0 24 33" version="1.1"
+                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>77E5C82D-08E6-4278-98AE-10E5958AFF86</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <g id="Styleguide-1" transform="translate(-982.000000, -713.000000)"
-                                        [attr.fill]="DileveredIconColor">
+                                       [attr.fill]="DileveredIconColor">
                                         <g id="Delivered" transform="translate(325.000000, 713.000000)">
-                                            <path
-                                                d="M669,0 C675.627402,0 681,5.35580833 681,11.9625 C681,20.2293208 669,33 669,33 C669,33 657,20.2293208 657,11.9625 C657,5.35580833 662.372598,0 669,0 Z M669,5.5 C665.49138,5.5 662.647059,8.27025 662.647059,11.6875 C662.647059,15.10475 665.49138,17.875 669,17.875 C672.508663,17.875 675.352941,15.10475 675.352941,11.6875 C675.352941,8.27025 672.508663,5.5 669,5.5 Z"
-                                                id="PIN-icon-Active"></path>
+                                            <path d="M669,0 C675.627402,0 681,5.35580833 681,11.9625 C681,20.2293208 669,33 669,33 C669,33 657,20.2293208 657,11.9625 C657,5.35580833 662.372598,0 669,0 Z M669,5.5 C665.49138,5.5 662.647059,8.27025 662.647059,11.6875 C662.647059,15.10475 665.49138,17.875 669,17.875 C672.508663,17.875 675.352941,15.10475 675.352941,11.6875 C675.352941,8.27025 672.508663,5.5 669,5.5 Z"
+                                                  id="PIN-icon-Active"></path>
                                         </g>
                                     </g>
                                 </g>
                             </svg>
-                            <div *ngIf="!Delivered" class="label dim">Delivered</div>
+                            <svg *ngIf="!Delivered && AssignedTruckerDone" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
+                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
+                                <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)"
+                                       fill="var(--secondaryColor)">
+                                        <g transform="translate(308.000000, 934.000000)">
+                                            <g transform="translate(45.000000, 46.000000)">
+                                                <g id="Group-3">
+                                                    <path [attr.d]="GetModesvgPath()" [attr.transform]="transform" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <div class="label" *ngIf="!Delivered && AssignedTruckerDone">{{currentMilestoneName||'In Progress'}}</div>
+                            <div class="details" *ngIf="!Delivered && AssignedTruckerDone">{{Date | date: 'dd/MM/yyyy'}}</div>
+
+                            <div *ngIf="!Delivered && !AssignedTruckerDone" class="label dim">Delivered</div>
                             <div *ngIf="Delivered" class="label">Delivered</div>
                             <!-- <div class="details">details</div> -->
                         </div>
                     </div>
 
                     <div class="line-progressbar">
-                        <div class="line" [class.colored-line]="InProgressShipment||Delivered"></div>
-                        <div class="line end" [class.colored-line]="Delivered"></div>
+                        <div class="line" [class.colored-line]="InProgressShipment||Delivered || AssignedTruckerDone"></div>
+                        <div class="line end" [class.colored-line]="Delivered || AssignedTruckerDone"></div>
 
                         <div class="dot start"></div>
                         <div class="dot middle" [class.outline]="InProgressShipment" [class.colored]="Delivered"
                             *ngIf="InProgressShipment || Delivered"></div>
-                        <div class="dot end gray" [class.colored]="Delivered"></div>
+                        <div class="dot end gray" [class.colored]="Delivered || AssignedTruckerDone"></div>
                     </div>
 
                 </div>
@@ -250,13 +269,17 @@
                         </ul>
                         &nbsp;
                         <a *ngIf="ShipmentContainers.length > 2" (click)="showMoreContainers=!showMoreContainers"
-                            style="cursor: pointer;text-decoration: underline; font-size: 11px;">
+                           style="cursor: pointer;text-decoration: underline; font-size: 11px;">
                             {{showMoreContainers?'Show Less':'See all'}}
                         </a>
                     </div>
 
                 </div>
 
+                <div class="field">
+                    <div class="label">Import Manifest</div>
+                    <div class="value">{{Shipment.ImportManifest}}</div>
+                </div>
 
             </div>
 

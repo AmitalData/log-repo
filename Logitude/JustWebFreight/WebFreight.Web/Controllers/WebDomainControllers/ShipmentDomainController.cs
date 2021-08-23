@@ -642,12 +642,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (shipmentPickUpDelivery != null)
                 {
                     shipmentPickUpDelivery.StandaloneShipmentId = null;
+                    shipmentPickUpDelivery.StandaloneShipmentId = null;
                     shipmentPickUpDelivery.StandaloneShipmentNumber = null;
                     shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
                 }
 
                 ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
                 shipmentPM.IsStandalonePickupDelivery = false;
+                shipmentPM.ParentShipmentNumber = null;
+                shipmentPM.ParentShipmentDirectionId = null;
+                shipmentPM.ParentShipmentType = null;
                 shipmentPM.ForwarderStandaloneShipmentId = null;
                 shipmentPM.StandalonePickupDeliveryId = null;
                 ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, authToken.Email);

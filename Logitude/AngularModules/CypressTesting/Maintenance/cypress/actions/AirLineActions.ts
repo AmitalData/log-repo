@@ -7,7 +7,6 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { AirLineDetails } from 'cypress/models/AirLineDetails';
 import * as Actions from './Actions'
-import * as GeneralActions from './BaseActions'
 import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 
 let searchFieldValue = null
@@ -78,12 +77,19 @@ export function AssertPostAirLine() {
     })
 }
 
-export function Search() {
-    GeneralActions.Search(searchFieldValue)
+export function Search(searchFieldValue) {
+    Actions.SearchCardByFilter(searchFieldValue, AirLineSelectors.CodeFilterCheckBox)
 }
 
-export function AssertSearch() {
-    GeneralActions.AssertSearch(searchFieldValue)
+export function AssertSearch(searchFieldValue) {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(searchFieldValue);
+    });
+}
+
+export function getSearchFieldValue() {
+    return searchFieldValue;
 }
 
 export function OpenAirLine() {

@@ -109,6 +109,20 @@ export class CargoTrackingShipmentList {
 	ForwardingShipperName: string;
 	ForwardingConsigneeName: string;
 	ForwardingShipmentLevelCode: string;
+	GoodsClassificationDate: Date;
+	GoodsClassificationEstDate: Date;
+	GoodsClassificationNotes: string;
+	DocumentInspectionDate: Date;
+	DocumentInspectionEstDate: Date;
+	DocumentInspectionNotes: string;
+	DocumentInspectionDone: boolean;
+	GoodsClassificationDone: boolean;
+	GatepassArrivedDate: Date;
+	GatepassArrivedEstDate: Date;
+	GatepassArrivedNotes: string;
+	GatepassArrivedDone: boolean;
+	ImportManifest: string;
+
 	
 }
  

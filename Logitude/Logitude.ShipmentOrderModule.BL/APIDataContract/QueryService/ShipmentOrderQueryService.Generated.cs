@@ -65,7 +65,6 @@ using Logitude.ShipmentOrderModule.Data;
 				   
 				   var temp = new ShipmentOrder(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.OrderNumber = MyEntityPM.OrderNumber;			  
 				   if(MyEntityPM.TransportModeId != null)
 				   {
@@ -192,7 +191,16 @@ using Logitude.ShipmentOrderModule.Data;
 				   
 				   temp.PODate = MyEntityPM.PODate;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
-				   temp.CarrierNumber = MyEntityPM.CarrierNumber;					
+				   temp.CarrierNumber = MyEntityPM.CarrierNumber;			  
+				   if(MyEntityPM.CarrierId != null)
+				   {
+					   CardQueryService CardService15 = new CardQueryService(Tenant);
+					   					   temp.Carrier = CardService15.GetCardById(MyEntityPM.CarrierId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.CreateDate = MyEntityPM.CreateDate;
+				   temp.SecurityKey = MyEntityPM.SecurityKey;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -223,7 +231,6 @@ using Logitude.ShipmentOrderModule.Data;
 					{
 						temp.Id = MyEntity.Id;
 					}
-					temp.Tenant = MyEntity.Tenant;
 					temp.OrderNumber = MyEntity.OrderNumber;
 					TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.TransportMode != null)
@@ -425,7 +432,21 @@ using Logitude.ShipmentOrderModule.Data;
 					
 					temp.PODate = MyEntity.PODate;
 					temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
-					temp.CarrierNumber = MyEntity.CarrierNumber;					   
+					temp.CarrierNumber = MyEntity.CarrierNumber;
+					CardQueryService CarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.Carrier != null)
+					{
+						var myCarrierPM = CarrierCardService.CardDataMappingAndValidatin(MyEntity.Carrier,Tenant,ComputingPartnerName);
+												if(myCarrierPM != null)
+						{
+							temp.CarrierId = myCarrierPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.CreateDate = MyEntity.CreateDate;
+					temp.SecurityKey = MyEntity.SecurityKey;					   
 					   return temp;
 		    }
             catch (Exception ex)

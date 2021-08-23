@@ -16,7 +16,7 @@ export var DSVLoginComponent = (function (_super) {
         _super.call(this, ss);
         this.ss = ss;
         this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
-        this.MainColor = null;
+        this.SecondaryColor = null;
         this.BackgroundImage = "";
         this.LoginImage = "";
         this.MainLogo = "";
@@ -36,6 +36,7 @@ export var DSVLoginComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
         this.showSpinner = false;
     };
     DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {

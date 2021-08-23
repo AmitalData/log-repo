@@ -566,11 +566,7 @@ namespace Logitude.BL.Security
 
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
-
-        public static void AuthenticationOnTenant(int tenant)
-        {
-            throw new NotImplementedException();
-        }
+ 
 
         public static bool CheckSharedContactAuthentication(int tenant, string partnerId)
         {

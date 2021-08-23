@@ -53,5 +53,23 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
+
+
+        public static void AddCardToSearchFields(ref string mySearchFields,  int tenant , string cardId)
+        {
+            if (!string.IsNullOrEmpty(cardId))
+            {
+                Card myCard = CardRepository.GetSingleCard(cardId, tenant, true);
+                if (myCard != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                }
+            }
+        }
+
+
+
+
+
     }
 }

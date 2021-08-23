@@ -211,9 +211,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     else
                     {
-                        List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
-                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                        List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
 
                         if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
                         {
@@ -1443,7 +1441,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iPort.Id,
+                            Id = iPort.Id + "P",
                             CountryId = iPort.CountryId,
                             CountryIsEC = iPort.CountryEC,
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
@@ -1451,6 +1449,54 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     }
                 }
             }
+        }
+        private static List<DomesticCountry> GetInlandDomesticCountries(ShipmentPM entityPM)
+        {
+            List<DomesticCountry> domesticCountries = new List<DomesticCountry>();
+
+            switch (entityPM.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(domesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.MainCarriageFromPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
+                        break;
+                    }
+            }
+
+            switch (entityPM.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(domesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.MainCarriageToPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticToCountryId, entityPM.Tenant);
+                        break;
+                    }
+            }
+
+            return domesticCountries;
         }
         private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
         {
@@ -1465,7 +1511,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iAddress.Id,
+                            Id = iAddress.Id + "A",
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
@@ -1474,6 +1520,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iCountryId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
+                {
+                    CountryRepository countryRepository = new CountryRepository(iTenant);
+                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
+
+                    if (iCountry != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iCountry.Id + "C",
+                            CountryId = iCountry.Id,
+                            CountryIsEC = iCountry.EC,
+                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+
         private static void ValidateContainerNumbers(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")

@@ -460,6 +460,9 @@ export class ShipmentList {
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
 		IsStandalonePickupDelivery: boolean;
+		ParentShipmentNumber: string;
+		ParentShipmentType: string;
+		ParentShipmentDirectionId: string;
 		IsHTSMissing: boolean;
 		PrivateLabelInvoiceNumber: string;
 		RequestedFlightDate: Date;
