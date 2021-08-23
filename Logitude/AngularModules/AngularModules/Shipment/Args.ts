@@ -20,6 +20,9 @@ export class NewShipmentComponentArgs {
     public IsNewStandAlonePickupDelivery: boolean = false;
     public ForwarderStandaloneShipmentId: string = null;
     public ForwarderShipmentPickUpDeliveryTypeCode: string = null;
+    public ParentShipmentDirectionId: string = null;
+    public ParentShipmentNumber: string = null;
+    public ParentShipmentType: string = null;
 }
 export class FSRWizardArgs {
     EntityPM: any;
