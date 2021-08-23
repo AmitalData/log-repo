@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 
 	If(OBJECT_ID('tempdb..#temp_StandaloneShipments') Is Not Null)
@@ -11,6 +11,25 @@
 	Begin
 		Drop Table #temp_Shipments
 	End
+
+	If(OBJECT_ID('tempdb..#temp_ShipmentLevels') Is Not Null)
+	Begin
+		Drop Table #temp_ShipmentLevels
+	End
+
+	select 
+	ShipmentLevels.Code, 
+	ShipmentLevels.Name
+	into #temp_ShipmentLevels from ShipmentLevels
+
+	If(OBJECT_ID('tempdb..#temp_ShipmentTypes') Is Not Null)
+	Begin
+		Drop Table #temp_ShipmentTypes
+	End
+	select 
+	ShipmentTypes.Id, 
+	ShipmentTypes.Name
+	into #temp_ShipmentTypes from ShipmentTypes
 
 	CREATE TABLE #temp_Shipments 
 	(Id varchar(15) not null ,
@@ -25,7 +44,7 @@
 		Shipments.ForwarderStandaloneShipmentId
 		into #temp_StandaloneShipments
 
-		FROM Shipments where  Shipments.ForwarderStandaloneShipmentId is not null and  $LastCounterWhere$
+		FROM Shipments where  Shipments.ForwarderStandaloneShipmentId is not null  and  $LastCounterWhere$
     
     DECLARE @Id as varchar(15)
 	DECLARE @ShipmentId as varchar(15)
@@ -52,7 +71,7 @@
 
 	if (@ShipmentTypeId is not null)
 	begin
-	    set @ShipmentType = (select Name from ShipmentTypes where Id = @ShipmentTypeId);
+	    set @ShipmentType = (select Name from #temp_ShipmentTypes where Id = @ShipmentTypeId);
 		
 	end
 
@@ -60,11 +79,11 @@
 	begin
 		if (@ShipmentType is null)
 		begin
-			set @ShipmentType = (select Name from ShipmentLevels where code = @ShipmentLevelCode);
+			set @ShipmentType = (select Name from #temp_ShipmentLevels  where code = @ShipmentLevelCode);
 		end
 		else 
 		begin
-			set @ShipmentType = @ShipmentType  + ' '+ (select Name from ShipmentLevels where code = @ShipmentLevelCode);
+			set @ShipmentType = @ShipmentType  + ' '+ (select Name from #temp_ShipmentLevels  where code = @ShipmentLevelCode);
 		end
 	end
 
@@ -101,6 +120,8 @@
 
 drop table #temp_StandaloneShipments
 drop table #temp_Shipments
+drop table #temp_ShipmentTypes
+drop table #temp_ShipmentLevels
 
     ]]>
   </Sql>
