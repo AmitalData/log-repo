@@ -39,8 +39,10 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                return activityQueryService.GetctivitiesDWListsByDates(tenant, fromDate, toDate, skip, take);
+                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                //return activityQueryService.GetctivitiesDWListsByDates(tenant, fromDate, toDate, skip, take);
+
+                return new List<ActivitiyDW>();
             }
             catch (Exception ex)
             {
@@ -73,8 +75,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                return activityQueryService.GetctivitiesDWListsCountByDates(tenant, fromDate, toDate);
+                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                //return activityQueryService.GetctivitiesDWListsCountByDates(tenant, fromDate, toDate);
+                return 0;
             }
             catch (Exception ex)
             {
@@ -108,10 +111,10 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);//UPDATE//READ
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                return activityQueryService.GetActivitiesDWBListsByUpdateDate(tenant, updateDate, skip, take);
+                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                //return activityQueryService.GetActivitiesDWBListsByUpdateDate(tenant, updateDate, skip, take);
 
-
+                return new List<ActivitiyDW>();
             }
             catch (Exception ex)
             {
@@ -144,8 +147,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                return activityQueryService.GetctivitiesDWCountByUpdateDate(tenant, updateDate);
+                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                //return activityQueryService.GetctivitiesDWCountByUpdateDate(tenant, updateDate);
+                return 0;
             }
             catch (Exception ex)
             {
