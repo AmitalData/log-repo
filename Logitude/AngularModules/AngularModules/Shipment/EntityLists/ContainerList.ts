@@ -37,6 +37,18 @@ export class ContainerList {
 		CurrentStatusDate: Date;
 		CurrentLocation: string;
 		HasContainerException: boolean;
+		ShipmentPreCarriageFromId: string;
+		ShipmentPreCarriageToId: string;
+		ShipmentMainCarriageFromId: string;
+		ShipmentMainCarriageToId: string;
+		ShipmentTransshipment1FromId: string;
+		ShipmentTransshipment1ToId: string;
+		ShipmentTransshipment2FromId: string;
+		ShipmentTransshipment2ToId: string;
+		ShipmentTransshipment3FromId: string;
+		ShipmentTransshipment3ToId: string;
+		ShipmentOnCarriageFromId: string;
+		ShipmentOnCarriageToId: string;
 		ShipmentFirstPickupFrom: string;
 		ShipmentFirstPickupTo: string;
 		ShipmentPreCarriageFrom: string;

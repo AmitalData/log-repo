@@ -51,18 +51,18 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string ShipmentFirstPickupFrom { get; set; }
         public string ShipmentFirstPickupTo { get; set; }
-        public string ShipmentPreCarriageFrom { get; set; }
-        public string ShipmentPreCarriageTo { get; set; }
-        public string ShipmentMainCarriageFrom { get; set; }
-        public string ShipmentMainCarriageTo { get; set; }
-        public string ShipmentTransshipment1From { get; set; }
-        public string ShipmentTransshipment1To { get; set; }
-        public string ShipmentTransshipment2From { get; set; }
-        public string ShipmentTransshipment2To { get; set; }
-        public string ShipmentTransshipment3From { get; set; }
-        public string ShipmentTransshipment3To { get; set; }
-        public string ShipmentOnCarriageFrom { get; set; }
-        public string ShipmentOnCarriageTo { get; set; }
+        public string ShipmentPreCarriageFromId { get; set; }
+        public string ShipmentPreCarriageToId { get; set; }
+        public string ShipmentMainCarriageFromId { get; set; }
+        public string ShipmentMainCarriageToId { get; set; }
+        public string ShipmentTransshipment1FromId { get; set; }
+        public string ShipmentTransshipment1ToId { get; set; }
+        public string ShipmentTransshipment2FromId { get; set; }
+        public string ShipmentTransshipment2ToId { get; set; }
+        public string ShipmentTransshipment3FromId { get; set; }
+        public string ShipmentTransshipment3ToId { get; set; }
+        public string ShipmentOnCarriageFromId { get; set; }
+        public string ShipmentOnCarriageToId { get; set; }
         public string ShipmentLastDeliveryFrom { get; set; }
         public string ShipmentLastDeliveryTo { get; set; }
 
@@ -161,6 +161,55 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
+
+        [ForeignKey("ShipmentPreCarriageFromId")]
+        public virtual Port ShipmentPreCarriageFromPort { get; set; }
+
+
+        [ForeignKey("ShipmentPreCarriageToId")]
+        public virtual Port ShipmentPreCarriageToPort { get; set; }
+
+
+        [ForeignKey("ShipmentMainCarriageFromId")]
+        public virtual Port ShipmentMainCarriageFromPort { get; set; }
+
+
+        [ForeignKey("ShipmentMainCarriageToId")]
+        public virtual Port ShipmentMainCarriageToPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment1FromId")]
+        public virtual Port ShipmentTransshipment1FromPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment1ToId")]
+        public virtual Port ShipmentTransshipment1ToPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment2FromId")]
+        public virtual Port ShipmentTransshipment2FromPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment2ToId")]
+        public virtual Port ShipmentTransshipment2ToPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment3FromId")]
+        public virtual Port ShipmentTransshipment3FromPort { get; set; }
+
+
+        [ForeignKey("ShipmentTransshipment3ToId")]
+        public virtual Port ShipmentTransshipment3ToPort { get; set; }
+
+
+        [ForeignKey("ShipmentOnCarriageFromId")]
+        public virtual Port ShipmentOnCarriageFromPort { get; set; }
+
+
+        [ForeignKey("ShipmentOnCarriageToId")]
+        public virtual Port ShipmentOnCarriageToPort { get; set; }
+
+
 
     }
 }
