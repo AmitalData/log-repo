@@ -44,9 +44,9 @@
         public static string OpportunitiesController = "Opportunities";
         public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
+        public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
-        public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
         public static string Tariffsettings = "tariffsettings";
         public static string TMProjectViewsGetByFilters = "TMProjectViews/GetByFilters";
