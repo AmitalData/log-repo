@@ -6,6 +6,8 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -34,7 +36,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private ContactRepository _contactRep;
         private string _resolveLoggingUserId;
         private Contact _contact;
-        private const bool useLocal = true;
+        private  bool useLocal = true;
         private TaxReportPM MyTaxReportPM;
 
 
@@ -42,6 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
+                useLocal = !(GetLoggedContact(ptenant.Value).DontShowLocal);
                 FileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
                 string taxReportIdFromPage4Tester = "";
@@ -222,6 +225,18 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        public Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         private void AddErrorRow(String errorLine)
         {
 
@@ -289,8 +304,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else
                         {
-                            string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotValidRowType", 0, useLocal);
-                            throw new ApplicationException($"{text}  {rawLine}");
+                            string text = TranslateTextsClassTranslate("TaxReport.O.NotValidRowType", 0, useLocal);
+                            throw new ApplicationException($"{text} ");
                         }
                         break;
                 }

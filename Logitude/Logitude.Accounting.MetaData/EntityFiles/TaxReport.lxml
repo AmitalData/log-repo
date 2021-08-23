@@ -2839,6 +2839,12 @@
       LocalDefaultText="&quot;קובץ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.NotValidRowType&quot;"
+      DefaultText="&quot;Not a valid Row Type&quot;"
+      LocalDefaultText="&quot;רשומת לא מסוג תקין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

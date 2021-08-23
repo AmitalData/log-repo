@@ -87,7 +87,7 @@ export class TaxReportUploadLinesComponent extends BaseComponent {
                     }
                     else {
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            this.ShowMessage(response.Message);
+                           // this.ShowMessage(response.Message);
                             this.CancelButtonClicked();
                         }
                     }
