@@ -2845,6 +2845,24 @@
       LocalDefaultText="&quot;רשומת לא מסוג תקין&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.TaxLineRowType&quot;"
+      DefaultText="&quot;Tax Line Row Type&quot;"
+      LocalDefaultText="&quot;רשומת תנועה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.AppearsBefore&quot;"
+      DefaultText="&quot;Appears Before&quot;"
+      LocalDefaultText="&quot;מופיעה לפני&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.StartingRowType&quot;"
+      DefaultText="&quot;Starting Row Type&quot;"
+      LocalDefaultText="&quot;רשומת פתיחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

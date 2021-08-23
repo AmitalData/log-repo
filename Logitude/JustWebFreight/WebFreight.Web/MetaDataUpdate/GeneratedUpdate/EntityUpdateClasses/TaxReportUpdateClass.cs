@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "1264f7ebf0cb6b7141b8f4d9b087ffc0";
+		public const string HashString = "cdfe62fb0a426e7920134c85b44774ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2420,6 +2420,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.File", DefaultText = "File",LocalDefaultText = @"קובץ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"רשומת לא מסוג תקין", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOTaxLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.TaxLineRowType", DefaultText = "Tax Line Row Type",LocalDefaultText = @"רשומת תנועה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"מופיעה לפני", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

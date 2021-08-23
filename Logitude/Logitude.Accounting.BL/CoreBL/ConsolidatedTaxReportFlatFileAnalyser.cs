@@ -293,9 +293,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!readingLines)
                             {
 
-                                string text_3 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxLineRowType", 0, useLocal);
-                                string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.AppearsBefore", 0, useLocal);
-                                string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowType", 0, useLocal);
+                                string text_3 = TranslateTextsClassTranslate("TaxReport.O.TaxLineRowType", 0, useLocal);
+                                string text_44 = TranslateTextsClassTranslate("TaxReport.O.AppearsBefore", 0, useLocal);
+                                string text_2 = TranslateTextsClassTranslate("TaxReport.O.StartingRowType", 0, useLocal);
                                 throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {OpeningLineDTO.RowType} ");
                             }
                             TaxReportLineDTO taxLine = TaxReportLineDTO.Create(rawLine);
