@@ -21,7 +21,7 @@ declare var window;
 })
 export class TaxReportUploadLinesComponent extends BaseComponent {
     public DataContext:any  = this;
-
+    public ObjectTableName: string = "TaxReport";
     public UploadFileId: string = Guid.NewRandomString();
    public  FileName: string;
     fileSize: string;
