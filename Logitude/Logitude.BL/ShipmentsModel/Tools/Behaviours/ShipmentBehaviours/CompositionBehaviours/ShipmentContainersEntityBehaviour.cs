@@ -110,7 +110,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (updatedShipmentPickUp == null || containersToBeUpdated.Count == 0)
                 return;
 
-            this.UpdateContainerHieldsFromPickUpFields(updatedShipmentPickUp, containersToBeUpdated);
+            this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated);
         }
 
         private void HandelShipmentDeliveriesChangeSets()
@@ -121,7 +121,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (updatedShipmentDeliveryPM == null || containersToBeUpdated.Count == 0)
                 return;
 
-            this.UpdateContainerHieldsFromPickUpFields(updatedShipmentDeliveryPM, containersToBeUpdated);
+            this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated);
         }
 
 
@@ -522,22 +522,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
                 {
-                    containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
+                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
                 }
             }
             return containerPMs;
         }
 
-        private void UpdateContainerHieldsFromPickUpFields(ShipmentPickUpPM updatedShipmentPickUp, List<ContainerPM> containerPMs)
+        private void UpdateContainerFieldsFromPickUp(ShipmentPickUpPM updatedShipmentPickUp, List<ContainerPM> containerPMs)
         {
             foreach (ContainerPM containerPM in containerPMs)
             {
-                if (!IsContainerUpdatedBefore(containerPM))
-                {
-                    containerPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(updatedShipmentPickUp);
-                    containerPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(updatedShipmentPickUp);
-                    containerService.Update(containerPM);
-                }
+                this.UpdateContainerFieldsFromPickUpFields(containerPM,updatedShipmentPickUp);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs)
+        {
+            foreach (ContainerPM containerPM in containerPMs)
+            {
+                this.UpdateContainerFieldsFromDeliveryFields(containerPM, updatedShipmentDeliveryPM);
+            }
+        }
+
+        private void UpdateContainerFieldsFromPickUpFields(ContainerPM containerPM, ShipmentPickUpPM updatedShipmentPickUp)
+        {
+            if (!IsContainerUpdatedBefore(containerPM))
+            {
+                containerPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(updatedShipmentPickUp);
+                containerPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerService.Update(containerPM);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDeliveryFields(ContainerPM containerPM, ShipmentDeliveryPM updatedShipmentDeliveryPM)
+        {
+            if (!IsContainerUpdatedBefore(containerPM))
+            {
+                containerPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
+                containerService.Update(containerPM);
             }
         }
 
@@ -545,19 +568,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             return initializer.EntityPM.ShipmentPackages != null && initializer.EntityPM.ShipmentPackages.Any(d =>
                  d.ChangeSetOp == ChangeSetOperation.Update && d.ContainerEntityId == containerPM.Id);
-        }
-
-        private void UpdateContainerHieldsFromPickUpFields(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs)
-        {
-            foreach (ContainerPM containerPM in containerPMs)
-            {
-                if (!IsContainerUpdatedBefore(containerPM))
-                {
-                    containerPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
-                    containerPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
-                    containerService.Update(containerPM);
-                }
-            }
         }
     }
 }
