@@ -36,8 +36,9 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
-                CustomerQuery customerQuery = new CustomerQuery(tenant);
-                return customerQuery.GetCustomersDWLists(tenant, skip, take);
+                //CustomerQuery customerQuery = new CustomerQuery(tenant);
+                //return customerQuery.GetCustomersDWLists(tenant, skip, take);
+                return new List<CustomerDW>();
 
 
             }
@@ -70,8 +71,9 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
-                CustomerQuery customerQuery = new CustomerQuery(tenant);
-                return customerQuery.GetCustomersDWCount(tenant);
+                //CustomerQuery customerQuery = new CustomerQuery(tenant);
+                //return customerQuery.GetCustomersDWCount(tenant);
+                return 0;
 
 
             }
@@ -104,9 +106,10 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);//UPDATE//READ
-                CustomerQuery customerQuery = new CustomerQuery(tenant);
-                return customerQuery.GetCustomersDWByListsUpdateDate(tenant, updateDate, skip, take);
+                //CustomerQuery customerQuery = new CustomerQuery(tenant);
+                //return customerQuery.GetCustomersDWByListsUpdateDate(tenant, updateDate, skip, take);
 
+                return new List<CustomerDW>();
 
             }
             catch (Exception ex)
@@ -139,8 +142,9 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
-                CustomerQuery customerQuery = new CustomerQuery(tenant);
-                return customerQuery.GetCustomersDWCountByUpdateDate(tenant, updateDate);
+                //CustomerQuery customerQuery = new CustomerQuery(tenant);
+                //return customerQuery.GetCustomersDWCountByUpdateDate(tenant, updateDate);
+                return 0;
 
 
             }
