@@ -1116,7 +1116,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ImportManifest = entityPOCO.ImportManifest;
             }
 
-		}
+		
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationDone))
             {
@@ -1573,7 +1573,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ImportManifest = entityPM.ImportManifest;
             }
 			
-		}
+		
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDone))
             {
