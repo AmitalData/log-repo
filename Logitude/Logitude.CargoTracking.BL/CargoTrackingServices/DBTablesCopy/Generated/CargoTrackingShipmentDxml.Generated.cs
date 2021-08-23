@@ -249,6 +249,42 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ForwardingShipmentLevelCode' Type='varchar' Size='100'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='GoodsClassificationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GoodsClassificationEstDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GoodsClassificationNotes' Type='nvarchar' Size='2000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DocumentInspectionDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DocumentInspectionEstDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DocumentInspectionNotes' Type='nvarchar' Size='2000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DocumentInspectionDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GoodsClassificationDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GatepassArrivedDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GatepassArrivedEstDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GatepassArrivedNotes' Type='nvarchar' Size='2000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GatepassArrivedDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

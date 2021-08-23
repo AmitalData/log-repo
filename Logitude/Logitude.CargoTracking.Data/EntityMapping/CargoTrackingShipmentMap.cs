@@ -182,6 +182,30 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ForwardingMaster).HasColumnName("ForwardingMaster").HasMaxLength(222).IsUnicode(true);
 
             this.Property(t => t.ForwardingShipmentLevelCode).HasColumnName("ForwardingShipmentLevelCode").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.GoodsClassificationDate).HasColumnName("GoodsClassificationDate");
+
+            this.Property(t => t.GoodsClassificationEstDate).HasColumnName("GoodsClassificationEstDate");
+
+            this.Property(t => t.GoodsClassificationNotes).HasColumnName("GoodsClassificationNotes").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.DocumentInspectionDate).HasColumnName("DocumentInspectionDate");
+
+            this.Property(t => t.DocumentInspectionEstDate).HasColumnName("DocumentInspectionEstDate");
+
+            this.Property(t => t.DocumentInspectionNotes).HasColumnName("DocumentInspectionNotes").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.DocumentInspectionDone).HasColumnName("DocumentInspectionDone");
+
+            this.Property(t => t.GoodsClassificationDone).HasColumnName("GoodsClassificationDone");
+
+            this.Property(t => t.GatepassArrivedDate).HasColumnName("GatepassArrivedDate");
+
+            this.Property(t => t.GatepassArrivedEstDate).HasColumnName("GatepassArrivedEstDate");
+
+            this.Property(t => t.GatepassArrivedNotes).HasColumnName("GatepassArrivedNotes").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.GatepassArrivedDone).HasColumnName("GatepassArrivedDone");
         }
     }
 }

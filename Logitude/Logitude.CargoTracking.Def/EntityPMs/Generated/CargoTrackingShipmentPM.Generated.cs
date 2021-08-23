@@ -2113,6 +2113,282 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? goodsClassificationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GoodsClassificationDate  
+	   {
+	    
+	     get
+		{
+		   return goodsClassificationDate;
+		 }
+		 set
+		 {
+		   if(goodsClassificationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsClassificationDate",OldValue=goodsClassificationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   goodsClassificationDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? goodsClassificationEstDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GoodsClassificationEstDate  
+	   {
+	    
+	     get
+		{
+		   return goodsClassificationEstDate;
+		 }
+		 set
+		 {
+		   if(goodsClassificationEstDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsClassificationEstDate",OldValue=goodsClassificationEstDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   goodsClassificationEstDate=value;
+		   }
+			
+		 }
+	   }
+	  private string goodsClassificationNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GoodsClassificationNotes  
+	   {
+	    
+	     get
+		{
+		   return goodsClassificationNotes;
+		 }
+		 set
+		 {
+		   if(goodsClassificationNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsClassificationNotes",OldValue=goodsClassificationNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   goodsClassificationNotes=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? documentInspectionDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DocumentInspectionDate  
+	   {
+	    
+	     get
+		{
+		   return documentInspectionDate;
+		 }
+		 set
+		 {
+		   if(documentInspectionDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentInspectionDate",OldValue=documentInspectionDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   documentInspectionDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? documentInspectionEstDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DocumentInspectionEstDate  
+	   {
+	    
+	     get
+		{
+		   return documentInspectionEstDate;
+		 }
+		 set
+		 {
+		   if(documentInspectionEstDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentInspectionEstDate",OldValue=documentInspectionEstDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   documentInspectionEstDate=value;
+		   }
+			
+		 }
+	   }
+	  private string documentInspectionNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentInspectionNotes  
+	   {
+	    
+	     get
+		{
+		   return documentInspectionNotes;
+		 }
+		 set
+		 {
+		   if(documentInspectionNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentInspectionNotes",OldValue=documentInspectionNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentInspectionNotes=value;
+		   }
+			
+		 }
+	   }
+	  private bool? documentInspectionDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? DocumentInspectionDone  
+	   {
+	    
+	     get
+		{
+		   return documentInspectionDone;
+		 }
+		 set
+		 {
+		   if(documentInspectionDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentInspectionDone",OldValue=documentInspectionDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   documentInspectionDone=value;
+		   }
+			
+		 }
+	   }
+	  private bool? goodsClassificationDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? GoodsClassificationDone  
+	   {
+	    
+	     get
+		{
+		   return goodsClassificationDone;
+		 }
+		 set
+		 {
+		   if(goodsClassificationDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsClassificationDone",OldValue=goodsClassificationDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   goodsClassificationDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? gatepassArrivedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GatepassArrivedDate  
+	   {
+	    
+	     get
+		{
+		   return gatepassArrivedDate;
+		 }
+		 set
+		 {
+		   if(gatepassArrivedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassArrivedDate",OldValue=gatepassArrivedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   gatepassArrivedDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? gatepassArrivedEstDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GatepassArrivedEstDate  
+	   {
+	    
+	     get
+		{
+		   return gatepassArrivedEstDate;
+		 }
+		 set
+		 {
+		   if(gatepassArrivedEstDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassArrivedEstDate",OldValue=gatepassArrivedEstDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   gatepassArrivedEstDate=value;
+		   }
+			
+		 }
+	   }
+	  private string gatepassArrivedNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GatepassArrivedNotes  
+	   {
+	    
+	     get
+		{
+		   return gatepassArrivedNotes;
+		 }
+		 set
+		 {
+		   if(gatepassArrivedNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassArrivedNotes",OldValue=gatepassArrivedNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gatepassArrivedNotes=value;
+		   }
+			
+		 }
+	   }
+	  private bool? gatepassArrivedDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? GatepassArrivedDone  
+	   {
+	    
+	     get
+		{
+		   return gatepassArrivedDone;
+		 }
+		 set
+		 {
+		   if(gatepassArrivedDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatepassArrivedDone",OldValue=gatepassArrivedDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   gatepassArrivedDone=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
