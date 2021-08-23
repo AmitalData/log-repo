@@ -30,6 +30,8 @@ namespace RestClientApplication
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
 
+            this.apiCombo.Items.Add("Vendor");
+
         }
 
         private void BuildOperationComboBox()
@@ -419,7 +421,7 @@ namespace RestClientApplication
                     {
                         txtParameter2.Visible = true;
                         apiName = "vendorpartner";
-                        requestText = responseParameters.XMLRequestText["Vendor"];
+                      //  requestText = responseParameters.XMLRequestText["Vendor"];
                         break;
                     }
                 #endregion

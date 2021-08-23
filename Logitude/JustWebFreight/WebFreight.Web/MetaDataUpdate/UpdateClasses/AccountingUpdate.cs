@@ -629,15 +629,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         public void LoadOtherFields(IWebFreightContext context)
         {
+           
             //  ________________________________________________
             // |                                                |
             // |           MUST BE ADDED To LXML Files          |
             // |________________________________________________|
-            return; //
+          
             objectContext = context;
             textCodeRepository = new TextCodeRepository(objectContext);
 
             Dictionary<string, TextCode> textcodes = textCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+            LoadTextCodes_ConsolidatedTaxReport(textcodes);
+            return;
             LoadTextCodes_General(textcodes);
             LoadTextCodes_JournalActionType(textcodes);
             LoadTextCodes_ChartOfAccounts(textcodes);

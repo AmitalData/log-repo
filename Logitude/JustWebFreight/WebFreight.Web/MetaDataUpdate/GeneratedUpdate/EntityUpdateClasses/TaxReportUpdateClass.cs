@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "474576ea15434c8f972415bda9eb0656";
+		public const string HashString = "cdfe62fb0a426e7920134c85b44774ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2290,6 +2290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature TaxReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRDL", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
              			   Feature TaxReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCN", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
+             			   Feature TaxReportFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPLD", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.UploadRows", NameTextCodeDefaultText = "Upload Rows", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2361,6 +2362,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode=  TaxReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
+			   MenuButton TaxReportMenuButton02 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "UPLD",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "TaxReport.B.UploadRows",
+						LabelTextCodeDefaultText = "Upload Rows",
+						Tenant = 0,
+						MenuButtonGroupId = TaxReportMenuButtonGroup.Id,
+						ParentMenuButtonId = TaxReportMenuButton0.Id,
+						ObjectTableId = TaxReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  TaxReportFeature_MB02.Id,
+						Style = null,
+						LocalDefaultText = "טעינת שורות",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  TaxReportFeature_MB02.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -2381,6 +2402,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOInvoiceErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.InvoiceErrors", DefaultText = "Can't download the report. Lines (#lines) has an invalid invoice number error. Fix it then try again.",LocalDefaultText = ".לא ניתן להוריד את הקובץ שורה (#lines) ישנה הודעת שגיאה ''אסמכתא שגויה .יש לתקן את השורה בטרם השידור", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportONewTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.NewTaxReport", DefaultText = "New Tax Report",LocalDefaultText = "דוח מע''מ חדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUploaded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Uploaded", DefaultText = "The 874.txt file you produced in a related company should be uploaded,",LocalDefaultText = @"יש לטעון את קובץ  874.txt  שהפקת בחברה הקשורה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOMark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Mark", DefaultText = "after loading the file, additional lines will be created in the VAT report that will be marked with a mark ",LocalDefaultText = "לאחר טעינת הקובץ יווצרו בדו''ח המע''מ שורות נוספות לדיווח שיסומנו בסימן", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOCantBeEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantBeEdited", DefaultText = "These lines cannot be edited.",LocalDefaultText = @"לא ניתן לבצע עריכה בשורות אלו.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOExternalLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ExternalLines", DefaultText = "Loading another external file into this report will delete the existing external rows and create new rows according to the new file.",LocalDefaultText = @"טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורות החיצוניות הקיימות וייצור שורות חדשות בהתאם לקובץ החדש.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUpload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.Upload", DefaultText = "Upload",LocalDefaultText = @"טעינה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOTextFileAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.TextFileAllowed", DefaultText = "Required TXT file",LocalDefaultText = @"חובה קובץ TXT", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOUploadFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.UploadFile", DefaultText = "Upload file before uploading",LocalDefaultText = @"טען קובץ לפני העלאה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.File", DefaultText = "File",LocalDefaultText = @"קובץ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"רשומת לא מסוג תקין", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOTaxLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.TaxLineRowType", DefaultText = "Tax Line Row Type",LocalDefaultText = @"רשומת תנועה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"מופיעה לפני", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

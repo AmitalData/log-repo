@@ -148,7 +148,7 @@ import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadCo
 
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
-
+import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -186,7 +186,7 @@ export const Components =
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
         JournalCSVLoadComponent,
-        
+        TaxReportUploadLinesComponent,
 
         //Maintenance
         NewCategory1Component,
@@ -470,7 +470,7 @@ export class ModuleDeclarations {
             case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
             case "BtatchPrintWarningComponent": { myResult = BtatchPrintWarningComponent; break; }
             case "InterestInvoiceAutoCreditComponent": { myResult = InterestInvoiceAutoCreditComponent; break; }
-
+            case "TaxReportUploadLinesComponent": { myResult = TaxReportUploadLinesComponent; break;}
 
         }
 
