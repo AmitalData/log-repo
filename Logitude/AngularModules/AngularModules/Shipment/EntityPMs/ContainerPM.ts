@@ -145,16 +145,6 @@ export class ContainerPM {
     public set ActualEmptyPickupDate(newValue: Date) { if (this.actualEmptyPickupDate != newValue) { this.actualEmptyPickupDate = newValue; this.MarkAsDirty("ActualEmptyPickupDate"); } }
        
 	 
-    private estimatedGateInDate: Date;
-    public get EstimatedGateInDate() { return this.estimatedGateInDate; }
-    public set EstimatedGateInDate(newValue: Date) { if (this.estimatedGateInDate != newValue) { this.estimatedGateInDate = newValue; this.MarkAsDirty("EstimatedGateInDate"); } }
-       
-	 
-    private actualGateInDate: Date;
-    public get ActualGateInDate() { return this.actualGateInDate; }
-    public set ActualGateInDate(newValue: Date) { if (this.actualGateInDate != newValue) { this.actualGateInDate = newValue; this.MarkAsDirty("ActualGateInDate"); } }
-       
-	 
     private departureLocation: string;
     public get DepartureLocation() { return this.departureLocation; }
     public set DepartureLocation(newValue: string) { if (this.departureLocation != newValue) { this.departureLocation = newValue; this.MarkAsDirty("DepartureLocation"); } }
@@ -183,6 +173,496 @@ export class ContainerPM {
     private hasContainerException: boolean;
     public get HasContainerException() { return this.hasContainerException; }
     public set HasContainerException(newValue: boolean) { if (this.hasContainerException != newValue) { this.hasContainerException = newValue; this.MarkAsDirty("HasContainerException"); } }
+       
+	 
+    private shipmentFirstPickupFrom: string;
+    public get ShipmentFirstPickupFrom() { return this.shipmentFirstPickupFrom; }
+    public set ShipmentFirstPickupFrom(newValue: string) { if (this.shipmentFirstPickupFrom != newValue) { this.shipmentFirstPickupFrom = newValue; this.MarkAsDirty("ShipmentFirstPickupFrom"); } }
+       
+	 
+    private shipmentFirstPickupTo: string;
+    public get ShipmentFirstPickupTo() { return this.shipmentFirstPickupTo; }
+    public set ShipmentFirstPickupTo(newValue: string) { if (this.shipmentFirstPickupTo != newValue) { this.shipmentFirstPickupTo = newValue; this.MarkAsDirty("ShipmentFirstPickupTo"); } }
+       
+	 
+    private shipmentPreCarriageFrom: string;
+    public get ShipmentPreCarriageFrom() { return this.shipmentPreCarriageFrom; }
+    public set ShipmentPreCarriageFrom(newValue: string) { if (this.shipmentPreCarriageFrom != newValue) { this.shipmentPreCarriageFrom = newValue; this.MarkAsDirty("ShipmentPreCarriageFrom"); } }
+       
+	 
+    private shipmentPreCarriageTo: string;
+    public get ShipmentPreCarriageTo() { return this.shipmentPreCarriageTo; }
+    public set ShipmentPreCarriageTo(newValue: string) { if (this.shipmentPreCarriageTo != newValue) { this.shipmentPreCarriageTo = newValue; this.MarkAsDirty("ShipmentPreCarriageTo"); } }
+       
+	 
+    private shipmentMainCarriageFrom: string;
+    public get ShipmentMainCarriageFrom() { return this.shipmentMainCarriageFrom; }
+    public set ShipmentMainCarriageFrom(newValue: string) { if (this.shipmentMainCarriageFrom != newValue) { this.shipmentMainCarriageFrom = newValue; this.MarkAsDirty("ShipmentMainCarriageFrom"); } }
+       
+	 
+    private shipmentMainCarriageTo: string;
+    public get ShipmentMainCarriageTo() { return this.shipmentMainCarriageTo; }
+    public set ShipmentMainCarriageTo(newValue: string) { if (this.shipmentMainCarriageTo != newValue) { this.shipmentMainCarriageTo = newValue; this.MarkAsDirty("ShipmentMainCarriageTo"); } }
+       
+	 
+    private shipmentTransshipment1From: string;
+    public get ShipmentTransshipment1From() { return this.shipmentTransshipment1From; }
+    public set ShipmentTransshipment1From(newValue: string) { if (this.shipmentTransshipment1From != newValue) { this.shipmentTransshipment1From = newValue; this.MarkAsDirty("ShipmentTransshipment1From"); } }
+       
+	 
+    private shipmentTransshipment1To: string;
+    public get ShipmentTransshipment1To() { return this.shipmentTransshipment1To; }
+    public set ShipmentTransshipment1To(newValue: string) { if (this.shipmentTransshipment1To != newValue) { this.shipmentTransshipment1To = newValue; this.MarkAsDirty("ShipmentTransshipment1To"); } }
+       
+	 
+    private shipmentTransshipment2From: string;
+    public get ShipmentTransshipment2From() { return this.shipmentTransshipment2From; }
+    public set ShipmentTransshipment2From(newValue: string) { if (this.shipmentTransshipment2From != newValue) { this.shipmentTransshipment2From = newValue; this.MarkAsDirty("ShipmentTransshipment2From"); } }
+       
+	 
+    private shipmentTransshipment2To: string;
+    public get ShipmentTransshipment2To() { return this.shipmentTransshipment2To; }
+    public set ShipmentTransshipment2To(newValue: string) { if (this.shipmentTransshipment2To != newValue) { this.shipmentTransshipment2To = newValue; this.MarkAsDirty("ShipmentTransshipment2To"); } }
+       
+	 
+    private shipmentTransshipment3From: string;
+    public get ShipmentTransshipment3From() { return this.shipmentTransshipment3From; }
+    public set ShipmentTransshipment3From(newValue: string) { if (this.shipmentTransshipment3From != newValue) { this.shipmentTransshipment3From = newValue; this.MarkAsDirty("ShipmentTransshipment3From"); } }
+       
+	 
+    private shipmentTransshipment3To: string;
+    public get ShipmentTransshipment3To() { return this.shipmentTransshipment3To; }
+    public set ShipmentTransshipment3To(newValue: string) { if (this.shipmentTransshipment3To != newValue) { this.shipmentTransshipment3To = newValue; this.MarkAsDirty("ShipmentTransshipment3To"); } }
+       
+	 
+    private shipmentOnCarriageFrom: string;
+    public get ShipmentOnCarriageFrom() { return this.shipmentOnCarriageFrom; }
+    public set ShipmentOnCarriageFrom(newValue: string) { if (this.shipmentOnCarriageFrom != newValue) { this.shipmentOnCarriageFrom = newValue; this.MarkAsDirty("ShipmentOnCarriageFrom"); } }
+       
+	 
+    private shipmentOnCarriageTo: string;
+    public get ShipmentOnCarriageTo() { return this.shipmentOnCarriageTo; }
+    public set ShipmentOnCarriageTo(newValue: string) { if (this.shipmentOnCarriageTo != newValue) { this.shipmentOnCarriageTo = newValue; this.MarkAsDirty("ShipmentOnCarriageTo"); } }
+       
+	 
+    private shipmentLastDeliveryFrom: string;
+    public get ShipmentLastDeliveryFrom() { return this.shipmentLastDeliveryFrom; }
+    public set ShipmentLastDeliveryFrom(newValue: string) { if (this.shipmentLastDeliveryFrom != newValue) { this.shipmentLastDeliveryFrom = newValue; this.MarkAsDirty("ShipmentLastDeliveryFrom"); } }
+       
+	 
+    private shipmentLastDeliveryTo: string;
+    public get ShipmentLastDeliveryTo() { return this.shipmentLastDeliveryTo; }
+    public set ShipmentLastDeliveryTo(newValue: string) { if (this.shipmentLastDeliveryTo != newValue) { this.shipmentLastDeliveryTo = newValue; this.MarkAsDirty("ShipmentLastDeliveryTo"); } }
+       
+	 
+    private originLocation: string;
+    public get OriginLocation() { return this.originLocation; }
+    public set OriginLocation(newValue: string) { if (this.originLocation != newValue) { this.originLocation = newValue; this.MarkAsDirty("OriginLocation"); } }
+       
+	 
+    private estimatedOriginPickup: Date;
+    public get EstimatedOriginPickup() { return this.estimatedOriginPickup; }
+    public set EstimatedOriginPickup(newValue: Date) { if (this.estimatedOriginPickup != newValue) { this.estimatedOriginPickup = newValue; this.MarkAsDirty("EstimatedOriginPickup"); } }
+       
+	 
+    private actualOriginPickup: Date;
+    public get ActualOriginPickup() { return this.actualOriginPickup; }
+    public set ActualOriginPickup(newValue: Date) { if (this.actualOriginPickup != newValue) { this.actualOriginPickup = newValue; this.MarkAsDirty("ActualOriginPickup"); } }
+       
+	 
+    private pOLLocation: string;
+    public get POLLocation() { return this.pOLLocation; }
+    public set POLLocation(newValue: string) { if (this.pOLLocation != newValue) { this.pOLLocation = newValue; this.MarkAsDirty("POLLocation"); } }
+       
+	 
+    private estimatedPOLArrival: Date;
+    public get EstimatedPOLArrival() { return this.estimatedPOLArrival; }
+    public set EstimatedPOLArrival(newValue: Date) { if (this.estimatedPOLArrival != newValue) { this.estimatedPOLArrival = newValue; this.MarkAsDirty("EstimatedPOLArrival"); } }
+       
+	 
+    private actualPOLArrival: Date;
+    public get ActualPOLArrival() { return this.actualPOLArrival; }
+    public set ActualPOLArrival(newValue: Date) { if (this.actualPOLArrival != newValue) { this.actualPOLArrival = newValue; this.MarkAsDirty("ActualPOLArrival"); } }
+       
+	 
+    private estimatedPOLLoaded: Date;
+    public get EstimatedPOLLoaded() { return this.estimatedPOLLoaded; }
+    public set EstimatedPOLLoaded(newValue: Date) { if (this.estimatedPOLLoaded != newValue) { this.estimatedPOLLoaded = newValue; this.MarkAsDirty("EstimatedPOLLoaded"); } }
+       
+	 
+    private actualPOLLoaded: Date;
+    public get ActualPOLLoaded() { return this.actualPOLLoaded; }
+    public set ActualPOLLoaded(newValue: Date) { if (this.actualPOLLoaded != newValue) { this.actualPOLLoaded = newValue; this.MarkAsDirty("ActualPOLLoaded"); } }
+       
+	 
+    private estimatedPOLVesselDeparture: Date;
+    public get EstimatedPOLVesselDeparture() { return this.estimatedPOLVesselDeparture; }
+    public set EstimatedPOLVesselDeparture(newValue: Date) { if (this.estimatedPOLVesselDeparture != newValue) { this.estimatedPOLVesselDeparture = newValue; this.MarkAsDirty("EstimatedPOLVesselDeparture"); } }
+       
+	 
+    private actualPOLVesselDeparture: Date;
+    public get ActualPOLVesselDeparture() { return this.actualPOLVesselDeparture; }
+    public set ActualPOLVesselDeparture(newValue: Date) { if (this.actualPOLVesselDeparture != newValue) { this.actualPOLVesselDeparture = newValue; this.MarkAsDirty("ActualPOLVesselDeparture"); } }
+       
+	 
+    private transshipmentCount: string;
+    public get TransshipmentCount() { return this.transshipmentCount; }
+    public set TransshipmentCount(newValue: string) { if (this.transshipmentCount != newValue) { this.transshipmentCount = newValue; this.MarkAsDirty("TransshipmentCount"); } }
+       
+	 
+    private transshipment1Location: string;
+    public get Transshipment1Location() { return this.transshipment1Location; }
+    public set Transshipment1Location(newValue: string) { if (this.transshipment1Location != newValue) { this.transshipment1Location = newValue; this.MarkAsDirty("Transshipment1Location"); } }
+       
+	 
+    private estimatedTrans1VesselArrival: Date;
+    public get EstimatedTrans1VesselArrival() { return this.estimatedTrans1VesselArrival; }
+    public set EstimatedTrans1VesselArrival(newValue: Date) { if (this.estimatedTrans1VesselArrival != newValue) { this.estimatedTrans1VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans1VesselArrival"); } }
+       
+	 
+    private actualTransshipment1VesselArrival: Date;
+    public get ActualTransshipment1VesselArrival() { return this.actualTransshipment1VesselArrival; }
+    public set ActualTransshipment1VesselArrival(newValue: Date) { if (this.actualTransshipment1VesselArrival != newValue) { this.actualTransshipment1VesselArrival = newValue; this.MarkAsDirty("ActualTransshipment1VesselArrival"); } }
+       
+	 
+    private estimatedTransshipment1Discharge: Date;
+    public get EstimatedTransshipment1Discharge() { return this.estimatedTransshipment1Discharge; }
+    public set EstimatedTransshipment1Discharge(newValue: Date) { if (this.estimatedTransshipment1Discharge != newValue) { this.estimatedTransshipment1Discharge = newValue; this.MarkAsDirty("EstimatedTransshipment1Discharge"); } }
+       
+	 
+    private actualTransshipment1Discharge: Date;
+    public get ActualTransshipment1Discharge() { return this.actualTransshipment1Discharge; }
+    public set ActualTransshipment1Discharge(newValue: Date) { if (this.actualTransshipment1Discharge != newValue) { this.actualTransshipment1Discharge = newValue; this.MarkAsDirty("ActualTransshipment1Discharge"); } }
+       
+	 
+    private estimatedTransshipment1Loaded: Date;
+    public get EstimatedTransshipment1Loaded() { return this.estimatedTransshipment1Loaded; }
+    public set EstimatedTransshipment1Loaded(newValue: Date) { if (this.estimatedTransshipment1Loaded != newValue) { this.estimatedTransshipment1Loaded = newValue; this.MarkAsDirty("EstimatedTransshipment1Loaded"); } }
+       
+	 
+    private actualTransshipment1Loaded: Date;
+    public get ActualTransshipment1Loaded() { return this.actualTransshipment1Loaded; }
+    public set ActualTransshipment1Loaded(newValue: Date) { if (this.actualTransshipment1Loaded != newValue) { this.actualTransshipment1Loaded = newValue; this.MarkAsDirty("ActualTransshipment1Loaded"); } }
+       
+	 
+    private estimatedTrans1VesselDeparture: Date;
+    public get EstimatedTrans1VesselDeparture() { return this.estimatedTrans1VesselDeparture; }
+    public set EstimatedTrans1VesselDeparture(newValue: Date) { if (this.estimatedTrans1VesselDeparture != newValue) { this.estimatedTrans1VesselDeparture = newValue; this.MarkAsDirty("EstimatedTrans1VesselDeparture"); } }
+       
+	 
+    private actualTrans1VesselDeparture: Date;
+    public get ActualTrans1VesselDeparture() { return this.actualTrans1VesselDeparture; }
+    public set ActualTrans1VesselDeparture(newValue: Date) { if (this.actualTrans1VesselDeparture != newValue) { this.actualTrans1VesselDeparture = newValue; this.MarkAsDirty("ActualTrans1VesselDeparture"); } }
+       
+	 
+    private transshipment2Location: string;
+    public get Transshipment2Location() { return this.transshipment2Location; }
+    public set Transshipment2Location(newValue: string) { if (this.transshipment2Location != newValue) { this.transshipment2Location = newValue; this.MarkAsDirty("Transshipment2Location"); } }
+       
+	 
+    private estimatedTrans2VesselArrival: Date;
+    public get EstimatedTrans2VesselArrival() { return this.estimatedTrans2VesselArrival; }
+    public set EstimatedTrans2VesselArrival(newValue: Date) { if (this.estimatedTrans2VesselArrival != newValue) { this.estimatedTrans2VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans2VesselArrival"); } }
+       
+	 
+    private actualTransshipment2VesselArrival: Date;
+    public get ActualTransshipment2VesselArrival() { return this.actualTransshipment2VesselArrival; }
+    public set ActualTransshipment2VesselArrival(newValue: Date) { if (this.actualTransshipment2VesselArrival != newValue) { this.actualTransshipment2VesselArrival = newValue; this.MarkAsDirty("ActualTransshipment2VesselArrival"); } }
+       
+	 
+    private estimatedTransshipment2Discharge: Date;
+    public get EstimatedTransshipment2Discharge() { return this.estimatedTransshipment2Discharge; }
+    public set EstimatedTransshipment2Discharge(newValue: Date) { if (this.estimatedTransshipment2Discharge != newValue) { this.estimatedTransshipment2Discharge = newValue; this.MarkAsDirty("EstimatedTransshipment2Discharge"); } }
+       
+	 
+    private actualTransshipment2Discharge: Date;
+    public get ActualTransshipment2Discharge() { return this.actualTransshipment2Discharge; }
+    public set ActualTransshipment2Discharge(newValue: Date) { if (this.actualTransshipment2Discharge != newValue) { this.actualTransshipment2Discharge = newValue; this.MarkAsDirty("ActualTransshipment2Discharge"); } }
+       
+	 
+    private estimatedTransshipment2Loaded: Date;
+    public get EstimatedTransshipment2Loaded() { return this.estimatedTransshipment2Loaded; }
+    public set EstimatedTransshipment2Loaded(newValue: Date) { if (this.estimatedTransshipment2Loaded != newValue) { this.estimatedTransshipment2Loaded = newValue; this.MarkAsDirty("EstimatedTransshipment2Loaded"); } }
+       
+	 
+    private actualTransshipment2Loaded: Date;
+    public get ActualTransshipment2Loaded() { return this.actualTransshipment2Loaded; }
+    public set ActualTransshipment2Loaded(newValue: Date) { if (this.actualTransshipment2Loaded != newValue) { this.actualTransshipment2Loaded = newValue; this.MarkAsDirty("ActualTransshipment2Loaded"); } }
+       
+	 
+    private estimatedTrans2VesselDeparture: Date;
+    public get EstimatedTrans2VesselDeparture() { return this.estimatedTrans2VesselDeparture; }
+    public set EstimatedTrans2VesselDeparture(newValue: Date) { if (this.estimatedTrans2VesselDeparture != newValue) { this.estimatedTrans2VesselDeparture = newValue; this.MarkAsDirty("EstimatedTrans2VesselDeparture"); } }
+       
+	 
+    private actualTrans2VesselDeparture: Date;
+    public get ActualTrans2VesselDeparture() { return this.actualTrans2VesselDeparture; }
+    public set ActualTrans2VesselDeparture(newValue: Date) { if (this.actualTrans2VesselDeparture != newValue) { this.actualTrans2VesselDeparture = newValue; this.MarkAsDirty("ActualTrans2VesselDeparture"); } }
+       
+	 
+    private transshipment3Location: string;
+    public get Transshipment3Location() { return this.transshipment3Location; }
+    public set Transshipment3Location(newValue: string) { if (this.transshipment3Location != newValue) { this.transshipment3Location = newValue; this.MarkAsDirty("Transshipment3Location"); } }
+       
+	 
+    private estimatedTrans3VesselArrival: Date;
+    public get EstimatedTrans3VesselArrival() { return this.estimatedTrans3VesselArrival; }
+    public set EstimatedTrans3VesselArrival(newValue: Date) { if (this.estimatedTrans3VesselArrival != newValue) { this.estimatedTrans3VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans3VesselArrival"); } }
+       
+	 
+    private actualTransshipment3VesselArrival: Date;
+    public get ActualTransshipment3VesselArrival() { return this.actualTransshipment3VesselArrival; }
+    public set ActualTransshipment3VesselArrival(newValue: Date) { if (this.actualTransshipment3VesselArrival != newValue) { this.actualTransshipment3VesselArrival = newValue; this.MarkAsDirty("ActualTransshipment3VesselArrival"); } }
+       
+	 
+    private estimatedTransshipment3Discharge: Date;
+    public get EstimatedTransshipment3Discharge() { return this.estimatedTransshipment3Discharge; }
+    public set EstimatedTransshipment3Discharge(newValue: Date) { if (this.estimatedTransshipment3Discharge != newValue) { this.estimatedTransshipment3Discharge = newValue; this.MarkAsDirty("EstimatedTransshipment3Discharge"); } }
+       
+	 
+    private actualTransshipment3Discharge: Date;
+    public get ActualTransshipment3Discharge() { return this.actualTransshipment3Discharge; }
+    public set ActualTransshipment3Discharge(newValue: Date) { if (this.actualTransshipment3Discharge != newValue) { this.actualTransshipment3Discharge = newValue; this.MarkAsDirty("ActualTransshipment3Discharge"); } }
+       
+	 
+    private estimatedTransshipment3Loaded: Date;
+    public get EstimatedTransshipment3Loaded() { return this.estimatedTransshipment3Loaded; }
+    public set EstimatedTransshipment3Loaded(newValue: Date) { if (this.estimatedTransshipment3Loaded != newValue) { this.estimatedTransshipment3Loaded = newValue; this.MarkAsDirty("EstimatedTransshipment3Loaded"); } }
+       
+	 
+    private actualTransshipment3Loaded: Date;
+    public get ActualTransshipment3Loaded() { return this.actualTransshipment3Loaded; }
+    public set ActualTransshipment3Loaded(newValue: Date) { if (this.actualTransshipment3Loaded != newValue) { this.actualTransshipment3Loaded = newValue; this.MarkAsDirty("ActualTransshipment3Loaded"); } }
+       
+	 
+    private estimatedTrans3VesselDeparture: Date;
+    public get EstimatedTrans3VesselDeparture() { return this.estimatedTrans3VesselDeparture; }
+    public set EstimatedTrans3VesselDeparture(newValue: Date) { if (this.estimatedTrans3VesselDeparture != newValue) { this.estimatedTrans3VesselDeparture = newValue; this.MarkAsDirty("EstimatedTrans3VesselDeparture"); } }
+       
+	 
+    private actualTrans3VesselDeparture: Date;
+    public get ActualTrans3VesselDeparture() { return this.actualTrans3VesselDeparture; }
+    public set ActualTrans3VesselDeparture(newValue: Date) { if (this.actualTrans3VesselDeparture != newValue) { this.actualTrans3VesselDeparture = newValue; this.MarkAsDirty("ActualTrans3VesselDeparture"); } }
+       
+	 
+    private transshipment4Location: string;
+    public get Transshipment4Location() { return this.transshipment4Location; }
+    public set Transshipment4Location(newValue: string) { if (this.transshipment4Location != newValue) { this.transshipment4Location = newValue; this.MarkAsDirty("Transshipment4Location"); } }
+       
+	 
+    private estimatedTrans4VesselArrival: Date;
+    public get EstimatedTrans4VesselArrival() { return this.estimatedTrans4VesselArrival; }
+    public set EstimatedTrans4VesselArrival(newValue: Date) { if (this.estimatedTrans4VesselArrival != newValue) { this.estimatedTrans4VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans4VesselArrival"); } }
+       
+	 
+    private actualTransshipment4VesselArrival: Date;
+    public get ActualTransshipment4VesselArrival() { return this.actualTransshipment4VesselArrival; }
+    public set ActualTransshipment4VesselArrival(newValue: Date) { if (this.actualTransshipment4VesselArrival != newValue) { this.actualTransshipment4VesselArrival = newValue; this.MarkAsDirty("ActualTransshipment4VesselArrival"); } }
+       
+	 
+    private estimatedTransshipment4Discharge: Date;
+    public get EstimatedTransshipment4Discharge() { return this.estimatedTransshipment4Discharge; }
+    public set EstimatedTransshipment4Discharge(newValue: Date) { if (this.estimatedTransshipment4Discharge != newValue) { this.estimatedTransshipment4Discharge = newValue; this.MarkAsDirty("EstimatedTransshipment4Discharge"); } }
+       
+	 
+    private actualTransshipment4Discharge: Date;
+    public get ActualTransshipment4Discharge() { return this.actualTransshipment4Discharge; }
+    public set ActualTransshipment4Discharge(newValue: Date) { if (this.actualTransshipment4Discharge != newValue) { this.actualTransshipment4Discharge = newValue; this.MarkAsDirty("ActualTransshipment4Discharge"); } }
+       
+	 
+    private estimatedTransshipment4Loaded: Date;
+    public get EstimatedTransshipment4Loaded() { return this.estimatedTransshipment4Loaded; }
+    public set EstimatedTransshipment4Loaded(newValue: Date) { if (this.estimatedTransshipment4Loaded != newValue) { this.estimatedTransshipment4Loaded = newValue; this.MarkAsDirty("EstimatedTransshipment4Loaded"); } }
+       
+	 
+    private actualTransshipment4Loaded: Date;
+    public get ActualTransshipment4Loaded() { return this.actualTransshipment4Loaded; }
+    public set ActualTransshipment4Loaded(newValue: Date) { if (this.actualTransshipment4Loaded != newValue) { this.actualTransshipment4Loaded = newValue; this.MarkAsDirty("ActualTransshipment4Loaded"); } }
+       
+	 
+    private estimatedTrans4VesselDeparture: Date;
+    public get EstimatedTrans4VesselDeparture() { return this.estimatedTrans4VesselDeparture; }
+    public set EstimatedTrans4VesselDeparture(newValue: Date) { if (this.estimatedTrans4VesselDeparture != newValue) { this.estimatedTrans4VesselDeparture = newValue; this.MarkAsDirty("EstimatedTrans4VesselDeparture"); } }
+       
+	 
+    private actualTrans4VesselDeparture: Date;
+    public get ActualTrans4VesselDeparture() { return this.actualTrans4VesselDeparture; }
+    public set ActualTrans4VesselDeparture(newValue: Date) { if (this.actualTrans4VesselDeparture != newValue) { this.actualTrans4VesselDeparture = newValue; this.MarkAsDirty("ActualTrans4VesselDeparture"); } }
+       
+	 
+    private leg1Vessel: string;
+    public get Leg1Vessel() { return this.leg1Vessel; }
+    public set Leg1Vessel(newValue: string) { if (this.leg1Vessel != newValue) { this.leg1Vessel = newValue; this.MarkAsDirty("Leg1Vessel"); } }
+       
+	 
+    private leg1Voyage: string;
+    public get Leg1Voyage() { return this.leg1Voyage; }
+    public set Leg1Voyage(newValue: string) { if (this.leg1Voyage != newValue) { this.leg1Voyage = newValue; this.MarkAsDirty("Leg1Voyage"); } }
+       
+	 
+    private leg2Vessel: string;
+    public get Leg2Vessel() { return this.leg2Vessel; }
+    public set Leg2Vessel(newValue: string) { if (this.leg2Vessel != newValue) { this.leg2Vessel = newValue; this.MarkAsDirty("Leg2Vessel"); } }
+       
+	 
+    private leg2Voyage: string;
+    public get Leg2Voyage() { return this.leg2Voyage; }
+    public set Leg2Voyage(newValue: string) { if (this.leg2Voyage != newValue) { this.leg2Voyage = newValue; this.MarkAsDirty("Leg2Voyage"); } }
+       
+	 
+    private leg3Vessel: string;
+    public get Leg3Vessel() { return this.leg3Vessel; }
+    public set Leg3Vessel(newValue: string) { if (this.leg3Vessel != newValue) { this.leg3Vessel = newValue; this.MarkAsDirty("Leg3Vessel"); } }
+       
+	 
+    private leg3Voyage: string;
+    public get Leg3Voyage() { return this.leg3Voyage; }
+    public set Leg3Voyage(newValue: string) { if (this.leg3Voyage != newValue) { this.leg3Voyage = newValue; this.MarkAsDirty("Leg3Voyage"); } }
+       
+	 
+    private leg4Vessel: string;
+    public get Leg4Vessel() { return this.leg4Vessel; }
+    public set Leg4Vessel(newValue: string) { if (this.leg4Vessel != newValue) { this.leg4Vessel = newValue; this.MarkAsDirty("Leg4Vessel"); } }
+       
+	 
+    private leg4Voyage: string;
+    public get Leg4Voyage() { return this.leg4Voyage; }
+    public set Leg4Voyage(newValue: string) { if (this.leg4Voyage != newValue) { this.leg4Voyage = newValue; this.MarkAsDirty("Leg4Voyage"); } }
+       
+	 
+    private leg5Vessel: string;
+    public get Leg5Vessel() { return this.leg5Vessel; }
+    public set Leg5Vessel(newValue: string) { if (this.leg5Vessel != newValue) { this.leg5Vessel = newValue; this.MarkAsDirty("Leg5Vessel"); } }
+       
+	 
+    private leg5Voyage: string;
+    public get Leg5Voyage() { return this.leg5Voyage; }
+    public set Leg5Voyage(newValue: string) { if (this.leg5Voyage != newValue) { this.leg5Voyage = newValue; this.MarkAsDirty("Leg5Voyage"); } }
+       
+	 
+    private pODLocation: string;
+    public get PODLocation() { return this.pODLocation; }
+    public set PODLocation(newValue: string) { if (this.pODLocation != newValue) { this.pODLocation = newValue; this.MarkAsDirty("PODLocation"); } }
+       
+	 
+    private estimatedPODVesselArrival: Date;
+    public get EstimatedPODVesselArrival() { return this.estimatedPODVesselArrival; }
+    public set EstimatedPODVesselArrival(newValue: Date) { if (this.estimatedPODVesselArrival != newValue) { this.estimatedPODVesselArrival = newValue; this.MarkAsDirty("EstimatedPODVesselArrival"); } }
+       
+	 
+    private actualPODVesselArrival: Date;
+    public get ActualPODVesselArrival() { return this.actualPODVesselArrival; }
+    public set ActualPODVesselArrival(newValue: Date) { if (this.actualPODVesselArrival != newValue) { this.actualPODVesselArrival = newValue; this.MarkAsDirty("ActualPODVesselArrival"); } }
+       
+	 
+    private estimatedPODDischarge: Date;
+    public get EstimatedPODDischarge() { return this.estimatedPODDischarge; }
+    public set EstimatedPODDischarge(newValue: Date) { if (this.estimatedPODDischarge != newValue) { this.estimatedPODDischarge = newValue; this.MarkAsDirty("EstimatedPODDischarge"); } }
+       
+	 
+    private actualPODDischarge: Date;
+    public get ActualPODDischarge() { return this.actualPODDischarge; }
+    public set ActualPODDischarge(newValue: Date) { if (this.actualPODDischarge != newValue) { this.actualPODDischarge = newValue; this.MarkAsDirty("ActualPODDischarge"); } }
+       
+	 
+    private estimatedPODDeparture: Date;
+    public get EstimatedPODDeparture() { return this.estimatedPODDeparture; }
+    public set EstimatedPODDeparture(newValue: Date) { if (this.estimatedPODDeparture != newValue) { this.estimatedPODDeparture = newValue; this.MarkAsDirty("EstimatedPODDeparture"); } }
+       
+	 
+    private actualPODDeparture: Date;
+    public get ActualPODDeparture() { return this.actualPODDeparture; }
+    public set ActualPODDeparture(newValue: Date) { if (this.actualPODDeparture != newValue) { this.actualPODDeparture = newValue; this.MarkAsDirty("ActualPODDeparture"); } }
+       
+	 
+    private deliveryLocation: string;
+    public get DeliveryLocation() { return this.deliveryLocation; }
+    public set DeliveryLocation(newValue: string) { if (this.deliveryLocation != newValue) { this.deliveryLocation = newValue; this.MarkAsDirty("DeliveryLocation"); } }
+       
+	 
+    private estimatedDelivery: Date;
+    public get EstimatedDelivery() { return this.estimatedDelivery; }
+    public set EstimatedDelivery(newValue: Date) { if (this.estimatedDelivery != newValue) { this.estimatedDelivery = newValue; this.MarkAsDirty("EstimatedDelivery"); } }
+       
+	 
+    private actualDelivery: Date;
+    public get ActualDelivery() { return this.actualDelivery; }
+    public set ActualDelivery(newValue: Date) { if (this.actualDelivery != newValue) { this.actualDelivery = newValue; this.MarkAsDirty("ActualDelivery"); } }
+       
+	 
+    private lIFLocation: string;
+    public get LIFLocation() { return this.lIFLocation; }
+    public set LIFLocation(newValue: string) { if (this.lIFLocation != newValue) { this.lIFLocation = newValue; this.MarkAsDirty("LIFLocation"); } }
+       
+	 
+    private estimatedLIFArrival: Date;
+    public get EstimatedLIFArrival() { return this.estimatedLIFArrival; }
+    public set EstimatedLIFArrival(newValue: Date) { if (this.estimatedLIFArrival != newValue) { this.estimatedLIFArrival = newValue; this.MarkAsDirty("EstimatedLIFArrival"); } }
+       
+	 
+    private actualLIFArrival: Date;
+    public get ActualLIFArrival() { return this.actualLIFArrival; }
+    public set ActualLIFArrival(newValue: Date) { if (this.actualLIFArrival != newValue) { this.actualLIFArrival = newValue; this.MarkAsDirty("ActualLIFArrival"); } }
+       
+	 
+    private estimatedLIFDeparture: Date;
+    public get EstimatedLIFDeparture() { return this.estimatedLIFDeparture; }
+    public set EstimatedLIFDeparture(newValue: Date) { if (this.estimatedLIFDeparture != newValue) { this.estimatedLIFDeparture = newValue; this.MarkAsDirty("EstimatedLIFDeparture"); } }
+       
+	 
+    private actualLIFDeparture: Date;
+    public get ActualLIFDeparture() { return this.actualLIFDeparture; }
+    public set ActualLIFDeparture(newValue: Date) { if (this.actualLIFDeparture != newValue) { this.actualLIFDeparture = newValue; this.MarkAsDirty("ActualLIFDeparture"); } }
+       
+	 
+    private gateIn: string;
+    public get GateIn() { return this.gateIn; }
+    public set GateIn(newValue: string) { if (this.gateIn != newValue) { this.gateIn = newValue; this.MarkAsDirty("GateIn"); } }
+       
+	 
+    private gateOut: string;
+    public get GateOut() { return this.gateOut; }
+    public set GateOut(newValue: string) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
+       
+	 
+    private emptyReturnLocation: string;
+    public get EmptyReturnLocation() { return this.emptyReturnLocation; }
+    public set EmptyReturnLocation(newValue: string) { if (this.emptyReturnLocation != newValue) { this.emptyReturnLocation = newValue; this.MarkAsDirty("EmptyReturnLocation"); } }
+       
+	 
+    private estimatedEmptyReturn: Date;
+    public get EstimatedEmptyReturn() { return this.estimatedEmptyReturn; }
+    public set EstimatedEmptyReturn(newValue: Date) { if (this.estimatedEmptyReturn != newValue) { this.estimatedEmptyReturn = newValue; this.MarkAsDirty("EstimatedEmptyReturn"); } }
+       
+	 
+    private actualEmptyReturn: Date;
+    public get ActualEmptyReturn() { return this.actualEmptyReturn; }
+    public set ActualEmptyReturn(newValue: Date) { if (this.actualEmptyReturn != newValue) { this.actualEmptyReturn = newValue; this.MarkAsDirty("ActualEmptyReturn"); } }
+       
+	 
+    private customsReleaseState: string;
+    public get CustomsReleaseState() { return this.customsReleaseState; }
+    public set CustomsReleaseState(newValue: string) { if (this.customsReleaseState != newValue) { this.customsReleaseState = newValue; this.MarkAsDirty("CustomsReleaseState"); } }
+       
+	 
+    private customsReleaseDate: Date;
+    public get CustomsReleaseDate() { return this.customsReleaseDate; }
+    public set CustomsReleaseDate(newValue: Date) { if (this.customsReleaseDate != newValue) { this.customsReleaseDate = newValue; this.MarkAsDirty("CustomsReleaseDate"); } }
+       
+	 
+    private carrierReleaseState: string;
+    public get CarrierReleaseState() { return this.carrierReleaseState; }
+    public set CarrierReleaseState(newValue: string) { if (this.carrierReleaseState != newValue) { this.carrierReleaseState = newValue; this.MarkAsDirty("CarrierReleaseState"); } }
+       
+	 
+    private carrierReleaseDate: Date;
+    public get CarrierReleaseDate() { return this.carrierReleaseDate; }
+    public set CarrierReleaseDate(newValue: Date) { if (this.carrierReleaseDate != newValue) { this.carrierReleaseDate = newValue; this.MarkAsDirty("CarrierReleaseDate"); } }
+       
+	 
+    private availablityDate: Date;
+    public get AvailablityDate() { return this.availablityDate; }
+    public set AvailablityDate(newValue: Date) { if (this.availablityDate != newValue) { this.availablityDate = newValue; this.MarkAsDirty("AvailablityDate"); } }
        
 	 
 

@@ -43,9 +43,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
             this.Property(t => t.EstimatedEmptyPickupDate).HasColumnName("EstimatedEmptyPickupDate");
-            this.Property(t => t.EstimatedGateInDate).HasColumnName("EstimatedGateInDate");
             this.Property(t => t.ActualEmptyPickupDate).HasColumnName("ActualEmptyPickupDate");
-            this.Property(t => t.ActualGateInDate).HasColumnName("ActualGateInDate");
             this.Property(t => t.CurrentStatus).HasColumnName("CurrentStatus");
             this.Property(t => t.CurrentStatusDate).HasColumnName("CurrentStatusDate");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
