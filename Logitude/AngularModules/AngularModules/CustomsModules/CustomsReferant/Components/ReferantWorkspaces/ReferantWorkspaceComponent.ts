@@ -327,6 +327,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         this.ViewReferantQuery(query);
     }
     public filters: ApiQueryFilters;
+    viewFilters = new ApiQueryFilters();
+
 
     FilterChange($event) {
         this.filters = new ApiQueryFilters();
