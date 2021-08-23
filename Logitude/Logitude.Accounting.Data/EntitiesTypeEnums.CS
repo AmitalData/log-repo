@@ -103,7 +103,10 @@ namespace Logitude.Accounting.Data
         }
     }
 
-
+    public class PaymentStatuses
+    {
+        public static string Void { get { return "VD"; } }
+    }
    
 
 }

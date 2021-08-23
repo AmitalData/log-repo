@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace CloudRestClientTool
 {
@@ -36,6 +37,7 @@ namespace CloudRestClientTool
             this.operationCombo.Items.Add("Create (POST)");
             this.operationCombo.Items.Add("Update (PUT)");
             this.operationCombo.Items.Add("Get");
+            this.operationCombo.Items.Add("Cancel");
 
             this.operationCombo.SelectedIndex = 0;
         }
@@ -45,47 +47,8 @@ namespace CloudRestClientTool
         {
             txtServerUrl.Text = "https://test.logitudeworld.com/test/api/";
             txtCredentialsPrimary.Text = "1859482b-755c-4259-a2be-8b4dc2e531f0";
-            string requestText = @"<?xml version='1.0' encoding='UTF-8'?>
-                                    <ShipmentOrder xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-                                       <Tenant>1311</Tenant>
-                                       <OrderNumber>1</OrderNumber>
-                                       <TransportMode Code='A'/>
-                                       <Consignee Code='10011'/>
-                                       <Shipper Code='10011'/>
-                                       <Agent Code='10011'/>
-                                       <Incoterm Code='CFR'/>
-                                       <AccountManager Code='mog@mail.com'/>
-                                       <PONumber>1234</PONumber>
-                                       <Master>master test</Master>
-                                       <House>house test</House>
-                                       <Vessel Code='rrr'/>
-                                       <CustomsAgent Code='10011'/>
-                                       <SpecialServicesType Code='5'/>
-                                       <Forwarder Code='TW'/>
-                                       <IsReadyForPickup>false</IsReadyForPickup>
-                                       <DescriptionOfGoods>desc test</DescriptionOfGoods>
-                                       <CustomerReferences>customer ref test</CustomerReferences>
-                                       <PickupEstimatedDateTime>2021-08-15T11:29:10.12</PickupEstimatedDateTime>
-                                       <PickupActualDateTime>2021-08-15T11:29:10.12</PickupActualDateTime>
-                                       <BookingConfirmationDate>2021-08-15T00:00:00</BookingConfirmationDate>
-                                       <ETD>2021-08-15T11:29:10.12</ETD>
-                                       <ETA>2021-08-15T11:29:10.12</ETA>
-                                       <ATD>2021-08-15T11:29:10.12</ATD>
-                                       <ATA>2021-08-15T11:29:10.12</ATA>
-                                       <Direction Code='E'/>
-                                       <ShipmentNumber>32</ShipmentNumber>
-                                       <SupplyDateTime>2021-08-15T11:29:10.12</SupplyDateTime>
-                                       <OriginPort Code='ILASH'/>
-                                       <DestinationPort Code='ILASH'/>
-                                       <Gateway Code='ILASH'/>
-                                       <CasualImporterName>imp test</CasualImporterName>
-                                       <CasualSupplierName>sup test</CasualSupplierName>
-                                       <ShipmentLevel Code='A'/>
-                                       <PODate>2021-08-15T00:00:00</PODate>
-                                       <BookingConfirmationNumber>2323</BookingConfirmationNumber>
-                                    </ShipmentOrder>";
-
-            txtRequestBody.Text = requestText;
+            txtRequestBody.Text = XDocument.Load(@"ShipmentOrder.xml").ToString();
+            
         }
         private async void LoginWithCredentials()
         {
@@ -204,7 +167,7 @@ namespace CloudRestClientTool
         {
 
             isSendButtonEnabled = operationCombo.SelectedIndex != -1 ? true : false;
-            ShipmentOrderParameterTextBox.Visible = operationCombo.SelectedIndex == 2 ? true : false;
+            ShipmentOrderParameterTextBox.Visible = (operationCombo.SelectedIndex == 2 || operationCombo.SelectedIndex == 3) ? true : false;
             lblParameter.Visible = operationCombo.SelectedIndex == 2 ? true : false;
 
             ChangeFormState();
@@ -214,65 +177,89 @@ namespace CloudRestClientTool
         private async void CallEntityApi()
         {
             this.Cursor = Cursors.WaitCursor;
-
-            if (!string.IsNullOrEmpty(this.token))
+            try
             {
-                using (var client = new HttpClient())
+                if (!string.IsNullOrEmpty(this.token))
                 {
-                    client.Timeout = new TimeSpan(0, 10, 0);
-
-                    client.DefaultRequestHeaders.Add("Token", token);
-                    var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
-                    HttpResponseMessage response = new HttpResponseMessage();
-
-                    if (operationCombo.SelectedIndex == 0)
+                    using (var client = new HttpClient())
                     {
-                        response = await client.PostAsync(txtServerUrl.Text + "/" + "ShipmentOrder", content);
-                    }
-                    else if (operationCombo.SelectedIndex == 1)
-                    {
-                        response = await client.PutAsync(txtServerUrl.Text + "/" + "ShipmentOrder", content);
-                    }
-                    else if (operationCombo.SelectedIndex == 2)
-                    {
-                        client.DefaultRequestHeaders.Add("Accept", "application/xml");
+                        client.Timeout = new TimeSpan(0, 10, 0);
 
-                        if (!string.IsNullOrEmpty(ShipmentOrderParameterTextBox.Text))
+                        client.DefaultRequestHeaders.Add("Token", token);
+                        var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
+                        HttpResponseMessage response = new HttpResponseMessage();
+
+                        if (operationCombo.SelectedIndex == 0)
                         {
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
+                            response = await client.PostAsync(txtServerUrl.Text + "/" + "ShipmentOrder", content);
                         }
-                        else {
-                            MessageBox.Show("Please insert order number");
-                            this.Cursor = Cursors.Default;
-                            return;
+                        else if (operationCombo.SelectedIndex == 1)
+                        {
+                            response = await client.PutAsync(txtServerUrl.Text + "/" + "ShipmentOrder", content);
+                        }
+                        else if (operationCombo.SelectedIndex == 2)
+                        {
+                            client.DefaultRequestHeaders.Add("Accept", "application/xml");
+
+                            if (!string.IsNullOrEmpty(ShipmentOrderParameterTextBox.Text))
+                            {
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Please insert order number");
+                                this.Cursor = Cursors.Default;
+                                return;
+                            }
+
+                        }
+                        else if (operationCombo.SelectedIndex == 3)
+                        {
+                            client.DefaultRequestHeaders.Add("Accept", "application/xml");
+
+                            if (!string.IsNullOrEmpty(ShipmentOrderParameterTextBox.Text))
+                            {
+                                response = await client.DeleteAsync(txtServerUrl.Text + "/" + "ShipmentOrder" + "?orderNumber=" + ShipmentOrderParameterTextBox.Text);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Please insert order number");
+                                this.Cursor = Cursors.Default;
+                                return;
+                            }
+
                         }
 
+                        txtReponseCode.Text = ((int)response.StatusCode).ToString();
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var resultData = response.Content.ReadAsStringAsync().Result;
+                            this.SetXmlBrouserXml(resultData);
+                        }
+
+                        else
+                        {
+                            var resultData2 = response.Content.ReadAsStringAsync().Result;
+                            this.SetXmlBrouserXml(resultData2);
+                        }
+
+
                     }
-
-                    txtReponseCode.Text = ((int)response.StatusCode).ToString();
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var resultData = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData);
-                    }
-
-                    else
-                    {
-                        var resultData2 = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData2);
-                    }
-
 
                 }
 
+                else
+                {
+                    lblMessage.Text = "Authentication Error!";
+                    lblMessage.ForeColor = Color.Red;
+                }
             }
-
-            else
+            catch (Exception ex)
             {
-                lblMessage.Text = "Authentication Error!";
-                lblMessage.ForeColor = Color.Red;
+                MessageBox.Show(ex.Message);
             }
+      
 
             this.Cursor = Cursors.Default;
         }

@@ -114,17 +114,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
  testRunner.Given("an ocean LCL freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table9.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "Name",
                             "updated specflow name"});
-                table9.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "Notes",
                             "updated specflow note"});
 #line 7
- testRunner.And("following ocean LCL freight cost tariff properties", ((string)(null)), table9, "And ");
+ testRunner.And("following ocean LCL freight cost tariff properties", ((string)(null)), table11, "And ");
 #line hidden
 #line 11
  testRunner.When("update ocean LCL freight cost tariff", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

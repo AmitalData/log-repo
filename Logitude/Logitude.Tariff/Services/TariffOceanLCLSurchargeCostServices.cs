@@ -25,13 +25,18 @@ namespace Logitude.Tariff.Services
                 .WithDefualtValues()
                 .TypeCode((string)dataTable.Freight)
                 .Name((string)dataTable.Name)
-                .SellerId(new TariffOceanLCLSurchargeCostDataPreparation().GetAgentId())
+                .SellerId(GetAgentId())
                 .CurrencyId((string)dataTable.Currency)
                 .Notes((string)dataTable.Notes)
                 .Surcharge1Id(BillingData.ChargeTypeOFTId)
                 .Surcharge1UOM(BillingData.MeasurementGRWTId)
                 .ContractNumber(Convert.ToString(dataTable.ContractNumber))
                 .Build();
+        }
+
+        public string GetAgentId()
+        {
+            return DataPreparation.CreatePartnerForUserTenant(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" });
         }
 
         public TariffPM UpdateInstance(Table tariffTable, TariffPM tariff)

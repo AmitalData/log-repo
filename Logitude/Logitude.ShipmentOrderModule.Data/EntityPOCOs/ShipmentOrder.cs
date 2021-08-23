@@ -156,6 +156,15 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string DirectionId { get; set; }
 	      
         public virtual Direction Direction { get; set; }
+        [ForeignKey("Carrier")]
+        [Column("CarrierId")]
+	    public string CarrierId { get; set; }
+	      
+        public virtual Card Carrier { get; set; }
+        [Column("IsCancelled")]
+	    public bool IsCancelled { get; set; }
+        [Column("SecurityKey")]
+	    public string SecurityKey { get; set; }
     }
 }
 	 

@@ -314,6 +314,26 @@ export class ShipmentOrderPM {
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
        
 	 
+    private carrierId: string;
+    public get CarrierId() { return this.carrierId; }
+    public set CarrierId(newValue: string) { if (this.carrierId != newValue) { this.carrierId = newValue; this.MarkAsDirty("CarrierId"); } }
+       
+	 
+    private carrierName: string;
+    public get CarrierName() { return this.carrierName; }
+    public set CarrierName(newValue: string) { if (this.carrierName != newValue) { this.carrierName = newValue; this.MarkAsDirty("CarrierName"); } }
+       
+	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
+    private securityKey: string;
+    public get SecurityKey() { return this.securityKey; }
+    public set SecurityKey(newValue: string) { if (this.securityKey != newValue) { this.securityKey = newValue; this.MarkAsDirty("SecurityKey"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

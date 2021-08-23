@@ -224,5 +224,28 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port OnCarriageToPort { get; set; }
         public virtual Card OnCarriageCarrierCard { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
+
+        public string InlandDomesticFromZipCode { get; set; }
+        public string InlandDomesticToZipCode { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
+
+        [ForeignKey("InlandDomesticFromTypeCode")]
+        public PickUpDeliveryFromToType InlandDomesticFromType { get; set; }
+
+        [ForeignKey("InlandDomesticToTypeCode")]
+        public PickUpDeliveryFromToType InlandDomesticToType { get; set; }
+
+        [ForeignKey("InlandDomesticFromCountryId")]
+        public virtual Country InlandDomesticFromCountry { get; set; }
+
+        [ForeignKey("InlandDomesticToCountryId")]
+        public virtual Country InlandDomesticToCountry { get; set; }
     }
 }

@@ -369,7 +369,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         private void SendProfactoXML33(ARInvoicePM entityPM, ARInvoice entityPoco, SATInterfaceSetting satSetting)
         {
 
-
+            if (!satSetting.IsARInvoiceTransferEnabled && FeatureToggleHelper.HasFeatureToggle("CPT", entityPM.Tenant))
+                return;
 
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPM.Tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);

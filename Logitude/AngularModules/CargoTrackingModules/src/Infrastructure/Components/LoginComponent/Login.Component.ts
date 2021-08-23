@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth.service';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
@@ -194,6 +195,18 @@ export class LoginComponent implements OnInit {
         {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
+            }else{
+                this.GetLoggedContact();
+            }
+        });
+    }
+
+    private GetLoggedContact()
+    {
+        this.cargoTrackingBrandingDataExtendedService.GetLoggedContact().subscribe((loggedContact: any) =>
+        {
+            if (loggedContact) {
+                SessionInfo.LoggedContact = loggedContact;
             }
         });
     }

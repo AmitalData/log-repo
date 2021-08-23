@@ -595,7 +595,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     BuildShipmentSubTypes() {
         this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId).forEach(item => {
+        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId || d.ShipmentTypeCode == null).forEach(item => {
             this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
         });
         this.SetDefaultSubType();

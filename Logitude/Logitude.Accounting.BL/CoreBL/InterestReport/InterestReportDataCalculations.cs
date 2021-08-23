@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -161,6 +162,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
             SetGLAccountCreditAllotmentPercentageByGLAccountId(interestReportPM);
             interestReportPM.CalCreditAllotmentCommission = (interestReportPM.GLAccountInterestCreditLimit == null ? 0 : interestReportPM.GLAccountInterestCreditLimit) * interestReportPM.CreditAllotmentPercentage * (decimal?)0.01;
+            interestReportPM.CalculatedPostponedChequesCommision = GetInterestReportCalculatedPostponedChequesCommision();
             SetInterestReportStatusDraft();
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
@@ -328,6 +330,39 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                     + d.CalculatedExcepInterestAmount
                                     + d.CalculatedCreditInterestAmount));
             return totalAmount;
+        }
+
+        private decimal? GetInterestReportCalculatedPostponedChequesCommision()
+        {
+            List<string> aRPaymentIds = interestTransactionPMs.Where(x => x.InterestEntityTypeCode == InterestEntities.ARPayment).Select(x => x.EntityId).ToList();
+            aRPaymentIds = ExcludeCancellePayments(aRPaymentIds);
+            var gLAccount = GetGLAccount(interestReportPM.GLAccountId, interestReportPM.Tenant);
+
+            int aRPaymentChequesCount = GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(aRPaymentIds, interestReportPM.Tenant);
+            decimal? postponedChequesCommision = gLAccount != null ? gLAccount.PostponedChequesCommission * aRPaymentChequesCount : null;
+
+            return postponedChequesCommision;
+        }
+
+        private List<string> ExcludeCancellePayments(List<string> paymentIds)
+        {
+            IInvoiceContext accountingContext = InvoiceContext.GetContext(tenant);
+           return (from a in accountingContext.ARPayments
+             where a.Tenant == tenant && a.StatusCode != PaymentStatuses.Void  && paymentIds.Contains(a.Id)
+             select a.Id).ToList();
+        }
+        private GLAccountPM GetGLAccount(string id, int tenant)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);
+            GLAccountPM account = gLAccountQueryService.GetSinglePM(id, tenant);
+            return account;
+        }
+
+        private int GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(List<string> aRPaymentIds, int tenant)
+        {
+            ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(interestReportPM.Tenant);
+            var aRPaymentChequesCount = aRPaymentChequeQueryService.GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(aRPaymentIds, tenant);
+            return aRPaymentChequesCount;
         }
 
         private void SetInterestReportStatusDraft()

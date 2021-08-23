@@ -28,5 +28,6 @@ export class SessionInfo{
     public static ShipmentsFilters: CargoTrackingShipmentFilters;
 
     public static LoggedUserPM: any;
+    public static LoggedContact: any;
 
 }

@@ -14,57 +14,63 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
 {
     public class ShipmentOrderService
     {
-        public ShipmentOrder GetByOrderNumber(int tenant, string orderNumber)
+        private readonly int tenant;
+        private readonly ShipmentOrderUpdateService shipmentOrderUpdateService;
+        public ShipmentOrderService(int tenant)
         {
-            if (string.IsNullOrEmpty(orderNumber))
-                return new ShipmentOrder();
+            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(tenant);
+            shipmentOrderUpdateService = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            this.tenant = tenant;
+        }
+
+        public ShipmentOrder GetByOrderNumber(string orderNumber)
+        {
             return new ShipmentOrderQueryService(tenant).GetByOrderNumber(orderNumber, tenant);
         }
-
-
         public ShipmentOrderPM Create(ShipmentOrder entity)
         {
-
-            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(entity.Tenant);
-            ShipmentOrderPM shipmentOrderPM = MapPocoToPM(entity, ChangeSetOperation.Insert);
-            ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
-            service.Update(shipmentOrderPM, true);
-
+            ShipmentOrderPM shipmentOrderPM = ShipmentOrderDataMappingAndValidatin(entity, ChangeSetOperation.Insert);
+            shipmentOrderUpdateService.Update(shipmentOrderPM,true);
             return shipmentOrderPM;
         }
-
         public ShipmentOrderPM Update(ShipmentOrder entity)
         {
-
-            IShipmentOrderContext MyContext = ShipmentOrderContext.GetContext(entity.Tenant);
-            ShipmentOrderPM shipmentOrderPM = MapPocoToPM(entity, ChangeSetOperation.Update);
-            ShipmentOrderUpdateService service = new ShipmentOrderUpdateService(MyContext, new Dictionary<string, IContext>(), shipmentOrderPM.Tenant);
-            service.Update(shipmentOrderPM, true);
-
+            ShipmentOrderPM shipmentOrderPM = ShipmentOrderDataMappingAndValidatin(entity, ChangeSetOperation.Update);
+            shipmentOrderUpdateService.Update(shipmentOrderPM, true);
             return shipmentOrderPM;
         }
-
-
-        private ShipmentOrderPM MapPocoToPM(ShipmentOrder entity, ChangeSetOperation changeSetOp)
+        public ShipmentOrderPM Delete(string orderNumber)
+        {
+            ShipmentOrderPM shipmentOrderPM = new ShipmentOrderQueryService(tenant).GetSinglePMByOrderNumber(orderNumber, tenant);
+            shipmentOrderPM.IsCancelled = true;
+            shipmentOrderPM.ChangeSetOp = ChangeSetOperation.Update;
+            shipmentOrderUpdateService.Update(shipmentOrderPM, true);
+            return shipmentOrderPM;
+        }
+        private ShipmentOrderPM ShipmentOrderDataMappingAndValidatin(ShipmentOrder entity, ChangeSetOperation changeSetOp)
         {
 
-            if (changeSetOp == ChangeSetOperation.Update)
+            if (!IsNewEntity(changeSetOp))
             {
-                entity.Id = new ShipmentOrderQueryService(entity.Tenant).GetByOrderNumber(entity.OrderNumber, entity.Tenant)?.Id;
-                if (entity.Id == null)
-                {
-                    throw new ApplicationException("ShipmentOrder with orderNumber " + entity.OrderNumber + " doesn't exist");
-                }
+                SetIgonrdModificationFields(entity);
             }
 
-            var shipmentOrderQueryService = new ShipmentOrderQueryService(entity.Tenant);
-            ShipmentOrderPM entityPM = shipmentOrderQueryService.ShipmentOrderDataMappingAndValidatin(entity, entity.Tenant);
-            entityPM.Tenant = entity.Tenant;
+            var shipmentOrderQueryService = new ShipmentOrderQueryService(tenant);
+            ShipmentOrderPM entityPM = shipmentOrderQueryService.ShipmentOrderDataMappingAndValidatin(entity, tenant);
+            entityPM.Tenant = tenant;
             entityPM.ChangeSetOp = changeSetOp;
             return entityPM;
         }
+        private void SetIgonrdModificationFields(ShipmentOrder entity)
+        {
+            ShipmentOrder shipmentOrder = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant);
+            entity.Id = shipmentOrder.Id;
+            entity.SecurityKey = shipmentOrder.SecurityKey;
+        }
 
-
-
+        private bool IsNewEntity(ChangeSetOperation changeSetOp)
+        {
+            return changeSetOp == ChangeSetOperation.Insert;
+        }
     }
 }

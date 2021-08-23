@@ -1244,7 +1244,8 @@ export class ShipmentPM {
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
-	 
+     
+
     private shipperNote: string;
     public get ShipperNote() { return this.shipperNote; }
     public set ShipperNote(newValue: string) { if (this.shipperNote != newValue) { this.shipperNote = newValue; this.MarkAsDirty("ShipperNote"); } }
@@ -3803,8 +3804,19 @@ export class ShipmentPM {
     private declarationXMLData: string;
     public get DeclarationXMLData() { return this.declarationXMLData; }
     public set DeclarationXMLData(newValue: string) { if (this.declarationXMLData != newValue) { this.declarationXMLData = newValue; this.MarkAsDirty("DeclarationXMLData"); } }
-       
-	 
+
+    private documentInspection: Date;
+    public get DocumentInspection() { return this.documentInspection; }
+    public set DocumentInspection(newValue: Date) { if (this.documentInspection != newValue) { this.documentInspection = newValue; this.MarkAsDirty("DocumentInspection"); } }
+
+    private gatepassDocumentsReady: Date;
+    public get GatepassDocumentsReady() { return this.gatepassDocumentsReady; }
+    public set GatepassDocumentsReady(newValue: Date) { if (this.gatepassDocumentsReady != newValue) { this.gatepassDocumentsReady = newValue; this.MarkAsDirty("GatepassDocumentsReady"); } }
+
+    private goodsClassification: Date;
+    public get GoodsClassification() { return this.goodsClassification; }
+    public set GoodsClassification(newValue: Date) { if (this.goodsClassification != newValue) { this.goodsClassification = newValue; this.MarkAsDirty("GoodsClassification"); } }
+
     private isImporterApprovalRequired: boolean;
     public get IsImporterApprovalRequired() { return this.isImporterApprovalRequired; }
     public set IsImporterApprovalRequired(newValue: boolean) { if (this.isImporterApprovalRequired != newValue) { this.isImporterApprovalRequired = newValue; this.MarkAsDirty("IsImporterApprovalRequired"); } }
@@ -4964,7 +4976,18 @@ export class ShipmentPM {
     public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
     public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
+    private parentShipmentDirectionId: string;
+    public get ParentShipmentDirectionId() { return this.parentShipmentDirectionId; }
+    public set ParentShipmentDirectionId(newValue: string) { if (this.parentShipmentDirectionId != newValue) { this.parentShipmentDirectionId = newValue; this.MarkAsDirty("ParentShipmentDirectionId"); } }      
 
+    private parentShipmentNumber: string;
+    public get ParentShipmentNumber() { return this.parentShipmentNumber; }
+    public set ParentShipmentNumber(newValue: string) { if (this.parentShipmentNumber != newValue) { this.parentShipmentNumber = newValue; this.MarkAsDirty("ParentShipmentNumber"); } }      
+
+    private parentShipmentType: string;
+    public get ParentShipmentType() { return this.parentShipmentType; }
+    public set ParentShipmentType(newValue: string) { if (this.parentShipmentType != newValue) { this.parentShipmentType = newValue; this.MarkAsDirty("ParentShipmentType"); } }      
+ 
     private isProductItemsUpdated: boolean;
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
@@ -4988,6 +5011,46 @@ export class ShipmentPM {
     private handlerUserId: string;
     public get HandlerUserId() { return this.handlerUserId; }
     public set HandlerUserId(newValue: string) { if (this.handlerUserId != newValue) { this.handlerUserId = newValue; this.MarkAsDirty("HandlerUserId"); } }
+
+    private inlandDomesticFromZipCode: string;
+    public get InlandDomesticFromZipCode() { return this.inlandDomesticFromZipCode; }
+    public set InlandDomesticFromZipCode(newValue: string) { if (this.inlandDomesticFromZipCode != newValue) { this.inlandDomesticFromZipCode = newValue; this.MarkAsDirty("InlandDomesticFromZipCode"); } }
+
+    private inlandDomesticToZipCode: string;
+    public get InlandDomesticToZipCode() { return this.inlandDomesticToZipCode; }
+    public set InlandDomesticToZipCode(newValue: string) { if (this.inlandDomesticToZipCode != newValue) { this.inlandDomesticToZipCode = newValue; this.MarkAsDirty("InlandDomesticToZipCode"); } }
+
+    private inlandDomesticFromCity: string;
+    public get InlandDomesticFromCity() { return this.inlandDomesticFromCity; }
+    public set InlandDomesticFromCity(newValue: string) { if (this.inlandDomesticFromCity != newValue) { this.inlandDomesticFromCity = newValue; this.MarkAsDirty("InlandDomesticFromCity"); } }
+
+    private inlandDomesticToCity: string;
+    public get InlandDomesticToCity() { return this.inlandDomesticToCity; }
+    public set InlandDomesticToCity(newValue: string) { if (this.inlandDomesticToCity != newValue) { this.inlandDomesticToCity = newValue; this.MarkAsDirty("InlandDomesticToCity"); } }
+
+    private inlandDomesticFromCountryId: string;
+    public get InlandDomesticFromCountryId() { return this.inlandDomesticFromCountryId; }
+    public set InlandDomesticFromCountryId(newValue: string) { if (this.inlandDomesticFromCountryId != newValue) { this.inlandDomesticFromCountryId = newValue; this.MarkAsDirty("InlandDomesticFromCountryId"); } }
+
+    private inlandDomesticToCountryId: string;
+    public get InlandDomesticToCountryId() { return this.inlandDomesticToCountryId; }
+    public set InlandDomesticToCountryId(newValue: string) { if (this.inlandDomesticToCountryId != newValue) { this.inlandDomesticToCountryId = newValue; this.MarkAsDirty("InlandDomesticToCountryId"); } }
+
+    private inlandDomesticFromTypeCode: string;
+    public get InlandDomesticFromTypeCode() { return this.inlandDomesticFromTypeCode; }
+    public set InlandDomesticFromTypeCode(newValue: string) { if (this.inlandDomesticFromTypeCode != newValue) { this.inlandDomesticFromTypeCode = newValue; this.MarkAsDirty("InlandDomesticFromTypeCode"); } }
+
+    private inlandDomesticToTypeCode: string;
+    public get InlandDomesticToTypeCode() { return this.inlandDomesticToTypeCode; }
+    public set InlandDomesticToTypeCode(newValue: string) { if (this.inlandDomesticToTypeCode != newValue) { this.inlandDomesticToTypeCode = newValue; this.MarkAsDirty("InlandDomesticToTypeCode"); } }
+
+    private mainCarriageFromPortAddress: string;
+    public get MainCarriageFromPortAddress() { return this.mainCarriageFromPortAddress; }
+    public set MainCarriageFromPortAddress(newValue: string) { if (this.mainCarriageFromPortAddress != newValue) { this.mainCarriageFromPortAddress = newValue; this.MarkAsDirty("MainCarriageFromPortAddress"); } }
+
+    private mainCarriageToPortAddress: string;
+    public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
+    public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
 
     public OldEntityPM: ShipmentPM;
 

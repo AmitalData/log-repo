@@ -3218,6 +3218,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ParentShipmentNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentShipmentType"
+    OldNames="ParentShipmentTypeId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentShipmentDirectionId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3926,6 +3948,11 @@
   <Relation
     ForeignKeyColumn="HandlerUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentShipmentDirectionId"
+    ReferencedTable="Directions"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

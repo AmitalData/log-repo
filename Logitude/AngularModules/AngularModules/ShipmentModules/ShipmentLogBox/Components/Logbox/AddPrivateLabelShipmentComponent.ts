@@ -57,17 +57,22 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public GrossWeightLabel: string;
     public ChargeableWeightLabel: string;
     public VolumetricWeightColumnHeader: string;
-
+    public IsDSVTenant: boolean = false;
+     
     constructor() {
         super(); 
         this.InitializeServices();
+        this.SetUIProperties();
         this.SetUIProperties_Filters(); 
         this.TenantPM = SessionLocator.TenantPM;
-        this.SessionIndex = this.CurrentSession.SessionIndex; 
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+        this.IsDSVTenant = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
         this.BuildFiltersLists(); 
         this.SetUnits();
         this.SetLabels();
     }
+
+   
 
     SetUnits() { 
         this.SetDimensionsUnitCode(); 
@@ -212,6 +217,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetUIProperties() { 
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, false);
 
     }
 
@@ -237,9 +244,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.DirectionsList.push(new FilterClass("E", "Export"));
         this.DirectionsList.push(new FilterClass("C", "Customs"));
     }
-
-    public get StatusId() { return this.EntityPM.StatusId }
-    public set StatusId(newValue: string) { this.EntityPM.StatusId = newValue; }
+     
 
     public get BranchId() { return this.EntityPM.BranchId }
     public set BranchId(newValue: string) { this.EntityPM.BranchId = newValue; }
@@ -298,8 +303,6 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
             if (this.ValidationErrorsList.length == 0) { 
                 this.InitializeExportShipmentFields(); 
-                this.SetForwarderPartner(); 
-                this.InsertShipment();
             }
         }
 
@@ -330,6 +333,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
+    public get StatusId() { return this.EntityPM.StatusId }
+    public set StatusId(newValue: string) { this.EntityPM.StatusId = newValue; }
+
     private InitializeExportShipmentFields() {
         this.CurrentSession.StartBusyIndicator("Creating...");
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId; 
@@ -345,6 +351,27 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.OtherPrepaidCollectId = "C";
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
+
+        this._EntityStatusListService.getAll().subscribe((myResult: any) => {
+            if (!myResult.HasError) {
+
+                this.SetShipmentStatus(myResult);
+                this.SetForwarderPartner();
+                this.InsertShipment();
+            }
+            else {
+                this.ValidationErrorsList = myResult.ErrorsArray;
+            }
+        });
+
+
+
+    }
+
+    private SetShipmentStatus(myResult: any) {
+        this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0]?.Id;
+        this.EntityProgressStatusId = myResult.Result.filter(a => a.Code == "INPS")[0]?.Id;
+        this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
     }
 
     private ValidateRequiredFields() { 
@@ -435,12 +462,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    get ConsigneeName() { return this.EntityPM.ConsigneeName; }
-    set ConsigneeName(newValue: string) {
-        if (this.EntityPM.ConsigneeName != newValue) {
-            this.EntityPM.ConsigneeName = newValue;
-        }
-    }
+    public get ShipperName() { return this.EntityPM.ShipperName }
+    public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
@@ -473,7 +496,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     MainCarriageFromPortId = null;
     SetUIProperties_Ports() { 
         var isToRequired: boolean = false; 
-        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
             isToRequired = true;
         } 
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, isToRequired);

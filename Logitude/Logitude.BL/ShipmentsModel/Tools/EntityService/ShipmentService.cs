@@ -3190,11 +3190,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                entityPM.FromPortId = null;
-                entityPM.ToPortId = null;
-                entityPM.MainCarriageFromPortId = null;
-                entityPM.MainCarriageToPortId = null;
-                entityPM.MainCarriageFinalDestinationPortId = null;
+                //entityPM.FromPortId = null;
+                //entityPM.ToPortId = null;
+                //entityPM.MainCarriageFromPortId = null;
+                //entityPM.MainCarriageToPortId = null;
+                //entityPM.MainCarriageFinalDestinationPortId = null;
                 entityPM.ShipmentLevelCode = "D";
             }
         }
@@ -5016,6 +5016,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             AddressValidating.ValidatePickUp(itemPM);
 
             ShipmentPickUpDelivery itemPoco = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.Id);
+
             if (!entityPM.IsHybrid)
             {
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
@@ -5064,7 +5065,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TraceDeletedPickUp(itemPM, itemPoco);
+                shipmentTracing.TraceDeletedPickUp(itemPM, itemPoco, entityPM);
             }            
 
             ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
@@ -5131,7 +5132,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TraceDelivery(itemPM, itemPoco);
+                shipmentTracing.TraceDelivery(itemPM, itemPoco, entityPM);
             }
 
             ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, true);
@@ -5153,7 +5154,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                shipmentTracing.TraceDelivery(itemPM, itemPoco);
+                shipmentTracing.TraceDelivery(itemPM, itemPoco, entityPM);
             }
 
             if (string.IsNullOrEmpty(itemPoco.StandaloneShipmentId) && !string.IsNullOrEmpty(itemPM.StandaloneShipmentId))
@@ -5203,7 +5204,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (!entityPM.IsHybrid)
                 {
-                    shipmentTracing.TraceDeletedDelivery(itemPM, itemPoco);
+                    shipmentTracing.TraceDeletedDelivery(itemPM, itemPoco, entityPM);
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);

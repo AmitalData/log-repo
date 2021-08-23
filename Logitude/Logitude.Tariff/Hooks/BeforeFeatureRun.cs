@@ -19,6 +19,7 @@ namespace Logitude.Tariff.Hooks
             new TariffAirSurchargeCostDataPreparation().Prepar();
             new TariffOceanFCLFreightCostDataPreparation().Prepar();
             new TariffOceanLCLSurchargeCostDataPreparation().Prepar();
+            new TariffOceanFCLSurchargeCostDataPreparation().Prepar();
         }
 
         [BeforeFeature("Pre-Prepare-Tariff-Air")]
@@ -51,5 +52,10 @@ namespace Logitude.Tariff.Hooks
             new TariffAirSurchargeCostDataPreparation().Prepar();
         }
 
+        [BeforeFeature("Pre-Prepare-Tariff-OceanFCL-Surcharge")]
+        public static void SetUpPrepareDataBeforeFeatureRunTariffOceanFCLSurchargeCost()
+        {
+            new TariffOceanFCLSurchargeCostDataPreparation().Prepar();
+        }
     }
 }

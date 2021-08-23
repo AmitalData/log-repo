@@ -395,6 +395,7 @@ namespace Logitude.Accounting.BL.InterestService
                 UpdateDateTime = interestReport.UpdateDateTime,
                 Tenant = interestReport.Tenant,
                 CalCreditAllotmentCommission = interestReport.CalCreditAllotmentCommission,
+                CalculatedPostponedChequesCommision = interestReport.CalculatedPostponedChequesCommision,
                 CreateDateTime = interestReport.CreateDateTime,
                 CreatedByUserId = interestReport.CreatedByUserId,
                 CustomerId = interestReport.CustomerId,

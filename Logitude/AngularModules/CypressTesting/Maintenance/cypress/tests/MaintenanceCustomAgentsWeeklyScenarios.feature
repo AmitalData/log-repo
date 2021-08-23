@@ -1,10 +1,19 @@
-@release @all @stable @weekly 
+@release @all @dev @weekly
 Feature: Custom Agent Create and Edit in Maintenance Module
     The user creates a custom agent and edit it from the Maintenance Module.
 
-    Scenario: Create a new custom agent
+    Scenario: Add custom agent city with lenght more than 25
         Given the user logged in and navigate to "Custom Agents" in maintenance menu
-        And a custom agent with the following details
+        When add "012345678901234567890123456789" as city
+        Then a validation message with "City Field must be less than 25" error should appear
+
+    Scenario: Assert create custom agent without compnay name
+        Given the user fill the required fields except the company
+        When create custom agent
+        Then a validation single message with "Name Field is Required" error should appear
+
+    Scenario: Create a new custom agent
+        Given a custom agent with the following details
             | CompanyName | Testing Custom Agent Weekly Scenario |
             | LocalName   | Testing Custom Agent Weekly Scenario |
             | Address1    | 15 Custom Agent Street               |
