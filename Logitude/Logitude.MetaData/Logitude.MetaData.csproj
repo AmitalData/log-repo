@@ -1054,6 +1054,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseStoragePricing.lxml" />
+    <None Include="EntityFiles\CommonDataModel\QuoteGroupSection.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightMeasurement.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightRounding.lxml">
       <SubType>Designer</SubType>
