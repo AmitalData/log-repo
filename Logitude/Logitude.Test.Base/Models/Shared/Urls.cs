@@ -65,6 +65,7 @@
         public static string SprintViewsByFilters = "SprintViews/GetByFilters";
         public static string SprintsController = "Sprints";
         public static string TimeManagementDomainController = "TimeManagementDomain";
+        public static string ShipmentOrderController = "ShipmentOrder";
 
         #region Shipment Prepare Data URls
         //locations
@@ -219,6 +220,10 @@
         public static string TariffSingle(string id)
         {
             return "Tariffs/GetSingle?id=" + id;
+        }
+        public static string ShipmentOrderSingle(string orderNumber)
+        {
+            return "ShipmentOrder?orderNumber=" + orderNumber;
         }
     }
 }
