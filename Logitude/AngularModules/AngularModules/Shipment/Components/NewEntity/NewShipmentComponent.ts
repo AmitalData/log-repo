@@ -257,9 +257,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
             this.EntityPM.ForwarderStandaloneShipmentId = args.ForwarderStandaloneShipmentId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ForwarderStandaloneShipmentId : args.ForwarderStandaloneShipmentId) : args.ForwarderStandaloneShipmentId;
-            this.EntityPM.ParentShipmentDirectionId = this.SourceEntityPM.ParentShipmentDirectionId;
-            this.EntityPM.ParentShipmentNumber = this.SourceEntityPM.ParentShipmentNumber;
-            this.EntityPM.ParentShipmentType = this.SourceEntityPM.ParentShipmentType;
+            this.EntityPM.ParentShipmentDirectionId = args.ParentShipmentDirectionId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentDirectionId : args.ParentShipmentDirectionId) : args.ParentShipmentDirectionId;;
+            this.EntityPM.ParentShipmentNumber = args.ParentShipmentNumber == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentNumber : args.ParentShipmentNumber) : args.ParentShipmentNumber;;
+            this.EntityPM.ParentShipmentType = args.ParentShipmentType == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentType : args.ParentShipmentType) : args.ParentShipmentType;;
             this.EntityPM.ForwarderPickUpDeliveryType = args.ForwarderShipmentPickUpDeliveryTypeCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
