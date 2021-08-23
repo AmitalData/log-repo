@@ -94,6 +94,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
 
+                    TenantQuery tenantQuery = new TenantQuery(tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                    string accountingCurrencyId = tPM.CurrencyId;
+
                     foreach (ChargeTypeSrcLineDTO ct1stLineDTO in _ChargeTypeSrcLinesDTO)
                     {
                         count++;
@@ -215,8 +219,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 IsDomestic = false,
                                 IsExport = false,
                                 IsDrop = false,
-                                ReceivablesDefaultCurrencyId = "",
-                                PayablesDefaultCurrencyId = "",
+                                ReceivablesDefaultCurrencyId = accountingCurrencyId,
+                                PayablesDefaultCurrencyId = accountingCurrencyId,
                                 ApplyRegionalTax = false,
                                 HasPickup = false,
                                 HasDelivery = false,
