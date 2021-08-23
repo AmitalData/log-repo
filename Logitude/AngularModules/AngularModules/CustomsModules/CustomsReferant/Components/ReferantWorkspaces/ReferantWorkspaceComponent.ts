@@ -327,11 +327,13 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         this.ViewReferantQuery(query);
     }
     public filters: ApiQueryFilters;
+    viewFilters = new ApiQueryFilters();
+
 
     FilterChange($event) {
         this.filters = new ApiQueryFilters();
         this.filters = $event.Filters;
-    
+        this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName");
         this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
         this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
         this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
