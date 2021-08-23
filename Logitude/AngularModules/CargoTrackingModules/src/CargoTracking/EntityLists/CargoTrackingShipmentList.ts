@@ -121,6 +121,8 @@ export class CargoTrackingShipmentList {
 	GatepassArrivedEstDate: Date;
 	GatepassArrivedNotes: string;
 	GatepassArrivedDone: boolean;
+	ImportManifest: string;
+
 	
 }
  

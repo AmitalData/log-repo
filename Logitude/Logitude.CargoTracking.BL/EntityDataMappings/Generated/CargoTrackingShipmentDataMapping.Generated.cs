@@ -114,6 +114,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedEstDate, 
 	         GatepassArrivedNotes, 
 	         GatepassArrivedDone,
+	         ImportManifest,
 	      }
 
 
@@ -223,6 +224,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedEstDate, 
 	         GatepassArrivedNotes, 
 	         GatepassArrivedDone,
+	         ImportManifest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -649,6 +651,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionDone))
             {
 				entityPOCO.DocumentInspectionDone = entityPM.DocumentInspectionDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+				entityPOCO.ImportManifest = entityPM.ImportManifest;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDone))
@@ -1104,6 +1111,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.DocumentInspectionDone = entityPOCO.DocumentInspectionDone;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
+            {
+					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
+		}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationDone))
             {
@@ -1555,6 +1568,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.DocumentInspectionDone = entityPM.DocumentInspectionDone;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+                oldEntityPM.ImportManifest = entityPM.ImportManifest;
+            }
+			
+		}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDone))
             {

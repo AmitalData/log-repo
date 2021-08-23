@@ -209,6 +209,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string GatepassArrivedNotes { get; set; }
         [Column("GatepassArrivedDone")]
 	    public bool? GatepassArrivedDone { get; set; }
+        [Column("ImportManifest")]
+	    public string ImportManifest { get; set; }
     }
 }
 	 
