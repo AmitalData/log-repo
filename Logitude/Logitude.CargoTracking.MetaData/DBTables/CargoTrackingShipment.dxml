@@ -522,6 +522,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ImportManifest"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

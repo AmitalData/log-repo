@@ -479,6 +479,11 @@ export class CargoTrackingShipmentPM {
     public set ForwardingShipmentLevelCode(newValue: string) { if (this.forwardingShipmentLevelCode != newValue) { this.forwardingShipmentLevelCode = newValue; this.MarkAsDirty("ForwardingShipmentLevelCode"); } }
        
 	 
+    private importManifest: string;
+    public get ImportManifest() { return this.importManifest; }
+    public set ImportManifest(newValue: string) { if (this.importManifest != newValue) { this.importManifest = newValue; this.MarkAsDirty("ImportManifest"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

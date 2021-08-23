@@ -28,7 +28,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA ";
+                ", Mas.MainCarriageETA  as MainCarriageETA " +
+                ", Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
                 "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
@@ -102,6 +103,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
+                    Mas.ImportManifest,
                     Mas.MainCarriageETA";
 
 
@@ -133,7 +135,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA";
+                ", Mas.MainCarriageETA  as MainCarriageETA"+
+                ", Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
           "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
@@ -211,6 +214,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
+                    Mas.ImportManifest,
                     Mas.MainCarriageETA";
 
 

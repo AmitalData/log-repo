@@ -269,13 +269,17 @@
                         </ul>
                         &nbsp;
                         <a *ngIf="ShipmentContainers.length > 2" (click)="showMoreContainers=!showMoreContainers"
-                            style="cursor: pointer;text-decoration: underline; font-size: 11px;">
+                           style="cursor: pointer;text-decoration: underline; font-size: 11px;">
                             {{showMoreContainers?'Show Less':'See all'}}
                         </a>
                     </div>
 
                 </div>
 
+                <div class="field">
+                    <div class="label">Import Manifest</div>
+                    <div class="value">{{Shipment.ImportManifest}}</div>
+                </div>
 
             </div>
 

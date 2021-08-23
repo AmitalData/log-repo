@@ -101,7 +101,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CurrentMilestoneExceptions, 
 	         ForwardingHouse, 
 	         ForwardingMaster, 
-	         ForwardingShipmentLevelCode,
+	         ForwardingShipmentLevelCode, 
+	         ImportManifest,
 	      }
 
 
@@ -198,7 +199,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ToPortCode, 
 	         NumberOfPackages, 
 	         CurrentMilestoneExceptions, 
-	         ForwardingShipmentLevelCode,
+	         ForwardingShipmentLevelCode, 
+	         ImportManifest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -590,6 +592,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentLevelCode))
             {
 				entityPOCO.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+				entityPOCO.ImportManifest = entityPM.ImportManifest;
 			}
 			}
 
@@ -986,6 +993,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ForwardingShipmentLevelCode = entityPOCO.ForwardingShipmentLevelCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
+            {
+					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1375,6 +1387,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentLevelCode))
             {
                 oldEntityPM.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+                oldEntityPM.ImportManifest = entityPM.ImportManifest;
             }
 			
 		}
