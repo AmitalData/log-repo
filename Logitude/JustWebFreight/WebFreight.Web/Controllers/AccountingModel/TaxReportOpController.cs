@@ -26,6 +26,8 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Text;
+using Logitude.Accounting.BL.CoreBL.Testers;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -307,6 +309,47 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+
+        public HttpResponseMessage PostCreateTaxReportLines(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    string winHebrewString = EncodeStringFromImageParameter(fileUploadParamerter);
+
+                    var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
+                    myConsolidatedTaxReportFlatFileAnalyser.Analyse(authToken.Tenant, fileUploadParamerter.EntityId, winHebrewString);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Done" });
+                }
+                else
+                {
+                    throw new Exception("fileUploadParamerter is empty");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
+        {
+            byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+            var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dataBytes);
+            string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+            return winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
+
+        }
 
     }
 }

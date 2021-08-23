@@ -2744,6 +2744,13 @@
         IndexOrder="1"
         LocalDefaultText="&quot;ביטול&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;UPLD&quot;"
+        DefaultText="&quot;Upload Rows&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="2"
+        LocalDefaultText="&quot;טעינת שורות&quot;"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
@@ -2782,6 +2789,78 @@
       Code="&quot;TaxReport.O.NewTaxReport&quot;"
       DefaultText="&quot;New Tax Report&quot;"
       LocalDefaultText="&quot;דוח מע&quot;מ חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Uploaded&quot;"
+      DefaultText="&quot;The 874.txt file you produced in a related company should be uploaded,&quot;"
+      LocalDefaultText="&quot;יש לטעון את קובץ  874.txt  שהפקת בחברה הקשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Mark&quot;"
+      DefaultText="&quot;after loading the file, additional lines will be created in the VAT report that will be marked with a mark &quot;"
+      LocalDefaultText="&quot;לאחר טעינת הקובץ יווצרו בדו&quot;ח המע&quot;מ שורות נוספות לדיווח שיסומנו בסימן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CantBeEdited&quot;"
+      DefaultText="&quot;These lines cannot be edited.&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע עריכה בשורות אלו.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.ExternalLines&quot;"
+      DefaultText="&quot;Loading another external file into this report will delete the existing external rows and create new rows according to the new file.&quot;"
+      LocalDefaultText="&quot;טעינת קובץ חיצוני נוסף לדוח זה ימחק את השורות החיצוניות הקיימות וייצור שורות חדשות בהתאם לקובץ החדש.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.Upload&quot;"
+      DefaultText="&quot;Upload&quot;"
+      LocalDefaultText="&quot;טעינה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.TextFileAllowed&quot;"
+      DefaultText="&quot;Required TXT file&quot;"
+      LocalDefaultText="&quot;חובה קובץ TXT&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.UploadFile&quot;"
+      DefaultText="&quot;Upload file before uploading&quot;"
+      LocalDefaultText="&quot;טען קובץ לפני העלאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.File&quot;"
+      DefaultText="&quot;File&quot;"
+      LocalDefaultText="&quot;קובץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.NotValidRowType&quot;"
+      DefaultText="&quot;Not a valid Row Type&quot;"
+      LocalDefaultText="&quot;רשומת לא מסוג תקין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.TaxLineRowType&quot;"
+      DefaultText="&quot;Tax Line Row Type&quot;"
+      LocalDefaultText="&quot;רשומת תנועה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.AppearsBefore&quot;"
+      DefaultText="&quot;Appears Before&quot;"
+      LocalDefaultText="&quot;מופיעה לפני&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.StartingRowType&quot;"
+      DefaultText="&quot;Starting Row Type&quot;"
+      LocalDefaultText="&quot;רשומת פתיחה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

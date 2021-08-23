@@ -6,6 +6,8 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -34,7 +36,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private ContactRepository _contactRep;
         private string _resolveLoggingUserId;
         private Contact _contact;
-        private const bool useLocal = true;
+        private  bool useLocal = true;
         private TaxReportPM MyTaxReportPM;
 
 
@@ -42,6 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
+                useLocal = !(GetLoggedContact(ptenant.Value).DontShowLocal);
                 FileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
                 string taxReportIdFromPage4Tester = "";
@@ -93,7 +96,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<TaxReportLineList> lines = taxReportLineListQueryService.GetReportLines(taxReportId, tenant).ToList();
                 if (lines != null && lines.Count > 0)
                 {
-                    maxLine = lines.Max(l => l.Line);
+                    lines= lines.Where(d => !d.IsExternalLine).ToList();
+                    maxLine = lines.Count > 0 ? lines.Max(l => l.Line) : 1;
+
                 }
 
                 int nextLine = maxLine;
@@ -164,10 +169,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         externalLines.ForEach(line => { line.ChangeSetOp = ChangeSetOperation.Delete; });
                     }
-
+                  
                     TaxReportLineUpdateService taxReportLineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
-                    taxReportLineUpdateService.UpdateMulti(newLines, externalLines, MyTaxReportPM, true);
+                    taxReportLineUpdateService.UpdateMulti(new List<TaxReportLinePM>(), externalLines, MyTaxReportPM, true);
+                    taxReportLineUpdateService.UpdateMulti(newLines, new List<TaxReportLinePM>(), MyTaxReportPM, true);
 
                     TaxReportPM RefreshedTaxReportPM = taxReportQueryService.GetSingle(taxReportId, true, false);
                     RefreshedTaxReportPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -220,6 +225,18 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+        public Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
         private void AddErrorRow(String errorLine)
         {
 
@@ -276,9 +293,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!readingLines)
                             {
 
-                                string text_3 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxLineRowType", 0, useLocal);
-                                string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.AppearsBefore", 0, useLocal);
-                                string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StartingRowType", 0, useLocal);
+                                string text_3 = TranslateTextsClassTranslate("TaxReport.O.TaxLineRowType", 0, useLocal);
+                                string text_44 = TranslateTextsClassTranslate("TaxReport.O.AppearsBefore", 0, useLocal);
+                                string text_2 = TranslateTextsClassTranslate("TaxReport.O.StartingRowType", 0, useLocal);
                                 throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {OpeningLineDTO.RowType} ");
                             }
                             TaxReportLineDTO taxLine = TaxReportLineDTO.Create(rawLine);
@@ -287,8 +304,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else
                         {
-                            string text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotValidRowType", 0, useLocal);
-                            throw new ApplicationException($"{text}  {rawLine}");
+                            string text = TranslateTextsClassTranslate("TaxReport.O.NotValidRowType", 0, useLocal);
+                            throw new ApplicationException($"{text} ");
                         }
                         break;
                 }
