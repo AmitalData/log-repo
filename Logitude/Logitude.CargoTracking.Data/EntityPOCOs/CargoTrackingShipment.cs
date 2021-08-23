@@ -185,6 +185,30 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ForwardingMaster { get; set; }
         [Column("ForwardingShipmentLevelCode")]
 	    public string ForwardingShipmentLevelCode { get; set; }
+        [Column("GoodsClassificationDate")]
+	    public DateTime? GoodsClassificationDate { get; set; }
+        [Column("GoodsClassificationEstDate")]
+	    public DateTime? GoodsClassificationEstDate { get; set; }
+        [Column("GoodsClassificationNotes")]
+	    public string GoodsClassificationNotes { get; set; }
+        [Column("DocumentInspectionDate")]
+	    public DateTime? DocumentInspectionDate { get; set; }
+        [Column("DocumentInspectionEstDate")]
+	    public DateTime? DocumentInspectionEstDate { get; set; }
+        [Column("DocumentInspectionNotes")]
+	    public string DocumentInspectionNotes { get; set; }
+        [Column("DocumentInspectionDone")]
+	    public bool? DocumentInspectionDone { get; set; }
+        [Column("GoodsClassificationDone")]
+	    public bool? GoodsClassificationDone { get; set; }
+        [Column("GatepassArrivedDate")]
+	    public DateTime? GatepassArrivedDate { get; set; }
+        [Column("GatepassArrivedEstDate")]
+	    public DateTime? GatepassArrivedEstDate { get; set; }
+        [Column("GatepassArrivedNotes")]
+	    public string GatepassArrivedNotes { get; set; }
+        [Column("GatepassArrivedDone")]
+	    public bool? GatepassArrivedDone { get; set; }
     }
 }
 	 

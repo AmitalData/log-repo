@@ -118,6 +118,21 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ForwardingMaster = shipment.ForwardingMaster,
                                                                ForwardingHouse = shipment.ForwardingHouse,
 
+                                                               GoodsClassificationDate = shipment.GoodsClassificationDate,
+                                                               GoodsClassificationDone = shipment.GoodsClassificationDone,
+                                                               GoodsClassificationNotes = shipment.GoodsClassificationNotes,
+                                                               GoodsClassificationEstDate = shipment.GoodsClassificationEstDate,
+
+                                                               DocumentInspectionDate = shipment.DocumentInspectionDate,
+                                                               DocumentInspectionEstDate = shipment.DocumentInspectionEstDate,
+                                                               DocumentInspectionDone = shipment.DocumentInspectionDone,
+                                                               DocumentInspectionNotes = shipment.DocumentInspectionNotes,
+
+                                                               GatepassArrivedDate = shipment.GatepassArrivedDate,
+                                                               GatepassArrivedDone = shipment.GatepassArrivedDone,
+                                                               GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
+                                                               GatepassArrivedNotes = shipment.GatepassArrivedNotes,
+                                                               
 
                                                            });
             return query;
@@ -267,7 +282,22 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                     DeliveryExceptionReason = poco.DeliveryExceptionReason,
 
-                    GrossWeightUnitCode = poco.GrossWeightUnitCode
+                    GrossWeightUnitCode = poco.GrossWeightUnitCode,
+
+                    GoodsClassificationDate = poco.GoodsClassificationDate,
+                    GoodsClassificationDone = poco.GoodsClassificationDone,
+                    GoodsClassificationNotes = poco.GoodsClassificationNotes,
+                    GoodsClassificationEstDate = poco.GoodsClassificationEstDate,
+
+                    DocumentInspectionDate = poco.DocumentInspectionDate,
+                    DocumentInspectionEstDate = poco.DocumentInspectionEstDate,
+                    DocumentInspectionDone = poco.DocumentInspectionDone,
+                    DocumentInspectionNotes = poco.DocumentInspectionNotes,
+
+                    GatepassArrivedDate = poco.GatepassArrivedDate,
+                    GatepassArrivedDone = poco.GatepassArrivedDone,
+                    GatepassArrivedEstDate = poco.GatepassArrivedEstDate,
+                    GatepassArrivedNotes = poco.GatepassArrivedNotes,
 
                 };
             if(list != null)
@@ -390,6 +420,21 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 DeliveryNotes = shipment.DeliveryNotes,
                 AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
                 AssignedTruckerNotes = shipment.AssignedTruckerNotes,
+
+                GoodsClassificationDate = shipment.GoodsClassificationDate,
+                GoodsClassificationDone = shipment.GoodsClassificationDone,
+                GoodsClassificationNotes = shipment.GoodsClassificationNotes,
+                GoodsClassificationEstDate = shipment.GoodsClassificationEstDate,
+
+                DocumentInspectionDate = shipment.DocumentInspectionDate,
+                DocumentInspectionEstDate = shipment.DocumentInspectionEstDate,
+                DocumentInspectionDone = shipment.DocumentInspectionDone,
+                DocumentInspectionNotes = shipment.DocumentInspectionNotes,
+
+                GatepassArrivedDate = shipment.GatepassArrivedDate,
+                GatepassArrivedDone = shipment.GatepassArrivedDone,
+                GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
+                GatepassArrivedNotes = shipment.GatepassArrivedNotes,
 
             };
         }
@@ -700,22 +745,31 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
 
 
-            //9 Goods Classification
             milestones.Add(new Milestone()
             {
                 Id = 9,
                 Code = "GoodsClassification",
                 Name = "Goods Classification",
-                Date = shipment.AssignedCustomsAgentDate,
-                EstimationDate = shipment.AssignedCustomsAgentEstDate,
-                Done = shipment.AssignedCustomsAgentDone,
-                Notes = shipment.AssignedCustomsAgentNotes,
+                Date = shipment.GoodsClassificationDate,
+                EstimationDate = shipment.GoodsClassificationEstDate,
+                Done = shipment.GoodsClassificationDone,
+                Notes = shipment.GoodsClassificationNotes,
                 IsCurrent = false,
-                IsEstimation = shipment.AssignedCustomsAgentDate == null && shipment.AssignedCustomsAgentEstDate != null
+                IsEstimation = shipment.GoodsClassificationDate == null && shipment.GoodsClassificationEstDate != null
             });
-
-            //10 Document Inspection
-
+            
+            milestones.Add(new Milestone()
+            {
+                Id = 10,
+                Code = "DocumentInspection",
+                Name = "Document Inspection",
+                Date = shipment.DocumentInspectionDate,
+                EstimationDate = shipment.DocumentInspectionEstDate,
+                Done = shipment.DocumentInspectionDone,
+                Notes = shipment.DocumentInspectionNotes,
+                IsCurrent = false,
+                IsEstimation = shipment.DocumentInspectionDate == null && shipment.DocumentInspectionEstDate != null
+            });
 
 
 
@@ -744,7 +798,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 IsEstimation = shipment.ClearanceDone != true
             });
 
-            //13 Gatepass Arrived
+            milestones.Add(new Milestone()
+            {
+                Id = 13,
+                Code = "GatepassArrived",
+                Name = "Gatepass Arrived",
+                Date = shipment.GatepassArrivedDate,
+                EstimationDate = shipment.GatepassArrivedEstDate,
+                Done = shipment.GatepassArrivedDone,
+                Notes = shipment.GatepassArrivedNotes,
+                IsCurrent = false,
+                IsEstimation = shipment.GatepassArrivedDate == null && shipment.GatepassArrivedEstDate != null
+            });
+
 
             milestones.Add(new Milestone()
             {

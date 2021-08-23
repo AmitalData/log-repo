@@ -479,6 +479,66 @@ export class CargoTrackingShipmentPM {
     public set ForwardingShipmentLevelCode(newValue: string) { if (this.forwardingShipmentLevelCode != newValue) { this.forwardingShipmentLevelCode = newValue; this.MarkAsDirty("ForwardingShipmentLevelCode"); } }
        
 	 
+    private goodsClassificationDate: Date;
+    public get GoodsClassificationDate() { return this.goodsClassificationDate; }
+    public set GoodsClassificationDate(newValue: Date) { if (this.goodsClassificationDate != newValue) { this.goodsClassificationDate = newValue; this.MarkAsDirty("GoodsClassificationDate"); } }
+       
+	 
+    private goodsClassificationEstDate: Date;
+    public get GoodsClassificationEstDate() { return this.goodsClassificationEstDate; }
+    public set GoodsClassificationEstDate(newValue: Date) { if (this.goodsClassificationEstDate != newValue) { this.goodsClassificationEstDate = newValue; this.MarkAsDirty("GoodsClassificationEstDate"); } }
+       
+	 
+    private goodsClassificationNotes: string;
+    public get GoodsClassificationNotes() { return this.goodsClassificationNotes; }
+    public set GoodsClassificationNotes(newValue: string) { if (this.goodsClassificationNotes != newValue) { this.goodsClassificationNotes = newValue; this.MarkAsDirty("GoodsClassificationNotes"); } }
+       
+	 
+    private documentInspectionDate: Date;
+    public get DocumentInspectionDate() { return this.documentInspectionDate; }
+    public set DocumentInspectionDate(newValue: Date) { if (this.documentInspectionDate != newValue) { this.documentInspectionDate = newValue; this.MarkAsDirty("DocumentInspectionDate"); } }
+       
+	 
+    private documentInspectionEstDate: Date;
+    public get DocumentInspectionEstDate() { return this.documentInspectionEstDate; }
+    public set DocumentInspectionEstDate(newValue: Date) { if (this.documentInspectionEstDate != newValue) { this.documentInspectionEstDate = newValue; this.MarkAsDirty("DocumentInspectionEstDate"); } }
+       
+	 
+    private documentInspectionNotes: string;
+    public get DocumentInspectionNotes() { return this.documentInspectionNotes; }
+    public set DocumentInspectionNotes(newValue: string) { if (this.documentInspectionNotes != newValue) { this.documentInspectionNotes = newValue; this.MarkAsDirty("DocumentInspectionNotes"); } }
+       
+	 
+    private documentInspectionDone: boolean;
+    public get DocumentInspectionDone() { return this.documentInspectionDone; }
+    public set DocumentInspectionDone(newValue: boolean) { if (this.documentInspectionDone != newValue) { this.documentInspectionDone = newValue; this.MarkAsDirty("DocumentInspectionDone"); } }
+       
+	 
+    private goodsClassificationDone: boolean;
+    public get GoodsClassificationDone() { return this.goodsClassificationDone; }
+    public set GoodsClassificationDone(newValue: boolean) { if (this.goodsClassificationDone != newValue) { this.goodsClassificationDone = newValue; this.MarkAsDirty("GoodsClassificationDone"); } }
+       
+	 
+    private gatepassArrivedDate: Date;
+    public get GatepassArrivedDate() { return this.gatepassArrivedDate; }
+    public set GatepassArrivedDate(newValue: Date) { if (this.gatepassArrivedDate != newValue) { this.gatepassArrivedDate = newValue; this.MarkAsDirty("GatepassArrivedDate"); } }
+       
+	 
+    private gatepassArrivedEstDate: Date;
+    public get GatepassArrivedEstDate() { return this.gatepassArrivedEstDate; }
+    public set GatepassArrivedEstDate(newValue: Date) { if (this.gatepassArrivedEstDate != newValue) { this.gatepassArrivedEstDate = newValue; this.MarkAsDirty("GatepassArrivedEstDate"); } }
+       
+	 
+    private gatepassArrivedNotes: string;
+    public get GatepassArrivedNotes() { return this.gatepassArrivedNotes; }
+    public set GatepassArrivedNotes(newValue: string) { if (this.gatepassArrivedNotes != newValue) { this.gatepassArrivedNotes = newValue; this.MarkAsDirty("GatepassArrivedNotes"); } }
+       
+	 
+    private gatepassArrivedDone: boolean;
+    public get GatepassArrivedDone() { return this.gatepassArrivedDone; }
+    public set GatepassArrivedDone(newValue: boolean) { if (this.gatepassArrivedDone != newValue) { this.gatepassArrivedDone = newValue; this.MarkAsDirty("GatepassArrivedDone"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
