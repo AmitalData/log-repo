@@ -52,6 +52,18 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request, retries);
         }
 
+        public static ApiResponse<T> CallDelete<T>(string url, string token, int retries = 0)
+        {
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.DELETE,
+                Token = token,
+                Url = url
+            };
+
+            return CallAPIProcess<T>(request, retries);
+        }
+
         public static ApiResponse<T> CallGetByFilters<T>(string url, string token, ApiQueryFilters apiQueryFilters)
         {
             ApiRequestParameters request = new ApiRequestParameters()

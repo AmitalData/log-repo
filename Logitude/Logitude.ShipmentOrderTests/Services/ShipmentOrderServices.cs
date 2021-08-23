@@ -72,5 +72,6 @@ namespace Logitude.ShipmentOrderTests.Services
             updatedShipmentOrder.DescriptionOfGoods.Should().Equals(shipmentOrder.DescriptionOfGoods);
             updatedShipmentOrder.CustomerReferences.Should().Equals(shipmentOrder.CustomerReferences);
         }
+
     }
 }

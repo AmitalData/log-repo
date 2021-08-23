@@ -88,5 +88,7 @@ namespace Logitude.ShipmentOrderTests.Models
         public Card Carrier { get; set; }
 
         public DateTime CreateDate { get; set; }
+
+        public string SecurityKey { get; set; }
     }
 }
