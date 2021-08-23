@@ -322,12 +322,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (isInlandDomesticShipment)
                 {
+                    shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
+                    shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
                     shipmentPM.MainCarriageFromPartnerId = masterData.MainCarriageFromPartnerId;
                     shipmentPM.MainCarriageFromAddressId = masterData.MainCarriageFromAddressId;
                     shipmentPM.MainCarriageToPartnerId = masterData.MainCarriageToPartnerId;
                     shipmentPM.MainCarriageToAddressId = masterData.MainCarriageToAddressId;
                     shipmentPM.Driver = masterData.Driver;
                     shipmentPM.TruckNumber = masterData.TruckNumber;
+                    shipmentPM.InlandDomesticFromZipCode = masterData.InlandDomesticFromZipCode;
+                    shipmentPM.InlandDomesticToZipCode = masterData.InlandDomesticToZipCode;
+                    shipmentPM.InlandDomesticFromCity = masterData.InlandDomesticFromCity;
+                    shipmentPM.InlandDomesticToCity = masterData.InlandDomesticToCity;
+                    shipmentPM.InlandDomesticFromCountryId = masterData.InlandDomesticFromCountryId;
+                    shipmentPM.InlandDomesticToCountryId = masterData.InlandDomesticToCountryId;
+                    shipmentPM.InlandDomesticFromTypeCode = masterData.InlandDomesticFromTypeCode;
+                    shipmentPM.InlandDomesticToTypeCode = masterData.InlandDomesticToTypeCode;
+                    shipmentPM.MainCarriageFromPortAddress = masterData.MainCarriageFromPortAddress;
+                    shipmentPM.MainCarriageToPortAddress = masterData.MainCarriageToPortAddress;
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromAddressId))
                     {

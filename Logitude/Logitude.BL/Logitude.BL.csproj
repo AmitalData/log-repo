@@ -471,8 +471,8 @@
     <Compile Include="CommonDataModel\Tools\MixPanelTracker\MixPanelEventTracker.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AccountingPartnerTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\CarrierAreaTracing.cs" />
-    <Compile Include="CommonDataModel\Tools\TraceEvents\HorseTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\ComputingPartnerTracing.cs" />
+    <Compile Include="CommonDataModel\Tools\TraceEvents\HorseTracing.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\ProductItemValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\TariffCarrierTranslationValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />

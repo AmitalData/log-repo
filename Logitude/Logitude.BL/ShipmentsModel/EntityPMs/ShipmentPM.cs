@@ -2711,7 +2711,32 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? PlannedCargoReadyDate { get; set; }
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticFromZipCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticToZipCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticFromCity { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticToCity { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticFromCountryId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticToCountryId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticFromTypeCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
     }
 
     public class TransshipmentLeg

@@ -1669,6 +1669,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                         entityMasterData.MainCarriageToAddressId = entityPM.MainCarriageToAddressId;
                         entityMasterData.Driver = entityPM.Driver;
                         entityMasterData.TruckNumber = entityPM.TruckNumber;
+                        entityMasterData.InlandDomesticFromZipCode = entityPM.InlandDomesticFromZipCode;
+                        entityMasterData.InlandDomesticToZipCode = entityPM.InlandDomesticToZipCode;
+                        entityMasterData.InlandDomesticFromCity = entityPM.InlandDomesticFromCity;
+                        entityMasterData.InlandDomesticToCity = entityPM.InlandDomesticToCity;
+                        entityMasterData.InlandDomesticFromCountryId = entityPM.InlandDomesticFromCountryId;
+                        entityMasterData.InlandDomesticToCountryId = entityPM.InlandDomesticToCountryId;
+                        entityMasterData.InlandDomesticFromTypeCode = entityPM.InlandDomesticFromTypeCode;
+                        entityMasterData.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
+                        entityMasterData.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
+                        entityMasterData.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
+                        entityMasterData.MainCarriageFromPortId = entityPM.MainCarriageFromPortId;
+                        entityMasterData.MainCarriageToPortId = entityPM.MainCarriageToPortId;
+                        entityMasterData.MainCarriageFinalDestinationPortId = entityPM.MainCarriageToPortId;
                     }
 
                     if (entityPM.TransportModeId == "A")
