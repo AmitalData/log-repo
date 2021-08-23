@@ -37,8 +37,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                return opportunityQueryService.GetOpportunitiesDWByDates(tenant, fromDate, toDate, skip, take);
+                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                //return opportunityQueryService.GetOpportunitiesDWByDates(tenant, fromDate, toDate, skip, take);
+                return new List<OpportunityDW>();
 
 
             }
@@ -73,9 +74,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                return opportunityQueryService.GetOpportunitiesCountDWByDates(tenant, fromDate, toDate);
-
+                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                //return opportunityQueryService.GetOpportunitiesCountDWByDates(tenant, fromDate, toDate);
+                return 0;
 
             }
             catch (Exception ex)
@@ -109,9 +110,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);//UPDATE//READ
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                return opportunityQueryService.GetOpportunitiesDWByUpdateDate(tenant, updateDate, skip, take);
-
+                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                //return opportunityQueryService.GetOpportunitiesDWByUpdateDate(tenant, updateDate, skip, take);
+                return new List<OpportunityDW>();
 
             }
             catch (Exception ex)
@@ -145,9 +146,9 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                return opportunityQueryService.GetOpportunitiesDWCountByUpdateDate(tenant, updateDate);
-
+                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                //return opportunityQueryService.GetOpportunitiesDWCountByUpdateDate(tenant, updateDate);
+                return  0;
 
             }
             catch (Exception ex)

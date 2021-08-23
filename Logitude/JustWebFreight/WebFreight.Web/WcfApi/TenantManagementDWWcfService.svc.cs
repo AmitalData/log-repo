@@ -30,9 +30,9 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TenantManagement", "READ", tenant);
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-                List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant,skip, take);
-                return result;
+                //TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                //List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant,skip, take);
+                return new List<TenantManagementDW>();
             }
 
             catch (Exception ex)
