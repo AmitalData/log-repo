@@ -175,19 +175,31 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToTrucker);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedTruckerDate"]);
-
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "GatepassArrivedDone") && !tableRow["GatepassArrivedDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GatepassArrived);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["GatepassArrivedDate"]);
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ClearanceDone") && !tableRow["ClearanceDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Clearance);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["ClearanceDate"]);
-
             }
             else if (!IsFieldNullOrEmpty(tableRow, "CustomsPaymentDone") && !tableRow["CustomsPaymentDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.CustomsPayment);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CustomsPaymentDate"]);
-
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DocumentInspectionDone") && !tableRow["DocumentInspectionDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DocumentInspection);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DocumentInspectionDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "GoodsClassificationDone") && !tableRow["GoodsClassificationDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GoodsClassification);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["GoodsClassificationDate"]);
             }
 
             //CustomsProcess
@@ -196,7 +208,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsAgent);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
-
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
             {
