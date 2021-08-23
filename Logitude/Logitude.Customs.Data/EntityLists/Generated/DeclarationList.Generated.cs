@@ -406,6 +406,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ImporterPassCountryForExport  { get; set; }
        [DataMember]
        public string ImporterNameForExport  { get; set; }
+       [DataMember]
+       public string ExportImporterCode  { get; set; }
    }
 
 }

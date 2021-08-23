@@ -364,6 +364,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      StorageSiteCode = a.StorageSiteCode,
                                                      DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                      DeclarationOfficeCode = a.DeclarationOfficeCode,
+                                                     ExportDeclarationOfficeCode =a.ExportDeclarationOfficeCode,
                                                      DepartmentId = a.DepartmentId,
                                                      DepartmentName = a.Department.LocalName,
                                                      //   EntitleImporterName = a.en
@@ -392,6 +393,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CorrectionsXml = a.CorrectionsXml,
                                                      SignedByUserId = a.SignedByUserId,
                                                      ImporterCode = a.ImporterCode,
+                                                     ExportImporterCode=a.ImporterCode,
+                                                     ImporterNameForExport= a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      StorageStatusCode = a.StorageStatusCode,
                                                      StorageStatusName = a.StorageStatus == null ? null : a.StorageStatus.LocalName,
                                                      WeightValue = a.WeightValue,
