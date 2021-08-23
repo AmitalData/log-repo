@@ -54,7 +54,7 @@
                                     <button  style="width:55px;" class="Button" (click)="OpenUploadFile()">{{'TaxReport.O.Upload' | TextCodeTranslationPipe}}</button>
                                     <input accept=".txt,.TXT" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                                 </td>
-                                <td style="width:30px;color:gray;">{{ProgressBarPercentText}}</td>
+                               <!-- <td style="width:30px;color:gray;">{{ProgressBarPercentText}}</td>-->
                                 <td style="width:4px;"></td>
                                 <td style="width:150px; background-color:white">
                                     <div>
