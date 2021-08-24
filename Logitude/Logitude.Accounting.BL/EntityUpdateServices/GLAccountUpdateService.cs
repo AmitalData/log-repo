@@ -1721,7 +1721,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
-                        EntityId = entityPM.CustomerGLAccountId,
+                        EntityId = entityPM.Id,
                         Tenant = entityPM.Tenant,
                         UserId = contact.Id,
                         ObjectTableName = "GLAccount",
