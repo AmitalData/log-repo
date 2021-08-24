@@ -99,5 +99,9 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public Card Carrier { get; set; }
     
     public DateTime CreateDate { get; set; }
+    
+    public string SecurityKey { get; set; }
+    
+    public bool IsCancelled { get; set; }
     }
 } 

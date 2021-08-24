@@ -30,7 +30,7 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
             {
                 int tenant = GetTenantFromAuthenticationToken();
                 Authentication(tenant);
-                ShipmentOrder shipmentOrder = new ShipmentOrderService(tenant).GetByOrderNumber(tenant, orderNumber);
+                ShipmentOrder shipmentOrder = new ShipmentOrderService(tenant).GetByOrderNumber(orderNumber);
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentOrder);
             }
             catch (Exception ex)
@@ -115,6 +115,22 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
             }
         }
 
+        public HttpResponseMessage Delete(string orderNumber)
+        {
+            try
+            {
+                int tenant = GetTenantFromAuthenticationToken();
+                Authentication(tenant);
+                ShipmentOrderPM shipmentOrder = new ShipmentOrderService(tenant).Delete(orderNumber);
+                var result = new ShipmentOrderQueryService(tenant).GetShipmentOrderById(shipmentOrder.Id, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
 
         private int GetTenantFromAuthenticationToken()
         {

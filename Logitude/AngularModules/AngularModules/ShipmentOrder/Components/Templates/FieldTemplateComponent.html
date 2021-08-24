@@ -1,17 +1,30 @@
-             <!-- Shipment order -->
-             <table *ngIf="ObjectTableName == 'ShipmentOrder'">
-                <tr>
-                    <td>
-                        <div class="MediaFill">
+<!-- Shipment order -->
+<table *ngIf="ObjectTableName == 'ShipmentOrder'">
+    <tr>
+        <td>
+            <div class="MediaFill">
 
-                            <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
-                                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
-                            </div>
+                <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
+                    <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'"
+                        [title]="Entity['TransportModeName']" />
+                </div>
 
-                            <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
-                                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
+                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'"
+                        [title]="Entity['DirectionName']" />
+                </div>
+                <!-- IsCancelled -->
+                <div *ngIf="FieldName == 'IsCancelled'">
+                    <img *ngIf="Entity[FieldName] == true" src="./Images/CheckBoxIcon.png"
+                        style="width:13px;height:13px;margin-top:-6px;" />
+                </div>
+
+                <!-- IsReadyForPickup -->
+                <div *ngIf="FieldName == 'IsReadyForPickup'">
+                    <img *ngIf="Entity[FieldName] == true" src="./Images/CheckBoxIcon.png"
+                        style="width:13px;height:13px;margin-top:-6px;" />
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
