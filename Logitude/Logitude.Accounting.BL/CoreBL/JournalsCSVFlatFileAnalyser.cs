@@ -587,10 +587,32 @@ namespace Logitude.Accounting.BL.CoreBL
             rawLine = rawLine ?? "";
             bool startsWithRowTypeOk = false;
             string actualRowType = "";
+            bool is_cddc = false;
+            string cddc = "";
             if (rawLine.Length >= 1)
             {
-                actualRowType = rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                if (rawLine.Length >= 2)
+                {
+                    cddc = rawLine.Substring(0, 1).ToUpperInvariant();
+                    if (cddc == "CD")
+                    {
+                        actualRowType = "3";
+                        is_cddc = true;
+                        startsWithRowTypeOk = true;
+
+                    }
+                    else if (cddc == "DC")
+                    {
+                        actualRowType = "3";
+                        is_cddc = true;
+                        startsWithRowTypeOk = true;
+                    }
+                }
+                if (!is_cddc)
+                {
+                    actualRowType = rawLine.Substring(0, 1);
+                    if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                }
             }
 
             if (!startsWithRowTypeOk || actualRowType == "")
@@ -606,30 +628,73 @@ namespace Logitude.Accounting.BL.CoreBL
             int count = values.Count();
             if (count > 0) //rec.ActionCode = values[0];
             {
-                switch (values[0])
+                if (is_cddc)
                 {
-                    case "c":
-                    case "C":
-                    case "ז":
-                    case "2": //  2 = credit in the input file
-                        rec.ActionCode = "1";
-                        break;
-                    case "d":
-                    case "D":
-                    case "ח":
-                    case "1": //  1 = debit in the input file
-                        rec.ActionCode = "2";
-                        break;
-                    case "3":
-                        rec.ActionCode = "3";
-                        break;
-                    default:
-                        break;
+                    rec.ActionCode = "3";
+                }
+                else
+                {
+                    switch (values[0])
+                    {
+                        case "c":
+                        case "C":
+                        case "ז":
+                        case "2": //  2 = credit in the input file
+                            rec.ActionCode = "1";
+                            break;
+                        case "d":
+                        case "D":
+                        case "ח":
+                        case "1": //  1 = debit in the input file
+                            rec.ActionCode = "2";
+                            break;
+                        case "3":
+                            rec.ActionCode = "3";
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            if (count > 1) rec.DebitGLAccount = values[1].TrimStart('G');
-            if (count > 2) rec.CreditGLAccount = values[2].TrimStart('G');
+            if (count > 1)
+            {
+                if (rec.ActionCode == "1") // credit 
+                {
+                    rec.CreditGLAccount = values[1].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "CD")
+                {
+                    rec.CreditGLAccount = values[1].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "DC")
+                {
+                    rec.DebitGLAccount = values[1].TrimStart('G');
+                }
+                else // debit
+                {
+                    rec.DebitGLAccount = values[1].TrimStart('G');
+                }
+            }
+            if (count > 2)
+            {
+                if (rec.ActionCode == "1") // credit 
+                {
+                    rec.DebitGLAccount = values[2].TrimStart('G'); // opposite
+                }
+                else if (rec.ActionCode == "3" && cddc == "CD")
+                {
+                    rec.DebitGLAccount = values[2].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "DC")
+                {
+                    rec.CreditGLAccount = values[2].TrimStart('G');
+                }
+                else // debit
+                {
+                    rec.CreditGLAccount = values[2].TrimStart('G'); // opposite 
+                }
+            }
             string txtDateTime = "";
             string fieldname = "";
             string pos = "";
