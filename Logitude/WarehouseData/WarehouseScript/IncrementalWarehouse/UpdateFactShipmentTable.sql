@@ -611,7 +611,7 @@
   SET @FinalRatio = '1:' +  CAST(CAST(@Ratio AS FLOAT(20)) AS VARCHAR(100))  ;
 	 ----------------------------------------------------
 
-	 	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @ChargeableWeightUnitCode +')';
+	 	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
 		SET @OrderVolumeWithUnitCode =  CAST(CAST(@BookingVolume AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @VolumeUnitCode +')';
 	    SET @OrderNumberOfPackagesWithUnitCode= CAST(@BookingNumberOfPackages AS VARCHAR(11)) +  +' ('+ @GrossWeightUnitCode +')'
 
