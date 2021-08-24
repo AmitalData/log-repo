@@ -15,6 +15,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,11 @@ namespace Logitude.Customs.BL.Messaging
                     return;
                 }
             }
-
+            if (string.IsNullOrWhiteSpace(Path.GetExtension(ftpOutParams.MyFileName.FileWithExtension)))
+            {
+                Debug.WriteLine("!!Warning!!!File name without Extension !!!Warning!!");
+                AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Warning);
+            }
 
             string loggedContactId = (new LoggedContactService()).GetLoggedContactId(tenant);
 
