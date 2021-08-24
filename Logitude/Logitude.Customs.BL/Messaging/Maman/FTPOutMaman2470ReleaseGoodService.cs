@@ -29,6 +29,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
         {
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_Ftp2Maman2470, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
+            if (string.IsNullOrEmpty(Path.GetExtension(FileName)))
+            {
+                if (!string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.FileExt))
+                {
+                    FileName = Path.ChangeExtension(FileName, pmCustomsPartnerFtp.FileExt);
+                }
+            }
+
             var ftpOutService = new FtpOutService();
             ftpOutService.BuildCommunicationLog(tenant, new FtpOutParams()
             {
