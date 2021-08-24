@@ -31,31 +31,6 @@ namespace Logitude.ShipmentOrderTests.Services
                 .Build();
         }
 
-        public ShipmentOrder Create(ShipmentOrder shipmentOrder)
-        {
-            do
-            {
-                shipmentOrder.OrderNumber = RandomGeneratorService.RandomNumber(5).ToString();
-                try
-                {
-                    shipmentOrder = APICaller.CallPost<ShipmentOrder>(shipmentOrder, Urls.ShipmentOrderController, UserTenant.Token)?.Data;
-                }
-                catch (Exception e)
-                {
-                    if (e.InnerException.Message.Contains("Violation of UNIQUE KEY constraint 'UQ_ShipmentOrders_Tenant_OrderNumber'"))
-                    {
-                        shipmentOrder.OrderNumber = null;
-                        continue;
-                    }
-                    throw e;
-                }
-
-            } while (shipmentOrder.OrderNumber == null);
-
-            return shipmentOrder;
-        }
-
-
         public ShipmentOrder UpdateInstance(Table table, ShipmentOrder shipmentOrder)
         {
             dynamic dataTable = table.CreateDynamicInstance();

@@ -45,15 +45,13 @@ namespace Logitude.Tariff.Steps
         [Then(@"the air surcharge cost tariff should create successfully")]
         public void ThenTheAirSurchargeCostTariffShouldCreateSuccessfully()
         {
-            if (string.IsNullOrEmpty(insertException))
-            {
-                tariffContext.AirSurchargeCost.Should().NotBeNull();
-                tariffContext.AirSurchargeCost?.Id.Should().NotBeNull();
-            }
-            else
+            if (!string.IsNullOrEmpty(insertException))
             {
                 insertException.Should().Contain("Tariff surcharge seller should be unique");
+                return;
             }
+            tariffContext.AirSurchargeCost.Should().NotBeNull();
+            tariffContext.AirSurchargeCost?.Id.Should().NotBeNull();
 
         }
 

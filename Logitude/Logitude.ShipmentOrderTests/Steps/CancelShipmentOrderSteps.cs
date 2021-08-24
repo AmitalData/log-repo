@@ -33,6 +33,7 @@ namespace Logitude.ShipmentOrderTests.Steps
         public void ThenTheShipmentOrderShouldCancelSuccessfully()
         {
             shipmentOrderContext.ShipmentOrder.Id.Should().NotBeNull();
+            shipmentOrderContext.ShipmentOrder.IsCancelled.Should().BeTrue();
         }
     }
 }
