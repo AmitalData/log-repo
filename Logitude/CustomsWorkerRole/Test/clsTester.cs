@@ -591,7 +591,7 @@ PaymentDate  מלפני 3  ימים ");
             }
         }
 
-        public void FtpMamanTester(int tenant)
+        public void FtpTester(int tenant)
         {
             using (var scop = TransactionFactory.GetTransaction())
             {
@@ -603,14 +603,14 @@ PaymentDate  מלפני 3  ימים ");
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-333");//02004004
+                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1255463");//02004004
 
-                var myFTPMamanService1 = new FTPOutMamanSubManifestService();
-                myFTPMamanService1.BuildCommunicationLogOLD(bytearray, tenant, "1-333");//02004004
+                var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
+                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1255463", $"maman{Guid.NewGuid().ToString()}", false);
 
 
 
-                string dec = "1-1240276";
+                string dec = "1-1255463";
                 //CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST
                 var fTPOutMawbSWSService = new FTPOutMawbSWSService();
                 Guid g = Guid.NewGuid();
@@ -620,7 +620,7 @@ PaymentDate  מלפני 3  ימים ");
                     
                 g = Guid.NewGuid();
                 filename = "02004004" + "_" + g;
-                fTPOutMawbSWSService.BuildCommunicationLogOld(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
+                fTPOutMawbSWSService.BuildCommunicationLog(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
                 scop.Complete();
                     //output  ftp://192.168.10.88/FTP_MAMAN/	
             }
