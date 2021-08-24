@@ -29,8 +29,16 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         //private string communicationSubject = "שידור פנימיים מסוכנים לממן";
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string interfaceDetailCode, string fileName)
         {
+
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, interfaceDetailCode, CustomsPartnerFtpDetails.PartnerCode_ILSWS, CustomsPartnerFtpDetails.TypeCode_Out);
+            if (string.IsNullOrEmpty(Path.GetExtension(fileName)))
+            {
+                if (!string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.FileExt))
+                {
+                    fileName = Path.ChangeExtension(fileName, pmCustomsPartnerFtp.FileExt);
+                }
+            }
             var ftpOutService = new FtpOutService();
             ftpOutService.BuildCommunicationLog(tenant, new FtpOutParams()
             {
