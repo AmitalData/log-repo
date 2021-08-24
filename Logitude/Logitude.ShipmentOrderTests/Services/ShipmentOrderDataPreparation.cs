@@ -17,20 +17,24 @@ namespace Logitude.ShipmentOrderTests.Services
             try
             {
                 shipmentOrder = GetValidShipmentOrder();
-                shipmentOrder.OrderNumber = "28467";
                 ApiResponse<ShipmentOrder> response = APICaller.CallPost<ShipmentOrder>(shipmentOrder, Urls.ShipmentOrderController, UserTenant.Token);
                 ShipmentOrderDataMap(response.Data);
             }
             catch (Exception e)
             {
-                if (e.InnerException.Message.Contains("Violation of UNIQUE KEY constraint 'UQ_ShipmentOrders_Tenant_OrderNumber'"))
-                {
-                    ShipmentOrderDataMap(GetShipmentOrderByNumber(shipmentOrder.OrderNumber));
-                }
-                else
-                    throw new InvalidOperationException("Failed Creating ShipmentOrder Before Feature Run :" + e.InnerException);
+                HandleExeption(e, shipmentOrder.OrderNumber);
             }
 
+        }
+
+        private void HandleExeption(Exception e, string orderNumber)
+        {
+            if (e.InnerException.Message.Contains("Violation of UNIQUE KEY constraint 'UQ_ShipmentOrders_Tenant_OrderNumber'"))
+            {
+                ShipmentOrderDataMap(GetShipmentOrderByNumber(orderNumber));
+            }
+            else
+                throw new InvalidOperationException("Failed Creating ShipmentOrder Before Feature Run :" + e.InnerException);
         }
 
         public ShipmentOrder GetShipmentOrderByNumber(string orderNumber)
