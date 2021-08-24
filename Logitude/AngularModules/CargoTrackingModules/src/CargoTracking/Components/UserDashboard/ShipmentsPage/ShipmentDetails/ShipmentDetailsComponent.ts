@@ -604,14 +604,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     private AddTruckerPartnerCardIfCarrierIdExist(routing: any) {
         if (routing.CarrierId) {
-            this.PartnerCards.push(this.CreateTruckerPartnerCard(routing.CarrierId));
+            this.PartnerCards.push(this.CreateTruckerPartnerCard(routing.CarrierId, routing.CarrierName));
         }
     }
 
-    private CreateTruckerPartnerCard(truckerId) {
+    private CreateTruckerPartnerCard(truckerId, carrierName) {
         let trucker = new PartnerCard();
         trucker.Type = "TRUCKER";
-        trucker.Name = this.ShipmentPM.ReleasingAgentName;
+        trucker.Name = carrierName;
         trucker.Address = this.GetPartnerAddress(truckerId);
         trucker.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(truckerId);
         trucker.FaxNumber = this.GetPartnerFaxNumberFromAddress(truckerId);
