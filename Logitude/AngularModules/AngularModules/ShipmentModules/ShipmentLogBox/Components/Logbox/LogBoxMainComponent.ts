@@ -431,7 +431,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.GetQueryColumn("ShipperName", 'Text', this.isPrivateLabel ? 'Supplier / Consignee' : 'Supplier')
         );
 
-        if (this.isPrivateLabel) { 
+        if (true) { 
             this.DisplayAgentColumn();
         }
 
