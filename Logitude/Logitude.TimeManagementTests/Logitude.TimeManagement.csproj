@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\BudgetPM.cs" />
     <Compile Include="Models\Builders\TimeManagementAPIHelperBuilder.cs" />
@@ -112,13 +113,16 @@
     <Compile Include="Models\TMProjectCategoryPM.cs" />
     <Compile Include="Models\TMProjectPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataEntryDataPreparation.cs" />
     <Compile Include="Services\DataEntryServices.cs" />
     <Compile Include="Services\TimeManagementDataPreparation.cs" />
     <Compile Include="Steps\DataEntry\CreateDataEntrySteps.cs" />
+    <Compile Include="Steps\DataEntry\GetDataEntrySteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\DataEntry\CreateDataEntry.feature" />
+    <None Include="Features\DataEntry\GetDataEntry.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
