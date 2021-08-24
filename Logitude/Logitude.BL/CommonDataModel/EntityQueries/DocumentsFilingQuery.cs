@@ -2234,14 +2234,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
             List<FollowUp> FollowUps=null;
 
-         //   CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-          //  var setting = settingService.GetSettingByTenantN(tenant) ;
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+            var IsConnectedToUniFreight = settingService.GetSettingByTenantN(tenant).IsConnectedToUniFreight;
             var resMode = new { DefaultValue = "" };
-           // if (setting.IsConnectedToUniFreight)
-           // {
+            if (IsConnectedToUniFreight)
+            {
                 FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
 
-           // }
+            }
 
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
