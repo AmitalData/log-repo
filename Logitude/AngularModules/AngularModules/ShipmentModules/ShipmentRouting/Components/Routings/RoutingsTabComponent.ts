@@ -26,6 +26,9 @@ import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { PortList } from '../../../../Common/EntityLists/PortList';
+import { PortListService } from '../../../../Common/Services/StandardLists/PortListService';
+import { CitySelectionArgs } from '../../../../Common/Args';
 
 @Component({    
     templateUrl: './RoutingsTabComponent.html',
@@ -519,6 +522,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         args.IsNewStandAlonePickupDelivery = true;
         args.ForwarderStandaloneShipmentId = this.EntityPM.Id;
         args.ForwarderShipmentPickUpDeliveryTypeCode = typeCode;
+        args.ParentShipmentDirectionId = this.EntityPM.DirectionId;
+        args.ParentShipmentNumber = this.EntityPM.ShipmentNumber;
+        args.ParentShipmentType = this.EntityPM.ShipmentType;
 
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
@@ -1009,19 +1015,19 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     // Inland Domestic
     private myCardListService: CardListService;
     private myAddressListService: AddressListService;
+    private myPortListService: PortListService;
     InitializePartners() {
         this.myCardListService = new CardListService();
         this.myAddressListService = new AddressListService();
+        this.myPortListService = new PortListService();
         this.LoadFromAddress();
         this.LoadToAddress();
     }
 
     SetUIProperties_InlandDomestic() {
         if (this.IsInlandDomestic) {
-            this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, this.IsEditingEnabled);
+            this.SetUIProperties_From();
+            this.SetUIProperties_To();
             this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("Driver", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("TruckNumber", this.ObjectTableName, this.IsEditingEnabled);
@@ -1047,6 +1053,83 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (!DateTool.IsActualDateValid(this.MainCarriageATA)) {
             var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
             this.UIProperties.SetValidity("MainCarriageATA", this.ObjectTableName, false, errorMessage);
+        }
+    }
+    SetUIProperties_From() {
+        switch (this.InlandDomesticFromTypeCode) {
+            case "PART": {
+                this.UIProperties.SetRequired("MainCarriageFromPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsEditingEnabled);
+
+                var isAddressIdEnabled = false;
+                if (this.IsEditingEnabled) {
+                    if (!AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId)) {
+                        isAddressIdEnabled = true;
+                    }
+                }
+
+                this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
+            }
+
+            case "PORT": {
+                this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
+                break;
+            }
+
+            case "CASL": {
+                this.UIProperties.SetRequired("InlandDomesticFromCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCity) && AppTool.IsNullOrEmpty(this.InlandDomesticFromZipCode) ? true : false);
+                this.UIProperties.SetRequired("InlandDomesticFromCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCountryId) ? true : false);
+                break;
+            }
+        }
+    }
+    SetUIProperties_To() {
+        switch (this.InlandDomesticToTypeCode) {
+            case "PART": {
+                this.UIProperties.SetRequired("MainCarriageToPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsEditingEnabled);
+
+                var isAddressIdEnabled = false;
+                if (this.IsEditingEnabled) {
+                    if (!AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId)) {
+                        isAddressIdEnabled = true;
+                    }
+                }
+
+                this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
+            }
+
+            case "PORT": {
+                this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
+                break;
+            }
+
+            case "CASL": {
+                this.UIProperties.SetRequired("InlandDomesticToCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCity) && AppTool.IsNullOrEmpty(this.InlandDomesticToZipCode) ? true : false);
+                this.UIProperties.SetRequired("InlandDomesticToCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCountryId) ? true : false);
+                break;
+            }
+        }
+    }
+
+    get InlandDomesticFromTypeCode() { return this.EntityPM.InlandDomesticFromTypeCode; }
+    set InlandDomesticFromTypeCode(value: string) {
+        if (this.EntityPM.InlandDomesticFromTypeCode != value) {
+            this.EntityPM.InlandDomesticFromTypeCode = value;
+
+            this.MainCarriageFromPartnerId = null;
+            this.MainCarriageFromAddressId = null;
+            this.MainCarriageFromPortId = null;
+            this.InlandDomesticFromCity = null;
+            this.InlandDomesticFromZipCode = null;
+            this.InlandDomesticFromCountryId = null;
+            this.MainCarriageFromPortAddress = null;
+            this.mainCarriageFromAddressList = null;
+            this.SetUIProperties_From();
         }
     }
 
@@ -1077,6 +1160,87 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.MainCarriageFromAddressId != value) {
             this.EntityPM.MainCarriageFromAddressId = value;
             this.LoadFromAddress();
+        }
+    }
+
+    private mainCarriageFromAddressList: AddressList;
+    get MainCarriageFromAddressList() { return this.mainCarriageFromAddressList; }
+    set MainCarriageFromAddressList(newValue: AddressList) {
+        this.mainCarriageFromAddressList = newValue;
+    }
+
+    get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
+    set MainCarriageFromPortId(value: string) {
+        if (this.EntityPM.MainCarriageFromPortId != value) {
+            this.EntityPM.MainCarriageFromPortId = value;
+            this.EntityPM.FromPortId = value;
+
+            if (this.IsInlandDomestic) {
+                this.SetUIProperties_From();
+
+                if (AppTool.IsNullOrEmpty(value)) {
+                    this.MainCarriageFromPortAddress = null;
+                }
+
+                else {
+                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList = myResponse.Result;
+                            if (list) {
+                                this.MainCarriageFromPortAddress = "Port Of: " + list.EnglishName;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    get MainCarriageFromPortAddress() { return this.EntityPM.MainCarriageFromPortAddress; }
+    set MainCarriageFromPortAddress(value: string) {
+        if (this.EntityPM.MainCarriageFromPortAddress != value) {
+            this.EntityPM.MainCarriageFromPortAddress = value;
+        }
+    }
+
+    get InlandDomesticFromCity() { return this.EntityPM.InlandDomesticFromCity; }
+    set InlandDomesticFromCity(value: string) {
+        if (this.EntityPM.InlandDomesticFromCity != value) {
+            this.EntityPM.InlandDomesticFromCity = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticFromZipCode() { return this.EntityPM.InlandDomesticFromZipCode; }
+    set InlandDomesticFromZipCode(value: string) {
+        if (this.EntityPM.InlandDomesticFromZipCode != value) {
+            this.EntityPM.InlandDomesticFromZipCode = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticFromCountryId() { return this.EntityPM.InlandDomesticFromCountryId; }
+    set InlandDomesticFromCountryId(value: string) {
+        if (this.EntityPM.InlandDomesticFromCountryId != value) {
+            this.EntityPM.InlandDomesticFromCountryId = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticToTypeCode() { return this.EntityPM.InlandDomesticToTypeCode; }
+    set InlandDomesticToTypeCode(value: string) {
+        if (this.EntityPM.InlandDomesticToTypeCode != value) {
+            this.EntityPM.InlandDomesticToTypeCode = value;
+
+            this.EntityPM.MainCarriageToPartnerId = null;
+            this.EntityPM.MainCarriageToAddressId = null;
+            this.EntityPM.MainCarriageToPortId = null;
+            this.EntityPM.InlandDomesticToCity = null;
+            this.EntityPM.InlandDomesticToZipCode = null;
+            this.EntityPM.InlandDomesticToCountryId = null;
+            this.MainCarriageToPortAddress = null;
+            this.mainCarriageToAddressList = null;
+            this.SetUIProperties_To();
         }
     }
 
@@ -1113,13 +1277,75 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    public ToAddressList: AddressList;
-    public FromAddressList: AddressList;
+    private mainCarriageToAddressList: AddressList;
+    get MainCarriageToAddressList() { return this.mainCarriageToAddressList; }
+    set MainCarriageToAddressList(newValue: AddressList) {
+        this.mainCarriageToAddressList = newValue;
+    }
+
+    get MainCarriageToPortId() { return this.EntityPM.MainCarriageToPortId; }
+    set MainCarriageToPortId(value: string) {
+        if (this.EntityPM.MainCarriageToPortId != value) {
+            this.EntityPM.MainCarriageToPortId = value;
+            this.EntityPM.ToPortId = value;
+
+            if (this.IsInlandDomestic) {
+                this.SetUIProperties_To();
+
+                if (AppTool.IsNullOrEmpty(value)) {
+                    this.MainCarriageToPortAddress = null;
+                }
+
+                else {
+                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList = myResponse.Result;
+                            if (list) {
+                                this.MainCarriageToPortAddress = "Port Of: " + list.EnglishName;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    get MainCarriageToPortAddress() { return this.EntityPM.MainCarriageToPortAddress; }
+    set MainCarriageToPortAddress(value: string) {
+        if (this.EntityPM.MainCarriageToPortAddress != value) {
+            this.EntityPM.MainCarriageToPortAddress = value;
+        }
+    }
+
+    get InlandDomesticToCity() { return this.EntityPM.InlandDomesticToCity; }
+    set InlandDomesticToCity(value: string) {
+        if (this.EntityPM.InlandDomesticToCity != value) {
+            this.EntityPM.InlandDomesticToCity = value;
+            this.SetUIProperties_To();
+        }
+    }
+
+    get InlandDomesticToZipCode() { return this.EntityPM.InlandDomesticToZipCode; }
+    set InlandDomesticToZipCode(value: string) {
+        if (this.EntityPM.InlandDomesticToZipCode != value) {
+            this.EntityPM.InlandDomesticToZipCode = value;
+            this.SetUIProperties_To();
+        }
+    }
+
+    get InlandDomesticToCountryId() { return this.EntityPM.InlandDomesticToCountryId; }
+    set InlandDomesticToCountryId(value: string) {
+        if (this.EntityPM.InlandDomesticToCountryId != value) {
+            this.EntityPM.InlandDomesticToCountryId = value;
+            this.SetUIProperties_To();
+        }
+    }
+
     private LoadToAddress() {
         this.oldCountryId = this.EntityPM.ToCountryId;
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToAddressId)) {
-            this.ToAddressList = null;
+            this.MainCarriageToAddressList = null;
 
             if (this.EntityPM.ToCountryId != null) {
                 this.EntityPM.ToCountryId = null;
@@ -1135,7 +1361,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     var list: AddressList = myResponse.Result;
                     if (list) {
-                        this.ToAddressList = list;
+                        this.MainCarriageToAddressList = list;
 
                         if (this.EntityPM.ToCountryId != list.CountryId) {
                             this.EntityPM.ToCountryId = list.CountryId;
@@ -1153,6 +1379,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
     CheckToUpdateProductItems() {
         var updateProductItems: boolean = false;
         if (this.oldCountryId != this.EntityPM.ToCountryId) {
@@ -1210,7 +1437,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     private LoadFromAddress() {
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromAddressId)) {
-            this.FromAddressList = null;
+            this.MainCarriageFromAddressList = null;
 
             if (this.EntityPM.FromCountryId != null) {
                 this.EntityPM.FromCountryId = null;
@@ -1226,7 +1453,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     var list: AddressList = myResponse.Result;
                     if (list) {
-                        this.FromAddressList = list;
+                        this.MainCarriageFromAddressList = list;
 
                         if (this.EntityPM.FromCountryId != list.CountryId) {
                             this.EntityPM.FromCountryId = list.CountryId;
@@ -1239,6 +1466,29 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 }
             });
         }
+    }
+
+    SelectCityCommand(myAddressCode: string) {
+        var mySourceCountryId: string = myAddressCode == "F" ? this.InlandDomesticFromCountryId : this.InlandDomesticToCountryId;
+
+        var args = new CitySelectionArgs(mySourceCountryId);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select City";
+        logWindow.WindowArgs = args;
+        logWindow.Show("./CommonModules/CommonOthers/Components/CitySelection/CitySelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (args.IsCitySelected) {
+                if (myAddressCode == "F") {
+                    this.InlandDomesticFromCity = args.CityName;
+                    this.InlandDomesticFromCountryId = args.CountryId;
+                }
+
+                else if (myAddressCode == "T") {
+                    this.InlandDomesticToCity = args.CityName;
+                    this.InlandDomesticToCountryId = args.CountryId;
+                }
+            }
+        });
     }
 
     get MainCarriageCarrierId() { return this.EntityPM.MainCarriageCarrierId; }

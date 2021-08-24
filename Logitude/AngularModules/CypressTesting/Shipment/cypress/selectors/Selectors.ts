@@ -254,6 +254,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';
+  public static readonly CancelActionButton = '#CancelAction';
   public static readonly ShipmentExceptionResolved = "#ShipmentBExceptionResolved"
   //#endregion
 
@@ -345,6 +346,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
   public static readonly PartnerName = "[data-cy='PartnerName']";
+  public static readonly RedButton = ".RedButton:last"
   //#endregion
   //#region Delivery Leg
   public static readonly EditDelivery = "#Edit-Delivery"

@@ -11,7 +11,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel; 
 using Logitude.Server.Tools; 
 using WebFreight.Web.Helpers;
-using Logitude.BL.Security;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {

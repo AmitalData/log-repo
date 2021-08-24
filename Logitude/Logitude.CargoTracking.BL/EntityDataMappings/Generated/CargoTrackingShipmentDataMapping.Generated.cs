@@ -101,7 +101,20 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         CurrentMilestoneExceptions, 
 	         ForwardingHouse, 
 	         ForwardingMaster, 
-	         ForwardingShipmentLevelCode,
+	         ForwardingShipmentLevelCode, 
+	         GoodsClassificationDate, 
+	         GoodsClassificationEstDate, 
+	         GoodsClassificationNotes, 
+	         DocumentInspectionDate, 
+	         DocumentInspectionEstDate, 
+	         DocumentInspectionNotes, 
+	         DocumentInspectionDone, 
+	         GoodsClassificationDone, 
+	         GatepassArrivedDate, 
+	         GatepassArrivedEstDate, 
+	         GatepassArrivedNotes, 
+	         GatepassArrivedDone,
+	         ImportManifest,
 	      }
 
 
@@ -198,7 +211,20 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ToPortCode, 
 	         NumberOfPackages, 
 	         CurrentMilestoneExceptions, 
-	         ForwardingShipmentLevelCode,
+	         ForwardingShipmentLevelCode, 
+	         GoodsClassificationDate, 
+	         GoodsClassificationEstDate, 
+	         GoodsClassificationNotes, 
+	         DocumentInspectionDate, 
+	         DocumentInspectionEstDate, 
+	         DocumentInspectionNotes, 
+	         DocumentInspectionDone, 
+	         GoodsClassificationDone, 
+	         GatepassArrivedDate, 
+	         GatepassArrivedEstDate, 
+	         GatepassArrivedNotes, 
+	         GatepassArrivedDone,
+	         ImportManifest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -590,6 +616,71 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentLevelCode))
             {
 				entityPOCO.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDate))
+            {
+				entityPOCO.GoodsClassificationDate = entityPM.GoodsClassificationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationEstDate))
+            {
+				entityPOCO.GoodsClassificationEstDate = entityPM.GoodsClassificationEstDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationNotes))
+            {
+				entityPOCO.GoodsClassificationNotes = entityPM.GoodsClassificationNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionDate))
+            {
+				entityPOCO.DocumentInspectionDate = entityPM.DocumentInspectionDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionEstDate))
+            {
+				entityPOCO.DocumentInspectionEstDate = entityPM.DocumentInspectionEstDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionNotes))
+            {
+				entityPOCO.DocumentInspectionNotes = entityPM.DocumentInspectionNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionDone))
+            {
+				entityPOCO.DocumentInspectionDone = entityPM.DocumentInspectionDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+				entityPOCO.ImportManifest = entityPM.ImportManifest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDone))
+            {
+				entityPOCO.GoodsClassificationDone = entityPM.GoodsClassificationDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedDate))
+            {
+				entityPOCO.GatepassArrivedDate = entityPM.GatepassArrivedDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedEstDate))
+            {
+				entityPOCO.GatepassArrivedEstDate = entityPM.GatepassArrivedEstDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedNotes))
+            {
+				entityPOCO.GatepassArrivedNotes = entityPM.GatepassArrivedNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedDone))
+            {
+				entityPOCO.GatepassArrivedDone = entityPM.GatepassArrivedDone;
 			}
 			}
 
@@ -986,6 +1077,72 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ForwardingShipmentLevelCode = entityPOCO.ForwardingShipmentLevelCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationDate))
+            {
+					entityPM.GoodsClassificationDate = entityPOCO.GoodsClassificationDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationEstDate))
+            {
+					entityPM.GoodsClassificationEstDate = entityPOCO.GoodsClassificationEstDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationNotes))
+            {
+					entityPM.GoodsClassificationNotes = entityPOCO.GoodsClassificationNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentInspectionDate))
+            {
+					entityPM.DocumentInspectionDate = entityPOCO.DocumentInspectionDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentInspectionEstDate))
+            {
+					entityPM.DocumentInspectionEstDate = entityPOCO.DocumentInspectionEstDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentInspectionNotes))
+            {
+					entityPM.DocumentInspectionNotes = entityPOCO.DocumentInspectionNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentInspectionDone))
+            {
+					entityPM.DocumentInspectionDone = entityPOCO.DocumentInspectionDone;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
+            {
+					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
+		
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsClassificationDone))
+            {
+					entityPM.GoodsClassificationDone = entityPOCO.GoodsClassificationDone;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GatepassArrivedDate))
+            {
+					entityPM.GatepassArrivedDate = entityPOCO.GatepassArrivedDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GatepassArrivedEstDate))
+            {
+					entityPM.GatepassArrivedEstDate = entityPOCO.GatepassArrivedEstDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GatepassArrivedNotes))
+            {
+					entityPM.GatepassArrivedNotes = entityPOCO.GatepassArrivedNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GatepassArrivedDone))
+            {
+					entityPM.GatepassArrivedDone = entityPOCO.GatepassArrivedDone;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1377,6 +1534,72 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ForwardingShipmentLevelCode = entityPM.ForwardingShipmentLevelCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDate))
+            {
+                oldEntityPM.GoodsClassificationDate = entityPM.GoodsClassificationDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationEstDate))
+            {
+                oldEntityPM.GoodsClassificationEstDate = entityPM.GoodsClassificationEstDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationNotes))
+            {
+                oldEntityPM.GoodsClassificationNotes = entityPM.GoodsClassificationNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionDate))
+            {
+                oldEntityPM.DocumentInspectionDate = entityPM.DocumentInspectionDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionEstDate))
+            {
+                oldEntityPM.DocumentInspectionEstDate = entityPM.DocumentInspectionEstDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionNotes))
+            {
+                oldEntityPM.DocumentInspectionNotes = entityPM.DocumentInspectionNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentInspectionDone))
+            {
+                oldEntityPM.DocumentInspectionDone = entityPM.DocumentInspectionDone;
+            }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+                oldEntityPM.ImportManifest = entityPM.ImportManifest;
+            }
+			
+		
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsClassificationDone))
+            {
+                oldEntityPM.GoodsClassificationDone = entityPM.GoodsClassificationDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedDate))
+            {
+                oldEntityPM.GatepassArrivedDate = entityPM.GatepassArrivedDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedEstDate))
+            {
+                oldEntityPM.GatepassArrivedEstDate = entityPM.GatepassArrivedEstDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedNotes))
+            {
+                oldEntityPM.GatepassArrivedNotes = entityPM.GatepassArrivedNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatepassArrivedDone))
+            {
+                oldEntityPM.GatepassArrivedDone = entityPM.GatepassArrivedDone;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -1425,6 +1648,18 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CurrentMilestoneExceptions)) //T4 find type == nText 
             {
                 entityPM.CurrentMilestoneExceptions = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CurrentMilestoneExceptions));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.GoodsClassificationNotes)) //T4 find type == nText 
+            {
+                entityPM.GoodsClassificationNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.GoodsClassificationNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DocumentInspectionNotes)) //T4 find type == nText 
+            {
+                entityPM.DocumentInspectionNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DocumentInspectionNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.GatepassArrivedNotes)) //T4 find type == nText 
+            {
+                entityPM.GatepassArrivedNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.GatepassArrivedNotes));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

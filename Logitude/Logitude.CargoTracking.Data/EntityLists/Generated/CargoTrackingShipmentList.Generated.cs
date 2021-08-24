@@ -216,6 +216,32 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string ForwardingConsigneeName  { get; set; }
        [DataMember]
        public string ForwardingShipmentLevelCode  { get; set; }
+       [DataMember]
+       public DateTime? GoodsClassificationDate  { get; set; }
+       [DataMember]
+       public DateTime? GoodsClassificationEstDate  { get; set; }
+       [DataMember]
+       public string GoodsClassificationNotes  { get; set; }
+       [DataMember]
+       public DateTime? DocumentInspectionDate  { get; set; }
+       [DataMember]
+       public DateTime? DocumentInspectionEstDate  { get; set; }
+       [DataMember]
+       public string DocumentInspectionNotes  { get; set; }
+       [DataMember]
+       public bool? DocumentInspectionDone  { get; set; }
+       [DataMember]
+       public bool? GoodsClassificationDone  { get; set; }
+       [DataMember]
+       public DateTime? GatepassArrivedDate  { get; set; }
+       [DataMember]
+       public DateTime? GatepassArrivedEstDate  { get; set; }
+       [DataMember]
+       public string GatepassArrivedNotes  { get; set; }
+       [DataMember]
+       public bool? GatepassArrivedDone  { get; set; }
+       [DataMember]
+       public string ImportManifest  { get; set; }
    }
 
 }

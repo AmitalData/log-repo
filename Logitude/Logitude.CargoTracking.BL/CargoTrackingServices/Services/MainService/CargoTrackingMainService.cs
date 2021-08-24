@@ -191,7 +191,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if(tableName == "CargoTrackingShipments")
             {
                 ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
-                //syncService.SyncShipmentMilstones(buildCargoArgs);
+                syncService.SyncShipmentMilstones(buildCargoArgs);
             }
 
         }

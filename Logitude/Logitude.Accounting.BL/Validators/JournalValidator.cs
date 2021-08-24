@@ -496,25 +496,29 @@ namespace Logitude.Accounting.BL.Validators
                             }
                         }
 
-
+                        bool suppressInactiveCheck = myJournalPM.AccountingEntityCode == "11";//  העברת שנה   Year Transfer
                         var jlCurrencyId = currJournalLinePM.CurrencyId;
                         currJournalLinePM.ActionTypeCode = currJournalLinePM.ActionTypeCode ?? string.Empty;
                         switch (currJournalLinePM.ActionTypeCode.ToString())//will be valid on server side only
                         {
                             case "1"://MyJournalActionTypeEnum.Credit:
                                 CheckGLAccount(true, errorsList, myDataProvider, glCreditAccId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
-                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640);
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640, 
+                                    suppressInactiveCheck);
                                 break;
                             case "2": //MyJournalActionTypeEnum.Debit:
                                 CheckGLAccount(false, errorsList, myDataProvider, debitAccountId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
-                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640);
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
                                 break;
                             case "3"://MyJournalActionTypeEnum.DebitAndCredit:
                             case "4"://MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
                                 CheckGLAccount(true, errorsList, myDataProvider, glCreditAccId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
-                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640);
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
                                 CheckGLAccount(false, errorsList, myDataProvider, debitAccountId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
-                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640);
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
                                 break;
                             default:
                                 break;
@@ -889,7 +893,8 @@ accountingValidationContextServiceProvider
             string glAccId, string jlCurrencyId
             , FullAccountingSettingPM tenantFullAccountingSettingPM,
             JournalPM myJournalPM,JournalLinePM myJournalLinePM,
-            bool? SuppressCheckGLAccountIsMultiCurrencyWI40640
+            bool? SuppressCheckGLAccountIsMultiCurrencyWI40640,
+            bool SuppressInactiveCheck
             )
         {
 
@@ -951,7 +956,11 @@ accountingValidationContextServiceProvider
             {
                 string msg = TranslateMyTextCode(JournalValidator.M_BlockedGLAccount, tenant);
                 msg = msg.Replace("%name", GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant, showLocal));
-                errorsList.Add(msg);
+                if (!SuppressInactiveCheck)
+                {
+                    errorsList.Add(msg);
+                }
+                
 
                 //errorsList.Add(TranslateMyTextCode(JournalValidator.M_BlockedGLAccount,tenant) + 
                 //    //glAccId
@@ -1141,6 +1150,10 @@ accountingValidationContextServiceProvider
         public new void AddNew(t item)
         {
             base.Add(item);
+        }
+        public new void Add(t item)
+        {
+            AddNew(item);
         }
     }
 

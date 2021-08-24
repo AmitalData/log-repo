@@ -146,6 +146,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             customsMilstonesFields.Add("DeliveredDone");
             customsMilstonesFields.Add("DeliveredDate");
             customsMilstonesFields.Add("DeliveredEstimationDate");
+            customsMilstonesFields.Add("GatepassArrivedDone");
+            customsMilstonesFields.Add("GatepassArrivedDate");
+            customsMilstonesFields.Add("GatepassArrivedEstDate");
+            customsMilstonesFields.Add("GatepassArrivedNotes");
+            customsMilstonesFields.Add("DocumentInspectionDate");
+            customsMilstonesFields.Add("DocumentInspectionEstDate");
+            customsMilstonesFields.Add("DocumentInspectionDone");
+            customsMilstonesFields.Add("DocumentInspectionNotes");
+            customsMilstonesFields.Add("GoodsClassificationDate");
+            customsMilstonesFields.Add("GoodsClassificationDone");
+            customsMilstonesFields.Add("GoodsClassificationNotes");
+            customsMilstonesFields.Add("GoodsClassificationEstDate");
+
         }
 
         private string BuildCustomsUpdatedFields()

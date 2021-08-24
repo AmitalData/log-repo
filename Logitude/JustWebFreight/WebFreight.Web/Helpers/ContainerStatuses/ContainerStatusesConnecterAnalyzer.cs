@@ -617,8 +617,9 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
-                            if (this.eventCode == "0" && !string.IsNullOrEmpty(this.container_number))
-                            {
+
+                            if(IsUpdatingShipmentAndContainer())
+                            { 
 
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
@@ -631,6 +632,19 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
+
+        private bool IsUpdatingShipmentAndContainer()
+        {
+            if (this.eventCode != null && this.eventCode != "20" &&
+                                (Int32.Parse(this.eventCode) >= 0 && Int32.Parse(this.eventCode) <= 31)
+                                && !string.IsNullOrEmpty(this.container_number))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
         {
             shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);

@@ -3,6 +3,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -41,6 +42,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 this.HandelShipmentMasterDataFieldsChanges();
                 this.HandelShipmentPackagesChangeSets();
+                this.HandelShipmentPickUpsChangeSets();
+                this.HandelShipmentDeliveriesChangeSets();
             }
         }
 
@@ -48,7 +51,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (CheckIfShipmentMasterDataFieldsUpdated()) {
                 this.UpdateShipmentPackagesChangeSetOperation();
-            }
+            }          
         }
 
         private bool CheckIfShipmentMasterDataFieldsUpdated()
@@ -71,8 +74,58 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.MainCarriageATD != this.initializer.EntityMasterData.MainCarriageATD)
                 return true;
-            return false;
+            if (this.initializer.EntityPM.PreCarriageFromPortId != this.initializer.EntityMasterData.PreCarriageFromPortId)
+                return true;
+            if (this.initializer.EntityPM.PreCarriageToPortId != this.initializer.EntityMasterData.PreCarriageToPortId)
+                return true;
+            if (this.initializer.EntityPM.MainCarriageToPortId != this.initializer.EntityMasterData.MainCarriageToPortId)
+                return true;
+            if (this.initializer.EntityPM.MainCarriageFromPortId != this.initializer.EntityMasterData.MainCarriageFromPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment1ToPortId != this.initializer.EntityMasterData.Transshipment1ToPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment1FromPortId != this.initializer.EntityMasterData.Transshipment1FromPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2ToPortId != this.initializer.EntityMasterData.Transshipment2ToPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment2FromPortId != this.initializer.EntityMasterData.Transshipment2FromPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment3ToPortId != this.initializer.EntityMasterData.Transshipment3ToPortId)
+                return true;
+            if (this.initializer.EntityPM.Transshipment3FromPortId != this.initializer.EntityMasterData.Transshipment3FromPortId)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageToPortId != this.initializer.EntityMasterData.OnCarriageToPortId)
+                return true;
+            if (this.initializer.EntityPM.OnCarriageFromPortId != this.initializer.EntityMasterData.OnCarriageFromPortId)
+                return true;
+
+            return false; 
         }
+
+        private void HandelShipmentPickUpsChangeSets()
+        {
+            ShipmentPickUpPM updatedShipmentPickUp = this.GetUpdatedShipmentPickUpPMByContainerEntityId();
+            List<ContainerPM> containersToBeUpdated = this.GetPickUpContainersToBeUpdatedByContainerEntityId(updatedShipmentPickUp);
+
+            if (updatedShipmentPickUp == null || containersToBeUpdated.Count == 0)
+                return;
+
+            this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated);
+            this.HandelDeletedShipmentPickUpsChangeSets();
+        }
+
+        private void HandelShipmentDeliveriesChangeSets()
+        {
+            ShipmentDeliveryPM updatedShipmentDeliveryPM = this.GetUpdatedShipmentDeliveryPMByContainerEntityId();
+            List<ContainerPM> containersToBeUpdated = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(updatedShipmentDeliveryPM);
+
+            if (updatedShipmentDeliveryPM == null || containersToBeUpdated.Count == 0)
+                return;
+
+            this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated);
+        }
+
+
         private void UpdateShipmentPackagesChangeSetOperation()
         {
             if (initializer.ShipmentPackagesChangeSet != null)
@@ -86,6 +139,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
+
         private void HandelShipmentPackagesChangeSets()
         {
             if (initializer.ShipmentPackagesChangeSet != null)
@@ -172,8 +226,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
             container.ShipmentId = shipmentPackage.ShipmentId;
-            this.MapContainerFieldsFromShipmentComputedFields(container, shipmentPackage.ShipmentId);
-
+            container.ShipmentPreCarriageFromId = this.initializer.EntityPM?.PreCarriageFromPortId;
+            container.ShipmentPreCarriageToId = this.initializer.EntityPM?.PreCarriageToPortId;
+            container.ShipmentMainCarriageFromId = this.initializer.EntityPM?.MainCarriageFromPortId;
+            container.ShipmentMainCarriageToId = this.initializer.EntityPM?.MainCarriageToPortId;
+            container.ShipmentTransshipment1FromId = this.initializer.EntityPM?.Transshipment1FromPortId;
+            container.ShipmentTransshipment1ToId = this.initializer.EntityPM?.Transshipment1ToPortId;
+            container.ShipmentTransshipment2FromId = this.initializer.EntityPM?.Transshipment2FromPortId;
+            container.ShipmentTransshipment2ToId = this.initializer.EntityPM?.Transshipment2ToPortId;
+            container.ShipmentTransshipment3FromId = this.initializer.EntityPM?.Transshipment3FromPortId;
+            container.ShipmentTransshipment3ToId = this.initializer.EntityPM?.Transshipment3ToPortId;
+            container.ShipmentOnCarriageFromId = this.initializer.EntityPM?.OnCarriageFromPortId;
+            container.ShipmentOnCarriageToId = this.initializer.EntityPM?.OnCarriageToPortId;
+            this.MapContainerFieldsFromShipmentPickup(container);
+            this.MapContainerFieldsFromShipmentDelivery(container);
         }
 
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
@@ -256,9 +322,261 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return packages;
         }
 
-        private void MapContainerFieldsFromShipmentComputedFields(ContainerPM entityPM, string shipmentId)
+        private void MapContainerFieldsFromShipmentPickup(ContainerPM entityPM)
         {
+            ShipmentPickUpPM shipmentPickUpPM = GetShipmentPickUpPMByContainerEntityId(entityPM);
+            if (shipmentPickUpPM == null)
+                return;
+
+            entityPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(shipmentPickUpPM);
+            entityPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(shipmentPickUpPM);
+        }
+
+        private void MapContainerFieldsFromShipmentDelivery(ContainerPM entityPM)
+        {
+            ShipmentDeliveryPM shipmentDeliveryPM = GetShipmentDeliveryPMByContainerEntityId(entityPM);
+            if (shipmentDeliveryPM == null)
+                return;
+
+            entityPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(shipmentDeliveryPM);
+            entityPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(shipmentDeliveryPM);
+        }
+
+        private ShipmentPickUpPM GetShipmentPickUpPMByContainerEntityId(ContainerPM entityPM)
+        {
+            foreach (ShipmentPickUpPM shipmentPickUpPM in initializer.EntityPM.ShipmentPickUps)
+            {
+                if (IsPickUpHaveContainerEntityId(shipmentPickUpPM, entityPM.Id))
+                {
+                    return shipmentPickUpPM;
+                }
+            }
+            return null;
+        }
+
+        private bool IsPickUpHaveContainerEntityId(ShipmentPickUpPM shipmentPickUpPM, string containerId)
+        {
+            if (shipmentPickUpPM.ShipmentPickUpDeliveryPackages != null)
+            {
+                ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM = shipmentPickUpPM.ShipmentPickUpDeliveryPackages.
+                    Find(a => !string.IsNullOrEmpty(a.ContainerEntityId) && containerId == a.ContainerEntityId);
+
+                if (shipmentPickUpDeliveryPackagePM != null)
+                    return true;
+            }
+            return false;
+        }
+
+        private ShipmentDeliveryPM GetShipmentDeliveryPMByContainerEntityId(ContainerPM entityPM)
+        {
+            foreach (ShipmentDeliveryPM shipmentDeliveryPM in initializer.EntityPM.ShipmentDeliveries)
+            {
+                if (IsDeliveryHaveContainerEntityId(shipmentDeliveryPM, entityPM.Id))
+                {
+                    return shipmentDeliveryPM;
+                }
+            }
+            return null;
+        }
+
+        private bool IsDeliveryHaveContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM,string containerId)
+        {
+            if (shipmentDeliveryPM.ShipmentPickUpDeliveryPackages != null)
+            {
+                ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM = shipmentDeliveryPM.ShipmentPickUpDeliveryPackages.
+                    Find(a => !string.IsNullOrEmpty(a.ContainerEntityId) && containerId == a.ContainerEntityId);
+                if (shipmentPickUpDeliveryPackagePM != null)
+                    return true;
+            }
+            return false;
+        }
+        
+
+        private string GetFirstPickupFromAddress(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            if(shipmentPickUpPM.PickUpDeliveryFromTypeCode == "PART")
+            {
+                return GetPartnerCardAddress(shipmentPickUpPM.FromPartnerCardId);
+            }
+            else if (shipmentPickUpPM.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                return GetPortCombinedCode(shipmentPickUpPM.FromPortId);
+            }
+            else if (shipmentPickUpPM.PickUpDeliveryFromTypeCode == "CASL")
+            {
+                return shipmentPickUpPM.FromAddressCity + ", " + shipmentPickUpPM.FromAddressCountryName;
+            }
+            return "";
+        }
+
+        private string GetFirstPickupToAddress(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            if (shipmentPickUpPM.PickUpDeliveryToTypeCode == "PART")
+            {
+                return GetPartnerCardAddress(shipmentPickUpPM.ToPartnerCardId);
+            }
+            else if (shipmentPickUpPM.PickUpDeliveryToTypeCode == "PORT")
+            {
+                return GetPortCombinedCode(shipmentPickUpPM.ToPortId);
+            }
+            else if (shipmentPickUpPM.PickUpDeliveryToTypeCode == "CASL")
+            {
+                return shipmentPickUpPM.ToAddressCity + ", " + shipmentPickUpPM.ToAddressCountryName;
+            }
+            return "";
+        }
+
+        private string GetLastDeliveryFromAddress(ShipmentDeliveryPM shipmentDeliveryPM)
+        {
+            if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "PART")
+            {
+                return GetPartnerCardAddress(shipmentDeliveryPM.FromPartnerCardId);
+            }
+            else if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                return GetPortCombinedCode(shipmentDeliveryPM.FromPortId);
+            }
+            else if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "CASL")
+            {
+                return shipmentDeliveryPM.FromAddressCity + ", " + shipmentDeliveryPM.FromAddressCountryName;
+            }
+            return "";
+        }
+
+        private string GetLastDeliveryToAddress(ShipmentDeliveryPM shipmentDeliveryPM)
+        {
+            if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "PART")
+            {
+                return GetPartnerCardAddress(shipmentDeliveryPM.ToPartnerCardId);
+            }
+            else if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "PORT")
+            {
+                return GetPortCombinedCode(shipmentDeliveryPM.ToPortId);
+            }
+            else if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "CASL")
+            {
+                return shipmentDeliveryPM.ToAddressCity + ", " + shipmentDeliveryPM.ToAddressCountryName;
+            }
+            return "";
+        }
+
+        private string GetPartnerCardAddress(string partnerId)
+        {
+            Card partner = initializer.CardRepository.GetSingleCard(partnerId, initializer.Tenant);
+            if (partner == null)
+                return "";
+
+            return partner.EnglishName + ", " + partner.CityName + ", "+partner.CountryName;
+        }
+
+        private string GetPortCombinedCode(string portId)
+        {
+            Port port = initializer.PortRepository.GetSinglePort(portId, initializer.Tenant);
+            if (port == null)
+                return "";
+
+            return port.CombinedCode;
+        }
+
+        private ShipmentPickUpPM GetUpdatedShipmentPickUpPMByContainerEntityId()
+        {
+            ShipmentPickUpPM shipmentPickUpPM = initializer.EntityPM.ShipmentPickUps.Find(d => d.ChangeSetOp == ChangeSetOperation.Update
+            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))
+            ));
+            return shipmentPickUpPM;
+        }
+
+        private ShipmentDeliveryPM GetUpdatedShipmentDeliveryPMByContainerEntityId()
+        {
+            ShipmentDeliveryPM shipmentDeliveryPM = initializer.EntityPM.ShipmentDeliveries.Find(d => d.ChangeSetOp == ChangeSetOperation.Update
+            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))
+            ));
+            return shipmentDeliveryPM;
+        }
+
+
+        private List<ContainerPM> GetDeliveryContainersToBeUpdatedByContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM)
+        {         
+            List<ContainerPM> containerPMs = new List<ContainerPM>(); 
+            if (shipmentDeliveryPM == null)
+            {
+                return containerPMs;
+            }
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentDeliveryPM.ShipmentPickUpDeliveryPackages)
+            {
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                {
+                    containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
+                }
+            }
+            return containerPMs;
+        }
+
+        private List<ContainerPM> GetPickUpContainersToBeUpdatedByContainerEntityId(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            if(shipmentPickUpPM == null)
+            {
+                return containerPMs;
+            }
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentPickUpPM.ShipmentPickUpDeliveryPackages)
+            {
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                {
+                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
+                }
+            }
+            return containerPMs;
+        }
+
+        private void UpdateContainerFieldsFromPickUp(ShipmentPickUpPM updatedShipmentPickUp, List<ContainerPM> containerPMs)
+        {
+            foreach (ContainerPM containerPM in containerPMs)
+            {
+                this.UpdateContainerFieldsFromPickUpFields(containerPM,updatedShipmentPickUp);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs)
+        {
+            foreach (ContainerPM containerPM in containerPMs)
+            {
+                this.UpdateContainerFieldsFromDeliveryFields(containerPM, updatedShipmentDeliveryPM);
+            }
+        }
+
+        private void UpdateContainerFieldsFromPickUpFields(ContainerPM containerPM, ShipmentPickUpPM updatedShipmentPickUp)
+        {
+            if (!IsContainerUpdatedBefore(containerPM))
+            {
+                containerPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(updatedShipmentPickUp);
+                containerPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerService.Update(containerPM);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDeliveryFields(ContainerPM containerPM, ShipmentDeliveryPM updatedShipmentDeliveryPM)
+        {
+            if (!IsContainerUpdatedBefore(containerPM))
+            {
+                containerPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
+                containerService.Update(containerPM);
+            }
+        }
+
+        private bool IsContainerUpdatedBefore(ContainerPM containerPM)
+        {
+            return initializer.EntityPM.ShipmentPackages != null && initializer.EntityPM.ShipmentPackages.Any(d =>
+                 d.ChangeSetOp == ChangeSetOperation.Update && d.ContainerEntityId == containerPM.Id);
+        }
+
+        private void HandelDeletedShipmentPickUpsChangeSets()
+        {
+            List<ShipmentPickUpPM> shipmentPickUpsPM = initializer.EntityPM.ShipmentPickUps.FindAll(d => d.ChangeSetOp == ChangeSetOperation.Delete
+            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
 
         }
+
     }
 }

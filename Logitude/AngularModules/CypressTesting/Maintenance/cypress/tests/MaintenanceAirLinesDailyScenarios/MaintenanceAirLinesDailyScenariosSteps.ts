@@ -80,12 +80,12 @@ Then("the air line should create successfully", () => {
 //#endregion
 
 //#region Search for the shipping line by code
-When("search for {string} air line", (searchValueField) => {
-    GeneralActions.Search(searchValueField)
+When("search for {string} air line", (searchFieldValue) => {
+    AirLineActions.Search(searchFieldValue)
 });
 
-Then("the {string} air line should appear successfully", (searchValueField) => {
-    GeneralActions.AssertSearch(searchValueField)
+Then("the {string} air line should appear successfully", (searchFieldValue) => {
+    AirLineActions.AssertSearch(searchFieldValue)
 });
 //#endregion
 

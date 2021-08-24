@@ -63,6 +63,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetTruckerMilestoneFields(tableRow);
             SetCustomAgentFields(tableRow);
 
+            SetGoodsClassificationMilestone(tableRow);
+            SetDocumentInspectionMilestone(tableRow);
+            SetGatepassDocumentsReadyMilestone(tableRow);
         }
         private static void SetCustomAgentFields(DataRow tableRow)
         {
@@ -172,19 +175,31 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToTrucker);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedTruckerDate"]);
-
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "GatepassArrivedDone") && !tableRow["GatepassArrivedDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GatepassArrived);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["GatepassArrivedDate"]);
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ClearanceDone") && !tableRow["ClearanceDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Clearance);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["ClearanceDate"]);
-
             }
             else if (!IsFieldNullOrEmpty(tableRow, "CustomsPaymentDone") && !tableRow["CustomsPaymentDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.CustomsPayment);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CustomsPaymentDate"]);
-
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DocumentInspectionDone") && !tableRow["DocumentInspectionDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DocumentInspection);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DocumentInspectionDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "GoodsClassificationDone") && !tableRow["GoodsClassificationDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GoodsClassification);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["GoodsClassificationDate"]);
             }
 
             //CustomsProcess
@@ -193,7 +208,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsAgent);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
-
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
             {
@@ -321,7 +335,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             else
             {
                 tableRow.SetField("DepartureDone", false);
-
             }
 
 
@@ -482,15 +495,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)
         {
-            bool isNull = false;
             if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
-            {
-                isNull = true;
-            }
-
-            return isNull;
-
-
+                return true;
+            return false;
         }
 
         private static void SetShipmentTypeCode(DataRow tableRow)
@@ -513,6 +520,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var consigneeId = tableRow["ConsigneeId"]?.ToString();
             if (string.IsNullOrWhiteSpace(consigneeId))
                 tableRow.SetField("ConsigneeId", defaultConsigneeId);
+        }
+        private static void SetGoodsClassificationMilestone(DataRow tableRow)
+        {
+            tableRow.SetField("GoodsClassificationDate", tableRow["GoodsClassification"]);
+            tableRow.SetField("GoodsClassificationDone", !IsFieldNullOrEmpty(tableRow, "GoodsClassification"));
+        }
+        private static void SetDocumentInspectionMilestone(DataRow tableRow)
+        {
+            tableRow.SetField("DocumentInspectionDate", tableRow["DocumentInspection"]);
+            tableRow.SetField("DocumentInspectionDone", !IsFieldNullOrEmpty(tableRow, "DocumentInspection"));
+        }
+        private static void SetGatepassDocumentsReadyMilestone(DataRow tableRow)
+        {
+            tableRow.SetField("GatepassArrivedDate", tableRow["GatepassDocumentsReady"]);
+            tableRow.SetField("GatepassArrivedDone", !IsFieldNullOrEmpty(tableRow, "GatepassDocumentsReady"));
         }
 
     }

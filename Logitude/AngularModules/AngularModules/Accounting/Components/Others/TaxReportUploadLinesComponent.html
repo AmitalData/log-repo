@@ -1,0 +1,104 @@
+
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <div style="padding-top: 5px;">
+                        <table>
+                            <tr style="height:30px">
+                                <td colspan="2">
+                                    {{'TaxReport.O.Uploaded' | TextCodeTranslationPipe }}
+                                </td>
+
+                            </tr>
+                            <tr style="height:30px">
+                                <td style="width:20px">
+                                    {{'TaxReport.O.Mark' | TextCodeTranslationPipe}}
+                                </td>
+                                <td><img src="./Images/External.png" style="margin:5px"/></td>
+                            </tr>
+                            <tr style="height:30px">
+                                <td colspan="2">
+                                    {{'TaxReport.O.CantBeEdited' | TextCodeTranslationPipe}}
+                                </td>
+                            </tr>
+                            <tr style="height:30px">
+                                <td colspan="2">
+                                    {{'TaxReport.O.ExternalLines' | TextCodeTranslationPipe}}
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px;"><td colspan="2"><div></div></td></tr>
+                        </table>
+                        <table>
+                            
+                            <tr style="height:35px">
+                                <td style="width:40px;"><span style="font-size:11px;color:dimgray">  {{'TaxReport.O.File' | TextCodeTranslationPipe}}</span></td>
+                                <td style="width:150px; ">
+                                    <LogTextBox [ObjectFieldName]="'FileName'" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width:10px;"><div></div></td>
+
+                                <td style="width:60px;text-align:left">
+                                    <button  style="width:55px;" class="Button" (click)="OpenUploadFile()">{{'TaxReport.O.Upload' | TextCodeTranslationPipe}}</button>
+                                    <input accept=".txt,.TXT" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                </td>
+                               <!-- <td style="width:30px;color:gray;">{{ProgressBarPercentText}}</td>-->
+                                <td style="width:4px;"></td>
+                                <td style="width:150px; background-color:white">
+                                    <div>
+
+                                    </div>
+                                </td>
+
+
+                                <td><div></div></td>
+                            </tr>
+
+                        </table>
+                           
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button [disabled]="UploadButtonIsEnabled" class="Button" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+

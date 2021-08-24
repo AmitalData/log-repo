@@ -13,5 +13,6 @@ namespace Logitude.Tariff.Models
         public static string OceanFCLFreightCostId { get; set; }
         public static string AirSurchargeCostId { get; set; }
         public static string OceanLCLSurchargeCostId { get; set; }
+        public static string OceanFCLSurchargeCostId { get; set; }
     }
 }

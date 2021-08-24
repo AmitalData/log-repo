@@ -124,6 +124,6 @@ namespace WebFreight.Web.DataContracts
         public bool IpRestricted { get; set; }
         public bool HasError { get; set; }
         public string Token { get; set; }
-        
+        public string DocumentDownloadToken { get; set; }
     }
 }

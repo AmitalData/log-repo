@@ -5,17 +5,19 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts; 
+using Simplog.Server.Infrastructure.DataContracts;
+using System;
 using System.Collections.Generic; 
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
-    public class ExporterShipmentAMMappingServie
+     
+    public class ExporterShipmentAMMappingService
     {
         private ShipmentPM shipmentPM;
         private HybridPartnerRepository hybridPartnerRepository;
-        private CardRepository cardsReporistory;
-        public ExporterShipmentAMMappingServie(ShipmentPM shipment)
+        private CardRepository cardsReporistory; 
+        public ExporterShipmentAMMappingService(ShipmentPM shipment)
         {
             this.shipmentPM = shipment;
             ICommonDataContext commoncontext = CommonDataContext.GetContext(shipment.Tenant);
@@ -29,10 +31,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapExportShipmentPackages(shipmentPM, newAExporterShipmentAM);
             MapShipmentShipper(newAExporterShipmentAM);
             MapShipmentCustomer(newAExporterShipmentAM);
-            MapShipmentPorts(shipmentPM, newAExporterShipmentAM);
-
+            MapShipmentPorts(shipmentPM, newAExporterShipmentAM); 
             return newAExporterShipmentAM;
-        } 
+        }
+ 
         private HybridPartnerPM GetHybridPartner()
         {
             HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
@@ -50,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 DirectionId = shipmentPM.DirectionId,
                 CustomerShipmentNumber = shipmentPM.ShipmentNumber,
                 ShipmentTypeId = shipmentPM.ShipmentTypeId,
-                ConsigneeName = shipmentPM.ConsigneeName,
+                ConsigneeName = shipmentPM.ShipperName,
                 InvoiceReference = shipmentPM.PrivateLabelInvoiceNumber,
                 CustomerReference = shipmentPM.CustomerReference1,
                 IncludePickup = shipmentPM.PrivateLabelIncludePickup,
@@ -59,7 +61,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ReqFlightDate = shipmentPM.RequestedFlightDate,
                 Quantity = shipmentPM.BookingNumberOfPackages,
                 Weight = shipmentPM.OrderGrossWeight,
-                Volume = shipmentPM.BookingVolume, 
+                Volume = shipmentPM.BookingVolume,  
+                Incoterm = shipmentPM.IncotermCode
             };
         } 
         private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
@@ -88,7 +91,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Code = ForwarderShipment.ToPort,
                 CountryCode = ForwarderShipment.ToCountryCode
             };
-        }  
+        }
         private void MapShipmentCustomer(NewAExporterShipmentAM newAExporterShipmentAM)
         { 
             Card Customer = cardsReporistory.GetSingleCard(shipmentPM.CustomerId, shipmentPM.Tenant);

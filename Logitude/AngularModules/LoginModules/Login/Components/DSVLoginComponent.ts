@@ -21,7 +21,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
 
     public authHeader;
     private privateUrl;
-    public MainColor: string = null;
+    public SecondaryColor: string = null;
     public BackgroundImage: string = "";
     public LoginImage: string = "";
     public MainLogo: string = ""; 
@@ -50,6 +50,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");  
         this.showSpinner = false;
     }
 

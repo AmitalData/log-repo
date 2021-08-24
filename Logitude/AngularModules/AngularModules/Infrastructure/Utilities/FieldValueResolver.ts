@@ -145,16 +145,16 @@ export class FieldValueResolver {
         var month: string, day, minuit, second, hour;
         if (date && date instanceof Date) {
             if (date.getMonth() < 10) {
-                month = "0" + date.getMonth().toString();
+                month = "0" + (date.getMonth()).toString();
             }
             else {
-                month = date.getMonth().toString();
+                month = (date.getMonth()).toString();
             }
-            if (date.getDay() < 10) {
-                day = "0" + date.getDay().toString();
+            if (date.getDate() < 10) {
+                day = "0" + date.getDate().toString();
             }
             else {
-                day = date.getDay().toString();
+                day = date.getDate().toString();
             }
             if (date.getHours() < 10) {
                 hour = "0" + date.getHours().toString();

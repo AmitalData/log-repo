@@ -17306,6 +17306,24 @@
       LocalDefaultText="&quot;רשימת המחאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLaccount.O.DebtBetween&quot;"
+      DefaultText="&quot;Debt Between&quot;"
+      LocalDefaultText="&quot;חוב בין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLaccount.O.From&quot;"
+      DefaultText="&quot;From&quot;"
+      LocalDefaultText="&quot;מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLaccount.O.To&quot;"
+      DefaultText="&quot;To&quot;"
+      LocalDefaultText="&quot;עד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

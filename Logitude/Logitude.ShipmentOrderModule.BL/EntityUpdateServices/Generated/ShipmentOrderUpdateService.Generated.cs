@@ -61,10 +61,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
 		
 		    entityPM.Id = IdCounter.GetNumber("ShipmentOrder", entityPM.Tenant); 
 					
-			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-							
-		    entityPM.CreateDate =  myDate;
-					 
 			string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -74,7 +70,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
             {
 		        entityPM.CreatedByUserId = loggedContact.Id;
 		    }
-					 
+					
+			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+							 
 
 		    entityPM.UpdateDate =  myDate;
                       

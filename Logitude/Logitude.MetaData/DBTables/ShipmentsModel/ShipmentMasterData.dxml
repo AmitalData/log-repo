@@ -690,21 +690,21 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
     Name="PreCarriageToPortId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
     Name="PreCarriageCarrierId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column> 
-    <Column
+  <Column
     Name="PreCarriageCarrierNumber"
     Type="varchar"
     Size="15">
@@ -717,7 +717,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-    <Column
+  <Column
     Name="PreCarriageATD"
     Type="datetime">
     <Constraints
@@ -742,7 +742,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-    <Column
+  <Column
     Name="OnCarriageTransportModeId"
     Type="char"
     Size="1">
@@ -770,14 +770,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-    <Column
+  <Column
     Name="OnCarriageCarrierNumber"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
-    <Column
+  <Column
     Name="OnCarriageATD"
     Type="datetime">
     <Constraints
@@ -801,14 +801,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
     Name="OnCarriageVesselId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
-    <Column
+  <Column
     Name="OnCarriageAdditionalTransportModeCode"
     ShortName="OnCarriageAddTransportModeCode"
     Type="varchar"
@@ -821,7 +821,77 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>  
+  </Column>
+  <Column
+    Name="InlandDomesticFromZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromCity"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToCity"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFromPortAddress"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageToPortAddress"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
@@ -997,7 +1067,7 @@
     ReferencedTable="TransportModes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-     <Relation
+  <Relation
     ForeignKeyColumn="OnCarriageFromPortId"
     ReferencedTable="Ports"
     ReferencedColumn="Id"
@@ -1021,6 +1091,26 @@
     ForeignKeyColumn="OnCarriageAdditionalTransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticFromTypeCode"
+    ReferencedTable="PickUpDeliveryFromToTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticToTypeCode"
+    ReferencedTable="PickUpDeliveryFromToTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticFromCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticToCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Master,InterlineId" />

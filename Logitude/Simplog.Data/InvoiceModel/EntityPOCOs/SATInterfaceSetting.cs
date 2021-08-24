@@ -16,7 +16,9 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SATInterfaceCode { get; set; }
         public string Token { get; set; }
         public DateTime? ActivationDate { get; set; }
-       
+        public bool IsARInvoiceTransferEnabled { get; set; }
+        public bool IsCartaPorteTransferEnabled { get; set; }
+
         [ForeignKey("SATInterfaceCode")]
         public virtual SATInterface SATInterface { get; set; }
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class SATInterfaceSettingUpdateClass
    {  		
-		public const string HashString = "6498e3c0adac97747c98eb62fa35cb2b";
+		public const string HashString = "14d170881c96555908a62cebad9403b3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "SATInterfaceSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "SATInterfaceSettings",
-			      				    OldDBTableName =  "SATInterfaceSettings",
 			      				    ObjectTableSingular =  "SAT Interface Setting",
 			      				    ObjectTablePlural =  "SAT Interface Settings",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SAT Interface Setting",
-			      				    Code =  "fd70",
+			      				    Code =  "131d",
 			      				    Name =  "SATInterfaceSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -131,6 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "SATInterfaceSetting,SATInterfaceSettings,,Tenant,",
 			      				    HashString =  SATInterfaceSettingUpdateClass.HashString,
 			                    
@@ -144,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "CompanyId",
-					  						OldFieldName =  "CompanyId",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -193,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CompanyId",
@@ -205,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "SATInterfaceCode",
-					  						OldFieldName =  "SATInterfaceCode",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "SATInterface",
@@ -258,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATInterfaceCode",
@@ -270,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Token",
-					  						OldFieldName =  "Token",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -319,6 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Token",
@@ -331,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ActivationDate",
-					  						OldFieldName =  "ActivationDate",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -381,6 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActivationDate",
@@ -393,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "MetodoPagoCode",
-					  						OldFieldName =  "MetodoPagoCode",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "MetodoPago",
@@ -449,6 +448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -460,7 +460,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "CustomsInterfaceCode",
-					  						OldFieldName =  "CustomsInterfaceCode",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsInterface",
@@ -513,6 +512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CustomsInterfaceCode",
@@ -525,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "UserId",
-					  						OldFieldName =  "UserId",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -574,6 +573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UserId",
@@ -586,7 +586,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "SATInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -635,9 +634,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Password",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsARInvoiceTransferEnabled",
+					  						ObjectTableName =  "SATInterfaceSetting",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsARInvoiceTransferEnabled",
+					  						ListPropertyPath =  "IsARInvoiceTransferEnabled",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsARInvoiceTransferEnabled",
+					  						DefaultText =  "Invoices",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCartaPorteTransferEnabled",
+					  						ObjectTableName =  "SATInterfaceSetting",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCartaPorteTransferEnabled",
+					  						ListPropertyPath =  "IsCartaPorteTransferEnabled",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCartaPorteTransferEnabled",
+					  						DefaultText =  "Carta Porte",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -649,7 +761,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable SATInterfaceSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SATInterfaceSetting" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> SATInterfaceSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SATInterfaceSetting").ToList();
+		       
+	      
+
+	         Screen SATInterfaceSettingSATInterfaceSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SATInterfaceSetting.HeaderScreen", Name = "SATInterfaceSettingHeaderScreen", ObjectTableId = SATInterfaceSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    SATInterfaceSettingObjectTable.HeaderScreenId = SATInterfaceSettingSATInterfaceSettingHeaderScreenScreen0.Id;
+		    SATInterfaceSettingObjectTable.HeaderScreenCode = SATInterfaceSettingSATInterfaceSettingHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

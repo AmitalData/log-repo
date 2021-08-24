@@ -62,6 +62,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     constructor() {
         super(); 
         this.InitializeServices();
+        this.SetUIProperties();
         this.SetUIProperties_Filters(); 
         this.TenantPM = SessionLocator.TenantPM;
         this.SessionIndex = this.CurrentSession.SessionIndex;
@@ -70,6 +71,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
     }
+
+   
 
     SetUnits() { 
         this.SetDimensionsUnitCode(); 
@@ -214,6 +217,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetUIProperties() { 
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, false);
 
     }
 
@@ -350,7 +355,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
 
-                this.newMethod(myResult);
+                this.SetShipmentStatus(myResult);
                 this.SetForwarderPartner();
                 this.InsertShipment();
             }
@@ -363,7 +368,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     }
 
-    private newMethod(myResult: any) {
+    private SetShipmentStatus(myResult: any) {
         this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0]?.Id;
         this.EntityProgressStatusId = myResult.Result.filter(a => a.Code == "INPS")[0]?.Id;
         this.EntityPM.StatusId = !this.IsDSVTenant ? this.EntityProgressStatusId : this.EntityPM.StatusId;
@@ -457,12 +462,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    get ConsigneeName() { return this.EntityPM.ConsigneeName; }
-    set ConsigneeName(newValue: string) {
-        if (this.EntityPM.ConsigneeName != newValue) {
-            this.EntityPM.ConsigneeName = newValue;
-        }
-    }
+    public get ShipperName() { return this.EntityPM.ShipperName }
+    public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
@@ -495,7 +496,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     MainCarriageFromPortId = null;
     SetUIProperties_Ports() { 
         var isToRequired: boolean = false; 
-        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
             isToRequired = true;
         } 
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, isToRequired);
