@@ -51,7 +51,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ValueOfCustomsOrForwarder: string = "";
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
-    PartnerCardTypeToShipmentTransportModeDictionary = {
+    PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
         'O': "SHIPPING LINES"
@@ -572,24 +572,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
         mainCarriageCarrier.Address = this.GetPartnerAddress(this.ShipmentPM.MainCarriageCarrierId);
         mainCarriageCarrier.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
         mainCarriageCarrier.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
-        mainCarriageCarrier.Type = this.PartnerCardTypeToShipmentTransportModeDictionary[this.ShipmentPM.TransportModeId];
-        //this.SetMainCarriageCarrierPartnerTypeBasedOnTransportMode(mainCarriageCarrier);
+        mainCarriageCarrier.Type = this.PartnerCardTypesOfShipmentTransportMode[this.ShipmentPM.TransportModeId];
         return mainCarriageCarrier;
     }
 
-    private SetMainCarriageCarrierPartnerTypeBasedOnTransportMode(mainCarriageCarrier: PartnerCard) {
-        switch (this.ShipmentPM.TransportModeId) {
-            case 'A':
-                mainCarriageCarrier.Type = "AIRLINES";
-                break;
-            case 'I':
-                mainCarriageCarrier.Type = "TRUCKER";
-                break;
-            case 'O':
-                mainCarriageCarrier.Type = "SHIPPING LINES";
-                break;
-        }
-    }
 
     private CreateWarehouseLegPartnerCard() {
         let warehouseLeg = new PartnerCard();
