@@ -684,11 +684,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else if (rec.ActionCode == "3" && cddc == "CD")
                 {
-                    rec.DebitGLAccount = values[1].TrimStart('G');
+                    rec.DebitGLAccount = values[2].TrimStart('G');
                 }
                 else if (rec.ActionCode == "3" && cddc == "DC")
                 {
-                    rec.CreditGLAccount = values[1].TrimStart('G');
+                    rec.CreditGLAccount = values[2].TrimStart('G');
                 }
                 else // debit
                 {
