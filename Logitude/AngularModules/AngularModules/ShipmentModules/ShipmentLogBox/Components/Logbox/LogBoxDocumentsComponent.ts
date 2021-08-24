@@ -75,7 +75,12 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
 
+    public MainCarriageTA;
+    public MainCarriageTD;
+    public MainCarriageTALabel: string = "";
+    public MainCarriageTDLabel: string = "";
 
+    public hasExportShipmentToggle: boolean = false;
 
     public FromPortCountryCode: string;
     public   FromPortCode: string;
@@ -100,9 +105,16 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.StopBusyIndicator();
             }
         });
+
+        this.checkExportShipmentToggle();
     }
 
-
+    checkExportShipmentToggle() { 
+        let ExportShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (ExportShipmentFeatureToggle) {
+            this.hasExportShipmentToggle = true; 
+        }
+    }
     SetPortFields() {
 
         if (this.SelectedShipment) {
@@ -176,6 +188,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                   this.ShipmentPM = myResult.Result;
                   this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
                   this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
+                    this.SetMainCarriageDates();
                   this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                     if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                       this.DisableAddDocumentButton = true;
@@ -210,6 +223,31 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.OnImporterShipmentsFilterChangedMethod(res);
         });
     }
+    SetMainCarriageDates() { 
+        this.SetMainCarriageArrivalDate(); 
+        this.SetMainCarriageDepartureDate(); 
+    }
+    
+    private SetMainCarriageArrivalDate() {
+        if (this.ShipmentPM.MainCarriageATA != null) {
+            this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
+            this.MainCarriageTALabel = 'ATA';
+        } else if (this.ShipmentPM.MainCarriageETA != null) {
+            this.MainCarriageTA = this.ShipmentPM.MainCarriageETA;
+            this.MainCarriageTALabel = 'ETA';
+        }
+    }
+
+    private SetMainCarriageDepartureDate() {
+        if (this.ShipmentPM.MainCarriageATD != null) {
+            this.MainCarriageTD = this.ShipmentPM.MainCarriageATD;
+            this.MainCarriageTDLabel = 'ATD';
+        } else if (this.ShipmentPM.MainCarriageETD != null) {
+            this.MainCarriageTD = this.ShipmentPM.MainCarriageETD;
+            this.MainCarriageTDLabel = 'ETD';
+        }
+    }
+
     ngAfterViewInit() {
 
     }
