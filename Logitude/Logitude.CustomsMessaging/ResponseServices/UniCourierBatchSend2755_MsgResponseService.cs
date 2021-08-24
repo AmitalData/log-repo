@@ -138,7 +138,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
                 var allPendings = listDeclarationPaymentPendingHold.Where(r => r.DeclarationID == itemPoco.DeclarationId)?.ToList();
-                for (var item = 0; item <= allPendings?.Count(); item++)
+                for (var item = 0; item < allPendings?.Count(); item++)
                 {
                     mess.AppendLine($" Pending[" + item + "].ErrorPlace = " + allPendings[item].ErrorPlace);
                 }
