@@ -207,7 +207,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
                                                 this.DeclarationPM = args.EntityPM;
-
+                                                
                                                 if (this.DeclarationPM.IsCourierDeclaration) {
                                                     let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
@@ -2372,8 +2372,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     }
                     else {
                         //if OK then  close Win !!
-                        if (SessionLocator.SelectedSession.CurrentWindow != null)
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                       // if (SessionLocator.SelectedSession.CurrentWindow != null)
+                        //    SessionLocator.SelectedSession.CloseCurrentWindow();
                     }
                 }
             };
@@ -2409,6 +2409,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     });
         }
 
+        debugger;
         SessionLocator.SelectedSession.CloseCurrentWindow();
 
     }
