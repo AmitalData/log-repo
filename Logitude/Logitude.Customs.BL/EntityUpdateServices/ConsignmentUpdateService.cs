@@ -81,8 +81,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             entityPM.Tenant);
                         foreach (var courierReasonCode in courierReasonCodeList)
                         {
+                            CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
+                            Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, entityPM.Tenant);
 
-                            if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
+                            if (!isActive) continue;
+
+                            if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode ) )
                             {
                                 pendingReasonCodeList.Add(courierReasonCode);
                                 DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();

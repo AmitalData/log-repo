@@ -127,6 +127,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     };
                     this._MyDeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
 
+
                     //Update ErrosXml field
                     var declarationException = new UnifreightIIG.Common.ImportDeclarationServiceReference.Exception();
                     declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
@@ -193,22 +194,46 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
 
-                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    if (customResponse.Response != null && customResponse.Response.Error != null  && customResponse.Response.Error.Count()>0 )
                     {
-                        Code = "APAY",
-                        Mode = UnifreightEventMode.@new,
-                        EventDateTime = DateTime.Now,
-                        Entname = "CFIFILEM",
-                        PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                        EventRemarks = "",
-                    };
-                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                    var myOpenUnifreighTask = new UnifreightEventTaskService();
-                    myOpenUnifreighTask.UpsertEventLE2U(
-                        _MyDeclarationPM.Tenant,
-                       requestParams.LoggingUserId,
-                        MyUnifreightEventParam);
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = customResponse.Response.Error[0].ValidationCode.Value,
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
 
+                    }
+                    else {
+
+
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAY",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+
+                    }
                 }
 
             }
