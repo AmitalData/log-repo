@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ShipmentOrderUpdateClass
    {  		
-		public const string HashString = "e0b8491521f86e8f3466d740246ff360";
+
+		public const string HashString = "bc662b44aa1aaef3271303d2b7ad3500";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3743,21 +3745,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ALSOQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ShipmentOrder.DirectionId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShipmentOrder.DescriptionOfGoods" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShipmentOrder.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShipmentOrder.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShipmentOrder.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShipmentOrder.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShipmentOrder.ShipmentLevelName" , ColumnWidth = 153 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShipmentOrder.ShipmentLevelName" , ColumnWidth = 153 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShipmentOrder.OrderNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShipmentOrder.OrderNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShipmentOrder.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ShipmentOrder.IsCancelled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ShipmentOrder.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ShipmentOrder.Master" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ShipmentOrder.House" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALSOQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ShipmentOrder.House" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ALSOQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALSOQuery.Id,QueryCode = ALSOQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ShipmentOrder.DescriptionOfGoods" , ColumnWidth = 124 }, addedQueryColumns);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -4612,43 +4612,43 @@
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
-        ColumnWidth="140" />
-      <QueryColumn
-        QueryCode="&quot;ALSO&quot;"
-        IndexOrder="2"
         ObjectFieldName="&quot;TransportModeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="3"
+        IndexOrder="2"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="4"
+        IndexOrder="3"
         ObjectFieldName="&quot;ShipmentLevelName&quot;"
         ColumnWidth="153" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="5"
+        IndexOrder="4"
         ObjectFieldName="&quot;OrderNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="6"
+        IndexOrder="5"
         ObjectFieldName="&quot;IsCancelled&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="7"
+        IndexOrder="6"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
-        IndexOrder="8"
+        IndexOrder="7"
         ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ColumnWidth="124" />
     </QueryColumns>
     <QueryFilters />
   </Query>
