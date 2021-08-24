@@ -118,11 +118,13 @@
     <Compile Include="Services\TimeManagementDataPreparation.cs" />
     <Compile Include="Steps\DataEntry\CreateDataEntrySteps.cs" />
     <Compile Include="Steps\DataEntry\GetDataEntrySteps.cs" />
+    <Compile Include="Steps\DataEntry\UpdateDataEntrySteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Features\DataEntry\CreateDataEntry.feature" />
     <None Include="Features\DataEntry\GetDataEntry.feature" />
+    <None Include="Features\DataEntry\UpdateDataEntry.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
