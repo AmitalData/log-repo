@@ -111,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
 
             this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated);
+            this.HandelDeletedShipmentPickUpsChangeSets();
         }
 
         private void HandelShipmentDeliveriesChangeSets()
@@ -225,18 +226,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.Master = this.initializer.EntityPM.Master;
             container.ContainerNumber = shipmentPackage.ContainerNumber;
             container.ShipmentId = shipmentPackage.ShipmentId;
-            container.ShipmentPreCarriageFromId = this.initializer.EntityMasterData?.PreCarriageFromPortId;
-            container.ShipmentPreCarriageToId = this.initializer.EntityMasterData?.PreCarriageToPortId;
-            container.ShipmentMainCarriageFromId = this.initializer.EntityMasterData?.MainCarriageFromPortId;
-            container.ShipmentMainCarriageToId = this.initializer.EntityMasterData?.MainCarriageToPortId;
-            container.ShipmentTransshipment1FromId = this.initializer.EntityMasterData?.Transshipment1FromPortId;
-            container.ShipmentTransshipment1ToId = this.initializer.EntityMasterData?.Transshipment1ToPortId;
-            container.ShipmentTransshipment2FromId = this.initializer.EntityMasterData?.Transshipment2FromPortId;
-            container.ShipmentTransshipment2ToId = this.initializer.EntityMasterData?.Transshipment2ToPortId;
-            container.ShipmentTransshipment3FromId = this.initializer.EntityMasterData?.Transshipment3FromPortId;
-            container.ShipmentTransshipment3ToId = this.initializer.EntityMasterData?.Transshipment3ToPortId;
-            container.ShipmentOnCarriageFromId = this.initializer.EntityMasterData?.OnCarriageFromPortId;
-            container.ShipmentOnCarriageToId = this.initializer.EntityMasterData?.OnCarriageToPortId;
+            container.ShipmentPreCarriageFromId = this.initializer.EntityPM?.PreCarriageFromPortId;
+            container.ShipmentPreCarriageToId = this.initializer.EntityPM?.PreCarriageToPortId;
+            container.ShipmentMainCarriageFromId = this.initializer.EntityPM?.MainCarriageFromPortId;
+            container.ShipmentMainCarriageToId = this.initializer.EntityPM?.MainCarriageToPortId;
+            container.ShipmentTransshipment1FromId = this.initializer.EntityPM?.Transshipment1FromPortId;
+            container.ShipmentTransshipment1ToId = this.initializer.EntityPM?.Transshipment1ToPortId;
+            container.ShipmentTransshipment2FromId = this.initializer.EntityPM?.Transshipment2FromPortId;
+            container.ShipmentTransshipment2ToId = this.initializer.EntityPM?.Transshipment2ToPortId;
+            container.ShipmentTransshipment3FromId = this.initializer.EntityPM?.Transshipment3FromPortId;
+            container.ShipmentTransshipment3ToId = this.initializer.EntityPM?.Transshipment3ToPortId;
+            container.ShipmentOnCarriageFromId = this.initializer.EntityPM?.OnCarriageFromPortId;
+            container.ShipmentOnCarriageToId = this.initializer.EntityPM?.OnCarriageToPortId;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
@@ -569,5 +570,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return initializer.EntityPM.ShipmentPackages != null && initializer.EntityPM.ShipmentPackages.Any(d =>
                  d.ChangeSetOp == ChangeSetOperation.Update && d.ContainerEntityId == containerPM.Id);
         }
+
+        private void HandelDeletedShipmentPickUpsChangeSets()
+        {
+            List<ShipmentPickUpPM> shipmentPickUpsPM = initializer.EntityPM.ShipmentPickUps.FindAll(d => d.ChangeSetOp == ChangeSetOperation.Delete
+            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
+
+        }
+
     }
 }
