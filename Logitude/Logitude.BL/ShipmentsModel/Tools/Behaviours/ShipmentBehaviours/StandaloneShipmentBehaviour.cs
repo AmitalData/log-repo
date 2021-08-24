@@ -27,6 +27,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private ShipmentQuery shipmentQuery;
         private ShipmentPickUpQuery shipmentPickUpQuery;
         private ShipmentDeliveryQuery shipmentDeliveryQuery;
+        private string shipmentType; 
 
         private int tenant;
         public void Handle(IServiceInitializer initializer)
@@ -596,5 +597,63 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             ShipmentDeliveryPM shipmentDeliveryPM = shipmentPM.ShipmentDeliveries.Find(d => d.Id == deliveryPM);
             return shipmentDeliveryPM;
         }
+
+       
+        public  void UpdateStandaloneShipmentsOfParentShipment(ShipmentServiceInitializer initializer, List<Shipment> allStandaloneShipments)
+        {
+            if (allStandaloneShipments.Count > 0)
+            {
+                this.GetShipmentType(initializer);
+                this.IterateStandaloneShipments(initializer, allStandaloneShipments);
+                this.SubmitChanges(initializer);
+            }
+        }
+        private void GetShipmentType(ShipmentServiceInitializer initializer)
+        {
+            string type = "";
+            if (initializer.EntityPM.ShipmentTypeId != null)
+            {
+                ShipmentTypeRepository shipmentTypeRepository = new ShipmentTypeRepository(initializer.EntityPM.Tenant);
+                ShipmentType shipmentType = shipmentTypeRepository.GetSingleShipmentType(initializer.EntityPM.ShipmentTypeId);
+                if (shipmentType != null)
+                {
+                    type = shipmentType.Name;
+                }
+            }
+
+            if (initializer.EntityPM.ShipmentLevelCode != null)
+            {
+                ShipmentLevelRepository shipmentLevelRepository = new ShipmentLevelRepository(initializer.EntityPM.Tenant);
+                ShipmentLevel shipmentLevel = shipmentLevelRepository.GetSingleShipmentLevel(initializer.EntityPM.ShipmentLevelCode);
+                if (shipmentLevel != null)
+                {
+                    type = string.IsNullOrEmpty(type) ? shipmentLevel.Name : type + " " + shipmentLevel.Name;
+                }
+            }
+
+            shipmentType = type;
+        }
+
+        private void IterateStandaloneShipments(ShipmentServiceInitializer initializer, List<Shipment> allStandaloneShipments)
+        {
+            foreach (Shipment item in allStandaloneShipments)
+            {
+                this.MapParentShipmentFieldsToStandaloneShipment(initializer, item);
+            }
+        }
+
+        private void MapParentShipmentFieldsToStandaloneShipment(ShipmentServiceInitializer initializer, Shipment item)
+        {
+            item.ParentShipmentDirectionId = initializer.EntityPM.DirectionId;
+            item.ParentShipmentNumber = initializer.EntityPM.ShipmentNumber;
+            item.ParentShipmentType = shipmentType;
+            initializer.Repository.Update(item);
+        }
+
+        private void SubmitChanges(ShipmentServiceInitializer initializer)
+        {
+            initializer.Repository.SubmitChanges();
+        }
+
     }
 }

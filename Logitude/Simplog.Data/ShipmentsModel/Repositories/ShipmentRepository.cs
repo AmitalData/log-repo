@@ -939,5 +939,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where a.Tenant == tenant && a.House == house
                     select a).ToList();
         }
+
+
+        public List<Shipment> GetStandaloneShipments(string shipmentParentId, int tenant)
+        {
+            List<Shipment> standaloneShipments = (from s in context.Shipments
+                                       where s.Tenant == tenant
+                                       && s.ForwarderStandaloneShipmentId == shipmentParentId
+                                       select s).ToList();
+            return standaloneShipments;
+        }
     }
 }
