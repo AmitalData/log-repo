@@ -741,12 +741,12 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void fTPCommunicationWorkerRoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool testIt = true;
+            bool testIt = false;
             if (testIt)
             {
                 int Tenant = GetTenant();
                 var tst = new CustomsWorkerRole.Test.clsTester();
-                tst.FtpMamanTester(Tenant);
+                tst.FtpTester(Tenant);
             }
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
             d.ExecuteTask();
