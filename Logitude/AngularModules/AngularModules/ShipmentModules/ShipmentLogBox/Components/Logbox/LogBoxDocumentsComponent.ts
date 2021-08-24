@@ -237,20 +237,20 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     private SetMainCarriageArrivalDate() {
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
-            this.MainCarriageTALabel = 'ATA';
+            this.MainCarriageTALabel = 'ATA:';
         } else if (this.ShipmentPM.MainCarriageETA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageETA;
-            this.MainCarriageTALabel = 'ETA';
+            this.MainCarriageTALabel = 'ETA:';
         }
     }
 
     private SetMainCarriageDepartureDate() {
         if (this.ShipmentPM.MainCarriageATD != null) {
             this.MainCarriageTD = this.ShipmentPM.MainCarriageATD;
-            this.MainCarriageTDLabel = 'ATD';
+            this.MainCarriageTDLabel = 'ATD:';
         } else if (this.ShipmentPM.MainCarriageETD != null) {
             this.MainCarriageTD = this.ShipmentPM.MainCarriageETD;
-            this.MainCarriageTDLabel = 'ETD';
+            this.MainCarriageTDLabel = 'ETD:';
         }
     }
 
