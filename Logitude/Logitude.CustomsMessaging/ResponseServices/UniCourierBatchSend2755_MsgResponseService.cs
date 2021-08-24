@@ -137,8 +137,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
+                var allPendings = listDeclarationPaymentPendingHold.Where(r => r.DeclarationID == itemPoco.DeclarationId)?.ToList();
+                for (var item = 0; item <= allPendings?.Count(); item++)
+                {
+                    mess.AppendLine($" Pending[" + item + "].ErrorPlace = " + allPendings[item].ErrorPlace);
+                }
+                var holdUrHorses =listDeclarationPaymentPendingHold.FirstOrDefault(r => r.DeclarationID == itemPoco.DeclarationId);
+                if (holdUrHorses != null)
+                    mess.AppendLine($" Pending.ErrorPlace =  " + holdUrHorses.ErrorPlace);
+                else
+                    mess.AppendLine($" Pending = null ");
 
-                var holdUrHorses=listDeclarationPaymentPendingHold.FirstOrDefault(r => r.DeclarationID == itemPoco.DeclarationId);
                 if (holdUrHorses!=null && holdUrHorses.ErrorPlace)
                 {
                     mess.AppendLine($" קיים Pending " +
