@@ -51,6 +51,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ValueOfCustomsOrForwarder: string = "";
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
+    PartnerCardTypesOfShipmentTransportMode = {
+        'A': "AIRLINES",
+        'I': "TRUCKER",
+        'O': "SHIPPING LINES"
+    }
 
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData = null;
@@ -284,7 +289,17 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.ShipmentPM.FreelancerId,
             this.ShipmentPM.ConsolidatorId,
             this.ShipmentPM.ReleasingAgentId,
+            this.ShipmentPM.MainCarriageCarrierId,
+            this.ShipmentPM.WarehouseLegWarehouseId,
         ];
+
+        for (let routing  of this.ShipmentPM.ShipmentDeliveries) {
+            partnersIds.push(routing.CarrierId)
+        }
+
+        for (let routing of this.ShipmentPM.ShipmentPickUps) {
+            partnersIds.push(routing.CarrierId)
+        }
 
         return partnersIds.filter(p=>p);
     }
@@ -366,8 +381,25 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
             if (this.ShipmentPM.ReleasingAgentId)
                 this.PartnerCards.push(this.CreateReleasingAgentPartnerCard());
+
+            if (this.ShipmentPM.MainCarriageCarrierId)
+                this.PartnerCards.push(this.CreateMainCarriageCarrierPartnerCard());
+
+            if (this.ShipmentPM.WarehouseLegWarehouseId)
+                this.PartnerCards.push(this.CreateWarehouseLegPartnerCard());
+
+            for (let routing of this.ShipmentPM.ShipmentDeliveries) {
+                this.AddTruckerPartnerCardIfCarrierIdExist(routing);
+            }
+
+            for (let routing of this.ShipmentPM.ShipmentPickUps) {
+                this.AddTruckerPartnerCardIfCarrierIdExist(routing);
+            }
+
         }
     }
+   
+
     private GetIdFromURI()
     {
 
@@ -532,6 +564,45 @@ export class ShipmentDetailsComponent implements AfterViewInit
         releasingAgent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ReleasingAgentId);
 
         return releasingAgent;
+    }
+
+    private CreateMainCarriageCarrierPartnerCard() {
+        let mainCarriageCarrier = new PartnerCard();
+        mainCarriageCarrier.Name = this.ShipmentPM.MainCarriageCarrierName;
+        mainCarriageCarrier.Address = this.GetPartnerAddress(this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.Type = this.PartnerCardTypesOfShipmentTransportMode[this.ShipmentPM.TransportModeId];
+        return mainCarriageCarrier;
+    }
+
+
+    private CreateWarehouseLegPartnerCard() {
+        let warehouseLeg = new PartnerCard();
+        warehouseLeg.Type = "WAREHOUSE";
+        warehouseLeg.Name = this.ShipmentPM.WarehouseLegTerminalName;
+        warehouseLeg.Address = this.GetPartnerAddress(this.ShipmentPM.WarehouseLegWarehouseId);
+        warehouseLeg.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.WarehouseLegWarehouseId);
+        warehouseLeg.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.WarehouseLegWarehouseId);
+
+        return warehouseLeg;
+    }
+
+    private AddTruckerPartnerCardIfCarrierIdExist(routing: any) {
+        if (routing.CarrierId) {
+            this.PartnerCards.push(this.CreateTruckerPartnerCard(routing.CarrierId, routing.CarrierName));
+        }
+    }
+
+    private CreateTruckerPartnerCard(truckerId, carrierName) {
+        let trucker = new PartnerCard();
+        trucker.Type = "TRUCKER";
+        trucker.Name = carrierName;
+        trucker.Address = this.GetPartnerAddress(truckerId);
+        trucker.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(truckerId);
+        trucker.FaxNumber = this.GetPartnerFaxNumberFromAddress(truckerId);
+
+        return trucker;
     }
 
     private CreateConsolidatorPartnerCard()
