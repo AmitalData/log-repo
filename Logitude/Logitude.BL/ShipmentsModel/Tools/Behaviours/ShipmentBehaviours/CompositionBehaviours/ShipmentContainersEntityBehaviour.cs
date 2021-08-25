@@ -44,6 +44,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.HandelShipmentPackagesChangeSets();
                 this.HandelShipmentPickUpsChangeSets();
                 this.HandelShipmentDeliveriesChangeSets();
+                this.HandelDeletedShipmentPickUpsChangeSets();
+                this.HandelDeletedShipmentDeliveriesChangeSets();
+
+
             }
         }
 
@@ -111,7 +115,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
 
             this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated);
-            this.HandelDeletedShipmentPickUpsChangeSets();
         }
 
         private void HandelShipmentDeliveriesChangeSets()
@@ -573,10 +576,72 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandelDeletedShipmentPickUpsChangeSets()
         {
+            if (initializer.EntityPM.ShipmentPickUps == null)
+                return;
+
             List<ShipmentPickUpPM> shipmentPickUpsPM = initializer.EntityPM.ShipmentPickUps.FindAll(d => d.ChangeSetOp == ChangeSetOperation.Delete
             && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
-
+            if (shipmentPickUpsPM != null && shipmentPickUpsPM.Count > 0)
+            {
+                this.UpdateContainerFieldsFromDeletedPickUps(shipmentPickUpsPM);
+            }
         }
 
+        private void UpdateContainerFieldsFromDeletedPickUps(List<ShipmentPickUpPM> shipmentPickUpsPM)
+        {
+            foreach (ShipmentPickUpPM shipmentPickUpPM in shipmentPickUpsPM)
+            {
+                List<ContainerPM> containers = this.GetPickUpContainersToBeUpdatedByContainerEntityId(shipmentPickUpPM);
+                this.UpdateContainerFieldsFromDeletedPickUpsFields(containers);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDeletedPickUpsFields(List<ContainerPM> containers)
+        {
+            if (containers == null)
+                return;
+            
+            foreach(ContainerPM containerPM in containers)
+            {
+                containerPM.ShipmentFirstPickupFrom = null;
+                containerPM.ShipmentFirstPickupTo = null;
+                containerService.Update(containerPM);
+            }
+        }
+
+        private void HandelDeletedShipmentDeliveriesChangeSets()
+        {
+            if (initializer.EntityPM.ShipmentDeliveries == null)
+                return;
+
+            List<ShipmentDeliveryPM> shipmentDeliveriesPM = initializer.EntityPM.ShipmentDeliveries.FindAll(d => d.ChangeSetOp == ChangeSetOperation.Delete
+            && d.ShipmentPickUpDeliveryPackages != null && (d.ShipmentPickUpDeliveryPackages.Any(a => !string.IsNullOrEmpty(a.ContainerEntityId))));
+            if (shipmentDeliveriesPM != null && shipmentDeliveriesPM.Count > 0)
+            {
+                this.UpdateContainerFieldsFromDeletedDeliveries(shipmentDeliveriesPM);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDeletedDeliveries(List<ShipmentDeliveryPM> shipmentDeliveriesPM)
+        {
+            foreach (ShipmentDeliveryPM shipmentDeliveryPM in shipmentDeliveriesPM)
+            {
+                List<ContainerPM> containers = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(shipmentDeliveryPM);
+                this.UpdateContainerFieldsFromDeletedDeliveriesFields(containers);
+            }
+        }
+
+        private void UpdateContainerFieldsFromDeletedDeliveriesFields(List<ContainerPM> containers)
+        {
+            if (containers == null)
+                return;
+
+            foreach (ContainerPM containerPM in containers)
+            {
+                containerPM.ShipmentLastDeliveryFrom = null;
+                containerPM.ShipmentLastDeliveryTo = null;
+                containerService.Update(containerPM);
+            }
+        }
     }
 }
