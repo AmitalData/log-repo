@@ -13,6 +13,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {DocumentTypeTemplateViewModel} from '../DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
+import { DocumentTypePMService } from '../../../../Common/Services/StandardPMs/DocumentTypePMService';
 
 @Component({
     
@@ -37,11 +38,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     CurrentDocumentTypeTemplatePM: DocumentTypeTemplateViewModel;
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
-
+    private CurrentSession = SessionLocator.SelectedSession;
+    public documentTypePMService: DocumentTypePMService;
     constructor() {
         super();
-
-
+         
+        this.documentTypePMService = new DocumentTypePMService();;
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
@@ -90,6 +92,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         }
     }
 
+    private StartBusyIndicator() {
+        this.CurrentSession.StartBusyIndicator("Loading...");
+    }
+    private StopBusyIndicator() {
+        this.CurrentSession.StopBusyIndicator();
+    }
 
     FillDocumentTypeTemplate() {
 
@@ -178,7 +186,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     CheckInActiveclick(item: DocumentTypeTemplateViewModel) {
 
         if (item.InActive) item.InActive = false;
-        else item.InActive = true;
+        else item.InActive = true;   
         this.UpdateDocumentTypeTemplate(item.Entity);
 
 
@@ -310,20 +318,18 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     }
 
 
-    UpdateDocumentTypeTemplate(item: any) {
-
+    UpdateDocumentTypeTemplate(item: any) { 
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
-        this.DocumentType.IsAir = !this.DocumentType.IsAir;
+        this.DocumentType.IsAir = !this.DocumentType.IsAir; 
+        this.StartBusyIndicator();
         this.documentTypeTemplatePMService.update(item).subscribe((res:any) => {
-
+         
         });
-    }
-
-
-
- 
-
-
-
-
+        this.UpdateDocumentType();  
+    } 
+    UpdateDocumentType() {
+        this.documentTypePMService.update(this.DocumentType).subscribe((res: any) => {
+            this.StopBusyIndicator();
+        });
+    } 
 }
