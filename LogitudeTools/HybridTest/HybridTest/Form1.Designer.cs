@@ -209,6 +209,7 @@
             this.cmdServices.Items.AddRange(new object[] {
             "Warehouse",
             "Customer",
+            "FreightForwarder",
             "Vendor",
             "Agent",
             "Airline",

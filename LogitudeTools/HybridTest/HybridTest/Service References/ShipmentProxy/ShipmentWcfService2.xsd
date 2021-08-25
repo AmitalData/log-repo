@@ -262,6 +262,7 @@
       <xs:element minOccurs="0" name="DirectionName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocsSentToAgent" type="xs:boolean" />
       <xs:element minOccurs="0" name="DocumentFilingIds" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentInspection" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DocumentsApprovedByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DocumentsClosingDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DocumentsSearchFields" nillable="true" type="xs:string" />
@@ -396,6 +397,8 @@
       <xs:element minOccurs="0" name="FromPortCountryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FromPortId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FromPortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GatepassDocumentsReady" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="GoodsClassification" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="GrossWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="GrossWeightEdited" type="xs:boolean" />
       <xs:element minOccurs="0" name="GrossWeightInKG" nillable="true" type="xs:double" />
@@ -470,6 +473,14 @@
       <xs:element minOccurs="0" name="IncotermCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncotermId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncotermName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticFromCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticFromCountryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticFromTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticFromZipCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticToCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticToCountryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticToTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InlandDomesticToZipCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InterlineId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAccountingClosed" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAccrualsApproved" type="xs:boolean" />
@@ -594,6 +605,7 @@
       <xs:element minOccurs="0" name="MainCarriageFinalDestinationPortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageFromAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageFromPartnerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainCarriageFromPortAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageFromPortCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageFromPortCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageFromPortCountryName" nillable="true" type="xs:string" />
@@ -608,6 +620,7 @@
       <xs:element minOccurs="0" name="MainCarriageSTD_Original" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="MainCarriageToAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageToPartnerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainCarriageToPortAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageToPortCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageToPortCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageToPortCountryName" nillable="true" type="xs:string" />
@@ -786,6 +799,9 @@
       <xs:element minOccurs="0" name="PackagesQuantity" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="PackagesTypesNames" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PackagesTypesPrintAs" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentShipmentDirectionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentShipmentNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentShipmentType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PaymentDateTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="PaymentRequestXML" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PickUpAddressId" nillable="true" type="xs:string" />
@@ -1936,6 +1952,7 @@
       <xs:element minOccurs="0" name="CorrectionNote" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DueTypeCode" nillable="true" type="xs:string" />
@@ -1983,6 +2000,7 @@
       <xs:element minOccurs="0" name="UOMPercentage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UnitPrice" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="UpdateByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ValueDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="VatAmountLocal" nillable="true" type="xs:double" />
@@ -2128,6 +2146,7 @@
       <xs:element minOccurs="0" name="ChildShipmentReceivablesChangeSet" nillable="true" type="tns:ArrayOfShipmentReceivablePM" />
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DueTypeCode" nillable="true" type="xs:string" />
@@ -2164,6 +2183,7 @@
       <xs:element minOccurs="0" name="UOMPercentage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UnitPrice" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="UpdateByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="VatAmountLocal" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="VatAmountProfit" nillable="true" type="xs:double" />
