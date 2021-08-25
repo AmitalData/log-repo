@@ -661,8 +661,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "Customs.DeclarationReferantData") {
             this.IsReferantObjectTable = true;
         }
+        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
 
-        if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = "ltr";
             this.RTL = false;
             this.ShowViews = false;

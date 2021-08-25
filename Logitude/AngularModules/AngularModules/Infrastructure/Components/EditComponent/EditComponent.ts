@@ -153,7 +153,7 @@ export class EditComponent implements OnDestroy {
         this.EntityFields = args['EntityFields'];
 
 
-        if (this.ObjectTableName == "Customs.ExportStorge") {
+        if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP"  ) {
             this.LayoutDirection = 'ltr'
         }
         else {

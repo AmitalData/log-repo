@@ -22,7 +22,7 @@ export class QuoteOPHelperComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
 
-        this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Quote", "Quote.Followups");
+        this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("QuoteOP", "Quote.Followups");
 
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -71,7 +71,7 @@ export class QuoteOPHelperComponent implements OnDestroy {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
-            ServiceLocator.SendTotangoUserActivity("Quote", "Notes update");
+            ServiceLocator.SendTotangoUserActivity("QuoteOP", "Notes update");
         }
     }
 

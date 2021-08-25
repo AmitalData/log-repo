@@ -52,6 +52,7 @@ namespace Logitude.BL.ExternalService
 
         public void RunAutomation()
         {
+            
             string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
 
             var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity });

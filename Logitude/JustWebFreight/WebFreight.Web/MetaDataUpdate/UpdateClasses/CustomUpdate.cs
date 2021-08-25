@@ -17809,6 +17809,95 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }
             #endregion
 
+            #region QuoteOP Counters
+
+            var objectTablesQuoteOP = ObjectContext.ObjectTables.Where(o => o.Name == "QuoteOP").FirstOrDefault();
+            Counter counterQUOTOP = CounterRepository.GetCounterByCode("QTOP", tenant);
+            if (objectTablesQuoteOP !=null && counterQUOTOP == null)
+            {
+                Counter quoteCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = objectTablesQuoteOP.Id,//QuoteObject.Id,
+                    Code = "QTOP",
+                    Tenant = 0,
+                    Name = "Quote(OP)",
+
+                };
+
+                CounterRepository.Add(quoteCounter);
+
+                CounterDefinition Quote_Export_Air_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "E",
+                    Parameter2 = "A",
+                };
+                CounterDefinition Quote_Export_Ocean_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "E",
+                    Parameter2 = "O",
+                };
+
+                CounterDefinition Quote_Export_Inland_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "E",
+                    Parameter2 = "I",
+                };
+
+                CounterDefinition Quote_Import_Air_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "I",
+                    Parameter2 = "A",
+                };
+
+                CounterDefinition Quote_Import_Ocean_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "I",
+                    Parameter2 = "O",
+                };
+
+                CounterDefinition Quote_Import_Inland_Counter = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = quoteCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "I",
+                    Parameter2 = "I",
+                };
+
+               
+                CounterDefinitionRepository.Add(Quote_Export_Air_Counter);
+                CounterDefinitionRepository.Add(Quote_Export_Ocean_Counter);
+                CounterDefinitionRepository.Add(Quote_Export_Inland_Counter);
+                CounterDefinitionRepository.Add(Quote_Import_Air_Counter);
+                CounterDefinitionRepository.Add(Quote_Import_Ocean_Counter);
+                CounterDefinitionRepository.Add(Quote_Import_Inland_Counter);
+
+               
+            }
+            #endregion
+
             this.ObjectContext.SaveChanges();
         }
         #endregion

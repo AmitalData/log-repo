@@ -684,7 +684,7 @@ export class QuoteUtilities {
     public static IsPriceCheckVisible(entityPM: QuoteOPPM) {
         var myResult = false;
         var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
-        if (featureToggle  != null && FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+        if (featureToggle  != null && FeatureLocator.HasFeaturePermession("QuoteOP", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
             myResult = true;
         }
         return myResult;

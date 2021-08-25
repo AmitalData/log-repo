@@ -682,7 +682,7 @@
     FieldsDataType="&quot;Raw&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -26100,9 +26100,9 @@
     ListLocalDefaultText="&quot;SpecialServiceId&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="SpecialServicesType"
+    ForeignEntity="OPSpecialServicesType"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="SpecialServicesType"
+    NavigationPropertyName="OPSpecialServicesType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -30831,7 +30831,6 @@
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
-  
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

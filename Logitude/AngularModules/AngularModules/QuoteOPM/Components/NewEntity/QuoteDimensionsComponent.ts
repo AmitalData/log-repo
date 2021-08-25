@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 export class QuoteDimensionsComponent {
     public EntityPM: QuoteOPPM;
     public DataContext: QuoteDimensionsComponent = this;
-    public ObjectTableName: string = "Quote";
+    public ObjectTableName: string = "QuoteOP";
     public ItemsSource: DimensionsPackageItem[] = [];
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;

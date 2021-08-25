@@ -39,7 +39,7 @@ namespace Amital.QuoteOPM.Data.EntityMapping
 
             this.Property(t => t.FreelancerContactId).HasColumnName("FreelancerContactId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LastModified).HasColumnName("LastModified").IsRequired();
+            this.Property(t => t.LastModified).HasColumnName("LastModified");
 
             this.Property(t => t.Field1).HasColumnName("Field1").HasMaxLength(250).IsUnicode(true);
 

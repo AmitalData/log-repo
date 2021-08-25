@@ -17,7 +17,7 @@ namespace Amital.QuoteOPM.BL.Tools.Behaviours
         public void Map<T1, T2>(T1 entityPM, T2 oldEntityPM)
         {
              
-            QuotePM quoteOldEntityPM = oldEntityPM as QuotePM; 
+            var quoteOldEntityPM = oldEntityPM as Def.EntityPMs.QuoteOPPM; 
 
             PortRepository quoteRepository = new PortRepository(quoteOldEntityPM.Tenant);
             Port fromPort = quoteRepository.GetSinglePort(quoteOldEntityPM.FromPortId, quoteOldEntityPM.Tenant);

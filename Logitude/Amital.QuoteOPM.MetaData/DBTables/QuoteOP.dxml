@@ -64,7 +64,7 @@
     Name="LastModified"
     Type="timestamp">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Field1"
@@ -1541,7 +1541,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="SpecialServiceId"
-    ReferencedTable="SpecialServicesTypes"
+    ReferencedTable="OPSpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
