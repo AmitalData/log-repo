@@ -13,7 +13,7 @@ import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 export class QuoteEventNotesComponent extends BaseComponent {
     public EntityPM: QuoteOPPM = null;
     public DataContext: QuoteEventNotesComponent = this;
-    public ObjectTableName: string = "Quote";
+    public ObjectTableName: string = "QuoteOP";
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;

@@ -324,10 +324,10 @@ export class MainMenuComponent {
                     }
                     case "General.MH.QuotesOP": {
                         this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => { });
-                        ServiceLocator.SendTotangoUserActivity("Quote", "List View");
+                        ServiceLocator.SendTotangoUserActivity("QuoteOP", "List View");
                         myComponentPath = "./QuoteOPM/Components/Workspaces/QuotesComponent";
 
-                        if (FeatureLocator.HasFeaturePermession("Quote", "Quote.Followups")) {
+                        if (FeatureLocator.HasFeaturePermession("QuoteOP", "Quote.Followups")) {
                             this.FollowUpsTableId = this.SelectedMenu.ObjectTableId;
                             this.ShowFollowUps = true;
                         }

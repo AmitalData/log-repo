@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DbScripts\pre\202108240104_AddEntityChange.sxml" />
     <None Include="DBTables\BorderOPType.dxml" />
     <None Include="DBTables\MarkUpOPType.dxml" />
     <None Include="DBTables\OPSpecialServicesType.dxml" />

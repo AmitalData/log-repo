@@ -36,6 +36,7 @@ export class QuotesComponent extends BaseComponent {
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
+
         this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => {
                 this.IsResourcesReady = true;

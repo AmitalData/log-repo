@@ -3,6 +3,7 @@ using Amital.QuoteOPM.BL.Tools.Behaviours;
 using Amital.QuoteOPM.BL.Tools.EntityService;
 using Amital.QuoteOPM.BL.Tools.Initializers;
 using Amital.QuoteOPM.BL.Tools.Validating;
+using Amital.QuoteOPM.Data;
 using Amital.QuoteOPM.Data.EntityPOCOs;
 using Amital.QuoteOPM.Data.Repsitories;
 using Amital.QuoteOPM.Def.EntityPMs;
@@ -75,7 +76,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             OnCreateInitializeStage(entityPM);
             if (!entityPM.IsHybrid)
             {
-                entityPM.QuoteNumber = TableCounter.GetNumber(entityPM.Tenant, "QUOTOP", entityPM.DirectionId, entityPM.TransportModeId);
+                entityPM.QuoteNumber = TableCounter.GetNumber(entityPM.Tenant, "QTOP", entityPM.DirectionId, entityPM.TransportModeId);
             }
             if (entityPM.IsCreatedFromTicket)
             {
@@ -103,7 +104,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             {
                 return;
             }
-            _Initializer =  new QuoteOPServiceInitializer(this.currentContext, entityPM.Tenant, resolveLoggingUserEmail);
+            _Initializer =  new QuoteOPServiceInitializer(this.MainContext as IQuoteOPMContext, entityPM.Tenant, resolveLoggingUserEmail);
 
             _Initializer.Initialize();
             this.loggedTenant = _Initializer.LoggedTenant; //TenantRepository.GetSingleTenant(tenant, false);
@@ -155,7 +156,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
         }
         private void OnCreateGetQuoteSettings(QuoteOPPM entityPM)
         {
-            var iQuoteSettingRepository = new QuoteOPSettingRepository(this.currentContext);
+            var iQuoteSettingRepository = new QuoteOPSettingRepository(this.MainContext as IQuoteOPMContext);
             var iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(entityPM.Tenant);
 
             if (iQuoteSetting != null)
@@ -171,9 +172,12 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 
         protected override void UpdateComposition(QuoteOPPM entityPM)
         {
-            
-            var quoteOPComputedFieldUpdateService = new QuoteOPComputedFieldUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            quoteOPComputedFieldUpdateService.Update(_Initializer.QuoteComputedFieldPM, false);
+            if (_Initializer.QuoteComputedFieldPM!=null)
+            {
+                var quoteOPComputedFieldUpdateService = new QuoteOPComputedFieldUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                quoteOPComputedFieldUpdateService.Update(_Initializer.QuoteComputedFieldPM, false);
+
+            }
 
             var quoteOPPackageUpdateService = new QuoteOPPackageUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             quoteOPPackageUpdateService.UpdateMulti(entityPM.QuotePackages, entityPM.DeletedQuotePackages, entityPM, false);
@@ -248,6 +252,11 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 #warning            ????                 followUpRepository.SubmitChanges();
 
                 //map poco 2 pm this.GetForeignFields(entityPM, entityPoco);
+#warning LastModified is IsRowVersion() is sqlserver todo change in oracle !!
+                int lastMod = 0;
+                int.TryParse(entityPM.LastModified, out lastMod);
+                lastMod++;
+                //entityPM.LastModified = lastMod.ToString();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "QuoteOP");
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "U", _Initializer.LoggedContactId);
@@ -275,7 +284,32 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                         }
                     }
                 }
+
+            if (entityPM.IsCancelled)
+            {
+                List<FollowUp> allFollowupLists = this.followUpRepository.GetFollowUpsByQuoteId(entityPM.Id, entityPM.Tenant);
+                foreach (FollowUp item in allFollowupLists)
+                {
+                    followUpRepository.Remove(item);
+                }
+
+                followUpRepository.SubmitChanges();
+
+                entityPM.FollowUps = new List<QuoteFollowUpPM>();
+            }
+
+
+
+            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant); 
+
+
+            quoteFollowUpUpdateService.RefreshFollowUps(); 
 #endif
+            }
+            if (string.IsNullOrWhiteSpace(entityPM.StageId))
+            {
+#warning entityPM.StageId IS MUST NO BL ??
+                entityPM.StageId = "-1";
             }
             base.OnUpdating(entityPM, entityPoco);
         }

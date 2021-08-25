@@ -41,7 +41,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 export class NewQuoteComponent extends BaseComponent implements OnInit, AfterViewInit {
     public EntityPM: QuoteOPPM;
     public DataContext: NewQuoteComponent = this;
-    public ObjectTableName: string = "Quote";
+    public ObjectTableName: string = "QuoteOP";
     public LabelColumnWidth: number = 120;
     public ControlColumnWidth: number = 220;
     public CardDependencyProperty1: string = "CS,PO";
@@ -479,7 +479,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
     public IsQuoteClosedAutomaticallyEnabled: boolean;
     private InitalizeFeatureOfClosedAutomatically() {
-        this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("Quote", "QuoteClosedAutomatically");
+        this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteClosedAutomatically");
         this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
         this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
         this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
@@ -2780,7 +2780,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: "Quote", BackButtonLabel: "Quote: " + this.sourceEntityPM.QuoteNumber });
+                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: "QuoteOP", BackButtonLabel: "Quote: " + this.sourceEntityPM.QuoteNumber });
 
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {

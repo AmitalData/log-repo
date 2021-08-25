@@ -27,6 +27,10 @@ namespace Amital.QuoteOPM.BL.Tools.Behaviours
             {
                 this.quoteEntityPM = this.initializer.EntityPM;
             }
+            if (this.quoteComputedField==null)
+            {
+                return;
+            }
             this.HandleBehaviour();
         }
         private void HandleBehaviour()

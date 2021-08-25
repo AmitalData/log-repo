@@ -36,7 +36,8 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.DirectionId);
             
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ProductCode);
-            
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ConcurrencyGUID);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
@@ -46,12 +47,14 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 entityPoco.OpenDate = entityPM.OpenDate;
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPoco.ProductCode = entityPM.ProductCode;
+                entityPoco.Id = entityPM.Id;
             }
 
             entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
 
+            entityPoco.ConcurrencyGUID = Guid.NewGuid().ToString();
 
             BuildSearchField(entityPM, entityPoco);
         }

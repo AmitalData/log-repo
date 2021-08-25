@@ -1,6 +1,6 @@
 
 <div style="overflow-x:auto;height:100%;width:100%">
-    <table style="min-width:1075px" *ngIf="IsResourcesReady">
+    <table dir="ltr" style="min-width:1075px" *ngIf="IsResourcesReady">
         <tr style="height: 1px;">
             <td>
                 <table>
@@ -16,7 +16,7 @@
                         <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'General.O.Search' | TextCodeTranslationPipe}}:</td>
 
                         <td style="width: 300px;">
-                            <QuickSearchTextBox [ObjectTableName]="'Quote'" [DropDownWidth]="600" [ItemHeight]="35" (DataLoaded)="QuickSearchItems = $event">
+                            <QuickSearchTextBox [ObjectTableName]="'QuoteOP'" [DropDownWidth]="600" [ItemHeight]="35" (DataLoaded)="QuickSearchItems = $event">
                                 <ul>
                                     <li class="LogitudeQuickSearchItem" style="height:35px;" *ngFor="let item of QuickSearchItems" (mousedown)="EditQuote(item)">
                                         <table>
@@ -165,38 +165,38 @@
                         <td style="width:250px;">
                             <div class="MediaFill">
                                 <SectionBox [Scrolling]="true">
-                                    <SectionHead>{{'Quote.S.Workspace.QuoteQueries' | TextCodeTranslationPipe}}</SectionHead>
+                                    <SectionHead>{{'QuoteOP.S.Workspace.QuoteQueries' | TextCodeTranslationPipe}}</SectionHead>
                                     <SectionBody>
                                         <div class="QueriesSection">
-                                            <div>{{'Quote.S.Workspace.QuoteQueries' | TextCodeTranslationPipe}}</div>
+                                            <div>{{'QuoteOP.S.Workspace.QuoteQueries' | TextCodeTranslationPipe}}</div>
                                             <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
                                                 <button class="Button" (click)="RunQuoteWizard()" id="{{'NewQuote' | IdGeneratorPipe}}" >{{'General.B.New' | TextCodeTranslationPipe}}</button>
                                             </div>
                                             <div>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('CRT')" id="{{'CreatedQuote' | IdGeneratorPipe}}" >{{'Quote.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('DRF')">{{'Quote.Q.DraftQuotes' | TextCodeTranslationPipe}} ({{Quotes_Draft}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('SNT')">{{'Quote.Q.SentQuotes' | TextCodeTranslationPipe}} ({{Quotes_Sent}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('ACW')">{{'Quote.Q.AcceptedWithoutShipmentsQuotes' | TextCodeTranslationPipe}} ({{Quotes_AcceptedNOShip}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('ACP')">{{'Quote.Q.AcceptedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Accepted}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('CNC')">{{'Quote.Q.CancelledQuotes' | TextCodeTranslationPipe}} ({{Quotes_Cancelled}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('MY')">{{'Quote.Q.MyQuotes' | TextCodeTranslationPipe}} ({{Quotes_My}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('CRT')" id="{{'CreatedQuote' | IdGeneratorPipe}}" >{{'QuoteOP.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('DRF')">{{'QuoteOP.Q.DraftQuotes' | TextCodeTranslationPipe}} ({{Quotes_Draft}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('SNT')">{{'QuoteOP.Q.SentQuotes' | TextCodeTranslationPipe}} ({{Quotes_Sent}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('ACW')">{{'QuoteOP.Q.AcceptedWithoutShipmentsQuotes' | TextCodeTranslationPipe}} ({{Quotes_AcceptedNOShip}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('ACP')">{{'QuoteOP.Q.AcceptedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Accepted}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('CNC')">{{'QuoteOP.Q.CancelledQuotes' | TextCodeTranslationPipe}} ({{Quotes_Cancelled}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('MY')">{{'QuoteOP.Q.MyQuotes' | TextCodeTranslationPipe}} ({{Quotes_My}})</p>
                                             </div>
                                         </div>
 
                                         <div class="QueriesSection">
-                                            <div>{{'Quote.S.Workspace.Others' | TextCodeTranslationPipe}}</div>
+                                            <div>{{'QuoteOP.S.Workspace.Others' | TextCodeTranslationPipe}}</div>
                                             <div>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('EXP')">{{'Quote.Q.ExpiredQuotes' | TextCodeTranslationPipe}} ({{Quotes_Expired}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('AllF')">{{'Quote.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{Quotes_AllFollowups}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('MYF')">{{'Quote.Q.MyFollowUps' | TextCodeTranslationPipe}} ({{Quotes_MyFollowups}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('ALL')">{{'Quote.Q.AllQuotes' | TextCodeTranslationPipe}} ({{Quotes_All}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('EXP')">{{'QuoteOP.Q.ExpiredQuotes' | TextCodeTranslationPipe}} ({{Quotes_Expired}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('AllF')">{{'QuoteOP.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{Quotes_AllFollowups}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('MYF')">{{'QuoteOP.Q.MyFollowUps' | TextCodeTranslationPipe}} ({{Quotes_MyFollowups}})</p>
+                                                <p class="QueryLink" (click)="ViewQuoteQuery('ALL')">{{'QuoteOP.Q.AllQuotes' | TextCodeTranslationPipe}} ({{Quotes_All}})</p>
                                             </div>
                                         </div>
 
                                         <div class="QueriesSection">
-                                            <div>{{'Quote.S.Workspace.MyViews' | TextCodeTranslationPipe}}</div>
+                                            <div>{{'QuoteOP.S.Workspace.MyViews' | TextCodeTranslationPipe}}</div>
                                             <div style="height:80px;">
-                                                <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Quote'" [BackButtonTitle]="'Quotes'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                                <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'QuoteOP'" [BackButtonTitle]="'Quotes'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
                                             </div>
                                         </div>
                                     </SectionBody>
@@ -216,7 +216,7 @@
                                         <td>
                                             <div class="MediaFill">
                                                 <SectionBox [Scrolling]="true">
-                                                    <SectionHead>{{RecentQuotesList.length}} {{'Quote.S.Workspace.RecentQuotes' | TextCodeTranslationPipe}}</SectionHead>
+                                                    <SectionHead>{{RecentQuotesList.length}} {{'QuoteOP.S.Workspace.RecentQuotes' | TextCodeTranslationPipe}}</SectionHead>
                                                     <SectionBody>
                                                         <ul>
                                                             <li class="RecentEntityItem" *ngFor="let item of RecentQuotesList" (click)="EditQuote(item)">
@@ -382,7 +382,7 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="color: #45494A; font-size: 14px;">
-                                                                                    {{'Quote.S.Workspace.TopQuotes' | TextCodeTranslationPipe}}
+                                                                                    {{'QuoteOP.S.Workspace.TopQuotes' | TextCodeTranslationPipe}}
                                                                                 </td>
 
                                                                                 <td>
@@ -509,7 +509,7 @@
                                                         <td>
                                                             <div class="MediaFill">
                                                                 <SectionBox>
-                                                                    <SectionHead>{{'Quote.S.Workspace.SalesFunnel' | TextCodeTranslationPipe}}</SectionHead>
+                                                                    <SectionHead>{{'QuoteOP.S.Workspace.SalesFunnel' | TextCodeTranslationPipe}}</SectionHead>
                                                                     <SectionBody>
                                                                         <div [attr.id]="SalesFunnelId" style="width:100%;height:100%" class="CellContent" (click)="FunnelClick()"></div>
                                                                     </SectionBody>

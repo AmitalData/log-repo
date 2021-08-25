@@ -10,7 +10,7 @@
         </td>
 
         <td style="padding-right: 5px;">
-            <HelperNotes [Title]="'Quote.F.Notes' | TextCodeTranslationPipe" [EntityTitle]="'Quote' | TextCodeTranslationPipe" [Text]="Notes" (TextChanged)="Notes = $event" [QuotePM]="EntityPM"></HelperNotes>
+            <HelperNotes [Title]="'QuoteOP.F.Notes' | TextCodeTranslationPipe" [EntityTitle]="'Quote' | TextCodeTranslationPipe" [Text]="Notes" (TextChanged)="Notes = $event" [QuotePM]="EntityPM"></HelperNotes>
         </td>
 
         <td *ngIf="IsFollowupsVisible">

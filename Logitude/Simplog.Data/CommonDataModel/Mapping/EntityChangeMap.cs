@@ -166,7 +166,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
 
             this.Property(t => t.CreateTaskAutomationFailedXml).HasColumnName("CreateTaskAutomationFailedXml");
-            this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXml");
+            
 
 
             //#if ORACLE_DB
@@ -174,11 +174,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSucceedXml");
+
+#warning ALTER TABLE ENTITYCHANGES ADD (CreateTaskAutomationSucceedXml NCLOB );
+                this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSucceedXml");
             }
             //#elseelse
             else
             {
                 this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXml");
+                this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXml");
             }
             //#endif
 
