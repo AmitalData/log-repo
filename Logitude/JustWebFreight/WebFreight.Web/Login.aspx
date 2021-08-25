@@ -1397,6 +1397,10 @@
             var linkArray = link.split('login');
             url = linkArray[0];
 
+            if (url.indexOf('/?tenant=') > -1) {
+                url = url.split('/?tenant=')[0];
+            }
+
             if (url.endsWith('/')) {
                 url += "SharedLogisticPage.aspx";
             }
@@ -1853,6 +1857,7 @@
                     var Key = hashSplit[1];
                     if (hashSplit[1]) {
                         BrandingTenant = hashSplit[1].split('=')[1];
+                        BrandingTenant = BrandingTenant.split('/')[0];
                     }
                 }
 
