@@ -1108,10 +1108,10 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         //}
     }
     SaveEntityChanges(args: any): any {
-        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             this.declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     //this.ValidationErrorsList = myResponse.ErrorsArray;

@@ -110,7 +110,7 @@ export class RecallClientsForCutoms
         this.filterImageParameter.UploadMode = "Block";
         this.filterImageParameter.Tenant = SessionLocator.Tenant;
 
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(this.filterImageParameter.Key, 5, true);
 

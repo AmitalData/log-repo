@@ -2256,7 +2256,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     //}
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
@@ -2456,7 +2456,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //    this.ValidationErrorsList = [];
         //    this.ValidationErrorsList.push(err);
         //});
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 

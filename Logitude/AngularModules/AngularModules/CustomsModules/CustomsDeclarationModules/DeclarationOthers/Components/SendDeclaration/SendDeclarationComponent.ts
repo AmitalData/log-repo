@@ -67,7 +67,7 @@ export class SendDeclarationComponent implements OnDestroy {
     _WorkWithService: boolean = true;
      //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
-    
+    logWindow = new LogitudeWindow();    
     constructor() {
 
     }
@@ -121,15 +121,15 @@ export class SendDeclarationComponent implements OnDestroy {
             
             let windowArgs = { "SincroScreen": "SincroSendDeclaration"};
             
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 600;
-            logWindow.Title = "תרחשי הצהרה";
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
+            //var logWindow = new LogitudeWindow();
+            this.logWindow.Width = 600;
+            this.logWindow.Height = 600;
+            this.logWindow.Title = "תרחשי הצהרה";
+            this.logWindow.ShowCloseButton = false;
+            this.logWindow.WindowArgs = windowArgs;
             
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(res => {
+            this.logWindow.ComponentLoaded.subscribe(comp => {
+                this.logWindow.WindowClosed.subscribe(res => {
                     if (!AppTool.IsNullOrEmpty(res) && res=="Ok") {
                          this._SendDeclarationService._TestCase = new TestCase();
                         this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
@@ -140,7 +140,7 @@ export class SendDeclarationComponent implements OnDestroy {
                 });
             });
 
-            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            this.logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
             ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
 
             return;
@@ -191,6 +191,7 @@ export class SendDeclarationService implements OnDestroy {
     LoadCompletedEvent: any;
     //------------------------------------------------------//
     private CurrentSession = SessionLocator.SelectedSession;
+    logWindow = new LogitudeWindow();
     _TestCase: TestCase;
     constructor() {
 
@@ -493,15 +494,15 @@ export class SendDeclarationService implements OnDestroy {
             windowArgs.ComponentHeight = '328px';
             var windowTitle = TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck");
 
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 400;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.TaxationWindowClosed($event));
+            //var logWindow = new LogitudeWindow();
+            this.logWindow.Width = 600;
+            this.logWindow.Height = 400;
+            this.logWindow.Title = windowTitle;
+            this.logWindow.ShowCloseButton = false;
+            this.logWindow.WindowArgs = windowArgs;
+            this.logWindow.WindowClosed.subscribe(($event: any) => this.TaxationWindowClosed($event));
 
-            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+            this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
             this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             // this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck"));
         }
@@ -563,15 +564,15 @@ export class SendDeclarationService implements OnDestroy {
                 windowArgs.ComponentHeight = '328px';
                 var windowTitle = TextCodeTranslator.Translate("Customs.General.O.PreSendValidations");
 
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 600;
-                logWindow.Height = 400;
-                logWindow.Title = windowTitle;
-                logWindow.ShowCloseButton = false;
-                logWindow.WindowArgs = windowArgs;
-                logWindow.WindowClosed.subscribe(($event: any) => this.CheckCertificateStatusClosed($event));
+                //var logWindow = new LogitudeWindow();
+                this.logWindow.Width = 600;
+                this.logWindow.Height = 400;
+                this.logWindow.Title = windowTitle;
+                this.logWindow.ShowCloseButton = false;
+                this.logWindow.WindowArgs = windowArgs;
+                this.logWindow.WindowClosed.subscribe(($event: any) => this.CheckCertificateStatusClosed($event));
 
-                logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                 this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             }
             else {
@@ -610,15 +611,15 @@ export class SendDeclarationService implements OnDestroy {
                         windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
                         var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
 
-                        var logWindow = new LogitudeWindow();
-                        logWindow.Width = 600;
-                        logWindow.Height = 400;
-                        logWindow.Title = windowTitle;
-                        logWindow.ShowCloseButton = false;
-                        logWindow.WindowArgs = windowArgs;
-                        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+                        //var logWindow = new LogitudeWindow();
+                        this.logWindow.Width = 600;
+                        this.logWindow.Height = 400;
+                        this.logWindow.Title = windowTitle;
+                        this.logWindow.ShowCloseButton = false;
+                        this.logWindow.WindowArgs = windowArgs;
+                        this.logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-                        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                        this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                         this.StopMyBusyIndicator();
 
                         return;
@@ -658,15 +659,15 @@ export class SendDeclarationService implements OnDestroy {
                             windowArgs.ComponentHeight = '328px';
                             var windowTitle = TextCodeTranslator.Translate("Customs.General.O.DocumetsUploadedCheck");
 
-                            var logWindow = new LogitudeWindow();
-                            logWindow.Width = 600;
-                            logWindow.Height = 400;
-                            logWindow.Title = windowTitle;
-                            logWindow.ShowCloseButton = false;
-                            logWindow.WindowArgs = windowArgs;
-                            logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
+                            //var logWindow = new LogitudeWindow();
+                            this.logWindow.Width = 600;
+                            this.logWindow.Height = 400;
+                            this.logWindow.Title = windowTitle;
+                            this.logWindow.ShowCloseButton = false;
+                            this.logWindow.WindowArgs = windowArgs;
+                            this.logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
 
-                            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                            this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                             this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                         }
                     }
@@ -707,15 +708,15 @@ export class SendDeclarationService implements OnDestroy {
                     windowArgs.ComponentHeight = '328px';
                     var windowTitle = TextCodeTranslator.Translate("Customs.General.O.DocumetsMandatoryTicket");
 
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 600;
-                    logWindow.Height = 400;
-                    logWindow.Title = windowTitle;
-                    logWindow.ShowCloseButton = false;
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsTicketUploadedCheckClosed($event));
+                    //var logWindow = new LogitudeWindow();
+                    this.logWindow.Width = 600;
+                    this.logWindow.Height = 400;
+                    this.logWindow.Title = windowTitle;
+                    this.logWindow.ShowCloseButton = false;
+                    this.logWindow.WindowArgs = windowArgs;
+                    this.logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsTicketUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                    this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -747,15 +748,15 @@ export class SendDeclarationService implements OnDestroy {
                     windowArgs.ComponentHeight = '328px';
                     var windowTitle = TextCodeTranslator.Translate("Customs.General.O.FreightIncotermMandatory");
 
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 600;
-                    logWindow.Height = 400;
-                    logWindow.Title = windowTitle;
-                    logWindow.ShowCloseButton = false;
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.WindowClosed.subscribe(($event: any) => this.FreightByIncotermUploadedCheckClosed($event));
+                    //var logWindow = new LogitudeWindow();
+                    this.logWindow.Width = 600;
+                    this.logWindow.Height = 400;
+                    this.logWindow.Title = windowTitle;
+                    this.logWindow.ShowCloseButton = false;
+                    this.logWindow.WindowArgs = windowArgs;
+                    this.logWindow.WindowClosed.subscribe(($event: any) => this.FreightByIncotermUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                    this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -1032,15 +1033,15 @@ export class SendDeclarationService implements OnDestroy {
         windowArgs.ComponentHeight = '328px'; // بدك تقيم 72 
         var windowTitle = title;
 
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+        //var logWindow = new LogitudeWindow();
+        this.logWindow.Width = 600;
+        this.logWindow.Height = 400;
+        this.logWindow.Title = windowTitle;
+        this.logWindow.ShowCloseButton = false;
+        this.logWindow.WindowArgs = windowArgs;
+        this.logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        this.logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     StopMyBusyIndicator() {
         if (this.CourierWorksheetmode) {

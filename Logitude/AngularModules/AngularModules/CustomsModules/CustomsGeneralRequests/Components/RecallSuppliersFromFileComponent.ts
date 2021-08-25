@@ -204,7 +204,7 @@ export class RecallSuppliersFromFileComponent
     SendRecallMessageToServer(filter: ImageParameter) {
         this.ProgressBarPercentText = "0%";
         
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
         this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
