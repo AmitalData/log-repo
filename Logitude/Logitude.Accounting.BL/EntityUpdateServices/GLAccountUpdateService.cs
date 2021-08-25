@@ -1715,7 +1715,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     }
                 }
-               
+
+                if (entityPM.IsMultiCurrency.GetValueOrDefault() && !EntityPOCO.IsMultiCurrency.GetValueOrDefault())
+                {
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "GLAccount",
+                        IsAddedManually = false,
+                        EventTypeCode = "GCC",
+                        Notes = entityPM.Change2MultiCurrencyNotes //"Changed from XXX to Multi Currency -- updated X transaction , deleted X reconciliations"
+
+                    });
+                }
+
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
@@ -2363,6 +2379,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CheckReconcileMethodChange(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            bool isTransactionFixed = !string.IsNullOrWhiteSpace(entityPM.Change2MultiCurrencyNotes);
+            if (isTransactionFixed)
+            {
+                return;
+            }
             if (
                 (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
                 && (entityPOCO.ReconcileMethodCode != entityPM.ReconcileMethodCode)

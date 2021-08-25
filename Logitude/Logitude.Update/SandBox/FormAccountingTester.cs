@@ -118,7 +118,9 @@ namespace Logitude.Update.SandBox
             ///RevaluationBatch revaluationBatch = new RevaluationBatch();
             //revaluationBatch.RunAllOpenRevaluations(28);
             //return;
-
+            var changeGLAccount2IsMultiCurrencyService = new ChangeGLAccount2IsMultiCurrencyService();
+            changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency("1-18459", 1255);
+            return;
             YearTest();
             return;
             var myReverseEngineerCashBook = new ReverseEngineerCashBook(69);
