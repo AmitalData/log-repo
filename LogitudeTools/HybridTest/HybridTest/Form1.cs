@@ -3282,6 +3282,9 @@ namespace HypredTest
                 case "Customer":
                     response = SetCustomerTests(Token);
                     break;
+                case "FreightForwarder":
+                    response = TestFreightForwarderService();
+                    break;
                 case "Vendor":
                     response = partnersTester.TestVendorService(Token);
                     break;
@@ -3337,6 +3340,78 @@ namespace HypredTest
 
             MessageBox.Show("Success " + response?.Result);
 
+        }
+
+        private Response TestFreightForwarderService()
+        {
+ 
+            ShipmentProxy.ShipmentPM shipmentPM = new ShipmentPM()
+            {
+                ShipmentNumber = "1083",
+                DirectionId = "R",
+                ShipmentLevelCode = "D",
+                Tenant = 1,
+                AccessDate = DateTime.Now,
+                AWBCurrencyId = "USD",
+                BranchId = "HybridB1",
+                DepartmentId = "HybridD1",
+                ChargeableWeightUnitCode = "KG",
+                ConsigneeId = "70000",
+                ShipperId = "70000",
+                ConsigneeReference1 = "PO35104",
+                CreateDateTime = DateTime.Now,
+                CreatedByUserId = "HybridU1",
+                CutoffDate = DateTime.Now,
+                DimensionsUnitCode = "CM",
+                FinalDistenationPortId = "TLV",
+                FreightPrepaidCollectId = "C",
+                FromPortId = "JFK",
+                GrossWeightUnitCode = "KG",
+                IncotermId = "CIF",
+                MainCarriageCarrierId = "LY",
+                MainCarriageFinalDestinationPortId = "TLV",
+                MainCarriageFromPortId = "FRD",
+                MainCarriageToPortId = "TLV",
+                OtherPrepaidCollectId = "C",
+                ProfitCurrencyId = "NIS",
+                ShipmentCustomerTypeCode = "SHI",
+                ShipmentTypeId = null,
+                ToPortId = "ILTLV",
+                TransportModeId = "A",
+                VolumeUnitCode = "CBM",
+                ChargeableWeight = 0.9999984133,
+                GrossWeight = 0.9999984133,
+                //Master = "12345678",
+                MainCarriageATA = DateTime.Now,
+                MainCarriageETA = DateTime.Now,
+                IsCancelled = false,
+                Notes = "testing console via hybrid 123",
+                IsHybrid = true,
+                AccountManagerUserId = "HybridU1",
+                QuoteNumber = "1000",
+                TruckerId = "TEP",
+                AssignedToTruckerDate = DateTime.Today,
+                ForwarderPartnerId = "BV",
+            };
+
+            ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();
+            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)shipmentservice.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", Token);
+                Response response = new Response();
+                response = shipmentservice.Upsert(shipmentPM, false);
+
+                if (!response.HasError)
+                { //update warehouseleg values
+                    shipmentPM.WarehouseLegWarehouseId = "sss";
+                    shipmentPM.WarehouseLegActualEntryDate = DateTime.Today;
+                    response = shipmentservice.Upsert(shipmentPM, false);
+                }
+
+                return response;
+            }
+
+ 
         }
 
         private Response TestAddressService()

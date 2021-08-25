@@ -30,6 +30,7 @@
       <xs:element minOccurs="0" name="ActivityTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ActualFinalArrivalDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="AdditionalChargesId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Agent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentComputed" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentComputedName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentId" nillable="true" type="xs:string" />
@@ -210,7 +211,9 @@
       <xs:element minOccurs="0" name="GrossWeightInKG" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="GrossWeightPerStorageDays" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="GrossWeightPerTon" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="GrossWeightUnitCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HandlerUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HandlerUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HasException" type="xs:boolean" />
       <xs:element minOccurs="0" name="House" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingError" nillable="true" type="xs:string" />
@@ -364,6 +367,9 @@
       <xs:element minOccurs="0" name="OrderVolumetricWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Origin" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PackagesQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentShipmentDirectionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentShipmentNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentShipmentType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PartnerLogoId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PartnerName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlannedCargoReadyDate" nillable="true" type="xs:dateTime" />
