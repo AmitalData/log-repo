@@ -1,0 +1,134 @@
+<tr style="height:80px;">
+    <td>
+        <table>
+            <tr style="height:25px">
+                <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+            </tr>
+
+            <tr style="height:5px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr style="height:28px;">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:10px;">
+                                <div></div>
+                            </td>
+
+                            <td>
+                                <table>
+                                    <tr>
+
+                                        <!-- Customer -->
+                                        <td style="width:80px;">Customer:</td>
+                                        <td style="width:100px;">
+                                            <ComboBox [ItemsSource]="CustomerStatusList" [Binding]="'Name'"
+                                                [SelectedItem]="SelectedCustomerStatus"
+                                                (SelectedItemChanged)="SelectedCustomerStatus = $event"></ComboBox>
+                                        </td>
+
+
+                                        <td style="width:25px;">
+                                            <div></div>
+                                        </td>
+
+
+                                        <!-- Reseller -->
+                                        <td style="width:100px;">Reseller:</td>
+                                        <td style="width:170px;">
+                                            <LogLov [ObjectFieldName]="'ResellerId'" [DataContext]="DataContext"
+                                                [ObjectTableName]="'Opportunity'" [LookUpTableName]="'Card'"
+                                                [HideAddLink]="true" [HideAdd]="true" [HideEdit]="true"
+                                                [HideMaintenanceIcon]="true" [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+
+                                        <td style="width:25px;">
+                                            <div></div>
+                                        </td>
+
+                                        <!-- Opportunities Type -->
+                                        <td style="width:120px;">Opportunities Type:</td>
+                                        <td style="width:170px;">
+                                            <ComboBoxWithInCheckBox (EditedItemSource)="EditedItemSource($event)"
+                                                [ItemsSource]="FilterdOpportunityTypeList"
+                                                (SelectedItemChanged)="SelectedOpportunityTypeListChanged($event)"
+                                                [Binding]="'lastTitle'" [SelectionType]="'Opportunity Types'"></ComboBoxWithInCheckBox>
+                                        </td>
+
+                                        <td style="width:25px;">
+                                            <div></div>
+                                        </td>
+
+
+
+                                        <!-- Run -->
+                                        <td style="width:90px;">
+                                            <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="height:28px;">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:10px;">
+                                <div></div>
+                            </td>
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <!-- Show net -->
+                                        <td class="Label" style="width:80px">Show net</td>
+                                        <td style="width:100px">
+                                            <CheckBox [IsChecked]="ShowNet" (Checked)="ShowNet = $event"></CheckBox>
+                                        </td>
+
+
+
+                                        <td style="width:25px;">
+                                            <div></div>
+                                        </td>
+
+
+                                        <!-- Exchange Rate -->
+                                        <td style="width:100px;">Exchange Rate:</td>
+                                        <td style="width:170px;">
+                                            <LogTextBox style="width:170px;" [InputType]="'double'"
+                                                [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'ExchangeRate'"
+                                                [DataContext]="DataContext" [HideColumns]="true">
+                                            </LogTextBox>
+                                        </td>
+
+
+
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>

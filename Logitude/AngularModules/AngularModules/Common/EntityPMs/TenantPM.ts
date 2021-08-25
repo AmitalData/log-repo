@@ -724,9 +724,12 @@ export class TenantPM {
     public get FTLRatio() { return this.fTLRatio; }
     public set FTLRatio(newValue: number) { if (this.fTLRatio != newValue) { this.fTLRatio = newValue; this.MarkAsDirty("FTLRatio"); } }
        
+	 
     private isQuotesRequestActivatedInShared: boolean;
     public get IsQuotesRequestActivatedInShared() { return this.isQuotesRequestActivatedInShared; }
     public set IsQuotesRequestActivatedInShared(newValue: boolean) { if (this.isQuotesRequestActivatedInShared != newValue) { this.isQuotesRequestActivatedInShared = newValue; this.MarkAsDirty("IsQuotesRequestActivatedInShared"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		
