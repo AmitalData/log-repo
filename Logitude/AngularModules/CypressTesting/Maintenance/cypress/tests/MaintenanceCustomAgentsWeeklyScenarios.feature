@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @stable @weekly
 Feature: Custom Agent Create and Edit in Maintenance Module
     The user creates a custom agent and edit it from the Maintenance Module.
 
