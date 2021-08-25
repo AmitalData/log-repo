@@ -204,7 +204,9 @@ export class DeclarationList {
 	ImporterAddressForExport: string;
 	ImporterPassCountryForExport: string;
 	ImporterNameForExport: string;
-	ExportImporterCode: string;
+	ExportTaxationDateTime: Date;
+	ExporterImporterCode: string;
+	DeclarationOfficeCodeForExport: string;
 	
 }
  

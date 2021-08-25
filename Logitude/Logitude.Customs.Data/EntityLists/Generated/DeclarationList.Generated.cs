@@ -407,7 +407,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ImporterNameForExport  { get; set; }
        [DataMember]
-       public string ExportImporterCode  { get; set; }
+       public DateTime? ExportTaxationDateTime  { get; set; }
+       [DataMember]
+       public string ExporterImporterCode  { get; set; }
+       [DataMember]
+       public string DeclarationOfficeCodeForExport  { get; set; }
    }
 
 }

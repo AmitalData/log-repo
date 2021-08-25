@@ -336,6 +336,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsSubmitDeclaration = a.IsSubmitDeclaration,
                                                      ProcedureCurrentName = a.GovernmentProcedureCurrent.LocalName,
                                                      TaxationDateTime = a.TaxationDateTime,
+                                                     ExportTaxationDateTime = a.TaxationDateTime,
                                                      Tenant = a.Tenant,
                                                      TotalTax = a.TotalTax,
                                                      TransferImporterCountryName = a.TransferImporterCountry.LocalName,
@@ -364,7 +365,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      StorageSiteCode = a.StorageSiteCode,
                                                      DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                      DeclarationOfficeCode = a.DeclarationOfficeCode,
+                                                     DeclarationOfficeCodeForExport=a.DeclarationOfficeCode,
                                                      ExportDeclarationOfficeCode =a.ExportDeclarationOfficeCode,
+                                                     ExportAutonomyRegionTypeCode=a.ExportAutonomyRegionTypeCode,
                                                      DepartmentId = a.DepartmentId,
                                                      DepartmentName = a.Department.LocalName,
                                                      //   EntitleImporterName = a.en
@@ -373,7 +376,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      EntitleImporterCode = a.EntitleImporterCode,
                                                      CreatedByUserName =
                                                      //a.CreatedByUser != null ? (a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName) : null,
-
+                                                    
                                                      a.CreatedByUser.Code,
                                                      ImporterAddress = a.ImporterAddress,
                                                      ImporterAddressForExport = a.ImporterAddress,
@@ -393,7 +396,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CorrectionsXml = a.CorrectionsXml,
                                                      SignedByUserId = a.SignedByUserId,
                                                      ImporterCode = a.ImporterCode,
-                                                     ExportImporterCode=a.ImporterCode,
+                                                     ExporterImporterCode=a.ImporterCode,
                                                      ImporterNameForExport= a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      StorageStatusCode = a.StorageStatusCode,
                                                      StorageStatusName = a.StorageStatus == null ? null : a.StorageStatus.LocalName,
