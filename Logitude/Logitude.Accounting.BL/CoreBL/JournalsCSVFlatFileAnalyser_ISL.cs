@@ -607,7 +607,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 if (rawLine.Length >= 2)
-                {
+                { 
                     cddc = rawLine.Substring(0, 1).ToUpperInvariant();
                     if (cddc == "CD")
                     {
