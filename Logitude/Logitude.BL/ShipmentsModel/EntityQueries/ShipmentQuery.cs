@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -35,7 +36,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
     {
 
         ShipmentRepository repository;
-
+        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
+        private const string MasterUserId = "13793";
         public ShipmentQuery(int tenant)
         {
             repository = new ShipmentRepository(tenant);
@@ -4098,14 +4100,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (string.IsNullOrEmpty(house)) { return null; }
 
             List<Shipment> shipments = repository.GetAllShipmentsByHouseNumber(house, tenant);
-
+            CreateSearchEventForMixPanel(house,tenant,shipments);
             if (shipments.Count == 0) { throw new Exception("There is no Shipment found with house " + house); }
 
             if (shipments.Count == 1) { return shipments[0].Id; }
             return null;
         }
 
+        private static void CreateSearchEventForMixPanel(string searchKey, int tenant, List<Shipment> shipments)
+        {
+            if (searchKey != null)
+            {
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+                MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
+                eventTracker.TrackEvent(searchEvent);
+            }
+        }
 
+        private static MixPanelEvent BuildMixPanelSearchEvent(string searchKey, List<Shipment> shipments)
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "Search";
+            mixPanelEvent.AddProperty("search_key", searchKey);
+            mixPanelEvent.AddProperty("results_count", shipments.Count().ToString());
+            return mixPanelEvent;
+        }
         public ShipmentPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
