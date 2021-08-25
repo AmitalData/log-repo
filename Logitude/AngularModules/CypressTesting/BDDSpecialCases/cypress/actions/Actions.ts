@@ -93,6 +93,7 @@ function AssertTimeOneOf(text: string) {
 
 function GetTimeZoneDateTime() {
   var TimeZone = LocalSettingsDetails.UpdateTime
+  cy.log(TimeZone)
   var DateTimeList = TimeZone.split(":")
   DateTimeList[0] = HourFormat(DateTimeList[0], DateTimeList[2])
   TimeZone = DateTimeList[0] + ":" + DateTimeList[1]
