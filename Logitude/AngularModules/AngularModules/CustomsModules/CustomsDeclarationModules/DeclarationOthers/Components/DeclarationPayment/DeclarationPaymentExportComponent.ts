@@ -1659,7 +1659,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     //}
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
@@ -1857,7 +1857,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         //    this.ValidationErrorsList = [];
         //    this.ValidationErrorsList.push(err);
         //});
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 

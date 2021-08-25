@@ -246,7 +246,7 @@ export class CustomsClosedTablesComponent implements OnInit {
         //systemTableRequestParamsystemTableRequestParams.s.RequestVIA == SendRequestVIA.WebServiceBatch;//all the time 
         systemTableRequestParams.UpdateAllTables = true;
 
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(systemTableRequestParams.PBId, 5, true);
         

@@ -39,7 +39,7 @@ export class CustomMessageProgressComponent {
             currentSession
             //SessionLocator.SelectedSession
             /*this.StaticCurrentSession*/.StartBusyIndicator("");
-            var currCustomMessageProgressHelper = new CustomMessageProgressHelper();
+            var currCustomMessageProgressHelper = new CustomMessageProgressHelper(currentSession);
             CustomMessageProgressComponent.CurrCustomMessageProgressHelper = currCustomMessageProgressHelper;
             currCustomMessageProgressHelper.StartProgress(PBId, 3, OnSuccessCloseWin);
             currCustomMessageProgressHelper.OnMessageArrived.subscribe(
@@ -165,9 +165,9 @@ export class CustomMessageProgressHelper
 
     _DispatcherTimer: any; //DispatcherTimer
     private _PBId: string;
+    constructor(private CurrentSession) { } 
 
-
-    private CurrentSession = SessionLocator.SelectedSession;
+    //private CurrentSession = SessionLocator.SelectedSession;
 
     _LastUpdateCurrentStageLine: Date = DateTool.GetCurrentDateTimeAsUtc();
     _CurrentStageLine: string;

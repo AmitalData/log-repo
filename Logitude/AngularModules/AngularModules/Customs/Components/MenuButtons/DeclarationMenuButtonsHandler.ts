@@ -899,7 +899,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         //ForcePersonalSign = _ForcePersonalSign,
 
 
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(searchParams.PBId, 5, true);
         let declarationMessagesService = new DeclarationMessagesService();
@@ -961,7 +961,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         searchParams.RequestName = "Send ReTransfer Request";
         searchParams.ResponseName = "Get ReTransfer Response";
         searchParams.Mode = "ReTransfer";
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(searchParams.PBId, 5, true);
         let declarationMessagesService = new DeclarationMessagesService();

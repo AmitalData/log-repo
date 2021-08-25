@@ -65,7 +65,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     RecipientList: any;
     AddRecipientEnabled: boolean;
     public DeclarationExportRecipientTableName: string = "Customs.DeclarationExportRecipient";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
@@ -109,9 +109,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
                                                     }
                                                     if (this.EntityPM.Direction == "E") {
-                                                        SessionLocator.SelectedSession.ChangeSessionHeader({ Text: "הצהרות יצוא" });
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: "הצהרות יצוא" });
                                                     } else {
-                                                        SessionLocator.SelectedSession.ChangeSessionHeader({ Text: "הצהרות יבוא" });
+                                                        this.CurrentSession.ChangeSessionHeader({ Text: "הצהרות יבוא" });
                                                     }
                                                 }
                                             });
@@ -334,7 +334,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     CancelButtonClicked() {
-        SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
@@ -345,7 +345,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     this.XMLErrors = [];
                     this.XMLErrors = response.ErrorsArray;
                 } else {
-                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });
         }
@@ -409,23 +409,23 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     private Listen() {
-        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildConsignments();
                         this.BuildRecipientsList()
 
                     }
                 })
             );
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && SessionLocator.SelectedSession.CurrentEditComponent) {
-                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.RefreshDatePicker = false;
                         if (this.timerToken) {
                             clearTimeout(this.timerToken);
@@ -442,15 +442,15 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 })
             );
 
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                            this.CurrentSession.StartBusyIndicatorLoading();
                             //this.RefreshEntity();
                             this.checkImportersVisibility();
                             this.DisplayOnlyCheck();
-                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
 
                         }
@@ -995,9 +995,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     Type: string = null;
     EditImporter() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
@@ -1033,9 +1033,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     EditExportDecScreen() {
         
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
@@ -1061,9 +1061,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             return;
         }
 
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
 
         var importerCode: string;
         var passportNumber: string;
@@ -1168,10 +1168,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
 
     EditTransferImporter() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
@@ -1197,10 +1197,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
     EditEntitleImporter() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
@@ -1365,8 +1365,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#endregion
 
     RefreshEntity() {
-        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
         if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
@@ -1386,7 +1386,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     DisplayOnlyCheck() {
          this.DrawMe = true;
-        this.IsDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
 
           if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
              {
@@ -1397,7 +1397,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             }
         }
       else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
