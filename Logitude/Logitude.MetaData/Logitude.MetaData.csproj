@@ -691,6 +691,7 @@
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
     <None Include="DBTables\CommonDataModel\ProductTypeModification.dxml" />
+    <None Include="DBTables\CommonDataModel\QuoteGroupSection.dxml" />
     <None Include="DBTables\CommonDataModel\Rank.dxml" />
     <None Include="DBTables\CommonDataModel\RateClass.dxml" />
     <None Include="DBTables\CommonDataModel\Region.dxml" />

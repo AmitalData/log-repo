@@ -183,6 +183,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\QuoteGroupSection.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
@@ -428,6 +429,7 @@
     <Compile Include="CommonDataModel\Mapping\DocumentStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeCategoryMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeMetaDataMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\QuoteGroupSectionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHBuildStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHEnvironmentSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHSettingMap.cs" />
@@ -511,6 +513,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\QuoteGroupSectionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />

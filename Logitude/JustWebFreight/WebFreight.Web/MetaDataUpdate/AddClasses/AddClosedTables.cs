@@ -120,7 +120,24 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 dueTypeRepository.Add(newDueType);
             }
         }
+        public static void AddQuoteGroupSection(QuoteGroupSectionDetails quoteGroupSectionDetails, QuoteGroupSectionRepository quoteGroupSectionRepository)
+        {
+            Dictionary<string, QuoteGroupSection> tenantQuoteGroupSections = quoteGroupSectionRepository.GetQuoteGroupSections().ToDictionary(d => d.Id, a => a);
 
+            if (tenantQuoteGroupSections.Keys.Contains(quoteGroupSectionDetails.Code))
+            {
+                QuoteGroupSection quoteGroupSection = quoteGroupSectionRepository.GetSingleQuoteGroupSection(quoteGroupSectionDetails.Id, 0);
+                quoteGroupSection.Name = quoteGroupSectionDetails.Name;
+                quoteGroupSection.Tenant = quoteGroupSectionDetails.Tenant;
+                quoteGroupSection.Code = quoteGroupSectionDetails.Code;
+                quoteGroupSectionRepository.Update(quoteGroupSection);
+            }
+            else
+            {
+                QuoteGroupSection quoteGroupSection = new QuoteGroupSection() { Id = quoteGroupSectionDetails.Id, Code = quoteGroupSectionDetails.Code, Name = quoteGroupSectionDetails.Name, Tenant = quoteGroupSectionDetails.Tenant };
+                quoteGroupSectionRepository.Add(quoteGroupSection);
+            }
+        }
         public static void AddTransportModes(TransportModeDetails transportModeDetails, TransportModeRepository transportModeRepository)
         {
             Dictionary<string, TransportMode> tenantTransportModes = transportModeRepository.GetTransportModes().ToDictionary(d => d.Id, a => a);

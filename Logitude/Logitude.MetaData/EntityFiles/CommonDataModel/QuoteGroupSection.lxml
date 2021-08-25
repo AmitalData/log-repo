@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Quote Group Section&quot;"
-  Code="&quot;4d1f&quot;"
+  Code="&quot;25ff&quot;"
   Name="&quot;QuoteGroupSection&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -216,7 +216,7 @@
     FieldName="&quot;Code&quot;"
     OldNames="Code"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;QuoteGroupSection&quot;"
     FieldsDataType="&quot;Text&quot;"
@@ -263,7 +263,7 @@
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
-    IsPrimaryKey="true"
+    IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
@@ -403,17 +403,17 @@
   </EventTypes>
   <Records>
     <Record
-      Id="1"
+      Id="&quot;1&quot;"
       Tenant="1"
       Code="&quot;O&quot;"
       Name="&quot;Origin Charges&quot;" />
     <Record
-      Id="2"
+      Id="&quot;2&quot;"
       Tenant="1"
       Code="&quot;F&quot;"
       Name="&quot;Freight Charges&quot;" />
     <Record
-      Id="3"
+      Id="&quot;3&quot;"
       Tenant="1"
       Code="&quot;D&quot;"
       Name="&quot;Destination Charges&quot;" />

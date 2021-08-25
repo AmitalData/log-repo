@@ -23,7 +23,6 @@
     Type="varchar"
     Size="1">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
