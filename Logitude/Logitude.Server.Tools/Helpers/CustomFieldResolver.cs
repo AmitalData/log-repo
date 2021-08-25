@@ -97,7 +97,7 @@ namespace Logitude.BL.Helpers
                         {
                             providerPropInfo = provider.GetType().GetProperty(objectTableName + field.FieldName);
                         }
-                        
+
                         if (providerPropInfo != null)
                         {
                             providerPropInfo.SetValue(provider, newValue, null);
@@ -185,7 +185,7 @@ namespace Logitude.BL.Helpers
                             MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
                             if (insideMethodInfo == null)
                             {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM"); 
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
                             }
                             if (insideMethodInfo == null)
                             {
@@ -196,7 +196,7 @@ namespace Logitude.BL.Helpers
                             if (insideMethodInfo != null)
                             {
                                 ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
-                                object[] parameters = new object[] {};
+                                object[] parameters = new object[] { };
                                 switch (parametersInfo.Count())
                                 {
                                     case 1:
@@ -212,7 +212,7 @@ namespace Logitude.BL.Helpers
                                         parameters = new object[] { value, tenant };
                                         break;
                                 }
-                                 
+
 
                                 insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
 
@@ -282,7 +282,7 @@ namespace Logitude.BL.Helpers
         {
             DateTime? date = null;
 
-            if (!string.IsNullOrEmpty(arg))
+            if (!string.IsNullOrEmpty(arg) && arg.Length >= 14)
             {
                 date = new DateTime(System.Convert.ToInt32(arg.Substring(0, 4)), System.Convert.ToInt32(arg.Substring(4, 2)), System.Convert.ToInt32(arg.Substring(6, 2)), System.Convert.ToInt32(arg.Substring(8, 2)), System.Convert.ToInt32(arg.Substring(10, 2)), System.Convert.ToInt32(arg.Substring(12, 2)));
             }
@@ -306,13 +306,13 @@ namespace Logitude.BL.Helpers
                     case "DateTime":
                         {
                             DateTime? date = ConvertToDate(customField);
-                            return date.Value.ToString(@"dd MMM yyyy HH':'mm':'ss", en.DateTimeFormat);
+                            return date != null ? date.Value.ToString(@"dd MMM yyyy HH':'mm':'ss", en.DateTimeFormat) : null;
                         }
 
                     case "Date":
                         {
                             DateTime? date = ConvertToDate(customField);
-                            return date.Value.ToString(@"dd MMM yyyy", en.DateTimeFormat);
+                            return date != null ? date.Value.ToString(@"dd MMM yyyy", en.DateTimeFormat) : null;
                         }
 
                     case "UnsDecimal":
@@ -450,7 +450,7 @@ namespace Logitude.BL.Helpers
                             {
                                 isGeneratedQuery = true;
                             }
-                            
+
                         }
 
                         object insideEntityRepository = null;
@@ -470,7 +470,7 @@ namespace Logitude.BL.Helpers
                             }
 
                             MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
-                            
+
                             if (insideMethodInfo == null)
                             {
                                 // insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
@@ -508,7 +508,7 @@ namespace Logitude.BL.Helpers
                                     }
                                 }
                                 else parameters = new object[] { value, false, false };
-                                   
+
 
 
                                 insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
