@@ -176,7 +176,10 @@ export class ChargesTypePM {
     public get PayableDebitAccountExternalId() { return this.payableDebitAccountExternalId; }
     public set PayableDebitAccountExternalId(newValue: string) { if (this.payableDebitAccountExternalId != newValue) { this.payableDebitAccountExternalId = newValue; this.MarkAsDirty("PayableDebitAccountExternalId"); } }
        
-	 
+    private quoteGroupSectionID: string;
+    public get QuoteGroupSectionID() { return this.quoteGroupSectionID; }
+    public set QuoteGroupSectionID(newValue: string) { if (this.quoteGroupSectionID != newValue) { this.quoteGroupSectionID = newValue; this.MarkAsDirty("QuoteGroupSectionID"); } }
+
     private receivableCreditAccountExternalId: string;
     public get ReceivableCreditAccountExternalId() { return this.receivableCreditAccountExternalId; }
     public set ReceivableCreditAccountExternalId(newValue: string) { if (this.receivableCreditAccountExternalId != newValue) { this.receivableCreditAccountExternalId = newValue; this.MarkAsDirty("ReceivableCreditAccountExternalId"); } }
