@@ -33,8 +33,8 @@ export class FieldValueResolver {
                  
                 case "Boolean":
                     {
-                        var b: boolean = Boolean(value);
-                        return b;
+                        //const b = value?.toLowerCase() === "true" ? true : false;//Boolean(value);
+                        return value;
                     }
                 
                 default:
