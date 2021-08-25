@@ -164,7 +164,13 @@
                         </div>
                     </app-tooltip>
 
-                    <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
+                    <div class="date">
+                        {{card.Date | date: 'dd'}}
+                        <span style="display:inline-flex;flex-direction:column-reverse">
+                            <span style="flex:50%">{{card.Date | date: 'MMM'}}</span>
+                            <span style="flex:50%">{{card.Date | date: 'HH:mm'}}</span>
+                        </span>
+                    </div>
                     <div class="title">{{card.Title}}</div>
                     <div class="desc hide-mobile " [attr.title]="card.Description"
                         style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
