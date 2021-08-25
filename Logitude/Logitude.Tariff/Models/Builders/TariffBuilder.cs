@@ -125,7 +125,7 @@ namespace Logitude.Tariff.Models.Builders
 
         public TariffBuilder WithDefualtValues()
         {
-            string randomGuid = new RandomGeneratorService().RandomGuid();
+            string randomGuid = RandomGeneratorService.RandomGuid();
             _tariff = new TariffPM
             {
                 Tenant = UserTenant.Tenant,

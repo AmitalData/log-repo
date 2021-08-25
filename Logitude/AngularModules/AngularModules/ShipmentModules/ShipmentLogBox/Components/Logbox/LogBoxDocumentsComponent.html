@@ -274,11 +274,26 @@
     visibility: visible;
     opacity: 1;
 }
-
+ 
     .logboxDocumentName {
         background-color: #5AACE5;
         border: 1px solid #5AACE5
     }
+ 
+  .ActualDate { 
+    color: green; 
+    }
+
+   .ExpectedDate {
+     color: darkorange;
+    }
+
+   .Date {
+     vertical-align: middle;
+     font-size: 15px;
+     margin-left: 10px;
+    }
+ 
 
 </style>
 
@@ -296,10 +311,20 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'O'" src="./Images/Vessel.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}</span>
-                            <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
-                            <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageETA && !SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:darkorange;margin-left: 10px;">ETA : {{SelectedShipment.MainCarriageETA | DateTimePipe: 'SMD'}}</span>
-                        </td> 
+                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}} </span>
+
+                            <span *ngIf="hasExportShipmentToggle">
+                                <span class="Date" [class.ActualDate]="MainCarriageTALabel == 'ATA:'" [class.ExpectedDate]="MainCarriageTALabel == 'ETA:'">
+                                    {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
+                                </span>
+                                <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
+                                    {{MainCarriageTDLabel}}{{MainCarriageTD | DateTimePipe: 'SMD'}}
+                                </span>
+                            </span>
+                            <span *ngIf="!hasExportShipmentToggle">
+                                <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
+                                <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageETA && !SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:darkorange;margin-left: 10px;">ETA : {{SelectedShipment.MainCarriageETA | DateTimePipe: 'SMD'}}</span>
+                            </span></td> 
                         <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber">
         <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
             <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />

@@ -1,4 +1,4 @@
-@release @all @dev @daily
+@release @all @stable @daily
 Feature: Credit Card Type fake Create and Edit in Maintenance Module
     The user creates a Credit Card Type fake create, then selects a different credit card type,
     edits it and activates or inactivates it from the Maintenance module.
@@ -10,7 +10,7 @@ Feature: Credit Card Type fake Create and Edit in Maintenance Module
         Then a validation single message with "Code Field is Required" error should appear
 
     Scenario: Add Credit Card Type Code with lenght more than 2
-        When add "123" as credit card type code
+        When add "12345" as credit card type code
         Then a validation message with "Code Field must be less than 2" error should appear
 
     Scenario: Create a new credit card type

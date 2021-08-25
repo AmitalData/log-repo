@@ -262,7 +262,7 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-
+                  
                     if (entityPM.ConsigneeId != null)
                     {
                         string cardId = cardsReporistory.GetCardIdByCode(entityPM.ConsigneeId, entityPM.Tenant);
@@ -672,11 +672,14 @@ namespace WebFreight.Web.WcfApi
                     #region WarehouseLeg
                     MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
                     #endregion
-
+                     
                     #region CustomAgent
                     MapCustomAgent(entityPM, cardsReporistory);
                     #endregion
 
+                    #region ForwarderPartner
+                    MapForwarderPartnert(entityPM, cardsReporistory);
+                    #endregion  
 
                     if (response.HasError)
                     {
@@ -899,8 +902,24 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
-             
 
+
+        }
+        private void MapForwarderPartnert(ShipmentPM entityPM, CardRepository cardsReporistory)
+        {
+           if (entityPM.ForwarderPartnerId != null)
+            {
+                string cardId = cardsReporistory.GetCardIdByCode(entityPM.ForwarderPartnerId, entityPM.Tenant);
+                if (!string.IsNullOrEmpty(cardId))
+                {
+                    entityPM.ForwarderPartnerId = cardId;
+                }
+                else
+                {
+                    throw new ApplicationException("ForwarderPartnerId field doesn't exist in the database,Upsert this entity before using it.");
+                }
+            }
+              
         }
 
         private void MapCustomAgent(ShipmentPM entityPM, CardRepository cardsReporistory)

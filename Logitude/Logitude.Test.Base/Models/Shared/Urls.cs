@@ -1,4 +1,6 @@
-﻿namespace Logitude.Test.Base.Models.Shared
+﻿using System;
+
+namespace Logitude.Test.Base.Models.Shared
 {
     public static class Urls
     {
@@ -224,6 +226,12 @@
         public static string ShipmentOrderSingle(string orderNumber)
         {
             return "ShipmentOrder?orderNumber=" + orderNumber;
+        }
+
+        public static string GetDataEntryTimeSheetList(string employeeUserId, string locationCode, DateTime startDate, DateTime endDate)
+        {
+            return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
+                locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
     }
 }

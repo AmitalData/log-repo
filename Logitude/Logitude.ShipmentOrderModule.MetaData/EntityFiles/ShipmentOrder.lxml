@@ -2183,7 +2183,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -4231,7 +4231,7 @@
     LookUpTableName="&quot;Direction&quot;"
     MinLength="0"
     MaxLength="1"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -4632,13 +4632,23 @@
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;Master&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ALSO&quot;"
         IndexOrder="6"
+        ObjectFieldName="&quot;Master&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="7"
         ObjectFieldName="&quot;House&quot;"
         ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALSO&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DescriptionOfGoods&quot;"
+        ColumnWidth="124" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -5551,6 +5561,21 @@
         IsManualMapping="false"
         IsMulti="false"
         FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;IsCancelled&quot;"
+        FieldName="&quot;IsCancelled&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Boolean&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"

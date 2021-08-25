@@ -1,4 +1,4 @@
-@release @all @dev @weekly
+@release @all @stable @weekly
 Feature:Credit Card Type Create and Edit it in Maintenance Module
     The user creates a credit card type and edits it from the Maintenance Module.
 
@@ -9,7 +9,7 @@ Feature:Credit Card Type Create and Edit it in Maintenance Module
         Then a validation single message with "Code Field is Required" error should appear
 
     Scenario: Add Credit Card Type Code with lenght more than 2
-        When add "123" as credit card type code
+        When add "12345" as credit card type code
         Then a validation message with "Code Field must be less than 2" error should appear
 
     Scenario: Create a new credit card type

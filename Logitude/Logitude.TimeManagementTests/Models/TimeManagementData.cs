@@ -10,5 +10,6 @@ namespace Logitude.TimeManagementTests.Models
     {
         public static string ProjectId { get; set; }
         public static string SprintId { get; set; }
+        public static TimeManagementAPIHelper DataEntry { get; set; }
     }
 }

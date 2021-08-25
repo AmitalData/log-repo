@@ -1,0 +1,108 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="3">
+    <![CDATA[
+
+	If(OBJECT_ID('tempdb..#temp_StandaloneShipments') Is Not Null)
+	Begin
+		Drop Table #temp_StandaloneShipments
+	End
+
+	If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+	Begin
+		Drop Table #temp_Shipments
+	End
+
+	CREATE TABLE #temp_Shipments 
+	(Id varchar(15) not null ,
+		Tenant int,
+		DirectionId varchar(1) null ,
+		ShipmentNumber varchar(20) null ,
+		ShipmentType varchar(40) null)
+
+		select 
+		Shipments.Id, 
+		Shipments.Tenant,
+		Shipments.ForwarderStandaloneShipmentId
+		into #temp_StandaloneShipments
+
+		FROM Shipments where  Shipments.ForwarderStandaloneShipmentId is not null  and  $LastCounterWhere$
+    
+    DECLARE @Id as varchar(15)
+	DECLARE @ShipmentId as varchar(15)
+	DECLARE @ForwarderStandaloneShipmentId as varchar(15)
+	DECLARE @DirectionId as varchar(1)
+	DECLARE @Tenant as int
+	DECLARE @Count as int
+	DECLARE @ShipmentNumber as varchar(20)
+	DECLARE @ShipmentType as nvarchar(40)
+	DECLARE @ShipmentTypeId  as varchar(15)
+	DECLARE @ShipmentLevelCode as varchar(1)
+	set @Count = 0;
+
+	BEGIN
+	DECLARE DataCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, Tenant,ForwarderStandaloneShipmentId
+	FROM #temp_StandaloneShipments
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @ForwarderStandaloneShipmentId
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+	select @DirectionId = DirectionId, @ShipmentNumber = ShipmentNumber, @ShipmentTypeId = ShipmentTypeId, @ShipmentLevelCode = ShipmentLevelCode   from shipments where id = @ForwarderStandaloneShipmentId and tenant = @Tenant
+
+	if (@ShipmentTypeId is not null)
+	begin
+	    set @ShipmentType = (select Name from ShipmentTypes where Id = @ShipmentTypeId);
+		
+	end
+
+	if (@ShipmentLevelCode is not null)
+	begin
+		if (@ShipmentType is null)
+		begin
+			set @ShipmentType = (select Name from ShipmentLevels  where code = @ShipmentLevelCode);
+		end
+		else 
+		begin
+			set @ShipmentType = @ShipmentType  + ' '+ (select Name from ShipmentLevels  where code = @ShipmentLevelCode);
+		end
+	end
+
+	insert into #temp_Shipments(Id, Tenant, DirectionId,ShipmentNumber,ShipmentType) values (@Id, @Tenant,@DirectionId,@ShipmentNumber,@ShipmentType)
+
+	set @Count = @Count + 1;
+	if(@Count = 1000)
+	begin
+		update Shipments
+		set
+		ParentShipmentDirectionId = #temp_Shipments.DirectionId, 
+		ParentShipmentNumber = #temp_Shipments.ShipmentNumber, 
+		ParentShipmentType = #temp_Shipments.ShipmentType
+		FROM #temp_Shipments
+		where #temp_Shipments.Id = Shipments.Id
+	end
+
+	FETCH NEXT FROM DataCursor INTO  @Id, @Tenant, @ForwarderStandaloneShipmentId
+	END
+	CLOSE DataCursor
+	DEALLOCATE DataCursor
+	END
+
+	if (@Count > 0)
+	begin
+		update Shipments
+		set
+		ParentShipmentDirectionId = #temp_Shipments.DirectionId, 
+		ParentShipmentNumber = #temp_Shipments.ShipmentNumber, 
+		ParentShipmentType = #temp_Shipments.ShipmentType
+		FROM #temp_Shipments
+		where #temp_Shipments.Id = Shipments.Id
+	end
+
+drop table #temp_StandaloneShipments
+drop table #temp_Shipments
+
+
+    ]]>
+  </Sql>
+</Script>

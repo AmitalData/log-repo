@@ -90,5 +90,7 @@ namespace Logitude.ShipmentOrderTests.Models
         public DateTime CreateDate { get; set; }
 
         public string SecurityKey { get; set; }
+
+        public bool IsCancelled { get; set; }
     }
 }

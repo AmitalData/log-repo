@@ -131,7 +131,7 @@ function DateTimeRange(time: string) {
   var hour = Number(timelist[0])
   var minutes = Number(timelist[1])
   var dateTimeRange = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     if (minutes == 0) {
       hour = subHour(hour)
       minutes = 59
@@ -143,7 +143,7 @@ function DateTimeRange(time: string) {
   hour = Number(timelist[0])
   minutes = Number(timelist[1])
   dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     if (minutes == 59) {
       hour = hour + 1
       minutes = 0
