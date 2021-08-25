@@ -691,6 +691,7 @@
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
     <None Include="DBTables\CommonDataModel\ProductTypeModification.dxml" />
+    <None Include="DBTables\CommonDataModel\QuoteGroupSection.dxml" />
     <None Include="DBTables\CommonDataModel\Rank.dxml" />
     <None Include="DBTables\CommonDataModel\RateClass.dxml" />
     <None Include="DBTables\CommonDataModel\Region.dxml" />
@@ -1054,6 +1055,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseStoragePricing.lxml" />
+    <None Include="EntityFiles\CommonDataModel\QuoteGroupSection.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightMeasurement.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightRounding.lxml">
       <SubType>Designer</SubType>

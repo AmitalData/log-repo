@@ -243,7 +243,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsBackToBack"
@@ -363,6 +363,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="QuoteGroupSectionID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"
@@ -411,6 +418,11 @@
   <Relation
     ForeignKeyColumn="PayablesDefaultCurrencyId"
     ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteGroupSectionID"
+    ReferencedTable="QuoteGroupSections"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

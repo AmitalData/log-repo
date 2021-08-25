@@ -250,6 +250,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new QueryGroupMap());
             modelBuilder.Configurations.Add(new QuoteChargeMap());
             modelBuilder.Configurations.Add(new QuoteCustomerTypeMap());
+            modelBuilder.Configurations.Add(new QuoteGroupSectionMap());
             modelBuilder.Configurations.Add(new QuotePriceStepMap());
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
@@ -525,6 +526,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CommunicationLog> CommunicationLogs { get; set; }
         public IDbSet<CommunicationAttachment> CommunicationAttachments { get; set; }
         public IDbSet<DueType> DueTypes { get; set; }
+        public IDbSet<QuoteGroupSection> QuoteGroupSections { get; set; }
         public IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; set; }
         public IDbSet<CommunicationLogType> CommunicationLogTypes { get; set; }
         public IDbSet<WarehouseType> WarehouseTypes { get; set; }

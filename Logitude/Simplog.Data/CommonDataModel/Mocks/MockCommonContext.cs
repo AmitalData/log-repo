@@ -736,6 +736,23 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        List<QuoteGroupSection> quoteGroupSections;
+        public IDbSet<QuoteGroupSection> QuoteGroupSections
+        {
+            get
+            {
+                if (quoteGroupSections == null)
+                {
+                    quoteGroupSections = new List<QuoteGroupSection>() {
+                        new QuoteGroupSection() { Id= "1" },
+                        new QuoteGroupSection() { Id = "2" },
+                        new QuoteGroupSection() { Id= "3" },
+                    };
+                }
+                return new MockObjectSet<QuoteGroupSection>(quoteGroupSections);
+            }
+        }
+
         List<CommunicationStatusType> communicationStatusTypes;
         public IDbSet<CommunicationStatusType> CommunicationStatusTypes
         {

@@ -32,6 +32,7 @@
         public string ReceivablesChargesTypeExternalCode { get; set; }
         public string PayablesChargesTypeExternalCode { get; set; }
         public string PayableDebitAccountExternalId { get; set; }
+        public string QuoteGroupSectionID { get; set; }
         public string ReceivableCreditAccountExternalId { get; set; }
         public string ChargesTypeExternalCodeExternalId { get; set; }
         public bool IsAutoDisplayInCustoms { get; set; }

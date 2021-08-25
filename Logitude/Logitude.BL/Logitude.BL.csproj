@@ -318,6 +318,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentGatewayPartnerDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentTermDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ProductPeriodDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\QuoteGroupSectionDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RateClassDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RegistryDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\TarrifFromToTypeDetails.Generated.cs" />
@@ -351,6 +352,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PaymentTermDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ProductPeriodStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\QuoteGroupSectionStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RateClassStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegistryDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TarrifFromToTypeStruct.Generated.cs" />
@@ -372,13 +374,16 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\QuoteGroupSectionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\QuoteGroupSectionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\QuoteGroupSectionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />

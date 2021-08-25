@@ -93,6 +93,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string PayablesChargesTypeExternalCode { get; set; }        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayableDebitAccountExternalId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteGroupSectionID { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivableCreditAccountExternalId { get; set; }

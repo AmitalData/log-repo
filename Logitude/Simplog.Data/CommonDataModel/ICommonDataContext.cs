@@ -58,6 +58,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CommunicationLog> CommunicationLogs { get; }
         IDbSet<CommunicationAttachment> CommunicationAttachments { get; }
         IDbSet<DueType> DueTypes { get; }
+        IDbSet<QuoteGroupSection> QuoteGroupSections { get; }
+
         IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; }
         IDbSet<CommunicationLogType> CommunicationLogTypes { get; }
         IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; }
