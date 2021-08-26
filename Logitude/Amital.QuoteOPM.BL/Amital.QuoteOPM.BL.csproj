@@ -154,6 +154,7 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTotalVatUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OPSpecialServicesTypeRepository.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPriceStepsUpdateService.cs" />
