@@ -872,11 +872,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (record.Debit != null)
                 {
                     record.Debit = (double)Math.Abs((decimal)record.Debit);
+                    record.DebitWithZero = record.Debit.Value;
                 }
 
                 if (record.Credit != null)
                 {
                     record.Credit = (double)Math.Abs((decimal)record.Credit);
+                    record.CreditWithZero = record.Credit.Value;
                 }
 
                 Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
@@ -944,7 +946,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.CurrencyId = d.InvoiceCurrencyId;
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
                 item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
+                item.DebitWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? 0 : d.AmountDue.Value);
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
+                item.CreditWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? 0 : d.AmountDue.Value);
                 item.Notes = d.InternalNotes;
                 item.BillToVendorId = d.BillToId;
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
@@ -978,7 +982,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      CurrencyId = d.InvoiceCurrencyId,
                      Type = "A\\P Invoice",
                      Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
+                     DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value),
                      Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
+                     CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0),
                      Notes = d.InternalNotes,
                      YourRefrence = d.InvoiceNumber,
                      BillToVendorId = d.VendorId,
@@ -1006,6 +1012,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      CurrencyId = d.PaymentCurrencyId,
                      Type = "A\\R Payment",
                      Credit = d.OpenAmount == null ? null : d.OpenAmount,
+                     CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value,
                      Notes = d.InternalNotes,
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
