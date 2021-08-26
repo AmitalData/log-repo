@@ -32,6 +32,7 @@ export class DeclarationList {
 	ImporterEntitlementTypeName: string;
 	EntitleImporterCountryCode: string;
 	EntitleImporterCountryName: string;
+	DeclarationDocumentId: string;
 	DeclarationDocumentTypeCode: string;
 	IsChanged: boolean;
 	PaymentDate: Date;

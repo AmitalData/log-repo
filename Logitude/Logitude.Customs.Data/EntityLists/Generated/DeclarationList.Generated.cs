@@ -63,6 +63,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EntitleImporterCountryName  { get; set; }
        [DataMember]
+       public string DeclarationDocumentId  { get; set; }
+       [DataMember]
        public string DeclarationDocumentTypeCode  { get; set; }
        [DataMember]
        public bool IsChanged  { get; set; }
