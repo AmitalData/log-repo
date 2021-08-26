@@ -274,6 +274,11 @@ export class FullAccountingSettingPM {
     public set ThirdsPeriodsMonths(newValue: string) { if (this.thirdsPeriodsMonths != newValue) { this.thirdsPeriodsMonths = newValue; this.MarkAsDirty("ThirdsPeriodsMonths"); } }
        
 	 
+    private activeSecurityLevel: boolean;
+    public get ActiveSecurityLevel() { return this.activeSecurityLevel; }
+    public set ActiveSecurityLevel(newValue: boolean) { if (this.activeSecurityLevel != newValue) { this.activeSecurityLevel = newValue; this.MarkAsDirty("ActiveSecurityLevel"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

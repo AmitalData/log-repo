@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle{
         color: #1b90cb;
         font-size: 16px;
@@ -58,6 +58,20 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ChartOfAccountSecurityLevel -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel style="width:100px" [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [InputType]="'integer'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
