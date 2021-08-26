@@ -1031,6 +1031,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      CurrencyId = d.PaymentCurrencyId,
                      Type = "A\\P Payment",
                      Debit = d.OpenAmount == null ? null : d.OpenAmount,
+                     DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value,
                      Notes = d.InternalNotes,
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
