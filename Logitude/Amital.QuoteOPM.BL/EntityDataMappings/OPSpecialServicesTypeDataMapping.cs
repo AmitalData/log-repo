@@ -20,6 +20,13 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
         public void CustomPMToPOCO(OPSpecialServicesTypePM entityPM, OPSpecialServicesType entityPOCO)
         {
             //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.Id = entityPM.Id;
+            }
+
         }
 
         public void CustomPOCOToPM(OPSpecialServicesTypePM entityPM, OPSpecialServicesType entityPOCO)
