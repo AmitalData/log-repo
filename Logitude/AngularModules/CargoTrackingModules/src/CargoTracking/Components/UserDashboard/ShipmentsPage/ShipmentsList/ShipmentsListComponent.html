@@ -264,9 +264,9 @@
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
                                 <div class="value truncateText hide-mobile">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
-                                    <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}}
                                 </div>
+                                    <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
 
                             </div>
                         </div>
@@ -342,9 +342,7 @@
                                             </div>
                                         </div>
                                     </app-tooltip>
-                                    <strong>
                                         {{ shipment.CurrentMilestoneName }}
-                                    </strong>
                                     <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
                                 </div>
 
