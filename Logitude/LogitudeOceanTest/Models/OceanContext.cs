@@ -8,5 +8,7 @@ namespace Logitude.OceanTest.Models
 {
     public class OceanContext
     {
+        public ShipmentContainerSimulator ShipmentContainerSimulator { get; set; }
+        
     }
 }

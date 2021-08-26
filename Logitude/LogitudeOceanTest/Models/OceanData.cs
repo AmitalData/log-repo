@@ -8,6 +8,7 @@ namespace Logitude.OceanTest.Models
 {
     public static class OceanData
     {
+        internal static ShipmentContainerSimulator ShipmentContainerSimulator;
 
     }
 }

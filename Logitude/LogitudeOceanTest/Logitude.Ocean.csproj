@@ -46,19 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\OceanContainerStatus\ContainerStatusRequest.feature.cs" />
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
     <Compile Include="Models\OceanContext.cs" />
     <Compile Include="Models\OceanData.cs" />
     <Compile Include="Models\PackagePM.cs" />
+    <Compile Include="Models\ShipmentContainerSimulator.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\OceanContainerStatus\GetContainerStatusRequestSteps.cs" />
+    <Compile Include="Services\ContainerStatusesServices.cs" />
+    <Compile Include="Services\Waiter.cs" />
+    <Compile Include="Steps\OceanContainerStatus\GetContainerStatusesSteps.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
@@ -66,9 +66,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Features\OceanContainerStatus\ContainerStatusRequest.feature" />
-    <None Include="packages.config" />
+    <None Include="Features\OceanContainerStatus\GetContainerStatuses.feature" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BoDi">

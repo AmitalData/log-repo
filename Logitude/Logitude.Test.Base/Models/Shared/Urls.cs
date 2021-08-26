@@ -45,6 +45,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string TicketsController = "tickets";
         public static string OpportunitiesController = "Opportunities";
         public static string TariffsController = "Tariffs";
+        public static string ShipmentContainersWebServiceController = "ShipmentContainersWebService";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
         public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
 
@@ -112,6 +113,7 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Tenants/GetSingle?id=" + id.ToString();
         }
+
 
         public static string TenantsUpdate(int id)
         {
