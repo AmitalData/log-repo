@@ -348,14 +348,14 @@
                                                     <LogLabel [ObjectFieldName]="'SpecialServiceId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td style="width: 105px;">
                                                     <!--[LookUpTableName]="'SpecialService'"-->
+                                                    <!--[HideColumns]="true"-->
                                                     <LogLov [ObjectFieldName]="'SpecialServiceId'"
                                                             [SelectedValue]="SpecialServiceId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'OPSpecialServicesType'"
-                                                            [HideColumns]="true">
+                                                            [LookUpTableName]="'OPSpecialServicesType'">
                                                     </LogLov>
 
                                                 </td>

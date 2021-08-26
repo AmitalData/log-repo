@@ -207,16 +207,17 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
         protected override void OnUpdating(QuoteOPPM entityPM, QuoteOP entityPoco)
         {
             this.entityPM = entityPM;
+            this._EntityPoco4Validate = entityPoco;
             if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
             {
-               
-
-                this.OnUpdating_InitializeComponent(entityPM);
                 string resolveLoggingUserEmail;
                 Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact;
                 GetLogUser(entityPM, out resolveLoggingUserEmail, out contact);
 
                 InitQuoteOPServiceInitializer(entityPM, resolveLoggingUserEmail);
+                this.OnUpdating_InitializeComponent(entityPM);
+
+                
 
 
 
@@ -1174,9 +1175,10 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                 this.allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
             }
         }
+        QuoteOP _EntityPoco4Validate = null;
         protected override void Validate(QuoteOPPM entityPM)
         {
-            QuoteOPValidating.Validate(entityPM, null, entityPM.ChangeSetOp == ChangeSetOperation.Insert, myCommonContext);
+            QuoteOPValidating.Validate(entityPM, _EntityPoco4Validate, entityPM.ChangeSetOp == ChangeSetOperation.Insert, myCommonContext);
             base.Validate(entityPM);
         }
 
