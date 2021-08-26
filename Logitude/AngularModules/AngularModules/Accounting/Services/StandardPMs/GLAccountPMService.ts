@@ -33,19 +33,19 @@ export class GLAccountPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccounts';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccounts';
     }
 
-	get(id: string) {       
+	get(id: string) {
 
-		var callTime = new Date();		
+		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
-				
+
 						var entity: GLAccountPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
@@ -53,26 +53,26 @@ export class GLAccountPMService {
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
-              
+
 						var servertime = response.headers.get('ServerExecutionTime');
 						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "GetSinglePM", 'id=' + id);
-				 
+
 						return serviceResponse;
 
 					}),
-					
+
 					catchError(ServiceHelper.HandleServiceError));
-		});                    
+		});
 	}
 
 	insert(entityPM: GLAccountPM) {
- 
-		var callTime = new Date();  
-		
+
+		var callTime = new Date();
+
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var validator: ClassLevelValidator = new ClassLevelValidator();
 			var errorsArray = validator.Validate("GLAccount", entityPM);
 
 			var customValidator :GLAccountValidator = new GLAccountValidator();
@@ -85,7 +85,7 @@ export class GLAccountPMService {
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: GLAccountPM = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -94,11 +94,11 @@ export class GLAccountPMService {
 							if (pm) {
 								var mappedResult: GLAccountPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
-							}						
+							}
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "SaveChanges", "");                    
-												                             
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "SaveChanges", "");
+
 							return serviceResponse;
 						}),
 
@@ -115,12 +115,12 @@ export class GLAccountPMService {
 
 	update(entityPM: GLAccountPM) {
 
-		var callTime = new Date();     
-		
+		var callTime = new Date();
+
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var validator: ClassLevelValidator = new ClassLevelValidator();
 			var errorsArray = validator.Validate("GLAccount", entityPM);
 
 			var customValidator :GLAccountValidator = new GLAccountValidator();
@@ -133,20 +133,20 @@ export class GLAccountPMService {
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: GLAccountPM = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
-                 
+
 							var pm = response.body;
 							if (pm) {
 								var mappedResult: GLAccountPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
-							 
+
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "SaveChanges", "");                    
-					                           
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "SaveChanges", "");
+
 							return serviceResponse;
 						}),
 
@@ -161,13 +161,13 @@ export class GLAccountPMService {
 		});
 	}
 
-   
+
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GLAccountPM = null) {
 
-         
+
         if (!entityPM) {
-            
+
             entityPM = new GLAccountPM();
 			entityPM.DisableMarkAsDirty = true;
         }
@@ -184,7 +184,7 @@ export class GLAccountPMService {
                 continue;
             }
                 var property = jsonPMKeys[key];
-				
+
 			  if(customFields.indexOf(property) > -1)
                 {
                 if (jsonPM[property]) {
@@ -195,76 +195,76 @@ export class GLAccountPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
+
             }
-			
+
                this.MapGLAccountWithholdingTaxes(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountInterestPeriods(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapGLAccountChildren(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
+
+
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+
             entityPM.OldEntityPM.GLAccountWithholdingTaxes = [];
             for (var item in entityPM.GLAccountWithholdingTaxes) {
             var myGLAccountWithholdingTaxPM = entityPM.GLAccountWithholdingTaxes[item];
             var newGLAccountWithholdingTaxPM: GLAccountWithholdingTaxPM = this.clone(myGLAccountWithholdingTaxPM);
-						
-							 
+
+
             entityPM.OldEntityPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.GLAccountInterestPeriods = [];
             for (var item in entityPM.GLAccountInterestPeriods) {
             var myGLAccountInterestPeriodPM = entityPM.GLAccountInterestPeriods[item];
             var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM = this.clone(myGLAccountInterestPeriodPM);
-						
-							 
+
+
             entityPM.OldEntityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.GLAccountCurrencies = [];
             for (var item in entityPM.GLAccountCurrencies) {
             var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
             var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
-						
-							 
+
+
             entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.GLAccountChildren = [];
             for (var item in entityPM.GLAccountChildren) {
             var myGLAccountPM = entityPM.GLAccountChildren[item];
             var newGLAccountPM: GLAccountPM = this.clone(myGLAccountPM);
-						
-                newGLAccountPM.GLAccountWithholdingTaxes = [];
-                for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
-				    var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
-				    newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
-                    newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
 
-					                 }
-                newGLAccountPM.GLAccountInterestPeriods = [];
-                for (var k in myGLAccountPM.GLAccountInterestPeriods) {
-				    var myGLAccountInterestPeriodPM =myGLAccountPM.GLAccountInterestPeriods[k];
-				    newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
-                    newGLAccountPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
+                // newGLAccountPM.GLAccountWithholdingTaxes = [];
+                // for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
+				//     var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
+				//     var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
+                //     newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
 
-					                 }
-                newGLAccountPM.GLAccountCurrencies = [];
-                for (var k in myGLAccountPM.GLAccountCurrencies) {
-				    var myGLAccountCurrencyPM =myGLAccountPM.GLAccountCurrencies[k];
-				    newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
-                    newGLAccountPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+				// 	                 }
+                // newGLAccountPM.GLAccountInterestPeriods = [];
+                // for (var k in myGLAccountPM.GLAccountInterestPeriods) {
+				//     var myGLAccountInterestPeriodPM =myGLAccountPM.GLAccountInterestPeriods[k];
+				//     var newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
+                //     newGLAccountPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
 
-					                 }
-							 
+				// 	                 }
+                // newGLAccountPM.GLAccountCurrencies = [];
+                // for (var k in myGLAccountPM.GLAccountCurrencies) {
+				//     var myGLAccountCurrencyPM =myGLAccountPM.GLAccountCurrencies[k];
+				//     var newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
+                //     newGLAccountPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+
+				// 	                 }
+
             entityPM.OldEntityPM.GLAccountChildren.push(newGLAccountPM);
             }
-			   
+
 		}
         else {
 
@@ -290,7 +290,7 @@ export class GLAccountPMService {
                 continue;
             }
             var newGLAccountWithholdingTaxPM: GLAccountWithholdingTaxPM;
-	  
+
             if (mapParent) {
                 newGLAccountWithholdingTaxPM = new GLAccountWithholdingTaxPM(entityPM);
             }
@@ -299,7 +299,7 @@ export class GLAccountPMService {
                 newGLAccountWithholdingTaxPM = new GLAccountWithholdingTaxPM(null);
             }
  			newGLAccountWithholdingTaxPM.DisableMarkAsDirty = true;
-               
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -308,15 +308,15 @@ export class GLAccountPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newGLAccountWithholdingTaxPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newGLAccountWithholdingTaxPM.UniqueKey = Guid.newGuid();
                 newGLAccountWithholdingTaxPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newGLAccountWithholdingTaxPM.OldEntityPM = this.clone(newGLAccountWithholdingTaxPM);
 
-				
+
             }
             else {
                 if (newGLAccountWithholdingTaxPM.UniqueKey) {
@@ -327,7 +327,7 @@ export class GLAccountPMService {
                 else {
                         newGLAccountWithholdingTaxPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newGLAccountWithholdingTaxPM.OldEntityPM = null;
                 newGLAccountWithholdingTaxPM.EntityParentPM = null;
             }
@@ -336,10 +336,10 @@ export class GLAccountPMService {
             entityPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
         }
         if (oldGLAccountWithholdingTaxes) {
-            
+
             for (var itemKey in oldGLAccountWithholdingTaxes) {
                 if (entityPM.GLAccountWithholdingTaxes.filter(p=> p.UniqueKey === oldGLAccountWithholdingTaxes[itemKey].UniqueKey).length === 0) {
-				
+
                     if (oldGLAccountWithholdingTaxes[itemKey]) {
                         //oldGLAccountWithholdingTaxes[itemKey].ChangeSetOp = "Delete";
                         //entityPM.GLAccountWithholdingTaxes.push(oldGLAccountWithholdingTaxes[itemKey]);
@@ -360,7 +360,7 @@ export class GLAccountPMService {
 					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.GLAccountWithholdingTaxes.push(deletedPM);
                     }
@@ -382,7 +382,7 @@ export class GLAccountPMService {
                 continue;
             }
             var newGLAccountInterestPeriodPM: GLAccountInterestPeriodPM;
-	  
+
             if (mapParent) {
                 newGLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(entityPM);
             }
@@ -391,7 +391,7 @@ export class GLAccountPMService {
                 newGLAccountInterestPeriodPM = new GLAccountInterestPeriodPM(null);
             }
  			newGLAccountInterestPeriodPM.DisableMarkAsDirty = true;
-               
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -400,15 +400,15 @@ export class GLAccountPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newGLAccountInterestPeriodPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newGLAccountInterestPeriodPM.UniqueKey = Guid.newGuid();
                 newGLAccountInterestPeriodPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newGLAccountInterestPeriodPM.OldEntityPM = this.clone(newGLAccountInterestPeriodPM);
 
-				
+
             }
             else {
                 if (newGLAccountInterestPeriodPM.UniqueKey) {
@@ -419,7 +419,7 @@ export class GLAccountPMService {
                 else {
                         newGLAccountInterestPeriodPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newGLAccountInterestPeriodPM.OldEntityPM = null;
                 newGLAccountInterestPeriodPM.EntityParentPM = null;
             }
@@ -428,10 +428,10 @@ export class GLAccountPMService {
             entityPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
         }
         if (oldGLAccountInterestPeriods) {
-            
+
             for (var itemKey in oldGLAccountInterestPeriods) {
                 if (entityPM.GLAccountInterestPeriods.filter(p=> p.UniqueKey === oldGLAccountInterestPeriods[itemKey].UniqueKey).length === 0) {
-				
+
                     if (oldGLAccountInterestPeriods[itemKey]) {
                         //oldGLAccountInterestPeriods[itemKey].ChangeSetOp = "Delete";
                         //entityPM.GLAccountInterestPeriods.push(oldGLAccountInterestPeriods[itemKey]);
@@ -452,7 +452,7 @@ export class GLAccountPMService {
 					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.GLAccountInterestPeriods.push(deletedPM);
                     }
@@ -474,7 +474,7 @@ export class GLAccountPMService {
                 continue;
             }
             var newGLAccountCurrencyPM: GLAccountCurrencyPM;
-	  
+
             if (mapParent) {
                 newGLAccountCurrencyPM = new GLAccountCurrencyPM(entityPM);
             }
@@ -483,7 +483,7 @@ export class GLAccountPMService {
                 newGLAccountCurrencyPM = new GLAccountCurrencyPM(null);
             }
  			newGLAccountCurrencyPM.DisableMarkAsDirty = true;
-               
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -492,15 +492,15 @@ export class GLAccountPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newGLAccountCurrencyPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newGLAccountCurrencyPM.UniqueKey = Guid.newGuid();
                 newGLAccountCurrencyPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newGLAccountCurrencyPM.OldEntityPM = this.clone(newGLAccountCurrencyPM);
 
-				
+
             }
             else {
                 if (newGLAccountCurrencyPM.UniqueKey) {
@@ -511,7 +511,7 @@ export class GLAccountPMService {
                 else {
                         newGLAccountCurrencyPM.ChangeSetOp = "Insert";
                 }
- 
+
                 newGLAccountCurrencyPM.OldEntityPM = null;
                 newGLAccountCurrencyPM.EntityParentPM = null;
             }
@@ -520,10 +520,10 @@ export class GLAccountPMService {
             entityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
         }
         if (oldGLAccountCurrencies) {
-            
+
             for (var itemKey in oldGLAccountCurrencies) {
                 if (entityPM.GLAccountCurrencies.filter(p=> p.UniqueKey === oldGLAccountCurrencies[itemKey].UniqueKey).length === 0) {
-				
+
                     if (oldGLAccountCurrencies[itemKey]) {
                         //oldGLAccountCurrencies[itemKey].ChangeSetOp = "Delete";
                         //entityPM.GLAccountCurrencies.push(oldGLAccountCurrencies[itemKey]);
@@ -544,7 +544,7 @@ export class GLAccountPMService {
 					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.GLAccountCurrencies.push(deletedPM);
                     }
@@ -563,10 +563,10 @@ export class GLAccountPMService {
             }
             var newGLAccountPM: GLAccountPM;
             newGLAccountPM = new GLAccountPM();
-		    newGLAccountPM.DisableMarkAsDirty = true;                
+		    newGLAccountPM.DisableMarkAsDirty = true;
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
+
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
@@ -585,7 +585,7 @@ export class GLAccountPMService {
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -597,12 +597,12 @@ export class GLAccountPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
+	  public GetNewEntityPM() {
 		    var entityPM: GLAccountPM;
 			entityPM = new GLAccountPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
-		 
+
 
 }
