@@ -5830,6 +5830,7 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.Container.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerFollowUp.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ContainerStatus.cs" />
+    <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.INTTRASIStatus.cs" />
