@@ -273,7 +273,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
             declarationCourierStatusQuery.RequiredFieldErrorsForCourierDeclarationIsValid = true;
             var q = declarationCourierStatusQuery.GetByCourierMasterId(courierMasterId, tenant)
-                .Where(x=>x.CourierCustomStatusCode == "2")
+                .Where(x=>x.CourierCustomStatusCode == "2" && x.IsClosedForFollowUp)
                 .Select(r => new
                 {
                     r.CourierHawb,
