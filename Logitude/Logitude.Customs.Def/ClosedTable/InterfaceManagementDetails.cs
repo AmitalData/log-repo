@@ -620,6 +620,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "מסר מסמך נדרש",
                 DcaPrefixName = "SendVAL_MSG8227_RequiredDocumentMessage_Out.",
+                DcaPrefixName2 = "SendVAL_MSG8227_RequiredDocumentMessage_EX.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -629,7 +630,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false
             });
-
+           
             //DCAInVAL_NG_8228_RequiredDocumentVerificationDecisionMassagingService
             all.Add(
             new InterfaceManagementDetails()
@@ -2865,6 +2866,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "2757",
              });
 
+
+
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "2450",
@@ -2888,6 +2891,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "מסר תשובה הצהרה יצוא",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
+                DcaPrefixName = "SaveDF_MSG2751_ExportDeclaration_In",
                 AllowRestore = true,
                  Active = true,
                 SendAsDual = false,
