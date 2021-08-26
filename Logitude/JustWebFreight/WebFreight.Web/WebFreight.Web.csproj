@@ -6993,6 +6993,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APInvoiceStatus.cs" />
+    <Content Include="WorkerRoleName.xml" />
     <Content Include="XapFileDownloadHandler.ashx" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.AWBStatus.cs" />
     <Content Include="packages.config">
