@@ -19,12 +19,14 @@ namespace Logitude.OceanTest.Features.OceanContainerStatus
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare")]
     public partial class GetContainerStatusRequestFeature : object, Xunit.IClassFixture<GetContainerStatusRequestFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -41,7 +43,8 @@ namespace Logitude.OceanTest.Features.OceanContainerStatus
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/OceanContainerStatus", "Get Container Status Request", "\tWith pre-prepared FCL shipment container data\r\n\tWe want to get container status." +
-                    "", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,11 +87,9 @@ namespace Logitude.OceanTest.Features.OceanContainerStatus
         [Xunit.SkippableFactAttribute(DisplayName="Create container status request")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Container Status Request")]
         [Xunit.TraitAttribute("Description", "Create container status request")]
-        [Xunit.TraitAttribute("Category", "mytag")]
         public virtual void CreateContainerStatusRequest()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create container status request", null, tagsOfScenario, argumentsOfScenario);
 #line 6
@@ -191,10 +192,10 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("waiting time is 2 minutes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
- testRunner.When("the communication logs added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("after the communication logs added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
- testRunner.Then("the communication logs status should be \"Waiting\" or \"Done\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the communication logs status should be or \"Done\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
