@@ -712,7 +712,7 @@ namespace Logitude.Customs.BL.Validators
 
             #region DeclarationPayment
             ObjectTable declarationPaymentTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPayment", 0, false);
-            List<CustomsRequiredFieldPM> declarationPaymentRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentTable.Id, tenant);
+            List<CustomsRequiredFieldPM> declarationPaymentRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationPaymentTable.Id, tenant, declaration.Direction);
             List<PropertyInfo> DeclarationPaymentProperties = GetPropertiesForEntity("DeclarationPaymentPM");
 
             foreach (PropertyInfo info in DeclarationPaymentProperties)
