@@ -206,7 +206,7 @@ export class DeclarationList {
 	ImporterNameForExport: string;
 	ExportTaxationDateTime: Date;
 	ExporterImporterCode: string;
-	DeclarationOfficeCodeForExport: string;
+	DeclarationOfficeNameForExport: string;
 	
 }
  

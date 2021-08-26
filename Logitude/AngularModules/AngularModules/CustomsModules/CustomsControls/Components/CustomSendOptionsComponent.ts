@@ -7,6 +7,7 @@ import { CommunicationLogStepListService } from '../../../Common/Services/Extend
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 //////////////////////////////////////////////////////////////////
 
@@ -55,7 +56,7 @@ export class CustomSendOptionsComponent implements OnInit {
     }
 
     public get IsTestTenant() { return SessionLocator.TenantPM.IsTestTenant; }
-    
+    public IsDcaActive: boolean = true;
 
       
     private _CustomSendOptionsArgs: CustomSendOptionsArgs;
@@ -78,6 +79,7 @@ export class CustomSendOptionsComponent implements OnInit {
         this._CustomSendOptionsComponentMenuId = "CustomSendOptionsComponentMenuId_" + curId;
 
         this.EntityResourceService = new EntityResourceService();
+        this.IsDcaActive = !(FeatureLocator.HasFeaturePermession("Customs.Declaration", "DCA"));
 
         
         

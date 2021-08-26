@@ -411,7 +411,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExporterImporterCode  { get; set; }
        [DataMember]
-       public string DeclarationOfficeCodeForExport  { get; set; }
+       public string DeclarationOfficeNameForExport  { get; set; }
    }
 
 }

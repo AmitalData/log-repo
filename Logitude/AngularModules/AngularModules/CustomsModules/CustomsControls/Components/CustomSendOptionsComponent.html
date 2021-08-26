@@ -219,7 +219,7 @@
                 <li>
                     <span (click)="SendWB()">שליחה ברקע</span>
                 </li>
-                <li>
+                <li *ngIf="IsDcaActive">
                     <span (click)="SendD()">כספת</span>
                 </li>
                 <li *ngIf="IsTestTenant && HaveTestCase">
