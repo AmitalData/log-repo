@@ -77,6 +77,7 @@ using WebFreight.Web.Helpers;
             InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
             InterestReportDP.CreditAllotmentPercentage = InteerstReportPM.CreditAllotmentPercentage;
             InterestReportDP.CalCreditAllotmentCommission = InteerstReportPM.CalCreditAllotmentCommission;
+            InterestReportDP.CalculatedPostponedChequesCommision = InteerstReportPM.CalculatedPostponedChequesCommision;
             InterestReportDP.AllotmentCommession = InteerstReportPM.CalCreditAllotmentCommission;
             InterestReportDP.AllotmentCalculation= SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
 
