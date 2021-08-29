@@ -140,6 +140,24 @@ export class CargoTrackingSearchService {
 					}));
 		});
     }
+
+    getUserShipment(SecurityKey: string, tenant: number) {
+        var authHeaders = ServiceHelper.GetHeaders();
+
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserShipment/?' + 'SecurityKey=' + SecurityKey + '&tenant=' + tenant,
+                { headers: authHeaders })
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+
+                        var list = response;
+
+                        return list;
+                    }));
+        });
+    }
+
     GetPublicShipmentReferences(securityKey: string, tenant: number) {
         var authHeaders = ServiceHelper.GetHeaders();
 
