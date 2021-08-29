@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef}  from '@angular/core';
+import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -86,6 +86,12 @@ export class ChartOfAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get ChartOfAccountSecurityLevel() { return this.EntityPM.ChartOfAccountSecurityLevel; }
+    set ChartOfAccountSecurityLevel(value: number) {
+        if (this.EntityPM.ChartOfAccountSecurityLevel != value) {
+            this.EntityPM.ChartOfAccountSecurityLevel = value;
+        }
+    }
 
     SetUIProperties() {
         if (!this.EntityPM.TypeCode) {

@@ -54,7 +54,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         ActiveSecurityLevel,
 	      }
 
 
@@ -110,7 +111,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         ActiveSecurityLevel,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -277,6 +279,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
 				entityPOCO.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveSecurityLevel))
+            {
+				entityPOCO.ActiveSecurityLevel = entityPM.ActiveSecurityLevel;
 			}
 			}
 
@@ -448,6 +455,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ThirdsPeriodsMonths = entityPOCO.ThirdsPeriodsMonths;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveSecurityLevel))
+            {
+					entityPM.ActiveSecurityLevel = entityPOCO.ActiveSecurityLevel;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -612,6 +624,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
                 oldEntityPM.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveSecurityLevel))
+            {
+                oldEntityPM.ActiveSecurityLevel = entityPM.ActiveSecurityLevel;
             }
 			
 		}

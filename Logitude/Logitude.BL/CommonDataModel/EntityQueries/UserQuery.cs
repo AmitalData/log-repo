@@ -95,6 +95,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,                            
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId
@@ -183,6 +184,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection= a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId
@@ -273,6 +275,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId
@@ -360,6 +363,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId
@@ -435,6 +439,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId
@@ -525,6 +530,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId
@@ -613,6 +619,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId
@@ -689,6 +696,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
                               SignatureImageId = a.SignatureImageId
@@ -778,6 +786,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
                                       SignatureImageId = a.SignatureImageId
@@ -864,8 +873,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                                   LayoutDirection = a.LayoutDirection,
                                   SignatureImageId = a.SignatureImageId
 
@@ -941,6 +950,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
 
                               LayoutDirection = a.LayoutDirection,
@@ -1024,6 +1034,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowInboxToolTip = a.ShowInboxToolTip,
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                            UserRoles = a.UserRoles,
+                                           SecurityLevel = a.SecurityLevel,
                                            AdditionalPackagesOnly = a.AdditionalPackagesOnly,
 
                                            LayoutDirection = a.LayoutDirection,
@@ -1093,6 +1104,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowInboxToolTip = a.ShowInboxToolTip,
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                             UserRoles = a.UserRoles,
+                            SecurityLevel = a.SecurityLevel,
                             AdditionalPackagesOnly = a.AdditionalPackagesOnly,
 
                             LayoutDirection = a.LayoutDirection,
@@ -1168,6 +1180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               DocumentFilingInbox = user.DocumentFilingInbox,
                                               ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                                               UserRoles = user.UserRoles,
+                                              SecurityLevel = user.SecurityLevel,
                                               AdditionalPackagesOnly = user.AdditionalPackagesOnly,
                                               SignatureImageId = user.SignatureImageId
 
@@ -1391,7 +1404,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                  UserRoles = a.UserRoles,
-
+                                 SecurityLevel = a.SecurityLevel,
                                  LayoutDirection = a.LayoutDirection,
                                  SignatureImageId = a.SignatureImageId
 
