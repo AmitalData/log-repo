@@ -163,8 +163,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 return AutomationChangedFields.ChangedFields;
             }
-
-
+             
             newValue = IsNewValueShouldBeNull(AutomationChangedFields, newValue) ? null : newValue;
             newValue = GetNewValueForCustomField(AutomationChangedFields, newValue);
             AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
@@ -173,44 +172,47 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         private static object GetNewValueForCustomField(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
         {
-               
-            var type = newValue.GetType();
 
-            var y = type.Name == "String";
-
-
-
-            if (!hasDateTypeField(AutomationChangedFields.SetValueItem) && (AutomationChangedFields.SetValueItem.DataTypeCode.Trim() == "LookUp" && y) || (AutomationChangedFields.SetValueItem.DataTypeCode.Trim() == "PickList" && y))
+            if (HasStringType(newValue)  || HasIntergerType(newValue) || HasBooleanType(newValue))
             {
                 if (AutomationChangedFields.SetValueItem.IsCustomField)
                 {
                     AutomationChangedFields.SetValueItem.Value = newValue.ToString();
-                    newValue = GetNewCustomField(AutomationChangedFields.SetValueItem);
+                    newValue = GetNewCustomFieldClass(AutomationChangedFields.SetValueItem);
                 }
-            } 
-            return newValue; 
-        }
-
-        private static object GetCustomFieldNewValue(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
-        {
-            if (AutomationChangedFields.SetValueItem.IsCustomField)
-            {
-                AutomationChangedFields.SetValueItem.Value = newValue.ToString();
-                newValue = GetNewCustomField(AutomationChangedFields.SetValueItem);
             }
-
             return newValue;
         }
+  
+        private static bool HasStringType(object objectValue)
+        {
+            var valueType = objectValue.GetType();
+            return valueType.Name == "String"; 
+        }
+        private static bool HasBooleanType(object objectValue)
+        {
+            var valueType = objectValue.GetType();
+            return valueType.Name == "Boolean";
+        }
+
+
+
+        private static bool HasIntergerType(object objectValue)
+        {
+            var valueType = objectValue.GetType();
+            return valueType.Name == "Int32";
+        }
+
 
         private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
         {
             object result = null;
 
-            if (item.OperatorCode.Contains("F"))
+            if (item.OperatorCode.Contains("F") && item.DataTypeCode.Trim() != "Boolean")
             {
                 Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
                 if (field != null) result = field.Value;
-                if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value))
+                if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value) && !item.IsCustomField)
                 {
                     result = ConvertToDate(field.Value);
                 }
@@ -220,7 +222,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             else if (item.IsCustomField && hasDateTypeField(item))
             {
                 item.Value = GetDateValue(item);
-                return GetNewCustomField(item);
+                return GetNewCustomFieldClass(item);
             }
 
             else if (hasDateTypeField(item))
@@ -241,7 +243,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             }
             else if (item.IsCustomField)
             {
-                result = GetNewCustomField(item);
+                result = GetNewCustomFieldClass(item);
             }
             else result = item.Value;
 
@@ -272,7 +274,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             return item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date";
         }
 
-        private static object GetNewCustomField(AutomationSetValue item)
+        private static object GetNewCustomFieldClass(AutomationSetValue item)
         {
             string[] objectFieldSeparator = item.ObjectFieldCode.Split('.');
             if (objectFieldSeparator.Length > 2)
