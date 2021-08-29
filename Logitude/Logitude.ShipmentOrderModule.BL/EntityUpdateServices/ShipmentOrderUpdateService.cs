@@ -30,15 +30,15 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
 
         private string GetShipmentIdByNumber(string shipmentNumber, int tenant)
         {
-            if (!string.IsNullOrEmpty(shipmentNumber))
-            {
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                string shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
-                if (string.IsNullOrEmpty(shipmentId))
-                    throw new ApplicationException("Shipment with Shipment Number " + shipmentNumber + " doesn't exist");
-                return shipmentId;
-            }
-            return null;
+            if (string.IsNullOrEmpty(shipmentNumber))            
+                return null;
+            
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            string shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
+            if (string.IsNullOrEmpty(shipmentId))
+                throw new ApplicationException("Shipment with Shipment Number " + shipmentNumber + " doesn't exist");
+            return shipmentId;
+
         }
     }
 }
