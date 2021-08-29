@@ -128,10 +128,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     LoadShipment()
     {
         //this.isLoading = true;
-        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
+        this.searchService.getUserShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
-            console.log("[getShipment]", result);
+            console.log("[getUserShipment]", result);
             this.ShipmentWithMilestones = result;
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
