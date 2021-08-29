@@ -19,23 +19,23 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
                 entityPM.SecurityKey = Guid.NewGuid().ToString("N");
             }
 
-            entityPM.ShipmentId = GetShipmentId(entityPM);
+            entityPM.ShipmentId = GetShipmentIdByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
 
         }
 
         protected override void OnUpdating(ShipmentOrderPM entityPM, ShipmentOrder entityPOCO)
         {
-            entityPM.ShipmentId = GetShipmentId(entityPM);
+            entityPM.ShipmentId = GetShipmentIdByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
         }
 
-        private string GetShipmentId(ShipmentOrderPM entityPM)
+        private string GetShipmentIdByNumber(string shipmentNumber, int tenant)
         {
-            if (!string.IsNullOrEmpty(entityPM.ShipmentNumber))
+            if (!string.IsNullOrEmpty(shipmentNumber))
             {
-                ShipmentQuery shipmentQuery = new ShipmentQuery(entityPM.Tenant);
-                string shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                string shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
                 if (string.IsNullOrEmpty(shipmentId))
-                    throw new ApplicationException("Shipment with Shipment Number " + entityPM.ShipmentNumber + " doesn't exist");
+                    throw new ApplicationException("Shipment with Shipment Number " + shipmentNumber + " doesn't exist");
                 return shipmentId;
             }
             return null;
