@@ -1003,7 +1003,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                      ResellerId = customer.Field2,
                                                                      OpportunityTypeId = a.OpportunityTypeId,
                                                                      ClientId = card.Id,
-                                                                     TenantNumber =card.ReceivablesAccountingCard,
+                                                                     TenantNumber = card.ReceivablesAccountingCard,
                                                                      ClientName = card.EnglishName,
                                                                      Reseller = a.Field1,
                                                                      CountryName = card.CountryName,
@@ -1017,6 +1017,8 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                      NumberOfUsers = a.NumberOfShipments,
                                                                      Total = a.Field4,
                                                                      Totalnet = (a.Field4 == null ? 0 : int.Parse(a.Field4)) * (100 - tenantManagement.ResellerCommission ?? 0) / 100,
+
+                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : a.OpportunityTypeId == "N" ? "-1" : null
 
                                                                  });
 

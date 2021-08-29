@@ -141,6 +141,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             OpportunityQueryService opportunityQueryService = new OpportunityQueryService(tenant);
             List<OpportunityDetails> opportunityDetails = opportunityQueryService.GetLogitudeOpportunities(tenant, logitudeCRMReportFilter);
 
+
+
         }
     }
 

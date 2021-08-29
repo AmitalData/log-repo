@@ -24,5 +24,6 @@ namespace Logitude.CRM.BL.DataContracts
         public int? TenantManagementNumberOfUsers { get; set; }
         public string Total { get; set; }
         public int Totalnet { get; internal set; }
+        public string IsNewCustomer { get; internal set; }
     }
 }
