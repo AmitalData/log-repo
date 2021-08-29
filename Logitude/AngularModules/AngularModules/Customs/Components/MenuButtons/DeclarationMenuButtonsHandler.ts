@@ -199,6 +199,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E") {
                             button.IsHidden = false;
+                            if (this.EntityPM.IsSubmitDeclaration)
+                                button.IsDisabled = false
+                            else
+                                button.IsDisabled = true
                         } else { 
                             button.IsHidden = true;
                         }
@@ -1262,8 +1266,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             EntityPM: this.EntityPM,
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
-        logWindow.Height = 700;
+        logWindow.Width = 770;
+        logWindow.Height = 530;
         logWindow.Title = "סגירת הצהרה";
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
