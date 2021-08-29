@@ -165,6 +165,11 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public bool IsCancelled { get; set; }
         [Column("SecurityKey")]
 	    public string SecurityKey { get; set; }
+        [ForeignKey("Shipment")]
+        [Column("ShipmentId")]
+	    public string ShipmentId { get; set; }
+	      
+        public virtual Shipment Shipment { get; set; }
     }
 }
 	 

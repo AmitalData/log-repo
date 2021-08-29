@@ -134,6 +134,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string CarrierName  { get; set; }
        [DataMember]
        public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string ShipmentId  { get; set; }
    }
 
 }
