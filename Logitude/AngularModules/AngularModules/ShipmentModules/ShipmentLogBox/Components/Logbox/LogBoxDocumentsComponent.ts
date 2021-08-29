@@ -75,8 +75,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public MainCarriageTA: string = "";
-    public MainCarriageTD: string = "";
+    public MainCarriageTA: any = "";
+    public MainCarriageTD: any = "";
     public MainCarriageTALabel: string = "";
     public MainCarriageTDLabel: string = "";
 
