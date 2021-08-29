@@ -23,7 +23,7 @@
                                         <table>
                                             <!-- Code -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 110px;">
+                                                <td style="width: 190px;">
                                                     <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
@@ -66,13 +66,14 @@
                                             <!-- ChartOfAccountSecurityLevel -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel style="width:100px" [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                    <LogLabel [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [InputType]="'integer'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                <td style="top:10px;">
+                                                    <div style="width:110px">
+                                                        <NumberInput style="width: 50px" [(ngModel)]="ChartOfAccountSecurityLevel" name="no" [min]="1" [max]="10"></NumberInput>
+                                                    </div>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>

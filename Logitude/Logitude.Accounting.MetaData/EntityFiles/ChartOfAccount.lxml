@@ -937,6 +937,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ChartOfAccountSecurityLevel&quot;"
     DefaultText="&quot;Chart Of Account Security Level&quot;"
+    FullLocalDefaultText="&quot;רמת הרשאה קבוצת מאזן&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

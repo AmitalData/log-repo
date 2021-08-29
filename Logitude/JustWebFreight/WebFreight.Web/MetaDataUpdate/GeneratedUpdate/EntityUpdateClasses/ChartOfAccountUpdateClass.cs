@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChartOfAccountUpdateClass
    {  		
-		public const string HashString = "5a2fd8847fb5fb5bf9638f16dd94f793";
+		public const string HashString = "921879cc8321b694a1c36c03987f0fd2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -743,6 +743,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountSecurityLevel",
 					  						DefaultText =  "Chart Of Account Security Level",
+					  						FullLocalDefaultText =  "רמת הרשאה קבוצת מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
