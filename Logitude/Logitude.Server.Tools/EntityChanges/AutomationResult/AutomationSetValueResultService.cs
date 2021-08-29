@@ -186,21 +186,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
   
         private static bool HasStringType(object objectValue)
         {
-            var valueType = objectValue.GetType();
-            return valueType.Name == "String"; 
+            return objectValue?.GetType().Name == "String"; 
         }
         private static bool HasBooleanType(object objectValue)
         {
-            var valueType = objectValue.GetType();
-            return valueType.Name == "Boolean";
-        }
-
-
-
+            return objectValue?.GetType().Name == "Boolean"; 
+        } 
         private static bool HasIntergerType(object objectValue)
         {
-            var valueType = objectValue.GetType();
-            return valueType.Name == "Int32";
+            return objectValue?.GetType().Name == "Int32"; 
         }
 
 
