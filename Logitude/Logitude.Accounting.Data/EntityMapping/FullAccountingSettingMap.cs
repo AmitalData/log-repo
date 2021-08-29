@@ -88,6 +88,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.SecondPeriodsMonths).HasColumnName("SecondPeriodsMonths").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.ThirdsPeriodsMonths).HasColumnName("ThirdsPeriodsMonths").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.IsSecurityLevelActivated).HasColumnName("IsSecurityLevelActivated");
         }
     }
 }

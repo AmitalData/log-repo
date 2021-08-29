@@ -43,6 +43,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool? Inactive { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("ChartOfAccountSecurityLevel")]
+	    public int? ChartOfAccountSecurityLevel { get; set; }
     }
 }
 	 

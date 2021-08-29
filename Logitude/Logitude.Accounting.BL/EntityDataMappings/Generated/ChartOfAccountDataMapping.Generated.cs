@@ -30,7 +30,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ParentId, 
 	         TypeCode, 
 	         Inactive, 
-	         SearchFields,
+	         SearchFields, 
+	         ChartOfAccountSecurityLevel,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Inactive, 
 	         TypeName, 
 	         ParentName, 
-	         SearchFields,
+	         SearchFields, 
+	         ChartOfAccountSecurityLevel,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -94,6 +96,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountSecurityLevel))
+            {
+				entityPOCO.ChartOfAccountSecurityLevel = entityPM.ChartOfAccountSecurityLevel;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -147,6 +154,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChartOfAccountSecurityLevel))
+            {
+					entityPM.ChartOfAccountSecurityLevel = entityPOCO.ChartOfAccountSecurityLevel;
+            }
+
 		}
 
 		public void PMToOldPM(ChartOfAccountPM entityPM, ChartOfAccountPM oldEntityPM)
@@ -191,6 +203,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountSecurityLevel))
+            {
+                oldEntityPM.ChartOfAccountSecurityLevel = entityPM.ChartOfAccountSecurityLevel;
             }
 			
 		}

@@ -108,6 +108,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SecondPeriodsMonths  { get; set; }
        [DataMember]
        public string ThirdsPeriodsMonths  { get; set; }
+       [DataMember]
+       public bool IsSecurityLevelActivated  { get; set; }
    }
 
 }

@@ -31,6 +31,8 @@ namespace RestClientApplication
             this.actionCombo.Items.Add("Cancel");
 
             this.apiCombo.Items.Add("Vendor");
+            this.apiCombo.Items.Add("CargoTrackingShipmentDetails");
+
 
         }
 

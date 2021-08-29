@@ -19,6 +19,7 @@ export class ChartOfAccountList {
 	TypeName: string;
 	ParentName: string;
 	SearchFields: string;
+	ChartOfAccountSecurityLevel: number;
 	
 }
  

@@ -195,7 +195,7 @@
 
                                                     <!-- AccountingActivated -->
                                                     <tr class="FormFieldRow">
-                                                        <td >
+                                                        <td>
                                                             <LogLabel [ObjectFieldName]="'AccountingActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
@@ -205,18 +205,17 @@
                                                     </tr>
 
                                                     <!--<tr class="FormFieldRow">
-                                                        <td >
-                                                            <LogLabel [ObjectFieldName]="'AllowMultiRatesInInvoiceLines'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
+        <td >
+            <LogLabel [ObjectFieldName]="'AllowMultiRatesInInvoiceLines'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                        <td colspan="2">
-                                                            <CheckBox [IsChecked]="AllowMultiRatesInInvoiceLines" (Checked)="AllowMultiRatesInInvoiceLines = $event"></CheckBox>
-                                                        </td>
-                                                    </tr>-->
-
+        <td colspan="2">
+            <CheckBox [IsChecked]="AllowMultiRatesInInvoiceLines" (Checked)="AllowMultiRatesInInvoiceLines = $event"></CheckBox>
+        </td>
+    </tr>-->
                                                     <!-- AccountingActivationDate -->
                                                     <tr class="FormFieldRow">
-                                                        <td  style="width: 180px;">
+                                                        <td style="width: 270px;">
                                                             <LogLabel [ObjectFieldName]="'AccountingActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
@@ -344,6 +343,18 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- ActiveSecurityLevel -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'ActiveSecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="ActiveSecurityLevel" (Checked)="ActiveSecurityLevel = $event"></CheckBox>
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
 
                                                 </table>
                                             </td>

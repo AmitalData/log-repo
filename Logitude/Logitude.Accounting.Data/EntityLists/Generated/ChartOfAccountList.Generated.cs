@@ -36,6 +36,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ParentName  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public int? ChartOfAccountSecurityLevel  { get; set; }
    }
 
 }
