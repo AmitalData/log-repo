@@ -159,7 +159,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.SetUIProperties();
 
         if (this.IsInlandDomestic) {
-
+            this.InitializePartners();
         }
 
         else {

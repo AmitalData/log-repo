@@ -376,8 +376,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Field38 = oldEntity.Field38,
                 Field39 = oldEntity.Field39,
                 Field40 = oldEntity.Field40,
-
                 ProjectNumber = oldEntity.ProjectNumber,
+                InlandDomesticFromZipCode = oldEntity.InlandDomesticFromZipCode,
+                InlandDomesticToZipCode = oldEntity.InlandDomesticToZipCode,
+                InlandDomesticFromCity = oldEntity.InlandDomesticFromCity,
+                InlandDomesticToCity = oldEntity.InlandDomesticToCity,
+                InlandDomesticFromCountryId = oldEntity.InlandDomesticFromCountryId,
+                InlandDomesticToCountryId = oldEntity.InlandDomesticToCountryId,
+                InlandDomesticFromTypeCode = oldEntity.InlandDomesticFromTypeCode,
+                InlandDomesticToTypeCode = oldEntity.InlandDomesticToTypeCode,
+                MainCarriageFromPortAddress = oldEntity.MainCarriageFromPortAddress,
+                MainCarriageToPortAddress = oldEntity.MainCarriageToPortAddress,
             };
 
             this.CopyPartners(entityPM, oldEntity);
