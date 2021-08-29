@@ -314,12 +314,12 @@
                             <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}} </span>
 
                             <span *ngIf="hasExportShipmentToggle">
-                                <span class="Date" [class.ActualDate]="MainCarriageTALabel == 'ATA:'" [class.ExpectedDate]="MainCarriageTALabel == 'ETA:'">
-                                    {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
-                                </span>
                                 <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
                                     {{MainCarriageTDLabel}}{{MainCarriageTD | DateTimePipe: 'SMD'}}
                                 </span>
+                                <span class="Date" [class.ActualDate]="MainCarriageTALabel == 'ATA:'" [class.ExpectedDate]="MainCarriageTALabel == 'ETA:'">
+                                    {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
+                                </span> 
                             </span>
                             <span *ngIf="!hasExportShipmentToggle">
                                 <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
