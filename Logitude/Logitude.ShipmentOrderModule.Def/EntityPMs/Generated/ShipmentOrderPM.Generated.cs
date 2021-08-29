@@ -1446,6 +1446,29 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentId  
+	   {
+	    
+	     get
+		{
+		   return shipmentId;
+		 }
+		 set
+		 {
+		   if(shipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

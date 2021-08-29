@@ -68,6 +68,7 @@ export class ShipmentOrderList {
 	CarrierId: string;
 	CarrierName: string;
 	IsCancelled: boolean;
+	ShipmentId: string;
 	
 }
  
