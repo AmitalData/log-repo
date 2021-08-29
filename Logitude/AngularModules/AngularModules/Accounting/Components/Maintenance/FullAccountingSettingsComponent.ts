@@ -167,7 +167,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, enableAllFields);
         this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, enableAllFields);
         this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("ActiveSecurityLevel", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, enableAllFields);
 
     }
 
@@ -464,10 +464,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get ActiveSecurityLevel() { return this.EntityPM.ActiveSecurityLevel; }
-    set ActiveSecurityLevel(value: boolean) {
-        if (this.EntityPM.ActiveSecurityLevel != value) {
-            this.EntityPM.ActiveSecurityLevel = value;
+    get IsSecurityLevelActivated() { return this.EntityPM.IsSecurityLevelActivated; }
+    set IsSecurityLevelActivated(value: boolean) {
+        if (this.EntityPM.IsSecurityLevelActivated != value) {
+            this.EntityPM.IsSecurityLevelActivated = value;
             this.SetUIProperties();
         }
     }

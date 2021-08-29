@@ -343,15 +343,15 @@
                                                         </td>
                                                     </tr>
 
-                                                    <!-- ActiveSecurityLevel -->
+                                                    <!-- IsSecurityLevelActivated -->
                                                     <tr class="FormFieldRow">
                                                         <td>
-                                                            <LogLabel [ObjectFieldName]="'ActiveSecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                            <LogLabel [ObjectFieldName]="'IsSecurityLevelActivated'" [ObjectTableName]="ObjectTableName"
                                                                       [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
                                                         <td colspan="2">
-                                                            <CheckBox [IsChecked]="ActiveSecurityLevel" (Checked)="ActiveSecurityLevel = $event"></CheckBox>
+                                                            <CheckBox [IsChecked]="IsSecurityLevelActivated" (Checked)="IsSecurityLevelActivated = $event"></CheckBox>
                                                         </td>
                                                         <td><div></div></td>
                                                     </tr>
