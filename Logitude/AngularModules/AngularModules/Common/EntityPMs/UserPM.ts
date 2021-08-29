@@ -481,6 +481,11 @@ export class UserPM {
     public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
        
 	 
+    private securityLevel: number;
+    public get SecurityLevel() { return this.securityLevel; }
+    public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
+       
+	 
     private layoutDirection: string;
     public get LayoutDirection() { return this.layoutDirection; }
     public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }

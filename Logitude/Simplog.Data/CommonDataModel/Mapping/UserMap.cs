@@ -100,6 +100,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
             this.Property(t => t.UserRoles).HasColumnName("UserRoles");
             this.Property(t => t.AdditionalPackagesOnly).HasColumnName("AdditionalPackagesOnly");
+            this.Property(t => t.SecurityLevel).HasColumnName("SecurityLevel");
 
 
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 

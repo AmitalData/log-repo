@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle{
         color: #1b90cb;
         font-size: 16px;
@@ -23,7 +23,7 @@
                                         <table>
                                             <!-- Code -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 110px;">
+                                                <td style="width: 190px;">
                                                     <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
@@ -59,6 +59,21 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ChartOfAccountSecurityLevel -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ChartOfAccountSecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="top:10px;">
+                                                    <div style="width:110px">
+                                                        <NumberInput style="width: 50px" [(ngModel)]="ChartOfAccountSecurityLevel" name="no" [min]="1" [max]="10"></NumberInput>
+                                                    </div>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
