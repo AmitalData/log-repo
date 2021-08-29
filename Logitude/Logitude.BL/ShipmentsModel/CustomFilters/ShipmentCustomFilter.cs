@@ -677,16 +677,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                 queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled && d.IsStandalonePickupDelivery == showIsStandalonePickupDelivery);
 
-                //if (showIsCancelled)
-                //{
-                //    queryableData = queryableData.Where(d => d.IsCancelled == true);
-                //}
-                //else
-                //{
-                //    queryableData = queryableData.Where(d => d.IsCancelled == false);
-                //}
-
-
                 return queryableData;
             }
         }
@@ -1242,17 +1232,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
 
                 queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled && d.IsStandalonePickupDelivery == showIsStandalonePickupDelivery);
-
-
-                //if (showIsCancelled)
-                //{
-                //    queryableData = queryableData.Where(d => d.IsCancelled == true);
-                //}
-
-                //else
-                //{
-                //    queryableData = queryableData.Where(d => d.IsCancelled == false);
-                //}
 
                 return queryableData;
             }
