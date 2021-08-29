@@ -35,6 +35,7 @@ using Logitude.CustomsMessaging.Common.DCAParams;
 using System.Configuration;
 using System.Collections.Concurrent;
 using Logitude.Server.Tools.Utils;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -179,6 +180,15 @@ namespace Logitude.CustomsMessaging.Dca
             }
         }
 
+        public bool HasFeature_DcaDirect9200()
+        {
+            //this.IsDcaActive = !(FeatureLocator.HasFeaturePermession("Customs.Declaration", "DCA"));
+            string email = AuthenticationUtil.ResolveUserIdentityName(this._CustomsSettingPM.Tenant);
+            bool  suppressUnifreightDCAServer= SecurityUtility.CheckFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant);
+            Debug.WriteLine($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
+            return suppressUnifreightDCAServer;
+            //return SecurityUtility.CheckContactFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant, email);
+        }
         private List<string> GetAllPreFix(InterfaceTenantDefinitionManagementPM rec)
         {
             var splitter = new string[] { Environment.NewLine };
@@ -214,7 +224,12 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-
+            if (this.HasFeature_DcaDirect9200())
+            {
+                var dcaDirect9200TenantService = new DcaDirect9200TenantService(this._CustomsSettingPM, _AllDcaPreFixWithoutInOutUpper,this._InterfaceListDCA, _AllInterface);
+                dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
+                return;
+            }
 
             var suppressFeature = false;
 
