@@ -55,6 +55,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM = new ExportDeclarationClosingDataPM();
                     this.EntityPM.DeclarationId = id;
                     this.EntityPM.Tenant = this.DecPM.Tenant;
+                    var consignments = this.DecPM.Consignments.filter(x => x.ConsignmentType == 'E');
+                    if (consignments.length == 1) {
+                        this.EntityPM.FinalCargoTypeCode = consignments[0].CargoTypeCode;
+                        this.EntityPM.FinalSecondCargoId = consignments[0].SecondCargoID;
+                        this.EntityPM.FinalThirdCargoId = consignments[0].ThirdCargoID;
+                        this.EntityPM.FinalManifestNumber = consignments[0].ManifestNumber;
+                        this.EntityPM.FinalShipCode = consignments[0].ShipCode;
+                        this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
+                    }
                     this.IsNew = true;
                 } 
                 this.IsReady = true;
