@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
-	         ActiveSecurityLevel,
+	         IsSecurityLevelActivated,
 	      }
 
 
@@ -112,7 +112,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
-	         ActiveSecurityLevel,
+	         IsSecurityLevelActivated,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -281,9 +281,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveSecurityLevel))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
             {
-				entityPOCO.ActiveSecurityLevel = entityPM.ActiveSecurityLevel;
+				entityPOCO.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
 			}
 			}
 
@@ -455,9 +455,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ThirdsPeriodsMonths = entityPOCO.ThirdsPeriodsMonths;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveSecurityLevel))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSecurityLevelActivated))
             {
-					entityPM.ActiveSecurityLevel = entityPOCO.ActiveSecurityLevel;
+					entityPM.IsSecurityLevelActivated = entityPOCO.IsSecurityLevelActivated;
             }
 
 		}
@@ -626,9 +626,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveSecurityLevel))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
             {
-                oldEntityPM.ActiveSecurityLevel = entityPM.ActiveSecurityLevel;
+                oldEntityPM.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
             }
 			
 		}

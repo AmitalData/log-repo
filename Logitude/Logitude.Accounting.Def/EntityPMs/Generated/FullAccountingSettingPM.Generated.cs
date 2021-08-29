@@ -1170,25 +1170,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool activeSecurityLevel ;
+	  private bool isSecurityLevelActivated ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool ActiveSecurityLevel  
+       public bool IsSecurityLevelActivated  
 	   {
 	    
 	     get
 		{
-		   return activeSecurityLevel;
+		   return isSecurityLevelActivated;
 		 }
 		 set
 		 {
-		   if(activeSecurityLevel != value)
+		   if(isSecurityLevelActivated != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveSecurityLevel",OldValue=activeSecurityLevel,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecurityLevelActivated",OldValue=isSecurityLevelActivated,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   activeSecurityLevel=value;
+		   isSecurityLevelActivated=value;
 		   }
 			
 		 }

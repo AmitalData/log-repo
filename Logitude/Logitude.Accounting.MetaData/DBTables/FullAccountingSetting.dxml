@@ -235,7 +235,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ActiveSecurityLevel"
+    Name="IsSecurityLevelActivated"
+    OldNames="ActiveSecurityLevel"
     Type="bit">
     <Constraints
       Nullable="false" />
