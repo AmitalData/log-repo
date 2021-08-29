@@ -76,6 +76,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AgentTalkBackTypeMap());
 	
+            modelBuilder.Configurations.Add(new AmedmentTypeMap());
+	
             modelBuilder.Configurations.Add(new AmendCancellRequestInitiatorMap());
 	
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
@@ -1364,6 +1366,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AgentTalkBackType> AgentTalkBackTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AmedmentType> AmedmentTypes 
 	 {
 	      get; set;
 	 

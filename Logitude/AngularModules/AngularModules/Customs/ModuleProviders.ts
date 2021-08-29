@@ -417,6 +417,7 @@ import { CustomerIndicationTypeListService } from './Services/StandardLists/Cust
 import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/PoaAuthorizationTypeLookupListService';
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
+import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -619,6 +620,7 @@ export class ModuleProviders {
             case "AccumalationStateListService": { myResult = new AccumalationStateListService(); break; }
             case "CouriersVatListService": { myResult = new CouriersVatListService(); break; }
             case "CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
+            case "AmedmentTypeListService": { myResult = new AmedmentTypeListService(); break; }
             case "CustomsAutonomyKeywordListService": { myResult = new CustomsAutonomyKeywordListService(); break; }
             case "StorageStatusListService": { myResult = new StorageStatusListService(); break; }
             case "FreightPaymentMethodListService": { myResult = new FreightPaymentMethodListService(); break; }
