@@ -75,8 +75,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public MainCarriageTA;
-    public MainCarriageTD;
+    public MainCarriageTA: string = "";
+    public MainCarriageTD: string = "";
     public MainCarriageTALabel: string = "";
     public MainCarriageTDLabel: string = "";
 
@@ -235,6 +235,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         } else if (this.ShipmentPM.MainCarriageETA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageETA;
             this.MainCarriageTALabel = 'ETA:';
+        } else {
+            this.MainCarriageTA = "";
+            this.MainCarriageTALabel = "";
         }
     }
 
@@ -245,6 +248,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         } else if (this.ShipmentPM.MainCarriageETD != null) {
             this.MainCarriageTD = this.ShipmentPM.MainCarriageETD;
             this.MainCarriageTDLabel = 'ETD:';
+        } else {
+            this.MainCarriageTD = '';
+            this.MainCarriageTDLabel = '';
         }
     }
 
