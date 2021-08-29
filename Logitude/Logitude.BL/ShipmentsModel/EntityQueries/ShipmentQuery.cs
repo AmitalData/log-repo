@@ -1853,6 +1853,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
+            shipmentPM.BillingStatusId = shipment.BillingStatusId;
+            shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
 
             if (shipmentPM.ProfitCurrencyId != null)
             {
@@ -3837,6 +3839,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
             shipmentPM.StatusId = shipment.StatusId;
+            shipmentPM.BillingStatusId = shipment.BillingStatusId;
+            shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
             shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
             shipmentPM.CustomerId = shipment.CustomerId;
             shipmentPM.DirectionId = shipment.DirectionId;
@@ -4788,6 +4792,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ComputedStatusId = s.ComputedStatusId,
                                                         ComputedStatusDate = s.ComputedStatusDate,
                                                         StatusId = s.StatusId,
+                                                        BillingStatusId = s.BillingStatusId,
+                                                        OperationalStatusId = s.OperationalStatusId,
                                                         StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                         StatusDate = s.StatusDate,
                                                         StatusLocation = s.StatusLocation,
@@ -4972,6 +4978,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
                     shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
                     shipmentPM.StatusId = shipment.StatusId;
+                    shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
+                    shipmentPM.BillingStatusId = shipment.BillingStatusId;
                     shipmentPM.TransportModeId = shipment.TransportModeId;
                     shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
                     shipmentPM.IncotermId = shipment.IncotermId;
@@ -11772,6 +11780,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfInsidePackagesDetails = s.NumberOfInsidePackagesDetails,
                                                          ComputedStatusId = s.ComputedStatusId,
                                                          ComputedStatusDate = s.ComputedStatusDate,
+                                                         BillingStatusId = s.BillingStatusId,
+                                                         OperationalStatusId = s.OperationalStatusId,
                                                          StatusId = s.StatusId,
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,
@@ -13527,6 +13537,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfInsidePackagesDetails = s.NumberOfInsidePackagesDetails,
                                                          ComputedStatusId = s.ComputedStatusId,
                                                          ComputedStatusDate = s.ComputedStatusDate,
+                                                         BillingStatusId = s.BillingStatusId,
+                                                         OperationalStatusId = s.OperationalStatusId,
                                                          StatusId = s.StatusId,
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,
