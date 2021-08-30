@@ -283,6 +283,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
+            
             // Full Accounting - Tax Fields Work 
             this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
@@ -295,6 +296,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant , EntityId = entityPM.Id});
             entityAutomationService.RunAutomation();
 
+            this.ComputeInvoiceAmounts();
             SetPrintNotesForInterestInvoice(entityPM);
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
@@ -350,7 +352,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
         private void SetPrintNotesForInterestInvoice(ARInvoicePM invoice)
         {
             if (invoice.ARInvoiceTypeCode == "IT")
@@ -3154,6 +3155,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             item.Id = IdCounter.GetNumber("ARInvoiceLine", entityPM.Tenant).ToString();
             item.ARInvoiceId = entityPM.Id;
 
+            this.ComputeInvoiceLineAmounts(item);
+
             ARInvoiceLine invoiceLine = new ARInvoiceLine();
             ARInvoiceMapping.MapInvoiceLine(item, invoiceLine, true);
             invoiceLineRepository.Add(invoiceLine);
@@ -4336,6 +4339,66 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             ARInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsNumbersBehaviour(entityPM);
             invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
+        }
+
+        private void ComputeInvoiceLineAmounts(ARInvoiceLinePM invoiceLine )
+        {
+            this.ComputeInvoiceLineLocalAmount(invoiceLine);
+            this.ComputeInvoiceLineProfitAmount(invoiceLine);
+            this.ComputeInvoiceLineInvoiceAmount(invoiceLine);           
+        }
+        private void ComputeInvoiceLineLocalAmount(ARInvoiceLinePM invoiceLine)
+        {
+            if (entityPM.LocalCurrencyId == invoiceLine.ForiegnCurrencyId)
+            {
+                invoiceLine.LocalCurrencyAmount = invoiceLine.ForiegnCurrencyAmount;
+            }
+            else
+            {
+                invoiceLine.LocalCurrencyAmount = MethodHelper.Round((invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate), 2);
+            }
+        }
+        private void ComputeInvoiceLineProfitAmount(ARInvoiceLinePM invoiceLine)
+        {
+            if (entityPM.ProfitCurrencyId == invoiceLine.ForiegnCurrencyId)
+            {
+                invoiceLine.ProfitCurrencyAmount = invoiceLine.ForiegnCurrencyAmount;
+            }
+            else if (entityPM.ProfitCurrencyId == entityPM.LocalCurrencyId)
+            {
+                invoiceLine.ProfitCurrencyAmount = invoiceLine.LocalCurrencyAmount;
+            }
+            else
+            {
+                invoiceLine.ProfitCurrencyAmount = MethodHelper.Round((invoiceLine.LocalCurrencyAmount / entityPM.ProfitCurrencyExchangeRate), 2);
+            }
+        }
+        private void ComputeInvoiceLineInvoiceAmount(ARInvoiceLinePM invoiceLine)
+        {
+            if (entityPM.InvoiceCurrencyId == invoiceLine.ForiegnCurrencyId)
+            {
+                invoiceLine.InvoiceCurrencyAmount = invoiceLine.ForiegnCurrencyAmount;
+            }
+            else if (entityPM.InvoiceCurrencyId == entityPM.LocalCurrencyId)
+            {
+                invoiceLine.InvoiceCurrencyAmount = invoiceLine.LocalCurrencyAmount;
+            }
+            else if (entityPM.InvoiceCurrencyId == entityPM.ProfitCurrencyId)
+            {
+                invoiceLine.InvoiceCurrencyAmount = invoiceLine.ProfitCurrencyAmount;
+            }
+            else
+            {
+                invoiceLine.InvoiceCurrencyAmount = MethodHelper.Round((invoiceLine.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate), 2);
+            }
+        }
+        private void ComputeInvoiceAmounts()
+        {
+            List<ARInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            entityPM.SubTotalInLocalCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
+            entityPM.SubTotalInInvoiceCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+            entityPM.AmountInLocalCurrency = MethodHelper.Round(entityPM.SubTotalInLocalCurrency + entityPM.TotalVATs.Sum(s => s.LocalVATAmount), 2);
+            entityPM.AmountInInvoiceCurrency = MethodHelper.Round(entityPM.SubTotalInInvoiceCurrency + entityPM.TotalVATs.Sum(s => s.InvoiceCurrencyVATAmount), 2);
         }
     }
 }
