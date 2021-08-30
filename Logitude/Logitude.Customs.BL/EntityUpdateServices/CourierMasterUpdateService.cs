@@ -362,7 +362,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                new GGGQCPM(){ 
                                     ChangeSetOp= ChangeSetOperation.Insert,
                                      FIELDID= "TASK_PARAM",
-                                      FIELDVAL= "PROC=A1468 "+(char)27+"; PRIMARY_NUM="+entityPM.Id
+                                      FIELDVAL= "PROC=A1468"+(char)27+"PRIMARY_NUM="+entityPM.Id
                                }
                           }
                         
