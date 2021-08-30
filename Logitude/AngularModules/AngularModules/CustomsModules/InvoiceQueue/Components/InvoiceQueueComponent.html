@@ -676,7 +676,7 @@
             <td style="width: 35%;bottom:13%;">
                 <div style="height : 100%">
 
-                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">חשבונית שילוח משולבת</span>
+                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">חשבונית שילוח / משולבת</span>
 
                     <br />
                     <br />
@@ -706,6 +706,18 @@
                                     <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div style="text-align:right">
                                             <span>{{item.ForwarderFile}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                            </log-column>
+                            <log-column [header]="'לקוח'"
+                                        [width]="'80'" [Alignment]="'Right'"
+                                        [binding]="'BillTo'">
+                                <ng-template let-item>
+
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div style="text-align:right">
+                                            <span>{{item.BillTo}}</span>
                                         </div>
                                     </log-cell-template>
                                 </ng-template>
