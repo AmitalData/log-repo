@@ -5283,6 +5283,40 @@ namespace Unifreight.Data.AmitalModel
                    .HasColumnName(@"UNIT_ID")
                    .HasMaxLength(3)
                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+    .Property(p => p.FACTOR)
+        .HasColumnType("decimal");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.VERIFICATIONNUMBER)
+                    .HasColumnName(@"VERIFICATION_NUMBER")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.TARIFFID)
+                    .HasColumnName(@"TARIFF_ID")
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.IMPAPPROVTYPEID)
+                    .HasColumnName(@"IMP_APPROV_TYPE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.SIVUGINSTRUCTION)
+                    .HasColumnName(@"SIVUG_INSTRUCTION")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.REMARKSMAKAT)
+                    .HasColumnName(@"REMARKS_MAKAT")
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.REMARKSPROTEST)
+                    .HasColumnName(@"REMARKS_PROTEST")
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar2");
+
             #endregion
 
             #region CFICONN
@@ -7774,6 +7808,56 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GGGQC
+
+            modelBuilder.Entity<GGGQC>()
+                .HasKey(p => new { p.QUEID, p.FIELDID })
+                .ToTable("GGGQC", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.QUEID)
+                    .HasColumnName(@"QUE_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.FIELDID)
+                    .HasColumnName(@"FIELD_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.FIELDVAL)
+                    .HasColumnName(@"FIELD_VAL")
+                    .HasColumnType("clob");
+
+            #endregion
+
+            #region GAQTEAMUSR
+
+            modelBuilder.Entity<GAQTEAMUSR>()
+                .HasKey(p => new { p.TEAMID, p.USRCODE })
+                .ToTable("GAQTEAMUSR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GAQTEAMUSR>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAMUSR>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -7881,5 +7965,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GSCUSR> GSCUSRs { get; set; }
         public virtual DbSet<GCBSCRNVWU> GCBSCRNVWUs { get; set; }
         public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
+        public virtual DbSet<GGGQC> GGGQCs { get; set; }
+        public virtual DbSet<GAQTEAMUSR> GAQTEAMUSRs { get; set; }
     }
 }
