@@ -652,56 +652,63 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
 
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
-                var itemRepo = new GTBITEMRepository(GetAmitalContext(tenant));
-
-                string partner = GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
-                if (partner == "S") // If Supplier get Unifreight card
+                if (setting.IsConnectedToUniFreight)
                 {
-                    customerCode = GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
-                }
+                    var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
+                    var itemRepo = new GTBITEMRepository(GetAmitalContext(tenant));
 
-                if (string.IsNullOrWhiteSpace(customerCode))
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
-
-
-                var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
-                var q =
-                from itm in itemRepo
-                    .GetAll()
-                    .Select(rec => new CustomsPartnersItemList()
+                    string partner = GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
+                    if (partner == "S") // If Supplier get Unifreight card
                     {
-                        Id = rec.ITEMID,
-                        ClassificationCode = rec.PRATID,
-                        ItemCode = rec.ITEMID,
-                        CustomerId = rec.PARTNERID,
-                        CustomerName = rec.PARTNERID,
-                        Name = rec.DESCRIPTION,
-                        VendorId = rec.PARTNERID,
-                        SearchFields = rec.SEARCHENG
-                    })
-                select new { itm };
-                if (!string.IsNullOrWhiteSpace(customerCode))
-                {
-                    q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
+                        customerCode = GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
+                    }
+
+                    if (string.IsNullOrWhiteSpace(customerCode))
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    }
+
+
+                    var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
+                    var q =
+                    from itm in itemRepo
+                        .GetAll()
+                        .Select(rec => new CustomsPartnersItemList()
+                        {
+                            Id = rec.ITEMID,
+                            ClassificationCode = rec.PRATID,
+                            ItemCode = rec.ITEMID,
+                            CustomerId = rec.PARTNERID,
+                            CustomerName = rec.PARTNERID,
+                            Name = rec.DESCRIPTION,
+                            VendorId = rec.PARTNERID,
+                            SearchFields = rec.SEARCHENG
+                        })
+                    select new { itm };
+                    if (!string.IsNullOrWhiteSpace(customerCode))
+                    {
+                        q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
+                    }
+                    if (!string.IsNullOrWhiteSpace(search))
+                    {
+                        search = search.ToUpper();
+                        q = q.Where(rec => rec.itm.ItemCode.Contains(search) | rec.itm.SearchFields.Contains(search));
+                    }
+                    q = q.Distinct();
+                    q = q.Take(top);
+
+                    var aynList = q.ToList();
+                    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    #endregion
+
+                    return Request.CreateResponse(HttpStatusCode.OK, l);
                 }
-                if (!string.IsNullOrWhiteSpace(search))
-                {
-                    search = search.ToUpper();
-                    q = q.Where(rec => rec.itm.ItemCode.Contains(search) | rec.itm.SearchFields.Contains(search));
-                }
-                q = q.Distinct();
-                q = q.Take(top);
+                return Request.CreateResponse(HttpStatusCode.OK);
 
-                var aynList = q.ToList();
-                var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
-
-                #endregion
-
-                return Request.CreateResponse(HttpStatusCode.OK, l);
             }
             catch (Exception ex)
             {
@@ -787,71 +794,78 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
 
-                var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
-                //var vendorRepo = new CTBCUSTSUPRepository(GetAmitalContext(tenant));
-                var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                if (string.IsNullOrWhiteSpace(customerCode))
+                if (setting.IsConnectedToUniFreight)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
+                    var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
+                    //var vendorRepo = new CTBCUSTSUPRepository(GetAmitalContext(tenant));
+                    var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
 
-                var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
-                var q =
-                from itm in itemRepo
-                    .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
-                    .Select(rec => new CustomsPartnersItemList()
+                    if (string.IsNullOrWhiteSpace(customerCode))
                     {
-                        Id = rec.COUNTER.ToString(),
-                        ClassificationCode = rec.PRATID,
-                        ItemCode = rec.ITEMNO,
-                        CustomerId = rec.PARTNERID,
-                        CustomerName = rec.PARTNERID,
-                        Name = rec.NAMEENG,
-                        VendorId = rec.SAPAKID,
-                        SearchFields = rec.SEARCHENG,
-                        OriginCountryCode = rec.ORIGINCOUNTRY,
-                        InvoiceQuantityType = rec.UNITID,
-                    })
-                select new { itm };
-                if (!string.IsNullOrWhiteSpace(customerCode))
-                {
-                    q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
-                }
-
-                if (searchNULLVendor)
-                {
-                    if (!string.IsNullOrWhiteSpace(vendorId))
-                    {
-                        q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
                     }
-                    else
+
+                    var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
+                    var q =
+                    from itm in itemRepo
+                        .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
+                        .Select(rec => new CustomsPartnersItemList()
+                        {
+                            Id = rec.COUNTER.ToString(),
+                            ClassificationCode = rec.PRATID,
+                            ItemCode = rec.ITEMNO,
+                            CustomerId = rec.PARTNERID,
+                            CustomerName = rec.PARTNERID,
+                            Name = rec.NAMEENG,
+                            VendorId = rec.SAPAKID,
+                            SearchFields = rec.SEARCHENG,
+                            OriginCountryCode = rec.ORIGINCOUNTRY,
+                            InvoiceQuantityType = rec.UNITID,
+                        })
+                    select new { itm };
+                    if (!string.IsNullOrWhiteSpace(customerCode))
                     {
-                        q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
+                        q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
                     }
-                }
-                else if (!string.IsNullOrWhiteSpace(vendorId))
-                {
-                    q = q.Where(rec => rec.itm.VendorId.Equals(vendorId));
-                }
-                
-                if (!string.IsNullOrWhiteSpace(search))
-                {
-                    search = search.ToUpper();
-                    q = q.Where(rec => rec.itm.ItemCode.Contains(search) ||
-                    rec.itm.ClassificationCode.Contains(search) ||
-                    rec.itm.SearchFields.Contains(search) ||
-                    rec.itm.VendorId.Contains(search));
-                }
-                q = q.Distinct();
-                q = q.Take(top);
 
-                var aynList = q.ToList();
-                var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+                    if (searchNULLVendor)
+                    {
+                        if (!string.IsNullOrWhiteSpace(vendorId))
+                        {
+                            q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
+                        }
+                        else
+                        {
+                            q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(vendorId))
+                    {
+                        q = q.Where(rec => rec.itm.VendorId.Equals(vendorId));
+                    }
 
-                #endregion
+                    if (!string.IsNullOrWhiteSpace(search))
+                    {
+                        search = search.ToUpper();
+                        q = q.Where(rec => rec.itm.ItemCode.Contains(search) ||
+                        rec.itm.ClassificationCode.Contains(search) ||
+                        rec.itm.SearchFields.Contains(search) ||
+                        rec.itm.VendorId.Contains(search));
+                    }
+                    q = q.Distinct();
+                    q = q.Take(top);
 
-                return Request.CreateResponse(HttpStatusCode.OK, l);
+                    var aynList = q.ToList();
+                    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    #endregion
+
+                    return Request.CreateResponse(HttpStatusCode.OK, l);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -883,63 +897,71 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
 
-                var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
-                var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                if (string.IsNullOrWhiteSpace(customerCode))
+                if (setting.IsConnectedToUniFreight)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
 
-                var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
-                var q =
-                from itm in itemRepo
-                    .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
-                    .Select(rec => new CustomsPartnersItemList()
+                    var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
+                    var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
+
+                    if (string.IsNullOrWhiteSpace(customerCode))
                     {
-                        Id = rec.COUNTER.ToString(),
-                        ClassificationCode = rec.PRATID,
-                        ItemCode = rec.ITEMNO,
-                        CustomerId = rec.PARTNERID,
-                        CustomerName = rec.PARTNERID,
-                        Name = rec.NAMEENG,
-                        VendorId = rec.SAPAKID,
-                        SearchFields = rec.SEARCHENG,
-                        OriginCountryCode = rec.ORIGINCOUNTRY,
-                        InvoiceQuantityType = rec.UNITID,
-                    })
-                select new { itm };
-                if (!string.IsNullOrWhiteSpace(customerCode))
-                {
-                    q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
-                }
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    }
 
-                if (!string.IsNullOrWhiteSpace(vendorId))
-                {
-                    if (searchNULLVendor)
+                    var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
+                    var q =
+                    from itm in itemRepo
+                        .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
+                        .Select(rec => new CustomsPartnersItemList()
+                        {
+                            Id = rec.COUNTER.ToString(),
+                            ClassificationCode = rec.PRATID,
+                            ItemCode = rec.ITEMNO,
+                            CustomerId = rec.PARTNERID,
+                            CustomerName = rec.PARTNERID,
+                            Name = rec.NAMEENG,
+                            VendorId = rec.SAPAKID,
+                            SearchFields = rec.SEARCHENG,
+                            OriginCountryCode = rec.ORIGINCOUNTRY,
+                            InvoiceQuantityType = rec.UNITID,
+                        })
+                    select new { itm };
+                    if (!string.IsNullOrWhiteSpace(customerCode))
                     {
-                        q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
+                        q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(vendorId))
+                    {
+                        if (searchNULLVendor)
+                        {
+                            q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
+                        }
+                        else
+                        {
+                            q = q.Where(rec => rec.itm.VendorId.Equals(vendorId));
+                        }
                     }
                     else
                     {
-                        q = q.Where(rec => rec.itm.VendorId.Equals(vendorId));
+                        q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
                     }
+
+                    q = q.Where(rec => rec.itm.ItemCode.Equals(itemCode)); // Contains
+                    q = q.Distinct();
+                    q = q.Take(top);
+
+                    var aynList = q.ToList();
+                    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    #endregion
+
+                    return Request.CreateResponse(HttpStatusCode.OK, l);
                 }
-                else
-                {
-                    q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
-                }
-
-                q = q.Where(rec => rec.itm.ItemCode.Equals(itemCode)); // Contains
-                q = q.Distinct();
-                q = q.Take(top);
-
-                var aynList = q.ToList();
-                var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
-
-                #endregion
-
-                return Request.CreateResponse(HttpStatusCode.OK, l);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -970,59 +992,67 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
-                var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
-
-                if (string.IsNullOrWhiteSpace(customerCode))
+                if (setting.IsConnectedToUniFreight)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
 
-                var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
 
-                var q =
-                from itm in itemRepo
-                    .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
-                    .Select(rec => new CustomsPartnersItemList()
+                    var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
+                    var itemRepo = new GITITEMRepository(GetAmitalContext(tenant));
+
+                    if (string.IsNullOrWhiteSpace(customerCode))
                     {
-                        Id = rec.COUNTER.ToString(),
-                        ClassificationCode = rec.PRATID,
-                        ItemCode = rec.ITEMNO,
-                        CustomerId = rec.PARTNERID,
-                        CustomerName = rec.PARTNERID,
-                        Name = rec.NAMEENG,
-                        VendorId = rec.SAPAKID,
-                        SearchFields = rec.SEARCHENG,
-                        OriginCountryCode = rec.ORIGINCOUNTRY,
-                        InvoiceQuantityType = rec.UNITID,
-                    })
-                select new { itm };
-                if (!string.IsNullOrWhiteSpace(customerCode))
-                {
-                    q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    }
+
+                    var cardDetails = cardRepo.GetAll().Where(rec => rec.CARDID == customerCode).FirstOrDefault();
+
+                    var q =
+                    from itm in itemRepo
+                        .GetAll().Where(rec => rec.ITEMCANCELLED != "T")
+                        .Select(rec => new CustomsPartnersItemList()
+                        {
+                            Id = rec.COUNTER.ToString(),
+                            ClassificationCode = rec.PRATID,
+                            ItemCode = rec.ITEMNO,
+                            CustomerId = rec.PARTNERID,
+                            CustomerName = rec.PARTNERID,
+                            Name = rec.NAMEENG,
+                            VendorId = rec.SAPAKID,
+                            SearchFields = rec.SEARCHENG,
+                            OriginCountryCode = rec.ORIGINCOUNTRY,
+                            InvoiceQuantityType = rec.UNITID,
+                        })
+                    select new { itm };
+                    if (!string.IsNullOrWhiteSpace(customerCode))
+                    {
+                        q = q.Where(rec => rec.itm.CustomerId.Equals(customerCode));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(vendorId))
+                    {
+                        q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
+                    }
+                    else
+                    {
+                        q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
+                    }
+
+                    name = name.ToUpper();
+                    q = q.Where(rec => rec.itm.SearchFields.Contains(name));
+                    q = q.Distinct();
+                    q = q.Take(top);
+
+                    var aynList = q.ToList();
+                    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    #endregion
+
+                    return Request.CreateResponse(HttpStatusCode.OK, l);
                 }
-
-                if (!string.IsNullOrWhiteSpace(vendorId))
-                {
-                    q = q.Where(rec => rec.itm.VendorId.Equals(vendorId) || rec.itm.VendorId.Equals("NULL"));
-                }
-                else
-                {
-                    q = q.Where(rec => rec.itm.VendorId.Equals("NULL"));
-                }
-
-                name = name.ToUpper();
-                q = q.Where(rec => rec.itm.SearchFields.Contains(name));
-                q = q.Distinct();
-                q = q.Take(top);
-
-                var aynList = q.ToList();
-                var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
-
-                #endregion
-
-                return Request.CreateResponse(HttpStatusCode.OK, l);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -1347,11 +1377,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext myContext = CustomContext.GetContext(tenant);
                 DeclarationQueryService queryService = new DeclarationQueryService(myContext);
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant); 
-                if (isNoIncotermCheck == "Y")
+                if (setting.IsConnectedToUniFreight)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                    string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant);
+                    if (isNoIncotermCheck == "Y")
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, false);
+                    }
                 }
 
                 var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
