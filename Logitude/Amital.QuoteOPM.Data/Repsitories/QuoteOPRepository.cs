@@ -40,7 +40,18 @@ namespace Amital.QuoteOPM.Data.Repsitories
             return (from record in context.QuoteOPs where record.Tenant == tenant && record.IsCancelled == false select record).Count();
         }
 
+      
+
+        public IQueryable<QuoteOP> GetAllIncludeStage(int tenant)
+        {
+            return from a in context.QuoteOPs.Include("Stage")
+                   where a.Tenant == tenant
+                   select a;
+        }
+
         
+
+
 
         public IQueryable<QuoteOP> GetSentQuotes(int tenant)
         {

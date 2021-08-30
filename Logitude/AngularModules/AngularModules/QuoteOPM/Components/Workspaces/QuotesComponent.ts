@@ -37,7 +37,7 @@ export class QuotesComponent extends BaseComponent {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
 
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
+        //this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => {
                 this.IsResourcesReady = true;
                 this.InitializeServices();
@@ -45,7 +45,7 @@ export class QuotesComponent extends BaseComponent {
                 this.BuildTopQuotesFilters();
                 this.InitializeFilters();
             });
-        });
+        //});
     }
 
     private filterName_RecordsType: string = "RecordsType";
@@ -687,7 +687,7 @@ export class QuotesComponent extends BaseComponent {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Quote', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Quotes") });
+                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'QuoteOP', BackButtonLabel: TextCodeTranslator.Translate("General.MH.QuoteOPs") });
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                     this.LoadAllScreenData();
                     //this.isWindowOpened = false;
@@ -697,6 +697,7 @@ export class QuotesComponent extends BaseComponent {
     RunQuoteWizard() {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
+        logWindow.RTL = false;
         logWindow.Width = 1200;
         logWindow.Height = 800;
         logWindow.WindowArgs = args;
