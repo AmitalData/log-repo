@@ -174,6 +174,8 @@ namespace Logitude.OceanTest.Models.Builders
 
         public ShipmentBuilder ShipmentPackages(List<PackagePM> shipmentPackages)
         {
+            if (_shipmentPM.ShipmentPackages == null)
+                _shipmentPM.ShipmentPackages = new List<PackagePM>();
             _shipmentPM.ShipmentPackages.AddRange(shipmentPackages);
             return this;
         }

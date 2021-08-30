@@ -84,14 +84,14 @@ namespace Logitude.OceanTest.Features.OceanContainerStatus
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get container Statuses")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get container statuses")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Container Statuses")]
-        [Xunit.TraitAttribute("Description", "Get container Statuses")]
+        [Xunit.TraitAttribute("Description", "Get container statuses")]
         public virtual void GetContainerStatuses()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get container Statuses", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get container statuses", null, tagsOfScenario, argumentsOfScenario);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -119,7 +119,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get container status request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
- testRunner.Then("get request status OK", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("container Statuses should be change successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

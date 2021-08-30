@@ -12,16 +12,16 @@ namespace Logitude.OceanTest.Steps.OceanContainerStatus
     public class GetContainerStatusesSteps
     {
         public OceanContext _oceanContext { get; set; }
-        public ContainerStatusesServices _getContainerStatusesServices { get; set; }
-        public GetContainerStatusesSteps(OceanContext oceanContext, ContainerStatusesServices getContainerStatusesServices)
+        public ContainerStatusesServices _containerStatusesServices { get; set; }
+        public GetContainerStatusesSteps(OceanContext oceanContext, ContainerStatusesServices containerStatusesServices)
         {
             _oceanContext = oceanContext;
-            _getContainerStatusesServices = getContainerStatusesServices;
+            _containerStatusesServices = containerStatusesServices;
         }
         [Given(@"Response ""(.*)"" Data")]
         public void GivenResponseData(string XMLFile)
         {
-            _oceanContext.ShipmentContainerSimulator = _getContainerStatusesServices.CreateShipmentContainerSimulator(XMLFile);
+            _oceanContext.ShipmentContainerSimulator = _containerStatusesServices.CreateShipmentContainerSimulator(XMLFile);
         }
 
         [When(@"get container status request")]
@@ -34,10 +34,10 @@ namespace Logitude.OceanTest.Steps.OceanContainerStatus
         [Then(@"container Statuses should be change successfully")]
         public void ThenContainerStatusesShouldBeChangeSuccessfully()
         {
-            _getContainerStatusesServices.ValidateShipmentContainerSimulator(_oceanContext.ShipmentContainerSimulator);
+            _containerStatusesServices.ValidateShipmentContainerSimulator(_oceanContext.ShipmentContainerSimulator);
             var TryEvreySecound = 4;
             var TineLifeInSecound = 60;
-            Waiter.RunAndWait(TryEvreySecound, TineLifeInSecound,()=>_getContainerStatusesServices.CheckWorkerQuewe(_oceanContext.ShipmentContainerSimulator));
+            Waiter.RunAndWait(TryEvreySecound, TineLifeInSecound,()=>_containerStatusesServices.CheckWorkerQuewe(_oceanContext.ShipmentContainerSimulator));
 
         }
 

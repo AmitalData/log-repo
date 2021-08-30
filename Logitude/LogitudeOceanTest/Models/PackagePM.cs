@@ -11,8 +11,15 @@
         public int? Quantity { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentNumber { get; set; }
-        public int ChangeSetOp { get; set; }
+        public string ChangeSetOp { get; set; }
         public string ContainerNumber { get; set; }
+        public string PackageTypeId { get; set; }
+        public string FlashPointTemperatureUnitCode { get; set; }
+        public string TemperatureUnitCode { get; set; }
+
+
+
+
 
     }
 }

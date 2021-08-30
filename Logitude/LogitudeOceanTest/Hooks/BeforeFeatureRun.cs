@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.OceanTest.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +8,15 @@ using TechTalk.SpecFlow;
 
 namespace Logitude.OceanTest.Hooks
 {
-    public class BeforeFeatureRun
+    [Binding]
+    public static class BeforeFeatureRun
     {
-        [BeforeFeature("Pre-Prepare")]
-        public void SetUpPrepareDataBeforeFeatureRun()
-        {
-            CreateShipmentWithContainers();
-        }
-        public void CreateShipmentWithContainers()
-        {
 
+        [BeforeFeature("Pre-Prepare")]
+        public static void SetUpPrepareDataBeforeFeatureRun()
+        {
+            new ShipmentDataPreparation().Prepar();
         }
+        
     }
 }

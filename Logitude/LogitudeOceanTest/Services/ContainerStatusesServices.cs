@@ -1,4 +1,9 @@
 ﻿using Logitude.OceanTest.Models;
+using Logitude.OceanTest.Models.Builders;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +30,10 @@ namespace Logitude.OceanTest.Services
 
         internal bool CheckWorkerQuewe(ShipmentContainerSimulator shipmentContainerSimulator)
         {
+            _oceanContext.ShipmentContainerSimulator = APICaller.CallPost<ShipmentContainerSimulator>(_oceanContext.ShipmentContainerSimulator, Urls.ShipmentContainersWebServiceController, UserTenant.Token)?.Data;
 
             return false;
         }
+        
     }
 }
