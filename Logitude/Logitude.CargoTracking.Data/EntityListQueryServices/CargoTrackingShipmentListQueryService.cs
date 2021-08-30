@@ -119,6 +119,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ForwardingHouse = shipment.ForwardingHouse,
 
                                                                ImportManifest = shipment.ImportManifest,
+
                                                                GoodsClassificationDate = shipment.GoodsClassificationDate,
                                                                GoodsClassificationDone = shipment.GoodsClassificationDone,
                                                                GoodsClassificationNotes = shipment.GoodsClassificationNotes,
@@ -133,7 +134,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                GatepassArrivedDone = shipment.GatepassArrivedDone,
                                                                GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
                                                                GatepassArrivedNotes = shipment.GatepassArrivedNotes,
-                                                               
+
+                                                               ShipmentTypeCode = shipment.ShipmentTypeCode
+
                                                            });
             return query;
         }
