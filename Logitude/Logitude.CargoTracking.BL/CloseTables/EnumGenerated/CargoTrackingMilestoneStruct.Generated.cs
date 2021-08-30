@@ -17,7 +17,7 @@ namespace Logitude.CargoTracking.BL.CloseTables
         public const string Departure = "4";
         public const string Arrival = "5";
         public const string ToWarehouse = "6";
-        public const string AssignedToCustomsAgent = "7";
+        public const string AssignedToCustomsBroker = "7";
         public const string CustomsProcess = "8";
         public const string GoodsClassification = "9";
         public const string DocumentInspection = "10";

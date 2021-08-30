@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;f40c&quot;"
+  Code="&quot;8e39&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -487,9 +487,10 @@
       LocalName="&quot;To Warehouse&quot;" />
     <Record
       Code="&quot;7&quot;"
-      EnglishName="&quot;Assigned To Customs Agent&quot;"
-      SearchFields="&quot;7,Assigned To Customs Agent&quot;"
-      LocalName="&quot;Assigned To Customs Agent&quot;" />
+      EnglishName="&quot;Assigned To Customs Broker&quot;"
+      SearchFields="&quot;7,Assigned To Customs Broker&quot;"
+      LocalName="&quot;Assigned To Customs Broker&quot;"
+      Inactive="false" />
     <Record
       Code="&quot;8&quot;"
       EnglishName="&quot;Customs Process&quot;"
