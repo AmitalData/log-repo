@@ -876,29 +876,9 @@ export class SendDeclarationService implements OnDestroy {
                     var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
 
-                    this.DeclarationService.GetAcceptDeclarationAmendment(this.EntityPM.Id).subscribe(data => {
-
-
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({
-                                    EntityId: data.Data.Id,
-                                    ObjectTableName: "Customs.Declaration"
-                                });
-                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(data.Data.DeclarationId, { rowIndex: SessionLocator.SelectedSession.SessionLocation.viewContainerRef. });
-                                 });
-                            });
-
-                    });
-
-                   
-
-
-                    //this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
-                    //this.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             }
             ).catch((err) => {
