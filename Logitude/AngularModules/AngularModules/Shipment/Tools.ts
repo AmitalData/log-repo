@@ -2307,15 +2307,11 @@ export class ShipmentTool {
         shipmentPM.ForwarderStandaloneShipmentId = shipment.Id;
         shipmentPM.ParentShipmentDirectionId = shipment.DirectionId;
         shipmentPM.ParentShipmentNumber = shipment.ShipmentNumber;
-        shipmentPM.ParentShipmentType = shipment.ShipmentType;
+        shipmentPM.ParentShipmentType = shipment.ShipmentType;         
 
         if (delivery) {
             shipmentPM.StandalonePickupDeliveryId = delivery.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;            
-            shipmentPM.ShipperId = delivery.FromPartnerCardId;
-            shipmentPM.ConsigneeId = delivery.ToPartnerCardId;
-            shipmentPM.ShipperAddressId = delivery.FromAddressId;
-            shipmentPM.ConsigneeAddressId = delivery.ToAddressId;
+            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;
             shipmentPM.MainCarriageFromPartnerId = delivery.FromPartnerCardId;
             shipmentPM.MainCarriageFromAddressId = delivery.FromAddressId;
             shipmentPM.MainCarriageToPartnerId = delivery.ToPartnerCardId;
@@ -2329,15 +2325,23 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETA = delivery.ETA;
             shipmentPM.MainCarriageATD = delivery.ATD;
             shipmentPM.MainCarriageATA = delivery.ATA;
+            shipmentPM.InlandDomesticFromTypeCode = delivery.PickUpDeliveryFromTypeCode;
+            shipmentPM.InlandDomesticToTypeCode = delivery.PickUpDeliveryToTypeCode;
+            shipmentPM.MainCarriageFromPortId = delivery.FromPortId;
+            shipmentPM.MainCarriageToPortId = delivery.ToPortId;
+            shipmentPM.InlandDomesticFromCity = delivery.FromAddressCity;
+            shipmentPM.InlandDomesticToCity = delivery.ToAddressCity;
+            shipmentPM.InlandDomesticFromCountryId = delivery.FromAddressCountryId;
+            shipmentPM.InlandDomesticToCountryId = delivery.ToAddressCountryId;
+            shipmentPM.InlandDomesticFromZipCode = delivery.FromAddressZipCode;
+            shipmentPM.InlandDomesticToZipCode = delivery.ToAddressZipCode;
+            shipmentPM.MainCarriageFromPortAddress = delivery.FromAddress;
+            shipmentPM.MainCarriageToPortAddress = delivery.ToAddress;
         }
 
         else if (pickup) {
             shipmentPM.StandalonePickupDeliveryId = pickup.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;            
-            shipmentPM.ShipperId = pickup.FromPartnerCardId;
-            shipmentPM.ConsigneeId = pickup.ToPartnerCardId;
-            shipmentPM.ShipperAddressId = pickup.FromAddressId;
-            shipmentPM.ConsigneeAddressId = pickup.ToAddressId;
+            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;
             shipmentPM.MainCarriageFromPartnerId = pickup.FromPartnerCardId;
             shipmentPM.MainCarriageFromAddressId = pickup.FromAddressId;
             shipmentPM.MainCarriageToPartnerId = pickup.ToPartnerCardId;
@@ -2350,7 +2354,19 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETD = pickup.ETD;
             shipmentPM.MainCarriageETA = pickup.ETA;
             shipmentPM.MainCarriageATD = pickup.ATD;
-            shipmentPM.MainCarriageATA = pickup.ATA;            
+            shipmentPM.MainCarriageATA = pickup.ATA;
+            shipmentPM.InlandDomesticFromTypeCode = pickup.PickUpDeliveryFromTypeCode;
+            shipmentPM.InlandDomesticToTypeCode = pickup.PickUpDeliveryToTypeCode;
+            shipmentPM.MainCarriageFromPortId = pickup.FromPortId;
+            shipmentPM.MainCarriageToPortId = pickup.ToPortId;
+            shipmentPM.InlandDomesticFromCity = pickup.FromAddressCity;
+            shipmentPM.InlandDomesticToCity = pickup.ToAddressCity;
+            shipmentPM.InlandDomesticFromCountryId = pickup.FromAddressCountryId;
+            shipmentPM.InlandDomesticToCountryId = pickup.ToAddressCountryId;
+            shipmentPM.InlandDomesticFromZipCode = pickup.FromAddressZipCode;
+            shipmentPM.InlandDomesticToZipCode = pickup.ToAddressZipCode;
+            shipmentPM.MainCarriageFromPortAddress = pickup.FromAddress;
+            shipmentPM.MainCarriageToPortAddress = pickup.ToAddress;
         }
 
         return shipmentPM;

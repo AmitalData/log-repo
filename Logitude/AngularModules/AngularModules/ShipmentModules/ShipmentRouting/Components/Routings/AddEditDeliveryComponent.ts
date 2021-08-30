@@ -133,7 +133,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     get IsCreateStandaloneShipmentEnabled() {
         var isEnabled: boolean = false;
 
-        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+        if (this.EntityPM.FullResponsibility) {
             isEnabled = true;
         }
 
