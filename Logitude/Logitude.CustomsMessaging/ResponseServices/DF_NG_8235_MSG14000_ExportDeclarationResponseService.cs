@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = dF_NG_8237_ImportDeclerationAmendmentReplyResponseService.Update8237(Cast8235Msg(customResponse), requestParams);
         }
 
-        public UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg Cast8235Msg(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse)
+        public UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg Cast8235Msg(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse)
         {
 
 
@@ -57,11 +57,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             using (var stringReader = new System.IO.StringReader(DeclarationString))
             {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg));
+                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg));
 
                 try
                 {
-                    return serializer.Deserialize(stringReader) as UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg;
+                    return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg;
 
 
                 }

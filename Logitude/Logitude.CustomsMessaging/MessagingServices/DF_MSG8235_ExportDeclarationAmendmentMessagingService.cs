@@ -28,7 +28,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg,
         DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg,
         DF_MSG8235_ExportDeclarationAmendmentRequestService,
-        DF_NG_8235_MSG14000_ExportDeclarationResponseService, RequestHeader>
+        DF_NG_8237_ExportDeclerationAmendmentReplyResponseService, RequestHeader>
     {
 
         
