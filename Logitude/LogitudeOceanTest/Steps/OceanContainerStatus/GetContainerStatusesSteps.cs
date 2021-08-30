@@ -18,12 +18,11 @@ namespace Logitude.OceanTest.Steps.OceanContainerStatus
             _oceanContext = oceanContext;
             _containerStatusesServices = containerStatusesServices;
         }
-        [Given(@"Response ""(.*)"" Data")]
-        public void GivenResponseData(string XMLFile)
+        [Given(@"Read the file ""(.*)"" Data Response")]
+        public void GivenReadTheFileDataResponse(string XMLFileName)
         {
-            _oceanContext.ShipmentContainerSimulator = _containerStatusesServices.CreateShipmentContainerSimulator(XMLFile);
+            _oceanContext.ShipmentContainerSimulator = _containerStatusesServices.CreateShipmentContainerSimulator(XMLFileName);
         }
-
         [When(@"get container status request")]
         public void WhenGetContainerStatusRequest()
         {
@@ -37,7 +36,9 @@ namespace Logitude.OceanTest.Steps.OceanContainerStatus
             _containerStatusesServices.ValidateShipmentContainerSimulator(_oceanContext.ShipmentContainerSimulator);
             var TryEvreySecound = 4;
             var TineLifeInSecound = 60;
-            Waiter.RunAndWait(TryEvreySecound, TineLifeInSecound,()=>_containerStatusesServices.CheckWorkerQuewe(_oceanContext.ShipmentContainerSimulator));
+            var isDone = Waiter.RunAndWait(TryEvreySecound, TineLifeInSecound,()=>_containerStatusesServices.CheckIfCommunicationLogsAddSuccessfully(_oceanContext.ShipmentContainerSimulator));
+            if(!isDone)
+                throw new InvalidOperationException("The Communication Logs not added successfully");
 
         }
 

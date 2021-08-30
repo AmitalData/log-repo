@@ -34,6 +34,8 @@ namespace Logitude.OceanTest.Models
         public string AgentName { get; set; }
         public string AgentId { get; set; }
         public string AgentComputed { get; set; }
+        public string MainCarriageCarrierId { get; set; }
+        public string MainCarriageCarrierCode { get; set; }
         public List<PackagePM> ShipmentPackages { get; set; }
        
         public string ShipmentReceivableStatusName { get; set; }

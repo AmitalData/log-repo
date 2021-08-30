@@ -49,6 +49,7 @@
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\PackageBuilder.cs" />
     <Compile Include="Models\Builders\ShipmentBuilder.cs" />
+    <Compile Include="Models\CommunicationLogList.cs" />
     <Compile Include="Models\OceanContext.cs" />
     <Compile Include="Models\OceanData.cs" />
     <Compile Include="Models\PackagePM.cs" />
@@ -138,6 +139,11 @@
     <PackageReference Include="Xunit.SkippableFact">
       <Version>1.3.12</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MetaData\Sample1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

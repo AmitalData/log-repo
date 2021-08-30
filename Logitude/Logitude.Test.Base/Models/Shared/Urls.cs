@@ -46,6 +46,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string OpportunitiesController = "Opportunities";
         public static string TariffsController = "Tariffs";
         public static string ShipmentContainersWebServiceController = "ShipmentContainersWebService";
+        public static string CommunicationLogViews = "CommunicationLogViews/GetByFilters";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
         public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
 

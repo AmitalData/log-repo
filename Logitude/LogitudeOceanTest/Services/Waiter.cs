@@ -13,7 +13,7 @@ namespace Logitude.OceanTest.Services
         {
             var done = false;
             var conter = 0;
-            while (!done || conter < TineLifeInSecound)
+            while (!done && conter < TineLifeInSecound)
             {
                 done = Do.Invoke();
                 Thread.Sleep(TryEvreySecound * 1000);

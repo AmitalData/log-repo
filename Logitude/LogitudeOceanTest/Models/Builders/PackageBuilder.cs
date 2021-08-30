@@ -112,6 +112,11 @@ namespace Logitude.OceanTest.Models.Builders
             _packagePM.Quantity = Quantity;
             return this;
         }
+        public PackageBuilder Weight(double? Weight)
+        {
+            _packagePM.Weight = Weight;
+            return this;
+        }
 
         private string PackageTypeCodeMapping(string portCode)
         {

@@ -113,7 +113,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("Response \"XML\" Data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Read the file \"Sample1.xml\" Data Response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
  testRunner.When("get container status request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

@@ -4,6 +4,6 @@ Feature: Get Container Statuses
 	We want to get container status.
 
 Scenario: Get container statuses
-	Given Response "XML" Data
+	Given Read the file "Sample1.xml" Data Response
 	When get container status request
 	Then container Statuses should be change successfully

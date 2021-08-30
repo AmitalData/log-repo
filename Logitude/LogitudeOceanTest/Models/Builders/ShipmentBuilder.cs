@@ -129,6 +129,17 @@ namespace Logitude.OceanTest.Models.Builders
             _shipmentPM.MainCarriageToPortId = PortCodeMapping(mainCarriageToPortCode);
             return this;
         }
+        public ShipmentBuilder MainCarriageCarrierIdByCode(string MainCarriageCarrierIdCode)
+        {
+            _shipmentPM.MainCarriageCarrierId = CarrierCodeMapping(MainCarriageCarrierIdCode);
+            return this;
+        }
+
+        public ShipmentBuilder MainCarriageCarrierCode(string MainCarriageCarrierCode)
+        {
+            _shipmentPM.MainCarriageCarrierCode = MainCarriageCarrierCode;
+            return this;
+        }
 
         public ShipmentBuilder MainCarriageFromPortId(string mainCarriageFromPortId)
         {
@@ -157,7 +168,7 @@ namespace Logitude.OceanTest.Models.Builders
         public ShipmentBuilder AgentAddressCountryCode(string agentAddressCountryCode)
         {
             _shipmentPM.AgentAddressCountryCode = agentAddressCountryCode;
-            return this; 
+            return this;
         }
 
         public ShipmentBuilder AgentName(string agentName)
@@ -186,10 +197,10 @@ namespace Logitude.OceanTest.Models.Builders
             return this;
         }
 
-        
+
         public ShipmentBuilder ShipmentReceivableStatusCode(string ShipmentReceivableStatusCode)
         {
-            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode ;
+            _shipmentPM.ShipmentReceivableStatusCode = ShipmentReceivableStatusCode;
             return this;
         }
         public ShipmentBuilder ShipmentReceivableStatusName(string ShipmentReceivableStatusName)
@@ -257,6 +268,20 @@ namespace Logitude.OceanTest.Models.Builders
                     return LocationsData.PortLONId;
                 case "MAN":
                     return LocationsData.PortMANId;
+                default:
+                    return null;
+            }
+        }
+        private string CarrierCodeMapping(string mainCarriageCarrierIdCode)
+        {
+            switch (mainCarriageCarrierIdCode)
+            {
+                case "MSCU":
+                    return PartnersData.ShippingLineMSCUId;
+                case "MAEU":
+                    return PartnersData.ShippingLineMAEUId;
+                case "YMLU":
+                    return PartnersData.ShippingLineYMLUId;
                 default:
                     return null;
             }

@@ -18,13 +18,12 @@ namespace Logitude.OceanTest.Services
         {
             try
             {
-                var createdShipment = GetValidShipmentPM();
-                var addShipment = CreateAndGetShipment(createdShipment);
-                DataMap(addShipment);
+                var Shipment = CreateShipmentWithContainer();
+                DataMap(Shipment);
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Failed Creating Tariff Before Feature Run :" + e.InnerException);
+                throw new InvalidOperationException("Failed Creating Shipment Before Feature Run :" + e.InnerException);
             }
         }
        
@@ -33,34 +32,51 @@ namespace Logitude.OceanTest.Services
         {
             return new ShipmentBuilder().WithDefualtValues()
                 .DirectionId("E")
-                .TransportModeId("A")
+                .TransportModeId("O")
                 .ShipmentLevelCode("D")
                 .MainCarriageFromPortIdByCode("LHR")
                 .MainCarriageToPortIdByCode("MIA")
+                .MainCarriageCarrierIdByCode("MSCU")
+                //.MainCarriageCarrierCode("MAEU")
                 .OtherPrepaidCollectId("P")
                 .FreightPrepaidCollectId("C")
                 .GrossWeight(100)
-                .ShipmentPackages(new List<PackagePM>() { GetValidPackagePM()})
                 .Build();
         }
         private PackagePM GetValidPackagePM()
         {
             return new PackageBuilder().WithDefualtValues()
                 .ChangeSetOp("Insert")
-                .ContainerNumber("AMER1234567")
+                .ContainerNumber("AMER1234568")
                 .FlashPointTemperatureUnitCode("CEL")
                 .PackageTypeByCode("PC1")
                 .Quantity(1)
+                .Weight(99)
                 .TemperatureUnitCode("CEL")
                 .Build();
         }
-        private ShipmentPM CreateAndGetShipment(ShipmentPM shipmentPM)
+        private ShipmentPM CreateShipmentWithContainer()
+        {
+            ShipmentPM shipment = CreateShipment();
+            shipment = AddContainer(shipment);
+            return shipment;
+        }
+
+        private ShipmentPM AddContainer(ShipmentPM shipment)
+        {
+            shipment.ShipmentPackages = new List<PackagePM>() { GetValidPackagePM() };
+            ApiResponse<ShipmentPM> putResponse = APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
+            return putResponse.Data;
+        }
+
+        private ShipmentPM CreateShipment()
         {
             ApiResponse<ShipmentPM> response = APICaller.CallPost<ShipmentPM>(GetValidShipmentPM(), Urls.ShipmentController, UserTenant.Token);
             string singleShipmentUrl = Urls.ShipmentGetSingle(response.Data?.Id);
-            ApiResponse<ShipmentPM> GetResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
-            return GetResponse.Data;
+            ApiResponse<ShipmentPM> getResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
+            return getResponse.Data;
         }
+
         private void DataMap(ShipmentPM shipment)
         {
             OceanData.ShipmentPM = shipment;
