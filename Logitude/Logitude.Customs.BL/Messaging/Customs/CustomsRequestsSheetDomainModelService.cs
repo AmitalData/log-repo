@@ -46,6 +46,7 @@ using Unifreight.BL.EntityQueryServices;
 
 
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 
@@ -146,12 +147,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     if (avoidSign)
                     {
                         _RequestParams.AvoidSign = true;
-                        if ( _RequestParams.ForcePersonalSign)
+                        if (_RequestParams.ForcePersonalSign)
                         {
                             _RequestParams.ForcePersonalSign = false;
                         }
                     }
-                    
+
                 }
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
@@ -172,31 +173,31 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 ThrowIfNoAvailablePersonalSignServer();
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
- 
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
-                        requestParams.InterfaceTypeCode);
+
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
+                    requestParams.InterfaceTypeCode);
 
 
-                        this.CreateNewComm();
-                        this.CreateNewRequestSheet();
-                        this.BuildSteps();
+                    this.CreateNewComm();
+                    this.CreateNewRequestSheet();
+                    this.BuildSteps();
 
-                        requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
+                    requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
 
-                        this.StartStep(CustomsStepEnum.StartRequestParams, null);
-                        OnCreateSetDefault();
+                    this.StartStep(CustomsStepEnum.StartRequestParams, null);
+                    OnCreateSetDefault();
 
-                        UpdateConnectedEntitys(reqSheetDetails);
-                        var mem =
-                            XmlGenericUtil<TRequestParams>.MemoryStreamSerialize(requestParams);
-                        //this.Serialize<TRequestParams>(requestParams);
-                        LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService.CreateNew(WithoutEndStepWithoutTransactionScope):took:" + sw.ElapsedMilliseconds);
-                        this.EndStepWithoutTransactionScope(mem, CommStatusEnum.D);
-                        this.StartCustomsRequestStepEnum = this.GetCurrentProcessState();
+                    UpdateConnectedEntitys(reqSheetDetails);
+                    var mem =
+                        XmlGenericUtil<TRequestParams>.MemoryStreamSerialize(requestParams);
+                    //this.Serialize<TRequestParams>(requestParams);
+                    LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService.CreateNew(WithoutEndStepWithoutTransactionScope):took:" + sw.ElapsedMilliseconds);
+                    this.EndStepWithoutTransactionScope(mem, CommStatusEnum.D);
+                    this.StartCustomsRequestStepEnum = this.GetCurrentProcessState();
 
-                        scope.Complete();
-                    
-                   
+                    scope.Complete();
+
+
                 }
                 RequestSheetContext.Current.SetRSContext(requestParams);
 
@@ -238,9 +239,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             if (!String.IsNullOrWhiteSpace(_InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType))
             {
-                
-            
-            
+
+
+
                 var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
                 var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
                 if (customsSettingPM.CompanyType != _InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType)
@@ -269,7 +270,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode) )
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
                     {
                         if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
                             !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId)
@@ -360,16 +361,24 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             try
             {
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "EscapeSign");
+                if (feature != null)
+                {
+                    return true;
+                }
+
                 if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
-                    &&
-                    String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                    CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
+                &&
+                String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
                 {
                     return true;//in courier CompanyType -AvoidSign
                 }
                 if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
-                    string defValue = GDFDATAQueryService.GetDefault(_Tenant,"ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    string defValue = GDFDATAQueryService.GetDefault(_Tenant, "ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
                     decimal defaultAmount = 0;
                     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
@@ -382,7 +391,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             var declarationQueryService = new DeclarationQueryService(_Tenant);
                             var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
 
-                            if (declaration!=null && declaration.IsCourierDeclaration)
+                            if (declaration != null && declaration.IsCourierDeclaration)
                             {
                                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
                                 DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
@@ -397,7 +406,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                                     return true;
                                 }
                             }
-                           
+
 
 
                         }
@@ -490,7 +499,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     return;
                 }
             }
-            
+
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
                 return;
@@ -526,7 +535,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
-            
+
             //if (Debugger.IsAttached)
             //{
             //    var doNotThrow = true;
@@ -1424,7 +1433,7 @@ After that Remove file  from DCA  .. ");
                 communicationLogStep.EndDate = serverTime;
                 PerformanceM.LastInstance.RequestStartDate = communicationLogStep.StartDate;
                 PerformanceM.LastInstance.RequestEndDate = communicationLogStep.EndDate;
-                
+
                 if (memstream != null)
                 {
 
@@ -2273,7 +2282,7 @@ After that Remove file  from DCA  .. ");
 
         public string GetCustomsRequestXml()
         {
-            
+
             var myArry = this.GetBolb(CustomsStepEnum.CustomRequest);
             string xml = Encoding.UTF8.GetString(myArry);
 
@@ -2672,5 +2681,5 @@ After that Remove file  from DCA  .. ");
         public string AggregateDCAAnalyzerLogger { get; set; }
     }
 
-    
+
 }

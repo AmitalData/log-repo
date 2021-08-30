@@ -329,6 +329,7 @@ export class ConsigmentTabContentComponent
 
     SetScreenFieldsEditability() {
         console.log("SetScreenFieldsEditability: " + this.EntityPM);
+        debugger;
         if (this.declarationPM.TransportModeId != 'O') {
             this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
         }
