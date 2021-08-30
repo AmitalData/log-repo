@@ -258,7 +258,7 @@
 
                 <div class="field">
                     <div class="label">
-                        Containers
+                        Containers <span *ngIf="Shipment.TransportModeId == 'O'">({{Shipment.ShipmentTypeCode.toString().substring(0,3)}})</span>
                     </div>
                     <div class="value">
                         <ul style="padding-left: 18px; margin: 0;" *ngIf="showMoreContainers">
