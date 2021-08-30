@@ -118,6 +118,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ForwardingMaster = shipment.ForwardingMaster,
                                                                ForwardingHouse = shipment.ForwardingHouse,
                                                                ImportManifest = shipment.ImportManifest,
+                                                               ShipmentTypeCode = shipment.ShipmentTypeCode
 
                                                            });
             return query;
