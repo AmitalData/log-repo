@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\BusinessUnitFilters\QuoteOPBusinessUnitFilter.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="EntityKeys\BorderOPTypeKeys.cs" />
     <Compile Include="EntityKeys\MarkUpOPTypeKeys.cs" />
@@ -269,6 +270,10 @@
     <Compile Include="Repsitories\QuoteOPTypeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
