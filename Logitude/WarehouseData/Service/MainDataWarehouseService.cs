@@ -156,7 +156,7 @@ namespace WarehouseData.Helper
 
             List<TableClass> tableNameLists = BulidDataWarehouseTableLists(sourceConnectionString);
             TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
-            Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable).ToList(), (table) =>
+            foreach(TableClass table in tableNameLists.Where(d => !d.HasFactTable).ToList())
             {
                 if (table.TableName != "WaterMark")
                 {
@@ -180,7 +180,7 @@ namespace WarehouseData.Helper
                     }
                 }
                 this.dWDataWarehouseService.UpdateAutomaticLastUpdate(table, sourceConnectionString, destinationConnectionString, privateTenant);
-            });
+            }
 
             this.dWDataWarehouseService.CopyDataBase(null, waterMark, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
 
@@ -188,13 +188,13 @@ namespace WarehouseData.Helper
             ExecuteFixedDimensionScripts(destinationConnectionString);
             RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
-            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) => {
+            foreach(TableClass table in  tableNameLists.Where(d => d.HasDimensionTable).ToList()) { 
                 this.BuildDimensionTable(destinationConnectionString, table);
-            });
+            }
 
-            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
+            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList()) {
                 this.BuildFactTable(destinationConnectionString, table);
-            });
+            }
 
 
             FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
@@ -254,7 +254,7 @@ namespace WarehouseData.Helper
                 }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
-                Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
+              foreach(DataRow row in dWHSettingsTable.Rows.Cast<DataRow>().ToList())
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
@@ -278,7 +278,7 @@ namespace WarehouseData.Helper
                         }
                         else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
-                });
+                }
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");
    

@@ -99,11 +99,14 @@ namespace WarehouseDataService.Helper
 
         private void RuningBuildDataWarehouseByTasks()
         {
-            Task dataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString));
-            Task privateDataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build"));
-            dataWarehouseBuildTask.Start();
-            privateDataWarehouseBuildTask.Start();
-            Task.WhenAll(dataWarehouseBuildTask, privateDataWarehouseBuildTask).Wait();
+            mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString);
+            mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
+
+            //Task dataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString));
+            //Task privateDataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build"));
+            //dataWarehouseBuildTask.Start();
+            //privateDataWarehouseBuildTask.Start();
+            //Task.WhenAll(dataWarehouseBuildTask, privateDataWarehouseBuildTask).Wait();
         }
 
 

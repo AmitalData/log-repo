@@ -135,7 +135,7 @@ namespace WarehouseData
                             #region Create and Build  DW Table
 
                             TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
-                           Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
+                            foreach(TableClass table in tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList())
                            {
                                stepName = table.DBTableName;
 
@@ -160,7 +160,7 @@ namespace WarehouseData
                                }
 
 
-                           });
+                           }
 
 
                             mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, waterMark, TotalCountLabel);
@@ -181,7 +181,7 @@ namespace WarehouseData
                             mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
 
 
-                            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) =>
+                            foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
 
@@ -210,11 +210,11 @@ namespace WarehouseData
 
                                 }
 
-                            });
+                            }
                             #endregion
 
                             #region  Create and Build Fact Table
-                            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) =>
+                            foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
                             {
                                 stepName = table.BuildScriptName;
 
@@ -231,7 +231,7 @@ namespace WarehouseData
                                 SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
                                 SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
 
-                            });
+                            }
 
                             #endregion
 
