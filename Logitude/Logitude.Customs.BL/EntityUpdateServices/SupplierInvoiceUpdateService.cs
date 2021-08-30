@@ -367,61 +367,73 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void SendClass(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
         {
-            if (string.IsNullOrWhiteSpace(loggedContactId))
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(Tenant);
+            CustomsSettingPM setting = settingService.GetSettingByTenantN(Tenant);
+
+            if (setting.IsConnectedToUniFreight)
             {
-                ContactRepository contactRepository = new ContactRepository(Tenant);
-                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
-                if (loggedContact != null)
+                if (string.IsNullOrWhiteSpace(loggedContactId))
                 {
-                    loggedContactId = loggedContact.Id;
+                    ContactRepository contactRepository = new ContactRepository(Tenant);
+                    var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                    if (loggedContact != null)
+                    {
+                        loggedContactId = loggedContact.Id;
+                    }
                 }
+                string unifrieghtEvent = "CLASS";
+                string eventRemarks = remarks;
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = unifrieghtEvent,
+                    Mode = UnifreightEventMode.@new,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNo,
+                    EventRemarks = eventRemarks,
+                };
+                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    Tenant,
+                    loggedContactId,
+                    MyUnifreightEventParam);
             }
-            string unifrieghtEvent = "CLASS";
-            string eventRemarks = remarks;
-            var MyUnifreightEventParam = new UnifreightEventParam()
-            {
-                Code = unifrieghtEvent,
-                Mode = UnifreightEventMode.@new,
-                EventDateTime = DateTime.Now,
-                Entname = "CFIFILEM",
-                PrimaryNum = CustomFileNo,
-                EventRemarks = eventRemarks,
-            };
-            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-            var myOpenUnifreighTask = new UnifreightEventTaskService();
-            myOpenUnifreighTask.UpsertEventLE2U(
-                Tenant,
-                loggedContactId,
-                MyUnifreightEventParam);
         }
         public void SendCHAS(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
         {
-            if (string.IsNullOrWhiteSpace(loggedContactId))
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(Tenant);
+            CustomsSettingPM setting = settingService.GetSettingByTenantN(Tenant);
+
+            if (setting.IsConnectedToUniFreight)
             {
-                ContactRepository contactRepository = new ContactRepository(Tenant);
-                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
-                if (loggedContact != null)
+                if (string.IsNullOrWhiteSpace(loggedContactId))
                 {
-                    loggedContactId = loggedContact.Id;
+                    ContactRepository contactRepository = new ContactRepository(Tenant);
+                    var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                    if (loggedContact != null)
+                    {
+                        loggedContactId = loggedContact.Id;
+                    }
                 }
+                string unifrieghtEvent = "CHAS";
+                string eventRemarks = remarks;
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = unifrieghtEvent,
+                    Mode = UnifreightEventMode.@new,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNo,
+                    EventRemarks = eventRemarks,
+                };
+                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    Tenant,
+                    loggedContactId,
+                    MyUnifreightEventParam);
             }
-            string unifrieghtEvent = "CHAS";
-            string eventRemarks = remarks;
-            var MyUnifreightEventParam = new UnifreightEventParam()
-            {
-                Code = unifrieghtEvent,
-                Mode = UnifreightEventMode.@new,
-                EventDateTime = DateTime.Now,
-                Entname = "CFIFILEM",
-                PrimaryNum = CustomFileNo,
-                EventRemarks = eventRemarks,
-            };
-            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-            var myOpenUnifreighTask = new UnifreightEventTaskService();
-            myOpenUnifreighTask.UpsertEventLE2U(
-                Tenant,
-                loggedContactId,
-                MyUnifreightEventParam);
         }
 
         private void SetDeclarationChanged(SupplierInvoicePM entityPM)

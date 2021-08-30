@@ -2234,10 +2234,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
             List<FollowUp> FollowUps=null;
 
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-            var IsConnectedToUniFreight = settingService.GetSettingByTenantN(tenant).IsConnectedToUniFreight;
+          //  CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+          //  var IsConnectedToUniFreight = settingService.GetSettingByTenantN(tenant).IsConnectedToUniFreight;
             var resMode = new { DefaultValue = "" };
-            if (IsConnectedToUniFreight)
+
+            //only to pilot
+            if (directionCode!="E")
             {
                 FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
 

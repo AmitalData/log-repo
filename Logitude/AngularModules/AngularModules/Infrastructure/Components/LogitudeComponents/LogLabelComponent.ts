@@ -53,7 +53,18 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
 export class LogLabelComponent implements OnInit {
     public DataContext: any;
     public ObjectFieldName: string;
-    public ObjectTableName: string;  
+    private _ObjectTableName: string;  
+    public get ObjectTableName(): string {
+        return this._ObjectTableName;
+    }
+    public set ObjectTableName(value: string) {
+        this._ObjectTableName = value;
+        if (!AppTool.IsNullOrEmpty(this._ObjectTableName)) {
+            if (this._ObjectTableName.toLowerCase().startsWith("quoteop")) {
+                this.LayoutDirection = 'ltr';
+            }
+        }
+    }
     public LabelText: string;
     public HideColumns: boolean = false;
     public IsSmallLabel: boolean = false;

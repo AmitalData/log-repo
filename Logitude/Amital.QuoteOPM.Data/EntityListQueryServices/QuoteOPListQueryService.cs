@@ -13,6 +13,8 @@ using System.Xml.Serialization;
 
 using Amital.QuoteOPM.Data.EntityPOCOs;
 using Amital.QuoteOPM.Data.EntityLists;
+using Amital.QuoteOPM.Data.BL.BusinessUnitFilters;
+using Amital.QuoteOPM.Data.Repsitories;
 
 namespace Amital.QuoteOPM.Data.EntityListQueryServices
 { 
@@ -21,16 +23,16 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
     {
 	    private IQueryable<QuoteOPList> GetIqueryableList(IQueryable<QuoteOP> iQueryable)
         {
-#if todo
+#if true
             if (iQueryable.Count() > 0)
             {
                 int tenant = iQueryable.First().Tenant;
 
-                QuoteBusinessUnitFilter businessUnitFilter = new QuoteBusinessUnitFilter(tenant);
+                QuoteOPBusinessUnitFilter businessUnitFilter = new QuoteOPBusinessUnitFilter(tenant);
                 iQueryable = businessUnitFilter.RunFilter(iQueryable);
 
-                iQueryable = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteOP>(new QueryOperations(), iQueryable, tenant);
-                iQueryable = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteOP>(new QueryOperations(), iQueryable, tenant);
+#warning Logitude.BL not alowed in DATA use in controller               iQueryable = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteOP>(new QueryOperations(), iQueryable, tenant);
+#warning Logitude.BL not alowed in DATA                iQueryable = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteOP>(new QueryOperations(), iQueryable, tenant);
             }
 
 
@@ -43,10 +45,10 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
             //We got numerous user requests concerning the ORA - 12704 error(“character set mismatch”).The reason of this error was a large number of Includes in the user code, and these Includes, in their turn, resulted in a query with a large number of UNION’s.We added a couple of workaround properties(TypedNulls and StringCastFormat) to deal with this error, which now are obsolete. We have found a possibility to fix this problem without these properties, and these queries are built correctly at the moment.
             //Devart.Data.Oracle.Entity.OracleEntityProviderServices.StringCastFormat = "TO_NCHAR({0})";
             //Devart.Data.Oracle.Entity.OracleEntityProviderServices.TypedNulls = true;
-//            Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance.CodeFirstOptions
-//.UseNonUnicodeStrings = true;
-//            Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance.CodeFirstOptions
-//            .UseNonLobStrings = true;
+            //            Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance.CodeFirstOptions
+            //.UseNonUnicodeStrings = true;
+            //            Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance.CodeFirstOptions
+            //            .UseNonLobStrings = true;
 
 
 
@@ -61,13 +63,13 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
                                                   .Include("ToPort.Country").Include("FromPort.Country")
 
 
-                                                  .Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType")
+                                                  .Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteOPType")
                                                   .Include("TransportMode").Include("Direction").Include("ToPort")//.Include("ShipmentType")
 
                                                   .Include("MainCarriageCarrierCard").Include("Department").Include("Branch")
 
                                                   .Include("AgentCard").Include("NotifyCard").Include("MoveType")
-                                                  .Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason")
+                                                  .Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteOPClosingReason")
                                                   .Include("SalesmanUser")
 
                                               select new QuoteOPList()
@@ -258,8 +260,75 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
         {
 			return iQueryable;
 		}
-		
-			}
+
+        public List<QuoteOPList> GetRecentEntityLists(string ownerId, string businessUnitId, int tenant, string userId, string objectTableId)
+        {
+            List<QuoteOPList> entityList = new List<QuoteOPList>();
+
+            EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
+            List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
+
+            List<string> ids = new List<string>();
+            foreach (EntityLastActivity activity in lastActivities)
+            {
+                ids.Add(activity.EntityId);
+            }
+
+            var repository = new QuoteOPRepository(tenant);
+            var entities = repository.GetQuotes(tenant);
+
+            QuoteOPBusinessUnitFilter businessUnitFilter = new QuoteOPBusinessUnitFilter(tenant);
+            entities = businessUnitFilter.RunFilter(entities);
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                entities = entities.Where(d => d.SalesmanUserId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                entities = entities.Where(d => d.BusinessUnitId == businessUnitId);
+            }
+
+
+            var qqq = this.GetIqueryableList(entities);
+
+            foreach (EntityLastActivity lastActivity in lastActivities)
+            {
+                var q = (from d in qqq///this.GetIqueryableList(entities)
+                         where d.Id == lastActivity.EntityId
+                         select d);
+                try
+                {
+
+
+                    var f = q.FirstOrDefault();
+
+                    if (f != null)
+                    {
+
+
+                        entityList.Add(f);
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+#if false
+            if (entityList.Count > 0)
+            {
+                entityList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<QuoteOPList>(new QueryOperations(), entityList.AsQueryable<QuoteOPList>(), tenant).ToList();
+                entityList = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteOPList>(new QueryOperations(), entityList.AsQueryable<QuoteOPList>(), tenant).ToList();
+            }
+#endif
+            return entityList;
+        }
+
+
+    }
 
 
 }

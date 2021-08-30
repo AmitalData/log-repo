@@ -3043,7 +3043,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Width = 400;
                         logWindow.Height = 200;
                         break;
-                    }    
+                    }
+                case "QuoteOP":
+                    {
+                        logWindow.RTL = false;
+                        logWindow.Width = 1200;
+                        logWindow.Height = 800;
+                        break;
+                    }
+
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

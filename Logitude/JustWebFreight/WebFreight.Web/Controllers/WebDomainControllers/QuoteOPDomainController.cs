@@ -1,12 +1,19 @@
-﻿using Amital.QuoteOPM.Data.EntityPOCOs;
+﻿using Amital.QuoteOPM.BL.EntityQueryServices;
+using Amital.QuoteOPM.Data;
+using Amital.QuoteOPM.Data.EntityListQueryServices;
+using Amital.QuoteOPM.Data.EntityLists;
+using Amital.QuoteOPM.Data.EntityPOCOs;
 using Amital.QuoteOPM.Data.Repsitories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -32,7 +39,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                //////SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 ownerId = this.FixFilter(ownerId);
@@ -154,7 +161,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
-#if false
+
 
 
         public HttpResponseMessage GetRecentQuotes(string ownerId, string businessUnitId)
@@ -176,22 +183,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     businessUnitId = null;
                 }
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                ///SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-                ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QuoteOP", 0, true);
+                var objectTable = objectTabelRepository.GetObjectTableByName("QuoteOP", 0, true);
+                IQuoteOPMContext quoteOPMContext = QuoteOPMContext.GetContext(tenant);
+                var quoteQuery = new QuoteOPListQueryService(quoteOPMContext);
+                IQueryable<QuoteOPList> first = quoteQuery.GetRecentEntityLists(ownerId, businessUnitId, tenant, contact.Id, objectTable.Id).AsQueryable();
 
-                QuoteQuery quoteQuery = new QuoteQuery(tenant);
-                IQueryable<QuoteList> first = quoteQuery.GetRecentEntityLists(ownerId, businessUnitId, tenant, contact.Id, objectTable.Id).AsQueryable();
+                IQueryable<QuoteOPList> myResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), first, tenant);
+                myResult = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteOPList>(new QueryOperations(), myResult, tenant);
 
-                IQueryable<QuoteList> myResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), first, tenant);
-                myResult = ProductPermitionsFilter.AddUserProductRestrictionFilters<QuoteList>(new QueryOperations(), myResult, tenant);
-
-                QuoteBusinessUnitFilter businessUnitFilter = new QuoteBusinessUnitFilter(tenant);
+                QuoteOPBusinessUnitFilter businessUnitFilter = new QuoteOPBusinessUnitFilter(tenant);
                 myResult = businessUnitFilter.RunFilter(myResult);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -202,6 +209,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetStageFunnelData(string OwnerId, string BusinessUnitId, string RecordsTypeCode)
         {
             try
@@ -210,14 +218,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                ///SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 OwnerId = this.FixFilter(OwnerId);
                 BusinessUnitId = this.FixFilter(BusinessUnitId);
                 RecordsTypeCode = this.FixFilter(RecordsTypeCode);
 
-                QuoteQuery quoteQuery = new QuoteQuery(tenant);
+
+
+                var quoteQuery = new QuoteOPQueryService(tenant);
 
                 List<ChartingDataClass> data = quoteQuery.GetStageFunnelData(OwnerId, BusinessUnitId, tenant, RecordsTypeCode);
 
@@ -249,6 +259,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
+#if false
         public HttpResponseMessage GetConnectQuotesToOpportunity(string opportunityId, string quotesIds)
         {
             try
@@ -305,7 +316,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 QuotesDomainService domainService = new QuotesDomainService();
-                List<QuoteList> myResult = domainService.GetQuotesByOpportunityId(oportunityId, authToken.Tenant).ToList();
+                List<QuoteOPList> myResult = domainService.GetQuotesByOpportunityId(oportunityId, authToken.Tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
