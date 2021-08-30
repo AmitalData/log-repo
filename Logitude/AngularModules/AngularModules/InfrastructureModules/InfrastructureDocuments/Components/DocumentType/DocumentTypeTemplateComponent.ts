@@ -93,7 +93,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     }
 
     private StartBusyIndicator() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
     }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
