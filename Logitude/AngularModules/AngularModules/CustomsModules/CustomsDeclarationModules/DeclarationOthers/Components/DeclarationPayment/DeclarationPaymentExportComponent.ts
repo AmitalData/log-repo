@@ -1066,7 +1066,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     instructionCancelled: boolean = false;
   
     PaymentDateTimeOnBlur(event) {
-        debugger;
         this.IsPaymentDateValid();
     }
     IsPaymentDateValid() {
@@ -1293,7 +1292,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     }
 
     SendButtonClickedStart(event) {
-        debugger;
         if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
@@ -1404,20 +1402,22 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             console.log("[response] GetAllRequiredFieldsForDeclarationPayment: ", customsRequiredFieldErrors);
 
             if (!AppTool.IsNullOrEmpty(customsRequiredFieldErrors)) {
-
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 if (customsRequiredFieldErrors.RequiredFields.length == 0) {
-
-                    //If Last Declaration was NOT Signed
-                    //if (!this.DeclarationPM.IsSignedVersion) {  ///If IsCourierDeclaration= false, Check if Last Declaration Signed (IsSignedVersion.Declaration = True) , if NOT   - WI 18211
-                    if (!this.DeclarationPM.IsCourierDeclaration && !this.DeclarationPM.IsSignedVersion) {
-
-                        this.CheckBeforeSendPaymentOrder();
-                    }
-                    else {
+                    if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "EscapeSign")) {
                         this.SendMethod();
                     }
+                    else {
+                        //If Last Declaration was NOT Signed
+                        //if (!this.DeclarationPM.IsSignedVersion) {  ///If IsCourierDeclaration= false, Check if Last Declaration Signed (IsSignedVersion.Declaration = True) , if NOT   - WI 18211
+                        if (!this.DeclarationPM.IsCourierDeclaration && !this.DeclarationPM.IsSignedVersion) {
 
+                            this.CheckBeforeSendPaymentOrder();
+                        }
+                        else {
+                            this.SendMethod();
+                        }
+                    }
                 } else {
                     this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"), customsRequiredFieldErrors);
                 }
@@ -1434,7 +1434,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             console.log("[response/customsSettingListService.getAll]", list);
             if (!AppTool.IsNullOrEmpty(list)) {
                 var customsSetting = list[0];
-
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
 
