@@ -8,6 +8,12 @@ import { Time } from '@angular/common';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
+import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -19,9 +25,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public EntityPM: ExportDeclarationClosingDataPM;
     public DecPM: DeclarationPM;
     public ConPM: ConsignmentPM;
-    public SendButtonEnabled: boolean = false;
+    public SendButtonEnabled: boolean = true;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
+    ValidationErrors: string[];
+    DeclarationService: DeclarationWebService = new DeclarationWebService();;
     exportDeclarationClosingDataPMService: ExportDeclarationClosingDataPMService = new ExportDeclarationClosingDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
@@ -55,6 +63,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM = new ExportDeclarationClosingDataPM();
                     this.EntityPM.DeclarationId = id;
                     this.EntityPM.Tenant = this.DecPM.Tenant;
+                    var consignments = this.DecPM.Consignments.filter(x => x.ConsignmentType == 'E');
+                    if (consignments.length == 1) {
+                        this.EntityPM.FinalCargoTypeCode = consignments[0].CargoTypeCode;
+                        this.EntityPM.FinalSecondCargoId = consignments[0].SecondCargoID;
+                        this.EntityPM.FinalThirdCargoId = consignments[0].ThirdCargoID;
+                        this.EntityPM.FinalManifestNumber = consignments[0].ManifestNumber;
+                        this.EntityPM.FinalShipCode = consignments[0].ShipCode;
+                        this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
+                    }
                     this.IsNew = true;
                 } 
                 this.IsReady = true;
@@ -112,9 +129,87 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
 
-    SendButtonClicked(event) {
+    SendButtonClicked(event: CustomSendOptionsArgs) {
+        if (this.EntityPM.IsDirty) {
+            if (this.IsNew) {
+                this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        this.SendAmendmentCloseDeclaration(event);
+                    }
+                });
+            } else {
+                this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        this.SendAmendmentCloseDeclaration(event);
+                    }
+                });
+            }
+        }
+        else {
+            this.SendAmendmentCloseDeclaration(event);
+        }
+        
     }
+    
+   
+    SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = this.EntityPM.DeclarationId;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = this.EntityPM.DeclarationId;
+        searchParams.LoggingEntityReference = this.DecPM.DeclarationNumber;
+        //searchParams.LoggingObjectTableId = this.ObjectTable.Id;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        searchParams.RequestName = "Export Amendment Declaration Request";
+        searchParams.ResponseName = "Amendment Declaration Response";
+        searchParams.RequestVIA = event.RequestVIA;
+        searchParams.ForcePersonalSign = event.ForcePersonalSign;
+        //searchParams.TestCase = event.TestCase;
+        let myShowProgressBarParams: ShowProgressBarParams = null;
 
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
+            .then((res) => {
+                //this.ResponseData = res;
+                
+                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
+
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
+                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                
+            }
+            ).catch((err) => {
+                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrors.push(err);
+                this.FillValidationErrors("Errors");
+            });
+
+        this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
+        });
+
+    }
+    FillValidationErrors(title: string)
+    {
+        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.ComponentHeight = '328px'; 
+        var windowTitle = title;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+    }
+    OnAddEditWindowClosed(event) {
+        this.ValidationErrors = [];
+    }
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }

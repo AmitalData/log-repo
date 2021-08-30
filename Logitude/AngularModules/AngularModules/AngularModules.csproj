@@ -1432,6 +1432,7 @@
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContainerizationResponseData.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContinuousResponseOnClaimFileResponseData.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\PhysicalCheckResponseData.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\AmedmentTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendCancellRequestInitiatorList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentFieldStatusTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\AmendmentStatusList.ts" />
@@ -1509,6 +1510,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransportMeansTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\AmedmentTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendCancellRequestInitiatorPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentFieldStatusTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentStatusPM.ts" />
@@ -1624,6 +1626,7 @@
     <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AcceptanceStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AmedmentTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendCancellRequestInitiatorListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentFieldStatusTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AmendmentStatusListService.ts" />

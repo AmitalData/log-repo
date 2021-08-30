@@ -1374,6 +1374,11 @@ export class DeclarationPM {
     public set IsSubmitDeclaration(newValue: boolean) { if (this.isSubmitDeclaration != newValue) { this.isSubmitDeclaration = newValue; this.MarkAsDirty("IsSubmitDeclaration"); } }
        
 	 
+    private amedmentType: string;
+    public get AmedmentType() { return this.amedmentType; }
+    public set AmedmentType(newValue: string) { if (this.amedmentType != newValue) { this.amedmentType = newValue; this.MarkAsDirty("AmedmentType"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

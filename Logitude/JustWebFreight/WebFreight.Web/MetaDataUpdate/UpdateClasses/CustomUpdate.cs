@@ -18014,6 +18014,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                                 Logitude.Customs.Data.Repsitories.ContainerizationStatusCodeRepository>(repo, dic);
         }
 
+        public void FillAmedmentTypeTable()
+        {
+            var repo = new AmedmentTypeRepository(0);
+            var dic = repo.GetAll().ToDictionary<AmedmentType, string, AmedmentType>(rec => rec.Code, a => a);
+            this.FillCloseTable<
+                                Logitude.Customs.Data.EntityPOCOs.AmedmentType,
+                                Logitude.Customs.Def.ClosedTable.AmedmentTypeDetails,
+                                Logitude.Customs.Data.Repsitories.AmedmentTypeRepository>(repo, dic);
+        }
+
         public void FillMamanSpecialActionTable()
         {
             MamanSpecialActionRepository mamanSpecialActionRepository = new MamanSpecialActionRepository(0);

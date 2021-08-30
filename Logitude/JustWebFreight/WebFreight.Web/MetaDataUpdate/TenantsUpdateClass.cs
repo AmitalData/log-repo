@@ -771,6 +771,8 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillMamanSpecialActionStatusTable();
             updateClass.FillCourierPendingReasonTable();
             updateClass.FillContainerizationStatusCodeTable();
+            updateClass.FillAmedmentTypeTable();
+
         }
 
         private static void UpdateTenantData(int tenant)

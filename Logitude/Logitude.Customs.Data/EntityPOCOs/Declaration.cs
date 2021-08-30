@@ -439,6 +439,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportContainerizationID { get; set; }
         [Column("IsSubmitDeclaration")]
 	    public bool? IsSubmitDeclaration { get; set; }
+        [ForeignKey("CustomsAmedmentType")]
+        [Column("AmedmentType")]
+	    public string AmedmentType { get; set; }
+	      
+        public virtual AmedmentType CustomsAmedmentType { get; set; }
     }
 }
 	 

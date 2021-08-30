@@ -21,6 +21,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AddressContactState> AddressContactStates { get; }
 		 IDbSet<AddressPurpose> AddressPurposes { get; }
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
+		 IDbSet<AmedmentType> AmedmentTypes { get; }
 		 IDbSet<AmendCancellRequestInitiator> AmendCancellRequestInitiators { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentFieldStatusType> AmendmentFieldStatusTypes { get; }

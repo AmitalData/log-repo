@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClosedTable\AmedmentTypeDetails.Generated.cs" />
     <Compile Include="ClosedTable\CustomsDeploymentStage.cs" />
     <Compile Include="ClosedTable\CustomsRequestsSheetStatusDetails.cs" />
     <Compile Include="ClosedTable\CustomsSchedulerProcedureDetails.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendRequestRejectReasonTypePM.Generated.cs" />

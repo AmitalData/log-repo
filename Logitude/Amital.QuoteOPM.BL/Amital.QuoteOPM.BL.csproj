@@ -132,6 +132,7 @@
     <Compile Include="EntityQueryServices\Generated\QuoteOPTemplateTextDesignQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPTotalVatQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\QuoteOPQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\BorderOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MarkUpOPTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OPSpecialServicesTypeUpdateService.Generated.cs" />

@@ -168,7 +168,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportDeclarationOfficeCode, 
 	         PhysicalCheck, 
 	         ExportContainerizationID, 
-	         IsSubmitDeclaration,
+	         IsSubmitDeclaration, 
+	         AmedmentType,
 	      }
 
 
@@ -400,7 +401,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShipCodeName, 
 	         CancelRejectionReasonName, 
 	         ExportContainerizationID, 
-	         IsSubmitDeclaration,
+	         IsSubmitDeclaration, 
+	         AmedmentType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1137,6 +1139,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
             {
 				entityPOCO.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmedmentType))
+            {
+				entityPOCO.AmedmentType = entityPM.AmedmentType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1880,6 +1887,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsSubmitDeclaration = entityPOCO.IsSubmitDeclaration;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmedmentType))
+            {
+					entityPM.AmedmentType = entityPOCO.AmedmentType;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2614,6 +2626,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSubmitDeclaration))
             {
                 oldEntityPM.IsSubmitDeclaration = entityPM.IsSubmitDeclaration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmedmentType))
+            {
+                oldEntityPM.AmedmentType = entityPM.AmedmentType;
             }
 			
 		}

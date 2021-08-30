@@ -225,6 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration.DMExtensions != null)
                 {
                     declarationPM.DeclarationExportRecipients = GetRecipients(declaration, tenant, declarationPM, context);
+                    //declarationPM.AmedmentType = 
                     //declarationPM. = GetClosingDetails(declaration, tenant, declarationPM, context);
                     declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
                     //declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID) + DateTime.Now.Year;

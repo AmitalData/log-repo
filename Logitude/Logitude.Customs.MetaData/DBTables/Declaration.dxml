@@ -1008,6 +1008,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AmedmentType"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1216,6 +1223,11 @@
   <Relation
     ForeignKeyColumn="ExportDeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="AmedmentType"
+    ReferencedTable="AmedmentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index
