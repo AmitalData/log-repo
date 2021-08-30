@@ -48,7 +48,7 @@ namespace Logitude.OceanTest.Services
         internal bool CheckIfCommunicationLogsAddSuccessfully(ShipmentContainerSimulator shipmentContainerSimulator)
         {
             var filters = GetCommunicationLogs(shipmentContainerSimulator);
-            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViews, UserTenant.Token, filters)?.Data;
+            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
             return ValidateCommunicationLogs(communicationLogs);
         }
 
@@ -73,9 +73,9 @@ namespace Logitude.OceanTest.Services
                 .PageIndex(0)
                 .PageSize(10)
                 .Filter1Name("EntityId")
-                .Filter1Value("1-356")
+                .Filter1Value("1-342")
                 .Filter2Name("ObjectTableId")
-                .Filter2Value("1-18474")
+                .Filter2Value("1-18816")
                 .SortBy("CreateDate")
                 .SortDirection("Descending")
                 .Build();
