@@ -38,5 +38,11 @@ namespace Unifreight.BL.EntityUpdateServices
             
             ///entityPM.COMPUTERID = Environment.MachineName;            
         }
+
+        protected override void UpdateComposition(GGGQPM entityPM)
+        {
+            var myGGGQCUpdateService = new GGGQCUpdateService(this.MainContext as AmitalContext);
+            myGGGQCUpdateService.UpdateMulti(entityPM.GGGQCPMs, new List<GGGQCPM>(), entityPM, true);
+        }
     }
 }
