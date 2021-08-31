@@ -330,9 +330,28 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             {
                 foreach (var line in lines)
                 {
-                    Debug.WriteLine(line + " ;");
-                    OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
-                    myCommand.ExecuteNonQuery();
+
+                    try
+                    {
+                        Debug.WriteLine(line + " ;");
+                        OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
+                        myCommand.ExecuteNonQuery();
+
+                    }
+                    catch (Exception e)
+                    {
+
+                        Console.WriteLine(line);
+                        if (line.Contains(".GAQ"))
+                        {
+                            
+                        }
+                        else
+                        {
+                            throw new Exception(line, e);
+                        }
+                        
+                    }
                 }
 
             }

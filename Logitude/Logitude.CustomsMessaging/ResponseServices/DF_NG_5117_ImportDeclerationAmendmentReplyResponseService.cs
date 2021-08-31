@@ -310,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
                                                 UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                if(_MyDeclarationPM.AmendmentOriginalDeclartation!= declarationParent.AmendmentOriginalDeclartation)
+                                                if(_MyDeclarationPM.Id!= declarationParent.Id)
                                                 {
                                                     UpdateParentDec(myDeclarationUpdateService, declarationParent);
 
