@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .MenuFilters {
         color: #909293;
@@ -108,8 +108,17 @@
                     </td>
 
                     <td style="width: 142px; vertical-align: middle; position:relative;">
-                        <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                        <TransportsFilter  (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                     </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 142px; vertical-align: middle; position:relative;">
+                        <DirectionsFilter [HideAMANACFilters]="'true'"  (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                    </td>
+                   
 
                     <td>
                         <div></div>
