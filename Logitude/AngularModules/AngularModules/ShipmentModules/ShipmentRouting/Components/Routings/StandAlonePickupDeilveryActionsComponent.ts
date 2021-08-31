@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -11,11 +12,14 @@ export class StandAlonePickupDeilveryActionsComponent {
     public RoutingLinkText: string;
     public MainButtonRoutingLinkText: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAddingStandaloneWithPickUpDeliveryOnlyVisible: boolean = false;
+
     constructor() {
 
     }
 
     SetWindowArgs(args: any) {
+        this.SetIsStandaloneWithPickupDeliveryOnlyVisible()
         this.Code = args['Code'];
 
         switch (this.Code) {
@@ -42,5 +46,12 @@ export class StandAlonePickupDeilveryActionsComponent {
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    SetIsStandaloneWithPickupDeliveryOnlyVisible() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OPD")[0];
+        if (featureToggle) {
+            this.IsAddingStandaloneWithPickUpDeliveryOnlyVisible = true;
+        }
     }
 }
