@@ -82,6 +82,11 @@ namespace Logitude.OceanTest.Models.Builders
             _packagePM.PackageTypeId = PackageTypeCodeMapping(code);
             return this;
         }
+        public PackageBuilder ContainerEntityId(string ContainerEntityId)
+        {
+            _packagePM.ContainerEntityId = ContainerEntityId;
+            return this;
+        }
 
         public PackageBuilder ContainerNumber(string containerNumber)
         {

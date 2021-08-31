@@ -81,6 +81,16 @@ namespace Logitude.OceanTest.Models.Builders
             _shipmentPM.ShipmentLevelCode = shipmentLevelCode;
             return this;
         }
+        public ShipmentBuilder Master(string Master)
+        {
+            _shipmentPM.Master = Master;
+            return this;
+        }
+        public ShipmentBuilder LongMaster(string LongMaster)
+        {
+            _shipmentPM.LongMaster = LongMaster;
+            return this;
+        }
 
         public ShipmentBuilder BranchId(string branchId)
         {
@@ -132,6 +142,11 @@ namespace Logitude.OceanTest.Models.Builders
         public ShipmentBuilder MainCarriageCarrierIdByCode(string MainCarriageCarrierIdCode)
         {
             _shipmentPM.MainCarriageCarrierId = CarrierCodeMapping(MainCarriageCarrierIdCode);
+            return this;
+        }
+        public ShipmentBuilder ShipmentTypeId(string ShipmentTypeId)
+        {
+            _shipmentPM.ShipmentTypeId = ShipmentTypeId;
             return this;
         }
 

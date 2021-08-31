@@ -14,6 +14,7 @@
         public string ChangeSetOp { get; set; }
         public string ContainerNumber { get; set; }
         public string PackageTypeId { get; set; }
+        public string ContainerEntityId { get; set; }
         public string FlashPointTemperatureUnitCode { get; set; }
         public string TemperatureUnitCode { get; set; }
 

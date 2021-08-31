@@ -11,35 +11,31 @@ namespace Logitude.OceanTest.Steps.OceanContainerStatus
     [Binding]
     public class GetContainerStatusesSteps
     {
-        public OceanContext _oceanContext { get; set; }
-        public ContainerStatusesServices _containerStatusesServices { get; set; }
-        public GetContainerStatusesSteps(OceanContext oceanContext, ContainerStatusesServices containerStatusesServices)
+        public OceanContext oceanContext;
+        public CheckerService checkerService;
+        public OceanInsightsStatusesServices containerStatusesServices;
+        public GetContainerStatusesSteps(OceanContext oceanContext, OceanInsightsStatusesServices containerStatusesServices, CheckerService checkerService)
         {
-            _oceanContext = oceanContext;
-            _containerStatusesServices = containerStatusesServices;
+            this.oceanContext = oceanContext;
+            this.checkerService = checkerService;
+            this.containerStatusesServices = containerStatusesServices;
         }
         [Given(@"Read the file ""(.*)"" Data Response")]
         public void GivenReadTheFileDataResponse(string XMLFileName)
         {
-            _oceanContext.ShipmentContainerSimulator = _containerStatusesServices.CreateShipmentContainerSimulator(XMLFileName);
+            oceanContext.ShipmentContainerSimulator = containerStatusesServices.CreateShipmentContainerSimulatorForContener(XMLFileName);
         }
         [When(@"get container status request")]
         public void WhenGetContainerStatusRequest()
         {
-            _oceanContext.ShipmentContainerSimulator = APICaller.CallPost<ShipmentContainerSimulator>(_oceanContext.ShipmentContainerSimulator, Urls.ShipmentContainersWebServiceController, UserTenant.Token)?.Data;
+            oceanContext.ShipmentContainerSimulator = APICaller.CallPost<ShipmentContainerSimulator>(oceanContext.ShipmentContainerSimulator, Urls.ShipmentContainersWebServiceController, UserTenant.Token)?.Data;
 
         }
 
         [Then(@"container Statuses should be change successfully")]
         public void ThenContainerStatusesShouldBeChangeSuccessfully()
         {
-            _containerStatusesServices.ValidateShipmentContainerSimulator(_oceanContext.ShipmentContainerSimulator);
-            var TryEvreySecound = 4;
-            var TineLifeInSecound = 60;
-            var isDone = Waiter.RunAndWait(TryEvreySecound, TineLifeInSecound,()=>_containerStatusesServices.CheckIfCommunicationLogsAddSuccessfully(_oceanContext.ShipmentContainerSimulator));
-            if(!isDone)
-                throw new InvalidOperationException("The Communication Logs not added successfully");
-
+            checkerService.CheckContainerStatuses(oceanContext.ShipmentContainerSimulator);
         }
 
     }

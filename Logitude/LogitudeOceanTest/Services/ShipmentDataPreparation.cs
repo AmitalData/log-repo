@@ -28,7 +28,7 @@ namespace Logitude.OceanTest.Services
         }
        
 
-        private ShipmentPM GetValidShipmentPM()
+        public ShipmentPM GetValidShipmentPM()
         {
             return new ShipmentBuilder().WithDefualtValues()
                 .DirectionId("E")
@@ -37,13 +37,15 @@ namespace Logitude.OceanTest.Services
                 .MainCarriageFromPortIdByCode("LHR")
                 .MainCarriageToPortIdByCode("MIA")
                 .MainCarriageCarrierIdByCode("MSCU")
-                //.MainCarriageCarrierCode("MAEU")
+                .ShipmentTypeId("FCLD")
+                .Master("MasterTest")
+                .LongMaster("MasterTest")
                 .OtherPrepaidCollectId("P")
-                .FreightPrepaidCollectId("C")
+                .FreightPrepaidCollectId("P")
                 .GrossWeight(100)
                 .Build();
         }
-        private PackagePM GetValidPackagePM()
+        public PackagePM GetValidPackagePM()
         {
             return new PackageBuilder().WithDefualtValues()
                 .ChangeSetOp("Insert")
@@ -55,21 +57,21 @@ namespace Logitude.OceanTest.Services
                 .TemperatureUnitCode("CEL")
                 .Build();
         }
-        private ShipmentPM CreateShipmentWithContainer()
+        public ShipmentPM CreateShipmentWithContainer()
         {
             ShipmentPM shipment = CreateShipment();
             shipment = AddContainer(shipment);
             return shipment;
         }
 
-        private ShipmentPM AddContainer(ShipmentPM shipment)
+        public ShipmentPM AddContainer(ShipmentPM shipment)
         {
             shipment.ShipmentPackages = new List<PackagePM>() { GetValidPackagePM() };
             ApiResponse<ShipmentPM> putResponse = APICaller.CallPut<ShipmentPM>(shipment, Urls.ShipmentController, UserTenant.Token);
             return putResponse.Data;
         }
 
-        private ShipmentPM CreateShipment()
+        public ShipmentPM CreateShipment()
         {
             ApiResponse<ShipmentPM> response = APICaller.CallPost<ShipmentPM>(GetValidShipmentPM(), Urls.ShipmentController, UserTenant.Token);
             string singleShipmentUrl = Urls.ShipmentGetSingle(response.Data?.Id);
@@ -77,7 +79,7 @@ namespace Logitude.OceanTest.Services
             return getResponse.Data;
         }
 
-        private void DataMap(ShipmentPM shipment)
+        public void DataMap(ShipmentPM shipment)
         {
             OceanData.ShipmentPM = shipment;
         }
