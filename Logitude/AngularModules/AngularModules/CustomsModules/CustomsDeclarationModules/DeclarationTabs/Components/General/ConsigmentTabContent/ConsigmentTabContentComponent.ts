@@ -329,10 +329,6 @@ export class ConsigmentTabContentComponent
 
     SetScreenFieldsEditability() {
         console.log("SetScreenFieldsEditability: " + this.EntityPM);
-        debugger;
-        if (this.declarationPM.TransportModeId != 'O') {
-            this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, this.IsDisplayOnly);
-        }
         this.UIProperties.SetEnabled("CargoDescription", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ConsignmentType", this.ObjectTableName, !this.IsDisplayOnly);
@@ -357,7 +353,9 @@ export class ConsigmentTabContentComponent
         this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
-        
+        if (this.declarationPM.TransportModeId != 'O') {
+            this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, false);
+        }
         
     }
 
