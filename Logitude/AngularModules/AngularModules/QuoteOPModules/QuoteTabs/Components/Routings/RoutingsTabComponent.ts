@@ -39,14 +39,14 @@ export class RoutingsTabComponent implements AfterViewInit {
       var isInlandDomestic = QuoteUtilities.IsInlandDomestic(this.EntityPM);
 
       if (isInlandDomestic) {
-        SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteTabs/Components/Routings/InlandDomesticRoutingsComponent', this.Child.Location)
+        SessionLocator.DynamicLoader.Load('./QuoteOPModules/QuoteTabs/Components/Routings/InlandDomesticRoutingsComponent', this.Child.Location)
           .then(cmpRef => {
             cmpRef.instance.InitTab(this.EntityPM, this.ObjectTableName);
           });
       }
 
       else {
-        SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteTabs/Components/Routings/OrdinaryRoutingsComponent', this.Child.Location)
+        SessionLocator.DynamicLoader.Load('./QuoteOPModules/QuoteTabs/Components/Routings/OrdinaryRoutingsComponent', this.Child.Location)
           .then(cmpRef => {
             cmpRef.instance.InitTab(this.EntityPM, this.ObjectTableName);
           });

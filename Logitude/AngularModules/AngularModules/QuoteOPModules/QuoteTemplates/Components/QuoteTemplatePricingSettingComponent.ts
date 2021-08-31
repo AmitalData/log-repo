@@ -774,7 +774,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         logWindow.Width = 930;
         logWindow.Height = 610;
         logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.TotalPerContainerSettings")  ;
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateTotalPerContainerSetting");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplateTotalPerContainerSetting");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
                 this.IsPerContainerChange = true;

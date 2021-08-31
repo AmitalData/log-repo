@@ -28,6 +28,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -198,7 +199,25 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 
             base.UpdateComposition(entityPM);
         }
+        protected override void CheckConcurrency(QuoteOPPM entityPM, QuoteOP entityPOCO)
+        {
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+            {
+                if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+                {
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant, true);
 
+                    if (entityPOCO.UpdatedByUser?.Contact != null)
+                    {
+                        msg = msg.Replace("another user", entityPOCO.UpdatedByUser?.Contact.Name);
+                    }
+
+                    throw new OptimisticConcurrencyException(msg);
+                }
+            }
+
+            base.CheckConcurrency(entityPM, entityPOCO);
+        }
 
         protected override void OnUpdating(QuoteOPPM entityPM)
         {

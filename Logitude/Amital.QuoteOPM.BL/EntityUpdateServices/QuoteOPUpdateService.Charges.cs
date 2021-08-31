@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Amital.QuoteOPM.Def.EntityPMs;
+using Amital.QuoteOPM.Data.EntityPOCOs;
 
 namespace Amital.QuoteOPM.BL.EntityUpdateServices
 {
@@ -518,6 +519,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             return false;
         }
 
+        
         public void ComputeChargesAmounts()
         {
             int tenant = entityPM.Tenant;

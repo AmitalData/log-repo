@@ -10,7 +10,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
-using Logitude.BL.Security;
+//using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -24,6 +24,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -39,7 +40,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
-                //////SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 ownerId = this.FixFilter(ownerId);
@@ -183,7 +184,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     businessUnitId = null;
                 }
 
-                ///SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
@@ -218,7 +219,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                ///SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteOP", "READ", tenant);
 
                 OwnerId = this.FixFilter(OwnerId);

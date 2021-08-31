@@ -1,5 +1,9 @@
-﻿using Amital.QuoteOPM.Data.BL.BusinessUnitFilters;
+﻿using Amital.QuoteOPM.Data;
+using Amital.QuoteOPM.Data.BL.BusinessUnitFilters;
+using Amital.QuoteOPM.Data.EntityKeys;
+using Amital.QuoteOPM.Def.EntityPMs;
 using Logitude.BL.DataContracts;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +63,22 @@ namespace Amital.QuoteOPM.BL.EntityQueryServices
                  }).ToList();
 
             return result;
+        }
+
+        public override void GetComposition(EntityKeyFields entityKeys, QuoteOPPM entityPM)
+        {
+            IQuoteOPMContext context = MainContext as QuoteOPMContext;
+            var quoteOPKeys = entityKeys as QuoteOPKeys;
+            QuoteOPComputedFieldQueryService quoteOPComputedFieldQueryService= new QuoteOPComputedFieldQueryService(context);
+            //entityPM.Quote = quoteOPComputedFieldQueryService.GetMulti(quoteOPKeys, true);
+            QuoteOPPackageQueryService quoteOPPackageQueryService= new QuoteOPPackageQueryService(context);
+            entityPM.QuotePackages = quoteOPPackageQueryService.GetMulti(quoteOPKeys, true);
+
+
+            //QuoteOPChargeQueryService quoteOPChargeQueryService= new  QuoteOPChargeQueryService(context);
+            //entityPM.QuoteOPCharge = quoteOPChargeQueryService.GetMulti(quoteOPKeys, true);
+
+            base.GetComposition(entityKeys, entityPM);
         }
     }
 }

@@ -253,7 +253,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         logWindow.DataContext = this;
 
         logWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
        
     }
 

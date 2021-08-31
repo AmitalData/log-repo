@@ -540,7 +540,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         logitudeWindow.Width = 880;
         logitudeWindow.Height = 550;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditFCLChargeComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/AddEditFCLChargeComponent');
 
         logitudeWindow.WindowClosed.subscribe(s => {
             if (s) {
@@ -1064,7 +1064,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = TextCodeTranslator.Translate("QuoteOP.O.Charges.VATDetails");
         logitudeWindow.WindowArgs = { IsLocalCurrency: this.IsLocalCurrency, SaleCurrencyCode: this.SaleCurrencyCode, IsCurrencyFilterVisible: this.IsCurrencyFilterVisible, TotalVATs: this.EntityPM.TotalVATs };
-        logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/QuoteVATDetailsComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/QuoteVATDetailsComponent');
     }
 
     OnFreightAmountChanged() {
