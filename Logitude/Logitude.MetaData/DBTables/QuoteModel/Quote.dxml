@@ -1269,6 +1269,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PackagesQuantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"

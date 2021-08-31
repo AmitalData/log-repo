@@ -1708,6 +1708,11 @@ export class QuotePM {
     public set DescriptionRightToLeft(newValue: boolean) { if (this.descriptionRightToLeft != newValue) { this.descriptionRightToLeft = newValue; this.MarkAsDirty("DescriptionRightToLeft"); } }
        
 	 
+    private packagesQuantity: number;
+    public get PackagesQuantity() { return this.packagesQuantity; }
+    public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		

@@ -704,8 +704,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? RegionalTaxPercentage { get; set; }
-
         public bool DescriptionRightToLeft { get; set; }
-
+        public int? PackagesQuantity { get; set; }
     }
 }

@@ -26,7 +26,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
 
             entityPoco.TransportModeId = entityPM.TransportModeId;
             entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
-
             entityPoco.TotalPerContainer = entityPM.TotalPerContainer;  
             entityPoco.UpdateDate = entityPM.UpdateDate;
             entityPoco.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -206,6 +205,18 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
             entityPoco.DescriptionRightToLeft = entityPM.DescriptionRightToLeft;
             entityPoco.IsMultiCurrency = entityPM.IsMultiCurrency;
+
+            if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+            {
+                entityPM.PackagesQuantity = entityPM.NumberOfPackages;
+            }
+
+            else
+            {
+                entityPM.PackagesQuantity = entityPM.NumberOfContainers;
+            }
+
+            entityPoco.PackagesQuantity = entityPM.PackagesQuantity;
 
             BuildSearchField(entityPM, entityPoco);
 

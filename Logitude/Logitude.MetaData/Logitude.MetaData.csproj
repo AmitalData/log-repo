@@ -337,6 +337,8 @@
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
+    <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
     </None>

@@ -296,7 +296,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RegionalTaxId = f.RegionalTaxId,
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
-
+                                               PackagesQuantity = f.PackagesQuantity,
                                            };
             return result;
         }
@@ -515,6 +515,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         EstimatedProfitInLocal = f.EstimatedProfitInLocal,
                         EstimatedProfitInProfit = f.EstimatedProfitInProfit,
                         IsMultiCurrency = f.IsMultiCurrency,
+                        PackagesQuantity = f.PackagesQuantity,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1368,6 +1369,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                 DescriptionRightToLeft = entityPOCO.DescriptionRightToLeft,
                 IsMultiCurrency = entityPOCO.IsMultiCurrency,
+                PackagesQuantity = entityPOCO.PackagesQuantity,
             };
 
             int tenant = entityPOCO.Tenant;
