@@ -2369,6 +2369,11 @@ export class ShipmentTool {
             shipmentPM.MainCarriageToPortAddress = pickup.ToAddress;
         }
 
+        else {
+            shipmentPM.InlandDomesticFromTypeCode = "PART";
+            shipmentPM.InlandDomesticToTypeCode = "PART";
+        }
+
         return shipmentPM;
     }
 

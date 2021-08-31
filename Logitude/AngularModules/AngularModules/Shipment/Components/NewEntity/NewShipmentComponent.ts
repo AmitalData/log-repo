@@ -1141,68 +1141,90 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
     SetUIProperties_From() {
-        //if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
-       
-        //}
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
+            this.SetUIProperties_StandaloneFields();
+        }
 
-        switch (this.InlandDomesticFromTypeCode) {
-            case "PART": {
-                this.UIProperties.SetRequired("MainCarriageFromPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId) ? true : false);
-                this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsScreenEnabled);
+        else {
+            switch (this.InlandDomesticFromTypeCode) {
+                case "PART": {
+                    this.UIProperties.SetRequired("MainCarriageFromPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId) ? true : false);
+                    this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsScreenEnabled);
 
-                var isAddressIdEnabled = false;
-                if (this.IsScreenEnabled) {
-                    if (!AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId)) {
-                        isAddressIdEnabled = true;
+                    var isAddressIdEnabled = false;
+                    if (this.IsScreenEnabled) {
+                        if (!AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId)) {
+                            isAddressIdEnabled = true;
+                        }
                     }
+
+                    this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, isAddressIdEnabled);
+                    break;
                 }
 
-                this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, isAddressIdEnabled);
-                break;
-            }
+                case "PORT": {
+                    this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
+                    this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
+                    break;
+                }
 
-            case "PORT": {
-                this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
-                this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
-                break;
+                case "CASL": {
+                    this.UIProperties.SetRequired("InlandDomesticFromCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCity) && AppTool.IsNullOrEmpty(this.InlandDomesticFromZipCode) ? true : false);
+                    this.UIProperties.SetRequired("InlandDomesticFromCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCountryId) ? true : false);
+                    break;
+                }
             }
+        }        
+    }
+    SetUIProperties_To() {
+        if (this.IsStandalone && !this.IsNewStandAlonePickupDelivery) {
+            this.SetUIProperties_StandaloneFields();
+        }
 
-            case "CASL": {
-                this.UIProperties.SetRequired("InlandDomesticFromCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCity) && AppTool.IsNullOrEmpty(this.InlandDomesticFromZipCode) ? true : false);
-                this.UIProperties.SetRequired("InlandDomesticFromCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCountryId) ? true : false);
-                break;
+        else {
+            switch (this.InlandDomesticToTypeCode) {
+                case "PART": {
+                    this.UIProperties.SetRequired("MainCarriageToPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId) ? true : false);
+                    this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsScreenEnabled);
+
+                    var isAddressIdEnabled = false;
+                    if (this.IsScreenEnabled) {
+                        if (!AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId)) {
+                            isAddressIdEnabled = true;
+                        }
+                    }
+
+                    this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, isAddressIdEnabled);
+                    break;
+                }
+
+                case "PORT": {
+                    this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPortId) ? true : false);
+                    this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
+                    break;
+                }
+
+                case "CASL": {
+                    this.UIProperties.SetRequired("InlandDomesticToCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCity) && AppTool.IsNullOrEmpty(this.InlandDomesticToZipCode) ? true : false);
+                    this.UIProperties.SetRequired("InlandDomesticToCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCountryId) ? true : false);
+                    break;
+                }
             }
         }
     }
-    SetUIProperties_To() {
-        switch (this.InlandDomesticToTypeCode) {
-            case "PART": {
-                this.UIProperties.SetRequired("MainCarriageToPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId) ? true : false);
-                this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsScreenEnabled);
-
-                var isAddressIdEnabled = false;
-                if (this.IsScreenEnabled) {
-                    if (!AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId)) {
-                        isAddressIdEnabled = true;
-                    }
-                }
-
-                this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, isAddressIdEnabled);
-                break;
-            }
-
-            case "PORT": {
-                this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPortId) ? true : false);
-                this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
-                break;
-            }
-
-            case "CASL": {
-                this.UIProperties.SetRequired("InlandDomesticToCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCity) && AppTool.IsNullOrEmpty(this.InlandDomesticToZipCode) ? true : false);
-                this.UIProperties.SetRequired("InlandDomesticToCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCountryId) ? true : false);
-                break;
-            }
-        }
+    SetUIProperties_StandaloneFields() {
+        this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticFromCity", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticFromCountryId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticFromZipCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticToCity", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticToCountryId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InlandDomesticToZipCode", this.ObjectTableName, false);
     }
 
     // Shipper
@@ -1238,7 +1260,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ShipperAddressId = null;
             this.ShipperCardList = null;
 
-            if (this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
                 this.SetUIProperties_From();
                 this.MainCarriageFromPartnerId = null;
                 this.MainCarriageFromAddressId = null;
@@ -1250,7 +1272,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 if (!myResponse.HasError) {
                     var myCardList: CardList = myResponse.Result;
                     if (myCardList) {
-                        if (this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.InlandDomesticFromTypeCode == "PART") {
                             this.MainCarriageFromPartnerId = this.ShipperId;
                             this.MainCarriageFromAddressId = myCardList.MainAddressId;
                         }
@@ -1357,7 +1379,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ConsigneeAddressId = null;
             this.ConsigneeCardList = null;
 
-            if (this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
                 this.SetUIProperties_To();
                 this.MainCarriageToPartnerId = null;
                 this.MainCarriageToAddressId = null;
@@ -1369,7 +1391,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 if (!myResponse.HasError) {
                     var myCardList: CardList = myResponse.Result;
                     if (myCardList) {
-                        if (this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.InlandDomesticToTypeCode == "PART") {
                             this.MainCarriageToPartnerId = this.ConsigneeId;
                             this.MainCarriageToAddressId = myCardList.MainAddressId;
                         }

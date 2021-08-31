@@ -109,11 +109,15 @@ export class PickupMainTabComponent extends BaseComponent {
             }
 
             case "PORT": {
+                this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromPortId) ? true : false);
                 break;
             }
 
             case "CASL": {
+                this.UIProperties.SetEnabled("FromAddressZipCode", this.ObjectTableName, this.IsEditingEnabled);
+                this.UIProperties.SetEnabled("FromAddressCity", this.ObjectTableName, this.IsEditingEnabled);
+                this.UIProperties.SetEnabled("FromAddressCountryId", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetRequired("FromAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCity) && AppTool.IsNullOrEmpty(this.FromAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("FromAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCountryId) ? true : false);
                 break;
@@ -138,11 +142,15 @@ export class PickupMainTabComponent extends BaseComponent {
             }
 
             case "PORT": {
+                this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
                 break;
             }
 
             case "CASL": {
+                this.UIProperties.SetEnabled("ToAddressZipCode", this.ObjectTableName, this.IsEditingEnabled);
+                this.UIProperties.SetEnabled("ToAddressCity", this.ObjectTableName, this.IsEditingEnabled);
+                this.UIProperties.SetEnabled("ToAddressCountryId", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
                 break;
