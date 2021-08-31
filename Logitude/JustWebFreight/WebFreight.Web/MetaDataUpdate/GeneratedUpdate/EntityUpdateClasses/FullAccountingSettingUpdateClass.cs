@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "5671c88e40b24b1affabb82c1f61453f";
+		public const string HashString = "ab20e9975f9d01fd840ec78ef9311d51";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "bdf0",
+			      				    Code =  "ee3f",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -3079,7 +3079,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ActiveSecurityLevel",
+					 						FieldName =  "IsSecurityLevelActivated",
 					  						ObjectTableName =  "FullAccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3097,8 +3097,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ActiveSecurityLevel",
-					  						ListPropertyPath =  "ActiveSecurityLevel",
+					  						PMPropertyPath =  "IsSecurityLevelActivated",
+					  						ListPropertyPath =  "IsSecurityLevelActivated",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -3115,7 +3115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ActiveSecurityLevel",
+					  						FullFieldLable =  "IsSecurityLevelActivated",
 					  						DefaultText =  "Chart Of Account Security Levels Activated",
 					  						FullLocalDefaultText =  "רמת הרשאת קבוצת מאזן הוגדרה",
 					  						IsMaxLength =  false,

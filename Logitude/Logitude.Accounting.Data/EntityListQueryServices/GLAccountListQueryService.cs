@@ -234,7 +234,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
                                                    InsuredCreditLimit= CardsDatas.InsuredcreditLimit,
 
-                                                   IsSecurityLevelsEnabled = fullAccountingSettings.ActiveSecurityLevel,
+                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
                                                    ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
                                                    
                                                });

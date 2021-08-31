@@ -139,8 +139,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SecondPeriodsMonths { get; set; }
         [Column("ThirdsPeriodsMonths")]
 	    public string ThirdsPeriodsMonths { get; set; }
-        [Column("ActiveSecurityLevel")]
-	    public bool ActiveSecurityLevel { get; set; }
+        [Column("IsSecurityLevelActivated")]
+	    public bool IsSecurityLevelActivated { get; set; }
     }
 }
 	 
