@@ -151,7 +151,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
         logitudeWindow.DataContext = myPartnerItem;
-        logitudeWindow.Show("./QuoteModules/QuoteTabs/Components/Partners/AddEditPartnerComponent");
+        logitudeWindow.Show("./QuoteOPModules/QuoteTabs/Components/Partners/AddEditPartnerComponent");
         logitudeWindow.WindowClosed.subscribe(s => {
             if (s == "OK") {
                 this.BuildItemsCollection();

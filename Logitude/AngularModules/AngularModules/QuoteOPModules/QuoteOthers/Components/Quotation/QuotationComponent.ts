@@ -1037,7 +1037,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             logWindow.Height = window.innerHeight - 150;
             logWindow.IsShowCloseButton = true;
             logWindow.DataContext = this;
-            logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
+            logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
 
             logWindow.WindowClosed.subscribe(($event1: any) => {
               this.IsShowPreviewPDF = true;
@@ -1094,7 +1094,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             logWindow.Width = sendWindowWidth;
             logWindow.Height = sendWindowHeight;
             logWindow.Title = "Edit Section";
-            logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
+            logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
                     this.PreviewQuoteOPTemplatePdfReport();
@@ -1120,7 +1120,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.NewQuoteOPTemplate"); 
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/AddQuoteTemplateFromLibraryComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
                 this.LoadTemplates($event);

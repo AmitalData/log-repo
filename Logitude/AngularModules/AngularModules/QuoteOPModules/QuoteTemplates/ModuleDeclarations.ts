@@ -11,7 +11,7 @@ import {QuoteTemplateHeaderFooterSettingComponent} from './Components/QuoteTempl
 import {QuoteTemplatePricingSettingComponent} from './Components/QuoteTemplatePricingSettingComponent';
 import {QuoteTemplateTotalPerContainerSetting} from './Components/QuoteTemplateTotalPerContainerSetting';
 import { NewQuoteTemplateComponent } from './Components/NewQuoteTemplateComponent';
-import { PreviewQuoteTemplateReportComponent } from '../../QuoteModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent';
+import { PreviewQuoteTemplateReportComponent } from '../../QuoteOPModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent';
 
 export const Components =
     [

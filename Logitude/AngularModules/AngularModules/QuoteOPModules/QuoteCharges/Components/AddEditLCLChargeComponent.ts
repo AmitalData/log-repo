@@ -199,7 +199,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 400;
         logitudeWindow.Height = 350;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditPriceStepComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/AddEditPriceStepComponent');
     }
     DeleteStepClicked(item: QuoteStepItem) {
         if (this.DataContext.EntityPM.QuoteOPChargePriceSteps.indexOf(item.EntityPM) != -1) {
@@ -535,7 +535,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
 
                 //var logitudeWindow = new LogitudeWindow();
                 //logitudeWindow.Title = "Select Price Breaks";
-                //logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/SelectBreaksComponent');
+                //logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/SelectBreaksComponent');
 
                 //logitudeWindow.WindowClosed.subscribe(s => {
                 //    if (s) {

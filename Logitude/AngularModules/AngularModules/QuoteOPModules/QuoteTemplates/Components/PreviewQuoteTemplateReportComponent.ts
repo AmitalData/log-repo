@@ -17,7 +17,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewInit {
 
     QuoteOPTemplateId: string;
-    QuoteId: string;
+    QuoteOPId: string;
     PdfDivKey: string = Guid.newGuid();
     QuoteOPTemplateSectionExtendedPMService: QuoteOPTemplateSectionExtendedPMService;
     HeightPdf: number;
@@ -42,7 +42,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
     GetQuoteOPTemplatePdfReport() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Loading"));
-        this.QuoteOPTemplateSectionExtendedPMService.GetQuoteOPTemplatePdfReport(this.QuoteOPId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe((res:any) => {
+        this.QuoteOPTemplateSectionExtendedPMService.GetQuoteOPTemplatePdfReport(this.QuoteOPId, this.QuoteOPTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -72,7 +72,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
 
     SetWindowArgs(args: any) {
-        this.QuoteTemplateId = args.QuoteTemplateId;
+        this.QuoteOPTemplateId = args.QuoteTemplateId;
         this.QuoteOPId = args.QuoteOPId;
         this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
   

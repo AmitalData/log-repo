@@ -66,13 +66,13 @@ export class ChargesTabComponent implements AfterViewInit, OnDestroy {
     this.Child.Location.clear();
 
     if (this.isLCL) {
-      SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.Child.Location)
+      SessionLocator.DynamicLoader.Load('./QuoteOPModules/QuoteCharges/Components/LCLChargesComponent', this.Child.Location)
         .then(cmpRef => {
         });
     }
 
     else {
-      SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/FCLChargesComponent', this.Child.Location)
+      SessionLocator.DynamicLoader.Load('./QuoteOPModules/QuoteCharges/Components/FCLChargesComponent', this.Child.Location)
         .then(cmpRef => {
         });
     }

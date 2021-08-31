@@ -159,11 +159,13 @@ namespace Amital.QuoteOPM.BL.Tools.Validating
         }
         private static void ValidateConcurrencyGUID(QuoteOPPM entityPM, QuoteOP entityPoco)
         {
-            if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
-            {
-                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                throw new OptimisticConcurrencyException(msg);
-            }
+            ///move to checkConcurrency !!!
+            
+            //if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
+            //{
+            //    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            //    throw new OptimisticConcurrencyException(msg);
+            //}
         }
         private static void ValidateProductTypePermission(QuoteOPPM entityPM)
         {
