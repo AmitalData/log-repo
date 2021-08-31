@@ -513,6 +513,19 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- VATreportEveryTwoMonths -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'VATreportEveryTwoMonths'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="VATreportEveryTwoMonths" (Checked)="VATreportEveryTwoMonths = $event"></CheckBox>
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
+
                                                     <tr><td><div></div></td></tr>
                                                 </table>
                                             </td>

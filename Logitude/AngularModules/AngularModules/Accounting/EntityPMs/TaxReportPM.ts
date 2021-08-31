@@ -194,6 +194,11 @@ export class TaxReportPM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
+    private createdInTwoMonthsLogic: boolean;
+    public get CreatedInTwoMonthsLogic() { return this.createdInTwoMonthsLogic; }
+    public set CreatedInTwoMonthsLogic(newValue: boolean) { if (this.createdInTwoMonthsLogic != newValue) { this.createdInTwoMonthsLogic = newValue; this.MarkAsDirty("CreatedInTwoMonthsLogic"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		

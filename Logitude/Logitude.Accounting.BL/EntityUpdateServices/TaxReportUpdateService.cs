@@ -53,6 +53,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.ProcessStartDate = DateTime.Now;
             entityPM.TaxReportNumber = entityPM.TaxReportMonth.Month.ToString() + entityPM.Year.ToString();
             entityPM.IsNew = true;
+            entityPM.CreatedInTwoMonthsLogic = setting.VATreportEveryTwoMonths;
             Validate(entityPM);
         }
         private FullAccountingSettingPM GetFullAccountingSetting(int tenant)
@@ -75,21 +76,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 TaxReportRepository repo = new TaxReportRepository(entityPM.Tenant);
                 int count = repo.ReportCount(entityPM.Tenant);
-
+                FullAccountingSettingPM fullAccountingSettingPM = GetFullAccountingSetting(entityPM.Tenant);
 
                 if (count > 0)
                 {
                     AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
-                    bool exist = repo.CheckIfTaxReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
-                    bool previousCompletedExist = repo.CheckIfPreviousReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
-                    bool previousNotCompletedExist = repo.CheckIfPreviousNotCompReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                    DateTime taxReportDate = new DateTime(entityPM.Year, entityPM.TaxReportMonth.Month, 1);
+                    bool exist = repo.CheckIfTaxReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
+                    bool previousCompletedExist = repo.CheckIfPreviousReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
+                    bool previousNotCompletedExist = repo.CheckIfPreviousNotCompReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
 
                     bool higherDateReportExist = repo.CheckIfTaxReportWithHigherDateExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
 
                     ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
 
                     bool showLocals = !contact.DontShowLocal;
-
 
                     if (exist == true)
                     {
@@ -107,10 +108,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (!previousCompletedExist)
                     {
-
+                        if (fullAccountingSettingPM.VATreportEveryTwoMonths)
+                        {
+                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.CompletedReportExistForPreviousTwoMonths", entityPM.Tenant, showLocals));
+                        }
                         throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.CompletedReportExist", entityPM.Tenant, showLocals));
                     }
-
                 }
 
             }

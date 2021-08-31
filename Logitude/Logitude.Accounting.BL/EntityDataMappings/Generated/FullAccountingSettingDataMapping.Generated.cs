@@ -55,7 +55,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
-	         IsSecurityLevelActivated,
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths,
 	      }
 
 
@@ -112,7 +113,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
-	         IsSecurityLevelActivated,
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -284,6 +286,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
             {
 				entityPOCO.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+				entityPOCO.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
 			}
 			}
 
@@ -460,6 +467,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsSecurityLevelActivated = entityPOCO.IsSecurityLevelActivated;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VATreportEveryTwoMonths))
+            {
+					entityPM.VATreportEveryTwoMonths = entityPOCO.VATreportEveryTwoMonths;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -629,6 +641,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
             {
                 oldEntityPM.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+                oldEntityPM.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
             }
 			
 		}
