@@ -2740,6 +2740,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticToTypeCode { get; set; }
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
+
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; }
     }
 
     public class TransshipmentLeg
