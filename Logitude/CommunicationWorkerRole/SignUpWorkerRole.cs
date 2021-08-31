@@ -257,7 +257,7 @@ namespace CommunicationWorkerRole
                     queue.Clear();
                 }///itzik ask :why to .. 
 
-            }
+         
 
 
             // Set the maximum number of concurrent connections 
@@ -268,7 +268,7 @@ namespace CommunicationWorkerRole
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
             RoleEnvironment.Changing += RoleEnvironmentChanging;
-
+            }
             return base.OnStart();
         }
 
