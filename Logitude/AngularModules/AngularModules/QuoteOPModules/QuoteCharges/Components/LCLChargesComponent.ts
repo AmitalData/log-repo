@@ -282,7 +282,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logitudeWindow.Width = 880;
         logitudeWindow.Height = 550;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditLCLChargeComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/AddEditLCLChargeComponent');
     }
 
     ShowTariffsClicked() {
@@ -291,7 +291,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logWindow.Height = 600;
         logWindow.Title = TextCodeTranslator.Translate("TariffHeader.O.Tariffs")
         logWindow.WindowArgs = this;
-        logWindow.Show('./QuoteModules/QuoteTabs/Components/Tariffs/TariffsComponent');
+        logWindow.Show('./QuoteOPModules/QuoteTabs/Components/Tariffs/TariffsComponent');
        
     }
     PriceCheck() {
@@ -871,7 +871,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = TextCodeTranslator.Translate("QuoteOP.O.Charges.VATDetails");
         logitudeWindow.WindowArgs = { IsLocalCurrency: this.IsLocalCurrency, SaleCurrencyCode: this.SaleCurrencyCode, IsCurrencyFilterVisible: this.IsCurrencyFilterVisible, TotalVATs: this.EntityPM.TotalVATs };
-        logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/QuoteVATDetailsComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteCharges/Components/QuoteVATDetailsComponent');
     }
 
     OnFreightAmountChanged() {

@@ -371,7 +371,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             logWindow.Width = 400;
             logWindow.Height = 130;
             logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.DesignTable");
-            logWindow.Show("./QuoteModules/QuoteTemplates/Components/AdvanceDesignTableComponent");
+            logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/AdvanceDesignTableComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
                     this.IsChangeSetting = true;
@@ -405,7 +405,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             logWindow.Height = 600;
             logWindow.BottomBorderForTitle = "1px solid LightGray";
             logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.Edit" + type);
-            logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
+            logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
                     this.IsChangeSetting = true;
@@ -434,7 +434,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             logWindow.Height = 660;
             logWindow.WindowArgs = windowArgs;
 
-            logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateHeaderDetailsSettingComponent");
+            logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplateHeaderDetailsSettingComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
                 if ($event == "Refresh") {
                     QuoteOPTemplateSectionHeaderViewModel.IsLoaded = false;

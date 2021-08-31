@@ -17,8 +17,12 @@ namespace Amital.QuoteOPM.Data.Repsitories
         
 		public List<QuoteOPPackage> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            QuoteOPKeys quoteOPKeys = entityKeys as QuoteOPKeys;
+
+            return (from a in context.QuoteOPPackages
+                    where a.QuoteOPId == quoteOPKeys.Id 
+                    select a).ToList();
         }
 
    }

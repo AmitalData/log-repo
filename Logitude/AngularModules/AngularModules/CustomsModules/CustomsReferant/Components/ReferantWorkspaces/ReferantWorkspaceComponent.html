@@ -48,7 +48,6 @@
                                 </SectionHead>
                                 <SectionBody>
                                     <div class="QueriesSection" *ngIf="counters">
-                                        <div>שטרי מטען</div>
                                         <div style="margin-right:10px;">
                                             <p class="QueryLink" *ngIf="FilesInProcessVisibility" (click)="ViewReferantQuery('FilesInProcess')"> {{'Customs.DeclarationReferantData.O.FilesInProcess' | TextCodeTranslationPipe}} ({{counters.FilesInProcess}}) </p>
                                             <p class="QueryLink" *ngIf="TrackingCasesVisibility" (click)="ViewReferantQuery('TrackingCases')"> {{'Customs.DeclarationReferantData.O.TrackingCases' | TextCodeTranslationPipe}} ({{counters.TrackingCases}})  </p>
