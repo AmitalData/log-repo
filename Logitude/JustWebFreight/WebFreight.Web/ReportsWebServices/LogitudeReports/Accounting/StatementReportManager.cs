@@ -881,6 +881,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CreditWithZero = record.Credit.Value;
                 }
 
+                int i = totalList.IndexOf(record);
+                if (i < totalList.Count && i != 0)
+                {
+                    record.Balance = totalList[i - 1].Balance + (totalList[i].Credit != null ? -1 * totalList[i].Credit : totalList[i].Debit);
+                }
+
                 Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
                 if (card != null)
                 {
@@ -932,6 +938,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             List<StatementRecord> myList = new List<StatementRecord>();
             List<ARInvoice> iQueryableList = iQueryable.ToList();
+            double? openbalance = 0;
             foreach (ARInvoice d in iQueryableList)
             {
                 StatementRecord item = new StatementRecord();
@@ -947,6 +954,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
                 item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
                 item.DebitWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? 0 : d.AmountDue.Value);
+                openbalance = openbalance + item.Debit;
+                item.Balance = openbalance;
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
                 item.CreditWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? 0 : d.AmountDue.Value);
                 item.Notes = d.InternalNotes;
@@ -968,87 +977,107 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private List<StatementRecord> BuildList_APInvoice(IQueryable<APInvoice> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     MasterNumber = d.MasterNumber,
-                     Desicription = d.Description + " " + d.MainEntityReference,
-                     ShipmentId = d.MainEntityId,
-                     HouseNumber = d.HouseNumber,
-                     Date = d.InvoiceDate.Value,
-                     DueDate = d.DueDate.Value,
-                     OurRefrence = d.InternalNumber,
-                     CurrencyId = d.InvoiceCurrencyId,
-                     Type = "A\\P Invoice",
-                     Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
-                     DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value),
-                     Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
-                     CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0),
-                     Notes = d.InternalNotes,
-                     YourRefrence = d.InvoiceNumber,
-                     BillToVendorId = d.VendorId,
-                     InvoiceStatus = d.Status == null ? null : d.Status.Name,
-                     InvoiceAmount = d.AmountInLocalCurrency,
-                     AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
-                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
-                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
-                     BranchId = d.BranchId,
-                     ShipmentNumber = d.MainEntityReference,
-                     OriginalAmount = d.AmountInInvoiceCurrency
-                 }).ToList();
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<APInvoice> iQueryableList = iQueryable.ToList();
+            double? openbalance = 0;
+            foreach (APInvoice d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.MasterNumber = d.MasterNumber;
+                item.Desicription = d.Description + " " + d.MainEntityReference;
+                item.ShipmentId = d.MainEntityId;
+                item.HouseNumber = d.HouseNumber;
+                item.Date = d.InvoiceDate.Value;
+                item.DueDate = d.DueDate.Value;
+                item.OurRefrence = d.InternalNumber;
+                item.CurrencyId = d.InvoiceCurrencyId;
+                item.Type = "A\\P Invoice";
+                item.Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue);
+                item.DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value);
+                item.Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null);
+                item.CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0);
+                openbalance = openbalance - item.Credit;
+                item.Balance = openbalance;
+                item.Notes = d.InternalNotes;
+                item.YourRefrence = d.InvoiceNumber;
+                item.BillToVendorId = d.VendorId;
+                item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
+                item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
+                item.InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency;
+                item.AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue;
+                item.BranchId = d.BranchId;
+                item.ShipmentNumber = d.MainEntityReference;
+                item.OriginalAmount = d.AmountInInvoiceCurrency;
+                myList.Add(item);
+            }
 
             return myList;
         }
         private List<StatementRecord> BuildList_ARPayment(IQueryable<ARPayment> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     Date = d.CreateDate.Value,
-                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
-                     OurRefrence = d.PaymentNo,
-                     CurrencyId = d.PaymentCurrencyId,
-                     Type = "A\\R Payment",
-                     Credit = d.OpenAmount == null ? null : d.OpenAmount,
-                     CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value,
-                     Notes = d.InternalNotes,
-                     RegisterDate = d.RegisterDate,
-                     ValueDate = d.ValueDate,
-                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
-                     BillToVendorId = d.BillToId,
-                     BranchId = d.BranchId,
-                     PaymentStatus = d.Status == null ? null : d.Status.Name,
-                     ShipmentNumber = d.ShipmentNumber,
-                     OriginalAmount = d.AmountInPaymentCurrency
-                 }).ToList();
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<ARPayment> iQueryableList = iQueryable.ToList();
+            double? openbalance = 0;
+
+            foreach (ARPayment d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.Date = d.CreateDate.Value;
+                item.DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value;
+                item.OurRefrence = d.PaymentNo;
+                item.CurrencyId = d.PaymentCurrencyId;
+                item.Type = "A\\R Payment";
+                item.Credit = d.OpenAmount == null ? null : d.OpenAmount;
+                item.CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
+                openbalance = openbalance - item.Credit;
+                item.Balance = openbalance;
+                item.Notes = d.InternalNotes;
+                item.RegisterDate = d.RegisterDate;
+                item.ValueDate = d.ValueDate;
+                item.PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name;
+                item.BillToVendorId = d.BillToId;
+                item.BranchId = d.BranchId;
+                item.PaymentStatus = d.Status == null ? null : d.Status.Name;
+                item.ShipmentNumber = d.ShipmentNumber;
+                item.OriginalAmount = d.AmountInPaymentCurrency;
+                myList.Add(item);
+            }
 
             return myList;
         }
+
+
         private List<StatementRecord> BuildList_APPayment(IQueryable<APPayment> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     Date = d.CreateDate.Value,
-                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
-                     OurRefrence = d.PaymentNo,
-                     CurrencyId = d.PaymentCurrencyId,
-                     Type = "A\\P Payment",
-                     Debit = d.OpenAmount == null ? null : d.OpenAmount,
-                     DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value,
-                     Notes = d.InternalNotes,
-                     RegisterDate = d.RegisterDate,
-                     ValueDate = d.ValueDate,
-                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
-                     BillToVendorId = d.VendorId,
-                     BranchId = d.BranchId,
-                     PaymentStatus = d.Status == null ? null : d.Status.Name,
-                     OriginalAmount = d.AmountInPaymentCurrency
-                 }).ToList();
 
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<APPayment> iQueryableList = iQueryable.ToList();
+            double? openbalance = 0;
+
+            foreach (APPayment d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.Date = d.CreateDate.Value;
+                item.DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value;
+                item.OurRefrence = d.PaymentNo;
+                item.CurrencyId = d.PaymentCurrencyId;
+                item.Type = "A\\P Payment";
+                item.Debit = d.OpenAmount == null ? null : d.OpenAmount;
+                item.DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
+                openbalance = openbalance + item.Debit;
+                item.Balance = openbalance;
+                item.Notes = d.InternalNotes;
+                item.RegisterDate = d.RegisterDate;
+                item.ValueDate = d.ValueDate;
+                item.PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name;
+                item.BillToVendorId = d.VendorId;
+                item.BranchId = d.BranchId;
+                item.PaymentStatus = d.Status == null ? null : d.Status.Name;
+                item.OriginalAmount = d.AmountInPaymentCurrency;
+
+                myList.Add(item);
+            }
             return myList;
         }
         private void FillFiltersFieldsValuesInDataProvider()
