@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessCardUpdateClass
    {  		
-		public const string HashString = "204ef36f2cfa9686d7cd8a5a8464c8eb";
+		public const string HashString = "c75a227a9addb169c669dad0990fb4a5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -106,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Tenant Access Card",
-			      				    Code =  "b6c9",
+			      				    Code =  "3af4",
 			      				    Name =  "CustomerTenantAccessCard",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
