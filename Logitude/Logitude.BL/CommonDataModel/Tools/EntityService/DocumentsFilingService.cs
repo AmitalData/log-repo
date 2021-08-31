@@ -699,7 +699,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void AddShipmentUpdateKafkaQueueMessage(DocumentsFilingPM theEntityPm)
         {
             if (FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
-                theEntityPm.ObjectTableName.Equals("Shipment") &&
+                theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
                 theEntityPm.HasFile.Equals(true) &&
                 theEntityPm.DirectionCode == "I")
             {
