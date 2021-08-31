@@ -63,6 +63,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { Alert } from 'selenium-webdriver';
 @Component({
 
     templateUrl: './DeclarationPaymentComponent.html',
@@ -3242,6 +3243,9 @@ export class PaymentMethodModel extends BaseComponent {
                                             if (!response.HasError) {
                                                 var bankCard: CustomBanksCardPM = response.Result;
                                                 if (bankCard != null) {
+                                                    alert("PayerActivityTypeCode" + customBank.PayerTypeCode);
+                                                    alert("customBank.PayerTypeName" + customBank.PayerTypeName);
+
                                                     this.methodPM.BankCode = customBank.BankCode;
 
                                                     this.methodPM.BranchCode = customBank.BranchCode;
