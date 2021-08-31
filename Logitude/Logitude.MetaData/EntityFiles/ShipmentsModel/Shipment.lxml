@@ -94714,8 +94714,7 @@
       ManualActivatedFollowUp="true"
       IsFollowUp="true"
       FollowUpEnglishName="&quot;Pick up Arrangement&quot;"
-      FollowUpLocalName="&quot;Pick up Arrangement&quot;"
-      EntityStatusCode="&quot;SHP2&quot;" />
+      FollowUpLocalName="&quot;Pick up Arrangement&quot;" />
     <EventType
       Code="&quot;PRCD&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -94891,8 +94890,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="true"
       FollowUpEnglishName="&quot;Delivery Arrangement&quot;"
-      FollowUpLocalName="&quot;Delivery Arrangement&quot;"
-      EntityStatusCode="&quot;SDL2&quot;" />
+      FollowUpLocalName="&quot;Delivery Arrangement&quot;" />
     <EventType
       Code="&quot;OPCL&quot;"
       ObjectTableName="&quot;Shipment&quot;"

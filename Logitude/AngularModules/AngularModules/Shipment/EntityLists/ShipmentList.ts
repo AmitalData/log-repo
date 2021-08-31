@@ -470,4 +470,4 @@ export class ShipmentList {
 		StandalonePickupDeliveryId: string;
 		GrossWeightUnitCode: string;
 	
-}
+}
