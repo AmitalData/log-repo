@@ -955,9 +955,16 @@ export class SendDeclarationService implements OnDestroy {
                     var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
                     myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
 
-                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
-                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
+                    if (!this.CurrentSession.SessionTabItem.IsSelected) {
+                        let token = this.CurrentSession.SessionSeleced.subscribe((isSel) => {
+                            token.unsubscribe();
+                            this.ChangeAnswerTab();
+                        });
+                    } else {
+                        this.ChangeAnswerTab()
+                    }
                 }
             }
             ).catch((err) => {
@@ -979,6 +986,12 @@ export class SendDeclarationService implements OnDestroy {
       
     }
 
+    ChangeAnswerTab() {
+        this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCA";
+        this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+    }
     GetRequiredErrorsList(errorsList: any[]) {
         var errorsMessages: string[] = [];
         errorsList.forEach((error) => {
