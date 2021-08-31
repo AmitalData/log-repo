@@ -2779,7 +2779,7 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.Tenant = SessionLocator.Tenant;
         errorLogPM.UserName = SessionLocator.LoggedUserId + "/" + SessionLocator.LoggedUserPM.Email;
         errorLogPM.LogDate = DateTool.GetCurrentDateTimeAsUtc();
-
+        alert("banklist")
         let myBankList = this._BanksList.map(r => JSON.stringify({
             'InternalBankId': r.Id, 'LocalName': r.LocalName, 'EnglishName': r.EnglishName
         }));
@@ -2810,6 +2810,7 @@ export class PaymentMethodModel extends BaseComponent {
         this.BankIsNull = false;
         if (methodPM.MethodTypeCode == "1") {
             this.BanksList = [];
+            alert("constructor" + methodPM.InternalBankId)
             if (!AppTool.IsNullOrEmpty(methodPM.InternalBankId)) {
                 this.customBankListService.getSingle(methodPM.InternalBankId).subscribe((response: ServiceResponse) => {
                     if (response) {
@@ -2819,6 +2820,7 @@ export class PaymentMethodModel extends BaseComponent {
 
             }
             else {
+                alert("constructor - loadBanks")
                 this.LoadBanks();
             }
         }
@@ -2858,6 +2860,7 @@ export class PaymentMethodModel extends BaseComponent {
 
                                                     this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                     if (this.agentBanks.length == 1) {
+                                                        alert("loadBanks InternalBankId " + this.agentBanks[0].Id);
                                                         this.InternalBankId = this.agentBanks[0].Id;
                                                         if (!this.BankIsNull || this.MethodTypeCode != "2") {
                                                             this.SelectedBank = this.agentBanks[0];
@@ -2867,6 +2870,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                     else {
                                                         if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
                                                             if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                alert("GetCreditInternalBankId InternalBankId " + this.parent.GetCreditInternalBankId);
                                                                 this.InternalBankId = this.parent.GetCreditInternalBankId;
                                                             }
                                                             this.SendCreditToGetBank();
@@ -2884,6 +2888,7 @@ export class PaymentMethodModel extends BaseComponent {
                                         if (customsSetting != null) {
                                             //this.InternalBankId = null;
                                             if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                alert("customsSetting != null " + this.parent.GetCreditInternalBankId);
                                                 this.InternalBankId = this.parent.GetCreditInternalBankId;
                                             }
                                             //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
@@ -2918,6 +2923,7 @@ export class PaymentMethodModel extends BaseComponent {
 
                                                             if (result.length == 1) {
                                                                 if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                    debugger;
                                                                     this.InternalBankId = this.BanksList[0].Id;
                                                                 }
                                                                 var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
@@ -2940,6 +2946,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                                     this.BanksList = this.agentBanks;
                                                                     if (this.agentBanks.length == 1) {
                                                                         if (this.InternalBankId == null) {
+                                                                            debugger;
                                                                             this.InternalBankId = this.BanksList[0].Id;
                                                                         }
                                                                     }
@@ -2957,6 +2964,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                 //one bank
                                                 else if (result.length == 1) {
                                                     if (this.InternalBankId == null) {
+                                                        debugger;
                                                         this.InternalBankId = this.BanksList[0].Id;
                                                     }
                                                     this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
@@ -2987,9 +2995,10 @@ export class PaymentMethodModel extends BaseComponent {
                                                                 agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                                 //fill the LOV
                                                                 this.BanksList = connectedBanks.concat(agentBanks);
-
+                                                                debugger;
                                                                 //select bank
                                                                 if (this.InternalBankId != null) {
+                                                                    debugger;
                                                                     var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                                     this.SelectedBank = bank;
                                                                 }
