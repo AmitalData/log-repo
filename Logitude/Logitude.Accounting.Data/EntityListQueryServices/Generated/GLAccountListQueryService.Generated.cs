@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
-
+            
             IQueryable<GLAccount> iQueryable = (from a in context.GLAccounts
                                               
                    where a.Tenant == tenant select a);
@@ -46,7 +46,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable);
-           
+
+            query2 = MapListFields(query2, tenant);
+
+
             query2 = filter.GetFilteredQuery<GLAccountList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
