@@ -211,7 +211,20 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             Styles: { width: '120px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
-         });
+        });
+
+        if (this.EntityPM.Direction == "E")
+        {
+            this.columns.push({
+
+                FieldName: 'AmendmentTypeName',
+                DataTypeCode: 'String',
+                Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentTypeName"),
+                Styles: { width: '120px' },
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+            });
+        }
 
         this.columns.push({
 

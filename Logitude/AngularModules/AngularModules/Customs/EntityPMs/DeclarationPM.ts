@@ -1379,6 +1379,11 @@ export class DeclarationPM {
     public set AmedmentType(newValue: string) { if (this.amedmentType != newValue) { this.amedmentType = newValue; this.MarkAsDirty("AmedmentType"); } }
        
 	 
+    private amendmentTypeName: string;
+    public get AmendmentTypeName() { return this.amendmentTypeName; }
+    public set AmendmentTypeName(newValue: string) { if (this.amendmentTypeName != newValue) { this.amendmentTypeName = newValue; this.MarkAsDirty("AmendmentTypeName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

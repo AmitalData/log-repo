@@ -2126,9 +2126,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
             AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
+            AmedmentTypeRepository amendmentTypesRepository = new AmedmentTypeRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
             UserRepository userRepository = new UserRepository(tenant);
             var amendmentStatuses = amendmentStatusRepository.GetAll();
+            var amendmentTypes = amendmentTypesRepository.GetAll();
             var users = userRepository.GetAll();
             var i = 1;
             foreach (Declaration item in declarations)
@@ -2144,10 +2146,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentStatus = item.AmendmentStatus,
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
-                    IsAmendment=item.IsAmendment
+                    IsAmendment=item.IsAmendment,
+                    AmedmentType = item.AmedmentType
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
+                if (item.AmedmentType != null) declarationList.AmendmentTypeName = amendmentTypes.FirstOrDefault(x => x.Code == item.AmedmentType).Name;
 
                 declarationLists.Add(declarationList);
             }

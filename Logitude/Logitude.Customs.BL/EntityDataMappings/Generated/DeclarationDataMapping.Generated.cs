@@ -402,7 +402,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CancelRejectionReasonName, 
 	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
-	         AmedmentType,
+	         AmedmentType, 
+	         AmendmentTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
