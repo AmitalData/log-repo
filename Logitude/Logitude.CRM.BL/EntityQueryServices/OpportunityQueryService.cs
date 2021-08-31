@@ -990,35 +990,26 @@ namespace Logitude.CRM.BL.EntityQueryServices
         {
 
             ICRMContext context = MainContext as ICRMContext;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            IGlobalContext globalContext = GlobalContext.GetContext();
-            IQueryable<OpportunityDetails> opportunityDetails = (from a in context.Opportunities
-                                                                 join customer in commonDataContext.Customers on a.CustomerId equals customer.Id
-                                                                 join card in commonDataContext.Cards on customer.Id equals card.Id
-                                                                 join tenantManagement in globalContext.TenantManagements on customer.Tenant equals tenantManagement.Id
+            IQueryable<OpportunityDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer")
+                                                                 join opportunityType in context.OpportunityTypes on a.OpportunityTypeId equals opportunityType.Id
                                                                  where a.Tenant == tenant
                                                                  select new OpportunityDetails()
                                                                  {
-                                                                     CustomerStatusCode = customer.CustomerStatusCode,
-                                                                     ResellerId = customer.Field2,
+                                                                     CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
+                                                                     ResellerId = a.Field2,
                                                                      OpportunityTypeId = a.OpportunityTypeId,
-                                                                     ClientId = card.Id,
-                                                                     TenantNumber = card.ReceivablesAccountingCard,
-                                                                     ClientName = card.EnglishName,
+                                                                     OpportunityTypeCode = opportunityType.Code,
+                                                                     IsCancelled = a.IsCancelled,
+                                                                     CreateDate = a.CreateDate.Value,
+
+                                                                     ClientId = a.Customer != null ? a.Customer.Id : null,
+                                                                     TenantNumber = a.Customer != null ? a.Customer.ReceivablesAccountingCard : null,
+                                                                     ClientName = a.Customer != null ? a.Customer.EnglishName : null,
                                                                      Reseller = a.Field1,
-                                                                     CountryName = card.CountryName,
-
-                                                                     CurrencyCode = tenantManagement.PaymentCurrencyCode,
-                                                                     ResellerCommission = tenantManagement.ResellerCommission,
-                                                                     TenantManagementNumberOfUsers = tenantManagement.NumberOfUsers,
-                                                                     AveragePrice = tenantManagement.AveragePrice,
-                                                                     TotalPrice = tenantManagement.TotalPrice,
-
+                                                                     CountryName = a.Customer != null ? a.Customer.CountryName : null,
                                                                      NumberOfUsers = a.NumberOfShipments,
-                                                                     Total = a.Field4,
-                                                                     Totalnet = (a.Field4 == null ? 0 : int.Parse(a.Field4)) * (100 - tenantManagement.ResellerCommission ?? 0) / 100,
-
-                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : a.OpportunityTypeId == "N" ? "-1" : null
+                                                                     Field4 = a.Field4,
+                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : a.OpportunityTypeId == "N" ? "1" : null
 
                                                                  });
 
@@ -1038,7 +1029,6 @@ namespace Logitude.CRM.BL.EntityQueryServices
             }
 
             return opportunityDetails.ToList();
-
         }
 
     }

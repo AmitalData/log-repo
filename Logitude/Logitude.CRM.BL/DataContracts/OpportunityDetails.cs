@@ -18,12 +18,16 @@ namespace Logitude.CRM.BL.DataContracts
         public string CountryName { get; set; }
         public string CurrencyCode { get; set; }
         public int? ResellerCommission { get; set; }
-        public int? NumberOfUsers { get; set; }
-        public double? AveragePrice { get; set; }
-        public double? TotalPrice { get; set; }
+        public decimal? TenantManagementAveragePrice { get; set; }
+        public decimal? TenantManagementTotalPrice { get; set; }
         public int? TenantManagementNumberOfUsers { get; set; }
-        public string Total { get; set; }
-        public int Totalnet { get; internal set; }
-        public string IsNewCustomer { get; internal set; }
+        public int? NumberOfUsers { get; set; }
+        public decimal Total { get; set; }
+        public string Field4 { get; set; }
+        public decimal? TotalNet { get; set; }
+        public string IsNewCustomer { get; set; }
+        public string OpportunityTypeCode { get; set; }
+        public bool IsCancelled { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

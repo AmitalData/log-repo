@@ -1372,5 +1372,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     where a.Id == tenant
                     select a.PrivateLabelId).FirstOrDefault();
         }
+
+        public List<TenantManagement> GetForTenantNumbers(List<string> tenantNumbers)
+        {
+            return repository.context.TenantManagements.Where(a => tenantNumbers.Contains(a.Id.ToString())).ToList();
+        }
     }
 }
