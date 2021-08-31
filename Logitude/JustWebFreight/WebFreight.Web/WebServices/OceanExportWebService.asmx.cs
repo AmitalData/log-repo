@@ -42,6 +42,7 @@ namespace WebFreight.Web.WebServices
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
+        private ContactRepository contactRepository; 
 
         [WebMethod]
         public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
@@ -75,7 +76,7 @@ namespace WebFreight.Web.WebServices
 
             PortRepository portRepository = new PortRepository(commonContext);
             addressRepository = new AddressRepository(commonContext);
-            ContactRepository contactRepository = new ContactRepository(commonContext);
+            contactRepository = new ContactRepository(commonContext);
 
             ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
             Tenant tenantSettings = (from a in commonContext.Tenants.Include("Address").Include("Address.Country") where a.Id == tenant select a).FirstOrDefault();
@@ -621,6 +622,7 @@ namespace WebFreight.Web.WebServices
 
                 string myAgentId = shipment.AgentId;
                 string myAgentAddressId = shipment.AgentAddressId;
+                string agentContactId = shipment.AgentContactId;
 
                 if (string.IsNullOrEmpty(myAgentId))
                 {
@@ -631,9 +633,12 @@ namespace WebFreight.Web.WebServices
                         {
                             myAgentId = myMasterShipment.AgentId;
                             myAgentAddressId = myMasterShipment.AgentAddressId;
+                            agentContactId = myMasterShipment.AgentContactId;
                         }
                     }
                 }
+
+                this.SetAgentContact(myDataProvider, agentContactId);
 
                 if (!string.IsNullOrEmpty(myAgentId))
                 {
@@ -662,7 +667,6 @@ namespace WebFreight.Web.WebServices
                             if (myContact != null)
                             {
                                 myDataProvider.AgentInfo = myDataProvider.AgentInfo + myContact.EnglishName + ", " + myContact.BusinessPhone;
-                                myDataProvider.AgentContact = myContact.BusinessPhone + ", " + myContact.Email;
 
                                 string agentContactDetails = "";
                                 agentContactDetails = myContact.EnglishName;
@@ -689,7 +693,6 @@ namespace WebFreight.Web.WebServices
                             if (myContact != null)
                             {
                                 myDataProvider.AgentInfo = myDataProvider.AgentInfo + myContact.EnglishName + ", " + myContact.BusinessPhone;
-                                myDataProvider.AgentContact = myContact.BusinessPhone + ", " + myContact.Email;
                             }
                         }
                     }
@@ -2157,6 +2160,15 @@ namespace WebFreight.Web.WebServices
             #endregion
 
             return myDataProvider;
+        }
+
+        private void SetAgentContact(FBLDataProvider myDataProvider, string agentContactId)
+        {
+            Contact agentContact = contactRepository.GetSingleContact(agentContactId, tenant);
+            if (agentContact != null)
+            {
+                myDataProvider.AgentContact = agentContact.BusinessPhone + ", " + agentContact.Email;
+            }
         }
 
         private string GetMultiHarmonizeHSCode(string packageDescriptionOfGoods, ShipmentPackage package)
