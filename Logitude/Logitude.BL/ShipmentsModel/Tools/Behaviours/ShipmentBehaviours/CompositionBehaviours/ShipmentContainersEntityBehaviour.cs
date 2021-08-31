@@ -110,22 +110,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             ShipmentPickUpPM updatedShipmentPickUp = this.GetUpdatedShipmentPickUpPMByContainerEntityId();
             List<ContainerPM> containersToBeUpdated = this.GetPickUpContainersToBeUpdatedByContainerEntityId(updatedShipmentPickUp);
+            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetPickUpContainersToBeDeletedByContainerEntityId(updatedShipmentPickUp);
 
-            if (updatedShipmentPickUp == null || containersToBeUpdated.Count == 0)
-                return;
+            if (updatedShipmentPickUp != null && containersToBeUpdated.Count > 0)
+               this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated, false);
 
-            this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated);
+            if (updatedShipmentPickUp != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
+                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdatedFromDeleteedPackages, true);
         }
 
         private void HandelShipmentDeliveriesChangeSets()
         {
             ShipmentDeliveryPM updatedShipmentDeliveryPM = this.GetUpdatedShipmentDeliveryPMByContainerEntityId();
             List<ContainerPM> containersToBeUpdated = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(updatedShipmentDeliveryPM);
+            List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetDeliveryContainersToBeDeletedByContainerEntityId(updatedShipmentDeliveryPM);
 
-            if (updatedShipmentDeliveryPM == null || containersToBeUpdated.Count == 0)
-                return;
+            if (updatedShipmentDeliveryPM != null && containersToBeUpdated.Count > 0)
+                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated, false);
 
-            this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdated);
+            if (updatedShipmentDeliveryPM != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
+                this.UpdateContainerFieldsFromDelivery(updatedShipmentDeliveryPM, containersToBeUpdatedFromDeleteedPackages, true);
         }
 
 
@@ -328,8 +332,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapContainerFieldsFromShipmentPickup(ContainerPM entityPM)
         {
             ShipmentPickUpPM shipmentPickUpPM = GetShipmentPickUpPMByContainerEntityId(entityPM);
-            if (shipmentPickUpPM == null)
+            if (shipmentPickUpPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentFirstPickupFrom)
+                || !string.IsNullOrEmpty(entityPM.ShipmentFirstPickupTo)))
+            {
+                entityPM.ShipmentFirstPickupTo = null;
+                entityPM.ShipmentFirstPickupFrom = null;
                 return;
+            }
+
+            if (shipmentPickUpPM == null)
+            {
+                return;
+            }
 
             entityPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(shipmentPickUpPM);
             entityPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(shipmentPickUpPM);
@@ -338,8 +352,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapContainerFieldsFromShipmentDelivery(ContainerPM entityPM)
         {
             ShipmentDeliveryPM shipmentDeliveryPM = GetShipmentDeliveryPMByContainerEntityId(entityPM);
-            if (shipmentDeliveryPM == null)
+            if (shipmentDeliveryPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentLastDeliveryFrom)
+                || !string.IsNullOrEmpty(entityPM.ShipmentLastDeliveryTo)))
+            {
+                entityPM.ShipmentLastDeliveryFrom = null;
+                entityPM.ShipmentLastDeliveryTo = null;
                 return;
+            }
+            
+            if (shipmentDeliveryPM == null)
+            {
+                return;
+            }
 
             entityPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(shipmentDeliveryPM);
             entityPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(shipmentDeliveryPM);
@@ -515,10 +539,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return containerPMs;
         }
 
-        private List<ContainerPM> GetPickUpContainersToBeUpdatedByContainerEntityId(ShipmentPickUpPM shipmentPickUpPM)
+        private List<ContainerPM> GetDeliveryContainersToBeDeletedByContainerEntityId(ShipmentDeliveryPM shipmentDeliveryPM)
         {
             List<ContainerPM> containerPMs = new List<ContainerPM>();
-            if(shipmentPickUpPM == null)
+            if (shipmentDeliveryPM == null)
+            {
+                return containerPMs;
+            }
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentDeliveryPM.ShipmentPickUpDeliveryPackages)
+            {
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                {
+                    containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
+                }
+            }
+            return containerPMs;
+        }
+
+        private List<ContainerPM> GetPickUpContainersToBeDeletedByContainerEntityId(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            if (shipmentPickUpPM == null)
             {
                 return containerPMs;
             }
@@ -526,44 +567,61 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
                 {
-                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
+                    containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
                 }
             }
             return containerPMs;
         }
 
-        private void UpdateContainerFieldsFromPickUp(ShipmentPickUpPM updatedShipmentPickUp, List<ContainerPM> containerPMs)
+        private List<ContainerPM> GetPickUpContainersToBeUpdatedByContainerEntityId(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            if(shipmentPickUpPM == null)
+            {
+                return containerPMs;
+            }
+            foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagePM in shipmentPickUpPM.ShipmentPickUpDeliveryPackages)
+            {
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagePM.ContainerEntityId) && shipmentPickUpDeliveryPackagePM.ChangeSetOp != ChangeSetOperation.Delete)
+                {
+                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagePM.ContainerEntityId, initializer.Tenant));
+                }
+            }
+            return containerPMs;
+        }
+
+        private void UpdateContainerFieldsFromPickUp(ShipmentPickUpPM updatedShipmentPickUp, List<ContainerPM> containerPMs, bool isPackageDeleted)
         {
             foreach (ContainerPM containerPM in containerPMs)
             {
-                this.UpdateContainerFieldsFromPickUpFields(containerPM,updatedShipmentPickUp);
+                this.UpdateContainerFieldsFromPickUpFields(containerPM,updatedShipmentPickUp, isPackageDeleted);
             }
         }
 
-        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs)
+        private void UpdateContainerFieldsFromDelivery(ShipmentDeliveryPM updatedShipmentDeliveryPM, List<ContainerPM> containerPMs ,bool isPackageDeleted)
         {
             foreach (ContainerPM containerPM in containerPMs)
             {
-                this.UpdateContainerFieldsFromDeliveryFields(containerPM, updatedShipmentDeliveryPM);
+                this.UpdateContainerFieldsFromDeliveryFields(containerPM, updatedShipmentDeliveryPM, isPackageDeleted);
             }
         }
 
-        private void UpdateContainerFieldsFromPickUpFields(ContainerPM containerPM, ShipmentPickUpPM updatedShipmentPickUp)
+        private void UpdateContainerFieldsFromPickUpFields(ContainerPM containerPM, ShipmentPickUpPM updatedShipmentPickUp, bool isPackageDeleted)
         {
             if (!IsContainerUpdatedBefore(containerPM))
             {
-                containerPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(updatedShipmentPickUp);
-                containerPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerPM.ShipmentFirstPickupFrom = isPackageDeleted ? null : this.GetFirstPickupFromAddress(updatedShipmentPickUp);
+                containerPM.ShipmentFirstPickupTo = isPackageDeleted ? null : this.GetFirstPickupToAddress(updatedShipmentPickUp);
                 containerService.Update(containerPM);
             }
         }
 
-        private void UpdateContainerFieldsFromDeliveryFields(ContainerPM containerPM, ShipmentDeliveryPM updatedShipmentDeliveryPM)
+        private void UpdateContainerFieldsFromDeliveryFields(ContainerPM containerPM, ShipmentDeliveryPM updatedShipmentDeliveryPM, bool isPackageDeleted)
         {
             if (!IsContainerUpdatedBefore(containerPM))
             {
-                containerPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
-                containerPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentLastDeliveryFrom = isPackageDeleted ? null : GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentLastDeliveryTo = isPackageDeleted ? null : GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
                 containerService.Update(containerPM);
             }
         }

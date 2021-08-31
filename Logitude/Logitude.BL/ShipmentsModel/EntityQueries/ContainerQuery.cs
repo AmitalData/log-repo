@@ -332,7 +332,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public IQueryable<ContainerList> GetIQueryableEntityList(IQueryable<Container> iQueryable)
         {
-            IQueryable<ContainerList> result = from entity in iQueryable.Include("CarrierCard").Include("VesselCard")
+            IQueryable<ContainerList> result = from entity in iQueryable.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
+                    Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
+                    .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
