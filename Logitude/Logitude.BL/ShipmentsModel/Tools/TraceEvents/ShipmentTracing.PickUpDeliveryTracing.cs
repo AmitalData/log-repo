@@ -445,6 +445,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.CreateTraceEvent("DLAR", itemPM.ETD, itemPM);
             }
+            else if ((IsETDLegDateEdited(null, itemPM,  itemPOCO) || IsETALegDateEdited(null, itemPM, itemPOCO) ||
+                      IsETDLegDateDeleted(null, itemPM, itemPOCO) || IsETDLegDateDeleted(null, itemPM, itemPOCO)) &&
+                      !IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("DLAR", itemPOCO.ETD))
+            {
+                this.DeleteTraceEvent("DLAR");
+                this.CreateTraceEvent("DLAR", itemPM.ETA != null ? itemPM.ETA : itemPM.ETD, itemPM);
+            }
         }
         private void TraceAddPickUpArrangedEvent(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
@@ -460,6 +467,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.CreateTraceEvent("PCAR", itemPM.ETD, itemPM);
             }
+            else if ((IsETDLegDateEdited(itemPM, null, itemPOCO) || IsETALegDateEdited(itemPM, null, itemPOCO) ||
+                      IsETDLegDateDeleted(itemPM, null, itemPOCO) || IsETDLegDateDeleted(itemPM, null, itemPOCO)) &&
+                      !IsEventExistInTraceEvents("PCAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("PCAR", itemPOCO.ETD))
+            {
+                this.DeleteTraceEvent("PCAR");
+                this.CreateTraceEvent("PCAR", itemPM.ETA != null ? itemPM.ETA : itemPM.ETD, itemPM);
+            }
         }
         private void TraceUpdateDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
@@ -472,6 +486,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("DLAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("DLAR", itemPM.ETD, itemPM);
+            }
+            else if ((IsETDLegDateEdited(null, itemPM, itemPOCO) || IsETALegDateEdited(null, itemPM, itemPOCO))
+                && !IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("DLAR", itemPOCO.ETD))
+            {
+                this.DeleteTraceEvent("DLAR");
+                this.CreateTraceEvent("DLAR", itemPM.ETA != null ? itemPM.ETA: itemPM.ETD, itemPM);
             }
         }
         private void TraceUpdatePickUpArrangedEvent(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO)
@@ -486,6 +506,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("PCAR", null, itemPOCO.ETD);
                 this.CreateTraceEvent("PCAR", itemPM.ETD, itemPM);
             }
+            
         }
         private void TraceDeleteDeliveryArrangedEvent(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
