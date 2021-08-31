@@ -151,7 +151,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
 
     CheckIsValidEmails(mailsList: string) {
-        var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
+        var EMAIL_REGEXP = /^[A-Za-z0-9‘'._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
         var IsOk = true;
 
         if (mailsList) {

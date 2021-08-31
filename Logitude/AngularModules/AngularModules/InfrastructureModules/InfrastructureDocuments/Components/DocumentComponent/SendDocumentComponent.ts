@@ -963,7 +963,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     CheckIsValidEmails(mailsList: string) {
 
         var IsOk = true;
-        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
+        var EMAIL_REGEXP1 = /^[A-Za-z0-9‘'._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
         var EMAIL_REGEXP2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
