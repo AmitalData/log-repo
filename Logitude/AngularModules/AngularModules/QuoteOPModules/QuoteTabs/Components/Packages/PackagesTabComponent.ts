@@ -1189,8 +1189,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     RunAddEditPackage(itemComponent: QuotePackageItem, windowTitle: string) {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = windowTitle;
+        logitudeWindow.RTL = false;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.Show('./QuoteModules/QuoteTabs/Components/Packages/AddEditPackageComponent');
+        logitudeWindow.Show('./QuoteOPModules/QuoteTabs/Components/Packages/AddEditPackageComponent');
     }
     DeletePackageClicked(itemComponent: QuotePackageItem) {
         var confirmWindow = new ConfirmWindow();

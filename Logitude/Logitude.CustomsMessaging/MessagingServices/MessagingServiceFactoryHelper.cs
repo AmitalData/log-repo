@@ -501,9 +501,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
               DF_MSG2892_ImportDeclarationAmendmentMessagingService>
               ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService>
-              ((new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService()).MainInterfaceCode);
+            //ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+            //  DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService>
+            //  ((new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DF_MSG8235_ExportDeclarationAmendmentMessagingService>

@@ -150,7 +150,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1000;
         logWindow.Height = (window.innerHeight - 130);
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent");
     }
 
 

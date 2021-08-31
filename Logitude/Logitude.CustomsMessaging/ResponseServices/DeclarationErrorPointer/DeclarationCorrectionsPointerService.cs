@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             return myDeclaretionCorrectionXml;
         }
 
-        public string AnalyzeCorrectionsPointerExport(string currentCorrectionXml, UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.Response response, List<error> systemMessagesList, int tenant, UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg[] referenceListMsg = null)
+        public string AnalyzeCorrectionsPointerExport(string currentCorrectionXml, UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response, List<error> systemMessagesList, int tenant, UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg[] referenceListMsg = null)
         {
             DeclarationCorrection declarationCorrectionXml = new DeclarationCorrection();
             if (response == null)
@@ -177,7 +177,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             _DeclarationCorrection.AdditionalInformation.Add(additionalInfo);
         }
 
-        private void GetCorrectionAdditionalInformationExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAdditionalInformation additionalInformationItem, int tenant)
+        private void GetCorrectionAdditionalInformationExport(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAdditionalInformation additionalInformationItem, int tenant)
         {
             Additional additionalInfo = new Additional();
             if (additionalInformationItem.StatementTypeCode != null)
@@ -241,7 +241,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             _DeclarationCorrection.References.Add(reference);
         }
 
-        private void GetCorrectionReferencesExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg referenceListMsg, int tenant)
+        private void GetCorrectionReferencesExport(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ReferenceListMsg referenceListMsg, int tenant)
         {
             Reference reference = new Reference();
             if (referenceListMsg.referenceType != null)
@@ -498,7 +498,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             }
         }
 
-        private void GetCorrectionAmendmentExport(UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAmendment amendmentItem)
+        private void GetCorrectionAmendmentExport(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ResponseAmendment amendmentItem)
         {
             var myDB = WCO.Instance.CreateDB();
             int pointerLevelCounter = 0;

@@ -54,7 +54,8 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
 
-            entityPoco.ConcurrencyGUID = Guid.NewGuid().ToString();
+            entityPM.ConcurrencyGUID = entityPoco.ConcurrencyGUID = Guid.NewGuid().ToString();
+            
 
             BuildSearchField(entityPM, entityPoco);
         }

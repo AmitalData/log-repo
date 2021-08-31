@@ -207,7 +207,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         logWindow.Width = 620;
         logWindow.Height = 450;
         logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.General"); 
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateGeneralSetting");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplateGeneralSetting");
 
    
     }
@@ -222,7 +222,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1000;
         logWindow.Height = (window.innerHeight - 130);
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/PreviewQuoteTemplateReportComponent");
     }
 
     PreviewButtonClicked() {
@@ -251,7 +251,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 windowArgs.QuoteOPTemplateSectionTypeName = item.QuoteOPTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
                 logWindow.Title = TextCodeTranslator.Translate("QuoteOPTemplate.S.Pricing" + windowArgs.QuoteOPTemplateSectionTypeName.replace(" ", "") + "Settings");
                 windowArgs.QuoteOPTemplateTextCodePMList = this.QuoteOPTemplateTextCodeLists;
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplatePricingSettingComponent";
+                componentPath = "./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplatePricingSettingComponent";
                 logWindow.Width = 950;
                 logWindow.Height = 660;
               
@@ -262,7 +262,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 windowArgs.QuoteOPTemplateSectionTypeName = item.QuoteOPTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
                 windowArgs.EditQuoteTemplateComponent = this;
                 
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateHeaderFooterSettingComponent";
+                componentPath = "./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplateHeaderFooterSettingComponent";
                 logWindow.Width = (window.innerWidth / 1.476); // 1920/1300
                 logWindow.Height = 600;
   
@@ -276,7 +276,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 windowArgs.QuoteOPTemplateTextCodePMList = this.QuoteOPTemplateTextCodeLists;
                 windowArgs.QuoteOPPM = this.QuoteOPPM;
                 
-                componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteOPTemplateHeaderDetailsSettingComponent";
+                componentPath = "./QuoteOPModules/QuoteTemplates/Components/QuoteOPTemplateHeaderDetailsSettingComponent";
                 logWindow.Width = 940;
                 logWindow.Height = 660;
         
@@ -345,7 +345,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         logWindow.Width = sendWindowWidth;
         logWindow.Height = sendWindowHeight;
         logWindow.Title = !item ? TextCodeTranslator.Translate("QuoteOPTemplate.S.AddSection") : TextCodeTranslator.Translate("QuoteOPTemplate.S.EditSection");
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
+        logWindow.Show("./QuoteOPModules/QuoteTemplates/Components/AddEditQuoteTemplateSectionComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "Refresh") {
                 this.QuoteOPTemplateSectionLists = this.AllQuoteOPTemplateSectionLists.filter(d => !d.IsCancel);

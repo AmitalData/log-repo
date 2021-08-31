@@ -19,8 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
-using UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference;
-using UnifreightIIG.Common.MessageLib.Collateral;
+ using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using System.Xml.Serialization;
 using Logitude.Customs.BL.TraceEvents;
@@ -30,6 +29,7 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
+using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -150,7 +150,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ProceduralFaults != null)
                 {
-                    var ProceduralFaultDetailsXml_8237 = XmlGenericUtil<UnifreightIIG.Common.TransshipmenDeclarationAmendmentRequestMsgRequestServiceReference.ProceduralFaultDetails[]>
+                    var ProceduralFaultDetailsXml_8237 = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ProceduralFaultDetails[]>
                        .SerializeObject(customResponse.ProceduralFaults);
 
                     var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
@@ -561,7 +561,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     var myError = new error();
                                     myError.ListVersionID = "A";
-                                    myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.CollateralRequestDetails.collateralRequestNumber;
+                                    myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
                                     systemMessagesList.Add(myError);
                                 }
                             }
@@ -594,7 +594,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (customResponse.CollateralRequests != null)
                         {
                             LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
-                            var requestXml = XmlGenericUtil<CollateralRequestMsg[]>.SerializeObject(customResponse.CollateralRequests);
+                            var requestXml = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
                             var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
 
                             COLT_NG_8211_MSG10040_CollateralRequestMsg myCOLT_NG_8211_MSG10040_CollateralRequestMsg = new COLT_NG_8211_MSG10040_CollateralRequestMsg();
