@@ -1,6 +1,6 @@
 ﻿
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
-  <Sql Version="1">
+  <Sql Version="4">
     <![CDATA[
 
 
@@ -8,57 +8,33 @@
 declare @Tenant as int
 declare @EntityId as varchar(15)
 declare @PackagesQuantity as int
-declare @NumberOfPackages as int
-declare @NumberOfContainers as int
-declare @TransportModeId as varchar(1)
-declare @ShipmentTypeId as varchar(15)
 declare @IsLCL as bit
 
 BEGIN
 		DECLARE DataCursor CURSOR READ_ONLY
 		FOR
-		SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+		SELECT Id, Tenant
 		FROM Quotes
 		WHERE $LastCounterWhere$
-		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant
 		WHILE @@FETCH_STATUS = 0
 			BEGIN
 				
-				set @IsLCL = 0
 				set @PackagesQuantity = 0
-				set @NumberOfPackages = 0
-				set @NumberOfContainers = 0
-
-				if (@TransportModeId = 'A')
-				set @IsLCL = 1
-				else if (@TransportModeId = 'O' AND @ShipmentTypeId = 'LCLD')
-				set @IsLCL = 1
-				else if (@TransportModeId = 'I' AND @ShipmentTypeId = 'LTL')
-				set @IsLCL = 1
 
 				if exists (select * from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
-				begin
-					
-					if (@IsLCL = 1)
-					begin
-						set @NumberOfPackages = (select SUM(Quantity) from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
-						set @PackagesQuantity = @NumberOfPackages
-					end
-
-					else
-					begin
-						set @NumberOfContainers = (select SUM(Quantity) from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
-						set @PackagesQuantity = @NumberOfContainers
-					end
+				begin					
+						set @PackagesQuantity = (select SUM(Quantity) from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
 				end
 
-				update Quotes set
-				PackagesQuantity = @PackagesQuantity,
-				NumberOfPackages = @NumberOfPackages,
-				NumberOfContainers = @NumberOfContainers
-				where Id = @EntityId AND Tenant = @Tenant
+				if(@PackagesQuantity > 0)
+        begin
+					update Quotes set
+					PackagesQuantity = @PackagesQuantity
+					where Id = @EntityId AND Tenant = @Tenant
+        end
 
-			FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+			FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant
 			END
 		CLOSE DataCursor
 		DEALLOCATE DataCursor
