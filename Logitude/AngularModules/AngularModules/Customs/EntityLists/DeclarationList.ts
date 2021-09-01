@@ -208,6 +208,8 @@ export class DeclarationList {
 	ExportTaxationDateTime: Date;
 	ExporterImporterCode: string;
 	DeclarationOfficeNameForExport: string;
+	AmedmentType: string;
+	AmendmentTypeName: string;
 	
 }
  

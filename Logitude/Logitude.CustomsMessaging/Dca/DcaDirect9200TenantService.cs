@@ -56,8 +56,20 @@ namespace Logitude.CustomsMessaging.Dca
             sw = Stopwatch.StartNew();
             try
             {
+                if (string.IsNullOrEmpty(this._CustomsSettingPM.CustomsAgentId))
+                {
+                    _SaveError = true;
+                    _SBErrorLog.AppendLine("Error: CustomsAgentId is null ");
+                    return;
+                }
 
-                
+                if (string.IsNullOrEmpty(this._CustomsSettingPM.IIGServiceAddress))
+                {
+                    _SaveError = true;
+                    _SBErrorLog.AppendLine("Error: IIGServiceAddress is null ");
+                    return;
+                }
+
                 NumOfMessages = 0;
 
                 while (Send9100Take100Messages_HaveMore().GetValueOrDefault() > 0)

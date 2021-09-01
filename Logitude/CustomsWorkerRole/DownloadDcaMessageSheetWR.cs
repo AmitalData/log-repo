@@ -137,14 +137,14 @@ namespace CustomsWorkerRole
                 _AllCustomsSetting = customsSettingQueryService.GetAll();
             }
 
-            
-            
+
+
             var debugIIGMessageId = "";
             var debugTenant = this.Tenant;
             if (this.DebugObject != null)
             {
                 debugIIGMessageId = this.DebugObject.ToString();
-                
+
             }
 
             var costomSettingDCAList = _AllCustomsSetting.Where(env => !String.IsNullOrEmpty(env.DCAServiceAddress));
@@ -152,6 +152,7 @@ namespace CustomsWorkerRole
             {
                 costomSettingDCAList = costomSettingDCAList.Where(rec => rec.Tenant == debugTenant.GetValueOrDefault());
             }
+            var sw = Stopwatch.StartNew();
             //var suppressTest = false;
             foreach (var costomSetting in costomSettingDCAList)
             {
@@ -175,8 +176,19 @@ namespace CustomsWorkerRole
                 }
 
             }
-            
+            SleepTil1Min(sw);
 
+        }
+
+        private static void SleepTil1Min(Stopwatch sw)
+        {
+            var ts = sw.Elapsed;
+            sw.Stop();
+            if (ts < TimeSpan.FromMinutes(1))
+            {
+                //Thread.Sleep(TimeSpan.FromMinutes(1).Subtract(ts));
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }

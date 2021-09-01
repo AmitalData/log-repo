@@ -211,13 +211,26 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             Styles: { width: '120px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
-         });
+        });
+
+        if (this.EntityPM.Direction == "E")
+        {
+            this.columns.push({
+
+                FieldName: 'AmendmentTypeName',
+                DataTypeCode: 'String',
+                Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentTypeName"),
+                Styles: { width: '120px' },
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+            });
+        }
 
         this.columns.push({
 
             FieldName: 'AmendmentCorrectedByUserName',
             DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentCorrectedByUserName"),
+            Display: this.EntityPM.Direction == "E" ? TextCodeTranslator.Translate("Customs.Declaration.O.CorrectedByUserName") : TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentCorrectedByUserName"),
             Styles: { width: '80px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
