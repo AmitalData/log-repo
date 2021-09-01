@@ -1965,7 +1965,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Note = follow.Notes,
+                    Notes = follow.Notes,
                     QuoteId = follow.QuoteId,
                     EventTypeId = follow.EventTypeId,
                     EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,

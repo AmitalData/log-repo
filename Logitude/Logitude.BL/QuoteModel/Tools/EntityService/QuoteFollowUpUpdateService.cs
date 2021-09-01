@@ -153,7 +153,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Note = follow.Notes,
+                    Notes = follow.Notes,
                     ShipmentId = follow.ShipmentId,
                     QuoteId = follow.QuoteId,
                     EventTypeId = follow.EventTypeId,

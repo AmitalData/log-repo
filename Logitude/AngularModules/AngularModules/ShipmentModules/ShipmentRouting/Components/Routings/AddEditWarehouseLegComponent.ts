@@ -1049,7 +1049,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Note = item.Note;
+            oldItem.Notes = item.Notes;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;

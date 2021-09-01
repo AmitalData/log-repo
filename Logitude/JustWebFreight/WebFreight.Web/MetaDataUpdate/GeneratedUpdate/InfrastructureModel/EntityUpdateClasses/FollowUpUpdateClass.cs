@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class FollowUpUpdateClass
    {  		
-		public const string HashString = "46aff6a13d58d4ed504c12710a756dbd";
+		public const string HashString = "5832779463255d0129b073ab479b2835";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Follow-Up",
-			      				    Code =  "6f21",
+			      				    Code =  "6829",
 			      				    Name =  "FollowUp",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -205,7 +205,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					 
 					 						FieldName =  "EventTypeId",
 					  						ObjectTableName =  "FollowUp",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "EventType",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
@@ -216,9 +217,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  true,
-					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -244,9 +244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EventTypeId",
-					  						DefaultText =  "Event Type ID",
-					  						ListFieldLable =  "EventTypeIdListLable",
-					  						ListLableDefaultText =  "Event Type ID",
+					  						DefaultText =  "Event Type",
 					  						ShortFieldLable =  "EventTypeId",
 					  						ShortFieldLableDefaultText =  "Type",
 					  						IsMaxLength =  false,
@@ -282,7 +280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  true,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -311,8 +309,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OwnerUserId",
 					  						DefaultText =  "Owner",
-					  						ListFieldLable =  "OwnerUserIdListLable",
-					  						ListLableDefaultText =  "Owner User ID",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -434,7 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DoneNote",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  "Done Notes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -495,7 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DoneDateTime",
-					  						DefaultText =  "Date",
+					  						DefaultText =  "Done Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

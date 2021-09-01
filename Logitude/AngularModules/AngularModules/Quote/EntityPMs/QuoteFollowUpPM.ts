@@ -47,9 +47,9 @@ export class QuoteFollowUpPM {
     public get IsNew() { return this.isNew; }
     public set IsNew(newValue: boolean) { this.isNew = newValue; this.MarkAsDirty(); }
 
-    private note: string;
-    public get Note() { return this.note; }
-    public set Note(newValue: string) { this.note = newValue; this.MarkAsDirty(); }
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { this.notes = newValue; this.MarkAsDirty(); }
 
     private doneNote: string;
     public get DoneNote() { return this.doneNote; }
