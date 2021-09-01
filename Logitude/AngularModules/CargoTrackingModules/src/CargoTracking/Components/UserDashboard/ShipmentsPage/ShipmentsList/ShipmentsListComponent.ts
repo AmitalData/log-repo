@@ -1,5 +1,5 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
-import { Event, NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular/router';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, AfterContentInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
@@ -13,16 +13,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
-import { asyncScheduler } from 'rxjs';
-import { filter, observeOn, scan } from 'rxjs/operators';
 
-
-interface ScrollPositionRestore {
-    event: Event;
-    positions: { [K: number]: number };
-    trigger: 'imperative' | 'popstate' | 'hashchange';
-    idToRestore: number;
-}
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -57,7 +48,6 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
-    @ViewChild('contentArea') private contentArea: ElementRef;
     public MoreReferenceText: string;
     public ConsignmentNumber: string;
     public toPortCode: string;
@@ -72,9 +62,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
     ShipmenTypeForRouting: string;
 
-
-
-
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -88,59 +75,22 @@ export class ShipmentsListComponent implements AfterViewInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-
-
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
 
-     ngOnInit() {
-        this.router.events
-            .pipe(
-                filter(
-                    event =>
-                        event instanceof NavigationStart || event instanceof NavigationEnd,
-                ),
-                scan<Event, ScrollPositionRestore>((acc, event) => ({
-                    event,
-                    positions: {
-                        ...acc.positions,
-                        ...(event instanceof NavigationStart
-                            ? {
-                                [event.id]: this.contentArea.nativeElement.scrollTop,
-                            }
-                            : {}),
-                    },
-                    trigger: 
-                        event instanceof NavigationStart
-                            ? event.navigationTrigger
-                            : acc.trigger,
-                    idToRestore:
-                        (event instanceof NavigationStart &&
-                            event.restoredState &&
-                            event.restoredState.navigationId + 1) ||
-                        acc.idToRestore, 
-                })),
-                filter(
-                    ({ event, trigger }) => event instanceof NavigationEnd && !trigger,
-                ),
-                observeOn(asyncScheduler),
-            )
-            .subscribe(({ trigger, positions, idToRestore }) => {
-                if (trigger === 'imperative') {
-                    this.contentArea.nativeElement.scrollTop = 0;
-                }
-
-                if (trigger === 'popstate') {
-                    this.contentArea.nativeElement.scrollTop = positions[idToRestore];
-                }
-            });
-    }
     ngAfterViewInit(): void
     {
         this.GetCompanyLoginsFromCache();
         this.GetPreservedToggleFiltersFromSessionInfo();
+        this.SetShipmentsScrollPosition();
+    }
 
+    private SetShipmentsScrollPosition() {
+        setTimeout(() => {
+            const shipmentCardsContainer = document.getElementById("scrollArea");
+            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        }, 500);
     }
 
     private SetDefaultBackgroundColor()
@@ -386,6 +336,12 @@ export class ShipmentsListComponent implements AfterViewInit
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
+        this.SaveShipmentsScrollPosition();
+    }
+
+    private SaveShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        RootContext.ShipmentsScrollPosition = shipmentCardsContainer.scrollTop;
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
