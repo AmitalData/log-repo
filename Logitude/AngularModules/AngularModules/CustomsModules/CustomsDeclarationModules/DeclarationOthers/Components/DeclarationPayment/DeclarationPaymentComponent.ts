@@ -3314,6 +3314,26 @@ export class PaymentMethodModel extends BaseComponent {
 
                                 this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
                             }
+                            // for dsv when more than one bank
+                            if (customBank == null && this.BanksList.length > 0 ) {
+                                for (let bank of this.BanksList) {
+                                    if (this.parent.BetweenMinAndMax && bank.PayerTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
+                                        this.BankIsNull = true;
+                                        this.methodPM.MethodTypeCode = "2";
+                                        this.methodPM.PayerActivityTypeCode = "3";
+                                        this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
+                                        this.InternalBankName = null;
+                                        this.InternalBankId = null;
+                                        this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                                            this.methodPM.MethodTypeName = response.Result.LocalName;
+                                        });
+                                        this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                                            this.methodPM.PayerActivityTypeName = response.Result.LocalName;
+                                        });
+                                        this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
+                                    }
+                                }
+                            }
 
                             else if (this.parent.PaymentMethodsList.Length == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
@@ -3334,6 +3354,8 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
+
+   
 
     get InternalBankName() { return this.methodPM.InternalBankName; }
     set InternalBankName(value: string) {
