@@ -226,6 +226,7 @@ namespace Logitude.CustomsMessaging.Dca
 
             if (this.HasFeature_DcaDirect9200())
             {
+                
                 var dcaDirect9200TenantService = new DcaDirect9200TenantService(this._CustomsSettingPM, _AllDcaPreFixWithoutInOutUpper,this._InterfaceListDCA, _AllInterface);
                 dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
                 return;
