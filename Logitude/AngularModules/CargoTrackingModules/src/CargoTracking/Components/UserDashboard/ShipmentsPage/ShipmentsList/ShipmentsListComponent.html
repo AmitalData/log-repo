@@ -116,7 +116,7 @@
     </div>
 
     <!-- Shipments List -->
-    <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
+    <div #contentArea class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
         <div class="table" style="height: calc(100vh - 274px)">
 
             <cdk-virtual-scroll-viewport *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 10px)">
