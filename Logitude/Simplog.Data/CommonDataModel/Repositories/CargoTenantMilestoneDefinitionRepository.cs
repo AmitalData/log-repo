@@ -25,11 +25,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
+        public CargoTenantMilestoneDefinition GetSingleCargoTenantMilestoneDefinition(string id, int tenant)
+        {
+            return (from d in context.CargoTenantMilestoneDefinitions where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
+        }
+
         public CargoTenantMilestoneDefinition GetSingleCargoTenantMilestoneDefinitionByCodeAndTenant(string code, int tenant)
         {
             return (from d in context.CargoTenantMilestoneDefinitions where d.Code == code && d.Tenant == tenant select d).FirstOrDefault();
         }
 
+        public List<CargoTenantMilestoneDefinition> GetAll(int tenant)
+        {
+            return (from d in context.CargoTenantMilestoneDefinitions where d.Tenant == tenant select d).ToList();
+        }
         public void Add(CargoTenantMilestoneDefinition entity)
         {
             context.CargoTenantMilestoneDefinitions.Add(entity);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -44,6 +45,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return result;
+        }
+
+        public List<CargoTenantMilestoneDefinitionPM> GetAll(int tenant)
+        {
+            List<CargoTenantMilestoneDefinitionPM> cargoTenantMilestoneDefinitionsPM = new List<CargoTenantMilestoneDefinitionPM>();
+            List<CargoTenantMilestoneDefinition> cargoTenantMilestoneDefinitionsPoco = repository.GetAll(tenant);
+            MapCargoTenantMilestoneDefinitionsPOCOToCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionsPM, cargoTenantMilestoneDefinitionsPoco);
+
+            return cargoTenantMilestoneDefinitionsPM;
+        }
+
+        private void MapCargoTenantMilestoneDefinitionsPOCOToCargoTenantMilestoneDefinitionsPM(List<CargoTenantMilestoneDefinitionPM> cargoTenantMilestoneDefinitionsPM, List<CargoTenantMilestoneDefinition> cargoTenantMilestoneDefinitionsPoco)
+        {
+            cargoTenantMilestoneDefinitionsPoco.ForEach(cargoTenantMilestone =>
+            {
+                cargoTenantMilestoneDefinitionsPM.Add(new CargoTenantMilestoneDefinitionPM()
+                {
+                    Id = cargoTenantMilestone.Id,
+                    Tenant = cargoTenantMilestone.Tenant,
+                    Code = cargoTenantMilestone.Code,
+                    IsCustomerView = cargoTenantMilestone.IsCustomerView,
+                });
+            });
         }
 
         public IQueryable<CargoTenantMilestoneDefinitionList> GetIQueryableEntityList(IQueryable<CargoTenantMilestoneDefinition> iQueryable,int tenant)

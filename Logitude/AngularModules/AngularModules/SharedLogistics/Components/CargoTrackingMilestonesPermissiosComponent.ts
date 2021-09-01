@@ -3,21 +3,24 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {MilestonePermissiosViewModel} from './ViewModel/MilestonePermissiosViewModel';
 import {CargoTrackingMilestoneExtendedService} from '../Services/Others/CargoTrackingMilestoneExtendedService';
+import { CargoTrackingTenantMilestoneDefinitionExtendedService } from '../Services/Others/CargoTrackingTenantMilestoneDefinitionExtendedService';
+import { CargoTenantMilestoneDefinitionPM } from '../../Common/EntityPMs/CargoTenantMilestoneDefinitionPM';
 
 @Component({
     selector: 'CargoTrackingMilestonesPermissiosComponent',
     templateUrl: './CargoTrackingMilestonesPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],
-    providers: [CargoTrackingMilestoneExtendedService],
+    providers: [CargoTrackingMilestoneExtendedService, CargoTrackingTenantMilestoneDefinitionExtendedService],
 })
 export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
     public MilestonePermissiosSelectedViewModel: any;
+    zeroTenantList: any;
     myTenantList: any;
     MilestonesPermissiosLists: MilestonePermissiosViewModel[];
     OnCloseWindowEvent = new EventEmitter();
     FullComponentsVisibility: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public cargoTrackingMilestoneExtendedService: CargoTrackingMilestoneExtendedService) {
+    constructor(public cargoTrackingMilestoneExtendedService: CargoTrackingMilestoneExtendedService, public cargoTrackingTenantMilestoneDefinitionExtendedService: CargoTrackingTenantMilestoneDefinitionExtendedService) {
         this.CurrentSession.StartBusyIndicatorLoading();
     }
 
@@ -34,30 +37,41 @@ export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
     }
 
     LoadTenantData() {
-        this.myTenantList = [];
+        this.zeroTenantList = [];
 
         this.cargoTrackingMilestoneExtendedService.getAll().subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                this.myTenantList = pmResponse.Result;
-                this.BuildData();
+                this.zeroTenantList = pmResponse.Result;
+                this.cargoTrackingTenantMilestoneDefinitionExtendedService.getAll().subscribe((respo: ServiceResponse) => {
+                    var cargoTenantMilestoneDefinitionPMResponse: ServiceResponse = respo;
+                    if (!cargoTenantMilestoneDefinitionPMResponse.HasError) {
+                        this.myTenantList = cargoTenantMilestoneDefinitionPMResponse.Result;
+                        this.BuildData();
+                    }
+                    this.CurrentSession.StopBusyIndicator();
+                });
             }
-             this.CurrentSession.StopBusyIndicator();
         });
     }
 
     mySearchText: string;
     BuildData() {
-        var myList = [];
+        var zeroList = [];
         this.MilestonesPermissiosLists = [];
         if (!this.mySearchText) {
-            myList = this.myTenantList;
+            zeroList = this.zeroTenantList;
         }
         else {
-            myList = this.myTenantList.filter(d=> (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.EnglishName && d.EnglishName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.LocalName && d.LocalName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
+            zeroList = this.zeroTenantList.filter(d=> (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.EnglishName && d.EnglishName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.LocalName && d.LocalName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
         }
-        myList =  this.SortItemSource(myList);
-        myList.forEach((item) => {
+        zeroList = this.SortItemSource(zeroList);
+
+        zeroList.forEach((item) => {
+            let cargoTenantMilestoneDefinition = this.myTenantList.filter(f => f.Code == item.Code)[0];
+            if (cargoTenantMilestoneDefinition) {
+                item.CustomerChooseIsChecked = cargoTenantMilestoneDefinition.IsCustomerView;
+            }
             this.MilestonesPermissiosLists.push(new MilestonePermissiosViewModel(item));
         });
     }
@@ -85,15 +99,19 @@ export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
 
     SaveButtonClicked() {
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.myTenantList = [];
-        this.MilestonesPermissiosLists.forEach((item) => {
-            if (item.entityPM.IsDirty) {
-                this.myTenantList.push(item.entityPM);
-            }
-        });
-        if (this.myTenantList.length > 0) {
-            this.cargoTrackingMilestoneExtendedService.update(this.myTenantList).subscribe((res: ServiceResponse) => {
-                this.CloseButtonClicked();
+        if (this.MilestonesPermissiosLists.length > 0) {
+            this.myTenantList = [];
+            this.MilestonesPermissiosLists.forEach((item) => {
+                let cargoTenantMilestoneDefinition = new CargoTenantMilestoneDefinitionPM();
+                cargoTenantMilestoneDefinition.Code = item.entityPM.Code;
+                cargoTenantMilestoneDefinition.Tenant = SessionLocator.Tenant;
+                cargoTenantMilestoneDefinition.IsCustomerView = item.CustomerChooseIsChecked;
+                this.myTenantList.push(cargoTenantMilestoneDefinition);
+            });
+            this.cargoTrackingTenantMilestoneDefinitionExtendedService.update(this.myTenantList).subscribe((res: ServiceResponse) => {
+                if (!res.HasError) {
+                    this.CloseButtonClicked();
+                }
             });
         }
         else {
