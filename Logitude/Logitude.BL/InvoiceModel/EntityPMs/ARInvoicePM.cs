@@ -210,6 +210,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }

@@ -189,5 +189,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string PartnerId { get; set; }
         public string PartnerName { get; set; }
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
     }
 }

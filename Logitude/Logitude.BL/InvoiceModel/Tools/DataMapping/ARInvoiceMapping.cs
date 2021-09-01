@@ -92,6 +92,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
             entity.PartnerId = entityPM.PartnerId;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
+            entity.MasterNumbers = entityPM.MasterNumbers;
+            entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
+            entity.HouseNumbers = entityPM.HouseNumbers;
 
             if (entityPM.HouseNumber != null)
             {

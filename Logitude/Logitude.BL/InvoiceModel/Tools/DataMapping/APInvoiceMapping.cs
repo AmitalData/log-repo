@@ -123,6 +123,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TotalVATOnly = entityPM.TotalVATOnly;
             entity.PaidDate = entityPM.PaidDate;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
+            entity.MasterNumbers = entityPM.MasterNumbers;
+            entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
+            entity.HouseNumbers = entityPM.HouseNumbers;
 
             if (entityPM.SetApproved)
             {

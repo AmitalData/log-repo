@@ -762,6 +762,30 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasterNumbers"
+    OldNames="MasterNumber"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterShipmentNumbers"
+    OldNames="MasterShipmentNumber"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HouseNumbers"
+    OldNames="HouseNumber"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

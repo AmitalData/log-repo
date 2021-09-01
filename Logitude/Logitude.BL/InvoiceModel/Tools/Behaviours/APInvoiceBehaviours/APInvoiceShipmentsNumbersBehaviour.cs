@@ -26,6 +26,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
             else
             {
                 aPInvoice.ShipmentsNumbers = aPInvoice.MainEntityReference;
+
+                aPInvoice.MasterShipmentNumbers = aPInvoice.MainEntityReference;
+                aPInvoice.HouseNumbers = aPInvoice.HouseNumber;
+                aPInvoice.MasterNumbers = aPInvoice.MasterNumber;
             }
         }
 
