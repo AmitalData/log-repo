@@ -317,6 +317,8 @@ namespace Logitude.Accounting.Data.EntityLists
         public bool IsSecurityLevelsEnabled { get; set; }
         [DataMember]
         public int? ChartOfAccountSecurityLevel { get; set; }
+        [DataMember]
+        public bool Access { get; set; }
     }
 
 }

@@ -235,15 +235,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    InsuredCreditLimit= CardsDatas.InsuredcreditLimit,
 
                                                    IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
-                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
-                                                   
+                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel
+
                                                });
             return query;
         }
-        public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable,int tenant)
+        public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
         {
-            var loggedUser = GetLoggedUser(tenant);
-            var test = iQueryable.ToList();
             var list = from glaccount in iQueryable.AsEnumerable()
                        select new GLAccountList()
                        {
@@ -399,6 +397,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            CalculatedAgingPeriod3 = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.CalculatedAgingPeriod3 : 0,
                            TotalOpenChequesInLocalCur = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.TotalOpenChequesInLocalCur : 0,
                            TotFutureOpenChequesInLocalCur = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.TotFutureOpenChequesInLocalCur : 0,
+
+                           Access = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount),
                        };
 
 
