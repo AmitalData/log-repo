@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "7d0c2bb1f918e9886111cdffe9219f94";
+		public const string HashString = "9ba631ec4fb4096eea0974c8968f252f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10417,9 +10417,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Access",
-					  						DefaultText =  "Access",
+					  						DefaultText =  "Security Alert",
+					  						FullLocalDefaultText =  " התראת סיווג",
 					  						ListFieldLable =  "AccessListLable",
-					  						ListLableDefaultText =  "Access",
+					  						ListLableDefaultText =  "Security Alert",
+					  						ListLocalDefaultText =  " התראת סיווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
