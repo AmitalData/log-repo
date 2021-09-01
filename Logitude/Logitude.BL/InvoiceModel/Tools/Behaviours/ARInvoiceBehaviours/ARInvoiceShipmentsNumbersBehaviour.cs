@@ -32,6 +32,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
             else
             {
                 aRInvoice.ShipmentsNumbers = aRInvoice.MainEntityReference;
+
+                aRInvoice.MasterShipmentNumbers = aRInvoice.MainEntityReference;
+                aRInvoice.HouseNumbers = aRInvoice.HouseNumber;
+                aRInvoice.MasterNumbers = aRInvoice.MasterNumber;
             }
         }
 
