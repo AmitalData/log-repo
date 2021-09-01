@@ -721,7 +721,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private bool IsETAOrETDEditedAfterDeleteFirstPickup(ShipmentPickUpPM shipmentPickUpPM, ShipmentPickUpDelivery itemPOCO)
         {
-            bool IsEventNotExist = !IsEventExistInTraceEvents("DLAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("DLAR", itemPOCO.ETD);
+            bool IsEventNotExist = !IsEventExistInTraceEvents("PCAR", itemPOCO.ETA) && !IsEventExistInTraceEvents("PCAR", itemPOCO.ETD);
 
             if (IsETDLegDateEdited(shipmentPickUpPM, null, itemPOCO) && IsEventNotExist)
                 return true;
