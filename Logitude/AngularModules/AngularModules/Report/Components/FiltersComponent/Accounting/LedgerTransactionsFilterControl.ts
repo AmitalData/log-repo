@@ -17,6 +17,9 @@ import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
 import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
+import { ChartOfAccountPMService } from '../../../../Accounting/Services/StandardPMs/ChartOfAccountPMService';
+import { ChartOfAccountPM } from '../../../../Accounting/EntityPMs/ChartOfAccountPM';
+import { UserPM } from '../../../../Common/EntityPMs/UserPM';
 
 @Component({
 
@@ -45,7 +48,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public GLAccountFilterItems: ApiQueryFilters;
-
+    private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     constructor(private CD: ChangeDetectorRef)
     {
         super();
@@ -84,17 +87,17 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
     }
-
+      private loggedUser: UserPM;
 
     GetSalesmanFeature()
     {
         var salesmanLedger = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
         var isSalesmanRestrictionsEnabled =  !!salesmanLedger;
         console.log("[Salesman Ledger Transactions]", salesmanLedger);
-        var loggedUser = SessionLocator.LoggedUserPM;
-        if (loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
+         this.loggedUser = SessionLocator.LoggedUserPM;
+        if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
-            this.Salesman = loggedUser.Id;
+            this.Salesman = this.loggedUser.Id;
             this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
 
@@ -574,11 +577,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
             isValid = false;
         }
+        this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }
+        
         if (this.ValidationErrorsList.length == 0)
             this.filterControlHight = "100";
         else
@@ -749,7 +754,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.GLAccountChanged = true;
     }
 
-
+    private securityLevel: any;
     private glaccountPM: any;
     
     get GLAccount() { return this.glaccountPM; }
@@ -766,11 +771,27 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
+                this.securityLevel= this.SetGLAccountChartOfAccountSecurityLevel(value.ChartOfAccountsId);
+               
             }
         }
     }
 
-
+    private  SetGLAccountChartOfAccountSecurityLevel(ChartOfAccountId: string) {
+        this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var chartOfAccount: ChartOfAccountPM = response.Result;
+                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel;
+                this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
+              
+            }
+        });
+    }
+    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
+        if (this.securityLevel < this.loggedUser.SecurityLevel) {
+            this.ValidationErrorsList.push("Can't run the report for this specific GLAccount due to insufficient security clearance");
+        }
+    }
     private _IsReconciled: boolean;
     public get IsReconciled(): boolean
     {
