@@ -89,6 +89,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 return supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id).pipe(
                     map((resp: ServiceResponse) => {
                         this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
+                        this.declarationPM.SupplierInvoices = this.loadedSupplierInvoices;
                         customsDocumentsTicketViewModels.forEach((ticket) => {
                             this.originalCustomsDocumentTicketViewModel.push(ticket);
                         });
@@ -137,7 +138,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                     entityParams.ParentEntityCode = 'Declaration';
                                     entityParams.ParentEntityId = this.declarationPM.Id;
                                     entityParams.ChildEntity1Code = "SupplierInvoice";
-                                    entityParams.ChildEntity1Id = supplierInvoice.InvoiceCounterKey + "";
+                                    entityParams.ChildEntity1Id = supplierInvoice.SequenceNumeric + "";
 
                                     var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
                                     var metaData: { [Code: string]: any; } = {};
