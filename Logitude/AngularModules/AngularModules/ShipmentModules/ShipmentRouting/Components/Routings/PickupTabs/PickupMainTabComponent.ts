@@ -199,6 +199,68 @@ export class PickupMainTabComponent extends BaseComponent {
         }
     }
 
+    get IsFromRequired() {
+        var myResult: boolean = false;
+
+        if (this.FullResponsibility) {
+            switch (this.FromTypeCode) {
+                case "PART": {
+                    if (AppTool.IsNullOrEmpty(this.FromPartnerCardId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "PORT": {
+                    if (AppTool.IsNullOrEmpty(this.FromPortId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "CASL": {
+                    if (AppTool.IsNullOrEmpty(this.FromAddressCity) || AppTool.IsNullOrEmpty(this.FromAddressCountryId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+            }
+        }        
+
+        return myResult;
+    }
+
+    get IsToRequired() {
+        var myResult: boolean = false;
+
+        if (this.FullResponsibility) {
+            switch (this.ToTypeCode) {
+                case "PART": {
+                    if (AppTool.IsNullOrEmpty(this.ToPartnerCardId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "PORT": {
+                    if (AppTool.IsNullOrEmpty(this.ToPortId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "CASL": {
+                    if (AppTool.IsNullOrEmpty(this.ToAddressCity) || AppTool.IsNullOrEmpty(this.ToAddressCountryId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return myResult;
+    }
+
     // On Open Edit Mood
     OnEditMoodScreen() {
         if (!AppTool.IsNullOrEmpty(this.FromAddressId)) {

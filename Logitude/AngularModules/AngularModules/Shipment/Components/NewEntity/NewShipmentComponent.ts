@@ -1225,6 +1225,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("InlandDomesticToCity", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InlandDomesticToCountryId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InlandDomesticToZipCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
     }
 
     // Shipper

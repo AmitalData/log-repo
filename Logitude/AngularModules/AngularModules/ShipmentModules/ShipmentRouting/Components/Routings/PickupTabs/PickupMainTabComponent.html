@@ -49,7 +49,7 @@
                                                         <td>
                                                             <fieldset class="MediaFill GroupBox">
                                                                 <legend>
-                                                                    <span style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;" *ngIf="FullResponsibility && !FromPartnerCardId"></span>
+                                                                    <span *ngIf="IsFromRequired" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
                                                                     <span>{{'ShipmentPickUpDelivery.O.From' | TextCodeTranslationPipe}}</span>
                                                                 </legend>
 
@@ -228,6 +228,7 @@
                                                         <td>
                                                             <fieldset class="MediaFill GroupBox">
                                                                 <legend>
+                                                                    <span *ngIf="IsToRequired" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
                                                                     <span>{{'ShipmentPickUpDelivery.O.To' | TextCodeTranslationPipe}}</span>
                                                                 </legend>
 
