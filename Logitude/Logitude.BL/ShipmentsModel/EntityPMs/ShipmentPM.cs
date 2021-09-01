@@ -2740,6 +2740,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticToTypeCode { get; set; }
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AccountingClosedByUserId { get; set; }
     }
 
     public class TransshipmentLeg

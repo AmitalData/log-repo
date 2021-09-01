@@ -55,7 +55,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnHandDate).IsOptional();
             this.Property(t => t.PODDate).IsOptional();
 
-
+            this.Property(t => t.AccountingClosedByUserId).HasMaxLength(15).IsUnicode(false);
 
 
 
@@ -137,6 +137,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupFrom).HasColumnName("PickupFrom");
             this.Property(t => t.PickupTo).HasColumnName("PickupTo");
             this.Property(t => t.OperationallyClosedByUserName).HasColumnName("OperationallyClosedByUserName");
+            this.Property(t => t.AccountingClosedByUserId).HasColumnName("AccountingClosedByUserId");
 
             this.Property(t => t.DeliveryDate).HasColumnName("DeliveryDate");
             this.Property(t => t.OnHandDate).HasColumnName("OnHandDate");
@@ -148,7 +149,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.HasOptional(t => t.DeliveryTrucker).WithMany().HasForeignKey(d => d.DeliveryTruckerId);
             this.HasOptional(t => t.PickupTrucker).WithMany().HasForeignKey(d => d.PickupTruckerId);
-
+            this.HasOptional(t => t.AccountingClosedByUserUser).WithMany().HasForeignKey(d => d.AccountingClosedByUserId);
 
         }
     }

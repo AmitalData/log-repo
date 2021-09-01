@@ -1102,6 +1102,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesNotify1Ref2NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNotify1Ref2NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesNotify1Ref2NewId,0,'Fact_Charges','[Notify 1 Ref2]','Notify 1 Ref2','Text','false',0,50,'false','false','true','References ','false','false','false','Shipment.Notify1Reference2','false','false')  
+declare @Fact_ChargesAccountingClosedByNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesAccountingClosedByNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesAccountingClosedByNewId,0,'Fact_Charges','[Accounting Closed By]','Accounting Closed By','Dimension','false',0,0,'DIM_Users','false','false','true','Operational','false','false','false','ShipmentComputedFields.AccountingClosedByUserId','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InvoicesNewId OUTPUT,'DWObjectTable' 
@@ -2348,3 +2351,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsNotify1Ref2NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNotify1Ref2NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsNotify1Ref2NewId,0,'Fact_Shipments','[Notify 1 Ref2]','Notify 1 Ref2','Text','false',0,50,'false','false','true','References ','false','false','false','Shipment.Notify1Reference2','false','false')  
+declare @Fact_ShipmentsAccountingClosedByNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountingClosedByNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ShipmentsAccountingClosedByNewId,0,'Fact_Shipments','[Accounting Closed By]','Accounting Closed By','Dimension','false',0,0,'DIM_Users','false','false','true','Operational','false','false','false','ShipmentComputedFields.AccountingClosedByUserId','false','false')  

@@ -305,6 +305,11 @@ export class ShipmentComputedFieldsPM {
     public set T1Received(newValue: Date) { if (this.t1Received != newValue) { this.t1Received = newValue; this.MarkAsDirty("T1Received"); } }
        
 	 
+    private accountingClosedByUserId: string;
+    public get AccountingClosedByUserId() { return this.accountingClosedByUserId; }
+    public set AccountingClosedByUserId(newValue: string) { if (this.accountingClosedByUserId != newValue) { this.accountingClosedByUserId = newValue; this.MarkAsDirty("AccountingClosedByUserId"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		
