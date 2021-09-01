@@ -59,7 +59,7 @@ export class ShipmentsListComponent implements AfterViewInit
     SupplierOrClientValue: string;
 
     ShipmenTypeForRouting: string;
-
+    private static LastSearchResult: string;
 
 
 
@@ -76,8 +76,7 @@ export class ShipmentsListComponent implements AfterViewInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-
-
+        this.GetLastSearchResult();
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
@@ -86,6 +85,12 @@ export class ShipmentsListComponent implements AfterViewInit
         this.GetCompanyLoginsFromCache();
         this.GetPreservedToggleFiltersFromSessionInfo();
 
+    }
+
+    private GetLastSearchResult() {
+        if (ShipmentsListComponent.LastSearchResult != null) {
+            this.SearchText = ShipmentsListComponent.LastSearchResult;
+        }
     }
 
     private SetDefaultBackgroundColor()
@@ -309,6 +314,7 @@ export class ShipmentsListComponent implements AfterViewInit
     Clear()
     {
         this.SearchText = '';
+        ShipmentsListComponent.LastSearchResult = '';
         this.LoadScreenData();
     }
 
@@ -327,7 +333,7 @@ export class ShipmentsListComponent implements AfterViewInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
-
+            
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
@@ -390,8 +396,11 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
 
+        if (this._SearchText) {
+            ShipmentsListComponent.LastSearchResult = this._SearchText;
+            shipmentFilters.SearchText = this._SearchText.trim().toLowerCase();
+        }
 
         shipmentFilters.SortDescending = this.isSortDescending;
 
