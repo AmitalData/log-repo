@@ -725,8 +725,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 7,
-                Code = "AssignedToCustomsAgent",
-                Name = "Assigned To Customs Agent",
+                Code = "AssignedToCustomsBroker",
+                Name = "Assigned To Customs Broker",
                 Date = shipment.AssignedCustomsAgentDate,
                 EstimationDate =shipment.AssignedCustomsAgentEstDate,
                 Done = shipment.AssignedCustomsAgentDone,
