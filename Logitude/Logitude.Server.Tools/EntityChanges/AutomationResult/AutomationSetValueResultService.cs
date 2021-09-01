@@ -12,8 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.EntityChanges.AutomationResult
-{//
-   public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
+{
+    public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
     {
 
 
@@ -25,7 +25,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             if (fieldSetAutomationsList.Count > 0)
             {
 
-              var otherObjectTableIdWithLastUpdate = (automationResultArgs.OtherAutomationObjectTable != null && !string.IsNullOrEmpty(automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate)) ? (automationResultArgs.OtherAutomationObjectTable.Id + "@" + automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate) : "";
+                var otherObjectTableIdWithLastUpdate = (automationResultArgs.OtherAutomationObjectTable != null && !string.IsNullOrEmpty(automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate)) ? (automationResultArgs.OtherAutomationObjectTable.Id + "@" + automationResultArgs.OtherAutomationObjectTable.AutomationLastUpdate) : "";
 
 
                 ApplySetValueAutomation(automationResultArgs.EntityChangeArgs.EntityPM, fieldSetAutomationsList, automationResultArgs.EntityChange, automationResultArgs.AutomationFieldLists, automationResultArgs.AutomationObjectTable.AutomationLastUpdate, automationResultArgs.EntityChangeArgs.OldEntityPM, automationResultArgs.EntityChangeArgs.ProcessType, automationResultArgs.EntityChangeArgs.EntityId, otherObjectTableIdWithLastUpdate);
@@ -67,7 +67,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     else SetValue(entityPM, entityChange, automationFieldLists, lastUpdate, this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, this.automationResultArgs.MainEntityChangeService.Changefields, automation, entityChangesAutomation, dateBefore);
                 }
                 else
-                { 
+                {
                     entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                     this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                     entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -86,14 +86,17 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 {
                     if (!string.IsNullOrEmpty(automation.AutomationXML))
                     {
-                        AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
-                        AutomationSetValueLists = AutomatedBackup.AutomationSetValueLists;
-                        CacheManager.CacheWrapper.Insert(automationSetValueListsName, AutomationSetValueLists, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                        AutomationSetValueLists = GetAutomationSetValueLists(automation);
+                        InsertAutomationListIntoCash(AutomationSetValueLists, automationSetValueListsName);
                     }
                 }
                 else
                 {
                     AutomationSetValueLists = (List<AutomationSetValue>)CacheManager.CacheWrapper.Get(automationSetValueListsName);
+                    if (hasCustomFieldSetValue(AutomationSetValueLists))
+                    {
+                        AutomationSetValueLists = GetAutomationSetValueLists(automation); 
+                    }
                 }
             }
             else
@@ -133,6 +136,24 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
         }
 
+        private static bool hasCustomFieldSetValue(List<AutomationSetValue> AutomationSetValueLists)
+        {
+            return AutomationSetValueLists.Find(item => item.IsCustomField == true) != null;
+        }
+
+        private static void InsertAutomationListIntoCash(List<AutomationSetValue> AutomationSetValueLists, string automationSetValueListsName)
+        {
+            CacheManager.CacheWrapper.Insert(automationSetValueListsName, AutomationSetValueLists, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+        }
+
+        private static List<AutomationSetValue> GetAutomationSetValueLists(Automation automation)
+        {
+            List<AutomationSetValue> AutomationSetValueLists;
+            AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
+            AutomationSetValueLists = AutomatedBackup.AutomationSetValueLists;
+            return AutomationSetValueLists;
+        }
+
         private List<c> FillChangedFieldsList(AutomationSetValueChangedFieldsArgs AutomationChangedFields)
         {
             object oldValue = AutomationChangedFields.PropInfo.GetValue(AutomationChangedFields.EntityPM) ?? "";
@@ -142,34 +163,60 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 return AutomationChangedFields.ChangedFields;
             }
-
+             
             newValue = IsNewValueShouldBeNull(AutomationChangedFields, newValue) ? null : newValue;
+            newValue = GetNewValueForCustomField(AutomationChangedFields, newValue);
             AutomationChangedFields.PropInfo.SetValue(AutomationChangedFields.EntityPM, newValue, null);
             return AddFieldToChangedFieldsList(AutomationChangedFields, oldValue, newValue);
         }
+
+        private static object GetNewValueForCustomField(AutomationSetValueChangedFieldsArgs AutomationChangedFields, object newValue)
+        {
+
+            if (HasStringType(newValue)  || HasIntergerType(newValue) || HasBooleanType(newValue))
+            {
+                if (AutomationChangedFields.SetValueItem.IsCustomField)
+                {
+                    AutomationChangedFields.SetValueItem.Value = newValue.ToString();
+                    newValue = GetNewCustomFieldClass(AutomationChangedFields.SetValueItem);
+                }
+            }
+            return newValue;
+        }
+  
+        private static bool HasStringType(object objectValue)
+        {
+            return objectValue?.GetType().Name == "String"; 
+        }
+        private static bool HasBooleanType(object objectValue)
+        {
+            return objectValue?.GetType().Name == "Boolean"; 
+        } 
+        private static bool HasIntergerType(object objectValue)
+        {
+            return objectValue?.GetType().Name == "Int32"; 
+        }
+
 
         private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
         {
             object result = null;
 
-             if (item.IsCustomField)
-             {
-                if (hasDateTypeField(item))
-                {
-                    item.Value = GetDateValue(item);
-                }
-
-                return GetNewCustomField(item);
-             }
-
-            if (item.OperatorCode.Contains("F"))
+            if (item.OperatorCode.Contains("F") && item.DataTypeCode.Trim() != "Boolean")
             {
                 Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
                 if (field != null) result = field.Value;
-                if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value))
+                if ((hasDateTypeField(item)) && item.OperatorCode == "SF" && !string.IsNullOrEmpty(field.Value) && !item.IsCustomField)
                 {
                     result = ConvertToDate(field.Value);
                 }
+            }
+
+
+            else if (item.IsCustomField && hasDateTypeField(item))
+            {
+                item.Value = GetDateValue(item);
+                return GetNewCustomFieldClass(item);
             }
 
             else if (hasDateTypeField(item))
@@ -177,6 +224,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 var dateSplitParts = item.Value.Split('*');
                 result = ConvertToDate(dateSplitParts[dateSplitParts.Length - 1]);
             }
+
 
             else if (item.DataTypeCode.Trim() == "Boolean")
             {
@@ -189,7 +237,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             }
             else if (item.IsCustomField)
             {
-                result = GetNewCustomField(item);
+                result = GetNewCustomFieldClass(item);
             }
             else result = item.Value;
 
@@ -199,9 +247,13 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         private static string GetDateValue(AutomationSetValue item)
         {
-            var dateParts = item.Value.Split('*'); 
+            var dateParts = item.Value.Split('*');
             if (item.Value.IndexOf("Today") > -1)
             {
+                if(item.DataTypeCode == "Date")
+                {
+                    return dateParts[2].Substring(0, 8);
+                }
                 return dateParts[2];
             }
             else if (item.Value.IndexOf("Date") > -1)
@@ -216,7 +268,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             return item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date";
         }
 
-        private static object GetNewCustomField(AutomationSetValue item)
+        private static object GetNewCustomFieldClass(AutomationSetValue item)
         {
             string[] objectFieldSeparator = item.ObjectFieldCode.Split('.');
             if (objectFieldSeparator.Length > 2)

@@ -692,6 +692,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddDocumentBackupLog();
             }
+
+            AddShipmentUpdateKafkaQueueMessage(theEntityPm);
+        }
+
+        private void AddShipmentUpdateKafkaQueueMessage(DocumentsFilingPM theEntityPm)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
+                theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
+                theEntityPm.HasFile.Equals(true) &&
+                theEntityPm.DirectionCode == "I")
+            {
+                AddKafkaQueueMessage(theEntityPm, "CToolShipmentsUpdate");
+            }
+        }
+
+        private void AddKafkaQueueMessage(DocumentsFilingPM theEntityPm, string queueName)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue(queueName, 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ShipmentId", theEntityPm.EntityId },
+                { "Tenant", theEntityPm.Tenant.ToString()}};
+            queueservice.Send(queueMessage, theEntityPm.Tenant);
         }
 
         public void Update(DocumentsFilingPM theEntityPm, bool mapComposition = false)
@@ -880,6 +903,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddDocumentBackupLog();
             }
+
+            AddShipmentUpdateKafkaQueueMessage(theEntityPm);
         }
 
         private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)

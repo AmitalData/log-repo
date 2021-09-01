@@ -136,7 +136,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DirectionId' Type='char' Size='1'>"+
-"    <Constraints Nullable='false' />"+
+"    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CarrierId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
@@ -145,6 +145,9 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipmentId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
@@ -165,6 +168,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='ShipmentLevelCode' ReferencedTable='ShipmentLevels' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='DirectionId' ReferencedTable='Directions' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CarrierId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='ShipmentId' ReferencedTable='Shipments' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='Tenant,OrderNumber' />"+
 "  <UniqueConstraint Columns='Tenant,OrderNumber' />"+
 "</Table>";

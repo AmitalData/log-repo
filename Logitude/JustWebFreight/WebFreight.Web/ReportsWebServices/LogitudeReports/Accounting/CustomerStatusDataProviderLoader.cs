@@ -439,8 +439,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillPrintingInformation()
         {
-            var loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
-            var loggedContactName = GetContactName(loggedContact);
+            string loggedContactName = GetLoggedContactName();
             dataProvider.PrintedByUser = loggedContactName;
         }
 
@@ -453,6 +452,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
             return contactQuery.GetContactByEmailOnly(email, tenant);
+        }
+       
+        private ContactPM GetLoggedContact()
+        {
+            return LoggedContactResolver.GetLoggedContact(tenant);
+
+        }
+        private string GetLoggedContactName()
+        {
+            ContactPM loggedContact;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return GetContactName(loggedContact);
+            }
+            else
+            {
+                loggedContact = GetLoggedContact();
+                return GetContactName(loggedContact);
+            }
         }
 
     }

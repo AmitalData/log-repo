@@ -262,7 +262,7 @@ namespace Logitude.Accounting.BL.DataContract
             return (from a in accountingContext.GLAccounts
                     where a.Tenant == Tenant
                     && glAccountIds.Contains(a.Id)
-                    && a.ExcludeFromDeductionReport == false && a.AccountTypeCode == "3"
+                   && a.ExcludeFromDeductionReport == false && a.AccountTypeCode == "3"
                     select new GLAccountList()
                     {
                         Id = a.Id,
@@ -630,6 +630,7 @@ namespace Logitude.Accounting.BL.DataContract
         }
        private ByVendorList SetGLAccountFields(GLAccountList gLAccount , ByVendorList groupedbyVendor)
         {
+            ValidateGLAccountDeductionTypeFields(gLAccount);
             groupedbyVendor.DisplayNumber = gLAccount.DisplayNumber;
 
             groupedbyVendor.Occupation = gLAccount.Occupation;
@@ -644,7 +645,25 @@ namespace Logitude.Accounting.BL.DataContract
 
             return groupedbyVendor;
         }
-
+        private void ValidateGLAccountDeductionTypeFields(GLAccountList gLAccount)
+        {
+            if (gLAccount.DeductionFileTypeCode == null)
+            {
+                GenerateGLAccountRequiredFieldsError("DeductionFileTypeCode", gLAccount);
+            }
+            if (gLAccount.DeductionTypeId == null)
+            {
+                GenerateGLAccountRequiredFieldsError("DeductionTypeId", gLAccount);
+            }
+            if (gLAccount.DeductionFileNumber == null)
+            {
+                GenerateGLAccountRequiredFieldsError("DeductionFileNumber", gLAccount);
+            }
+        }
+        private void GenerateGLAccountRequiredFieldsError(string Fieldname, GLAccountList gLAccount)
+        {
+            taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + "Glaccount without " + TextCodesTranslator.TranslateText("GLaccount.F." + Fieldname, Tenant) + " , " + TextCodesTranslator.TranslateText("GLAccount.F.DisplayNumber", Tenant) + ": " + gLAccount.DisplayNumber;
+        }
         private List<TaxDeductionReportLine> GroupDeductionLinesByVendorAndPercentage(List<TaxDeductionReportLine> deductionLines)
         {
 

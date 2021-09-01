@@ -80,7 +80,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         } 
         public void AddQueueTask(List<QueueTask> tasks, string data)
         {
-            tasks.Add(new QueueTask() { Action = action, Parameters = new List<Parameter>() { new Parameter { Name = "ImporterShipment", Value = data } } });
+            tasks.Add(new QueueTask() { Action = action, Parameters = new List<Parameter>() { new Parameter { Name = "ExporterShipment", Value = data } } });
         } 
         public CommunicationLog CreateCommunicationLog( Document document)
         {
