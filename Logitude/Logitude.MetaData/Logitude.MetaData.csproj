@@ -1056,6 +1056,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CargoTenantMilestoneDefinition.lxml" />
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />

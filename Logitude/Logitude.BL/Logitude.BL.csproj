@@ -372,6 +372,7 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CargoTenantMilestoneDefinitionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
@@ -379,6 +380,8 @@
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CargoTenantMilestoneDefinitionPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CargoTenantMilestoneDefinitionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
@@ -440,6 +443,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CargoTenantMilestoneDefinitionMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
@@ -454,6 +458,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\WarehouseStoragePricingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CardSearchService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CargoTenantMilestoneDefinitionService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
