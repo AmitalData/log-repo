@@ -295,7 +295,7 @@ export class AddFollowupComponent extends BaseComponent {
                 myQuoteFollowUpPM.ManualActivatedFollowUp = this.EntityPM.ManualActivatedFollowUp;
                 myQuoteFollowUpPM.Date = this.Date;
                 myQuoteFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myQuoteFollowUpPM.Note = this.Notes;
+                myQuoteFollowUpPM.Notes = this.Notes;
                 myQuoteFollowUpPM.Done = this.EntityPM.Done;
                 myQuoteFollowUpPM.IsNew = this.EntityPM.IsNew;
                 myQuoteFollowUpPM.LegType = this.EntityPM.LegType;
@@ -311,7 +311,7 @@ export class AddFollowupComponent extends BaseComponent {
                 myShipmentFollowUpPM.ManualActivatedFollowUp = this.EntityPM.ManualActivatedFollowUp;
                 myShipmentFollowUpPM.Date = this.Date;
                 myShipmentFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myShipmentFollowUpPM.Note = this.Notes;
+                myShipmentFollowUpPM.Notes = this.Notes;
                 myShipmentFollowUpPM.Done = this.EntityPM.Done;
                 myShipmentFollowUpPM.IsNew = this.EntityPM.IsNew;
                 myShipmentFollowUpPM.LegType = this.EntityPM.LegType;
