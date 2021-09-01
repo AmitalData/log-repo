@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.InternalDocumentId = itemPM.InternalDocumentId;
             itemPoco.IsNew = itemPM.IsNew;
             itemPoco.LegType = itemPM.LegType;
-            itemPoco.Notes = itemPM.Note;
+            itemPoco.Notes = itemPM.Notes;
             itemPoco.EventTypeId = itemPM.EventTypeId;
             itemPoco.OwnerUserId = itemPM.OwnerUserId;
             itemPoco.DocumentTypeId = itemPM.DocumentTypeId;

@@ -854,7 +854,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Note = follow.Notes,
+                    Notes = follow.Notes,
                     ShipmentId = follow.ShipmentId,
                     EventTypeId = follow.EventTypeId,
                     EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,
