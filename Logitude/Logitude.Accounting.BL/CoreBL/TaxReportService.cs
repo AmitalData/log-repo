@@ -102,6 +102,7 @@ namespace Logitude.Accounting.BL.CoreBL
             decimal? VatAmount = 0;
             decimal? InvoiceAmount = 0;
             string transmitStatus;
+            string statusCode = null;
             foreach (TaxReportData a in TaxReportJournalData)
             {
                 string vatNumber = null;
@@ -113,9 +114,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                     if (invoice != null)
                     {
-                        if (invoice.InvoiceDate.Value.Month != taxReport.TaxReportMonth.Month)
+                        DateTime invoiceDate = new DateTime(invoice.InvoiceDate.Value.Year, invoice.InvoiceDate.Value.Month, 1);
+                        DateTime taxReportDate = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month, 1);
+                        DateTime taxReportDatePreviousMonth = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month -1, 1);
+
+                        if ((setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate && invoiceDate != taxReportDatePreviousMonth)
+                            || (!setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate))
                         {
-                            transmitStatus = "0";
+                            transmitStatus = TaxReportLineTransmitStatusValues.WithoutTransmit;
+                            statusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
                         }
                         VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
@@ -147,6 +154,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
                             TotalInvoiceAmount = invoice.TotalAmountForTaxReport != null ? Math.Round(invoice.TotalAmountForTaxReport.Value, MidpointRounding.AwayFromZero) : 0,
                             IsManuallyChanged = false,
+                            StatusCode = statusCode,
                             TransmitStatusCode = transmitStatus,
                             TaxReportId = taxReport.Id,
                             ChangeSetOp = ChangeSetOperation.Insert,
@@ -238,7 +246,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 SetVatAmounts(transaction);
 
              
-                string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate);
+                string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate, setting.VATreportEveryTwoMonths);
                 TaxReportLinePM inputReportLine = new TaxReportLinePM()
                 {
 
@@ -501,11 +509,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate)
+        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate, bool vatReportEveryTwoMonths)
         {
-            DateTime date = DateTime.Now.AddDays(-180);
-            DateTime last180days = new DateTime(date.Year, date.Month, 1);
-            if (referenceDate <= last180days)
+            DateTime dateBefore210Days = DateTime.Now.AddDays(-210);
+            DateTime dateBefore180Days = DateTime.Now.AddDays(-180);
+            DateTime last180days = new DateTime(dateBefore180Days.Year, dateBefore180Days.Month, 1);
+            DateTime last210days = new DateTime(dateBefore210Days.Year, dateBefore210Days.Month, 1);
+            if ((vatReportEveryTwoMonths && referenceDate <= last210days) || (!vatReportEveryTwoMonths && referenceDate <= last180days))
             {
                 return "3";
             }
