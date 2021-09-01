@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "e8cc7f93d21e7400eb55e81d0b9a465a";
+		public const string HashString = "4a1b65bef400b37e7939cd6d7a2edbc2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15277,6 +15277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AmendmentTypeName",
 					  						ListPropertyPath =  "AmendmentTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -18876,6 +18877,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarationExport", DefaultText = "Declaration was already paid , screen is display only",LocalDefaultText = @"הצהרה כבר הוגשה , המסך לתצוגה בלבד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclarationExport", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectedByUserName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectedByUserName", DefaultText = "Corrected By User Name",LocalDefaultText = @"נפתח עי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

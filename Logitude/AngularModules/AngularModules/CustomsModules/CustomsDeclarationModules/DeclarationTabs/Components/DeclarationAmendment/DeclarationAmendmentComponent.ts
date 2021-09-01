@@ -230,7 +230,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
 
             FieldName: 'AmendmentCorrectedByUserName',
             DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentCorrectedByUserName"),
+            Display: this.EntityPM.Direction == "E" ? TextCodeTranslator.Translate("Customs.Declaration.O.CorrectedByUserName") : TextCodeTranslator.Translate("Customs.Declaration.F.AmendmentCorrectedByUserName"),
             Styles: { width: '80px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,

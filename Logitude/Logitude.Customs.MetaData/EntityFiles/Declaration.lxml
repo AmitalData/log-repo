@@ -18692,6 +18692,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AmendmentTypeName&quot;"
     ListPropertyPath="&quot;AmendmentTypeName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -24077,6 +24078,12 @@
       Code="&quot;Customs.Declaration.O.ChangedDeclarationExport&quot;"
       DefaultText="&quot;Declaration data was changed , please send again before trying to pay&quot;"
       LocalDefaultText="&quot;בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CorrectedByUserName&quot;"
+      DefaultText="&quot;Corrected By User Name&quot;"
+      LocalDefaultText="&quot;נפתח עי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
