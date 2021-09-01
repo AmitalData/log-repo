@@ -117,9 +117,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ShipperName = shipper == null ? null : shipper.EnglishName,
                                                                ForwardingMaster = shipment.ForwardingMaster,
                                                                ForwardingHouse = shipment.ForwardingHouse,
-
                                                                ImportManifest = shipment.ImportManifest,
-
                                                                GoodsClassificationDate = shipment.GoodsClassificationDate,
                                                                GoodsClassificationDone = shipment.GoodsClassificationDone,
                                                                GoodsClassificationNotes = shipment.GoodsClassificationNotes,
@@ -135,8 +133,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
                                                                GatepassArrivedNotes = shipment.GatepassArrivedNotes,
 
-                                                               ShipmentTypeCode = shipment.ShipmentTypeCode
-
+                                                               ShipmentTypeCode = shipment.ShipmentTypeCode,
+                                                               CustomsPaymentDone = shipment.CustomsPaymentDone,                                                               
                                                            });
             return query;
         }
