@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
         private const string MasterUserId = "13793";
 
-        [HttpGet]
+        [HttpGet]// for public search
         public HttpResponseMessage GetShipments(string searchKey, int tenant)
         {
             try
@@ -100,7 +100,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return mixPanelEvent;
         }
 
-        [HttpGet]
+        [HttpGet]// for public search
         public async Task<HttpResponseMessage> GetShipment(string SecurityKey, int tenant)
         {
             try
@@ -136,12 +136,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        [HttpGet]
+        [HttpGet] // for private needs auth.
         public async Task<HttpResponseMessage> GetUserShipment(string SecurityKey, int tenant)
         {
             try
             {
-
+                AuthorizeTenant(tenant);
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
@@ -170,6 +170,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+
+        private void AuthorizeTenant(int tenant)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+        }
+
         private static void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment, bool isPublic)
         {
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber,isPublic);
@@ -187,11 +196,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return mixPanelEvent;
         }
 
-        [HttpGet]
+        [HttpGet] // for private needs auth.
         public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
+                AuthorizeTenant(shipmentFilters.Tenant);
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
                 CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
 
@@ -208,12 +218,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        [HttpGet]
+        [HttpGet] // for private needs auth.
         public HttpResponseMessage GetUserShipmentsCount([FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
-               
+                AuthorizeTenant(shipmentFilters.Tenant);
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
                 CargoTrackingShipmentsCounter counter = usersShipmentService.GetUserShipmentsCounter(shipmentFilters);
 
@@ -228,7 +238,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
-        [HttpGet]
+        [HttpGet]// for public
         public HttpResponseMessage GetShipmentReferences(string securityKey, int tenant)
         {
             try
