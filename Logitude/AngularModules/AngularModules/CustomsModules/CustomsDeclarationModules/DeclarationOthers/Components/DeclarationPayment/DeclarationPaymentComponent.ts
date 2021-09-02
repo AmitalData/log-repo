@@ -355,7 +355,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
-    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public get AutomaticPayment() { return (this.paymentPM.AutomaticPayment ? this.paymentPM.AutomaticPayment : null) }
     public set AutomaticPayment(newValue: number) {
         this.paymentPM.AutomaticPayment = newValue;
     }
@@ -2778,7 +2778,6 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.Tenant = SessionLocator.Tenant;
         errorLogPM.UserName = SessionLocator.LoggedUserId + "/" + SessionLocator.LoggedUserPM.Email;
         errorLogPM.LogDate = DateTool.GetCurrentDateTimeAsUtc();
-
         let myBankList = this._BanksList.map(r => JSON.stringify({
             'InternalBankId': r.Id, 'LocalName': r.LocalName, 'EnglishName': r.EnglishName
         }));
@@ -2986,7 +2985,6 @@ export class PaymentMethodModel extends BaseComponent {
                                                                 agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                                 //fill the LOV
                                                                 this.BanksList = connectedBanks.concat(agentBanks);
-
                                                                 //select bank
                                                                 if (this.InternalBankId != null) {
                                                                     var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
