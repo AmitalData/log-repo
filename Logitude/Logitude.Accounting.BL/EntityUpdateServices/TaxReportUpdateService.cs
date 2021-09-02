@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
                     DateTime taxReportDate = new DateTime(entityPM.Year, entityPM.TaxReportMonth.Month, 1);
-                    bool exist = repo.CheckIfTaxReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
+                    bool isTaxReportExist = repo.CheckIfTaxReportExist(taxReportDate, entityPM.Tenant);
                     bool previousCompletedExist = repo.CheckIfPreviousReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
                     bool previousNotCompletedExist = repo.CheckIfPreviousNotCompReportExist(taxReportDate, entityPM.Tenant, fullAccountingSettingPM.VATreportEveryTwoMonths);
 
@@ -92,10 +92,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     bool showLocals = !contact.DontShowLocal;
 
-                    if (exist == true)
+                    if (isTaxReportExist == true)
                     {
                         throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExist", entityPM.Tenant, showLocals));
                     }
+
+                    if (fullAccountingSettingPM.VATreportEveryTwoMonths)
+                    {
+                        bool isTaxReportExistForPreviousMonth = repo.CheckIfTaxReportExistForPreviousMonth(taxReportDate, entityPM.Tenant);
+                        if (isTaxReportExistForPreviousMonth)
+                        {
+                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExistForPreviousMonth", entityPM.Tenant, showLocals));
+                        }
+                    }
+
                     if (higherDateReportExist == true)
                     {
                         throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));

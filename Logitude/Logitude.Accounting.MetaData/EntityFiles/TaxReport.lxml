@@ -2940,6 +2940,12 @@
       LocalDefaultText="&quot;, לא ניתן להפיק דוח מעמ לחודש הנבחר משום שלא הופק דוח מעמ בחודשיים האחרונים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ReportExistForPreviousMonth&quot;"
+      DefaultText="&quot;There is already a report for the previous month of the chosen month&quot;"
+      LocalDefaultText="&quot;קיים כבר דוח קודם לחודש הנבחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

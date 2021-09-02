@@ -23,22 +23,21 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-        public bool CheckIfTaxReportExist(DateTime taxReportDate, int tenant, bool VATreportEveryTwoMonths)
+        public bool CheckIfTaxReportExist(DateTime taxReportDate, int tenant)
         {
-            DateTime taxReportDateWithPreviousMonth = taxReportDate.AddMonths(-1);
-            if (VATreportEveryTwoMonths)
-            {
-                return (from a in context.TaxReports
-                        where (DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDate.Date ||
-                        DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDateWithPreviousMonth.Date ||
-                        (a.CreatedInTwoMonthsLogic == true && SqlFunctions.DateAdd("month", -1, a.TaxReportMonth) == taxReportDate.Date))
-                        && a.Tenant == tenant 
-                        && a.IsCancelled == false
-                        select a).Any();
-            }
             return (from a in context.TaxReports
                     where (DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDate.Date ||
                     (a.CreatedInTwoMonthsLogic == true && SqlFunctions.DateAdd("month", -1, a.TaxReportMonth) == taxReportDate.Date))
+                    && a.Tenant == tenant
+                    && a.IsCancelled == false
+                    select a).Any();
+        }
+
+        public bool CheckIfTaxReportExistForPreviousMonth(DateTime taxReportDate, int tenant)
+        {
+            DateTime taxReportDateWithPreviousMonth = taxReportDate.AddMonths(-1);
+            return (from a in context.TaxReports
+                    where DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDateWithPreviousMonth.Date
                     && a.Tenant == tenant
                     && a.IsCancelled == false
                     select a).Any();

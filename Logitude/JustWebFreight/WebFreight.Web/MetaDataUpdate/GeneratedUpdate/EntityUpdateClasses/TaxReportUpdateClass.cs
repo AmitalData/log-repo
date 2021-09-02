@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "ed27793af4a07f76f0b9c115bec30913";
+		public const string HashString = "0d0235fbeb0e0bc55fb3dd92213f8b4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2486,6 +2486,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_AccountingOCompletedReportExistForPreviousTwoMonths = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CompletedReportExistForPreviousTwoMonths", DefaultText = "Can’t create tax report for the chosen month, there is no tax report In the previous two months",LocalDefaultText = @", לא ניתן להפיק דוח מעמ לחודש הנבחר משום שלא הופק דוח מעמ בחודשיים האחרונים", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_AccountingOReportExistForPreviousMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportExistForPreviousMonth", DefaultText = "There is already a report for the previous month of the chosen month",LocalDefaultText = @"קיים כבר דוח קודם לחודש הנבחר", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
