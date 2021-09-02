@@ -36,7 +36,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ThirdCargoID, 
 	         DeclarationId, 
 	         IsClosed, 
-	         ResponseStatusCode,
+	         ResponseStatusCode, 
+	         Direction, 
+	         TransportModeId,
 	      }
 
 
@@ -62,7 +64,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClosed, 
 	         ResponseStatusCode, 
 	         ResponseStatusName, 
-	         CustomFileNo,
+	         CustomFileNo, 
+	         Direction, 
+	         TransportModeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -139,6 +143,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseStatusCode))
             {
 				entityPOCO.ResponseStatusCode = entityPM.ResponseStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+				entityPOCO.Direction = entityPM.Direction;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeId))
+            {
+				entityPOCO.TransportModeId = entityPM.TransportModeId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -222,6 +236,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ResponseStatusCode = entityPOCO.ResponseStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Direction))
+            {
+					entityPM.Direction = entityPOCO.Direction;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransportModeId))
+            {
+					entityPM.TransportModeId = entityPOCO.TransportModeId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCargoSplitPM entityPM, DeclarationCargoSplitPM oldEntityPM)
@@ -296,6 +320,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseStatusCode))
             {
                 oldEntityPM.ResponseStatusCode = entityPM.ResponseStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+                oldEntityPM.Direction = entityPM.Direction;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeId))
+            {
+                oldEntityPM.TransportModeId = entityPM.TransportModeId;
             }
 			
 		}

@@ -28,6 +28,8 @@ export class DeclarationCargoSplitList {
 	ResponseStatusCode: string;
 	ResponseStatusName: string;
 	CustomFileNo: string;
+	Direction: string;
+	TransportModeId: string;
 	
 }
  

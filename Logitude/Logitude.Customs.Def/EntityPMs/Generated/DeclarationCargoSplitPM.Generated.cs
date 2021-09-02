@@ -550,7 +550,53 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDecCargoSplitCargoIdentifiers = value; }
 	    }
-	     }
+	  	  private string direction ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Direction  
+	   {
+	    
+	     get
+		{
+		   return direction;
+		 }
+		 set
+		 {
+		   if(direction != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Direction",OldValue=direction,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   direction=value;
+		   }
+			
+		 }
+	   }
+	  private string transportModeId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeId  
+	   {
+	    
+	     get
+		{
+		   return transportModeId;
+		 }
+		 set
+		 {
+		   if(transportModeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeId",OldValue=transportModeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeId=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

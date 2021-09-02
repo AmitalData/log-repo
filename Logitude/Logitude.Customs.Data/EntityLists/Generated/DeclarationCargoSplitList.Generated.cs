@@ -54,6 +54,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ResponseStatusName  { get; set; }
        [DataMember]
        public string CustomFileNo  { get; set; }
+       [DataMember]
+       public string Direction  { get; set; }
+       [DataMember]
+       public string TransportModeId  { get; set; }
    }
 
 }

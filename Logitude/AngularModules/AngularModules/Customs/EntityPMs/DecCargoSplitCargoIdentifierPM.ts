@@ -57,6 +57,11 @@ export class DecCargoSplitCargoIdentifierPM {
     public set CargoIdentifierKey3(newValue: string) { if (this.cargoIdentifierKey3 != newValue) { this.cargoIdentifierKey3 = newValue; this.MarkAsDirty("CargoIdentifierKey3"); } }
        
 	 
+    private cargoTypeCode: string;
+    public get CargoTypeCode() { return this.cargoTypeCode; }
+    public set CargoTypeCode(newValue: string) { if (this.cargoTypeCode != newValue) { this.cargoTypeCode = newValue; this.MarkAsDirty("CargoTypeCode"); } }
+       
+	 
 
     public OldEntityPM: DecCargoSplitCargoIdentifierPM;
 	

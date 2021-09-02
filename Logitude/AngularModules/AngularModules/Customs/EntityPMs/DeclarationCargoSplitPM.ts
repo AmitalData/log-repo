@@ -194,7 +194,17 @@ export class DeclarationCargoSplitPM {
         }
     }
     //public DecCargoSplitCargoIdentifiers: Array<DecCargoSplitCargoIdentifierPM>= [];
- 
+     private direction: string;
+    public get Direction() { return this.direction; }
+    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
+       
+	 
+    private transportModeId: string;
+    public get TransportModeId() { return this.transportModeId; }
+    public set TransportModeId(newValue: string) { if (this.transportModeId != newValue) { this.transportModeId = newValue; this.MarkAsDirty("TransportModeId"); } }
+       
+	 
+
     public OldEntityPM: DeclarationCargoSplitPM;
 		
     public IsDirty: boolean;

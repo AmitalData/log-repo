@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LineNumber, 
 	         CargoIdentifierKey1, 
 	         CargoIdentifierKey2, 
-	         CargoIdentifierKey3,
+	         CargoIdentifierKey3, 
+	         CargoTypeCode,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LineNumber, 
 	         CargoIdentifierKey1, 
 	         CargoIdentifierKey2, 
-	         CargoIdentifierKey3,
+	         CargoIdentifierKey3, 
+	         CargoTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -66,6 +68,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey3))
             {
 				entityPOCO.CargoIdentifierKey3 = entityPM.CargoIdentifierKey3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoTypeCode))
+            {
+				entityPOCO.CargoTypeCode = entityPM.CargoTypeCode;
 			}
 			}
 
@@ -102,6 +109,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CargoIdentifierKey3 = entityPOCO.CargoIdentifierKey3;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoTypeCode))
+            {
+					entityPM.CargoTypeCode = entityPOCO.CargoTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DecCargoSplitCargoIdentifierPM entityPM, DecCargoSplitCargoIdentifierPM oldEntityPM)
@@ -126,6 +138,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierKey3))
             {
                 oldEntityPM.CargoIdentifierKey3 = entityPM.CargoIdentifierKey3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoTypeCode))
+            {
+                oldEntityPM.CargoTypeCode = entityPM.CargoTypeCode;
             }
 			
 		}
