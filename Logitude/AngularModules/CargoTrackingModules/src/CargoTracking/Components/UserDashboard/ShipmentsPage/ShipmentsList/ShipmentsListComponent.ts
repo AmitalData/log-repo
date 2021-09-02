@@ -59,7 +59,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SupplierOrClientValue: string;
 
     ShipmenTypeForRouting: string;
-    private static LastSearchResult: string;
 
 
 
@@ -76,7 +75,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-        this.GetLastSearchResult();
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
@@ -86,12 +84,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ngAfterViewInit(): void
     {
         this.GetCompanyLoginsFromCache();
-    }
-
-    private GetLastSearchResult() {
-        if (ShipmentsListComponent.LastSearchResult != null) {
-            this.SearchText = ShipmentsListComponent.LastSearchResult;
-        }
     }
 
     private SetDefaultBackgroundColor()
@@ -217,6 +209,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
+            this.LoadScreenData();
         }
     }
 
@@ -315,7 +308,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     Clear()
     {
         this.SearchText = '';
-        ShipmentsListComponent.LastSearchResult = '';
         this.LoadScreenData();
     }
 
@@ -397,11 +389,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-
-        if (this._SearchText) {
-            ShipmentsListComponent.LastSearchResult = this._SearchText;
-            shipmentFilters.SearchText = this._SearchText.trim().toLowerCase();
-        }
+        shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortDescending = this.isSortDescending;
 
@@ -569,10 +557,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
         this.LoadScreenData();
     }
+
+    SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
+        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
+        if (!item)
+            this.SelectedFilters.push(filter);
+    }
+
     SelectFilterByCode(filterCode: string)
     {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        this.SelectFilter(filter);
+        this.SelectFilterWithoutLoadScreenData(filter);
     }
     DeselectFilter(filter: ToggleFilter)
     {
