@@ -4597,6 +4597,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\ViewModel\MilestonePermissiosViewModel.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Services\Others\CargoTrackingTenantMilestoneDefinitionExtendedService.ts" />
     <TypeScriptCompile Include="SharedLogistics\Services\Others\CargoTrackingMilestoneExtendedService.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.ts" />
