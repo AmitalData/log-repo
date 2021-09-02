@@ -13,10 +13,12 @@ namespace Logitude.OceanTest.Steps.OceanShipmentStatus
     {
         public OceanContext _oceanContext { get; set; }
         public OceanInsightsStatusesServices _oceanInsightsStatusesServices { get; set; }
-        public GetShipmentContainersStatusesSteps(OceanContext oceanContext, OceanInsightsStatusesServices oceanInsightsStatusesServices)
+        public CheckerService _checkerService { get; set; }
+        public GetShipmentContainersStatusesSteps(OceanContext oceanContext, OceanInsightsStatusesServices oceanInsightsStatusesServices, CheckerService checkerService)
         {
             _oceanContext = oceanContext;
             _oceanInsightsStatusesServices = oceanInsightsStatusesServices;
+            _checkerService = checkerService;
         }
         [Given(@"Read the file ""(.*)"" shipment data response")]
         public void GivenReadTheFileShipmentDataResponse(string XMLFileName)
@@ -33,7 +35,7 @@ namespace Logitude.OceanTest.Steps.OceanShipmentStatus
         [Then(@"The status of the containers in the shipment should be changed successfully")]
         public void ThenTheStatusOfTheContainersInTheShipmentShouldBeChangedSuccessfully()
         {
-            _oceanInsightsStatusesServices.CheckContainerStatuses(_oceanContext.ShipmentContainerSimulator);
+            _checkerService.CheckContainerStatuses(_oceanContext.ShipmentContainerSimulator);
         }
     }
 }

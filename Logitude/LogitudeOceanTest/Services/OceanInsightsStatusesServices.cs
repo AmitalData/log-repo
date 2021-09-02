@@ -36,37 +36,13 @@ namespace Logitude.OceanTest.Services
             };
         }
 
-        public string ReadFilebyName(string xMLFile)
+        public string ReadFilebyName(string fileName)
         {
-            var path = "./MetaData/" + xMLFile;
+            var path = "./MetaData/" + fileName;
             return File.ReadAllText(path);
         }
 
-        public bool CheckIfCommunicationLogsAddSuccessfullyForContener()
-        {
-            var filters = GetCommunicationLogs("1-18816", OceanData.ShipmentPM.ShipmentPackages.First().ContainerEntityId);
-            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
-            return new CheckerService().ValidateCommunicationLogs(communicationLogs);
-        }
-        public bool CheckIfCommunicationLogsAddSuccessfullyForShipment()
-        {
-            var filters = GetCommunicationLogs("1-4", OceanData.ShipmentPM.Id);
-            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
-            return new CheckerService().ValidateCommunicationLogs(communicationLogs);
-        }
-        public ApiQueryFilters GetCommunicationLogs(string objectTableId, string EntityId)
-        {
-            return new ApiQueryFiltersBuilder()
-                .PageIndex(0)
-                .PageSize(10)
-                .Filter1Name("EntityId")
-                .Filter1Value(EntityId)
-                .Filter2Name("ObjectTableId")
-                .Filter2Value(objectTableId)
-                .SortBy("CreateDate")
-                .SortDirection("Descending")
-                .Build();
-
-        }
+       
+        
     }
 }
