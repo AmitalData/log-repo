@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -57,19 +59,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CargoTenantMilestoneDefinitionQuery cargoTrackingMilestoneQuery = new CargoTenantMilestoneDefinitionQuery(tenant);
             List<CargoTenantMilestoneDefinitionPM> cargoMyTenantMilestoneDefinitionPMs = cargoTrackingMilestoneQuery.GetAll(tenant);
 
-            cargoTenantZeroMilestoneDefinitionPMs.ForEach(cargoTenantZeroMilestoneDefinition =>
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                CargoTenantMilestoneDefinitionPM cargoMyTenantMilestoneDefinition = cargoMyTenantMilestoneDefinitionPMs.FirstOrDefault(f => f.Code == cargoTenantZeroMilestoneDefinition.Code);
-                if (cargoMyTenantMilestoneDefinition == null)
+                cargoTenantZeroMilestoneDefinitionPMs.ForEach(cargoTenantZeroMilestoneDefinition =>
                 {
-                    Create(cargoTenantZeroMilestoneDefinition);
-                }
-                else
-                {
-                    cargoMyTenantMilestoneDefinition.IsCustomerView = cargoTenantZeroMilestoneDefinition.IsCustomerView;
-                    Update(cargoMyTenantMilestoneDefinition);
-                }
-            });
+                    CargoTenantMilestoneDefinitionPM cargoMyTenantMilestoneDefinition = cargoMyTenantMilestoneDefinitionPMs.FirstOrDefault(f => f.Code == cargoTenantZeroMilestoneDefinition.Code);
+                    if (cargoMyTenantMilestoneDefinition == null)
+                    {
+                        Create(cargoTenantZeroMilestoneDefinition);
+                    }
+                    else
+                    {
+                        cargoMyTenantMilestoneDefinition.IsCustomerView = cargoTenantZeroMilestoneDefinition.IsCustomerView;
+                        Update(cargoMyTenantMilestoneDefinition);
+                    }
+                });
+                scope.Complete();
+            }
         }
     }
 }
