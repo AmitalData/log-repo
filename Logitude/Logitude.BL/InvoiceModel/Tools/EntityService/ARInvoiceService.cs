@@ -4358,7 +4358,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildShipmentsNumbers()
         {
-            ARInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsNumbersBehaviour(entityPM);
+            ARInvoiceShipmentsDataBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsDataBehaviour(entityPM);
             invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
         }
 

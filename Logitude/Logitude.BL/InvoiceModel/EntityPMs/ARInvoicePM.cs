@@ -100,6 +100,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
+        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description { get; set; }
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
 {
-    public class APInvoiceShipmentsNumbersBehaviour
+    public class APInvoiceShipmentsDataBehaviour
     {
         private APInvoicePM aPInvoice;
-        public APInvoiceShipmentsNumbersBehaviour(APInvoicePM aPInvoice)
+        public APInvoiceShipmentsDataBehaviour(APInvoicePM aPInvoice)
         {
             this.aPInvoice = aPInvoice;
         }
@@ -27,7 +27,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
             {
                 aPInvoice.ShipmentsNumbers = aPInvoice.MainEntityReference;
 
-                aPInvoice.MasterShipmentNumbers = aPInvoice.MainEntityReference;
+                aPInvoice.MasterShipmentNumbers = aPInvoice.MainEntityMasterShipmentNumbers;
                 aPInvoice.HouseNumbers = aPInvoice.HouseNumber;
                 aPInvoice.MasterNumbers = aPInvoice.MasterNumber;
             }

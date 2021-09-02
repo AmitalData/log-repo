@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
 {
-    public class ARInvoiceShipmentsNumbersBehaviour
+    public class ARInvoiceShipmentsDataBehaviour
     {
         private ARInvoicePM aRInvoice;
         private ARInvoiceRepository aRInvoiceRepository;
-        public ARInvoiceShipmentsNumbersBehaviour(ARInvoicePM aRInvoice)
+        public ARInvoiceShipmentsDataBehaviour(ARInvoicePM aRInvoice)
         {
             this.aRInvoice = aRInvoice;
             this.aRInvoiceRepository = new ARInvoiceRepository(aRInvoice.Tenant);
@@ -33,7 +33,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
             {
                 aRInvoice.ShipmentsNumbers = aRInvoice.MainEntityReference;
 
-                aRInvoice.MasterShipmentNumbers = aRInvoice.MainEntityReference;
+                aRInvoice.MasterShipmentNumbers = aRInvoice.MainEntityMasterShipmentNumbers;
                 aRInvoice.HouseNumbers = aRInvoice.HouseNumber;
                 aRInvoice.MasterNumbers = aRInvoice.MasterNumber;
             }
