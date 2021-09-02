@@ -388,6 +388,210 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+ 
+
+        private static string SetBankIdInUnifreightListOnServerOnly(string internalBankId)
+        {
+            var dic = new Dictionary<string, string>();
+            dic.Add("InternalBankId", internalBankId);
+            var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
+            return UnifreightListOnServerOnly;
+        }
+
+        public void DelSertPayment(
+        DeclarationPM myDeclarationPM,
+        string bankId)
+        {
+            var user = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant);
+            ICustomContext dbContext = CustomContext.GetContext(myDeclarationPM.Tenant);
+
+            var myQueryService = new DeclarationQueryService(dbContext);
+
+
+            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            if (declarationPaymentPM != null)  //@itzik M אם כבר קיימות שורות אבל אין תאריך תשלום Declaration PaymentDate המשמעות היא שלא שולם בפועל, ולכן למחוק ולכתוב מחדש לפי נתונים נוכחיים.
+
+            {
+                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                {
+                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                    {
+                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                    }
+
+                    var myDeclarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(dbContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                    myDeclarationPaymentMethodUpdateService.UpdateMulti(declarationPaymentPM.DeclarationPaymentMethods, new List<DeclarationPaymentMethodPM>(), declarationPaymentPM
+                        , true);
+                }
+                declarationPaymentPM.AutomaticPayment = 1;
+
+                declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(myDeclarationPM.Id, true, false);
+                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+            }
+
+            declarationPaymentPM = declarationPaymentPM ?? new DeclarationPaymentPM()
+            {
+                DeclarationId = myDeclarationPM.Id,
+                Tenant = myDeclarationPM.Tenant,
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+            };
+
+
+
+            declarationPaymentPM.PaymentDate = DateTime.Now;
+            declarationPaymentPM.CreatedByUserId = user;
+            declarationPaymentPM.AutomaticPayment = 1;
+            CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(myDeclarationPM.Tenant);
+            declarationPaymentPM.SignatoryIdentification =
+                 CustomsSetting.CustomsAgentId;
+            {
+
+
+                CustomBankQueryService customBankQueryService = new CustomBankQueryService(dbContext);
+
+
+                var customBank = customBankQueryService.GetSingle(bankId, false, false);
+                if (customBank == null)
+                {
+                    throw new System.Exception($"customBankQueryService.GetSingle(bankId={bankId}  return null !! - maybe clear cache on client !!!!!!!@!!!!!@@@@ ");
+                }
+
+                DeclarationPaymentMethodPM declarationPaymentMethod = new DeclarationPaymentMethodPM()
+                {
+                    Tenant = myDeclarationPM.Tenant,
+                    DeclarationId = myDeclarationPM.Id,
+                    Line = 1,
+                    SequenceNumeric = 1,
+                    MethodTypeCode = "1",
+                    Amount = myDeclarationPM.TotalTax,
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+
+                    BankCode = customBank.BankCode,
+                    BranchCode = customBank.BranchCode,
+                    PayerActivityTypeCode ="1",// customBank.PayerTypeCode,
+                    AccountNumber = customBank.AccountNumber,
+                    CustomsBranchId = customBank.CustomsBranchId
+                };
+
+                declarationPaymentPM.DeclarationPaymentMethods.Add(declarationPaymentMethod);
+            }
+
+            DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+            declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
+
+
+
+
+
+
+
+        }
+        private void AutoPayment(string decId , int tenant, string user )
+        {
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            DeclarationPM _MyDeclarationPM =declarationQueryService.GetSingle(decId, false, false);
+
+            ICustomContext dbContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+
+            CustomBankQueryService customBankQueryService = new CustomBankQueryService(_MyDeclarationPM.Tenant);
+
+            var banks = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
+
+            if (banks != null && banks.Count()>0)
+            {
+
+
+                if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
+                {
+                    DelSertPayment(_MyDeclarationPM, banks[0].Id);
+
+                }
+                else
+                {
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "APAYA",
+                        Mode = UnifreightEventMode.@new,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                        EventRemarks = "תשלום הצהרה אוטומטי"
+                    };
+
+
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        _MyDeclarationPM.Tenant,
+                      user,
+                        MyUnifreightEventParam);
+
+            
+                var requestParams = new GenericRequestParams()
+                    {
+                        LoggingEnabled = true,
+                        IsFakeResponse = true,
+                        InterfaceTypeCode = "2755",
+                        Tenant = _MyDeclarationPM.Tenant,
+                        RequestName = "Payment Request",
+                        ResponseName = "Payment Response",
+                        LoggingEntityId = _MyDeclarationPM.Id,
+                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                        SuppressSplitWR = true,
+                        LoggingEntityReference = "AutoPayment",
+                        UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
+                    };
+
+                //    MyGenericResponseObj.ApplicationId =
+                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+                }
+            }
+            else
+            {
+
+                // event
+
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = "APAYF",
+                    Mode = UnifreightEventMode.@new,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                    EventRemarks = "לא נמצא בנק ללקוח."
+            };
+              
+                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    _MyDeclarationPM.Tenant,
+                  user,
+                    MyUnifreightEventParam);
+
+
+                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(tenant);
+                DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+
+                var decRef =    declarationReferantDataQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+ 
+                if(decRef != null)
+                {
+                   // decRef.ManualPayment = true;
+                    updateService.Update(decRef,true);
+                }
+             }
+
+        }
+
+
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
@@ -395,7 +599,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
- 
+
+
+
+
+                AutoPayment(requestParams.LoggingEntityId, requestParams.Tenant, requestParams.LoggingUserId); 
+
+
+
+
+
                 DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
                 var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                 string error="";

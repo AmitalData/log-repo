@@ -32,6 +32,8 @@ using Logitude.Customs.BL.Validators;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.AmitalMessaging.Customs.CustomFile;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -102,6 +104,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     break;
                 case "DeletePending":
                     DeletePending();
+                    break;
+                case "Payment":
+                    AutoPayment();
                     break;
                 case "IsReferantAddOn":
                     CheckIsReferantAddOn();
@@ -180,7 +185,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
         }
-
         private void DeletePending()
         {
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
@@ -271,6 +275,170 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("Declaration ID is missing");
             }
         }
+
+        private static string SetBankIdInUnifreightListOnServerOnly(string internalBankId)
+        {
+            var dic = new Dictionary<string, string>();
+            dic.Add("InternalBankId", internalBankId);
+            var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
+            return UnifreightListOnServerOnly;
+        }
+
+        public void DelSertPayment(
+        DeclarationPM myDeclarationPM,
+        string bankId)
+        {
+            var user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+
+            var myQueryService = new DeclarationQueryService(dbContext);
+
+
+            var mydeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            if (declarationPaymentPM != null)  //@itzik M אם כבר קיימות שורות אבל אין תאריך תשלום Declaration PaymentDate המשמעות היא שלא שולם בפועל, ולכן למחוק ולכתוב מחדש לפי נתונים נוכחיים.
+
+            {
+                 if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                {
+                    foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
+                    {
+                        item.ChangeSetOp = ChangeSetOperation.Delete;
+                    }
+
+                    var myDeclarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+                    myDeclarationPaymentMethodUpdateService.UpdateMulti(declarationPaymentPM.DeclarationPaymentMethods, new List<DeclarationPaymentMethodPM>(), declarationPaymentPM
+                        , true);
+                }
+
+                declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(myDeclarationPM.Id, true, false);
+                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+            }
+
+            declarationPaymentPM = declarationPaymentPM ?? new DeclarationPaymentPM()
+            {
+                DeclarationId = myDeclarationPM.Id,
+                Tenant = myDeclarationPM.Tenant,
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+            };
+
+
+
+            declarationPaymentPM.PaymentDate = DateTime.Now;
+            declarationPaymentPM.CreatedByUserId = user;
+            declarationPaymentPM.AutomaticPayment = 1;
+            CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(ResolvedTenant());
+            declarationPaymentPM.SignatoryIdentification =
+                 CustomsSetting.CustomsAgentId;  
+             {
+
+
+                CustomBankQueryService customBankQueryService = new CustomBankQueryService(dbContext);
+
+
+                var customBank = customBankQueryService.GetSingle(bankId, false, false);
+                if (customBank == null)
+                {
+                    throw new System.Exception($"customBankQueryService.GetSingle(bankId={bankId}  return null !! - maybe clear cache on client !!!!!!!@!!!!!@@@@ ");
+                }
+
+                DeclarationPaymentMethodPM declarationPaymentMethod = new DeclarationPaymentMethodPM()
+                {
+                    Tenant = myDeclarationPM.Tenant,
+                    DeclarationId = myDeclarationPM.Id,
+                    Line = 1,
+                    SequenceNumeric = 1,
+                    MethodTypeCode = "1",
+                    Amount = myDeclarationPM.TotalTax,
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+
+                    BankCode = customBank.BankCode,
+                    BranchCode = customBank.BranchCode,
+                    PayerActivityTypeCode = customBank.PayerTypeCode,
+                    AccountNumber = customBank.AccountNumber,
+                    CustomsBranchId = customBank.CustomsBranchId
+                };
+
+                declarationPaymentPM.DeclarationPaymentMethods.Add(declarationPaymentMethod);
+            }
+      
+            DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+            declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
+
+
+
+
+
+
+
+        }
+        private void AutoPayment()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+            CustomBankQueryService customBankQueryService = new CustomBankQueryService(ResolvedTenant());
+
+            var banks = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
+
+            if (banks != null)
+            {
+
+
+                if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
+                {
+                    DelSertPayment(_MyDeclarationPM, banks[0].BankCode);
+
+                }
+                else
+                {
+                    var requestParams = new GenericRequestParams()
+                    {
+                        LoggingEnabled = true,
+                        IsFakeResponse = true,
+                        InterfaceTypeCode = "2755",
+                        Tenant = ResolvedTenant(),
+                        RequestName = "Payment Request",
+                        ResponseName = "Payment Response",
+                        LoggingEntityId = _MyDeclarationPM.Id,
+                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                        SuppressSplitWR = true,
+                        LoggingEntityReference = "AutoPayment",
+                        UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
+                    };
+
+                    MyGenericResponseObj.ApplicationId =
+                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+                }
+            }
+            else
+            {
+
+                // event
+
+
+
+            }
+
+        }
+
 
         private void SendDeclarationStatusRequest()
         {
