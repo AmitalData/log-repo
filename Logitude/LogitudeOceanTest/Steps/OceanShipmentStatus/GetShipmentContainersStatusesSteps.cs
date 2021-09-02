@@ -11,31 +11,31 @@ namespace Logitude.OceanTest.Steps.OceanShipmentStatus
     [Binding]
     public class GetShipmentContainersStatusesSteps
     {
-        public OceanContext _oceanContext { get; set; }
-        public OceanInsightsStatusesServices _oceanInsightsStatusesServices { get; set; }
-        public CheckerService _checkerService { get; set; }
+        public OceanContext oceanContext { get; set; }
+        public OceanInsightsStatusesServices oceanInsightsStatusesServices { get; set; }
+        public CheckerService checkerService { get; set; }
         public GetShipmentContainersStatusesSteps(OceanContext oceanContext, OceanInsightsStatusesServices oceanInsightsStatusesServices, CheckerService checkerService)
         {
-            _oceanContext = oceanContext;
-            _oceanInsightsStatusesServices = oceanInsightsStatusesServices;
-            _checkerService = checkerService;
+            this.oceanContext = oceanContext;
+            this.oceanInsightsStatusesServices = oceanInsightsStatusesServices;
+            this.checkerService = checkerService;
         }
         [Given(@"Read the file ""(.*)"" shipment data response")]
         public void GivenReadTheFileShipmentDataResponse(string XMLFileName)
         {
-            _oceanContext.ShipmentContainerSimulator = _oceanInsightsStatusesServices.CreateShipmentContainerSimulatorForShipment(XMLFileName);
+            oceanContext.ShipmentContainerSimulator = oceanInsightsStatusesServices.CreateShipmentContainerSimulatorForShipment(XMLFileName);
         }
 
         [When(@"get Shipment status request")]
         public void WhenGetShipmentStatusRequest()
         {
-            _oceanContext.ShipmentContainerSimulator = APICaller.CallPost<ShipmentContainerSimulator>(_oceanContext.ShipmentContainerSimulator, Urls.ShipmentContainersWebServiceController, UserTenant.Token)?.Data;
+            oceanContext.ShipmentContainerSimulator = APICaller.CallPost<ShipmentContainerSimulator>(oceanContext.ShipmentContainerSimulator, Urls.ShipmentContainersWebServiceController, UserTenant.Token)?.Data;
         }
 
         [Then(@"The status of the containers in the shipment should be changed successfully")]
         public void ThenTheStatusOfTheContainersInTheShipmentShouldBeChangedSuccessfully()
         {
-            _checkerService.CheckContainerStatuses(_oceanContext.ShipmentContainerSimulator);
+            checkerService.CheckContainerStatuses(oceanContext.ShipmentContainerSimulator);
         }
     }
 }
