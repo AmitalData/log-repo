@@ -29,6 +29,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 CargoIdentifierKey1 = a.CargoIdentifierKey1,
                                                 CargoIdentifierKey2 = a.CargoIdentifierKey2,
                                                 CargoIdentifierKey3 = a.CargoIdentifierKey3,
+                                                CargoTypeCode = a.CargoTypeCode,
                                             });
             return query;
 		}
