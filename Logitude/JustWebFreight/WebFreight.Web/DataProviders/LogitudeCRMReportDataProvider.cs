@@ -9,19 +9,28 @@ namespace WebFreight.Web.DataProviders
     {
         public LogitudeCRMReportDataProvider()
         {
-            LogitudeCRMReports = new List<LogitudeCRMReport>();
+            Customers = new List<CustomerItem>();
         }
 
-        public List<LogitudeCRMReport> LogitudeCRMReports { get; set; }
-
+        public List<CustomerItem> Customers { get; set; }
+        public bool ShowNet { get; set; }
+        public int ResellerCommission { get; set; }
+        public int NumberOfUsers { get; set; }
+        public decimal AveragePrice { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int OpportunitiesNumberOfUsers { get; set; }
+        public decimal OpportunitiesTotal { get; set; }
+        public decimal OpportunitiesTotalNet { get; set; }
+        public decimal TotalNetBeforeYear { get; set; }
+        public decimal TotalNet { get; set; }
     }
 
 
-    public class LogitudeCRMReport
+    public class CustomerItem
     {
-        public LogitudeCRMReport()
+        public CustomerItem()
         {
-            Periods = new List<OpportunityPeriod>();
+            OpportunityPeriods = new List<OpportunityPeriod>();
         }
 
         public string ClientId { get; set; }
@@ -29,21 +38,20 @@ namespace WebFreight.Web.DataProviders
         public string ClientName { get; set; }
         public string Reseller { get; set; }
         public string CountryName { get; set; }
-
         public string CurrencyCode { get; set; }
         public int? ResellerCommission { get; set; }
-        public int? TenantManagementNumberOfUsers { get; set; }
-        public decimal? TenantManagementAveragePrice { get; set; }
-        public decimal? TenantManagementTotalPrice { get; set; }
-        public List<LogitudeCRMReportOpportunity> Opportunities { get; set; }
+        public int? NumberOfUsers { get; set; }
+        public decimal? AveragePrice { get; set; }
+        public decimal? TotalPrice { get; set; }
+        public List<OpportunityItem> Opportunities { get; set; }
         public int? HasError { get; set; }
         public decimal? TotalNetBeforeYear { get; set; }
-        public List<OpportunityPeriod> Periods { get; set; }
+        public List<OpportunityPeriod> OpportunityPeriods { get; set; }
         public decimal? TotalNet { get; set; }
 
     }
 
-    public class LogitudeCRMReportOpportunity
+    public class OpportunityItem
     {
         public int? NumberOfUsers { get; set; }
         public decimal? Total { get; set; }
@@ -58,6 +66,7 @@ namespace WebFreight.Web.DataProviders
         }
 
         public string PeriodName { get; set; }
+        public decimal Total { get; set; }
         public List<OpportunityPeriodSummary> OpportunityPeriodSummaries { get; set; }
     }
 
@@ -68,6 +77,5 @@ namespace WebFreight.Web.DataProviders
         public decimal? NewIncome { get; set; }
 
     }
-
 
 }

@@ -84,10 +84,5 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return entityPM;
         }
 
-        public List<TenantManagementLicense> GetForTenantNumbers(List<string> tenantNumbers)
-        {
-            return repository.context.TenantManagementLicenses.Where(a => tenantNumbers.Contains(a.Tenant.ToString())).ToList();
-        }
-
     }
 }

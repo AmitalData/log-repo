@@ -92,7 +92,6 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.FilterdOpportunityTypeList = newSource;
     }
 
-
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.ExchangeRate == null) {

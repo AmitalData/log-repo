@@ -996,7 +996,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                  select new OpportunityDetails()
                                                                  {
                                                                      CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
-                                                                     ResellerId = a.Field2,
+                                                                     ResellerId = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
                                                                      OpportunityTypeId = a.OpportunityTypeId,
                                                                      OpportunityTypeCode = opportunityType.Code,
                                                                      IsCancelled = a.IsCancelled,
@@ -1005,27 +1005,27 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                      ClientId = a.Customer != null ? a.Customer.Id : null,
                                                                      TenantNumber = a.Customer != null ? a.Customer.ReceivablesAccountingCard : null,
                                                                      ClientName = a.Customer != null ? a.Customer.EnglishName : null,
-                                                                     Reseller = a.Field1,
+                                                                     Reseller = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
                                                                      CountryName = a.Customer != null ? a.Customer.CountryName : null,
                                                                      NumberOfUsers = a.NumberOfShipments,
                                                                      Field4 = a.Field4,
-                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : a.OpportunityTypeId == "N" ? "1" : null
+                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : opportunityType.Code == "N" ? "1" : null
 
                                                                  });
 
             if (!string.IsNullOrEmpty(logitudeCRMReportFilter.CustomerStatus))
             {
-                opportunityDetails.Where(d => d.CustomerStatusCode == logitudeCRMReportFilter.CustomerStatus);
+                opportunityDetails = opportunityDetails.Where(d => d.CustomerStatusCode == logitudeCRMReportFilter.CustomerStatus);
             }
 
             if (!string.IsNullOrEmpty(logitudeCRMReportFilter.ResellerId))
             {
-                opportunityDetails.Where(d => d.ResellerId == logitudeCRMReportFilter.ResellerId);
+                opportunityDetails = opportunityDetails.Where(d => d.ResellerId == logitudeCRMReportFilter.ResellerId);
             }
 
             if (logitudeCRMReportFilter.OpportunityTypes != null && logitudeCRMReportFilter.OpportunityTypes.Count > 0)
             {
-                opportunityDetails.Where(d => logitudeCRMReportFilter.OpportunityTypes.Contains(d.OpportunityTypeId));
+                opportunityDetails = opportunityDetails.Where(d => logitudeCRMReportFilter.OpportunityTypes.Contains(d.OpportunityTypeId));
             }
 
             return opportunityDetails.ToList();

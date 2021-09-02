@@ -39,6 +39,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMReport;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -1245,8 +1246,8 @@ namespace WebFreight.Web.Helpers
                     }
                 case "LOCR":
                     {
-                        LogitudeCRMReportService myDataService = new LogitudeCRMReportService(filters, reportFliter.tenant);
-                        dataProvider = myDataService.GetData();
+                        LogitudeCRMReportDataProviderService myDataService = new LogitudeCRMReportDataProviderService(filters, reportFliter.tenant);
+                        dataProvider = myDataService.Load();
                         break;
                     }
                     #endregion
@@ -1942,7 +1943,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(LogitudeCRMReportDataProvider));
                         LogitudeCRMReportDataProvider reportDataProvider = (LogitudeCRMReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
-                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "LOCR", Name = "LogitudeCRMReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Logitude CRM Report", Name = "LogitudeCRMReportDataProvider", BusinessObjectValue = reportDataProvider };
 
                         break;
                     }
