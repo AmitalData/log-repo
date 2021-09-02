@@ -3254,12 +3254,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="PaymentRequestDateTime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

@@ -683,7 +683,7 @@ namespace WebFreight.Web.WcfApi
 
 
                     #region PaymentRequestDateTime
-                    PaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
+                    MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
                     #endregion  
 
                     if (response.HasError)
@@ -911,7 +911,7 @@ namespace WebFreight.Web.WcfApi
 
         }
 
-        private void PaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
+        private void MapPaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
         {
             Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
             if (entityPM.PaymentRequestDateTime != null)
