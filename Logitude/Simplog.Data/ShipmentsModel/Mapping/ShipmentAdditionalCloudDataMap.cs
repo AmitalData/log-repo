@@ -76,7 +76,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.GatepassDocumentsReady).HasColumnName("GatepassDocumentsReady");
             this.Property(t => t.GoodsClassification).HasColumnName("GoodsClassification");
 
-
+            this.Property(t => t.PaymentRequestDateTime).HasColumnName("PaymentRequestDateTime");
             this.HasRequired(t => t.Shipment);
 
         }

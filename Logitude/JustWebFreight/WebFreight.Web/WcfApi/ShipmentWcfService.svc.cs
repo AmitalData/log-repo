@@ -92,8 +92,8 @@ namespace WebFreight.Web.WcfApi
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
                     CountryRepository countryRepository = new CountryRepository(commoncontext);
                     AddressRepository addressRepository = new AddressRepository(commoncontext);
-                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext); 
-
+                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext);
+                    ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
 
                     // ???????????
                     //"system@tenant1.com"
@@ -679,6 +679,11 @@ namespace WebFreight.Web.WcfApi
 
                     #region ForwarderPartner
                     MapForwarderPartnert(entityPM, cardsReporistory);
+                    #endregion
+
+
+                    #region PaymentRequestDateTime
+                    PaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
                     #endregion  
 
                     if (response.HasError)
@@ -905,6 +910,28 @@ namespace WebFreight.Web.WcfApi
 
 
         }
+
+        private void PaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
+        {
+            Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+            if (entityPM.PaymentRequestDateTime != null)
+            {
+                ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
+              
+                if (shipmentAdditionalCloudData != null)
+                {
+                    UpdateShipmentAdditionalCloudData(entityPM, shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
+                }
+            }
+        }
+
+        private static void UpdateShipmentAdditionalCloudData(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        {
+            shipmentAdditionalCloudData.PaymentRequestDateTime = entityPM.PaymentRequestDateTime;
+            shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
+            shipmentAdditionalCloudDataRepository.SubmitChanges();
+        }
+
         private void MapForwarderPartnert(ShipmentPM entityPM, CardRepository cardsReporistory)
         {
            if (entityPM.ForwarderPartnerId != null)

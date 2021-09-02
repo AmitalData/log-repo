@@ -2135,6 +2135,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssginedToCustomsAgentDate { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? PaymentRequestDateTime { get; set; }
 
         #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

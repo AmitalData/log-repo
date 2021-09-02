@@ -46,6 +46,7 @@
       <xs:element minOccurs="0" name="AsAgreedOtherCharges" type="xs:boolean" />
       <xs:element minOccurs="0" name="BasicFreightId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasketId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillingStatusId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BookingConfirmationNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BookingNumberOfPackages" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="BranchId" nillable="true" type="xs:string" />
@@ -363,6 +364,7 @@
       <xs:element minOccurs="0" name="OperationalCloseDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="OperationalClosedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OperationalDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OperationalStatusId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrderChargeableWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="OrderVolumetricWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Origin" nillable="true" type="xs:string" />
