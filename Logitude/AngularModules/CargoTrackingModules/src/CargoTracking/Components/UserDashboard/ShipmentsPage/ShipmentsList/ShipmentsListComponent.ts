@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -24,7 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent implements AfterViewInit
+export class ShipmentsListComponent implements AfterViewInit, OnInit
 {
 
 
@@ -80,11 +80,12 @@ export class ShipmentsListComponent implements AfterViewInit
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
+    ngOnInit(): void {
+        this.GetPreservedToggleFiltersFromSessionInfo();
+    }
     ngAfterViewInit(): void
     {
         this.GetCompanyLoginsFromCache();
-        this.GetPreservedToggleFiltersFromSessionInfo();
-
     }
 
     private GetLastSearchResult() {
