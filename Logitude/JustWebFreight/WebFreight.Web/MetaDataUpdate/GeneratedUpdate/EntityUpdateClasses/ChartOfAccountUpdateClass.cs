@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChartOfAccountUpdateClass
    {  		
-		public const string HashString = "921879cc8321b694a1c36c03987f0fd2";
+		public const string HashString = "e6327910353ad3d6c6905fe69e722632";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -996,6 +996,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ChartOfAccountTextCode_ChartOfAccountsOWrongParentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.WrongParentType", DefaultText = "The type of parent chart of account differs from this chart of account",LocalDefaultText = @"סוג קבוצת מאזן שונה מסוג של קוד אב", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ChartOfAccountTextCode_ChartOfAccountsOParentIsChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.ParentIsChild", DefaultText = "Can't connect to this account since it's already defined as a  child for the current account",LocalDefaultText = @"לא ניתן לקשר כרטיס זה כאב מכיוון שהוא מוגדר כבר כבן לכרטיס", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOSecurityLevelErrorMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.SecurityLevelErrorMessage", DefaultText = "Can't run the report for this specific GLAccount due to insufficient security clearance",LocalDefaultText = @"לא ניתן להציג את נתוני הדוח מכיון שלמשתמש אין הרשאה לקבוצת המאזן שנבחרה", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
