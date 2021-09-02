@@ -39,17 +39,17 @@ namespace Logitude.OceanTest.Services
         }
         public bool CheckIfCommunicationLogsAddSuccessfullyForContener()
         {
-            var filters = GetCommunicationLogs("1-18816", OceanData.ShipmentPM.ShipmentPackages.First().ContainerEntityId);
+            var filters = CreateCommunicationLogFilter("1-18816", OceanData.ShipmentPM.ShipmentPackages.First().ContainerEntityId);
             var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
             return new CheckerService().ValidateCommunicationLogs(communicationLogs);
         }
         public bool CheckIfCommunicationLogsAddSuccessfullyForShipment()
         {
-            var filters = GetCommunicationLogs("1-4", OceanData.ShipmentPM.Id);
+            var filters = CreateCommunicationLogFilter("1-4", OceanData.ShipmentPM.Id);
             var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
             return new CheckerService().ValidateCommunicationLogs(communicationLogs);
         }
-        public ApiQueryFilters GetCommunicationLogs(string objectTableId, string EntityId)
+        public ApiQueryFilters CreateCommunicationLogFilter(string objectTableId, string EntityId)
         {
             return new ApiQueryFiltersBuilder()
                 .PageIndex(0)

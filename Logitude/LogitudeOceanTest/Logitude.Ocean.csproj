@@ -144,10 +144,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MetaData\Sample1.xml">
+    <Content Include="MetaData\GetContainerStatusesFeatureData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MetaData\Shipment.xml">
+    <Content Include="MetaData\GetShipmentContainersStatusesFeatureData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

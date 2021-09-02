@@ -40,5 +40,11 @@ namespace Logitude.ShipmentTests.Models
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public double? GrossWeight { get; set; }
+        public string MainCarriageCarrierId { get; set; }
+        public string ShipmentTypeId { get; set; }
+
+        public string MainCarriageCarrierCode { get; set; }
+        public string Master { get; set; }
+        public string LongMaster { get; set; }
     }
 }
