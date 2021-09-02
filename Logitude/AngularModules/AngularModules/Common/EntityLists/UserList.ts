@@ -44,6 +44,7 @@ export class UserList {
 		DistributorCode: string;
 		PersonalId: string;
 		IsTwoFactorAuthenticationEnabled: boolean;
+		SecurityLevel: number;
 		DocumentFilingInbox: string;
 		EmployeeGroupCustomFilter: string;
 		ShowLocalNameInLOV: boolean;

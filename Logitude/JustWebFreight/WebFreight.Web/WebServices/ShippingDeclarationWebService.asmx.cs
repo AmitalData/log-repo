@@ -2656,6 +2656,7 @@ namespace WebFreight.Web.WebServices
                             }
 
                             myDataProvider.EmptyContainer = myEmptyContainer;
+                            myDataProvider.EmptyContainerRef = myFirstPickup.EmptyPickupDepotReference;
                             myDataProvider.EmptyContainerName = myEmptyContainerName;
                             myDataProvider.EmptyContainerAddress = myEmptyContainerAddress;
                         }

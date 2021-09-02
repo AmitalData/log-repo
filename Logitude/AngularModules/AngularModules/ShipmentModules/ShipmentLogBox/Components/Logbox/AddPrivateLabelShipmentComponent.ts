@@ -379,7 +379,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
-        if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.PushErrorMessage("Reference");
         }
 

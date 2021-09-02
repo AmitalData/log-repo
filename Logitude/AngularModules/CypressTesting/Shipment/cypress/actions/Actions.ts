@@ -309,7 +309,7 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 //#endregion
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
-    cy.Click(ShipmentSelectors.PackagesTab, null)
+    cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
     // for (let i = 0; i < packagesDetails.length; i++) {
     //     packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
     // }

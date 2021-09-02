@@ -255,11 +255,14 @@
                                 <div class="value truncateText">{{SupplierOrClientValue}}</div>
 
 
-                                <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
-                                <div class="value truncateText">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
-                                    <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
+
+
+
+                                <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
+                                <div class="value truncateText hide-mobile">
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}}
                                 </div>
+                                    <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
 
                             </div>
                         </div>
@@ -317,7 +320,25 @@
                         <div class="column col-md-1 status" style="width: 12%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
+
+                                <div class="value truncateText">
+
+
+                                    <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
+                                        <div tooltip-trigger>
+                                            <div class="icon-danger">!</div>
+                                        </div>
+                                        <div tooltip-body>
+                                            <div style="text-align: right;">
+                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'dd/MM/yyyy, HH:mm'}}
+                                                <br>
+                                                {{shipment.CurrentMilestoneExceptions.substring(shipment.CurrentMilestoneExceptions.indexOf(',')+1)}}
+                                            </div>
+                                        </div>
+                                    </app-tooltip>
+                                        {{ shipment.CurrentMilestoneName }}
+                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                </div>
 
 
                                 <div class="subtitle hide-mobile">Last Updated</div>

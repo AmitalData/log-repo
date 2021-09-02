@@ -412,4 +412,11 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             this.EntityPM.AdditionalPackagesOnly = value;
         }
     }
+
+    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
+    public set SecurityLevel(value: number) {
+        if (this.EntityPM.SecurityLevel != value) {
+            this.EntityPM.SecurityLevel = value;
+        }
+    }
 }
