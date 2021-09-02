@@ -401,20 +401,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
-            
-            var settings = GetFullAccountingSettings(tenant);
-            var loggedUser = GetLoggedUser(tenant);
 
-
-            if (settings.IsSecurityLevelActivated && gLAccountPM.ChartOfAccountSecurityLevel > loggedUser.SecurityLevel)
+            if (!CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
                 return null;
 
             return gLAccountPM;
         }
-        void GetLoggedUser(int tenant)
+
+        private bool CheckIfUserHasSecurityAccessToGLAccount(int tenant, int? chartOfAccountSecurityLevel)
         {
-            UserQuery userQuery = new UserQuery(tenant);
-            userQuery.GetSinglePMByEmail
+            var settings = GetFullAccountingSettings(tenant);
+            var loggedUser = GetLoggedUser(tenant);         
+
+            bool hasSecurityAccess = 
+                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel <= loggedUser.SecurityLevel)
+                || (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel == null)
+                || !settings.IsSecurityLevelActivated;
+            return hasSecurityAccess;
+        }
+
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            return loggedUser;
         }
         public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
         {

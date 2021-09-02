@@ -44,9 +44,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
+import { GLAccountSecurityLevelChecker } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 @Component({
-    
+
 
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
@@ -54,7 +55,7 @@ import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
     providers: [ListComponentArgs , EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
-export class ListComponent implements OnInit, AfterViewInit { 
+export class ListComponent implements OnInit, AfterViewInit {
     public IsDemoTenant: boolean = false;
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
@@ -182,7 +183,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         return methodName;
 
-       
+
     }
     ApplyPreDefinedFilters() {
         if (this.SelectedQuery != null) {
@@ -472,15 +473,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     constructor(public _ListComponentArgs: ListComponentArgs,private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
-       
+
         if (this.CurrentSession == null) {
             this.ListComponentId = "ListComponentId_-1_-1";
-           
+
         }
 
         else {
             this.ListComponentId = "ListComponentId_" + this.CurrentSession.LogitudeGridHelper.GetLListComponentIndexId();
-           
+
         }
 
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
@@ -889,9 +890,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 });
                         }
                     }
-                    
+
                 }
-              
+
             }
 
             else {
@@ -1002,8 +1003,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //    if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
     //        return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
     //    }
-    //    return allQueries; 
-    
+    //    return allQueries;
+
     //}
 
 
@@ -1024,7 +1025,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         if(!this.ObjectTable.IsClosed){
             this.Queries = allQueries.filter(x =>  FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) );
-        
+
         }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
@@ -1207,7 +1208,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.UniqueCode;
-          
+
             this.MethodName = this.GetMethodName();
 
 
@@ -1670,7 +1671,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             MyFilters.DontApplyVirtualization = this.DontApplyVirtualization;
         } else MyFilters.PageSize = take;
 
-       
+
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
@@ -1735,7 +1736,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             break;
                         }
                 }
-                
+
                 if (myObjectTableName != "TicketEscalation") {
 
                     this.isEditControlOpened = true;
@@ -2323,7 +2324,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                             });
                             */
- 
+
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
@@ -2367,7 +2368,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 " הצגת מסך :הזנת תיק כללי עמילות מכס");
 
                         }
- 
+
                         else {
                             alert("ShowCustomFileOPCFromDeclaration");
                         }
@@ -2392,6 +2393,40 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             this.isEditControlOpened = false;
                             this.OnBackFromEdit(selectedEntityId, $event);
                         });
+                    }
+                    else if (myObjectTableName == "GLAccount") {
+
+                        var hasAccess = GLAccountSecurityLevelChecker.CheckLevel();
+
+                        if(hasAccess){
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({
+                                    EntityId: selectedEntityId,
+                                    ObjectTableName: myObjectTableName,
+                                    BackButtonLabel: label,
+                                    QuerySection: this.MenuTableQuerySection
+                                });
+                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                });
+                                this.DestroyMe = true;
+                            });
+                        }
+                        else
+                        {
+                            this.isEditControlOpened = false;
+                            var messageWindow = new MessageWindow();
+                            messageWindow.Width = 460;
+                            messageWindow.Height = 190;
+                            messageWindow.Title =  TextCodeTranslator.Translate("General.O.Warning");
+                            messageWindow.ShowIcon = false;
+                            messageWindow.Show(TextCodeTranslator.Translate("GLAccount.O.SecurityLevelHiddenItem"));
+                            return;
+                        }
                     }
                     else {
 
@@ -2458,9 +2493,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     } else {
                         if(this.MyLogGridComponent){this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
                         if(this.MyLogGridComponentV2){this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });}
-                        
+
                     }
-                    
+
                 }
 
                 //this.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
@@ -2492,7 +2527,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //    //    this.ReattachToDetection = true;
     //    //}
     //}
-    
+
     BackButtonClicked() {
 
         this.DestroyListControl();
@@ -2583,7 +2618,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                 if (useLocal == true ) {
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-                  
+
                         var ChangedText = GeneralText.split('%')[0];
                         var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                         var FinalText = NewText + " " + ChangedText;
@@ -2591,7 +2626,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         FinalText = "New" + " " + NewText;
                     }
                     this.NewEntityButtonLabel = FinalText;//TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
-                    
+
                 }
                 else {
                     this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
@@ -2682,11 +2717,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 this.IsNewEntityButtonVisible = isVisible;
                             });
 
-                          
+
                             break;
                         }
 
-                        
+
 
                     case "CustomerTenantAccess":
                         {
@@ -2701,7 +2736,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
 
                     case "Airline":
-                    case "ShippingLine":                        
+                    case "ShippingLine":
                         {
                             isVisible = false;
                             break;
@@ -2722,7 +2757,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         let b1=FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
         let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
 
-        return b1 && b2; 
+        return b1 && b2;
     }
     AddNewEntity() {
         if (this.SelectedQuery != null) {
@@ -2774,7 +2809,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             this.HaveFeatureNewExportDeclararion) {
                             this.RunNewExportDeclaration();
                         }
-                          
+
                         else {
                             this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                         }
@@ -2793,10 +2828,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
 
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
-                            this.RunNewCustomsFileWizard(); 
+                            this.RunNewCustomsFileWizard();
                         }
 
-                        
+
                         else {
 
                             this.RunNewGenaricEntity();
@@ -2975,7 +3010,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Width = 400;
                         logWindow.Height = 200;
                         break;
-                    }    
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -3081,7 +3116,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "OSC";
                             break;
                         }
-                            
+
                         case "Tariff.Ocean FCL Freight Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
                             windowArgs.TypeCode = "OFC";
@@ -3094,7 +3129,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             break;
                         }
                     }
-                 
+
                     logWindow.WindowArgs = windowArgs;
                 }
 
@@ -3144,7 +3179,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
     }
- 
+
     private RunNewGenaricEntity() {
 
         var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
@@ -3176,7 +3211,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
             }
 
-         
+
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
             logWindow.Title = windowTitle;
@@ -3460,7 +3495,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
-                    EntityPM: entityPM, ObjectTableName: 'UserDefinedReport' 
+                    EntityPM: entityPM, ObjectTableName: 'UserDefinedReport'
                 });
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     //this.LoadAllScreenData();
@@ -3617,7 +3652,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
               ObjectTableName: this.ObjectTableName,
               BackButtonLabel: label,
               NavigationIds: ids,
-              
+
             });
             cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
               this.isEditControlOpened = false;
@@ -3644,7 +3679,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.sortColid = $event.id;
     }
 
-    HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue 
+    HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue
         switch (this.ObjectTable.Name) {
             case "Customs.DeclarationReferantData":
                 return true;
