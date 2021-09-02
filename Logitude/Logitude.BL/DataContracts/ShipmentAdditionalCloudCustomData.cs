@@ -38,6 +38,7 @@ namespace Logitude.BL.DataContracts
         public string CargoIdentifier2 { get; set; }
         public string CargoIdentifier3 { get; set; }
 
+        public DateTime? PaymentRequestDateTime { get; set; }
 
         //public string VersionId { get; set; }
 
