@@ -3,6 +3,7 @@ export class RootContext
 {
 
     public static AppComponent: any;
+    public static ShipmentsScrollPosition: number = 0;
 
     public static StartBusyIndicator(myText: string)
     {
