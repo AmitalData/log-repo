@@ -327,6 +327,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             shipmentPickUpPM.ETA = shipmentPM.MainCarriageETA;
             shipmentPickUpPM.ATD = shipmentPM.MainCarriageATD;
             shipmentPickUpPM.ATA = shipmentPM.MainCarriageATA;
+            shipmentPickUpPM.FromPortId = shipmentPM.MainCarriageFromPortId;
+            shipmentPickUpPM.ToPortId = shipmentPM.MainCarriageToPortId;
+            shipmentPickUpPM.FromAddressCity = shipmentPM.InlandDomesticFromCity;
+            shipmentPickUpPM.ToAddressCity = shipmentPM.InlandDomesticToCity;
+            shipmentPickUpPM.FromAddressCountryId = shipmentPM.InlandDomesticFromCountryId;
+            shipmentPickUpPM.ToAddressCountryId = shipmentPM.InlandDomesticToCountryId;
+            shipmentPickUpPM.FromAddressZipCode = shipmentPM.InlandDomesticFromZipCode;
+            shipmentPickUpPM.ToAddressZipCode = shipmentPM.InlandDomesticToZipCode;
+            shipmentPickUpPM.FromAddress = shipmentPM.MainCarriageFromPortAddress;
+            shipmentPickUpPM.ToAddress = shipmentPM.MainCarriageToPortAddress;
+            shipmentPickUpPM.PickUpDeliveryFromTypeCode = shipmentPM.InlandDomesticFromTypeCode;
+            shipmentPickUpPM.PickUpDeliveryToTypeCode = shipmentPM.InlandDomesticToTypeCode;
         }
 
         private void MapDeliveryFieldsFromStandaloneShipment(ShipmentDeliveryPM shipmentDeliveryPM)
@@ -345,6 +357,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             shipmentDeliveryPM.ETA = shipmentPM.MainCarriageETA;
             shipmentDeliveryPM.ATD = shipmentPM.MainCarriageATD;
             shipmentDeliveryPM.ATA = shipmentPM.MainCarriageATA;
+            shipmentDeliveryPM.FromPortId = shipmentPM.MainCarriageFromPortId;
+            shipmentDeliveryPM.ToPortId = shipmentPM.MainCarriageToPortId;
+            shipmentDeliveryPM.FromAddressCity = shipmentPM.InlandDomesticFromCity;
+            shipmentDeliveryPM.ToAddressCity = shipmentPM.InlandDomesticToCity;
+            shipmentDeliveryPM.FromAddressCountryId = shipmentPM.InlandDomesticFromCountryId;
+            shipmentDeliveryPM.ToAddressCountryId = shipmentPM.InlandDomesticToCountryId;
+            shipmentDeliveryPM.FromAddressZipCode = shipmentPM.InlandDomesticFromZipCode;
+            shipmentDeliveryPM.ToAddressZipCode = shipmentPM.InlandDomesticToZipCode;
+            shipmentDeliveryPM.FromAddress = shipmentPM.MainCarriageFromPortAddress;
+            shipmentDeliveryPM.ToAddress = shipmentPM.MainCarriageToPortAddress;
+            shipmentDeliveryPM.PickUpDeliveryFromTypeCode = shipmentPM.InlandDomesticFromTypeCode;
+            shipmentDeliveryPM.PickUpDeliveryToTypeCode = shipmentPM.InlandDomesticToTypeCode;
         }
 
         private void MapPickUpDeliveryFieldsFromStandaloneShipment(ShipmentPickUpDelivery shipmentPickUpDelivery)
@@ -362,6 +386,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             shipmentPickUpDelivery.ETA = shipmentPM.MainCarriageETA;
             shipmentPickUpDelivery.ATD = shipmentPM.MainCarriageATD;
             shipmentPickUpDelivery.ATA = shipmentPM.MainCarriageATA;
+            shipmentPickUpDelivery.FromPortId = shipmentPM.MainCarriageFromPortId;
+            shipmentPickUpDelivery.ToPortId = shipmentPM.MainCarriageToPortId;
+            shipmentPickUpDelivery.FromAddressCity = shipmentPM.InlandDomesticFromCity;
+            shipmentPickUpDelivery.ToAddressCity = shipmentPM.InlandDomesticToCity;
+            shipmentPickUpDelivery.FromAddressCountryId = shipmentPM.InlandDomesticFromCountryId;
+            shipmentPickUpDelivery.ToAddressCountryId = shipmentPM.InlandDomesticToCountryId;
+            shipmentPickUpDelivery.FromAddressZipCode = shipmentPM.InlandDomesticFromZipCode;
+            shipmentPickUpDelivery.ToAddressZipCode = shipmentPM.InlandDomesticToZipCode;
+            shipmentPickUpDelivery.FromAddress = shipmentPM.MainCarriageFromPortAddress;
+            shipmentPickUpDelivery.ToAddress = shipmentPM.MainCarriageToPortAddress;
+            shipmentPickUpDelivery.PickUpDeliveryFromTypeCode = shipmentPM.InlandDomesticFromTypeCode;
+            shipmentPickUpDelivery.PickUpDeliveryToTypeCode = shipmentPM.InlandDomesticToTypeCode;
         }
 
         private void HandelStandalonePackagesChangeSets(string shipmentPickUpDeliveryId)

@@ -1045,15 +1045,15 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PART'" (Checked)="InlandDomesticFromTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PART'" (Checked)="InlandDomesticFromTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
                                                                                                         </td>
 
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PORT'" (Checked)="InlandDomesticFromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PORT'" (Checked)="InlandDomesticFromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
                                                                                                         </td>
 
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'CASL'" (Checked)="InlandDomesticFromTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'CASL'" (Checked)="InlandDomesticFromTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
@@ -1223,15 +1223,15 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PART'" (Checked)="InlandDomesticToTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PART'" (Checked)="InlandDomesticToTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
                                                                                                         </td>
 
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PORT'" (Checked)="InlandDomesticToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PORT'" (Checked)="InlandDomesticToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
                                                                                                         </td>
 
                                                                                                         <td>
-                                                                                                            <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'CASL'" (Checked)="InlandDomesticToTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="IsInlandDomesticFromToEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'CASL'" (Checked)="InlandDomesticToTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>

@@ -97,7 +97,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     get IsCreateStandaloneShipmentEnabled() {
         var isEnabled: boolean = false;
 
-        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+        if (this.EntityPM.FullResponsibility) {
             isEnabled = true;
         }
 
@@ -801,8 +801,16 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "Shipments Search";
         var args: any = {};        
         args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+        args.FromType = this.EntityPM.PickUpDeliveryFromTypeCode;
+        args.ToType = this.EntityPM.PickUpDeliveryToTypeCode;
         args.FromPartnerId = this.EntityPM.FromPartnerCardId;
         args.ToPartnerId = this.EntityPM.ToPartnerCardId;
+        args.FromPortId = this.EntityPM.FromPortId;
+        args.ToPortId = this.EntityPM.ToPortId;        
+        args.FromCity = this.EntityPM.FromAddressCity;
+        args.ToCity = this.EntityPM.ToAddressCity;
+        args.FromCountryId = this.EntityPM.FromAddressCountryId;
+        args.ToCountryId = this.EntityPM.ToAddressCountryId;
         args.CarrierId = this.EntityPM.CarrierId;
         args.NumberOfPackages = this.EntityPM.ShipmentPickUpDeliveryPackages != null ? this.EntityPM.ShipmentPickUpDeliveryPackages.length : 0;
         logWindow.WindowArgs = args;
