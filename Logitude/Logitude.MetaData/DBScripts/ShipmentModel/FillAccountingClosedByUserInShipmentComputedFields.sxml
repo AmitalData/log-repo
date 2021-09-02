@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" TargetTableName="ShipmentComputedFields">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
 
 declare @Tenant as int
@@ -21,9 +21,6 @@ BEGIN
 	set @EventTypeId = (select Id from EventTypes where Code = 'ACCL' AND Tenant = @Tenant AND ObjectTableId in (@ObjectTableId))
 	if (@EventTypeId is not null)
 	begin
-		if exists (select * from TraceEvents where Tenant = @Tenant AND EventTypeId = @EventTypeId AND ObjectTableId in (@ObjectTableId))
-		begin
-
 			DECLARE TraceEventsCursor CURSOR READ_ONLY
 			FOR
 			SELECT EntityId
@@ -48,7 +45,6 @@ BEGIN
 			CLOSE TraceEventsCursor
 			DEALLOCATE TraceEventsCursor
 
-		end
 	end
 
 FETCH NEXT FROM TenantsCursor INTO @Tenant
