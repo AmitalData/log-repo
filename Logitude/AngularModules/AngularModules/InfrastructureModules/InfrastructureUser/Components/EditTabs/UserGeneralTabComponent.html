@@ -217,7 +217,7 @@
                                 </tr>
 
                                 <!-- SecurityLevel -->
-                                <tr class="FormFieldRow">
+                                <tr class="FormFieldRow" *ngIf="IsSecurityLevelVisibile">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
