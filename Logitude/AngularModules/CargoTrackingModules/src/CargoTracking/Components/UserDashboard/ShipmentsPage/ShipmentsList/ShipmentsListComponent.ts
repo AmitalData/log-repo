@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -24,7 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent implements AfterViewInit
+export class ShipmentsListComponent implements AfterViewInit, OnInit
 {
 
 
@@ -62,7 +62,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
 
 
-
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -76,16 +75,15 @@ export class ShipmentsListComponent implements AfterViewInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-
-
         this.InitComponent();
         this.SetDefaultBackgroundColor();
+    }
+    ngOnInit(): void {
+        this.GetPreservedToggleFiltersFromSessionInfo();
     }
     ngAfterViewInit(): void
     {
         this.GetCompanyLoginsFromCache();
-        this.GetPreservedToggleFiltersFromSessionInfo();
-
     }
 
     private SetDefaultBackgroundColor()
@@ -211,6 +209,7 @@ export class ShipmentsListComponent implements AfterViewInit
             this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
+            this.LoadScreenData();
         }
     }
 
@@ -327,7 +326,7 @@ export class ShipmentsListComponent implements AfterViewInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
-
+            
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
@@ -390,8 +389,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
-
+        shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortDescending = this.isSortDescending;
 
@@ -559,10 +557,17 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.LoadScreenData();
     }
+
+    SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
+        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
+        if (!item)
+            this.SelectedFilters.push(filter);
+    }
+
     SelectFilterByCode(filterCode: string)
     {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        this.SelectFilter(filter);
+        this.SelectFilterWithoutLoadScreenData(filter);
     }
     DeselectFilter(filter: ToggleFilter)
     {
