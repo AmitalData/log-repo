@@ -115,6 +115,16 @@ namespace Logitude.Update.SandBox
 
         private void tESTADHOKToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //NewMethod();return;
+
+            var fixJournaRecolService = new FixJournaRecolService();
+
+            fixJournaRecolService.Fix("1-16314448", 10, false);
+            return;
+
+            //var changeGLAccount2IsMultiCurrencyService = new ChangeGLAccount2IsMultiCurrencyService();
+            //changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency("1-18459", 1255 );
+            //return;
             ///RevaluationBatch revaluationBatch = new RevaluationBatch();
             //revaluationBatch.RunAllOpenRevaluations(28);
             //return;
@@ -137,6 +147,17 @@ namespace Logitude.Update.SandBox
 
             return;
         }
+
+        private static void NewMethod()
+        {
+            var accountingContext = AccountingContext.GetContext(3);
+            var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), 3);
+
+            var listTransactionId = new List<string>() { "1-159389115", "1-126188886" };
+            myLedgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, 3, false);
+            return;
+        }
+
         public  void YearTest()
         {
             var parameterArgs = new BatchYearlyFIXParams() { MyFixType="", Year=2015, Tenant=3 };
