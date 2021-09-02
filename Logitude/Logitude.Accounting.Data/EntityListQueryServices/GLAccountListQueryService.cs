@@ -417,6 +417,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private static bool CheckIfUserHasAccessToGLAccount(int? loggedUserSecurityLevel, GLAccountList glaccount)
         {
             return !glaccount.IsSecurityLevelsEnabled 
+                || (glaccount.IsSecurityLevelsEnabled && glaccount.ChartOfAccountSecurityLevel == null)
                 || (glaccount.IsSecurityLevelsEnabled && glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel);
         }
 
