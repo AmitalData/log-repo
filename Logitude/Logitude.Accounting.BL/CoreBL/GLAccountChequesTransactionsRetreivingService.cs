@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
 
                     where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntityValues.ARPayment && 
-                    transaction.Reference2 ==arpaymentcheque.ChequeNumber
+                    transaction.Reference2 ==arpaymentcheque.ChequeNumber && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.ReturnToCustomer
 
                     select new LedgerTransactionList()
                     {
@@ -71,7 +71,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         CalculatedForeignAmount = transaction.ForeignAmountCredit != 0 ? transaction.ForeignAmountCredit : transaction.ForeignAmountDebit,
                         CalculatedLocalAmount = transaction.LocalAmountCredit != 0 ? transaction.LocalAmountCredit : transaction.LocalAmountDebit,
                         CurrencySign =transaction.Currency.Sign,
-
+                        Tenant = transaction.Tenant
                     }).Distinct().ToList();
         }
 
@@ -130,4 +130,9 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
     }
+}
+public struct ARPaymentChequeStatuses
+{
+    public const string ReturnToCustomer = "5";
+ 
 }
