@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class GLAccountList {
-   
+
 	Id: string;
 	Tenant: number;
 	InternalNumber: string;
@@ -157,6 +157,6 @@ export class GLAccountList {
 	PostponedChequesCommission: number;
 	BalanceInForeignCurrency: number;
 	ForeignBalanceInDue: number;
-	
+    Access: boolean;
+
 }
- 
