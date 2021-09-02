@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ExportDeclarationClosingDataQueryService: EntityQueryService<ExportDeclarationClosingData,ExportDeclarationClosingDataKeys,ExportDeclarationClosingDataPM,object,ExportDeclarationClosingDataKeys>
+   public partial class ExportDeclarationClosingDataQueryService: EntityQueryService<ExportDeclarationClosingData,ExportDeclarationClosingDataKeys,ExportDeclarationClosingDataPM,DeclarationPM,DeclarationKeys>
    {
    
         ExportDeclarationClosingDataRepository repository;

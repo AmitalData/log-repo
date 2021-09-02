@@ -298,7 +298,14 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
             req.Response.AdditionalInformation = AdditionalInformation();
-            req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
+            if(_DeclarationPM.AmedmentType == "2")
+            {
+                req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "3" };
+            }
+            else
+            {
+                req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
+            }
             //req.Attachments = GetAttachments();
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
              UpdateDeclaration(req.Response, requestParams.LoggingUserId);
@@ -448,6 +455,10 @@ namespace Logitude.CustomsMessaging.RequestServices
            if(!string.IsNullOrEmpty(_DeclarationPM.ReplacingRepairRequest))
             { 
                 responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.ReplacingRepairRequest } });
+            }
+            if (_DeclarationPM.AmedmentType == "2")
+            {
+                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "28" }, Content = new AdditionalDocumentTypeTextType { Value = "declaration closed" } });
             }
             return responseAdditionalInformation.ToArray();
          }

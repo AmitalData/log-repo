@@ -133,14 +133,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus != "2" && entityPOCO.AmendmentStatus != null)
             {
-                entityPM.AmendmentMessage = "לתצוגה בלבד - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                if (entityPOCO.AmedmentType == "2")
+                {
+                    //closeDeclaration
+                    entityPM.AmendmentMessage = "לתצוגה בלבד - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + " מסוג סגירה " + entityPM.AmendmentStatusName;
+
+                }
+                else
+                {
+                    entityPM.AmendmentMessage = "לתצוגה בלבד - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                }
                 entityPM.IsAmendmentDisplayOnly = true;
             }
 
             else if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus == "2")
             {
-                entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
-
+                if (entityPOCO.AmedmentType == "2")
+                {
+                    //closeDeclaration
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + " מסוג סגירה " + entityPM.AmendmentStatusName;
+                }
+                else
+                {
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                }
             }
 
             else if (entityPOCO.IsAmendment != true)

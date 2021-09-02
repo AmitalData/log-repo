@@ -23,8 +23,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
      [Key]
+        [ForeignKey("Declaration")]
         [Column("DeclarationId")]
 	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
         [ForeignKey("FinalCargoType")]
         [Column("FinalCargoTypeCode")]
 	    public string FinalCargoTypeCode { get; set; }
