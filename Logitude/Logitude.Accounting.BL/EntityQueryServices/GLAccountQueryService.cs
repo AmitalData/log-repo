@@ -364,6 +364,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return dic;
         }
 
+        public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
+        {
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
         {
             (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
@@ -394,12 +399,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         //}
         public GLAccountPM GetSinglePM(string gLAccountId, int tenant)
         {
-            GLAccount gLAccountPOCO = null;
-            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
-            GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
-            return pm;
-        }
+            GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+            GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
+            
+            var settings = GetFullAccountingSettings(tenant);
+            var loggedUser = GetLoggedUser(tenant);
 
+
+            if (settings.IsSecurityLevelActivated && gLAccountPM.ChartOfAccountSecurityLevel > loggedUser.SecurityLevel)
+                return null;
+
+            return gLAccountPM;
+        }
+        void GetLoggedUser(int tenant)
+        {
+            UserQuery userQuery = new UserQuery(tenant);
+            userQuery.GetSinglePMByEmail
+        }
         public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
         {
             GLAccount gLAccountPOCO = null;

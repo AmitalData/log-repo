@@ -157,6 +157,7 @@ export class GLAccountList {
 	PostponedChequesCommission: number;
 	BalanceInForeignCurrency: number;
 	ForeignBalanceInDue: number;
+	ChartOfAccountSecurityLevel: number;
 	
 }
  
