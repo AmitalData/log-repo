@@ -107,6 +107,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Direction"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransportModeId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ActionTypeCode"
     ReferencedTable="ActionCodes"
@@ -130,6 +144,11 @@
   <Relation
     ForeignKeyColumn="ResponseStatusCode"
     ReferencedTable="CargoSplitRequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TransportModeId"
+    ReferencedTable="CustomsTransportModes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
