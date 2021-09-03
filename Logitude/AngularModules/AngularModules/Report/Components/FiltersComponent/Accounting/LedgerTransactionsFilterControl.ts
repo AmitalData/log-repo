@@ -19,6 +19,8 @@ import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/C
 import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 import { ChartOfAccountPMService } from '../../../../Accounting/Services/StandardPMs/ChartOfAccountPMService';
 import { ChartOfAccountPM } from '../../../../Accounting/EntityPMs/ChartOfAccountPM';
+import { ChartOfAccountList } from '../../../../Accounting/EntityLists/ChartOfAccountList';
+
 import { UserPM } from '../../../../Common/EntityPMs/UserPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
@@ -53,7 +55,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public GLAccountFilterItems: ApiQueryFilters;
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
-
+    private ChartOfAccountSecurityLevel: any;
     constructor(private CD: ChangeDetectorRef)
     {
         super();
@@ -116,7 +118,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
             this.Salesman = this.loggedUser.Id;
-           this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
+          this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
 
     }
@@ -249,12 +251,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this._ChartOfAccountsTypeCode = v;
     }
     
-    private chartOfAccount: string;
+    private chartOfAccount: ChartOfAccountList;
     public get ChartOfAccount() { return this.chartOfAccount; }
-    public set ChartOfAccount(value: string)
+    public set ChartOfAccount(value: ChartOfAccountList)
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
+            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel;
         }
     }
 
@@ -582,7 +585,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     {
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
-
+        isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
         if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
             isValid = false;
@@ -607,10 +610,17 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.filterControlHight = "100";
         else
             this.filterControlHight = "80";
-        isValid=  this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
+     
         return isValid;
     }
+    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
 
+        if (this.CheckGLAccountChartOfAccountSecurityLevel()) {
+           
+            return this.CheckChartOfAccountSecurityLevel();
+        }
+        else return false;
+    }
 
     public get SelectedCategoryValue(): string
     {
@@ -791,13 +801,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
              
-                this.securityLevel = this.SetGLAccountChartOfAccountSecurityLevel(value.ChartOfAccountsId);
+                 this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
             }
 
         }
     }
 
-    private  SetGLAccountChartOfAccountSecurityLevel(ChartOfAccountId: string) {
+    private  SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
         this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var chartOfAccount: ChartOfAccountPM = response.Result;
@@ -805,20 +815,32 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             }
         });
     }
-    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
-        if (this.GLAccount && !this.loggedUser.IsCustomerCare) {
-            if (this.securityLevel == undefined) {
-                this.securityLevel = 0;
+    private CheckGLAccountChartOfAccountSecurityLevel() {
+        if (this.GLAccount) {
+            return this.CheckSecurityLevel(this.securityLevel);
+        } else return true;
+       
+    }
+    private CheckChartOfAccountSecurityLevel() {
+        if (this.ChartOfAccount) {
+            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
+        }
+        else return true;
+    }
+    private CheckSecurityLevel(securityLevel: any) {
+        if (!this.loggedUser.IsCustomerCare) {
+            if (securityLevel == undefined) {
+                securityLevel = 0;
             }
-            if (this.securityLevel > this.loggedUser.SecurityLevel) {
+            if (securityLevel > this.loggedUser.SecurityLevel) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
                 return false;
             }
             else return true;
+
         }
         else return true;
     }
-   
     private _IsReconciled: boolean;
     public get IsReconciled(): boolean
     {
