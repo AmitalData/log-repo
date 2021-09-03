@@ -1391,7 +1391,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבואנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבואנים/יצואנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 

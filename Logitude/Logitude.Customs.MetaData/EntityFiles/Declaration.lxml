@@ -23381,7 +23381,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.ImporterDetails&quot;"
       DefaultText="&quot;Importer Details&quot;"
-      LocalDefaultText="&quot;נתונים נוספים ליבואן&quot;"
+      LocalDefaultText="&quot;נתונים נוספים ליבואן/יצואן&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

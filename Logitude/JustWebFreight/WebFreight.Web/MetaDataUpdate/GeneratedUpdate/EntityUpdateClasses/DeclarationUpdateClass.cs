@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4a1b65bef400b37e7939cd6d7a2edbc2";
+		public const string HashString = "01cbb98ccb1dbc0871895d30da810bdf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18644,7 +18644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOTooLongCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongCode", DefaultText = "Importer code is too long",LocalDefaultText = @"מספר יבואן ארוך מדי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"נתונים נוספים ליבואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"נתונים נוספים ליבואן/יצואן", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentObjection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentObjection", DefaultText = "You must fill objection",LocalDefaultText = @"יש למלא ערעור לתשובה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
