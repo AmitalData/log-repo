@@ -153,7 +153,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     
    
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
@@ -188,6 +188,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
     }
@@ -214,12 +215,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
             });
         } else {
             this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
             });
         }

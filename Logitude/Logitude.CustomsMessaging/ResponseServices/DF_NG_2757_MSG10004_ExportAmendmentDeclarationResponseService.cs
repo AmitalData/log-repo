@@ -74,7 +74,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false, bool isCopy =false)
+        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept=false, bool isCopy =false, bool isClose = false)
         {
             error = "";
             try
@@ -225,8 +225,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration.DMExtensions != null)
                 {
                     declarationPM.DeclarationExportRecipients = GetRecipients(declaration, tenant, declarationPM, context);
-                    //declarationPM.AmedmentType = 
-                    //declarationPM. = GetClosingDetails(declaration, tenant, declarationPM, context);
+                    declarationPM.AmedmentType = isClose ? "2" : "1";
+                    declarationPM.ExportDeclarationClosingDatas = GetClosingDetails(declaration, tenant, declarationPM, context);
                     declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
                     //declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID) + DateTime.Now.Year;
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
@@ -256,6 +256,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
                 declarationUpdateService.Update(declarationPM, true);
+
 
                 if (declarationPM.IsCourierDeclaration)
                 {
@@ -565,11 +566,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        private ExportDeclarationClosingDataPM GetClosingDetails(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
+        private List<ExportDeclarationClosingDataPM> GetClosingDetails(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
         {
-            var closingDetails = new ExportDeclarationClosingDataPM();
+            List<ExportDeclarationClosingDataPM> list = new List<ExportDeclarationClosingDataPM>();
+
             if (declaration.DMExtensions.DeclarationClosingDetails != null)
             {
+                var closingDetails = new ExportDeclarationClosingDataPM();
                 closingDetails.FinalShipCode = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalShipID);
                 closingDetails.FinalLoadingSite = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalLoadingSite);
                 if (declaration.DMExtensions.DeclarationClosingDetails.DepartureDateTime != null)
@@ -580,8 +583,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 closingDetails.FinalCargoTypeCode = GetValueCodeType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.TypeCode);
                 closingDetails.FinalSecondCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.SecondCargoID);
                 closingDetails.FinalThirdCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.ThirdCargoID);
+                closingDetails.ChangeSetOp = ChangeSetOperation.Insert;
+                list.Add(closingDetails);
             }
-            return closingDetails;
+            return list;
         }
         private List<DeclarationExportRecipientPM> GetRecipients(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
         {

@@ -68,6 +68,11 @@
       Nullable="true" />
   </Column>
   <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
     ForeignKeyColumn="FinalCargoTypeCode"
     ReferencedTable="CargoIdentifireTypes"
     ReferencedColumn="Code"

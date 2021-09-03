@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportDeclarationClosingDataUpdateClass
    {  		
-		public const string HashString = "03e88a3484af44e359a2709bfdd4e442";
+		public const string HashString = "10b32b5ba99121974f0f00f1ccace1e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -112,14 +112,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "DeclarationId",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    IsComposition =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "ExportDeclarationClosingData",
 			      				    DefaultText =  "ExportDeclarationClosingData",
-			      				    Code =  "dc5e",
+			      				    Code =  "82b7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -780,6 +780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FinalShipCodeName",
 					  						ListPropertyPath =  "FinalShipCodeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -839,13 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ExportDeclarationClosingDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExportDeclarationClosingData" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature ExportDeclarationClosingDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ExportDeclarationClosingDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportDeclarationClosingData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExportDeclarationClosingDataObjectTable);
-		   Feature ExportDeclarationClosingDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ExportDeclarationClosingDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportDeclarationClosingData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExportDeclarationClosingDataObjectTable);
-		   Feature ExportDeclarationClosingDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ExportDeclarationClosingDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportDeclarationClosingData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExportDeclarationClosingDataObjectTable);
-		   Feature ExportDeclarationClosingDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ExportDeclarationClosingDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportDeclarationClosingData.Features.PackageFeature", NameTextCodeDefaultText = "ExportDeclarationClosingData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExportDeclarationClosingDataObjectTable);    
+	    {     
 	    
 		}
 

@@ -56,6 +56,7 @@ import {DeclarationErrorViewPM} from '../../EntityPMs/DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from '../../EntityPMs/DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from '../../EntityPMs/DecDangersContactPM';
 import {DeclarationExportRecipientPM} from '../../EntityPMs/DeclarationExportRecipientPM';
+import {ExportDeclarationClosingDataPM} from '../../EntityPMs/ExportDeclarationClosingDataPM';
 import {DeclarationValidator} from '../../Validators/DeclarationValidator';
 
 @Injectable()
@@ -238,6 +239,7 @@ export class DeclarationPMService {
                this.MapDeclarationConsAcceptances(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDecDangersContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationExportRecipients(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapExportDeclarationClosingDatas(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -475,6 +477,15 @@ export class DeclarationPMService {
 						
 							 
             entityPM.OldEntityPM.DeclarationExportRecipients.push(newDeclarationExportRecipientPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ExportDeclarationClosingDatas = [];
+            for (var item in entityPM.ExportDeclarationClosingDatas) {
+            var myExportDeclarationClosingDataPM = entityPM.ExportDeclarationClosingDatas[item];
+            var newExportDeclarationClosingDataPM: ExportDeclarationClosingDataPM = this.clone(myExportDeclarationClosingDataPM);
+						
+							 
+            entityPM.OldEntityPM.ExportDeclarationClosingDatas.push(newExportDeclarationClosingDataPM);
             }
 			   
 		}
@@ -1430,6 +1441,98 @@ export class DeclarationPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.DeclarationExportRecipients.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapExportDeclarationClosingDatas(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldExportDeclarationClosingDatas: ExportDeclarationClosingDataPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldExportDeclarationClosingDatas = entityPM.OldEntityPM.ExportDeclarationClosingDatas;
+        }
+
+        entityPM.ExportDeclarationClosingDatas = new Array<ExportDeclarationClosingDataPM>();
+        for (var item in jsonPM.ExportDeclarationClosingDatas) {
+            var jItem = jsonPM.ExportDeclarationClosingDatas[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newExportDeclarationClosingDataPM: ExportDeclarationClosingDataPM;
+	  
+            if (mapParent) {
+                newExportDeclarationClosingDataPM = new ExportDeclarationClosingDataPM(entityPM);
+            }
+            else
+            {
+                newExportDeclarationClosingDataPM = new ExportDeclarationClosingDataPM(null);
+            }
+ 			newExportDeclarationClosingDataPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newExportDeclarationClosingDataPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newExportDeclarationClosingDataPM.UniqueKey = Guid.newGuid();
+                newExportDeclarationClosingDataPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newExportDeclarationClosingDataPM.OldEntityPM = this.clone(newExportDeclarationClosingDataPM);
+
+				
+            }
+            else {
+                if (newExportDeclarationClosingDataPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newExportDeclarationClosingDataPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newExportDeclarationClosingDataPM.ChangeSetOp = "Insert";
+                }
+ 
+                newExportDeclarationClosingDataPM.OldEntityPM = null;
+                newExportDeclarationClosingDataPM.EntityParentPM = null;
+            }
+			 newExportDeclarationClosingDataPM.DisableMarkAsDirty = false;
+			 newExportDeclarationClosingDataPM.IsDirty = false;
+            entityPM.ExportDeclarationClosingDatas.push(newExportDeclarationClosingDataPM);
+        }
+        if (oldExportDeclarationClosingDatas) {
+            
+            for (var itemKey in oldExportDeclarationClosingDatas) {
+                if (entityPM.ExportDeclarationClosingDatas.filter(p=> p.UniqueKey === oldExportDeclarationClosingDatas[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldExportDeclarationClosingDatas[itemKey]) {
+                        //oldExportDeclarationClosingDatas[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ExportDeclarationClosingDatas.push(oldExportDeclarationClosingDatas[itemKey]);
+						var oldItemJson = oldExportDeclarationClosingDatas[itemKey];
+                        var deletedPM: ExportDeclarationClosingDataPM = new ExportDeclarationClosingDataPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ExportDeclarationClosingDatas.push(deletedPM);
                     }
                 }
             }

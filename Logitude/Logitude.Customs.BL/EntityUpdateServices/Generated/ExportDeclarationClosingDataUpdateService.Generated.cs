@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ExportDeclarationClosingDataUpdateService:EntityUpdateService<ExportDeclarationClosingData,ExportDeclarationClosingDataPM,EntityPM>
+   public partial class ExportDeclarationClosingDataUpdateService:EntityUpdateService<ExportDeclarationClosingData,ExportDeclarationClosingDataPM,DeclarationPM>
    {
    
         ExportDeclarationClosingDataRepository entityRepository;
