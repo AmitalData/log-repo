@@ -531,7 +531,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
             foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentDeliveryPM.ShipmentPickUpDeliveryPackages)
             {
-                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId) && shipmentPickUpDeliveryPackagesPM.ChangeSetOp != ChangeSetOperation.Delete)
                 {
                     containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
                 }
@@ -548,7 +548,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
             foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentDeliveryPM.ShipmentPickUpDeliveryPackages)
             {
-                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId) && shipmentPickUpDeliveryPackagesPM.ChangeSetOp == ChangeSetOperation.Delete)
                 {
                     containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
                 }
@@ -565,7 +565,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
             foreach (ShipmentPickUpDeliveryPackagePM shipmentPickUpDeliveryPackagesPM in shipmentPickUpPM.ShipmentPickUpDeliveryPackages)
             {
-                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId))
+                if (!string.IsNullOrEmpty(shipmentPickUpDeliveryPackagesPM.ContainerEntityId) && shipmentPickUpDeliveryPackagesPM.ChangeSetOp == ChangeSetOperation.Delete)
                 {
                     containerPMs.Add(this.containerQuery.GetSinglePM(shipmentPickUpDeliveryPackagesPM.ContainerEntityId, initializer.Tenant));
                 }
@@ -649,7 +649,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             foreach (ShipmentPickUpPM shipmentPickUpPM in shipmentPickUpsPM)
             {
-                List<ContainerPM> containers = this.GetPickUpContainersToBeUpdatedByContainerEntityId(shipmentPickUpPM);
+                List<ContainerPM> containers = this.GetPickUpContainersToBeDeletedByContainerEntityId(shipmentPickUpPM);
                 this.UpdateContainerFieldsFromDeletedPickUpsFields(containers);
             }
         }
@@ -684,7 +684,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             foreach (ShipmentDeliveryPM shipmentDeliveryPM in shipmentDeliveriesPM)
             {
-                List<ContainerPM> containers = this.GetDeliveryContainersToBeUpdatedByContainerEntityId(shipmentDeliveryPM);
+                List<ContainerPM> containers = this.GetDeliveryContainersToBeDeletedByContainerEntityId(shipmentDeliveryPM);
                 this.UpdateContainerFieldsFromDeletedDeliveriesFields(containers);
             }
         }
