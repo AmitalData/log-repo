@@ -27,6 +27,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 
 @Component({
@@ -97,10 +98,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ExchangeRateValidation"));
                     }
                 }
-             
+
             }
-         
-         
+
+
         });
     }
     public isRTL: boolean = false;
@@ -326,7 +327,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.reference1 != value) {
             this.reference1 = value;
             this.UpdateFirstLineReferencesNotesAndCurrency();
-          
+
 
         }
     }
@@ -343,7 +344,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     reference3: string;
     get Reference3() { return this.reference3; }
     set Reference3(value: string) {
-        if (this.reference3 != value) {          
+        if (this.reference3 != value) {
             this.reference3 = value;
             this.UpdateFirstLineReferencesNotesAndCurrency();
 
@@ -393,7 +394,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.EntityPM.CurrencyId = value;
             this.getHeaderCurrency(value);
           //  this.getHeadercurrencyRate(value);
-            
+
         }
         if (!value) {
             this.HeaderCurrency = null;
@@ -429,7 +430,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.ValidateDates(value,"AccountingDate");
 
             }
-        
+
             this.EntityPM.AccountingDate = value;
             this.UpdateLinesDates();
             this.UpdateLinesAccountingDates();
@@ -698,7 +699,7 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setFullYear(this.line_year);
         this.lineDate.setMonth(this.line_month - 1);
         this.lineDate.setDate(this.line_day);
-        
+
         if (!line.ActionCode) line.accDay = this.line_day;
         line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
     }
@@ -723,7 +724,7 @@ getHeaderCurrency(CurrencyId:string){
                     }
                     else {
                         this.SetLineDate(line);
-                      
+
                     }
                 }
             });
@@ -746,7 +747,7 @@ getHeaderCurrency(CurrencyId:string){
                 if (!line.ActionCode) {
                     if (line.AccountingDate != this.AccountingDate ) line.AccountingDate = this.AccountingDate;
                     if (line.DueDate != this.DueDate) line.DueDate = this.DueDate;
-                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;                 
+                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;
                 }
             });
 
@@ -1042,8 +1043,8 @@ class JournalLineModel extends BaseComponent {
                             this.isRateManualy = false;
 
                             var rate = myResponse.Result;
-                           
-                          
+
+
                             if (this.IsAccDayChanged && (this.currencyRate != rate.Rate)) {
                                 this.SetAmountsWhenChangingAccDay();
                                 this.currencyRate = rate.Rate;
@@ -1099,11 +1100,11 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.LocalAmount = value;
             this.parent.CalculateTotals();
-           
+
             if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
-           
+
             if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-           
+
 
         }
     }
@@ -1117,7 +1118,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
             if (!this.LocalAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-         
+
         }
 
     }
@@ -1125,10 +1126,10 @@ class JournalLineModel extends BaseComponent {
 
     AmountChanged(type,localAmount,foreignAmount){
         console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
-      
+
 
         if (this.CurrencyId) {
-           
+
             if (type == 'local')
                 this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
 
@@ -1247,8 +1248,8 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
-           
-          
+
+
             if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
                 this.CurrencyId = this.creditAccount.CurrencyId;
                 this.CurrencyCode = this.creditAccount.CurrencyCode;
@@ -1320,7 +1321,7 @@ class JournalLineModel extends BaseComponent {
               //  this.AccountingDate = this.parent.AccountingDate;
             }
 
-        
+
         }
     }
     ValidateAccDay() {
@@ -1356,7 +1357,7 @@ class JournalLineModel extends BaseComponent {
         if (this.CurrencyId)
             this.GetExchangeRate(this.CurrencyId);
         this.SetAccountingDate();
-        
+
     }
     IsAccDayChanged: boolean;
     IsAccDayValid(date: Date, day: number) {
@@ -1583,11 +1584,11 @@ class JournalLineModel extends BaseComponent {
     //#region GLAccount HyberLink
 
     GLAccountHyperlinkClicked() {
-        this.EditEntity("GLAccount", this.CreditAccountId, null, "GATR");
+        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.CreditAccountId);
     }
 
     DebitAccountHyperlinkClicked() {
-        this.EditEntity("GLAccount", this.DebitAccountId, null, "GATR");
+        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.DebitAccountId);
     }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {

@@ -2396,35 +2396,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                     else if (myObjectTableName == "GLAccount") {
 
-                        var hasAccess = GLAccountSecurityLevelChecker.CheckLevel();
+                        var hasAccess = GLAccountSecurityLevelChecker.CheckLevel(selectedEntityId);
 
                         if(hasAccess){
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({
-                                    EntityId: selectedEntityId,
-                                    ObjectTableName: myObjectTableName,
-                                    BackButtonLabel: label,
-                                    QuerySection: this.MenuTableQuerySection
-                                });
-                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                    this.isEditControlOpened = false;
-                                    this.OnBackFromEdit(selectedEntityId, $event)
-                                });
-                                this.DestroyMe = true;
-                            });
+                            this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
                         }
                         else
                         {
                             this.isEditControlOpened = false;
-                            var messageWindow = new MessageWindow();
-                            messageWindow.Width = 460;
-                            messageWindow.Height = 190;
-                            messageWindow.Title =  TextCodeTranslator.Translate("General.O.Warning");
-                            messageWindow.ShowIcon = false;
-                            messageWindow.Show(TextCodeTranslator.Translate("GLAccount.O.SecurityLevelHiddenItem"));
+                            GLAccountSecurityLevelChecker.ShowSecurityBockingMessage();
                             return;
                         }
                     }
@@ -2454,6 +2434,28 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             //this.CurrentSession.StopBusyIndicator();
         }
+    }
+
+    private OpenEditComponent(selectedEntityId: any, myObjectTableName: string, $event: any)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef =>
+            {
+                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: selectedEntityId,
+                    ObjectTableName: myObjectTableName,
+                    BackButtonLabel: label,
+                    QuerySection: this.MenuTableQuerySection
+                });
+                cmpRef.instance.BackCompleted.subscribe(($event1: any) =>
+                {
+                    this.isEditControlOpened = false;
+                    this.OnBackFromEdit(selectedEntityId, $event);
+                });
+                this.DestroyMe = true;
+            });
     }
 
     private ShowINTTRABookingWizard(selectedEntityId: string, $event) {

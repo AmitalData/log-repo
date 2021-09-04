@@ -7,6 +7,7 @@ import { ARPaymentExtendedListService } from '../../../Invoice/Services/Extended
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 @Component({
 
@@ -233,16 +234,28 @@ export class FieldTemplateComponent {
     }
 
     OpenGLAccount(id) {
+
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    });
-                });
-        }
+            GLAccountSecurityLevelService.CheckLevel(id).then(hasAccess =>
+            {
+                if (hasAccess) {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef =>
+                        {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
+                            cmpRef.instance.BackCompleted.subscribe(bk =>
+                            {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            });
+                        });
+                } else {
+                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                }
+            });
+    }
+
+
     }
 
     OpenBankAccount(id) {

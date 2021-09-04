@@ -27,10 +27,11 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ModulesService } from '../../../Services/ModulesService';
- 
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+
 
 @Component({
-    
+
     templateUrl: './ReceivablePageComponent.html',
 })
 
@@ -364,15 +365,29 @@ export class ReceivablePageComponent {
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Receivables") });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.RefreshButtonClicked();
-                    });
-                });
+
+            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
+            {
+                if (hasAccess)
+                    this.OpenGLAccountEditWindow(entity);
+                else
+                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+            });
         }
+    }
+
+    private OpenGLAccountEditWindow(entity: any)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef =>
+            {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Receivables") });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) =>
+                {
+                    this.RefreshButtonClicked();
+                });
+            });
     }
 
     Abs(number: number) {
