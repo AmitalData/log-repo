@@ -50,6 +50,9 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.HouseNumber = null;
             aRInvoicePM.MainEntityReference = null;
             aRInvoicePM.MasterNumber = null;
+            aRInvoicePM.MasterShipmentNumbers = null;
+            aRInvoicePM.MasterNumbers = null;
+            aRInvoicePM.HouseNumbers = null;
             aRInvoicePM.Description = null;
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;

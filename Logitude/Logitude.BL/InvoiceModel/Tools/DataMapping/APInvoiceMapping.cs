@@ -84,6 +84,36 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            if (entityPM.HouseNumbers != null)
+            {
+                entityPM.HouseNumbers = entityPM.HouseNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.HouseNumbers))
+                {
+                    entityPM.HouseNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterNumbers != null)
+            {
+                entityPM.MasterNumbers = entityPM.MasterNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterNumbers))
+                {
+                    entityPM.MasterNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterShipmentNumbers != null)
+            {
+                entityPM.MasterShipmentNumbers = entityPM.MasterShipmentNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterShipmentNumbers))
+                {
+                    entityPM.MasterShipmentNumbers = null;
+                }
+            }
+
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.UpdatedByUserId = loggedContact.Id;
             entity.UpdateDate = entityPM.UpdateDate;
