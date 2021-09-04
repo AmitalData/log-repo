@@ -431,12 +431,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
                 {
-                    this.CreateTraceEvent("ICUC", entityPM.CustomsClearanceDate);
+                    this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
                 }
 
                 else if (entityPM.DirectionId == "E")
                 {
-                    this.CreateTraceEvent("ECUC", entityPM.CustomsClearanceDate);
+                    this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
                 }
             }
 
