@@ -331,19 +331,18 @@ namespace WebFreight.Web.Helpers.Analyzers
 
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
-            var containerNumber = oceanInsight.ContainerNumber;
-            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
+            container_number = this.GetContainerNumber(oceanInsight);
+            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(container_number, oceanInsight.ShipmentId, logitudeTenant.Value);
             containerId = container?.Id;
-            container_number = this.GetContainerNumber(container, oceanInsight);
             shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
 
-        private string GetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        private string GetContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = ""; 
-            if(container != null)
+            if(!string.IsNullOrEmpty(oceanInsight.ContainerNumber))
             {
-                containerNumber = container.ContainerNumber;
+                containerNumber = oceanInsight.ContainerNumber;
             }
             else
             {
