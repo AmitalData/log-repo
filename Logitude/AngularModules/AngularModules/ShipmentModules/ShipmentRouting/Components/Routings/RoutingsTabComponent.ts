@@ -86,8 +86,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.GetWarehouseAddress();
                 }
                 
-                if (s == "ReloadForwarderShipmentFromStandAlone") {
-                      this.entityArgs.EditComponent.ReloadEntityPM();
+                if (s == "ReloadForwarderShipmentFromStandAlone" ) {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+                else if (s == "ReloadDisconnectedForwarderShipment") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
                 }
             });
 

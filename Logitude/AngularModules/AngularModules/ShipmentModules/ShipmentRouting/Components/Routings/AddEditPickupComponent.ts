@@ -623,7 +623,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     });
                 }
             }
-
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             this.myCloner.RejectChanges();
         }
     }
