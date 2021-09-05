@@ -261,6 +261,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if(exportDeclarationClosingData != null)
                 {
                     exportDeclarationClosingData.DeclarationId = declarationPM.Id;
+                    exportDeclarationClosingData.Tenant = tenant;
                     ExportDeclarationClosingDataUpdateService exportDeclarationClosingDataUpdateService = new ExportDeclarationClosingDataUpdateService(context, new Dictionary<string, IContext>(), tenant);
                     exportDeclarationClosingDataUpdateService.Update(exportDeclarationClosingData, true);
                 }
