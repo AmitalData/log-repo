@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ShipmentOrderUpdateClass
    {  		
-		public const string HashString = "72f60642bf81016b551ab68cedd1b0fd";
+		public const string HashString = "dcacac4cf7a2504a37891c75c811718b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3730,6 +3730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipmentId",
 					  						ListPropertyPath =  "ShipmentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3940,12 +3941,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode ShipmentOrderGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentOrder.TH.General", DefaultText = "General",LocalDefaultText = "", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentOrderGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentOrder.Tab.General", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentOrderFeatures.SHGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentOrderObjectTable);
+ 
+                 
+			   TextCode ShipmentOrderDocsInTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentOrder.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = "Docs In", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentOrderDocsInFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentOrder.Tab.DocsIn", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentOrderFeatures.SODI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentOrderObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentOrderGeneralFeature_TH0.Id,FeatureUniqeCode = ShipmentOrderGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentOrderObjectTable.Id, TabNameTextCodeId = ShipmentOrderGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShipmentOrderGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SODI",HtmlComponentName = "ShipmentOrderDocsInTabComponent",HtmlComponentUrl = "./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent", FeatureId = ShipmentOrderDocsInFeature_TH1.Id,FeatureUniqeCode = ShipmentOrderDocsInFeature_TH1.FeatureUniqeCode, ControlPath = "./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent", ObjectTableId = ShipmentOrderObjectTable.Id, TabNameTextCodeId = ShipmentOrderDocsInTextCode_TH1.Id, TabNameTextCodeCode = ShipmentOrderDocsInTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
