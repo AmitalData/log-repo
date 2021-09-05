@@ -34,6 +34,7 @@ using Logitude.BL.Security;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -283,13 +284,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
             return UnifreightListOnServerOnly;
         }
-
+ 
         public void DelSertPayment(
         DeclarationPM myDeclarationPM,
         string bankId)
         {
-            var user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
-            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            var user = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant);
+            ICustomContext dbContext = CustomContext.GetContext(myDeclarationPM.Tenant);
 
             var myQueryService = new DeclarationQueryService(dbContext);
 
@@ -299,17 +300,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             if (declarationPaymentPM != null)  //@itzik M אם כבר קיימות שורות אבל אין תאריך תשלום Declaration PaymentDate המשמעות היא שלא שולם בפועל, ולכן למחוק ולכתוב מחדש לפי נתונים נוכחיים.
 
             {
-                 if (declarationPaymentPM.DeclarationPaymentMethods.Any())
+                if (declarationPaymentPM.DeclarationPaymentMethods.Any())
                 {
                     foreach (var item in declarationPaymentPM.DeclarationPaymentMethods)
                     {
                         item.ChangeSetOp = ChangeSetOperation.Delete;
                     }
 
-                    var myDeclarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+                    var myDeclarationPaymentMethodUpdateService = new DeclarationPaymentMethodUpdateService(dbContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
                     myDeclarationPaymentMethodUpdateService.UpdateMulti(declarationPaymentPM.DeclarationPaymentMethods, new List<DeclarationPaymentMethodPM>(), declarationPaymentPM
                         , true);
                 }
+                declarationPaymentPM.AutomaticPayment = 1;
 
                 declarationPaymentPM = mydeclarationPaymentQueryService.GetSingle(myDeclarationPM.Id, true, false);
                 declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -330,10 +332,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             declarationPaymentPM.CreatedByUserId = user;
             declarationPaymentPM.AutomaticPayment = 1;
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
-            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(ResolvedTenant());
+            CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(myDeclarationPM.Tenant);
             declarationPaymentPM.SignatoryIdentification =
-                 CustomsSetting.CustomsAgentId;  
-             {
+                 CustomsSetting.CustomsAgentId;
+            {
 
 
                 CustomBankQueryService customBankQueryService = new CustomBankQueryService(dbContext);
@@ -357,14 +359,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
                     BankCode = customBank.BankCode,
                     BranchCode = customBank.BranchCode,
-                    PayerActivityTypeCode = customBank.PayerTypeCode,
+                    PayerActivityTypeCode = "1",// customBank.PayerTypeCode,
                     AccountNumber = customBank.AccountNumber,
                     CustomsBranchId = customBank.CustomsBranchId
                 };
 
                 declarationPaymentPM.DeclarationPaymentMethods.Add(declarationPaymentMethod);
             }
-      
+
             DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
             declarationPaymentUpdateService.Update(declarationPaymentPM, true);
 
@@ -376,6 +378,39 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 
         }
+
+
+
+
+
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, string user)
+        {
+            CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+            {
+                Tenant = declarationPM.Tenant,
+                AppicationId = declarationPM.Id,
+                LoggingEnabled = true,
+                LoggingEntityId = declarationPM.Id,
+                InterfaceTypeCode = "2755",
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityReference = declarationPM.DeclarationNumber,
+                LoggingUserId = user,
+                RequestName = "Send to check credit request",
+                ResponseName = "Get check credit Response",
+                Mode = "Check",
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void AutoPayment()
         {
             string user = this.MyCommunicationsParams.LoggingUserId;
@@ -388,44 +423,96 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 {
                     throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
                 }
-                
+
             }
             else
             {
                 throw new BusinessErrorException("Declaration ID is missing");
             }
-            CustomBankQueryService customBankQueryService = new CustomBankQueryService(ResolvedTenant());
+
+          //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            // DeclarationPM _MyDeclarationPM = declarationQueryService.GetSingle(decId, false, false);
+
+            ICustomContext dbContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+
+            CustomBankQueryService customBankQueryService = new CustomBankQueryService(_MyDeclarationPM.Tenant);
 
             var banks = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
 
-            if (banks != null)
+            if (banks != null && banks.Count() > 0)
             {
 
 
                 if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
                 {
-                    DelSertPayment(_MyDeclarationPM, banks[0].BankCode);
+                    DelSertPayment(_MyDeclarationPM, banks[0].Id);
 
                 }
                 else
                 {
-                    var requestParams = new GenericRequestParams()
-                    {
-                        LoggingEnabled = true,
-                        IsFakeResponse = true,
-                        InterfaceTypeCode = "2755",
-                        Tenant = ResolvedTenant(),
-                        RequestName = "Payment Request",
-                        ResponseName = "Payment Response",
-                        LoggingEntityId = _MyDeclarationPM.Id,
-                        RequestVIA = SendRequestVIA.WebServiceBatch,
-                        SuppressSplitWR = true,
-                        LoggingEntityReference = "AutoPayment",
-                        UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
-                    };
 
-                    MyGenericResponseObj.ApplicationId =
-                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+                    if (!CheckFileCredit(_MyDeclarationPM, user))
+                    {
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "לא אושר בבקרת אשראי",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           user,
+                            MyUnifreightEventParam);
+                    }
+
+                    else
+                    {
+
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYA",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "תשלום הצהרה אוטומטי"
+                        };
+
+
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                          user,
+                            MyUnifreightEventParam);
+
+
+                        var requestParams = new GenericRequestParams()
+                        {
+                            LoggingEnabled = true,
+                            IsFakeResponse = true,
+                            InterfaceTypeCode = "2755",
+                            Tenant = _MyDeclarationPM.Tenant,
+                            RequestName = "Payment Request",
+                            ResponseName = "Payment Response",
+                            LoggingEntityId = _MyDeclarationPM.Id,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            SuppressSplitWR = true,
+                            LoggingEntityReference = "AutoPayment",
+                            UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
+                        };
+
+                        //    MyGenericResponseObj.ApplicationId =
+                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+                    }
                 }
             }
             else
@@ -433,12 +520,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
                 // event
 
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = "APAYF",
+                    Mode = UnifreightEventMode.@new,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                    EventRemarks = "לא נמצא בנק ללקוח."
+                };
+
+                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    _MyDeclarationPM.Tenant,
+                  user,
+                    MyUnifreightEventParam);
 
 
+                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(_MyDeclarationPM.Tenant);
+                DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _MyDeclarationPM.Tenant);
+
+                var decRef = declarationReferantDataQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+
+                if (decRef != null)
+                {
+                    // decRef.ManualPayment = true;
+                    decRef.ChangeSetOp = ChangeSetOperation.Update;
+                    updateService.Update(decRef, true);
+                }
             }
 
         }
 
+
+ 
 
         private void SendDeclarationStatusRequest()
         {
