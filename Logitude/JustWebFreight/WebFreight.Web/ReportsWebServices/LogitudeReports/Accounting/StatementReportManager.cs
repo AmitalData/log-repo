@@ -974,7 +974,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      HouseNumber = d.HouseNumber,
                      Date = d.InvoiceDate.Value,
                      DueDate = d.DueDate.Value,
-                     OurRefrence = d.InternalNumber,
+                     OurRefrence = d.InvoiceNumber,
                      CurrencyId = d.InvoiceCurrencyId,
                      Type = "A\\P Invoice",
                      Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
