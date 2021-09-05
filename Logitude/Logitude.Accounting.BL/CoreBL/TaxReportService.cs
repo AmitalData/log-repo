@@ -102,7 +102,6 @@ namespace Logitude.Accounting.BL.CoreBL
             decimal? VatAmount = 0;
             decimal? InvoiceAmount = 0;
             string transmitStatus;
-            string statusCode = null;
             foreach (TaxReportData a in TaxReportJournalData)
             {
                 string vatNumber = null;
@@ -116,13 +115,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         DateTime invoiceDate = new DateTime(invoice.InvoiceDate.Value.Year, invoice.InvoiceDate.Value.Month, 1);
                         DateTime taxReportDate = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month, 1);
-                        DateTime taxReportDatePreviousMonth = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month -1, 1);
+                        DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
 
                         if ((setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate && invoiceDate != taxReportDatePreviousMonth)
                             || (!setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate))
                         {
                             transmitStatus = TaxReportLineTransmitStatusValues.WithoutTransmit;
-                            statusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
                         }
                         VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
@@ -154,7 +152,6 @@ namespace Logitude.Accounting.BL.CoreBL
                             VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
                             TotalInvoiceAmount = invoice.TotalAmountForTaxReport != null ? Math.Round(invoice.TotalAmountForTaxReport.Value, MidpointRounding.AwayFromZero) : 0,
                             IsManuallyChanged = false,
-                            StatusCode = statusCode,
                             TransmitStatusCode = transmitStatus,
                             TaxReportId = taxReport.Id,
                             ChangeSetOp = ChangeSetOperation.Insert,
