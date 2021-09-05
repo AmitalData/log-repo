@@ -91,7 +91,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             if (MyEntity.EntityType.Name == "ShipmentOrder")
             {
                 ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(Tenant);
-                return shipmentRepository.GetShipmentOrderId(MyEntity.EntityNumber, Tenant);
+                return shipmentRepository.GetIdByCode(MyEntity.EntityNumber, Tenant);
             }
 
             return null;
