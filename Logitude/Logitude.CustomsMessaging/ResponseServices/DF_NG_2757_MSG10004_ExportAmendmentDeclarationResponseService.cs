@@ -257,6 +257,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 declarationUpdateService.Update(declarationPM, true);
 
+                var exportDeclarationClosingData = GetClosingDetails(declaration, tenant, declarationPM, context);
+                if(exportDeclarationClosingData != null)
+                {
+                    exportDeclarationClosingData.DeclarationId = declarationPM.Id;
+                    ExportDeclarationClosingDataUpdateService exportDeclarationClosingDataUpdateService = new ExportDeclarationClosingDataUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    exportDeclarationClosingDataUpdateService.Update(exportDeclarationClosingData, true);
+                }
 
                 if (declarationPM.IsCourierDeclaration)
                 {
@@ -566,10 +573,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        private List<ExportDeclarationClosingDataPM> GetClosingDetails(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
+        private ExportDeclarationClosingDataPM GetClosingDetails(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
         {
-            List<ExportDeclarationClosingDataPM> list = new List<ExportDeclarationClosingDataPM>();
-
             if (declaration.DMExtensions.DeclarationClosingDetails != null)
             {
                 var closingDetails = new ExportDeclarationClosingDataPM();
@@ -584,9 +589,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 closingDetails.FinalSecondCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.SecondCargoID);
                 closingDetails.FinalThirdCargoId = GetValueIDType(declaration.DMExtensions.DeclarationClosingDetails.FinalTransportContractDocument.ThirdCargoID);
                 closingDetails.ChangeSetOp = ChangeSetOperation.Insert;
-                list.Add(closingDetails);
+                return closingDetails;
             }
-            return list;
+            return null;
         }
         private List<DeclarationExportRecipientPM> GetRecipients(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
         {
