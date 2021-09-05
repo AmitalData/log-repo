@@ -33,12 +33,16 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
 import { DocumentDownloadService } from '../CargoTracking/Services/Others/DocumentDownloadService';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MessageWindowComponent } from '../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { ToolTipComponent } from 'src/Infrastructure/Components/ToolTip/ToolTipComponent';
 import { OverlayModule } from '@angular/cdk/overlay';
-
-
+import { MultipleSelectionComponent } from '../Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }
@@ -66,6 +70,7 @@ export function getBaseUrl() {
         ChangePasswordComponent,
         MessageWindowComponent,
         ToolTipComponent,
+        MultipleSelectionComponent,
 
 
         //Erros
@@ -79,9 +84,13 @@ export function getBaseUrl() {
         HttpClientModule,
         AppRoutingModule,
         MatDialogModule,
+        MatNativeDateModule,
         ReactiveFormsModule,
         ScrollingModule,
         OverlayModule,
+        MatInputModule,
+        MatSelectModule,
+        MatFormFieldModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
     ],
     providers: [
@@ -97,8 +106,11 @@ export function getBaseUrl() {
         AuthService,
         LoginServiceHelper,
         DatePipe,
-        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

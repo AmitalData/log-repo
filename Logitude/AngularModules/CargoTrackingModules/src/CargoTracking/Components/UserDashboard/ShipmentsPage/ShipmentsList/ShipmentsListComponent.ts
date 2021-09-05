@@ -12,6 +12,7 @@ import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrack
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
+import { MultipleSelectionComponent } from '../../../../../Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -364,6 +365,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.BuildToggleFilters();
         });
     }
+
 
     private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters)
     {

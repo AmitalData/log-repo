@@ -36,12 +36,17 @@
             </form>
         </div>
 
-        <div class="filters hide-mobile">
+        <!--<div class="filters hide-mobile">
             <ul class="toolbar-filters">
                 <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">{{filter.Name}}
                     ({{filter.Count | number}})</li>
             </ul>
-        </div>
+        </div>-->
+    <div class="hide-mobile">
+        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(2,ToggleFilters.length)" [Title]="'Shipment Type'"> </multiple-selection>
+        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"> </multiple-selection>
+
+    </div>
 
         <div class="actions-buttons hide-mobile">
             <div (click)="OpenAdvancedFiltersSidebar()">

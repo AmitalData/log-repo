@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{Title}}</mat-label>
+    <mat-select  multiple>
+        <mat-option matInput *ngFor="let selection of MultipleSelectionList" value="selection">{{selection.Name}}({{selection.Count}})</mat-option>
+    </mat-select>
+</mat-form-field>
+
+
