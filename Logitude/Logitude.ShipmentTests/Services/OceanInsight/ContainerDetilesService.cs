@@ -43,7 +43,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         public void AssertChangeContainerDetails(PackagePM packagePM)
         {
             XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
-            packagePM.ContainerStatusSourceCode.Should().Be(xMLOceanInsightAnalyzer.ContenerShipment.container_status);
+            packagePM.LastStatusCode.Should().Be(xMLOceanInsightAnalyzer.ContenerShipment.container_status);
         }
 
         public ShipmentContainerSimulator CreateShipmentContainerSimulator(string fileName)
