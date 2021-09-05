@@ -33,7 +33,7 @@ namespace Logitude.ShipmentTests.Steps.OceanInsight
         [Then(@"container details should be change successfully")]
         public void ThenContainerDetailsShouldBeChangeSuccessfully()
         {
-            containerDetailsService.AssertChanging(shipmentContext.ShipmentContainerSimulator);
+            containerDetailsService.Assert(shipmentContext.ShipmentContainerSimulator);
         }
 
     }

@@ -15,37 +15,6 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 {
     public class ContainerDetailsService : OceanInsightService
     {
-        public void AssertChanging(ShipmentContainerSimulator shipmentContainerSimulator)
-        {
-            AssertShipmentContainerSimulator(shipmentContainerSimulator);
-            AssertCommunicationLogs();
-            var shipment = GetShipment();
-            AssertChangeContainerDetails(shipment.ShipmentPackages.First());
-
-        }
-        private void AssertCommunicationLogs()
-        {
-            var tryEvreySecound = 4;
-            var tineLifeInSecound = 60 * 5;
-            var containerObjectTableID = GetObjectTableID("Container");
-            var containerEntityId = "1-344";//ShipmentData.ShipmentPM.ShipmentPackages.First().ContainerEntityId;
-            var isDone = Waiter.RunAndWait(tryEvreySecound, tineLifeInSecound, () => AssertAddCommunicationLogs(containerObjectTableID, containerEntityId));
-            isDone.Should().BeTrue();
-        }
-
-        private ShipmentPM GetShipment()
-        {
-            string singleShipmentUrl = Urls.ShipmentGetSingle("1-2072011"/*ShipmentData.ShipmentPM.Id*/);
-            ApiResponse<ShipmentPM> getResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
-            return getResponse.Data;
-        }
-
-        public void AssertChangeContainerDetails(PackagePM packagePM)
-        {
-            XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
-            packagePM.LastStatusCode.Should().Be(xMLOceanInsightAnalyzer.ContenerShipment.container_status);
-        }
-
         public ShipmentContainerSimulator CreateShipmentContainerSimulator(string fileName)
         {
             var xmlData = ReadFilebyName(fileName);
@@ -58,6 +27,18 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
                 IsFromContainer = true,
                 XmlString = xmlData
             };
+        }
+        public void Assert(ShipmentContainerSimulator shipmentContainerSimulator)
+        {
+            AssertShipmentContainerSimulator(shipmentContainerSimulator);
+            AssertAddCommunicationLogs();
+            var shipment = GetShipment();
+            var container = GetContainer(shipment.ShipmentPackages.First().ContainerEntityId);
+            XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
+            AssertStatusCode(xMLOceanInsightAnalyzer.ContenerShipment);
+            AssertChangeContainerDetails(container, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
+            AssertChangeShipmentDetails(shipment, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
+
         }
 
 

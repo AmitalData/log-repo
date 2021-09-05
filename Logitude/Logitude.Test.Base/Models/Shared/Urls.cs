@@ -135,6 +135,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Shipment/GetSingle?id=" + id;
         }
+        public static string ContainerGetSingle(string id)
+        {
+            return "Containers/GetSingle?id=" + id;
+        }
 
         public static string FTPDetailsGetSingle(string id)
         {

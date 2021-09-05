@@ -59,7 +59,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 
             return true;
         }
-        public string GetObjectTableID(string ObjectTableName)
+        public string GetObjectTableId(string ObjectTableName)
         {
             ObjectTableService objectTableService = new ObjectTableService();
             return objectTableService.GetIdByName(ObjectTableName);
@@ -69,6 +69,19 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(xmlData);
             ShipmentData.XMLData = xmlDocument;
+        }
+        public ContainerPM GetContainer(string containerEntityId)
+        {
+            string singleShipmentUrl = Urls.ContainerGetSingle(containerEntityId);
+            ApiResponse<ContainerPM> getResponse = APICaller.CallGet<ContainerPM>(singleShipmentUrl, UserTenant.Token);
+            return getResponse.Data;
+
+        }
+        public ShipmentPM GetShipment()
+        {
+            string singleShipmentUrl = Urls.ShipmentGetSingle("1-2072011"/*ShipmentData.ShipmentPM.Id*/);
+            ApiResponse<ShipmentPM> getResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
+            return getResponse.Data;
         }
     }
 }
