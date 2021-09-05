@@ -4983,7 +4983,7 @@
     TabName="&quot;Docs In&quot;"
     TabLocalName="&quot;Docs In&quot;"
     ObjectTableName="&quot;ShipmentOrder&quot;"
-    Code="&quot;SHDI&quot;"
+    Code="&quot;SODI&quot;"
     ControlPath="&quot;./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent&quot;"
     TextCode="&quot;ShipmentOrder.TH.DocsIn&quot;"
     IsPackagable="true"
