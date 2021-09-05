@@ -20,8 +20,12 @@ namespace Logitude.ShipmentOrderModule.Data.Repositories
             
 			throw new NotImplementedException();
         }
+        public string GetShipmentOrderId(string orderNumber, int tenant)
+        {
+            return (from a in context.ShipmentOrders where a.OrderNumber == orderNumber && a.Tenant == tenant select a.Id).FirstOrDefault();
+        }
 
-   }
+    }
 
 }
    

@@ -27,6 +27,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.ShipmentOrderModule.Data.Repositories;
+
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class DocumentsFilingQueryService
@@ -85,6 +87,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             {
                 TicketRepository ticketRepository = new TicketRepository(Tenant);
                 return ticketRepository.GetTicketId(MyEntity.EntityNumber, Tenant);
+            }
+            if (MyEntity.EntityType.Name == "ShipmentOrder")
+            {
+                ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(Tenant);
+                return shipmentRepository.GetShipmentOrderId(MyEntity.EntityNumber, Tenant);
             }
 
             return null;
