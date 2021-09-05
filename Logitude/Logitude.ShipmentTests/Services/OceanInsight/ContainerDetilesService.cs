@@ -15,6 +15,11 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 {
     public class ContainerDetailsService : OceanInsightService
     {
+        public AssertionService assertionService { get; set; }
+        public ContainerDetailsService()
+        {
+            assertionService = new AssertionService();
+        }
         public ShipmentContainerSimulator CreateShipmentContainerSimulator(string fileName)
         {
             var xmlData = ReadFilebyName(fileName);
@@ -30,15 +35,14 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         }
         public void Assert(ShipmentContainerSimulator shipmentContainerSimulator)
         {
-            AssertShipmentContainerSimulator(shipmentContainerSimulator);
-            AssertAddCommunicationLogs();
+            assertionService.AssertShipmentContainerSimulator(shipmentContainerSimulator);
+            assertionService.AssertAddCommunicationLogs();
             var shipment = GetShipment();
             var container = GetContainer(shipment.ShipmentPackages.First().ContainerEntityId);
             XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
-            AssertStatusCode(xMLOceanInsightAnalyzer.ContenerShipment);
-            AssertChangeContainerDetails(container, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
-            AssertChangeShipmentDetails(shipment, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
-
+            assertionService.AssertStatusCode(xMLOceanInsightAnalyzer.ContenerShipment);
+            assertionService.AssertChangeContainerDetails(container, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
+            assertionService.AssertChangeShipmentDetails(shipment, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
         }
 
 

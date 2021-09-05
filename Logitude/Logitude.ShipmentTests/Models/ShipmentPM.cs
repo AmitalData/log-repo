@@ -46,5 +46,9 @@ namespace Logitude.ShipmentTests.Models
         public string MainCarriageCarrierCode { get; set; }
         public string Master { get; set; }
         public string LongMaster { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
     }
 }

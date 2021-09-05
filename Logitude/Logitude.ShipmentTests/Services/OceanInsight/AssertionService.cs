@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,14 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 
         public void AssertChangeShipmentDetails(ShipmentPM shipment, ContainerUpdatedFields containerUpdatedFields)
         {
-            throw new NotImplementedException();
+            AssertChangePackageStatus(shipment.ShipmentPackages.First(),)
+        }
+        public void AssertChangeMainCarriage(ShipmentPM shipment, ContainerUpdatedFields containerUpdatedFields)
+        {
+            shipment.MainCarriageETD.Should().Be(containerUpdatedFields.MainCarriageETD);
+            shipment.MainCarriageETA.Should().Be(containerUpdatedFields.MainCarriageETA);
+            shipment.MainCarriageATD.Should().Be(containerUpdatedFields.MainCarriageATD);
+            shipment.MainCarriageATA.Should().Be(containerUpdatedFields.MainCarriageATA);
         }
 
         public void AssertStatusCode(ContenerShipmentElement contenerShipment)
@@ -31,6 +40,31 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             var isDone = Waiter.RunAndWait(tryEvreySecound, tineLifeInSecound, () => AssertAddCommunicationLogs(containerObjectTableID, containerEntityId));
             isDone.Should().BeTrue();
         }
+        public void AssertShipmentContainerSimulator(ShipmentContainerSimulator shipmentContainerSimulator)
+        {
+            shipmentContainerSimulator.Errors.Should().BeNullOrEmpty(string.Join(", ", shipmentContainerSimulator.Errors));
+        }
+        public bool AssertAddCommunicationLogs(string objectTableId, string EntityId)
+        {
+            var filters = CreateCommunicationLogFilter(objectTableId, EntityId);
+            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
+            return AssertCommunicationLogs(communicationLogs);
+        }
+        public bool AssertCommunicationLogs(List<CommunicationLogList> communicationLogs)
+        {
+            if (communicationLogs == null || communicationLogs.Count <= 0)
+                return false;
+
+            var lastCommunicationLog = communicationLogs.First(e => e.InOut == "In");
+            if (lastCommunicationLog.CommunicationStatusTypeCode != "D")
+                return false;
+
+            if (lastCommunicationLog.From != "Amital")
+                return false;
+
+            return true;
+        }
+
         public void AssertChangeContainerDetails(ContainerPM containerPM, ContainerUpdatedFields containerUpdatedFields)
         {
             containerPM.EmptyPickupLocation.Should().Be(containerUpdatedFields.EmptyPickupLocation);

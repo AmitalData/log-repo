@@ -21,17 +21,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             var path = "./MetaData/" + fileName;
             return File.ReadAllText(path);
         }
-        public void AssertShipmentContainerSimulator(ShipmentContainerSimulator shipmentContainerSimulator)
-        {
-            shipmentContainerSimulator.Errors.Should().BeNullOrEmpty(string.Join(", ", shipmentContainerSimulator.Errors));
-        }
-        public bool AssertAddCommunicationLogs(string objectTableId, string EntityId)
-        {
-            var filters = CreateCommunicationLogFilter(objectTableId, EntityId);
-            var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
-            return AssertCommunicationLogs(communicationLogs);
-        }
-        private ApiQueryFilters CreateCommunicationLogFilter(string objectTableId, string EntityId)
+        public ApiQueryFilters CreateCommunicationLogFilter(string objectTableId, string EntityId)
         {
             return new ApiQueryFiltersBuilder()
                 .PageIndex(0)
@@ -44,20 +34,6 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
                 .SortDirection("Descending")
                 .Build();
 
-        }
-        public bool AssertCommunicationLogs(List<CommunicationLogList> communicationLogs)
-        {
-            if (communicationLogs == null || communicationLogs.Count <= 0)
-                return false;
-
-            var lastCommunicationLog = communicationLogs.First(e=>e.InOut == "In");
-            if (lastCommunicationLog.CommunicationStatusTypeCode != "D")
-                return false;
-
-            if (lastCommunicationLog.From != "Amital")
-                return false;
-
-            return true;
         }
         public string GetObjectTableId(string ObjectTableName)
         {
