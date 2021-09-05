@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "SREX", StatusWeight = 50, Name = "Storage Released", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Storage Released" }, EntityStatusRepository, tenantEntityStatus);
 
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "BKAR", StatusWeight = 5, Name = "Booking arrangement", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Booking arrangement" }, EntityStatusRepository, tenantEntityStatus);
-            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "CRFP", StatusWeight = 55, Name = "Cargo Ready for Pickup", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Cargo Ready for Pickupt" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "CRFP", StatusWeight = 10, Name = "Cargo Ready for Pickup", ObjectTableId = shipmentObject.Id, Tenant = 0, DisplayName = "Cargo Ready for Pickupt" }, EntityStatusRepository, tenantEntityStatus);
 
             #endregion
 
