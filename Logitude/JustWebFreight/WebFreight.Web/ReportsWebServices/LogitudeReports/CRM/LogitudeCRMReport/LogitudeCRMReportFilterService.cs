@@ -47,24 +47,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         {
             QueryFilterItem queryFilterItem = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "OpportunityTypes").FirstOrDefault();
             string opportunityTypes = null;
-            if (queryFilterItem != null)
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null)
             {
-                if (queryFilterItem.FieldValue != null)
-                {
-                    opportunityTypes = queryFilterItem.FieldValue.ToString();
-                }
+                opportunityTypes = queryFilterItem.FieldValue.ToString();
             }
-
-
-            if (string.IsNullOrEmpty(opportunityTypes) || opportunityTypes.ToLower() == "all")
-            {
-                logitudeCRMReportFilter.OpportunityTypes = GetOpportunityTypes();
-            }
-            else
-            {
-                logitudeCRMReportFilter.OpportunityTypes = opportunityTypes.Trim(',').Split(',').ToList();
-            }
-
+            logitudeCRMReportFilter.OpportunityTypes = (string.IsNullOrEmpty(opportunityTypes) || opportunityTypes.ToLower() == "all") ? GetOpportunityTypes() : opportunityTypes.Trim(',').Split(',').ToList();
         }
 
         private List<string> GetOpportunityTypes()

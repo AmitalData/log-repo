@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.CRM.BL.DataContracts
 {
-    public class OpportunityDetails
+    public class OpportunityCRMDetails
     {
         public string CustomerStatusCode { get; set; }
         public string ResellerId { get; set; }

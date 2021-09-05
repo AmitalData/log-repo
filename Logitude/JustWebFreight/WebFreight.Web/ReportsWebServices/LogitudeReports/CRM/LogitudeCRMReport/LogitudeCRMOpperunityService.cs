@@ -20,38 +20,38 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             this.logitudeCRMReportFilter = logitudeCRMReportFilter;
         }
 
-        public List<OpportunityDetails> Build()
+        public List<OpportunityCRMDetails> Build()
         {
-            List<OpportunityDetails> opportunities = new OpportunityQueryService(tenant).GetLogitudeOpportunities(tenant, logitudeCRMReportFilter);
+            List<OpportunityCRMDetails> opportunities = new OpportunityQueryService(tenant).GetLogitudeOpportunities(tenant, logitudeCRMReportFilter);
             List<Card> resellers = GetResellersForIds(opportunities.Select(a => a.ResellerId).ToList());
             List<int> tenantManamgnetNumbers = opportunities.Select(b => (int.TryParse(b.TenantNumber, out int x) ? x : 0)).ToList();
             logitudeCRMReportTenantManagementService = new LogitudeCRMReportTenantManagementService(tenantManamgnetNumbers);
 
-            foreach (OpportunityDetails opportunity in opportunities)
+            foreach (OpportunityCRMDetails opportunityCRMDetails in opportunities)
             {
-                FillCustomFields(resellers, opportunity);
-                FillTenantManagementsFileds(opportunity);
+                FillCustomFields(resellers, opportunityCRMDetails);
+                FillTenantManagementsFileds(opportunityCRMDetails);
             }
             return opportunities;
         }
 
-        private void FillCustomFields(List<Card> resellers, OpportunityDetails opportunity)
+        private void FillCustomFields(List<Card> resellers, OpportunityCRMDetails opportunityCRMDetails)
         {
-            opportunity.Reseller = resellers.Where(a => a.Id == opportunity.ResellerId).FirstOrDefault()?.EnglishName;
-            opportunity.Total = (decimal.TryParse(opportunity.Field4, out decimal x) ? x : 0);
+            opportunityCRMDetails.Reseller = resellers.Where(a => a.Id == opportunityCRMDetails.ResellerId).FirstOrDefault()?.EnglishName;
+            opportunityCRMDetails.Total = (decimal.TryParse(opportunityCRMDetails.Field4, out decimal x) ? x : 0);
         }
 
-        private void FillTenantManagementsFileds(OpportunityDetails opportunity)
+        private void FillTenantManagementsFileds(OpportunityCRMDetails opportunityCRMDetails)
         {
-            TenantManagementPM tenantManagement = logitudeCRMReportTenantManagementService.GetByTenantNumber(opportunity.TenantNumber);
+            TenantManagementPM tenantManagement = logitudeCRMReportTenantManagementService.GetByTenantNumber(opportunityCRMDetails.TenantNumber);
             if (tenantManagement != null)
             {
-                opportunity.CurrencyCode = tenantManagement.PaymentCurrencyCode;
-                opportunity.ResellerCommission = tenantManagement.ResellerCommission;
-                opportunity.TenantManagementNumberOfUsers = logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
-                opportunity.TenantManagementTotalPrice = (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
-                opportunity.TenantManagementAveragePrice = (opportunity.TenantManagementNumberOfUsers == null || opportunity.TenantManagementNumberOfUsers == 0) ? 0 : opportunity.TenantManagementTotalPrice / opportunity.TenantManagementNumberOfUsers;
-                opportunity.TotalNet = opportunity.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
+                opportunityCRMDetails.CurrencyCode = tenantManagement.PaymentCurrencyCode;
+                opportunityCRMDetails.ResellerCommission = tenantManagement.ResellerCommission;
+                opportunityCRMDetails.TenantManagementNumberOfUsers = logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
+                opportunityCRMDetails.TenantManagementTotalPrice = (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
+                opportunityCRMDetails.TenantManagementAveragePrice = (opportunityCRMDetails.TenantManagementNumberOfUsers == null || opportunityCRMDetails.TenantManagementNumberOfUsers == 0) ? 0 : opportunityCRMDetails.TenantManagementTotalPrice / opportunityCRMDetails.TenantManagementNumberOfUsers;
+                opportunityCRMDetails.TotalNet = opportunityCRMDetails.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
             }
         }
 

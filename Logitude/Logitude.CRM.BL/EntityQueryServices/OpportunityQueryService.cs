@@ -986,14 +986,14 @@ namespace Logitude.CRM.BL.EntityQueryServices
             return context.Opportunities.Where(a => a.Tenant == tenant && a.UpdateDate > updateDate).Count();
         }
 
-        public List<OpportunityDetails> GetLogitudeOpportunities(int tenant, LogitudeCRMReportFilter logitudeCRMReportFilter)
+        public List<OpportunityCRMDetails> GetLogitudeOpportunities(int tenant, LogitudeCRMReportFilter logitudeCRMReportFilter)
         {
 
             ICRMContext context = MainContext as ICRMContext;
-            IQueryable<OpportunityDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer")
+            IQueryable<OpportunityCRMDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer")
                                                                  join opportunityType in context.OpportunityTypes on a.OpportunityTypeId equals opportunityType.Id
                                                                  where a.Tenant == tenant
-                                                                 select new OpportunityDetails()
+                                                                 select new OpportunityCRMDetails()
                                                                  {
                                                                      CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
                                                                      ResellerId = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
@@ -1012,7 +1012,12 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                      IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : opportunityType.Code == "N" ? "1" : null
 
                                                                  });
+            opportunityDetails = ApplyOpportunitiesFlter(logitudeCRMReportFilter, opportunityDetails);
+            return opportunityDetails.ToList();
+        }
 
+        private static IQueryable<OpportunityCRMDetails> ApplyOpportunitiesFlter(LogitudeCRMReportFilter logitudeCRMReportFilter, IQueryable<OpportunityCRMDetails> opportunityDetails)
+        {
             if (!string.IsNullOrEmpty(logitudeCRMReportFilter.CustomerStatus))
             {
                 opportunityDetails = opportunityDetails.Where(d => d.CustomerStatusCode == logitudeCRMReportFilter.CustomerStatus);
@@ -1028,8 +1033,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                 opportunityDetails = opportunityDetails.Where(d => logitudeCRMReportFilter.OpportunityTypes.Contains(d.OpportunityTypeId));
             }
 
-            return opportunityDetails.ToList();
+            return opportunityDetails;
         }
-
     }
 }
