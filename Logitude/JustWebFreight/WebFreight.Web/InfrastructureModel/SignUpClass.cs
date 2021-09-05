@@ -1474,18 +1474,49 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static void AddTruckerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
         {
-            CardRepository cardRepository = new CardRepository(signUpInfoClass.Tenant);
-
-            var truckerCard = cardQuery.GetSinglePMByCode("---", 0);
-            if (truckerCard != null)
+            if (LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
             {
-                Card newTrucker = GetCardInstance(signUpInfoClass, truckerCard); 
-                cardRepository.Add(newTrucker);
-                cardRepository.SubmitChanges();  
+                InsertTrucerCard(signUpInfoClass, cardQuery);
+                InsertTrucker(signUpInfoClass, cardQuery);
+
             }
         }
 
-        private static Card GetCardInstance(SignUpInfoClass signUpInfoClass, CardPM truckerCard)
+        private static void InsertTrucker(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
+        {
+            TruckerRepository truckerRepository = new TruckerRepository(signUpInfoClass.Tenant);  
+
+            Trucker newTrucker = GetTruckerInstance(cardQuery);
+            truckerRepository.Add(newTrucker);
+            truckerRepository.SubmitChanges();
+           
+        }
+
+        private static void InsertTrucerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
+        {
+            CardRepository cardRepository = new CardRepository(signUpInfoClass.Tenant);
+
+            CardPM truckerCard = cardQuery.GetSinglePMByCode("---", 0);
+            if (truckerCard != null)
+            {
+                Card newTrucker = GetCardInstance(truckerCard);
+                cardRepository.Add(newTrucker);
+                cardRepository.SubmitChanges();
+            }
+        }
+
+        private static Trucker GetTruckerInstance(CardQuery cardQuery)
+        {
+            var trucker = cardQuery.GetSinglePMByCode("---", tenant);
+
+            return new Trucker()
+            {
+                Id = trucker.Id,
+                Tenant = tenant,
+            };
+        }
+
+        private static Card GetCardInstance(CardPM truckerCard)
         {
             return new Card()
             {
@@ -1496,14 +1527,14 @@ namespace WebFreight.Web.InfrastructureModel
                 InActive = truckerCard.InActive,
                 VatNumber = truckerCard.VatNumber,
                 CountryId = truckerCard.CountryId,
-                CreateDate = truckerCard.CreateDate,
-                UpdateDate = truckerCard.UpdateDate,
+                CreateDate = DateTime.Today,
+                UpdateDate = DateTime.Today,
                 CreatedByUserId = truckerCard.CreatedByUserId,
                 UpdatedByUserId = truckerCard.UpdatedByUserId,
                 SearchFields = truckerCard.SearchFields,
                 PaymentTermId = truckerCard.PaymentTermId,
                 Notes = truckerCard.Notes,
-                Tenant = signUpInfoClass.Tenant,
+                Tenant = tenant,
             };
         }
 
