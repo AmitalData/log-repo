@@ -917,6 +917,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isManualPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsManualPayment  
+	   {
+	    
+	     get
+		{
+		   return isManualPayment;
+		 }
+		 set
+		 {
+		   if(isManualPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsManualPayment",OldValue=isManualPayment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isManualPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

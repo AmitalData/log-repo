@@ -104,6 +104,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ForwarderId { get; set; }
 	      
         public virtual Card ForwarderCard { get; set; }
+        [Column("IsManualPayment")]
+	    public bool IsManualPayment { get; set; }
     }
 }
 	 
