@@ -357,39 +357,39 @@ export class StringToColorPipe {
             case "7":
             case "8":
             case "13":
-
-                {
-                    myResult = "#009161"; // green
-
-                    break;
-                }
-                   case "4":
-                   case "5":
-                   case "6":
-                   case "10":
-                   case "11":
-                   case "15":
-                   case "21":
-                {
-                    myResult = "#F37021"; // orange
-                    break;
-                }
-                    case "0":
-                    case "1":
-                    case "2":
-                    case "9":
-                    case "12":
-                    case "14":
-                    case "16":
-                    case "17":
-                    case "18":
-                    case "19":
-                    case "20":
-
-                {
-                    myResult = "#E53030"; // red
-                    break;
-                }
+            case "43":
+            case "44":
+            {
+                myResult = "#009161"; // green
+                break;
+            }
+            case "4":
+            case "5":
+            case "6":
+            case "10":
+            case "11":
+            case "15":
+            case "21":
+            {
+                myResult = "#F37021"; // orange
+                break;
+            }
+            case "0":
+            case "1":
+            case "2":
+            case "9":
+            case "12":
+            case "14":
+            case "16":
+            case "17":
+            case "18":
+            case "19":
+            case "20":
+            case "37":
+            {
+                myResult = "#E53030"; // red
+                break;
+            }
 
         }
 
