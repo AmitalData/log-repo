@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "35ae087eb73efc8b23c16623dab83341";
+		public const string HashString = "f7e9597019a5a55efe15aac72cdbecf0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "1148",
+			      				    Code =  "dea9",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1784,7 +1784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationStatusQueryOHandeledWroker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationStatusQuery.O.HandeledWroker", DefaultText = "Handeled Wroker",LocalDefaultText = @"מעריך מטפל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClientSearchByIDQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClientSearchByIDQuery", DefaultText = "Client Search Query",LocalDefaultText = @"נתונים נוספים ליבואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClientSearchByIDQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClientSearchByIDQuery", DefaultText = "Client Search Query",LocalDefaultText = @"נתונים נוספים ליבואן/יצואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsClientSearchByIDQueryOAgentAuthorization = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClientSearchByIDQuery.O.AgentAuthorization", DefaultText = "Agent Authorization List",LocalDefaultText = @"רשימת כתבי הרשאה שניתנו לסוכן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

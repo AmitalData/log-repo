@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "d7021a46b221f51ce5b8c997306ae2fc";
+		public const string HashString = "a567168241d4c8c069277080fcdc5a01";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2596,7 +2596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ClientObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Client" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ClientTextCode_CustomsClientOClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Clients", DefaultText = "Clients",LocalDefaultText = @"יבואנים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Clients", DefaultText = "Clients",LocalDefaultText = @"יבואנים/יצואנים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Send", DefaultText = "Send",LocalDefaultText = @"לשלוח", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

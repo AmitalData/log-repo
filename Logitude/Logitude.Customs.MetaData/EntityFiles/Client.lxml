@@ -3119,7 +3119,7 @@
     <TextCode
       Code="&quot;Customs.Client.O.Clients&quot;"
       DefaultText="&quot;Clients&quot;"
-      LocalDefaultText="&quot;יבואנים&quot;"
+      LocalDefaultText="&quot;יבואנים/יצואנים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

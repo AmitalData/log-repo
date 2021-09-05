@@ -35,11 +35,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (!string.IsNullOrWhiteSpace(requestParams.ExternalId))
             {
-                this.MyRequestSheetParam.RequestDescription = "נתונים נוספים ליבואן " + requestParams.ExternalId;
+                this.MyRequestSheetParam.RequestDescription = "נתונים נוספים ליבואן/יצואן " + requestParams.ExternalId;
             }
             else
             {
-                this.MyRequestSheetParam.RequestDescription = "נתונים נוספים ליבואן " + requestParams.PassportNumber;
+                this.MyRequestSheetParam.RequestDescription = "נתונים נוספים ליבואן/יצואן " + requestParams.PassportNumber;
             }
 
             return myCL_NG_8343_Web01_ClientSearchByIDParam;
