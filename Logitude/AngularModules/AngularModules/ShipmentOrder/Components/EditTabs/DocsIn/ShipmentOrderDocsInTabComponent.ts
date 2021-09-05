@@ -28,7 +28,7 @@ export class ShipmentOrderDocsInTabComponent implements OnInit {
             var table = window.ObjectTables.filter(d => d.Name == this.entityArgs.ObjectTableName)[0];
             if (table) this.ObjectTableId = table.Id;
             this.EntityId = this.EntityPM.Id;
-            this.TransportModeId = this.EntityPM.TransportModeId;
+           // this.TransportModeId = this.EntityPM.TransportModeId;
         }
     }
 
