@@ -15,7 +15,6 @@ import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from './DecDangersContactPM';
 import {DeclarationExportRecipientPM} from './DeclarationExportRecipientPM';
-import {ExportDeclarationClosingDataPM} from './ExportDeclarationClosingDataPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1385,41 +1384,7 @@ export class DeclarationPM {
     public set AmendmentTypeName(newValue: string) { if (this.amendmentTypeName != newValue) { this.amendmentTypeName = newValue; this.MarkAsDirty("AmendmentTypeName"); } }
        
 	 
-     
-	private exportDeclarationClosingDatas: ExportDeclarationClosingDataPM[];
-    get  ExportDeclarationClosingDatas() {
-        if (this.exportDeclarationClosingDatas == null) {
-            this.exportDeclarationClosingDatas = [];
-        }
 
-        return this.exportDeclarationClosingDatas;
-    }
-    set  ExportDeclarationClosingDatas(newValue: ExportDeclarationClosingDataPM[]) {
-        if (this.exportDeclarationClosingDatas != newValue) {
-            this.exportDeclarationClosingDatas = newValue;
-        }
-    }
-    public AddExportDeclarationClosingData(item: ExportDeclarationClosingDataPM) {
-        if (item != null) {
-            var index = this. ExportDeclarationClosingDatas.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. ExportDeclarationClosingDatas.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveExportDeclarationClosingData(item: ExportDeclarationClosingDataPM) {
-        if (item != null) {
-            var index = this. ExportDeclarationClosingDatas.indexOf(item);
-            if (index > -1) {
-                this. ExportDeclarationClosingDatas.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public ExportDeclarationClosingDatas: Array<ExportDeclarationClosingDataPM>= [];
- 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

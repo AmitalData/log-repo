@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.ExportDeclarationClosingData", "READ", authToken.Tenant);
-	                
+                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
 				exportDeclarationClosingDataQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.ExportDeclarationClosingData", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("ExportDeclarationClosingData", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         ExportDeclarationClosingDataUpdateService service = new ExportDeclarationClosingDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.ExportDeclarationClosingData", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("ExportDeclarationClosingData", entityPM.Tenant, authToken.Tenant);
-	
+
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         ExportDeclarationClosingDataUpdateService service = new ExportDeclarationClosingDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
