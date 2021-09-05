@@ -239,7 +239,15 @@ export class SelectStandalonePackagesComponent {
         } else if (this.IsFromShipmentPackageTab && !this.IsNewShipmentPackage()) {
             this.AddStandAloneShipmentPackagePM();
         }
+        this.RemoveNotSelectedNewShipmentPackages();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+    private RemoveNotSelectedNewShipmentPackages() {
+        if (this.ShipmentPM.ShipmentPackages != null) {
+            this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id) && item.IsPackageCheckedInLeg == false).forEach(item => {
+                this.ShipmentPM.RemovePackage(item);
+            });
+        }
     }
 
     AddShipmentPickUpDeliveryPackagePM() {
@@ -261,6 +269,7 @@ export class SelectStandalonePackagesComponent {
     }
 
     AddStandAloneShipmentPackagePM() {
+
         this.ItemsSource.filter(f => f.IsChecked).forEach(item => {
             var newPackage = new ShipmentPackagePM(this.ShipmentPM);
             newPackage.Tenant = this.ShipmentPM.Tenant;

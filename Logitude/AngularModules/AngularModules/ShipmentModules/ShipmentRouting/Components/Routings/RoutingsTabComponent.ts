@@ -132,15 +132,6 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 }
             });
 
-            this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackSuccess: boolean) => {
-                if (isBackSuccess) {
-                    var c = this.CurrentSession.SessionEvent.subscribe(s => {
-                        if (s == "ReloadDisconnectedForwarderShipment") {
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        }
-                    });
-                }
-            });
         }
     }
     ngOnDestroy() {

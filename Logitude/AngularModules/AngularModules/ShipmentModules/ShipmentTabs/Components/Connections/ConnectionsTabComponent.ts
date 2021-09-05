@@ -146,11 +146,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.LoadData();
                     this.FillAssemblies();
-
-                    if (this.IsDisconnectindStandAloneShipmentCompleted) {
-                        this.IsDisconnectindStandAloneShipmentCompleted = false;
-                        this.CurrentSession.FireEvent("ReloadDisconnectedForwarderShipment");
-                    }
                 }
             });
 
@@ -535,7 +530,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 if (!myResponse.HasError) {
                     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ReloadEntityPM();
-                    this.IsDisconnectindStandAloneShipmentCompleted = true;
                     this.LoadData();
                 }
                 this.CurrentSession.StopBusyIndicator();
