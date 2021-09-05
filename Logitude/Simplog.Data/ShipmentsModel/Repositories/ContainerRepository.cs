@@ -38,7 +38,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Container GetSingleContainer(string id, int tenant)
         {
-            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard")
+            return (from container in context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
+                    Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
+                    .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort")
                     where container.Id == id && container.Tenant == tenant
                     select container).FirstOrDefault();
         }

@@ -532,6 +532,7 @@
     <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
