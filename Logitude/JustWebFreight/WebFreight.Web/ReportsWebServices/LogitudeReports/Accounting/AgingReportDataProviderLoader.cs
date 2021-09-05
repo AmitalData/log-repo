@@ -119,10 +119,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods, false);
 
             }
+            resultedPeriods= FilterPeriodsBySecusrityLevel(resultedPeriods);
+         
 
             return resultedPeriods;
         }
-
+        private  List<PeriodMExtended> FilterPeriodsBySecusrityLevel(List<PeriodMExtended> resultedPeriods)
+        {
+            UserPM loggedUer = GetLoggerUser();
+            if (!loggedUer.IsCustomerCare)
+                return resultedPeriods.Where(d => (d.ChartOfAccountSecurityLevel <= loggedUer.SecurityLevel) || d.ChartOfAccountSecurityLevel == null).ToList();
+            else return resultedPeriods;
+        }
         private  List<PeriodMExtended> FilterPeriodsBetweenTwoValues(List<PeriodMExtended> resultedPeriods, Boolean useLocalBalanceInDue)
         {
             decimal? FromBalanceFilterAmount = GetNullableDecimalFilterValue("FromBalanceFilterValue");
@@ -551,51 +559,54 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<AgingPeriod> BuildAgingPeriods(List<PeriodMExtended> result)
         {
+            UserPM loggedUser = GetLoggerUser();
              List<AgingPeriod> periods = new List<AgingPeriod>();
             if (GetFilterValue<bool>("Detailed") == true)
             {
                 foreach (PeriodMExtended item in result)
                 {
-                    AgingPeriod record = new AgingPeriod();
+                   
+                        AgingPeriod record = new AgingPeriod();
 
-                    record.PeriodName = item.PeriodName;
-                    record.AccountName = (item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName) + " / " + item.CurrencyCode;
-                    record.AccountEnglishName = item.AccountEnglishName + " / " + item.CurrencyCode;
-                    record.AccountLocalName = item.AccountLocalName + " / " + item.CurrencyCode;
-                    record.CurrencyCode = item.CurrencyCode;
-                    record.AccountDisplayNumber = item.AccountDisplayNumber;
-                    record.AccountCurrencyCode = item.AccountCurrencyCode;
-                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
-                    record.InsuredCreditLimit = item.InsuredCreditLimit;
-                    record.CustomerVatNumber = item.CustomerVatNumber;
-                    record.CustomerPaymentTerm = item.AccountTermLocalName;
-                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
+                        record.PeriodName = item.PeriodName;
+                        record.AccountName = (item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName) + " / " + item.CurrencyCode;
+                        record.AccountEnglishName = item.AccountEnglishName + " / " + item.CurrencyCode;
+                        record.AccountLocalName = item.AccountLocalName + " / " + item.CurrencyCode;
+                        record.CurrencyCode = item.CurrencyCode;
+                        record.AccountDisplayNumber = item.AccountDisplayNumber;
+                        record.AccountCurrencyCode = item.AccountCurrencyCode;
+                        record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                        record.InsuredCreditLimit = item.InsuredCreditLimit;
+                        record.CustomerVatNumber = item.CustomerVatNumber;
+                        record.CustomerPaymentTerm = item.AccountTermLocalName;
+                        record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
-                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
-                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
-                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
-                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
-
-
-                    record.AccountSalesmanName = item.AccountSalesmanName;
-                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    record.AccountCollectorName = item.AccountCollectorName;
-                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    record.Category1Name = item.Category1Name;
-                    record.Category2Name = item.Category2Name;
-                    record.Category3Name = item.Category3Name;
-                    record.Category4Name = item.Category4Name;
-                    record.Category5Name = item.Category5Name;
-                    record.Category1LocalName = item.Category1LocalName;
-                    record.Category2LocalName = item.Category2LocalName;
-                    record.Category3LocalName = item.Category3LocalName;
-                    record.Category4LocalName = item.Category4LocalName;
-                    record.Category5LocalName = item.Category5LocalName;
-
-                    record.Total = item.Total;
+                        record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                        record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                        record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                        record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
 
-                    periods.Add(record);
+                        record.AccountSalesmanName = item.AccountSalesmanName;
+                        record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                        record.AccountCollectorName = item.AccountCollectorName;
+                        record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                        record.Category1Name = item.Category1Name;
+                        record.Category2Name = item.Category2Name;
+                        record.Category3Name = item.Category3Name;
+                        record.Category4Name = item.Category4Name;
+                        record.Category5Name = item.Category5Name;
+                        record.Category1LocalName = item.Category1LocalName;
+                        record.Category2LocalName = item.Category2LocalName;
+                        record.Category3LocalName = item.Category3LocalName;
+                        record.Category4LocalName = item.Category4LocalName;
+                        record.Category5LocalName = item.Category5LocalName;
+
+                        record.Total = item.Total;
+
+
+                        periods.Add(record);
+                    
 
                 }
             }
@@ -603,45 +614,47 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 foreach (PeriodMExtended item in result)
                 {
-                    AgingPeriod record = new AgingPeriod();
+                    
+                        AgingPeriod record = new AgingPeriod();
 
-                    record.PeriodName = item.PeriodName;
-                    record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
-                    record.AccountEnglishName = item.AccountEnglishName;
-                    record.AccountLocalName = item.AccountLocalName;
-                    record.AccountDisplayNumber = item.AccountDisplayNumber;
-                    record.AccountCurrencyCode = item.AccountCurrencyCode;
-                    record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
-                    record.InsuredCreditLimit = item.InsuredCreditLimit;
-                    record.CustomerVatNumber = item.CustomerVatNumber;
-                    record.CustomerPaymentTerm = item.AccountTermLocalName;
-                    record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
+                        record.PeriodName = item.PeriodName;
+                        record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
+                        record.AccountEnglishName = item.AccountEnglishName;
+                        record.AccountLocalName = item.AccountLocalName;
+                        record.AccountDisplayNumber = item.AccountDisplayNumber;
+                        record.AccountCurrencyCode = item.AccountCurrencyCode;
+                        record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
+                        record.InsuredCreditLimit = item.InsuredCreditLimit;
+                        record.CustomerVatNumber = item.CustomerVatNumber;
+                        record.CustomerPaymentTerm = item.AccountTermLocalName;
+                        record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
-                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
-                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
-                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
-                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+                        record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                        record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                        record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                        record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
 
-                    record.AccountSalesmanName = item.AccountSalesmanName;
-                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    record.AccountCollectorName = item.AccountCollectorName;
-                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    record.Category1Name = item.Category1Name;
-                    record.Category2Name = item.Category2Name;
-                    record.Category3Name = item.Category3Name;
-                    record.Category4Name = item.Category4Name;
-                    record.Category5Name = item.Category5Name;
-                    record.Category1LocalName = item.Category1LocalName;
-                    record.Category2LocalName = item.Category2LocalName;
-                    record.Category3LocalName = item.Category3LocalName;
-                    record.Category4LocalName = item.Category4LocalName;
-                    record.Category5LocalName = item.Category5LocalName;
+                        record.AccountSalesmanName = item.AccountSalesmanName;
+                        record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                        record.AccountCollectorName = item.AccountCollectorName;
+                        record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                        record.Category1Name = item.Category1Name;
+                        record.Category2Name = item.Category2Name;
+                        record.Category3Name = item.Category3Name;
+                        record.Category4Name = item.Category4Name;
+                        record.Category5Name = item.Category5Name;
+                        record.Category1LocalName = item.Category1LocalName;
+                        record.Category2LocalName = item.Category2LocalName;
+                        record.Category3LocalName = item.Category3LocalName;
+                        record.Category4LocalName = item.Category4LocalName;
+                        record.Category5LocalName = item.Category5LocalName;
 
-                    record.Total = item.Total;
+                        record.Total = item.Total;
 
-                    periods.Add(record);
+                        periods.Add(record);
+                    }
 
-                }
+                
             }
 
             return periods;
@@ -718,7 +731,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
             reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
-
+          
 
             SetReportCategoryParameters(reportParameters);
 
