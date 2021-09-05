@@ -59,23 +59,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CargoTenantMilestoneDefinitionQuery cargoTrackingMilestoneQuery = new CargoTenantMilestoneDefinitionQuery(tenant);
             List<CargoTenantMilestoneDefinitionPM> cargoMyTenantMilestoneDefinitionPMs = cargoTrackingMilestoneQuery.GetAll(tenant);
 
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            cargoTenantZeroMilestoneDefinitionPMs.ForEach(cargoTenantZeroMilestoneDefinition =>
             {
-                cargoTenantZeroMilestoneDefinitionPMs.ForEach(cargoTenantZeroMilestoneDefinition =>
+                CargoTenantMilestoneDefinitionPM cargoMyTenantMilestoneDefinition = cargoMyTenantMilestoneDefinitionPMs.FirstOrDefault(f => f.Code == cargoTenantZeroMilestoneDefinition.Code);
+                if (cargoMyTenantMilestoneDefinition == null)
                 {
-                    CargoTenantMilestoneDefinitionPM cargoMyTenantMilestoneDefinition = cargoMyTenantMilestoneDefinitionPMs.FirstOrDefault(f => f.Code == cargoTenantZeroMilestoneDefinition.Code);
-                    if (cargoMyTenantMilestoneDefinition == null)
-                    {
-                        Create(cargoTenantZeroMilestoneDefinition);
-                    }
-                    else
-                    {
-                        cargoMyTenantMilestoneDefinition.IsCustomerView = cargoTenantZeroMilestoneDefinition.IsCustomerView;
-                        Update(cargoMyTenantMilestoneDefinition);
-                    }
-                });
-                scope.Complete();
-            }
+                    Create(cargoTenantZeroMilestoneDefinition);
+                }
+                else
+                {
+                    cargoMyTenantMilestoneDefinition.IsCustomerView = cargoTenantZeroMilestoneDefinition.IsCustomerView;
+                    Update(cargoMyTenantMilestoneDefinition);
+                }
+            });
         }
     }
 }
