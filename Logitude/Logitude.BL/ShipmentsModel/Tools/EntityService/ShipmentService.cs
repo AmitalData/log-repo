@@ -3204,25 +3204,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (isNewEntity)
                 {
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
-                    {
-                        entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+                    //{
+                    //    entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
-                    {
-                        entityPM.MainCarriageFromAddressId = entityPM.ShipperAddressId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
+                    //{
+                    //    entityPM.MainCarriageFromAddressId = entityPM.ShipperAddressId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
-                    {
-                        entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+                    //{
+                    //    entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
-                    {
-                        entityPM.MainCarriageToAddressId = entityPM.ConsigneeAddressId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                    //{
+                    //    entityPM.MainCarriageToAddressId = entityPM.ConsigneeAddressId;
+                    //}
                 }
 
                 //entityPM.FromPortId = null;
