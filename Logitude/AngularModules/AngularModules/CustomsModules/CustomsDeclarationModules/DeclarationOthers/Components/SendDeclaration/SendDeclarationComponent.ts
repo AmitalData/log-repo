@@ -610,6 +610,9 @@ export class SendDeclarationService implements OnDestroy {
                         windowArgs.Errors = this.ValidationErrors;
                         windowArgs.ComponentHeight = '328px'; // TextCodeTranslator.Translate("Customs.General.O.ValidationDocuments")
                         var windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יבוא";
+                        if (this.EntityPM.Direction == "E") {
+                            windowTitle = "בדיקת מסמכים לפני שליחת הצהרת יצוא";
+                        }
 
                         //var logWindow = new LogitudeWindow();
                         this.logWindow.Width = 600;
@@ -862,9 +865,13 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
+        var windowTitle = "שליחת תיקון הצהרת יבוא";
+        if (this.EntityPM.Direction == "E") {
+            windowTitle = "שליחת תיקון הצהרת יצוא";
+        }
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,searchParams.PBId,
-                "שליחת תיקון הצהרת יבוא", false
+                windowTitle, false
                 , myShowProgressBarParams)
             .then((res) => {
                 this.ResponseData = res;
@@ -937,9 +944,14 @@ export class SendDeclarationService implements OnDestroy {
                     }
                 };
         }
+        var title = "שליחת הצהרת יבוא";
+        if (this.EntityPM.Direction == "E")
+        {
+             title = "שליחת הצהרת יצוא";
+        }
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,searchParams.PBId,
-            "שליחת הצהרת יבוא", false
+            .ShowProgressBar(this.CurrentSession, searchParams.PBId,
+                title, false
             , myShowProgressBarParams)
             .then((res) => {
                 this.ResponseData = res;
