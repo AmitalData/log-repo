@@ -545,7 +545,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
                 if (decRef != null)
                 {
-                    // decRef.ManualPayment = true;
+                     decRef.IsManualPayment = true;
                     decRef.ChangeSetOp = ChangeSetOperation.Update;
                     updateService.Update(decRef, true);
                 }

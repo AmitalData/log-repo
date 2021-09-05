@@ -106,7 +106,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (decRef != null)
                 {
-                    // decRef.ManualPayment = true;
+                    decRef.ChangeSetOp = ChangeSetOperation.Update;
+                      decRef.IsManualPayment = true;
                     updateService.Update(decRef, true);
                 }
             }
