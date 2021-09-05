@@ -248,17 +248,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count > 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
         }
-        private UserPM GetLoggedUser(int tenant)
-        {
-            UserPM loggedUser = null;
-            UserQuery userQuery = new UserQuery(tenant);
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            {
-                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
-            }
-
-            return loggedUser;
-        }
+     
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
         {
             List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();

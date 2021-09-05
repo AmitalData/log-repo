@@ -257,7 +257,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel;
+            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
         }
     }
 
@@ -811,7 +811,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var chartOfAccount: ChartOfAccountPM = response.Result;
-                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel;
+                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel == undefined ? 0 : chartOfAccount.ChartOfAccountSecurityLevel;
             }
         });
     }
@@ -828,19 +828,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         else return true;
     }
     private CheckSecurityLevel(securityLevel: any) {
-        if (!this.loggedUser.IsCustomerCare) {
-            if (securityLevel == undefined) {
-                securityLevel = 0;
-            }
-            if (securityLevel > this.loggedUser.SecurityLevel) {
+        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel )) {          
+           
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
                 return false;
-            }
-            else return true;
-
-        }
+            }          
         else return true;
     }
+
     private _IsReconciled: boolean;
     public get IsReconciled(): boolean
     {
