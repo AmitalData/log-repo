@@ -45,9 +45,9 @@ export class SystemDataPM {
     public set SignatureHtml(newValue: string) { if (this.signatureHtml != newValue) { this.signatureHtml = newValue; this.MarkAsDirty("SignatureHtml"); } }
        
 	 
-    private date: string;
+    private date: Date;
     public get Date() { return this.date; }
-    public set Date(newValue: string) { if (this.date != newValue) { this.date = newValue; this.MarkAsDirty("Date"); } }
+    public set Date(newValue: Date) { if (this.date != newValue) { this.date = newValue; this.MarkAsDirty("Date"); } }
        
 	 
     private localCurrencyId: string;

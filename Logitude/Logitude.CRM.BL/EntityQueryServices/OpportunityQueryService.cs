@@ -18,6 +18,8 @@ using Logitude.CRM.Data.BusinessUnitFilters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.BL.EntityDws;
 using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.CRM.BL.EntityQueryServices
 {
@@ -86,7 +88,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                     cusReposiory.Update(customerItem);
                 }
             }
-            
+
             OpportunityProductLocationRepository oppLocationRepository = new OpportunityProductLocationRepository(tenant);
             CustomerProductLocationRepository cusLocationReposiory = new CustomerProductLocationRepository(tenant);
 
@@ -146,9 +148,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
             IQueryable<Opportunity> dataSourceQuery =
                 (from d in context.Opportunities.Include("Stage")
                  where d.Tenant == tenant
-                 && !d.IsClosed    
+                 && !d.IsClosed
                  && !d.IsCancelled
-                 && d.StageId != null                 
+                 && d.StageId != null
                  && d.Stage.IsSelectable
                  select d);
 
@@ -188,7 +190,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                  {
                      Id = g.Key.StageId,
                      LabelProperty = g.Key.Name,
-                     DecimalProperty = filterCode == "CNT" ? g.Count() : g.Sum(s => s.NumberOfShipments).Value,                     
+                     DecimalProperty = filterCode == "CNT" ? g.Count() : g.Sum(s => s.NumberOfShipments).Value,
                      IntegerProperty = g.Key.Probability == null ? 0 : g.Key.Probability.Value,
                      GroupedId = g.Key.StageId,
                  }).ToList();
@@ -408,13 +410,13 @@ namespace Logitude.CRM.BL.EntityQueryServices
 
             return myResult;
         }
-        public List<CRMChartingClass> GetOpportunitiesGroupBySalesmanCustom(DateTime? FromDate,DateTime? ToDate, string ownerId, string businessUnitId, string fieldCode, int tenant, bool isTopTen)
+        public List<CRMChartingClass> GetOpportunitiesGroupBySalesmanCustom(DateTime? FromDate, DateTime? ToDate, string ownerId, string businessUnitId, string fieldCode, int tenant, bool isTopTen)
         {
             List<CRMChartingClass> myResult = new List<CRMChartingClass>();
             ICRMContext context = MainContext as ICRMContext;
 
 
-         
+
 
             IQueryable<Opportunity> dataSourceQuery =
                 (from d in context.Opportunities.Include("Owner").Include("Stage")
@@ -438,9 +440,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
 
             if (fieldCode == "C")
             {
-              
-                    dataSourceQuery = dataSourceQuery.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= ToDate);
-                
+
+                dataSourceQuery = dataSourceQuery.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= ToDate);
+
 
                 if (dataSourceQuery != null)
                 {
@@ -526,9 +528,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
 
                 dataSourceQuery = dataSourceQuery.Where(d => d.IsClosed == true && (d.Stage.Code == "CLS" || d.Stage.Code == "CWN"));
 
-              
-                    dataSourceQuery = dataSourceQuery.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) <= ToDate);
-                
+
+                dataSourceQuery = dataSourceQuery.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) <= ToDate);
+
 
                 if (dataSourceQuery != null)
                 {
@@ -595,12 +597,12 @@ namespace Logitude.CRM.BL.EntityQueryServices
             return myResult;
         }
 
-        public List<CRMChartingClass> GetOpportunitiesChartDataCustom(DateTime? FromDate,DateTime?ToDate, string ownerId, string businessUnitId, string chartCode, int tenant)
+        public List<CRMChartingClass> GetOpportunitiesChartDataCustom(DateTime? FromDate, DateTime? ToDate, string ownerId, string businessUnitId, string chartCode, int tenant)
         {
             List<CRMChartingClass> myResult = new List<CRMChartingClass>();
             ICRMContext context = MainContext as ICRMContext;
 
-      
+
 
             IQueryable<Opportunity> dataSource =
                 (from d in context.Opportunities.Include("Owner").Include("OpportunityType").Include("LeadSource").Include("Stage")
@@ -622,9 +624,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
                 dataSource = dataSource.Where(d => d.BusinessUnitId == businessUnitId);
             }
 
-          
-                dataSource = dataSource.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) <= ToDate);
-            
+
+            dataSource = dataSource.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.ActualClosingDate) <= ToDate);
+
 
             if (chartCode == "WL")
             {
@@ -688,7 +690,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
             ICRMContext context = MainContext as ICRMContext;
 
             DatesHelper helper = MethodHelper.GetDates(code, tenant);
-            
+
             DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime? date1 = helper.Date1;
             DateTime? date2 = helper.Date2;
@@ -785,7 +787,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
         }
 
 
-        public List<OpportunityDW> GetOpportunitiesDWByDates(int tenant, DateTime fromDate, DateTime toDate, int skip , int take)
+        public List<OpportunityDW> GetOpportunitiesDWByDates(int tenant, DateTime fromDate, DateTime toDate, int skip, int take)
         {
 
             //ICRMContext context = MainContext as ICRMContext;
@@ -821,6 +823,8 @@ namespace Logitude.CRM.BL.EntityQueryServices
             //                                         }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
 
             return new List<OpportunityDW>();//SetOtherPropInOpportunityDwLists(OpportunityDWList, tenant);
+
+      
 
         }
 
@@ -865,7 +869,8 @@ namespace Logitude.CRM.BL.EntityQueryServices
             //                                         }).OrderBy(d=>d.UpdateDate).Skip(skip).Take(take).ToList();
 
             return new List<OpportunityDW>();//SetOtherPropInOpportunityDwLists(OpportunityDWList,tenant);
-
+          
+                                            
 
         }
 
@@ -873,14 +878,14 @@ namespace Logitude.CRM.BL.EntityQueryServices
         {
             #region Card
             List<string> cardIds = new List<string>();
-            List<string>resellerIds = new List<string>();
+            List<string> resellerIds = new List<string>();
             List<string> contactIds = new List<string>();
             foreach (OpportunityDW item in opportunityDWList.Where(d => !string.IsNullOrEmpty(d.CustomerId) || !string.IsNullOrEmpty(d.Reseller) || !string.IsNullOrEmpty(d.OwnerId)).ToList())
             {
                 if (!string.IsNullOrEmpty(item.CustomerId))
                 {
                     if (!cardIds.Contains(item.CustomerId)) cardIds.Add(item.CustomerId);
-                   
+
                 }
 
                 if (!string.IsNullOrEmpty(item.Reseller))
@@ -899,13 +904,13 @@ namespace Logitude.CRM.BL.EntityQueryServices
             List<Card> cardLists = new List<Card>();
             List<Card> cardResellerLists = new List<Card>();
             if (cardIds.Count > 0) cardLists = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
-            
+
             if (resellerIds.Count > 0) cardResellerLists = cardRepository.GetCardsByIds(resellerIds, tenant).ToList();
-          
+
             #endregion
 
             #region Contacts
-          
+
             foreach (Card card in cardLists.Where(d => !string.IsNullOrEmpty(d.SalesmanUserId)).ToList())
             {
                 if (!contactIds.Contains(card.SalesmanUserId)) contactIds.Add(card.SalesmanUserId);
@@ -923,7 +928,8 @@ namespace Logitude.CRM.BL.EntityQueryServices
             foreach (OpportunityDW item in opportunityDWList)
             {
                 #region Field4
-                if (!string.IsNullOrEmpty(item.Field4)){
+                if (!string.IsNullOrEmpty(item.Field4))
+                {
                     item.IncomeCurrency = "USD";
                     if (item.Field4.Contains("E"))
                     {
@@ -984,6 +990,54 @@ namespace Logitude.CRM.BL.EntityQueryServices
             return 0;
         }
 
-      
+        public List<OpportunityCRMDetails> GetLogitudeOpportunities(int tenant, LogitudeCRMReportFilter logitudeCRMReportFilter)
+        {
+
+            ICRMContext context = MainContext as ICRMContext;
+            IQueryable<OpportunityCRMDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer")
+                                                                 join opportunityType in context.OpportunityTypes on a.OpportunityTypeId equals opportunityType.Id
+                                                                 where a.Tenant == tenant
+                                                                 select new OpportunityCRMDetails()
+                                                                 {
+                                                                     CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
+                                                                     ResellerId = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
+                                                                     OpportunityTypeId = a.OpportunityTypeId,
+                                                                     OpportunityTypeCode = opportunityType.Code,
+                                                                     IsCancelled = a.IsCancelled,
+                                                                     CreateDate = a.CreateDate.Value,
+
+                                                                     ClientId = a.Customer != null ? a.Customer.Id : null,
+                                                                     TenantNumber = a.Customer != null ? a.Customer.ReceivablesAccountingCard : null,
+                                                                     ClientName = a.Customer != null ? a.Customer.EnglishName : null,
+                                                                     Reseller = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
+                                                                     CountryName = a.Customer != null ? a.Customer.CountryName : null,
+                                                                     NumberOfUsers = a.NumberOfShipments,
+                                                                     Field4 = a.Field4,
+                                                                     IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : opportunityType.Code == "N" ? "1" : null
+
+                                                                 });
+            opportunityDetails = ApplyOpportunitiesFlter(logitudeCRMReportFilter, opportunityDetails);
+            return opportunityDetails.ToList();
+        }
+
+        private static IQueryable<OpportunityCRMDetails> ApplyOpportunitiesFlter(LogitudeCRMReportFilter logitudeCRMReportFilter, IQueryable<OpportunityCRMDetails> opportunityDetails)
+        {
+            if (!string.IsNullOrEmpty(logitudeCRMReportFilter.CustomerStatus))
+            {
+                opportunityDetails = opportunityDetails.Where(d => d.CustomerStatusCode == logitudeCRMReportFilter.CustomerStatus);
+            }
+
+            if (!string.IsNullOrEmpty(logitudeCRMReportFilter.ResellerId))
+            {
+                opportunityDetails = opportunityDetails.Where(d => d.ResellerId == logitudeCRMReportFilter.ResellerId);
+            }
+
+            if (logitudeCRMReportFilter.OpportunityTypes != null && logitudeCRMReportFilter.OpportunityTypes.Count > 0)
+            {
+                opportunityDetails = opportunityDetails.Where(d => logitudeCRMReportFilter.OpportunityTypes.Contains(d.OpportunityTypeId));
+            }
+
+            return opportunityDetails;
+        }
     }
 }
