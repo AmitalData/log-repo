@@ -879,11 +879,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationDMExtensionsDeclarationClosingDetails GetDeclarationDMExtensionsDeclarationClosingDetails(DeclarationPM declarationPM)
         {
-            var closingDetails=new DeclarationDMExtensionsDeclarationClosingDetails();
             var exportDeclarationClosingDataRepository = new ExportDeclarationClosingDataRepository(declarationPM.Tenant);
             var entityClosingDeclaration = exportDeclarationClosingDataRepository.getByDecId(declarationPM.Id, declarationPM.Tenant);
             if (entityClosingDeclaration != null)
             {
+                var closingDetails = new DeclarationDMExtensionsDeclarationClosingDetails();
                 closingDetails.FinalShipID = new SeaTransportationIDType { Value = entityClosingDeclaration.FinalShipCode } ;
                 closingDetails.FinalLoadingSite = new FinalLoadingSiteIDType { Value = entityClosingDeclaration.FinalLoadingSite };
                 if (entityClosingDeclaration.LoadingDateTime.HasValue)
@@ -898,8 +898,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                     ThirdCargoID=new ThirdCargoIDType {  Value = entityClosingDeclaration.FinalThirdCargoId}
                     
                 };
+                return closingDetails;
             }
-            return closingDetails;
+            return null;
         }
 
         private DeclarationAdditionalDocument[] GetDeclarationAdditionalDocuments(DeclarationPM declarationPM)
