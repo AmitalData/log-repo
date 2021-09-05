@@ -477,25 +477,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountListQuery;
         }
-        public IQueryable<GLAccountList> GetGLAccountsByIdAndSecurityLevels(List<string> ids, int tenant, bool noNeedTenant,int? securityLevel)
-        {
-           
-            
-            IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
-                                                  join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
-                                                  //where a.Tenant == tenant && ids.Contains(a.Id)
-                                                  where ids.Contains(a.Id) && chartOfAccount.ChartOfAccountSecurityLevel >= securityLevel
-                                                  select a);
-            if (!noNeedTenant)
-            {
-                accountQuery = accountQuery.Where(a => a.Tenant == tenant);
-            }
-
-            IQueryable<GLAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
-            //var xxx = accountListQuery.ToList();
-
-            return accountListQuery;
-        }
+   
 
     }
 }
