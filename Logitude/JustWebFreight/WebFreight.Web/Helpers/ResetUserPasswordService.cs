@@ -320,7 +320,7 @@ namespace WebFreight.Web.Helpers
 
         private void BuildForgotPasswordEmailBody(StringBuilder HtmlTemplate, EmailBodyParams emailBodyParams)
         {
-            var tenantName = (emailBodyParams.EmailMessageParams.TenantName != null && IsCargoTrackingDomain()) ? emailBodyParams.EmailMessageParams.TenantName + " " : "";
+            var tenantName = (emailBodyParams.EmailMessageParams.TenantName != null && (IsCargoTrackingDomain() || IsPrivateLabelDomain())) ? emailBodyParams.EmailMessageParams.TenantName + " " : "";
             HtmlTemplate.Append("<p style='text-align:left'>");
             HtmlTemplate.Append("Hi,");
             HtmlTemplate.Append("<br /><br />");
@@ -330,8 +330,8 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<a href=" + emailBodyParams.PagePath + ">Reset my Password</a>");
             HtmlTemplate.Append("</P>");
             HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName  + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment);
-            if(!IsPrivateLabelDomain() && !IsCargoTrackingDomain()) { HtmlTemplate.Append(" Software."); }
+            HtmlTemplate.Append("You can use the username <b>" + emailBodyParams.Email + "</b>  as the " + tenantName + " ID to sign in to " + tenantName + emailBodyParams.EmailMessageParams.Environment);
+            if (!IsPrivateLabelDomain() && !IsCargoTrackingDomain()) { HtmlTemplate.Append(" Software."); }
             HtmlTemplate.Append("<br />");
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thanks,");
