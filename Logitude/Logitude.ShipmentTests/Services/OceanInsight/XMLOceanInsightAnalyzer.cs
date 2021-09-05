@@ -11,6 +11,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
     {
         public ContainerEventElement ContainerEvent { get; set; }
         public ContenerShipmentElement ContenerShipment { get; set; }
+        public ContainerUpdatedFields containerUpdatedFields { get; set; }
         public XMLOceanInsightAnalyzer(XmlDocument xmlDocument)
         {
             ContainerEvent = new ContainerEventElement();
@@ -25,6 +26,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
                     this.GetShipmentSectionFields(item);
                 }
             }
+            this.BuildContainerUpdatedFields();
         }
         private void GetEventSectionFields(XmlNode node)
         {
@@ -1058,7 +1060,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 
             return null;
         }
-        public ContainerUpdatedFields BuildContainerUpdatedFields()
+        private void BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();

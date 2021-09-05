@@ -37,12 +37,8 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         {
             assertionService.AssertShipmentContainerSimulator(shipmentContainerSimulator);
             assertionService.AssertAddCommunicationLogs();
-            var shipment = GetShipment();
-            var container = GetContainer(shipment.ShipmentPackages.First().ContainerEntityId);
-            XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
-            assertionService.AssertStatusCode(xMLOceanInsightAnalyzer.ContenerShipment);
-            assertionService.AssertChangeContainerDetails(container, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
-            assertionService.AssertChangeShipmentDetails(shipment, xMLOceanInsightAnalyzer.BuildContainerUpdatedFields());
+            assertionService.AssertChangeDetails();
+            
         }
 
 

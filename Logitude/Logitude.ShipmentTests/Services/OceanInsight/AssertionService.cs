@@ -13,45 +13,23 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 {
     public class AssertionService: OceanInsightService
     {
-
-        public void AssertChangeShipmentDetails(ShipmentPM shipment, ContainerUpdatedFields containerUpdatedFields)
+        public void AssertShipmentContainerSimulator(ShipmentContainerSimulator shipmentContainerSimulator)
         {
-            AssertChangePackageStatus(shipment.ShipmentPackages.First(),)
+            shipmentContainerSimulator.Errors.Should().BeNullOrEmpty(string.Join(", ", shipmentContainerSimulator.Errors));
         }
-        public void AssertChangeMainCarriage(ShipmentPM shipment, ContainerUpdatedFields containerUpdatedFields)
-        {
-            shipment.MainCarriageETD.Should().Be(containerUpdatedFields.MainCarriageETD);
-            shipment.MainCarriageETA.Should().Be(containerUpdatedFields.MainCarriageETA);
-            shipment.MainCarriageATD.Should().Be(containerUpdatedFields.MainCarriageATD);
-            shipment.MainCarriageATA.Should().Be(containerUpdatedFields.MainCarriageATA);
-        }
-
-        public void AssertStatusCode(ContenerShipmentElement contenerShipment)
-        {
-            contenerShipment.container_status.Should().NotBe("20");
-        }
-
         public void AssertAddCommunicationLogs()
         {
             var tryEvreySecound = 4;
             var tineLifeInSecound = 60 * 5;
             var containerObjectTableID = GetObjectTableId("Container");
             var containerEntityId = "1-344";//ShipmentData.ShipmentPM.ShipmentPackages.First().ContainerEntityId;
-            var isDone = Waiter.RunAndWait(tryEvreySecound, tineLifeInSecound, () => AssertAddCommunicationLogs(containerObjectTableID, containerEntityId));
+            var isDone = Waiter.RunAndWait(tryEvreySecound, tineLifeInSecound, () => HaveCommunicationLogsBeenAdded(containerObjectTableID, containerEntityId));
             isDone.Should().BeTrue();
         }
-        public void AssertShipmentContainerSimulator(ShipmentContainerSimulator shipmentContainerSimulator)
-        {
-            shipmentContainerSimulator.Errors.Should().BeNullOrEmpty(string.Join(", ", shipmentContainerSimulator.Errors));
-        }
-        public bool AssertAddCommunicationLogs(string objectTableId, string EntityId)
+        public bool HaveCommunicationLogsBeenAdded(string objectTableId, string EntityId)
         {
             var filters = CreateCommunicationLogFilter(objectTableId, EntityId);
             var communicationLogs = APICaller.CallGetByFilters<List<CommunicationLogList>>(Urls.CommunicationLogViewsGetByFilters, UserTenant.Token, filters)?.Data;
-            return AssertCommunicationLogs(communicationLogs);
-        }
-        public bool AssertCommunicationLogs(List<CommunicationLogList> communicationLogs)
-        {
             if (communicationLogs == null || communicationLogs.Count <= 0)
                 return false;
 
@@ -64,7 +42,19 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 
             return true;
         }
-
+        public void AssertChangeDetails()
+        {
+            var shipment = GetShipment();
+            var container = GetContainer(shipment.ShipmentPackages.First().ContainerEntityId);
+            XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer = new XMLOceanInsightAnalyzer(ShipmentData.XMLData);
+            AssertStatusCode(xMLOceanInsightAnalyzer.ContenerShipment);
+            AssertChangeContainerDetails(container, xMLOceanInsightAnalyzer.containerUpdatedFields);
+            AssertChangeShipmentDetails(shipment, xMLOceanInsightAnalyzer);
+        }
+        public void AssertStatusCode(ContenerShipmentElement contenerShipment)
+        {
+            contenerShipment.container_status.Should().NotBe("20");
+        }
         public void AssertChangeContainerDetails(ContainerPM containerPM, ContainerUpdatedFields containerUpdatedFields)
         {
             containerPM.EmptyPickupLocation.Should().Be(containerUpdatedFields.EmptyPickupLocation);
@@ -166,5 +156,34 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
 
 
         }
+        public void AssertChangeShipmentDetails(ShipmentPM shipment, XMLOceanInsightAnalyzer xMLOceanInsightAnalyzer)
+        {
+            AssertChangePackageStatus(shipment.ShipmentPackages.First(), xMLOceanInsightAnalyzer.ContenerShipment);
+            AssertChangeMainCarriage(shipment, xMLOceanInsightAnalyzer.containerUpdatedFields);
+        }
+
+        private void AssertChangePackageStatus(PackagePM packagePM, ContenerShipmentElement contenerShipment)
+        {
+            packagePM.LastStatusCode.Should().Be(contenerShipment.container_status);
+        }
+
+        public void AssertChangeMainCarriage(ShipmentPM shipment, ContainerUpdatedFields containerUpdatedFields)
+        {
+            shipment.MainCarriageETD.Should().Be(containerUpdatedFields.MainCarriageETD);
+            shipment.MainCarriageETA.Should().Be(containerUpdatedFields.MainCarriageETA);
+            shipment.MainCarriageATD.Should().Be(containerUpdatedFields.MainCarriageATD);
+            shipment.MainCarriageATA.Should().Be(containerUpdatedFields.MainCarriageATA);
+        }
+
+        
+
+        
+        
+
+       
+        
+        
+
+        
     }
 }
