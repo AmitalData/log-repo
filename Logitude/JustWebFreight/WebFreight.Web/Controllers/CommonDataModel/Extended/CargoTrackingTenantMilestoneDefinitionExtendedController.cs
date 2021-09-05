@@ -60,15 +60,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICommonDataContext commonDataContext = new CommonDataContext();
-                CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
-                cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    ICommonDataContext commonDataContext = new CommonDataContext();
+                    CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
+                    cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, cargoTenantMilestoneDefinitionPMs);
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, cargoTenantMilestoneDefinitionPMs);
+                }
             }
             catch (Exception ex)
             {

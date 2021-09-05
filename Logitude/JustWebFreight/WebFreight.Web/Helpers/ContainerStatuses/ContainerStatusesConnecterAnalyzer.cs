@@ -366,6 +366,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             pod_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_initial").FirstOrDefault()?.InnerText;
             pod_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_last").FirstOrDefault()?.InnerText;
             pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
+            pod_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_actual").FirstOrDefault()?.InnerText;
         }
         private void GetEmptyPickupLocationElement(XmlNode node)
         {
@@ -650,18 +651,19 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
-            var containerNumber = oceanInsight.ContainerNumber;
-            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
+            container_number = this.GetContainerNumber(oceanInsight);
+            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(container_number, oceanInsight.ShipmentId, logitudeTenant.Value);
             containerId = container?.Id;
-            container_number = this.GetContainerNumber(container, oceanInsight);
             shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
-        private string GetContainerNumber(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+
+        private string GetContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = "";
-            if (container != null)
+
+            if(!string.IsNullOrEmpty(oceanInsight.ContainerNumber))
             {
-                containerNumber = container.ContainerNumber;
+                containerNumber = oceanInsight.ContainerNumber;
             }
             else
             {
