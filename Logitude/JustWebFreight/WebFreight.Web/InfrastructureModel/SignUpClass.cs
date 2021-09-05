@@ -1364,6 +1364,7 @@ namespace WebFreight.Web.InfrastructureModel
                                                                                                         //    LocalName = CurrentContact.LocalName,
                                                                                                         //    BusinessPhone = CurrentContact.BusinessPhone,
                                                                                                         //    Mobile = CurrentContact.Mobile
+                AddTruckerCard(signUpInfoClass, cardQuery);
 
                 //};
                 contactPM.SetAsPrimaryForCard = true;
@@ -1470,7 +1471,42 @@ namespace WebFreight.Web.InfrastructureModel
                 service.Update(newTenant);
             }
         }
-        
+
+        private static void AddTruckerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
+        {
+            CardRepository cardRepository = new CardRepository(signUpInfoClass.Tenant);
+
+            var truckerCard = cardQuery.GetSinglePMByCode("---", 0);
+            if (truckerCard != null)
+            {
+                Card newTrucker = GetCardInstance(signUpInfoClass, truckerCard); 
+                cardRepository.Add(newTrucker);
+                cardRepository.SubmitChanges();  
+            }
+        }
+
+        private static Card GetCardInstance(SignUpInfoClass signUpInfoClass, CardPM truckerCard)
+        {
+            return new Card()
+            {
+                Code = truckerCard.Code,
+                EnglishName = truckerCard.EnglishName,
+                LocalName = truckerCard.LocalName,
+                PartnerTypeId = truckerCard.PartnerTypeId,
+                InActive = truckerCard.InActive,
+                VatNumber = truckerCard.VatNumber,
+                CountryId = truckerCard.CountryId,
+                CreateDate = truckerCard.CreateDate,
+                UpdateDate = truckerCard.UpdateDate,
+                CreatedByUserId = truckerCard.CreatedByUserId,
+                UpdatedByUserId = truckerCard.UpdatedByUserId,
+                SearchFields = truckerCard.SearchFields,
+                PaymentTermId = truckerCard.PaymentTermId,
+                Notes = truckerCard.Notes,
+                Tenant = signUpInfoClass.Tenant,
+            };
+        }
+
         public static void AddBranchesAndDepartments(int theTenant, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
         {
             Department deb;
