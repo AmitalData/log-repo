@@ -572,7 +572,7 @@
 
                                                                         <td class="CellTools">
                                                                             <div>
-                                                                                <span class="hyperlink" (click)="DisconnectStandaloneShipmentClicked()" style="padding-left:5px;">Disconnect</span>
+                                                                                <span *ngIf ="!IsAddingStandaloneWithPickUpDeliveryOnlyVisible"  class="hyperlink" (click)="DisconnectStandaloneShipmentClicked()" style="padding-left:5px;">Disconnect</span>
                                                                                 <span class="hyperlink" (click)="ViewEntity(item)" style="padding-left:5px;">View</span>
                                                                             </div>
                                                                         </td>

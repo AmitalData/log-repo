@@ -51,6 +51,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public DisableNewWarehouseEntryButton: boolean = false;
     public DisableNewWarehouseReleaseButton: boolean = false;
     public IsStandaloneShipmentVisible: boolean = false;
+    public IsAddingStandaloneWithPickUpDeliveryOnlyVisible: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
@@ -89,6 +90,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         }
 
         this.SetIsStandaloneShipmentVisible();
+        this.SetIsStandaloneWithPickupDeliveryOnlyVisible();
         this.Listen();
         this.LoadData();
     }
@@ -211,6 +213,14 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             this.IsStandaloneShipmentVisible = true;
         }
     }
+
+    SetIsStandaloneWithPickupDeliveryOnlyVisible() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OPD")[0];
+        if (featureToggle) {
+            this.IsAddingStandaloneWithPickUpDeliveryOnlyVisible = true;
+        }
+    }
+
 
     public EntriesGridHeight: number = 90;
     public ReleasesGridHeight: number = 90;
