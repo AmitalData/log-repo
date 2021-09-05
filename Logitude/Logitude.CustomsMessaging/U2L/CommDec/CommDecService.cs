@@ -1149,7 +1149,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
- 
+ if(false)
+                                {
+
+                 
                                 CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
                                 List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
 
@@ -1173,6 +1176,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         };
 
                                         string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                    }
                                     //}
                                 }
                             }
