@@ -14,6 +14,8 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         public XMLOceanInsightAnalyzer(XmlDocument xmlDocument)
         {
             ContainerEvent = new ContainerEventElement();
+            ContenerShipment = new ContenerShipmentElement();
+
             XmlNodeList xnList = xmlDocument.SelectNodes("//container");
             foreach (XmlNode xn in xnList)
             {

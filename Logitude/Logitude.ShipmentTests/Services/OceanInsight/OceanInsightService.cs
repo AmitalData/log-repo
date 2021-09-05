@@ -50,7 +50,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             if (communicationLogs == null || communicationLogs.Count <= 0)
                 return false;
 
-            var lastCommunicationLog = communicationLogs.First();
+            var lastCommunicationLog = communicationLogs.First(e=>e.InOut == "In");
             if (lastCommunicationLog.CommunicationStatusTypeCode != "D")
                 return false;
 
@@ -69,7 +69,6 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(xmlData);
             ShipmentData.XMLData = xmlDocument;
-            xmlDocument.node
         }
     }
 }

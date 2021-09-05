@@ -28,14 +28,14 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             var tryEvreySecound = 4;
             var tineLifeInSecound = 60 * 5;
             var containerObjectTableID = GetObjectTableID("Container");
-            var containerEntityId = ShipmentData.ShipmentPM.ShipmentPackages.First().ContainerEntityId;
+            var containerEntityId = "1-344";//ShipmentData.ShipmentPM.ShipmentPackages.First().ContainerEntityId;
             var isDone = Waiter.RunAndWait(tryEvreySecound, tineLifeInSecound, () => AssertAddCommunicationLogs(containerObjectTableID, containerEntityId));
             isDone.Should().BeTrue();
         }
 
         private ShipmentPM GetShipment()
         {
-            string singleShipmentUrl = Urls.ShipmentGetSingle(ShipmentData.ShipmentPM.Id);
+            string singleShipmentUrl = Urls.ShipmentGetSingle("1-2072011"/*ShipmentData.ShipmentPM.Id*/);
             ApiResponse<ShipmentPM> getResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
             return getResponse.Data;
         }
