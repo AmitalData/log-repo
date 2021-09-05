@@ -3970,6 +3970,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
+                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
             }
         }
 
@@ -4140,12 +4141,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
+
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                    
+
+
                     var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
                                      where a.Id == shipment.Id
                                      select a).FirstOrDefault();
@@ -4170,6 +4176,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
+ 
+
 
                     MapShipmentComputedFields(returnShipment);
 

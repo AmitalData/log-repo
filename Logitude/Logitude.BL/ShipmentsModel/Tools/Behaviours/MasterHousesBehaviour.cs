@@ -91,6 +91,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             iHousePM.FirstOperationalCloseDate = this.initializer.EntityPM.FirstOperationalCloseDate;
             iHousePM.IsAccountingClosed = this.initializer.EntityPM.IsAccountingClosed;
             iHousePM.AccountingCloseDate = this.initializer.EntityPM.AccountingCloseDate;
+            iHousePM.AccountingClosedByUserId = this.initializer.EntityPM.AccountingClosedByUserId;
             iHousePM.FirstAccountingCloseDate = this.initializer.EntityPM.FirstAccountingCloseDate;
         }
         private void MapMasterHouseFromPortFields()
