@@ -73,7 +73,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private BackCompletedEvent: any = null; 
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -82,16 +84,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
 
-                if (s == "RefreshWareHouseLeg") {
+                else if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
-                
-                if (s == "ReloadForwarderShipmentFromStandAlone" ) {
+
+                else if (s == "ReloadForwarderShipmentFromStandAlone") {
                     this.entityArgs.EditComponent.ReloadEntityPM();
                 }
-                else if (s == "ReloadDisconnectedForwarderShipment") {
-                    this.entityArgs.EditComponent.ReloadEntityPM();
-                }
+
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -131,6 +131,16 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
             });
+
+            this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackSuccess: boolean) => {
+                if (isBackSuccess) {
+                    var c = this.CurrentSession.SessionEvent.subscribe(s => {
+                        if (s == "ReloadDisconnectedForwarderShipment") {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        }
+                    });
+                }
+            });
         }
     }
     ngOnDestroy() {
@@ -138,6 +148,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.BackCompletedEvent);
     }
     ngOnInit() {
         if (this.EntityPM != null) {

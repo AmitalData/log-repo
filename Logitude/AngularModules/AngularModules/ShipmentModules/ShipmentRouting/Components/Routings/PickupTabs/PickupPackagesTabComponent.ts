@@ -168,6 +168,7 @@ export class PickupPackagesTabComponent {
             confirmWindow.Show(TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.M.DeleteThisPickUpPackage"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    this.RestConnectedShipmentpackage(itemComponent.EntityPM);
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
                     this.SetUIProperties();
@@ -265,6 +266,12 @@ export class PickupPackagesTabComponent {
                 logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditFullTruckLoad");
         }
         return logWindowTitle;
+    }
+
+    RestConnectedShipmentpackage(item: ShipmentPickUpDeliveryPackagePM) {
+        if (this.IsAddContainerVisible) {
+            this.ShipmentPM.ShipmentPackages.find(p => p.ContainerNumber == item.ContainerNumber).IsPackageCheckedInLeg = false;
+        }
     }
 
 }

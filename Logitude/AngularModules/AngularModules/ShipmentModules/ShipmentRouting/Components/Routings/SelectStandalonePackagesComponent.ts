@@ -352,6 +352,7 @@ export class SelectStandalonePackagesComponent {
                 this.ShipmentPM.RemovePackage(item);
             });
         }
+        this.ItemsSource.filter(f => f.IsChecked).forEach(item => item.IsChecked = false);
     }
 
     private IsNewShipmentPackage() {
@@ -383,6 +384,7 @@ export class PackagesSelectItem {
     set IsChecked(value: boolean) {
         if (this.isChecked != value) {
             this.isChecked = value;
+            this.EntityPM.IsPackageCheckedInLeg = this.isChecked;
             this.fatherComponent.OnItemsChecked();
         }
     }

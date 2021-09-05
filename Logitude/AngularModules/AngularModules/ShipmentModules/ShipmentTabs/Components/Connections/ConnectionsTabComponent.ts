@@ -110,7 +110,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private SessionEvent: any = null;
-    private BackCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -147,6 +146,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.LoadData();
                     this.FillAssemblies();
+
                     if (this.IsDisconnectindStandAloneShipmentCompleted) {
                         this.IsDisconnectindStandAloneShipmentCompleted = false;
                         this.CurrentSession.FireEvent("ReloadDisconnectedForwarderShipment");
@@ -159,21 +159,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.LoadData();
                     this.FillAssemblies();
                 }
-            });
-           /* this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((tabCode: string) => {
-                if (this.IsDisconnectindStandAloneShipmentCompleted) {
-                    this.IsDisconnectindStandAloneShipmentCompleted = false;
-                    this.CurrentSession.FireEvent("ReloadDisconnectedForwarderShipment");
-                }
-            });*/
+            });            
         }
-
-        //this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            //if (s == "RefreshConnections") {
-            //    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-            //    this.LoadData();
-            //}
-        //});
     }
 
     ngOnDestroy() {
@@ -181,7 +168,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.SessionEvent);
-        AppTool.KillEventEmitter(this.BackCompletedEvent);
     }
 
     LoadData() {
@@ -313,11 +299,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                             else
                                 this.entityArgs.EditComponent.ReloadEntityPM();
                         }
-                    }
-
-                    if (this.IsDisconnectindStandAloneShipmentCompleted) {
-                        this.IsDisconnectindStandAloneShipmentCompleted = false;
-                        this.CurrentSession.FireEvent("ReloadDisconnectedForwarderShipment");
                     }
                 });
                 cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
