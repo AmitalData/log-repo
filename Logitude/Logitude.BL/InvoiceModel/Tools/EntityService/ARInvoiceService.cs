@@ -4441,7 +4441,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return;
             }
-
+            
             List<ARInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             entityPM.SubTotalInLocalCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
             entityPM.SubTotalInInvoiceCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
