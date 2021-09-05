@@ -43,6 +43,7 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -388,6 +389,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+ 
+
+
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
@@ -395,7 +400,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
- 
+
                 DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
                 var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                 string error="";
