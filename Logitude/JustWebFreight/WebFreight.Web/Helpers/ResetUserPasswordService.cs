@@ -101,6 +101,7 @@ namespace WebFreight.Web.Helpers
                 emailMessageParams.SiteUri = privatelabel.PrivateLabelUrl;
                 emailMessageParams.SenderEmail = "no-reply@" + privatelabel.PrivateLabelDomain;
                 emailMessageParams.Environment = privatelabel.PrivateLabelShortName;
+                emailMessageParams.TenantName = privatelabel.PrivateLabelShortName;
                 emailMessageParams.IsLogBox = true;
             }
             else
