@@ -5538,42 +5538,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
-	   private List<ExportDeclarationClosingDataPM> exportDeclarationClosingDatas;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("ExportDeclarationClosingData", "id","DeclarationId")]
-	   [DataMember]
-	   public virtual List<ExportDeclarationClosingDataPM> ExportDeclarationClosingDatas  
-	   {
-	        get
-             {
-                 if (exportDeclarationClosingDatas == null)
-                 {
-                     exportDeclarationClosingDatas = new List<ExportDeclarationClosingDataPM>();
-                 }
-                 return exportDeclarationClosingDatas;
-              }
-             set { exportDeclarationClosingDatas = value; }
-	    }
-		   
-	   private List<ExportDeclarationClosingDataPM>  deletedExportDeclarationClosingDatas;
-	   public virtual List<ExportDeclarationClosingDataPM> DeletedExportDeclarationClosingDatas  
-	   {
-	        get
-             {
-                 if ( deletedExportDeclarationClosingDatas == null)
-                 {
-                      deletedExportDeclarationClosingDatas = new List<ExportDeclarationClosingDataPM>();
-                 }
-                 return  deletedExportDeclarationClosingDatas;
-              }
-             set {  deletedExportDeclarationClosingDatas = value; }
-	    }
-	     }
+   }
    
 }
 	 
