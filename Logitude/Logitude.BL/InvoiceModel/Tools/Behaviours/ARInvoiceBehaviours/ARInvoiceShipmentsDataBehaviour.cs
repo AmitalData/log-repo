@@ -149,7 +149,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
 
         private void AddNumberToMasterShipmentNumbersField(ref string masterShipmentNumbers, Shipment shipment)
         {
-            if (shipment.ShipmentLevelCode == "C")
+            if (shipment.ShipmentLevelCode == "H")
             {
                 var console = (from d in iShipmentsContext.ShipmentMasterDatas where d.Id == shipment.Id select d).FirstOrDefault();
                 if (!masterShipmentNumbers.Contains(console.MasterShipmentNumber))
@@ -170,7 +170,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
         {
             var shipment = (from d in iShipmentsContext.Shipments where d.Id == aRInvoice.MainEntityId select d).FirstOrDefault();
             var masterShipmentNumbers = shipment?.ShipmentNumber;
-            if (shipment?.ShipmentLevelCode == "C")
+            if (shipment?.ShipmentLevelCode == "H")
             {
                 var masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
                 masterShipmentNumbers = masterShipment.ShipmentNumber;

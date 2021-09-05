@@ -85,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
 
         private void AddNumberToMasterShipmentNumbersField(ref string masterShipmentNumbers, APInvoiceMultipleShipmentPM shipment)
         {
-            if (shipment.ShipmentLevelCode == "C")
+            if (shipment.ShipmentLevelCode == "H")
             {
                 var console = this.invoiceConsoleShipments.Where(a => a.Id == shipment.ShipmentId).FirstOrDefault();
                 if (!masterShipmentNumbers.Contains(console.MasterShipmentNumber))
@@ -163,7 +163,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
         {
             var shipment = (from d in iShipmentsContext.Shipments where d.Id == aPInvoice.MainEntityId select d).FirstOrDefault();
             var masterShipmentNumbers = shipment?.ShipmentNumber;
-            if (shipment?.ShipmentLevelCode == "C")
+            if (shipment?.ShipmentLevelCode == "H")
             {
                 var masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
                 masterShipmentNumbers = masterShipment.ShipmentNumber;
