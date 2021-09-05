@@ -27,7 +27,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+import { GLAccountSecurityLevelChecker } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 
 @Component({
@@ -1584,11 +1584,11 @@ class JournalLineModel extends BaseComponent {
     //#region GLAccount HyberLink
 
     GLAccountHyperlinkClicked() {
-        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.CreditAccountId);
+        GLAccountSecurityLevelChecker.OpenGLAccountEditWindow(this.CreditAccountId);
     }
 
     DebitAccountHyperlinkClicked() {
-        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.DebitAccountId);
+        GLAccountSecurityLevelChecker.OpenGLAccountEditWindow(this.DebitAccountId);
     }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {

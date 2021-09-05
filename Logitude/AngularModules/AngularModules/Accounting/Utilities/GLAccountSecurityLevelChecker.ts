@@ -7,7 +7,7 @@ import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 
-export class GLAccountSecurityLevelService{
+export class GLAccountSecurityLevelChecker{
 
     public static CheckLevel(glaccountId: string){
 
@@ -33,13 +33,13 @@ export class GLAccountSecurityLevelService{
 
     public static OpenGLAccountEditWindow(entityId: string, defaultSelectedTabCode: string = 'GATR') {
 
-        GLAccountSecurityLevelService.CheckLevel(entityId)
+        GLAccountSecurityLevelChecker.CheckLevel(entityId)
         .then(hasAccess=>{
 
             if(hasAccess){
-                GLAccountSecurityLevelService.OpenGLaccountWindow(entityId, defaultSelectedTabCode);
+                GLAccountSecurityLevelChecker.OpenGLaccountWindow(entityId, defaultSelectedTabCode);
             }else{
-                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                GLAccountSecurityLevelChecker.ShowSecurityBockingMessage();
             }
         });
     }

@@ -17,7 +17,7 @@ import {APPaymentPM} from '../../../../Invoice/EntityPMs/APPaymentPM';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {ModulesService} from '../../../Services/ModulesService';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+import { GLAccountSecurityLevelChecker } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 @Component({
 
@@ -320,12 +320,12 @@ export class PayablePageComponent {
     EditGLAccount(entity: any) {
         if (entity != null) {
 
-            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
+            GLAccountSecurityLevelChecker.CheckLevel(entity.Id).then(hasAccess =>
             {
                 if (hasAccess)
                     this.OpenGLAccountEditWindow(entity);
                 else
-                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                GLAccountSecurityLevelChecker.ShowSecurityBockingMessage();
             });
 
 

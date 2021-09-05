@@ -7,7 +7,7 @@ import { ARPaymentExtendedListService } from '../../../Invoice/Services/Extended
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+import { GLAccountSecurityLevelChecker } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
 
 @Component({
 
@@ -236,7 +236,7 @@ export class FieldTemplateComponent {
     OpenGLAccount(id) {
 
         if (!AppTool.IsNullOrEmpty(id)) {
-            GLAccountSecurityLevelService.CheckLevel(id).then(hasAccess =>
+            GLAccountSecurityLevelChecker.CheckLevel(id).then(hasAccess =>
             {
                 if (hasAccess) {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -250,7 +250,7 @@ export class FieldTemplateComponent {
                             });
                         });
                 } else {
-                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                    GLAccountSecurityLevelChecker.ShowSecurityBockingMessage();
                 }
             });
     }
