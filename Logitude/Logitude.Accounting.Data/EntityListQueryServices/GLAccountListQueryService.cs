@@ -664,12 +664,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountList;
         }
-        
+       
         public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant, bool noNeedTenant)
         {
+          
             IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
                                                       //where a.Tenant == tenant && ids.Contains(a.Id)
-                                                  where ids.Contains(a.Id)
+                                                  where ids.Contains(a.Id) 
                                                   select a);
             if (!noNeedTenant)
             {
@@ -681,6 +682,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountListQuery;
         }
+   
 
     }
 }

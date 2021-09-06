@@ -98,7 +98,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,                            
                                   LayoutDirection = a.LayoutDirection,
-                                  SignatureImageId = a.SignatureImageId
+                                  SignatureImageId = a.SignatureImageId,
+                                  
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -1651,7 +1652,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-
+                          SecurityLevel = a.SecurityLevel,
                           LayoutDirection = a.LayoutDirection,
                           SignatureImageId = a.SignatureImageId
 

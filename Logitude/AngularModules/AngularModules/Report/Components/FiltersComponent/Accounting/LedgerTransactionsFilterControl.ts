@@ -17,6 +17,14 @@ import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
 import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
+import { ChartOfAccountPMService } from '../../../../Accounting/Services/StandardPMs/ChartOfAccountPMService';
+import { ChartOfAccountPM } from '../../../../Accounting/EntityPMs/ChartOfAccountPM';
+import { ChartOfAccountList } from '../../../../Accounting/EntityLists/ChartOfAccountList';
+
+import { UserPM } from '../../../../Common/EntityPMs/UserPM';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
+
 
 @Component({
 
@@ -40,12 +48,14 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public isRTL: boolean = false;
     public filterControlHight: string = "100";
     private CurrentSession = SessionLocator.SelectedSession;
-
+    private entityListService: EntityListService = new EntityListService();
     public IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public GLAccountFilterItems: ApiQueryFilters;
-
+    private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
+    private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
+    private ChartOfAccountSecurityLevel: any;
     constructor(private CD: ChangeDetectorRef)
     {
         super();
@@ -57,7 +67,20 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.GetResources();
+        this.GetFullAccountingSettings();
 
+    }
+    GetFullAccountingSettings() {
+        this.entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+
+                    var res = myResponse.Result;
+                    this.fullAccountingSetting = res;                   
+                }
+            })
+        });
     }
 
     private GetResources()
@@ -84,18 +107,18 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
     }
-
+      private loggedUser: UserPM;
 
     GetSalesmanFeature()
     {
         var salesmanLedger = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
         var isSalesmanRestrictionsEnabled =  !!salesmanLedger;
         console.log("[Salesman Ledger Transactions]", salesmanLedger);
-        var loggedUser = SessionLocator.LoggedUserPM;
-        if (loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
+         this.loggedUser = SessionLocator.LoggedUserPM;
+        if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
-            this.Salesman = loggedUser.Id;
-            this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
+            this.Salesman = this.loggedUser.Id;
+          this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
 
     }
@@ -228,12 +251,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this._ChartOfAccountsTypeCode = v;
     }
     
-    private chartOfAccount: string;
+    private chartOfAccount: ChartOfAccountList;
     public get ChartOfAccount() { return this.chartOfAccount; }
-    public set ChartOfAccount(value: string)
+    public set ChartOfAccount(value: ChartOfAccountList)
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
+            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
         }
     }
 
@@ -480,7 +504,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
         queryFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
         queryFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-
+  
+        queryFilterItems.push(new QueryFilterItem("UseSecurityLevel", this.fullAccountingSetting.IsSecurityLevelActivated));
         return queryFilterItems;
     }
 
@@ -560,7 +585,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     {
         this.ValidationErrorsList = [];
         var isValid: boolean = true;
-
+        isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
         if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
             isValid = false;
@@ -574,19 +599,28 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
             isValid = false;
         }
+       
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }
+        
         if (this.ValidationErrorsList.length == 0)
             this.filterControlHight = "100";
         else
             this.filterControlHight = "80";
-
+     
         return isValid;
     }
+    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
 
+        if (this.CheckGLAccountChartOfAccountSecurityLevel()) {
+           
+            return this.CheckChartOfAccountSecurityLevel();
+        }
+        else return false;
+    }
 
     public get SelectedCategoryValue(): string
     {
@@ -749,7 +783,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.GLAccountChanged = true;
     }
 
-
+    private securityLevel: any;
     private glaccountPM: any;
     
     get GLAccount() { return this.glaccountPM; }
@@ -766,10 +800,41 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
+             
+                 this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
             }
+
         }
     }
 
+    private  SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
+        this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var chartOfAccount: ChartOfAccountPM = response.Result;
+                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel == undefined ? 0 : chartOfAccount.ChartOfAccountSecurityLevel;
+            }
+        });
+    }
+    private CheckGLAccountChartOfAccountSecurityLevel() {
+        if (this.GLAccount) {
+            return this.CheckSecurityLevel(this.securityLevel);
+        } else return true;
+       
+    }
+    private CheckChartOfAccountSecurityLevel() {
+        if (this.ChartOfAccount) {
+            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
+        }
+        else return true;
+    }
+    private CheckSecurityLevel(securityLevel: any) {
+        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel )) {          
+           
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+                return false;
+            }          
+        else return true;
+    }
 
     private _IsReconciled: boolean;
     public get IsReconciled(): boolean
