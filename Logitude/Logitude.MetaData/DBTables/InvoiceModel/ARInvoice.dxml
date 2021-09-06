@@ -764,7 +764,6 @@
   </Column>
   <Column
     Name="MasterNumbers"
-    OldNames="MasterNumber"
     Type="varchar"
     Size="1000">
     <Constraints
@@ -780,7 +779,6 @@
   </Column>
   <Column
     Name="HouseNumbers"
-    OldNames="HouseNumber"
     Type="varchar"
     Size="1000">
     <Constraints

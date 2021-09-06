@@ -12,7 +12,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
         private APInvoicePM aPInvoice;
         private List<APInvoiceMultipleShipmentPM> allInvoiceShipments;
         private IShipmentsContext iShipmentsContext;
-        private List<ShipmentMasterData> invoiceConsoleShipments;
+        private List<Shipment> invoiceConsoleShipments;
         public APInvoiceShipmentsDataBehaviour(APInvoicePM aPInvoice)
         {
             this.aPInvoice = aPInvoice;
@@ -80,17 +80,20 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
         private void GetInvoiceConsoleShipments()
         {
             var shipmentsIds = allInvoiceShipments.Where(a => a.ShipmentLevelCode == "C").Select(a => a.ShipmentId).ToList();
-            this.invoiceConsoleShipments = (from d in iShipmentsContext.ShipmentMasterDatas where shipmentsIds.Contains(d.Id) select d).ToList();
+            this.invoiceConsoleShipments = (from d in iShipmentsContext.Shipments where shipmentsIds.Contains(d.MasterShipmentDataId) select d).ToList();
         }
 
         private void AddNumberToMasterShipmentNumbersField(ref string masterShipmentNumbers, APInvoiceMultipleShipmentPM shipment)
         {
             if (shipment.ShipmentLevelCode == "H")
             {
-                var console = this.invoiceConsoleShipments.Where(a => a.Id == shipment.ShipmentId).FirstOrDefault();
-                if (!masterShipmentNumbers.Contains(console.MasterShipmentNumber))
+                Shipment masterShipment = this.invoiceConsoleShipments.Where(a => a.Id == shipment.ShipmentId).FirstOrDefault();
+                if (masterShipment != null)
                 {
-                    masterShipmentNumbers = string.IsNullOrEmpty(masterShipmentNumbers) ? console.MasterShipmentNumber : masterShipmentNumbers + ", " + console.MasterShipmentNumber;
+                    if (!masterShipmentNumbers.Contains(masterShipment.ShipmentNumber))
+                    {
+                        masterShipmentNumbers = string.IsNullOrEmpty(masterShipmentNumbers) ? masterShipment.ShipmentNumber : masterShipmentNumbers + ", " + masterShipment.ShipmentNumber;
+                    }
                 }
             }
             else
@@ -161,12 +164,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
         
         private string GetMainEntityMasterShipmentNumbers()
         {
-            var shipment = (from d in iShipmentsContext.Shipments where d.Id == aPInvoice.MainEntityId select d).FirstOrDefault();
-            var masterShipmentNumbers = shipment?.ShipmentNumber;
+            Shipment shipment = (from d in iShipmentsContext.Shipments where d.Id == aPInvoice.MainEntityId select d).FirstOrDefault();
+            string masterShipmentNumbers = shipment?.ShipmentNumber;
             if (shipment?.ShipmentLevelCode == "H")
             {
-                var masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
-                masterShipmentNumbers = masterShipment.ShipmentNumber;
+                Shipment masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
+                masterShipmentNumbers = masterShipment?.ShipmentNumber;
             }
             return masterShipmentNumbers;
         }

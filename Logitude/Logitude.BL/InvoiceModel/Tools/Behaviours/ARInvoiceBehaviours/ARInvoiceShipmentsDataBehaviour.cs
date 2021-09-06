@@ -43,7 +43,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
                 aRInvoice.ShipmentsNumbers = shipmentsNumbersField;
                 aRInvoice.HouseNumbers = shipmentsHouseField;
                 aRInvoice.MasterNumbers = shipmentsMasterField;
-                aRInvoice.MasterShipmentNumbers = this.CopmuteMasterShipmentNumbersFromMultipleShipments();
+                aRInvoice.MasterShipmentNumbers = this.CopmuteMasterShipmentNumbersFromConnectedShipments();
 
             }
 
@@ -136,10 +136,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
             }
         }
 
-        private string CopmuteMasterShipmentNumbersFromMultipleShipments()
+        private string CopmuteMasterShipmentNumbersFromConnectedShipments()
         {
             string masterShipmentNumbers = "";
-            foreach (var shipment in invoiceShipments)
+            foreach (Shipment shipment in invoiceShipments)
             {
                 this.AddNumberToMasterShipmentNumbersField(ref masterShipmentNumbers, shipment);
             }
@@ -151,10 +151,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
         {
             if (shipment.ShipmentLevelCode == "H")
             {
-                var console = (from d in iShipmentsContext.ShipmentMasterDatas where d.Id == shipment.Id select d).FirstOrDefault();
-                if (!masterShipmentNumbers.Contains(console.MasterShipmentNumber))
+                Shipment masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
+                if (masterShipment != null)
                 {
-                    masterShipmentNumbers = string.IsNullOrEmpty(masterShipmentNumbers) ? console.MasterShipmentNumber : masterShipmentNumbers + ", " + console.MasterShipmentNumber;
+                    if (!masterShipmentNumbers.Contains(masterShipment.ShipmentNumber))
+                    {
+                        masterShipmentNumbers = string.IsNullOrEmpty(masterShipmentNumbers) ? masterShipment.ShipmentNumber : masterShipmentNumbers + ", " + masterShipment.ShipmentNumber;
+                    }
                 }
             }
             else
@@ -168,12 +171,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
 
         private string GetMainEntityMasterShipmentNumbers()
         {
-            var shipment = (from d in iShipmentsContext.Shipments where d.Id == aRInvoice.MainEntityId select d).FirstOrDefault();
-            var masterShipmentNumbers = shipment?.ShipmentNumber;
+            Shipment shipment = (from d in iShipmentsContext.Shipments where d.Id == aRInvoice.MainEntityId select d).FirstOrDefault();
+            string masterShipmentNumbers = shipment?.ShipmentNumber;
+            
             if (shipment?.ShipmentLevelCode == "H")
             {
-                var masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
-                masterShipmentNumbers = masterShipment.ShipmentNumber;
+                Shipment masterShipment = (from d in iShipmentsContext.Shipments where d.Id == shipment.MasterShipmentDataId select d).FirstOrDefault();
+                masterShipmentNumbers = masterShipment?.ShipmentNumber;
             }
             return masterShipmentNumbers;
         }

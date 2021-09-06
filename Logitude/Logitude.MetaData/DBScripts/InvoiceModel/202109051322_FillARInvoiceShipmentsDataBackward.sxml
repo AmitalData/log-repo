@@ -1,0 +1,119 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
+  <Sql Version="2">
+    <![CDATA[  
+
+
+declare @InvoiceId as varchar(15)
+declare @Tenant as int
+declare @IsConsolidationInvoice as bit
+declare @MasterNumber as varchar(50)
+declare @HouseNumber as varchar(50)
+declare @MasterNumbers as varchar(1000)
+declare @MasterShipmentNumbers as varchar(1000)
+declare @HouseNumbers as varchar(1000)
+declare @ShipmentId as varchar(15)
+declare @ShipmentLevel as varchar(15)
+declare @ShipmentNumber as varchar(50)
+
+BEGIN 
+		DECLARE InvoicesCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant, IsConsolidationInvoice, MasterNumber, HouseNumber, MainEntityId, MainEntityReference
+		FROM ARInvoices
+    where  $LastCounterWhere$
+		OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsConsolidationInvoice, @MasterNumber, @HouseNumber, @ShipmentId, @ShipmentNumber
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @MasterNumbers = NULL
+				set @MasterShipmentNumbers = NULL
+				set @HouseNumbers = NULL
+
+				if (@IsConsolidationInvoice = 1)
+				begin
+					
+					declare @ConstituentShipmentNumber as varchar(50)
+					declare @ConstituentMasterNumber as varchar(50)
+					declare @ConstituentHouseNumber as varchar(50)
+					declare @ConstituentShipmentId as varchar(15)
+					declare @ConstituentShipmentLevel as varchar(15)
+					declare @ConstituentMasterShipmentNumber as varchar(50)
+
+					BEGIN 
+							DECLARE ConstituentsCursor CURSOR READ_ONLY
+							FOR
+							SELECT MasterNumber, HouseNumber, MainEntityId, MainEntityReference
+							FROM ARInvoices
+							where  Tenant = @Tenant and ConsolidationInvoiceId = @InvoiceId and IsConstituentInvoice = 1 
+							OPEN ConstituentsCursor FETCH NEXT FROM ConstituentsCursor INTO @ConstituentMasterNumber, @ConstituentHouseNumber, @ConstituentShipmentId, @ConstituentShipmentNumber
+							WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+									set @ShipmentLevel = (select ShipmentLevelCode from Shipments where Id = @ConstituentShipmentId and Tenant = @Tenant)
+
+									if (@MasterNumbers  Is NULL) set @MasterNumbers = @ConstituentMasterNumber
+									else 
+										if CHARINDEX(@ConstituentMasterNumber,@MasterNumbers) <= 0										
+											set @MasterNumbers = @MasterNumbers + ', ' + @ConstituentMasterNumber												
+
+									----------------------------------------------------------------------------------------------
+
+									if (@HouseNumbers Is NULL) set @HouseNumbers = @ConstituentHouseNumber
+									else 
+										if CHARINDEX(@ConstituentHouseNumber,@HouseNumbers) <= 0										
+											set @HouseNumbers = @HouseNumbers + ', ' + @ConstituentHouseNumber			
+								    ----------------------------------------------------------------------------------------------
+									
+									if(@ShipmentLevel = 'H')
+									begin
+										set @ConstituentMasterShipmentNumber = (select ShipmentNumber from Shipments where Tenant = @Tenant and Id = (select MasterShipmentDataId from Shipments where Id = @ConstituentShipmentId and Tenant = @Tenant))
+
+										if (@MasterShipmentNumbers Is NULL) set @MasterShipmentNumbers = @ConstituentMasterShipmentNumber
+										else 
+											if CHARINDEX(@ConstituentMasterShipmentNumber,@MasterShipmentNumbers) <= 0										
+												set @MasterShipmentNumbers = @MasterShipmentNumbers + ', ' + @ConstituentMasterShipmentNumber										
+									end
+
+									else
+									begin
+										if (@MasterShipmentNumbers Is NULL) set @MasterShipmentNumbers = @ConstituentShipmentNumber
+									else 
+										if CHARINDEX(@ConstituentShipmentNumber,@MasterShipmentNumbers) <= 0										
+											set @MasterShipmentNumbers = @MasterShipmentNumbers + ', ' + @ConstituentShipmentNumber
+									end
+
+								FETCH NEXT FROM ConstituentsCursor INTO  @ConstituentMasterNumber, @ConstituentHouseNumber, @ConstituentShipmentId, @ConstituentShipmentNumber
+								END
+							CLOSE ConstituentsCursor
+							DEALLOCATE ConstituentsCursor
+					END
+
+				end
+
+				else
+				begin
+					set @MasterNumbers = @MasterNumber
+					set @HouseNumbers = @HouseNumber
+					set @MasterShipmentNumbers = @ShipmentNumber
+
+					set @ShipmentLevel = (select ShipmentLevelCode from Shipments where Id = @ShipmentId and Tenant = @Tenant)
+					if(@ShipmentLevel = 'H')
+					begin
+						set @MasterShipmentNumbers = (select ShipmentNumber from Shipments where Tenant = @Tenant and Id = (select MasterShipmentDataId from Shipments where Id = @ShipmentId and Tenant = @Tenant))
+					end
+
+				end
+
+				update ARInvoices set MasterNumbers = @MasterNumbers, HouseNumbers = @HouseNumbers, MasterShipmentNumbers = @MasterShipmentNumbers 
+				where Id = @InvoiceId and Tenant = @Tenant
+
+			FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsConsolidationInvoice, @MasterNumber, @HouseNumber, @ShipmentId, @ShipmentNumber
+			END
+		CLOSE InvoicesCursor
+		DEALLOCATE InvoicesCursor
+	END
+
+
+        ]]>
+  </Sql>
+</Script>
