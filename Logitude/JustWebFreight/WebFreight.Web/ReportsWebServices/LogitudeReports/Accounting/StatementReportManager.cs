@@ -247,8 +247,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                      StatementRecordList = g.ToList(),
                                                  }).ToList();
 
+
             foreach (StatementGroup group in finalResults)
             {
+                this.HandelStatementRecordListOfGroup(group);
                 List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
                 group.StatementAgingSummaryRecordList = agingList;
             }
@@ -256,7 +258,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();            
             return dataProvider;
         }
-        
+
+        private void HandelStatementRecordListOfGroup(StatementGroup group)
+        {
+            var statementRecordListGroup = group.StatementRecordList;
+            foreach (StatementRecord record in statementRecordListGroup)
+            {
+                int i = statementRecordListGroup.IndexOf(record);
+                if (i == 0)
+                {
+                    record.Balance = statementRecordListGroup[0].Credit != null ? -1 * statementRecordListGroup[0].Credit : statementRecordListGroup[0].Debit;
+                }
+
+                if (i < statementRecordListGroup.Count && i != 0)
+                {
+                    record.Balance = statementRecordListGroup[i - 1].Balance + (statementRecordListGroup[i].Credit != null ? -1 * statementRecordListGroup[i].Credit : statementRecordListGroup[i].Debit);
+                }
+            }
+        }
+
         private void FillGeneralData()
         {
             FillFiltersFieldsValuesInDataProvider();
@@ -881,17 +901,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CreditWithZero = record.Credit.Value;
                 }
 
-                int i = totalList.IndexOf(record);
-                if(i == 0)
-                {
-                    record.Balance = totalList[0].Credit != null ? -1 * totalList[0].Credit : totalList[0].Debit;
-                }
-
-                if (i < totalList.Count && i != 0)
-                {
-                    record.Balance = totalList[i - 1].Balance + (totalList[i].Credit != null ? -1 * totalList[i].Credit : totalList[i].Debit);
-                }
-   
                 Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
                 if (card != null)
                 {
