@@ -11,6 +11,7 @@ using Logitude.BL.Resolvers;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -48,8 +49,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
             UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
-        
-          
+
+            entityPM.LastUpdateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -68,7 +69,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
             }
-            entityPM.LastUpdateDateTime = DateTime.Now;
+            
             base.OnUpdating(entityPM, entityPOCO);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
