@@ -123,6 +123,7 @@
     <None Include="app.config" />
     <None Include="Features\DataEntry\CreateDataEntry.feature" />
     <None Include="Features\DataEntry\GetDataEntry.feature" />
+    <None Include="Features\DataEntry\UpdateDataEntry.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
