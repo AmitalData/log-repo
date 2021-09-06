@@ -104,7 +104,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetEmptyPickupLocationElement(XmlNode node)
         {
             XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
-            if (ContenerShipment.emptyPickupLocationElement != null)
+            if (emptyPickupLocationElement != null)
             {
                 ContenerShipment.emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
             }
@@ -178,7 +178,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetTransshipment3Leg(XmlNode node)
         {
             XmlElement tsp3_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loc").FirstOrDefault();
-            if (ContenerShipment.tsp3_locElement != null)
+            if (tsp3_locElement != null)
             {
                 ContenerShipment.tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
@@ -198,7 +198,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetTransshipment4Leg(XmlNode node)
         {
             XmlElement tsp4_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loc").FirstOrDefault();
-            if (ContenerShipment.tsp4_locElement != null)
+            if (tsp4_locElement != null)
             {
                 ContenerShipment.tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
@@ -263,7 +263,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetDeliveryLocationElement(XmlNode node)
         {
             XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
-            if (ContenerShipment.dlv_locElement != null)
+            if (dlv_locElement != null)
             {
                 ContenerShipment.dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
@@ -274,7 +274,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetLifLocationElement(XmlNode node)
         {
             XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
-            if (ContenerShipment.lif_locElement != null)
+            if (lif_locElement != null)
             {
                 ContenerShipment.lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
@@ -288,7 +288,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         private void GetEmptyReturnElement(XmlNode node)
         {
             XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
-            if (ContenerShipment.empty_return_locElement != null)
+            if (empty_return_locElement != null)
             {
                 ContenerShipment.empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
@@ -1062,7 +1062,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         }
         private void BuildContainerUpdatedFields()
         {
-            ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
+            containerUpdatedFields = new ContainerUpdatedFields();
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
             containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
             containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
@@ -1154,7 +1154,6 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
             containerUpdatedFields.CarrierReleaseState = ContenerShipment.carrier_release_state;
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-            return containerUpdatedFields;
         }
     }
     public class ContainerEventElement

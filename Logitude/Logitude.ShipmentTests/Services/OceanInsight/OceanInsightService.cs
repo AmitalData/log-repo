@@ -55,7 +55,7 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         }
         public ShipmentPM GetShipment()
         {
-            string singleShipmentUrl = Urls.ShipmentGetSingle("1-2072011"/*ShipmentData.ShipmentPM.Id*/);
+            string singleShipmentUrl = Urls.ShipmentGetSingle(ShipmentData.ShipmentPM.Id);
             ApiResponse<ShipmentPM> getResponse = APICaller.CallGet<ShipmentPM>(singleShipmentUrl, UserTenant.Token);
             return getResponse.Data;
         }

@@ -40,11 +40,11 @@
       <shipmentsubscription_on_hold>false</shipmentsubscription_on_hold>
       <shipmentsubscription_id>22306828</shipmentsubscription_id>
       <lifecycle_status_verbose>active</lifecycle_status_verbose>
-      <tsp4_loc />
+      <tsp4_loc>1</tsp4_loc>
       <tsp3_loc />
       <tsp2_loc />
       <tsp1_loc />
-      <leg5_vessel />
+	   <leg5_vessel >1</leg5_vessel>
       <leg4_vessel />
       <leg3_vessel />
       <leg2_vessel />
@@ -108,28 +108,28 @@
       <status>14</status>
       <lifecycle_status>0</lifecycle_status>
       <id_date>2021-04-02</id_date>
-      <empty_pickup_planned_initial />
+	   <empty_pickup_planned_initial >2021-04-02T09:20 0200</empty_pickup_planned_initial>
       <empty_pickup_planned_last />
       <empty_pickup_actual>2021-04-02T09:20 0200</empty_pickup_actual>
-      <origin_pickup_planned_initial />
-      <origin_pickup_planned_last />
-      <origin_pickup_actual />
-      <pol_arrival_planned_initial />
-      <pol_arrival_planned_last />
+	   <origin_pickup_planned_initial>2021-04-02T09:20 0200</origin_pickup_planned_initial>
+	   <origin_pickup_planned_last >2021-04-02T09:20 0200</origin_pickup_planned_last>
+	   <origin_pickup_actual >2021-04-02T09:20 0200</origin_pickup_actual>
+	   <pol_arrival_planned_initial >2021-04-02T09:20 0200</pol_arrival_planned_initial>
+	   <pol_arrival_planned_last >2021-04-02T09:20 0200</pol_arrival_planned_last>
       <pol_arrival_actual>2021-04-02T11:54 0200</pol_arrival_actual>
-      <pol_loaded_planned_initial />
-      <pol_loaded_planned_last />
+	   <pol_loaded_planned_initial >2021-04-02T09:20 0200</pol_loaded_planned_initial>
+	   <pol_loaded_planned_last >2021-04-02T09:20 0200</pol_loaded_planned_last>
       <pol_loaded_actual>2021-04-03T19:02 0200</pol_loaded_actual>
-      <pol_vsldeparture_planned_initial />
-      <pol_vsldeparture_planned_last />
-      <pol_vsldeparture_actual />
-      <pol_vsldeparture_detected />
+	   <pol_vsldeparture_planned_initial >2021-04-02T09:20 0200</pol_vsldeparture_planned_initial>
+	   <pol_vsldeparture_planned_last >2021-04-02T09:20 0200</pol_vsldeparture_planned_last>
+	   <pol_vsldeparture_actual >2021-04-02T09:20 0200</pol_vsldeparture_actual>
+	   <pol_vsldeparture_detected >2021-04-02T09:20 0200</pol_vsldeparture_detected>
       <leg1_voyage>AE113A</leg1_voyage>
-      <tsp1_vslarrival_planned_initial />
-      <tsp1_vslarrival_planned_last />
-      <tsp1_vslarrival_actual />
-      <tsp1_vslarrival_detected />
-      <tsp1_discharge_planned_initial />
+	   <tsp1_vslarrival_planned_initial >2021-04-02T09:20 0200</tsp1_vslarrival_planned_initial>
+	   <tsp1_vslarrival_planned_last >2021-04-02T09:20 0200</tsp1_vslarrival_planned_last>
+	   <tsp1_vslarrival_actual >2021-04-02T09:20 0200</tsp1_vslarrival_actual>
+	   <tsp1_vslarrival_detected >2021-04-02T09:20 0200</tsp1_vslarrival_detected>
+	   <tsp1_discharge_planned_initial >2021-04-02T09:20 0200</tsp1_discharge_planned_initial>
       <tsp1_discharge_planned_last />
       <tsp1_discharge_actual />
       <tsp1_loaded_planned_initial />
