@@ -47,6 +47,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
+    @ViewChild(MultipleSelectionComponent) multipleSelectionComponent: MultipleSelectionComponent;
     public MoreReferenceText: string;
     public ConsignmentNumber: string;
     public toPortCode: string;
@@ -433,6 +434,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
         shipmentFilters.TransportModeCodes = transportMode;
     }
+
+    SelectionChangedHandler(toggleFilterCodes: string) {
+        this.SelectToggleFilters(toggleFilterCodes);
+    }
+
     private SelectToggleFilters(toggleFilterCodes: string)
     {
         if(toggleFilterCodes){
@@ -531,6 +537,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ToggleFilters: ToggleFilter[] = [
+        new ToggleFilter('AL', 'ALL'),
         new ToggleFilter('IM', 'Import'),
         new ToggleFilter('EX', 'Export'),
         new ToggleFilter('A', 'Air'),
@@ -540,6 +547,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     BuildToggleFilters(){
         this.ToggleFilters = [
+            new ToggleFilter('AL', 'ALL', this.ShipmentsCount),
             new ToggleFilter('IM', 'Import',this.ShipmentsCounter.Import),
             new ToggleFilter('EX', 'Export',this.ShipmentsCounter.Export),
             new ToggleFilter('A', 'Air',this.ShipmentsCounter.Air),
@@ -575,7 +583,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
-
+        this.multipleSelectionComponent.DeselectFilter(filter.Code);
         this.LoadScreenData();
 
     }
@@ -583,6 +591,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.SelectedFilters = [];
         this.ClearAdvancedFilters();
+        this.multipleSelectionComponent.ClearFilters();
         this.LoadScreenData();
     }
 

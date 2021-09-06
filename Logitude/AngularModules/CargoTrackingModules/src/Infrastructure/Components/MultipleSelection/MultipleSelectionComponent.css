@@ -14,3 +14,11 @@
 .mat-form-field-underline::before {
     background: var(--MainColor);
 }
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: var(--MainColor);
+}
+
+mat-option-text {
+    color: var(--MainColor);
+}
