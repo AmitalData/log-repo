@@ -8,4 +8,5 @@ export class CargoTrackingShipmentFilters
     public DirectionCodes: string;
     public SortDescending: boolean = true;
     public SortFieldName: string;
+    public SelectedInvitedCustomers: any[];
 }
