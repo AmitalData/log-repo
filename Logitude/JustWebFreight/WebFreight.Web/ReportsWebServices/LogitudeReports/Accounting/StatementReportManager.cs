@@ -943,7 +943,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             List<StatementRecord> myList = new List<StatementRecord>();
             List<ARInvoice> iQueryableList = iQueryable.ToList();
-            double? openbalance = 0;
             foreach (ARInvoice d in iQueryableList)
             {
                 StatementRecord item = new StatementRecord();
@@ -959,8 +958,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
                 item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
                 item.DebitWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? 0 : d.AmountDue.Value);
-                openbalance = openbalance + item.Debit;
-                //.Balance = openbalance;
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
                 item.CreditWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? 0 : d.AmountDue.Value);
                 item.Notes = d.InternalNotes;
@@ -984,7 +981,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             List<StatementRecord> myList = new List<StatementRecord>();
             List<APInvoice> iQueryableList = iQueryable.ToList();
-            double? openbalance = 0;
             foreach (APInvoice d in iQueryableList)
             {
                 StatementRecord item = new StatementRecord();
@@ -1001,8 +997,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value);
                 item.Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null);
                 item.CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0);
-                openbalance = openbalance - item.Credit;
-                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.YourRefrence = d.InvoiceNumber;
                 item.BillToVendorId = d.VendorId;
@@ -1023,7 +1017,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             List<StatementRecord> myList = new List<StatementRecord>();
             List<ARPayment> iQueryableList = iQueryable.ToList();
-            double? openbalance = 0;
 
             foreach (ARPayment d in iQueryableList)
             {
@@ -1035,8 +1028,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Type = "A\\R Payment";
                 item.Credit = d.OpenAmount == null ? null : d.OpenAmount;
                 item.CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
-                openbalance = openbalance - item.Credit;
-                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.RegisterDate = d.RegisterDate;
                 item.ValueDate = d.ValueDate;
@@ -1058,7 +1049,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             List<StatementRecord> myList = new List<StatementRecord>();
             List<APPayment> iQueryableList = iQueryable.ToList();
-            double? openbalance = 0;
 
             foreach (APPayment d in iQueryableList)
             {
@@ -1070,8 +1060,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Type = "A\\P Payment";
                 item.Debit = d.OpenAmount == null ? null : d.OpenAmount;
                 item.DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
-                openbalance = openbalance + item.Debit;
-                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.RegisterDate = d.RegisterDate;
                 item.ValueDate = d.ValueDate;
