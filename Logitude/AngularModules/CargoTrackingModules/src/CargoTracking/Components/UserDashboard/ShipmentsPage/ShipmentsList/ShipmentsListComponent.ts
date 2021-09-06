@@ -1,4 +1,5 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, AfterContentInit } from '@angular/core';
+
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -26,7 +27,7 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent implements AfterViewInit
+export class ShipmentsListComponent implements AfterViewInit, OnInit
 {
 
 
@@ -79,19 +80,22 @@ export class ShipmentsListComponent implements AfterViewInit
         this.SetDefaultBackgroundColor();
     }
 
+    ngOnInit(): void {
+        this.GetPreservedToggleFiltersFromSessionInfo();
+        this.GetCompanyLoginsFromCache();
+    }
     ngAfterViewInit(): void
     {
-        this.GetCompanyLoginsFromCache();
-        this.GetPreservedToggleFiltersFromSessionInfo();
+
+        this.LoadScreenData();
         this.SetShipmentsScrollPosition();
     }
 
     private SetShipmentsScrollPosition() {
-        setTimeout(() => {
-            const shipmentCardsContainer = document.getElementById("scrollArea");
-            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
-        }, 500);
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
     }
+
 
     private SetDefaultBackgroundColor()
     {
@@ -213,9 +217,10 @@ export class ShipmentsListComponent implements AfterViewInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
-            this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
+            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText:'';
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
         }
     }
 
@@ -265,7 +270,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
 
-        this.LoadScreenData();
     }
 
 
@@ -314,6 +318,7 @@ export class ShipmentsListComponent implements AfterViewInit
     Clear()
     {
         this.SearchText = '';
+        RootContext.LastSearchText = '';
         this.LoadScreenData();
     }
 
@@ -321,6 +326,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
         }
 
@@ -332,7 +338,7 @@ export class ShipmentsListComponent implements AfterViewInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
-
+            
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
@@ -352,6 +358,7 @@ export class ShipmentsListComponent implements AfterViewInit
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments(shipmentFilters);
             this.LoadShipmentsCounter(shipmentFilters);
+            this.SetShipmentsScrollPosition();
         }
     }
     references: string[];
@@ -401,8 +408,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
-
+        shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortDescending = this.isSortDescending;
 
@@ -423,6 +429,7 @@ export class ShipmentsListComponent implements AfterViewInit
 
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
+        shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -570,10 +577,17 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.LoadScreenData();
     }
+
+    SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
+        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
+        if (!item)
+            this.SelectedFilters.push(filter);
+    }
+
     SelectFilterByCode(filterCode: string)
     {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        this.SelectFilter(filter);
+        this.SelectFilterWithoutLoadScreenData(filter);
     }
     DeselectFilter(filter: ToggleFilter)
     {

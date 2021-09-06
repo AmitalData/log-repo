@@ -31,9 +31,7 @@
                 </div>
 
                 <button class="search-button" type="submit"
-                        (onsubmit)="LoadScreenData()">
-                    {{isLoading?'Loading...': 'Search'}}
-                </button>
+                    (click)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
 
