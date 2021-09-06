@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 
-import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
+//import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -53,7 +53,7 @@ export class FilingInboxAttachmentPM {
        
 	 
      
-	private attachLogs: FilingInboxAttachToolTip[];
+	private attachLogs: any[];
     get  AttachLogs() {
         if (this.attachLogs == null) {
             this.attachLogs = [];
@@ -61,7 +61,7 @@ export class FilingInboxAttachmentPM {
 
         return this.attachLogs;
     }
-    set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
+    set  AttachLogs(newValue: any[]) {
         if (this.attachLogs != newValue) {
             this.attachLogs = newValue;
         }
