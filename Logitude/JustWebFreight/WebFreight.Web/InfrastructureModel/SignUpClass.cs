@@ -482,6 +482,8 @@ namespace WebFreight.Web.InfrastructureModel
                 AddVatTypes(tenant, vatTypeRepository, tenantZeroVatTypes, vatTypePercentageRepository);
                 List<VatType> currentTenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
+                AddTruckerCard(signUpInfo);
+
                 AddLeadSources(tenant, leadSourceRepository, tenantZeroLeadSources);
                 AddStages(tenant, stageRepository, tenantZeroStages);
                 AddIndustries(tenant, industryRepository, tenantZeroIndustries);
@@ -1364,7 +1366,7 @@ namespace WebFreight.Web.InfrastructureModel
                                                                                                         //    LocalName = CurrentContact.LocalName,
                                                                                                         //    BusinessPhone = CurrentContact.BusinessPhone,
                                                                                                         //    Mobile = CurrentContact.Mobile
-                AddTruckerCard(signUpInfoClass, cardQuery);
+              
 
                 //};
                 contactPM.SetAsPrimaryForCard = true;
@@ -1472,8 +1474,10 @@ namespace WebFreight.Web.InfrastructureModel
             }
         }
 
-        private static void AddTruckerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
+        private static void AddTruckerCard(SignUpInfoClass signUpInfoClass)
         {
+            CardQuery cardQuery = new CardQuery(signUpInfoClass.Tenant); 
+
             if (LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
             {
                 InsertTrucerCard(signUpInfoClass, cardQuery);
@@ -1484,12 +1488,16 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static void InsertTrucker(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
         {
-            TruckerRepository truckerRepository = new TruckerRepository(signUpInfoClass.Tenant);  
+            TruckerRepository truckerRepository = new TruckerRepository(signUpInfoClass.Tenant);
+            AddTrucker(cardQuery, truckerRepository);
 
+        }
+
+        private static void AddTrucker(CardQuery cardQuery, TruckerRepository truckerRepository)
+        {
             Trucker newTrucker = GetTruckerInstance(cardQuery);
             truckerRepository.Add(newTrucker);
             truckerRepository.SubmitChanges();
-           
         }
 
         private static void InsertTrucerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
@@ -1499,10 +1507,15 @@ namespace WebFreight.Web.InfrastructureModel
             CardPM truckerCard = cardQuery.GetSinglePMByCode("---", 0);
             if (truckerCard != null)
             {
-                Card newTrucker = GetCardInstance(truckerCard);
-                cardRepository.Add(newTrucker);
-                cardRepository.SubmitChanges();
+                AddCard(cardRepository, truckerCard);
             }
+        }
+
+        private static void AddCard(CardRepository cardRepository, CardPM truckerCard)
+        {
+            Card newTrucker = GetCardInstance(truckerCard);
+            cardRepository.Add(newTrucker);
+            cardRepository.SubmitChanges();
         }
 
         private static Trucker GetTruckerInstance(CardQuery cardQuery)
@@ -1520,6 +1533,7 @@ namespace WebFreight.Web.InfrastructureModel
         {
             return new Card()
             {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
                 Code = truckerCard.Code,
                 EnglishName = truckerCard.EnglishName,
                 LocalName = truckerCard.LocalName,
