@@ -698,6 +698,21 @@ export class ARInvoicePM {
     public set ShipmentsNumbers(newValue: string) { if (this.shipmentsNumbers != newValue) { this.shipmentsNumbers = newValue; this.MarkAsDirty("ShipmentsNumbers"); } }
        
 	 
+    private masterNumbers: string;
+    public get MasterNumbers() { return this.masterNumbers; }
+    public set MasterNumbers(newValue: string) { if (this.masterNumbers != newValue) { this.masterNumbers = newValue; this.MarkAsDirty("MasterNumbers"); } }
+       
+	 
+    private masterShipmentNumbers: string;
+    public get MasterShipmentNumbers() { return this.masterShipmentNumbers; }
+    public set MasterShipmentNumbers(newValue: string) { if (this.masterShipmentNumbers != newValue) { this.masterShipmentNumbers = newValue; this.MarkAsDirty("MasterShipmentNumbers"); } }
+       
+	 
+    private houseNumbers: string;
+    public get HouseNumbers() { return this.houseNumbers; }
+    public set HouseNumbers(newValue: string) { if (this.houseNumbers != newValue) { this.houseNumbers = newValue; this.MarkAsDirty("HouseNumbers"); } }
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }

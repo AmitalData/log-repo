@@ -33,7 +33,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
-        public double? AmountInProfitCurrency { get; set; }               
+        public double? AmountInProfitCurrency { get; set; }
         public string UpdatedByUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string MainEntityId { get; set; }
@@ -48,8 +48,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string MasterNumber { get; set; }
         public string Description { get; set; }
         public string CreditAccount { get; set; }
-        public int TransferTries { get; set; }	
-        public string TransferError { get; set; }        
+        public int TransferTries { get; set; }
+        public string TransferError { get; set; }
         public bool IsTransferStarted { get; set; }
         public string AccountingExternalCode { get; set; }
         public string PaymentTermExternalId { get; set; }
@@ -117,5 +117,10 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? PaidDate { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
     }
+
 }
