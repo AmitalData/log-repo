@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ProcessProgress).HasColumnName("ProcessProgress");
 
             this.Property(t => t.NeedsRebulid).HasColumnName("NeedsRebulid");
+
+            this.Property(t => t.CreatedInTwoMonthsLogic).HasColumnName("CreatedInTwoMonthsLogic");
         }
     }
 }
