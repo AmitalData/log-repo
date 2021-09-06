@@ -4616,6 +4616,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShipmentId&quot;"
     ListPropertyPath="&quot;ShipmentId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4976,6 +4977,19 @@
     TextCode="&quot;ShipmentOrder.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Docs In&quot;"
+    TabLocalName="&quot;Docs In&quot;"
+    ObjectTableName="&quot;ShipmentOrder&quot;"
+    Code="&quot;SODI&quot;"
+    ControlPath="&quot;./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent&quot;"
+    TextCode="&quot;ShipmentOrder.TH.DocsIn&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    HtmlComponentURL="&quot;./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent&quot;"
+    HtmlComponentName="&quot;ShipmentOrderDocsInTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
