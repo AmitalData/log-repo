@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -12,6 +12,8 @@ import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrack
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -60,9 +62,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
     ShipmenTypeForRouting: string;
 
-
-
-
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -76,16 +75,22 @@ export class ShipmentsListComponent implements AfterViewInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-
-
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
+
     ngAfterViewInit(): void
     {
         this.GetCompanyLoginsFromCache();
         this.GetPreservedToggleFiltersFromSessionInfo();
+        this.SetShipmentsScrollPosition();
+    }
 
+    private SetShipmentsScrollPosition() {
+        setTimeout(() => {
+            const shipmentCardsContainer = document.getElementById("scrollArea");
+            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        }, 500);
     }
 
     private SetDefaultBackgroundColor()
@@ -331,6 +336,12 @@ export class ShipmentsListComponent implements AfterViewInit
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
+        this.SaveShipmentsScrollPosition();
+    }
+
+    private SaveShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        RootContext.ShipmentsScrollPosition = shipmentCardsContainer.scrollTop;
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
