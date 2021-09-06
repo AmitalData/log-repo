@@ -320,7 +320,7 @@ namespace WebFreight.Web.Helpers
 
         private void BuildForgotPasswordEmailBody(StringBuilder HtmlTemplate, EmailBodyParams emailBodyParams)
         {
-            var tenantName = (emailBodyParams.EmailMessageParams.TenantName != null && IsCargoTrackingDomain() ? emailBodyParams.EmailMessageParams.TenantName + " " : "";
+            var tenantName = (emailBodyParams.EmailMessageParams.TenantName != null && IsCargoTrackingDomain() ? emailBodyParams.EmailMessageParams.TenantName + " " : "");
             HtmlTemplate.Append("<p style='text-align:left'>");
             HtmlTemplate.Append("Hi,");
             HtmlTemplate.Append("<br /><br />");
