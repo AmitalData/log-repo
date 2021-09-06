@@ -882,11 +882,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 }
 
                 int i = totalList.IndexOf(record);
+                if(i == 0)
+                {
+                    record.Balance = totalList[0].Credit != null ? -1 * totalList[0].Credit : totalList[0].Debit;
+                }
+
                 if (i < totalList.Count && i != 0)
                 {
                     record.Balance = totalList[i - 1].Balance + (totalList[i].Credit != null ? -1 * totalList[i].Credit : totalList[i].Debit);
                 }
-
+   
                 Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
                 if (card != null)
                 {
@@ -955,7 +960,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
                 item.DebitWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? 0 : d.AmountDue.Value);
                 openbalance = openbalance + item.Debit;
-                item.Balance = openbalance;
+                //.Balance = openbalance;
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
                 item.CreditWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? 0 : d.AmountDue.Value);
                 item.Notes = d.InternalNotes;
@@ -997,7 +1002,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null);
                 item.CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0);
                 openbalance = openbalance - item.Credit;
-                item.Balance = openbalance;
+                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.YourRefrence = d.InvoiceNumber;
                 item.BillToVendorId = d.VendorId;
@@ -1031,7 +1036,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Credit = d.OpenAmount == null ? null : d.OpenAmount;
                 item.CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
                 openbalance = openbalance - item.Credit;
-                item.Balance = openbalance;
+                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.RegisterDate = d.RegisterDate;
                 item.ValueDate = d.ValueDate;
@@ -1066,7 +1071,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.Debit = d.OpenAmount == null ? null : d.OpenAmount;
                 item.DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
                 openbalance = openbalance + item.Debit;
-                item.Balance = openbalance;
+                //item.Balance = openbalance;
                 item.Notes = d.InternalNotes;
                 item.RegisterDate = d.RegisterDate;
                 item.ValueDate = d.ValueDate;
