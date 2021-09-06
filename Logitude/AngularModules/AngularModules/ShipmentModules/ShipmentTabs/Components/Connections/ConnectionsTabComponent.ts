@@ -155,15 +155,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.LoadData();
                     this.FillAssemblies();
                 }
-            });
+            });            
         }
-
-        //this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            //if (s == "RefreshConnections") {
-            //    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-            //    this.LoadData();
-            //}
-        //});
     }
 
     ngOnDestroy() {
@@ -188,6 +181,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.IsCFSWarehouse && this.EntityPM.DirectionId == "I") {
             this.SetIsCFSWarehouseProperities();
         }
+
     }
 
     SetIsCFSWarehouseProperities() {
