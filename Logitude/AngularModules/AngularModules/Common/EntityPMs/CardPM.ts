@@ -82,19 +82,18 @@ export class CardPM {
     private gLAccountDisplayNumber: string;
     public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
     public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
-    	 
        
-	  
+	 
     private creditLimitAmount: number;
     public get CreditLimitAmount() { return this.creditLimitAmount; }
     public set CreditLimitAmount(newValue: number) { if (this.creditLimitAmount != newValue) { this.creditLimitAmount = newValue; this.MarkAsDirty("CreditLimitAmount"); } }
-	 
+       
 	 
     private phone: string;
     public get Phone() { return this.phone; }
     public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
-
-    
+       
+	 
     private vatNumber: string;
     public get VatNumber() { return this.vatNumber; }
     public set VatNumber(newValue: string) { if (this.vatNumber != newValue) { this.vatNumber = newValue; this.MarkAsDirty("VatNumber"); } }
@@ -532,4 +531,4 @@ export class CardPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

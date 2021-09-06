@@ -108,5 +108,6 @@ export class TenantList {
 		AllowCustomersInAgentsLOV: boolean;
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
+		IsQuotesRequestActivatedInShared: boolean;
 	
 }

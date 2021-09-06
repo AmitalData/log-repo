@@ -36,12 +36,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
-                                                       MainColor = a.MainColor, 
-                                                       SecondaryColor = a.SecondaryColor, 
+                                                       MainColor = a.MainColor,
+                                                       SecondaryColor = a.SecondaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
@@ -60,8 +60,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             int Tenant = (from a in repository.context.TenantManagements
-                                                   where a.CustomerURL == domain  && a.Id !=0 && a.GlobalTenant.IsActive
-                                                   select a.Id
+                          where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
+                          select a.Id
                                                   ).FirstOrDefault();
 
             return Tenant;
@@ -72,7 +72,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             string domain = TrimDomainByRegex(tenantManagement.CustomerURL);
             bool IsExist = (from a in repository.context.TenantManagements
-                          where a.CustomerURL == domain  && a.Id!= tenantManagement.Id
+                            where a.CustomerURL == domain && a.Id != tenantManagement.Id
                             select a.Id).Any();
 
             return IsExist;
@@ -427,7 +427,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   TotalFreeUsers = a.TotalFreeUsers,
                                                   AveragePrice = a.AveragePrice,
                                                   TotalPaymentamount = a.TotalPaymentamount,
-                                                  MainColor = a.MainColor ,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
+                                                  MainColor = a.MainColor,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                   BackgroundId = a.BackgroundId,
@@ -966,7 +966,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 {
                     PackageRepository pckgRep = new PackageRepository(entityPM.Id);
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
-                    
+
                     if (pckg.FeaturePackageTypeCode == "BS")
                     {
                         entityPM.PackagesCodes_BS.Add(pckg.Code);
@@ -986,16 +986,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     }
                 }
 
-                if(entityPM.IsMultiPackage)
+                if (entityPM.IsMultiPackage)
                 {
                     List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
                     entityPM.PackagesCodes_PK.AddRange(licensesCodes);
 
                     PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
                     entityPM.PackagesCodes_BS.AddRange((from a in connectedPackageRepository.context.PackageConnectedPackages
-                                                 where licensesCodes.Contains(a.PackageCode)
-                                                 group a by a.ConnectedPackageCode into g
-                                                 select g.Key).ToList());
+                                                        where licensesCodes.Contains(a.PackageCode)
+                                                        group a by a.ConnectedPackageCode into g
+                                                        select g.Key).ToList());
                 }
             }
 
@@ -1359,8 +1359,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             if (!string.IsNullOrEmpty(id))
             {
                 privateLabelDomain = (from a in repository.context.TenantManagmentPrivateLabels
-                                             where a.Id == id
-                                             select a.PrivateLabelDomain).FirstOrDefault();
+                                      where a.Id == id
+                                      select a.PrivateLabelDomain).FirstOrDefault();
             }
 
             return privateLabelDomain;
@@ -1371,6 +1371,49 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return (from a in repository.context.GlobalTenants
                     where a.Id == tenant
                     select a.PrivateLabelId).FirstOrDefault();
+        }
+
+        public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
+        {
+            IQueryable<TenantManagementLicensePM> tenantManagementLicenses = GetTenantManagementLicensesByTenantNumbers(tenantNumbers);
+
+            List<TenantManagementPM> tenantManagements = repository.context.TenantManagements.Where(a => tenantNumbers.Contains(a.Id))
+                .Select(a => new TenantManagementPM()
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    PackageCode = a.PackageCode,
+                    PackageName = a.PackageName,
+                    TotalPrice = a.TotalPrice,
+                    SupportDomain = a.SupportDomain,
+                    TotalNumberOfUsers = a.TotalNumberOfUsers,
+                    TotalFreeUsers = a.TotalFreeUsers,
+                    AveragePrice = a.AveragePrice,
+                    TotalPaymentamount = a.TotalPaymentamount,
+                    ResellerCommission = a.ResellerCommission,
+                    PaymentCurrencyCode = a.PaymentCurrencyCode,
+                    MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                    IsMultiPackage = a.IsMultiPackage,
+                    NumberOfUsers = a.NumberOfUsers,
+                    TenantManagementLicenses = tenantManagementLicenses.Where(b => b.Tenant == a.Id).ToList(),
+                }).ToList();
+
+            return tenantManagements;
+        }
+
+        private IQueryable<TenantManagementLicensePM> GetTenantManagementLicensesByTenantNumbers(List<int> tenantNumbers)
+        {
+            return repository.context.TenantManagementLicenses.Where(a => tenantNumbers.Contains(a.Tenant))
+                .Select(a => new TenantManagementLicensePM()
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    PackageCode = a.PackageCode,
+                    NumberOfUsers = a.NumberOfUsers,
+                    FreeUsers = a.FreeUsers,
+                    Price = a.Price,
+                    TotalPrice = a.TotalPrice,
+                });
         }
     }
 }
