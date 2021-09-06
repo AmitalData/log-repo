@@ -65,6 +65,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<GLAccountPM> parentGLAccounts;
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const int maxAllowedLinesCount = 3000;
+
+
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -113,15 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                     if (invoice != null)
                     {
-                        DateTime invoiceDate = new DateTime(invoice.InvoiceDate.Value.Year, invoice.InvoiceDate.Value.Month, 1);
-                        DateTime taxReportDate = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month, 1);
-                        DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
-
-                        if ((setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate && invoiceDate != taxReportDatePreviousMonth)
-                            || (!setting.VATreportEveryTwoMonths && invoiceDate != taxReportDate))
-                        {
-                            transmitStatus = TaxReportLineTransmitStatusValues.WithoutTransmit;
-                        }
+                        transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
                         VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
                         //if (invoice.InvoiceNumber.Length > 9)
@@ -322,6 +316,20 @@ namespace Logitude.Accounting.BL.CoreBL
             UpdateTaxReport(taxReport);
             reportLinesList = HandleTaxReportLines(taxReport, reportLinesList);
             return reportLinesList;
+        }
+
+        private static string SetTransmitStaus(DateTime invoiceDate, DateTime taxReportMonth, FullAccountingSetting setting)
+        {
+            DateTime invoiceDateVal = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);
+            DateTime taxReportDate = new DateTime(taxReportMonth.Year, taxReportMonth.Month, 1);
+            DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
+
+            if ((setting.VATreportEveryTwoMonths && invoiceDateVal != taxReportDate && invoiceDateVal != taxReportDatePreviousMonth)
+                || (!setting.VATreportEveryTwoMonths && invoiceDateVal != taxReportDate))
+            {
+                return TaxReportLineTransmitStatusValues.WithoutTransmit;
+            }
+            return TaxReportLineTransmitStatusValues.Fortransmit;
         }
 
         private static void UpdateTaxReport(TaxReportPM taxReport)
