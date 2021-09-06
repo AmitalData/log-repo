@@ -3486,7 +3486,10 @@ namespace WebFreight.Web.ReportsWebServices
                 Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
                 if(vendorCard != null)
                 {
-                    invoicesRecored.BillToType = vendorCard.PartnerTypeName;
+                    if (vendorCard.PartnerType != null)
+                    {
+                        invoicesRecored.BillToType = vendorCard.PartnerType.Name;
+                    }
                 }
 
                 if (localCurrency)
