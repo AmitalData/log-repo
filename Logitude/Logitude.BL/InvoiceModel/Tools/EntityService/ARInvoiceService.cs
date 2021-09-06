@@ -2057,7 +2057,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                 }
 
-                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR" || item.MeasurementCode == "PFCL")
                                 {
                                     var price = item.UnitPrice / 100;
                                     TotalAmount = item.Quantity * price;
