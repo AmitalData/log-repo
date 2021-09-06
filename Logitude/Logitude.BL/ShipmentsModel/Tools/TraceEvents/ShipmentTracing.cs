@@ -338,11 +338,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("AFD");
             }
-            else if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
+
+            if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
             {
                 if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
                 {
-                    this.CreateTraceEvent("CUCD", entityPM.CustomsClearanceDate);
+                    this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
+                }
+
+                else if (entityPM.DirectionId == "E")
+                {
+                    this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
                 }
             }
 
@@ -426,21 +432,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.CreateTraceEvent("SCNL", entityPM.EventNote);
             }
-
-            if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
-            {
-                if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
-                {
-                    this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
-                }
-
-                else if (entityPM.DirectionId == "E")
-                {
-                    this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
-                }
-            }
-
-
         }
         private void TraceMasterData()
         {
