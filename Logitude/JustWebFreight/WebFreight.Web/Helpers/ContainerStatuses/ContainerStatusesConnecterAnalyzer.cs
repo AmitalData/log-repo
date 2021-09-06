@@ -155,6 +155,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string leg4_voyage = null;
         string leg5_vessel_name = null;
         string leg5_voyage = null;
+        string pod_loc_locode = null;
         string pod_discharge_planned_initial = null;
         string pod_discharge_planned_last = null;
         string pod_discharge_actual = null;
@@ -373,7 +374,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
             if (emptyPickupLocationElement != null)
             {
-                emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
             }
         }
         private void GetDepartureLocationElement(XmlNode node)
@@ -391,6 +392,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (destinationLocationElement != null)
             {
                 destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                pod_loc_locode = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+
             }
         }
         private void GetOriginLocationElement(XmlNode node)
@@ -1178,7 +1181,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.Leg4Voyage = leg4_voyage;
             containerUpdatedFields.Leg5Vessel = leg5_vessel_name;
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
-            containerUpdatedFields.PODLocation = destinationLocation;
+            containerUpdatedFields.PODLocation = pod_loc_locode;
             containerUpdatedFields.EstimatedPODVesselArrival = ComputeEstimatedPODVesselArrival();
             containerUpdatedFields.ActualPODVesselArrival = ComputeActualPODVesselArrival();
             containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
