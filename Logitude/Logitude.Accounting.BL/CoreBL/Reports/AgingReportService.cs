@@ -359,7 +359,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              ChartOfAccountsEnglishName = acc.ChartOfAccountsEnglishName,
                              ChartOfAccountsTypeEnglishName = acc.ChartOfAccountsTypeEnglishName,
                              ChartOfAccountsTypeLocalName = acc.ChartOfAccountsTypeLocalName,
-
+                             ChartOfAccountSecurityLevel = acc.ChartOfAccountSecurityLevel,
 
 
 
@@ -399,7 +399,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                              AccountPhone = card.Phone,
                              InsuredCreditLimit = card != null ? (card.InsuredcreditLimit != null ? (double)card.InsuredcreditLimit : 0) : 0
-
+                            
                          }
 
                      ).ToList();
@@ -500,7 +500,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAccountsEnglishName = r.ChartOfAccountsEnglishName,
                          ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                          ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
-
+                         ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
 
 
                      }
@@ -1076,7 +1076,7 @@ _Param.AgingForDate.Date, false, true, true,false);
                                                       ChartOfAccountsEnglishName = account.ChartOfAccountsEnglishName,
                                                       ChartOfAccountsTypeEnglishName = account.ChartOfAccountsTypeEnglishName,
                                                       ChartOfAccountsTypeLocalName = account.ChartOfAccountsTypeLocalName,
-
+                                                      ChartOfAccountSecurityLevel = account.ChartOfAccountSecurityLevel,
 
                                                   }).ToList();
             return namedPeriods;
@@ -1920,6 +1920,7 @@ Period	Acc	Currency	Total
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
+        public int? ChartOfAccountSecurityLevel { get; set; }
     }
 
     public class AgingReportParam

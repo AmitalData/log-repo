@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               TypeName = a.ChartOfAccountsTypeCode != null ? a.ChartOfAccountsTypeCode.EnglishName : null,
                                               ParentName = a.ParentChartOfAccount != null ? a.ParentChartOfAccount.EnglishName : null,
                                               SearchFields = a.SearchFields,
-                                              ChartOfAccountSecurityLevel = a.ChartOfAccountSecurityLevel
+                                              ChartOfAccountSecurityLevel = a.ChartOfAccountSecurityLevel,
                                           });
             return query;
 		}
