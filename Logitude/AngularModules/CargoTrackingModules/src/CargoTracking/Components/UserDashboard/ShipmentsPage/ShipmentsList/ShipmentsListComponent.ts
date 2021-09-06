@@ -83,13 +83,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ngOnInit(): void {
         this.GetPreservedToggleFiltersFromSessionInfo();
+        this.GetCompanyLoginsFromCache();
     }
 
 
 
     ngAfterViewInit(): void
     {
-        this.GetCompanyLoginsFromCache();
+        this.LoadScreenData();
         this.SetShipmentsScrollPosition();
 
     }
@@ -221,10 +222,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
-            this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
+            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText:'';
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
-            this.LoadScreenData();
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
         }
     }
 
@@ -274,7 +275,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
 
-        this.LoadScreenData();
     }
 
 
@@ -323,6 +323,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     Clear()
     {
         this.SearchText = '';
+        RootContext.LastSearchText = '';
         this.LoadScreenData();
     }
 
@@ -330,6 +331,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
         }
 
@@ -431,6 +433,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
+        shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
