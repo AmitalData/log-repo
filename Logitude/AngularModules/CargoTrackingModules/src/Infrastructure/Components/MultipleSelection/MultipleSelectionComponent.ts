@@ -9,32 +9,48 @@ import { ToggleFilter } from '../../../CargoTracking/Components/UserDashboard/Sh
     templateUrl: './MultipleSelectionComponent.html',
     styleUrls: ['./MultipleSelectionComponent.css']
 })
-export class MultipleSelectionComponent {
+export class MultipleSelectionComponent implements OnInit {
 
     MultipleSelection = new FormControl();
     @Input() MultipleSelectionList: any[];
     @Input() Title: string;
     @Output() SelectionChanged: EventEmitter<any> = new EventEmitter();
-    @Output() SelectToggleFilters: string;
+    @Output() SelectedFilters: ToggleFilter[] = [];
+    DefaultSelected: string;
 
     @ViewChild('select') select: MatSelect;
 
     constructor() {
-       
     }
 
-    SelectFilter(selectedFilter: any) {
-        this.SelectToggleFilters = selectedFilter.Code;
-        this.SelectionChanged.emit(this.SelectToggleFilters);
+    ngOnInit(): void {
+        this.DefaultSelected = this.MultipleSelectionList[0];
+    }
+
+    ToggleFilter(filter: ToggleFilter) {
+        var isSelected = this.select.options.find(d => d.value.Code == filter.Code).selected;
+        if (isSelected)
+            this.SelectFilter(filter)
+        else
+            this.DeselectFilter(filter)
+
+    }
+
+    SelectFilter(filter: ToggleFilter) {
+        this.SelectedFilters.push(filter);
+        this.SelectionChanged.emit(this.SelectedFilters);
     }
 
     ClearFilters() {
         this.select.options.forEach((item: MatOption) => {
             item.deselect();
         });
+        this.SelectedFilters = [];
     }
 
-    DeselectFilter(filterCode: string) {
-        this.select.options.find(d => d.value.Code == filterCode).deselect();
+    DeselectFilter(filter: ToggleFilter) {
+        var index = this.SelectedFilters.findIndex(d => d == filter);
+        this.SelectedFilters.splice(index, 1);
+        this.SelectionChanged.emit(this.SelectedFilters);
     }
 }

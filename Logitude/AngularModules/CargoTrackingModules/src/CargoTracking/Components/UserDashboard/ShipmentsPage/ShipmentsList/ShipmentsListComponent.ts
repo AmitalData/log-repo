@@ -430,13 +430,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var transportMode = "";
         if (this.SelectedFilters.length > 0){
             const transportModeCodes = ['A', 'I', 'O'];
-            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
+            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.code)).map(d => d.code).join(',');
         }
         shipmentFilters.TransportModeCodes = transportMode;
     }
 
-    SelectionChangedHandler(toggleFilterCodes: string) {
-        this.SelectToggleFilters(toggleFilterCodes);
+    SelectionChangedHandler(filter: ToggleFilter) {
+        this.SelectFilter(filter);
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
@@ -583,7 +583,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
-        this.multipleSelectionComponent.DeselectFilter(filter.Code);
+        this.multipleSelectionComponent.DeselectFilter(filter);
         this.LoadScreenData();
 
     }
@@ -694,7 +694,7 @@ export class ToggleFilter
     }
 
 
-    private name: string;
+     name: string;
     public get Name(): string
     {
         return this.name;
@@ -706,7 +706,7 @@ export class ToggleFilter
 
 
 
-    private count: number = 0;
+     count: number = 0;
     public get Count(): number
     {
         return this.count;
@@ -717,7 +717,7 @@ export class ToggleFilter
     }
 
 
-    private code: string;
+     code: string;
     public get Code(): string
     {
         return this.code;
