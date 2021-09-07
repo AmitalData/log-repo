@@ -992,29 +992,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             List<APInvoice> iQueryableList = iQueryable.ToList();
             foreach (APInvoice d in iQueryableList)
             {
-                     MasterNumber = d.MasterNumber,
-                     Desicription = d.Description + " " + d.MainEntityReference,
-                     ShipmentId = d.MainEntityId,
-                     HouseNumber = d.HouseNumber,
-                     Date = d.InvoiceDate.Value,
-                     DueDate = d.DueDate.Value,
-                     OurRefrence = d.InvoiceNumber,
-                     CurrencyId = d.InvoiceCurrencyId,
-                     Type = "A\\P Invoice",
-                     Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
-                     Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
-                     Notes = d.InternalNotes,
-                     YourRefrence = d.InvoiceNumber,
-                     BillToVendorId = d.VendorId,
-                     InvoiceStatus = d.Status == null ? null : d.Status.Name,
-                     InvoiceAmount = d.AmountInLocalCurrency,
-                     AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
-                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
-                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
-                     BranchId = d.BranchId,
-                     ShipmentNumber = d.MainEntityReference,
-                     OriginalAmount = d.AmountInInvoiceCurrency
-                 }).ToList();
+                StatementRecord item = new StatementRecord();
+                item.MasterNumber = d.MasterNumber;
+                item.Desicription = d.Description + " " + d.MainEntityReference;
+                item.ShipmentId = d.MainEntityId;
+                item.HouseNumber = d.HouseNumber;
+                item.Date = d.InvoiceDate.Value;
+                item.DueDate = d.DueDate.Value;
+                item.OurRefrence = d.InternalNumber;
+                item.CurrencyId = d.InvoiceCurrencyId;
+                item.Type = "A\\P Invoice";
+                item.Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue);
+                item.DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value);
+                item.Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null);
+                item.CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0);
+                item.Notes = d.InternalNotes;
+                item.YourRefrence = d.InvoiceNumber;
+                item.BillToVendorId = d.VendorId;
+                item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
+                item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
+                item.InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency;
+                item.AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue;
+                item.BranchId = d.BranchId;
+                item.ShipmentNumber = d.MainEntityReference;
+                item.OriginalAmount = d.AmountInInvoiceCurrency;
+                myList.Add(item);
+            }
 
             return myList;
         }
