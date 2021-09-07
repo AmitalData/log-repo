@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "9ba631ec4fb4096eea0974c8968f252f";
+		public const string HashString = "2b682fb18e3e3775fe3e6a2deb41cc64";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10436,6 +10436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -12588,6 +12589,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLaccountOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.To", DefaultText = "To",LocalDefaultText = @"עד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOLevelWarningMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LevelWarningMsg", DefaultText = "Some data has been hidden due to insufficient security clearance",LocalDefaultText = @"חלק מהמידע מוסתר , עקב הגבלת הרשאה של המשתמש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOSecurityLevelHiddenItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SecurityLevelHiddenItem", DefaultText = "GLAccount's data is hidden due to insufficient Security Clearance",LocalDefaultText = @"לא ניתן להציג את נתוני הדוח מכיוון שלמשתמש אין הרשאה לקבוצת המאזן שנבחרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

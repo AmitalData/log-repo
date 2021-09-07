@@ -17,9 +17,10 @@ import {APPaymentPM} from '../../../../Invoice/EntityPMs/APPaymentPM';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {ModulesService} from '../../../Services/ModulesService';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
-    
+
     templateUrl: './PayablePageComponent.html',
 })
 
@@ -206,22 +207,22 @@ export class PayablePageComponent {
 
                 case "Draft Payments":
                     {
-                     
+
                         displayTitle = TextCodeTranslator.Translate("APPayment.Q.DraftAPPayments");
 
                         break;
                     }
                 case "Open Payments":
                     {
-                    
+
                         displayTitle = TextCodeTranslator.Translate("APPayment.Q.OpenAPPayments");
 
                         break;
                     }
                 case "All Payments":
                     {
-                       
-                       
+
+
                         displayTitle = TextCodeTranslator.Translate("APPayment.Q.AllAPPayments");
 
                         break;
@@ -235,7 +236,7 @@ export class PayablePageComponent {
             var backButtonTitle = "Accounting";
             var objectTableName = args.split(':')[0];
             var queryCode = args.split(':')[1];
-           
+
             this.filterAgrs = new ApiQueryFilters();
 
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
@@ -318,18 +319,35 @@ export class PayablePageComponent {
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Payables") });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.RefreshButtonClicked();
-                    });
-                });
+
+            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
+            {
+                if (hasAccess)
+                    this.OpenGLAccountEditWindow(entity);
+                else
+                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+            });
+
+
+
         }
     }
 
-    // General Invoice 
+    private OpenGLAccountEditWindow(entity: any)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef =>
+            {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Payables") });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) =>
+                {
+                    this.RefreshButtonClicked();
+                });
+            });
+    }
+
+    // General Invoice
     NewGeneralAPInvoice() {
         var str = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
         var windowTitle = str;

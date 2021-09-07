@@ -381,6 +381,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return dic;
         }
 
+        public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
+        {
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
         {
             (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
@@ -411,12 +416,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         //}
         public GLAccountPM GetSinglePM(string gLAccountId, int tenant)
         {
-            GLAccount gLAccountPOCO = null;
-            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
-            GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
-            return pm;
+            GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+            GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
+
+            if (!CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
+                return null;
+
+            return gLAccountPM;
         }
 
+        private bool CheckIfUserHasSecurityAccessToGLAccount(int tenant, int? chartOfAccountSecurityLevel)
+        {
+            var settings = GetFullAccountingSettings(tenant);
+            var loggedUser = GetLoggedUser(tenant);         
+
+            bool hasSecurityAccess = 
+                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel <= loggedUser.SecurityLevel)
+                || (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel == null)
+                || !settings.IsSecurityLevelActivated;
+            return hasSecurityAccess;
+        }
+
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            return loggedUser;
+        }
         public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
         {
             GLAccount gLAccountPOCO = null;
