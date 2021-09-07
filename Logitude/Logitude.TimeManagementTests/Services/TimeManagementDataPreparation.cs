@@ -25,6 +25,7 @@ namespace Logitude.TimeManagementTests.Services
             CreateDataEntry();
             TimeManagementData.UpdateProjectId = GetProjectId("specflow project update", UserTenant.UserId);
             TimeManagementData.UpdateSprintId = GetSprintId("specflow sprint update");
+            TimeManagementData.UpdatedDateNumber = -1;
         }
 
         private void CreateDataEntry()

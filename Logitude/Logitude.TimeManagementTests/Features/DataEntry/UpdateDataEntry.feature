@@ -11,8 +11,7 @@ Scenario: Update data entry
 		| Description | specflow desc  update  |
 		| Sprint      | specflow sprint update |
 		| Location    | Home                   |
-		| DateOfWork  | Today - 1 hour         |
+		| DateOfWork  | Today - 1 day          |
 		| Minuts      | 60                     |
 	When update data entry
 	Then the data entry should update successfully
-

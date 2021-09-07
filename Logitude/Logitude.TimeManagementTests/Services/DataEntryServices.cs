@@ -41,11 +41,16 @@ namespace Logitude.TimeManagementTests.Services
                 .WithModel(timeManagementAPIHelper)
                 .LocationCode((string)dataTable.Location)
                 .WithItemsPM(GetUpdateItemPMs(dataTable, timeManagementAPIHelper.ItemsPM))
-                .WithItems(GetUpdateItems(dataTable, timeManagementAPIHelper.Items))
                 .Build();
         }
 
-
+        public TimeManagementAPIHelper Update(TimeManagementAPIHelper dataEntry)
+        {
+            var putDataEntry = APICaller.CallPut<TimeManagementAPIHelper>(dataEntry, Urls.TimeManagementDomainController, UserTenant.Token).Data;
+            string path = Urls.GetDataEntryTimeSheetList(UserTenant.UserId, "A", DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber), DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber));
+            var updatedDataEntry = APICaller.CallGet<TimeManagementAPIHelper>(path, UserTenant.Token).Data;
+            return updatedDataEntry;
+        }
 
         private List<TMEmployeeTimePM> GetUpdateItemPMs(dynamic dataTable, List<TMEmployeeTimePM> itemsPM)
         {
@@ -54,41 +59,23 @@ namespace Logitude.TimeManagementTests.Services
                 .LocationCode((string)dataTable.Location)
                 .Description((string)dataTable.Description)
                 .TimeInMinutes((int)dataTable.Minuts)
-                .DateOfWork(DateTime.Now.AddHours(-1))
+                .DateOfWork(DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber))
                 .ProjectId(TimeManagementData.UpdateProjectId)
                 .sprintId(TimeManagementData.UpdateSprintId)
                 .Build();
-            return new List<TMEmployeeTimePM>() { updatedItem };
-        }
-        private object GetUpdateItems(dynamic dataTable, List<TimeSheetItem> items)
-        {
-            var item = items.First();
-            var updatedItem = new TimeSheetItemBuilder().WithModel(item)
-                .LocationCode((string)dataTable.Location)
-                .Description((string)dataTable.Description)
-                .ProjectId(TimeManagementData.UpdateProjectId)
-                .Days(GetDays((int)dataTable.Minuts, DateTime.Now.AddHours(-1)))
-                .Build();
-            return new List<TimeSheetItem>() { updatedItem };
+            return itemsPM;
         }
 
-        private List<TimeSheetItemDay> GetDays(int minuts, DateTime dateTime)
-        {
-            return new List<TimeSheetItemDay>() { 
-                new TimeSheetItemDay(){ Date = dateTime, Minuts = minuts}
-            };
-        }
 
         public void Assert(TimeManagementAPIHelper dataEntry, TimeManagementAPIHelper updatedDataEntry)
         {
-            updatedDataEntry.LocationCode.Should().Be(dataEntry.LocationCode);
-            var updatedItem = updatedDataEntry.ItemsPM.First();
-            var item = dataEntry.ItemsPM.First();
+            var updatedItem = updatedDataEntry.ItemsPM.Where(e=>e.Id == TimeManagementData.DataEntryID).First();
+            var item = dataEntry.ItemsPM.Where(e => e.Id == TimeManagementData.DataEntryID).First();
             updatedItem.LocationCode.Should().Be(item.LocationCode);
             updatedItem.Description.Should().Be(item.Description);
             updatedItem.SprintId.Should().Be(item.SprintId);
             updatedItem.ProjectId.Should().Be(item.ProjectId);
-            updatedItem.DateOfWork.Should().Be(item.DateOfWork);
+            //updatedItem.DateOfWork.Should().Be(item.DateOfWork);
             updatedItem.TimeInMinutes.Should().Be(item.TimeInMinutes);
         }
     }

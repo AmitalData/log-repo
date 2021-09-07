@@ -37,14 +37,13 @@ namespace Logitude.TimeManagementTests.Steps.DataEntry
         [When(@"update data entry")]
         public void WhenUpdateDataEntry()
         {
-            timeManagementContext.UpdatedDataEntry = APICaller.CallPut<TimeManagementAPIHelper>(timeManagementContext.DataEntry, Urls.TimeManagementDomainController, UserTenant.Token).Data;
+            timeManagementContext.UpdatedDataEntry = dataEntryServices.Update(timeManagementContext.DataEntry);
         }
 
         [Then(@"the data entry should update successfully")]
         public void ThenTheDataEntryShouldUpdateSuccessfully()
         {
             dataEntryServices.Assert(timeManagementContext.DataEntry, timeManagementContext.UpdatedDataEntry);
-            
         }
     }
 }

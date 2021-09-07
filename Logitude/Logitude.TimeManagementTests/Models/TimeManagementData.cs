@@ -13,6 +13,7 @@ namespace Logitude.TimeManagementTests.Models
         public static string SprintId { get; set; }
         public static string UpdateSprintId { get; set; }
         public static TimeManagementAPIHelper DataEntry { get; set; }
-        public static string DataEntryID { get; internal set; }
+        public static string DataEntryID { get; set; }
+        public static double UpdatedDateNumber { get; set; }
     }
 }

@@ -134,7 +134,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Home"});
                 table2.AddRow(new string[] {
                             "DateOfWork",
-                            "Today - 1 hour"});
+                            "Today - 1 day"});
                 table2.AddRow(new string[] {
                             "Minuts",
                             "60"});
