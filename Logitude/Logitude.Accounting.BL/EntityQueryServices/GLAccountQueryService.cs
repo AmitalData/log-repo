@@ -437,13 +437,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return hasSecurityAccess;
         }
 
-        private User GetLoggedUser(int tenant)
-        {
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            UserRepository userRepository = new UserRepository(tenant);
-            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
-            return loggedUser;
-        }
         public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
         {
             GLAccount gLAccountPOCO = null;
