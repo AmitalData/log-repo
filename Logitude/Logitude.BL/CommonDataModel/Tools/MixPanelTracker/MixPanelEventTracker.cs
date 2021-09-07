@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,7 +81,7 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
             factory.ConfigureBrowserCapabilities(new NameValueCollection(), userBrowser);
             return userBrowser.Browser;
         }
-        private static string GetIPAddress() => HttpContext.Current?.Request?.UserHostAddress;
+        private static string GetIPAddress() => AuthenticationUtil.GetIP4Address();
 
         private void GetTenantManagement(int tenant)
         {

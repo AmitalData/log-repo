@@ -90,15 +90,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ngAfterViewInit(): void
     {
+
         this.LoadScreenData();
         this.SetShipmentsScrollPosition();
-
     }
 
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
         shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
     }
+
 
     private SetDefaultBackgroundColor()
     {
@@ -361,6 +362,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments(shipmentFilters);
             this.LoadShipmentsCounter(shipmentFilters);
+            this.SetShipmentsScrollPosition();
         }
     }
     references: string[];
