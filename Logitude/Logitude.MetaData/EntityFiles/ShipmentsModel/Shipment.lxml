@@ -97465,6 +97465,20 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;CRFP&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Cargo Ready for Pickup&quot;"
+      LocalName="&quot;Cargo Ready for Pickup&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;CRFP&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
