@@ -47,6 +47,7 @@ using Logitude.BL.QuoteModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using WebFreight.Web.Helpers.SignUp;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -158,7 +159,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
         private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
-
+         
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -308,6 +309,7 @@ namespace WebFreight.Web.InfrastructureModel
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
+ 
             #endregion
         }
         private static Setting setting;
@@ -482,6 +484,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddVatTypes(tenant, vatTypeRepository, tenantZeroVatTypes, vatTypePercentageRepository);
                 List<VatType> currentTenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
+                 
                 AddLeadSources(tenant, leadSourceRepository, tenantZeroLeadSources);
                 AddStages(tenant, stageRepository, tenantZeroStages);
                 AddIndustries(tenant, industryRepository, tenantZeroIndustries);
@@ -527,7 +530,7 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = "99999999"
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-
+                 
                 if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
                 AddReportFromTenantZero(tenant);
@@ -538,6 +541,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
+                new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
             }
@@ -1364,6 +1368,7 @@ namespace WebFreight.Web.InfrastructureModel
                                                                                                         //    LocalName = CurrentContact.LocalName,
                                                                                                         //    BusinessPhone = CurrentContact.BusinessPhone,
                                                                                                         //    Mobile = CurrentContact.Mobile
+              
 
                 //};
                 contactPM.SetAsPrimaryForCard = true;
@@ -1470,7 +1475,8 @@ namespace WebFreight.Web.InfrastructureModel
                 service.Update(newTenant);
             }
         }
-        
+         
+
         public static void AddBranchesAndDepartments(int theTenant, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
         {
             Department deb;
