@@ -325,7 +325,7 @@ export class PayablePageComponent {
                 if (hasAccess)
                     this.OpenGLAccountEditWindow(entity);
                 else
-                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
             });
 
 

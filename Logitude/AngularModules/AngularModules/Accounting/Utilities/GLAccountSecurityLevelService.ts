@@ -23,7 +23,7 @@ export class GLAccountSecurityLevelService{
                     glaccountService.getSingle(glaccountId).subscribe((response: any) =>
                     {
                         var glaccount = response.Result;
-                        var hasAccess = glaccount.ChartOfAccountSecurityLevel >= loggedUserSecurityLevel;
+                        var hasAccess = (glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel || glaccount.ChartOfAccountSecurityLevel == null);
                         resolve(hasAccess);
                     });
                 }else{
