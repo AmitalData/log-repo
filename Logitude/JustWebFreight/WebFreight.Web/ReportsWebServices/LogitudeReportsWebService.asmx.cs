@@ -3216,7 +3216,7 @@ namespace WebFreight.Web.ReportsWebServices
             APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
-
+            
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
@@ -3482,7 +3482,16 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.BillToCode = apInvoice.VendorCode;
                 invoicesRecored.AmountDueInInvoiceCurrency = apInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
-               
+
+                Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
+                if(vendorCard != null)
+                {
+                    if (vendorCard.PartnerType != null)
+                    {
+                        invoicesRecored.BillToType = vendorCard.PartnerType.Name;
+                    }
+                }
+
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
