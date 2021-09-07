@@ -43,18 +43,9 @@ namespace Logitude.TimeManagementTests.Services
                 .WithItemsPM(GetUpdateItemPMs(dataTable, timeManagementAPIHelper.ItemsPM))
                 .Build();
         }
-
-        public TimeManagementAPIHelper Update(TimeManagementAPIHelper dataEntry)
-        {
-            var putDataEntry = APICaller.CallPut<TimeManagementAPIHelper>(dataEntry, Urls.TimeManagementDomainController, UserTenant.Token).Data;
-            string path = Urls.GetDataEntryTimeSheetList(UserTenant.UserId, "A", DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber), DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber));
-            var updatedDataEntry = APICaller.CallGet<TimeManagementAPIHelper>(path, UserTenant.Token).Data;
-            return updatedDataEntry;
-        }
-
         private List<TMEmployeeTimePM> GetUpdateItemPMs(dynamic dataTable, List<TMEmployeeTimePM> itemsPM)
         {
-            var item = itemsPM.Where(e=>e.Id == TimeManagementData.DataEntryID).First();
+            var item = itemsPM.Where(e => e.Id == TimeManagementData.DataEntryID).First();
             var updatedItem = new TMEmployeeTimePMBuilder().WithModel(item)
                 .LocationCode((string)dataTable.Location)
                 .Description((string)dataTable.Description)
@@ -65,8 +56,13 @@ namespace Logitude.TimeManagementTests.Services
                 .Build();
             return itemsPM;
         }
-
-
+        public TimeManagementAPIHelper Update(TimeManagementAPIHelper dataEntry)
+        {
+            var putDataEntry = APICaller.CallPut<TimeManagementAPIHelper>(dataEntry, Urls.TimeManagementDomainController, UserTenant.Token).Data;
+            string path = Urls.GetDataEntryTimeSheetList(UserTenant.UserId, "A", DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber), DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber));
+            var updatedDataEntry = APICaller.CallGet<TimeManagementAPIHelper>(path, UserTenant.Token).Data;
+            return updatedDataEntry;
+        }
         public void Assert(TimeManagementAPIHelper dataEntry, TimeManagementAPIHelper updatedDataEntry)
         {
             var updatedItem = updatedDataEntry.ItemsPM.Where(e=>e.Id == TimeManagementData.DataEntryID).First();
