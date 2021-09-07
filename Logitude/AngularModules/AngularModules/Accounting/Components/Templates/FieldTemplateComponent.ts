@@ -7,7 +7,7 @@ import { ARPaymentExtendedListService } from '../../../Invoice/Services/Extended
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
 

@@ -44,7 +44,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
-import { GLAccountSecurityLevelChecker } from 'Accounting/Utilities/GLAccountSecurityLevelChecker';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
 
@@ -2396,17 +2396,20 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                     else if (myObjectTableName == "GLAccount") {
 
-                        var hasAccess = GLAccountSecurityLevelChecker.CheckLevel(selectedEntityId);
+                        GLAccountSecurityLevelService.CheckLevel(selectedEntityId)
+                        .then(hasAccess=>{
 
-                        if(hasAccess){
-                            this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
-                        }
-                        else
-                        {
-                            this.isEditControlOpened = false;
-                            GLAccountSecurityLevelChecker.ShowSecurityBockingMessage();
-                            return;
-                        }
+                            if(hasAccess){
+                                this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
+                            }
+                            else
+                            {
+                                this.isEditControlOpened = false;
+                                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                                return;
+                            }
+                        });
+
                     }
                     else {
 

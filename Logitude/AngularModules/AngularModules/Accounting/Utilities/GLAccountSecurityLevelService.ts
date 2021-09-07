@@ -14,14 +14,16 @@ export class GLAccountSecurityLevelService{
         return new Promise(resolve =>
         {
             var settingsService = new FullAccountingSettingListService();
-            settingsService.getSingle(SessionLocator.LoggedUserPM.Id).subscribe((settings: any) =>
+            settingsService.getSingle(SessionLocator.Tenant+'').subscribe((response: any) =>
             {
+                var settings = response.Result;
                 if (settings.IsSecurityLevelActivated) {
                     var loggedUserSecurityLevel = SessionLocator.LoggedUserPM.SecurityLevel || 1;
-                    var settingsService = new FullAccountingSettingListService();
-                    settingsService.getSingle(glaccountId).subscribe((glaccount: any) =>
+                    var glaccountService = new GLAccountListService();
+                    glaccountService.getSingle(glaccountId).subscribe((response: any) =>
                     {
-                        var hasAccess = glaccount.SecurityLevel >= loggedUserSecurityLevel;
+                        var glaccount = response.Result;
+                        var hasAccess = glaccount.ChartOfAccountSecurityLevel >= loggedUserSecurityLevel;
                         resolve(hasAccess);
                     });
                 }else{
@@ -59,7 +61,7 @@ export class GLAccountSecurityLevelService{
         messageWindow.Width = 460;
         messageWindow.Height = 190;
         messageWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
-        messageWindow.ShowIcon = false;
+        // messageWindow.ShowIcon = false;
         messageWindow.Show(TextCodeTranslator.Translate("GLAccount.O.SecurityLevelHiddenItem"));
     }
 }
