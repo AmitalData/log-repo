@@ -257,6 +257,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
+            if(value)
             this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
         }
     }
