@@ -49,7 +49,7 @@ namespace Logitude.TimeManagementTests.Services
 
         private List<TMEmployeeTimePM> GetUpdateItemPMs(dynamic dataTable, List<TMEmployeeTimePM> itemsPM)
         {
-            var item = itemsPM.First();
+            var item = itemsPM.Where(e=>e.Id == TimeManagementData.DataEntryID).First();
             var updatedItem = new TMEmployeeTimePMBuilder().WithModel(item)
                 .LocationCode((string)dataTable.Location)
                 .Description((string)dataTable.Description)
