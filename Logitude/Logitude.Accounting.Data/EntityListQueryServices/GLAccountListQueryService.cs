@@ -235,8 +235,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    InsuredCreditLimit = CardsDatas.InsuredcreditLimit,
                                                    ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
 
-                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
-                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel
+                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated
 
                                                }) ;
             return query;
