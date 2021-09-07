@@ -47,6 +47,7 @@ using Logitude.BL.QuoteModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using WebFreight.Web.Helpers.SignUp;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -158,7 +159,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
         private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
-
+         
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -308,6 +309,7 @@ namespace WebFreight.Web.InfrastructureModel
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
+ 
             #endregion
         }
         private static Setting setting;
@@ -482,8 +484,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddVatTypes(tenant, vatTypeRepository, tenantZeroVatTypes, vatTypePercentageRepository);
                 List<VatType> currentTenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
-                AddTruckerCard(signUpInfo);
-
+                 
                 AddLeadSources(tenant, leadSourceRepository, tenantZeroLeadSources);
                 AddStages(tenant, stageRepository, tenantZeroStages);
                 AddIndustries(tenant, industryRepository, tenantZeroIndustries);
@@ -529,7 +530,7 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = "99999999"
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-
+                 
                 if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
                 AddReportFromTenantZero(tenant);
@@ -540,6 +541,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
+                new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
             }
@@ -1473,84 +1475,7 @@ namespace WebFreight.Web.InfrastructureModel
                 service.Update(newTenant);
             }
         }
-
-        private static void AddTruckerCard(SignUpInfoClass signUpInfoClass)
-        {
-            CardQuery cardQuery = new CardQuery(signUpInfoClass.Tenant); 
-
-            if (LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
-            {
-                InsertTrucerCard(signUpInfoClass, cardQuery);
-                InsertTrucker(signUpInfoClass, cardQuery);
-
-            }
-        }
-
-        private static void InsertTrucker(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
-        {
-            TruckerRepository truckerRepository = new TruckerRepository(signUpInfoClass.Tenant);
-            AddTrucker(cardQuery, truckerRepository);
-
-        }
-
-        private static void AddTrucker(CardQuery cardQuery, TruckerRepository truckerRepository)
-        {
-            Trucker newTrucker = GetTruckerInstance(cardQuery);
-            truckerRepository.Add(newTrucker);
-            truckerRepository.SubmitChanges();
-        }
-
-        private static void InsertTrucerCard(SignUpInfoClass signUpInfoClass, CardQuery cardQuery)
-        {
-            CardRepository cardRepository = new CardRepository(signUpInfoClass.Tenant);
-
-            CardPM truckerCard = cardQuery.GetSinglePMByCode("---", 0);
-            if (truckerCard != null)
-            {
-                AddCard(cardRepository, truckerCard);
-            }
-        }
-
-        private static void AddCard(CardRepository cardRepository, CardPM truckerCard)
-        {
-            Card newTrucker = GetCardInstance(truckerCard);
-            cardRepository.Add(newTrucker);
-            cardRepository.SubmitChanges();
-        }
-
-        private static Trucker GetTruckerInstance(CardQuery cardQuery)
-        {
-            var trucker = cardQuery.GetSinglePMByCode("---", tenant);
-
-            return new Trucker()
-            {
-                Id = trucker.Id,
-                Tenant = tenant,
-            };
-        }
-
-        private static Card GetCardInstance(CardPM truckerCard)
-        {
-            return new Card()
-            {
-                Id = IdCounter.GetNumber("Card", tenant).ToString(),
-                Code = truckerCard.Code,
-                EnglishName = truckerCard.EnglishName,
-                LocalName = truckerCard.LocalName,
-                PartnerTypeId = truckerCard.PartnerTypeId,
-                InActive = truckerCard.InActive,
-                VatNumber = truckerCard.VatNumber,
-                CountryId = truckerCard.CountryId,
-                CreateDate = DateTime.Today,
-                UpdateDate = DateTime.Today,
-                CreatedByUserId = truckerCard.CreatedByUserId,
-                UpdatedByUserId = truckerCard.UpdatedByUserId,
-                SearchFields = truckerCard.SearchFields,
-                PaymentTermId = truckerCard.PaymentTermId,
-                Notes = truckerCard.Notes,
-                Tenant = tenant,
-            };
-        }
+         
 
         public static void AddBranchesAndDepartments(int theTenant, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
         {
