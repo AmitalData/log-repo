@@ -73,7 +73,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private BackCompletedEvent: any = null; 
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -82,13 +84,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
 
-                if (s == "RefreshWareHouseLeg") {
+                else if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
-                
-                if (s == "ReloadForwarderShipmentFromStandAlone") {
-                      this.entityArgs.EditComponent.ReloadEntityPM();
+
+                else if (s == "ReloadForwarderShipmentFromStandAlone") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
                 }
+
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -128,6 +131,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
             });
+
         }
     }
     ngOnDestroy() {
@@ -135,6 +139,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.BackCompletedEvent);
     }
     ngOnInit() {
         if (this.EntityPM != null) {

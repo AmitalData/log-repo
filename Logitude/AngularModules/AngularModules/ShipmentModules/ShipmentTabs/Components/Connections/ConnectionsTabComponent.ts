@@ -51,6 +51,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public DisableNewWarehouseEntryButton: boolean = false;
     public DisableNewWarehouseReleaseButton: boolean = false;
     public IsStandaloneShipmentVisible: boolean = false;
+    public IsDisconnectindStandAloneShipmentCompleted: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
@@ -153,15 +154,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.LoadData();
                     this.FillAssemblies();
                 }
-            });
+            });            
         }
-
-        //this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            //if (s == "RefreshConnections") {
-            //    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-            //    this.LoadData();
-            //}
-        //});
     }
 
     ngOnDestroy() {
@@ -186,6 +180,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.IsCFSWarehouse && this.EntityPM.DirectionId == "I") {
             this.SetIsCFSWarehouseProperities();
         }
+
     }
 
     SetIsCFSWarehouseProperities() {

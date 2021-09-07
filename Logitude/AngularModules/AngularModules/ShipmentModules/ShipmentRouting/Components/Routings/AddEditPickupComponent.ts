@@ -119,6 +119,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private SessionEvent: any = null;
+    private BackCompletedEvent: any = null;
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -623,7 +624,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     });
                 }
             }
-
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             this.myCloner.RejectChanges();
         }
     }
@@ -824,26 +825,10 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.StandaloneShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment" + ": " + this.ShipmentPM.ShipmentNumber });
-
-                let isEditComponentSaved = false;
-
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 });
 
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
             });
     }    
 
