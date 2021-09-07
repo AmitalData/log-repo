@@ -1469,6 +1469,75 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? quantity ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Quantity  
+	   {
+	    
+	     get
+		{
+		   return quantity;
+		 }
+		 set
+		 {
+		   if(quantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Quantity",OldValue=quantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   quantity=value;
+		   }
+			
+		 }
+	   }
+	  private double? grossWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? GrossWeight  
+	   {
+	    
+	     get
+		{
+		   return grossWeight;
+		 }
+		 set
+		 {
+		   if(grossWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeight",OldValue=grossWeight,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   grossWeight=value;
+		   }
+			
+		 }
+	   }
+	  private double? volume ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Volume  
+	   {
+	    
+	     get
+		{
+		   return volume;
+		 }
+		 set
+		 {
+		   if(volume != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Volume",OldValue=volume,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   volume=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

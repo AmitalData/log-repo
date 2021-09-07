@@ -69,6 +69,9 @@ export class ShipmentOrderList {
 	CarrierName: string;
 	IsCancelled: boolean;
 	ShipmentId: string;
+	Quantity: number;
+	GrossWeight: number;
+	Volume: number;
 	
 }
  

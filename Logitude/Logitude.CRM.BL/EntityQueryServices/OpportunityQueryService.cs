@@ -824,7 +824,6 @@ namespace Logitude.CRM.BL.EntityQueryServices
 
             return new List<OpportunityDW>();//SetOtherPropInOpportunityDwLists(OpportunityDWList, tenant);
 
-      
 
         }
 

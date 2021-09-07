@@ -116,6 +116,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Quantity).HasColumnName("Quantity");
+
+            this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+
+            this.Property(t => t.Volume).HasColumnName("Volume");
         }
     }
 }

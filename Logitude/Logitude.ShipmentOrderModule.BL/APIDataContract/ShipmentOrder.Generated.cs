@@ -103,5 +103,11 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public string SecurityKey { get; set; }
     
     public bool IsCancelled { get; set; }
+    
+    public int? Quantity { get; set; }
+    
+    public double? GrossWeight { get; set; }
+    
+    public double? Volume { get; set; }
     }
 } 
