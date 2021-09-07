@@ -430,13 +430,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var transportMode = "";
         if (this.SelectedFilters.length > 0){
             const transportModeCodes = ['A', 'I', 'O'];
-            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.code)).map(d => d.code).join(',');
+            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
         }
         shipmentFilters.TransportModeCodes = transportMode;
     }
 
-    SelectionChangedHandler(filter: ToggleFilter) {
-        this.SelectFilter(filter);
+    SelectionAddedHandler(filters: ToggleFilter[]) {
+        for (let i = 0; i < filters.length; i++) {
+            this.SelectFilter(filters[i]);
+        }
+    }
+
+    SelectionRemovedHandler(filter: ToggleFilter) {
+        this.DeselectFilter(filter);
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
@@ -545,15 +551,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         new ToggleFilter('O', 'Sea'),
     ];
 
-    BuildToggleFilters(){
-        this.ToggleFilters = [
-            new ToggleFilter('AL', 'ALL', this.ShipmentsCount),
-            new ToggleFilter('IM', 'Import',this.ShipmentsCounter.Import),
-            new ToggleFilter('EX', 'Export',this.ShipmentsCounter.Export),
-            new ToggleFilter('A', 'Air',this.ShipmentsCounter.Air),
-            new ToggleFilter('I', 'Land',this.ShipmentsCounter.Land),
-            new ToggleFilter('O', 'Sea',this.ShipmentsCounter.Sea),
-        ];
+    BuildToggleFilters() {
+        this.ToggleFilters[0].Count = this.ShipmentsCount;
+        this.ToggleFilters[1].Count = this.ShipmentsCounter.Import;
+        this.ToggleFilters[2].Count = this.ShipmentsCounter.Export;
+        this.ToggleFilters[3].Count = this.ShipmentsCounter.Air;
+        this.ToggleFilters[4].Count = this.ShipmentsCounter.Land;
+        this.ToggleFilters[5].Count = this.ShipmentsCounter.Sea;
 
         this.changeDetector.detectChanges();
     }
@@ -583,7 +587,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
-        this.multipleSelectionComponent.DeselectFilter(filter);
+       // this.multipleSelectionComponent.DeselectFilter(filter);
         this.LoadScreenData();
 
     }
@@ -686,15 +690,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
 export class ToggleFilter
 {
-    constructor(code: string, name: string, count: number = 0)
+    constructor(code: string, name: string, count: number = 0, isSelected: boolean = false)
     {
         this.Code = code;
         this.Name = name;
         this.Count = count;
+        this.IsSelected = isSelected;
     }
 
 
-     name: string;
+    private name: string;
     public get Name(): string
     {
         return this.name;
@@ -706,7 +711,7 @@ export class ToggleFilter
 
 
 
-     count: number = 0;
+    private count: number = 0;
     public get Count(): number
     {
         return this.count;
@@ -717,7 +722,7 @@ export class ToggleFilter
     }
 
 
-     code: string;
+    private code: string;
     public get Code(): string
     {
         return this.code;
@@ -725,6 +730,14 @@ export class ToggleFilter
     public set Code(v: string)
     {
         this.code = v;
+    }
+
+    private isSelected: boolean;
+    public get IsSelected(): boolean {
+        return this.isSelected;
+    }
+    public set IsSelected(v: boolean) {
+        this.isSelected = v;
     }
 
 

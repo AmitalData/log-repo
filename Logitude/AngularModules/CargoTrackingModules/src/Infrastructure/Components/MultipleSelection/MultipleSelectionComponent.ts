@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
@@ -9,12 +9,17 @@ import { ToggleFilter } from '../../../CargoTracking/Components/UserDashboard/Sh
     templateUrl: './MultipleSelectionComponent.html',
     styleUrls: ['./MultipleSelectionComponent.css']
 })
-export class MultipleSelectionComponent implements OnInit {
+  
+  
+
+export class MultipleSelectionComponent implements OnInit  {
 
     MultipleSelection = new FormControl();
     @Input() MultipleSelectionList: any[];
     @Input() Title: string;
-    @Output() SelectionChanged: EventEmitter<any> = new EventEmitter();
+    @Output() SelectionAdded: EventEmitter<any> = new EventEmitter();
+    @Output() SelectionRemoved: EventEmitter<any> = new EventEmitter();
+
     @Output() SelectedFilters: ToggleFilter[] = [];
     DefaultSelected: string;
 
@@ -38,7 +43,7 @@ export class MultipleSelectionComponent implements OnInit {
 
     SelectFilter(filter: ToggleFilter) {
         this.SelectedFilters.push(filter);
-        this.SelectionChanged.emit(this.SelectedFilters);
+        this.SelectionAdded.emit(this.SelectedFilters);
     }
 
     ClearFilters() {
@@ -51,6 +56,6 @@ export class MultipleSelectionComponent implements OnInit {
     DeselectFilter(filter: ToggleFilter) {
         var index = this.SelectedFilters.findIndex(d => d == filter);
         this.SelectedFilters.splice(index, 1);
-        this.SelectionChanged.emit(this.SelectedFilters);
+        this.SelectionRemoved.emit(filter);
     }
 }

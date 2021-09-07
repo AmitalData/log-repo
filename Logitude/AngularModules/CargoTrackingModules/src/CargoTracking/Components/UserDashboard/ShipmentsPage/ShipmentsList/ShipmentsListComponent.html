@@ -43,8 +43,8 @@
             </ul>
         </div>-->
     <div class="hide-mobile">
-        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,1).concat(ToggleFilters.slice(3,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
-        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,1).concat(ToggleFilters.slice(3,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionAdded)="SelectionAddedHandler($event)" (SelectionRemoved)="SelectionRemovedHandler($event)"> </multiple-selection>
+        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"  (SelectionAdded)="SelectionAddedHandler($event)" (SelectionRemoved)="SelectionRemovedHandler($event)"> </multiple-selection>
 
     </div>
 
