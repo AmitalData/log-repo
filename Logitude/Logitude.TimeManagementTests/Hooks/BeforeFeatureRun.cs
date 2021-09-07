@@ -11,13 +11,13 @@ namespace Logitude.TimeManagementTests.Hooks
     public sealed class BeforeFeatureRun
     {
         [BeforeFeature("Pre-Prepare")]
-        public static void SetUpPrepareDataBeforeFeatureRun()
+        public static void SetupPrepareDataBeforeFeatureRun()
         {
             new DataEntryDataPreparation().Prepar();
         }
 
         [BeforeFeature("Pre-Prepare-DataEntry")]
-        public static void SetUpPrepareDataBeforeFeatureRunDataEntry()
+        public static void SetupPrepareDataBeforeFeatureRunDataEntry()
         {
             new DataEntryDataPreparation().Prepar();
         }

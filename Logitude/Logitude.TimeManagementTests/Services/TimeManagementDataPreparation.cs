@@ -19,6 +19,11 @@ namespace Logitude.TimeManagementTests.Services
             TimeManagementData.ProjectId = GetProjectId("specflow project", UserTenant.UserId);
             TimeManagementData.SprintId = GetSprintId("specflow sprint");
         }
+        public void PreparForUpdate()
+        {
+            TimeManagementData.UpdateProjectId = GetProjectId("specflow project update", UserTenant.UserId);
+            TimeManagementData.UpdateSprintId = GetSprintId("specflow sprint update");
+        }
 
         #region project
         private string GetProjectId(string name, string ownerId)
@@ -60,6 +65,7 @@ namespace Logitude.TimeManagementTests.Services
                 UpdatedByUserId = UserTenant.UserId,
                 BudgetId = GetBudgetId("specflowtest"),
                 CategoryId = GetCategoryId("specflowtest"),
+                ProjectNumber= DateTime.Now.Ticks.ToString()
 
             };
 
