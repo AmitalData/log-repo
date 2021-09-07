@@ -85,8 +85,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeliveryNoticeSent = a.DeliveryNoticeSent,
                         ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                         T1Received = a.T1Received,
+                        AccountingClosedByUserId = a.AccountingClosedByUserId,
 
-    }).FirstOrDefault();
+                    }).FirstOrDefault();
         }
 
         public IQueryable<ShipmentComputedFieldsList> GetIQueryableEntityList(IQueryable<ShipmentComputedFields> iQueryable)
@@ -148,6 +149,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  DeliveryNoticeSent = a.DeliveryNoticeSent,
                                                                  ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                                                                  T1Received = a.T1Received,
+                                                                 AccountingClosedByUserId = a.AccountingClosedByUserId,
                                                              });
             return result;
         }

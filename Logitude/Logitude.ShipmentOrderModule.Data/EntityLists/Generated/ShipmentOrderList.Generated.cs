@@ -136,6 +136,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public bool IsCancelled  { get; set; }
        [DataMember]
        public string ShipmentId  { get; set; }
+       [DataMember]
+       public int? Quantity  { get; set; }
+       [DataMember]
+       public double? GrossWeight  { get; set; }
+       [DataMember]
+       public double? Volume  { get; set; }
    }
 
 }

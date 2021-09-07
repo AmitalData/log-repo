@@ -37,6 +37,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? GatepassDocumentsReady { get; set; }
         public DateTime? GoodsClassification { get; set; }
 
+        public DateTime? PaymentRequestDateTime { get; set; }
         /*
                  IsUserIDNumberRequired (Bit)
         UserIdNumberUpdateDate (Date)

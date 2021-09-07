@@ -150,6 +150,15 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='ShipmentId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='Quantity' Type='int'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GrossWeight' Type='float'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='Volume' Type='float'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='UpdatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='TransportModeId' ReferencedTable='TransportModes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+

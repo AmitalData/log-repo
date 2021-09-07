@@ -65,8 +65,11 @@ namespace WebFreight.Web.DataProviders
         public string MasterNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Desicription { get; set; }
+        public double? Balance { get; set; }
         public double? Debit { get; set; }
+        public double CreditWithZero { get; set; }
         public double? Credit { get; set; }
+        public double DebitWithZero { get; set; }
         public string Currency { get; set; }
         public double? TotalAmount { get; set; }
 

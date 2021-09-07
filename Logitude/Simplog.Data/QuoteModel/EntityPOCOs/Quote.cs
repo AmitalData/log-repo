@@ -375,16 +375,12 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public string ShipmentSubTypeId { get; set; }
         public virtual ShipmentSubType ShipmentSubType { get; set; }
-
         public double? PickupDeliveryVolumetricWeight { get; set; }
-
         public string RegionalTaxId { get; set; }
         [ForeignKey("RegionalTaxId")]
         public virtual VatType RegionalTax { get; set; }
-
         public double? RegionalTaxPercentage { get; set; }
-
         public bool DescriptionRightToLeft { get; set; }
-
+        public int? PackagesQuantity { get; set; }
     }
 }

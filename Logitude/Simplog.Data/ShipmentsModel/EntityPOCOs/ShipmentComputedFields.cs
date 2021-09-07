@@ -75,7 +75,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ArrivalNoticeSent { get; set; }
         public DateTime? T1Received  { get; set; }
 
-
+        public string AccountingClosedByUserId { get; set; }
 
 
 
@@ -91,6 +91,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("PickupTruckerId")]
         public Card PickupTrucker { get; set; }
+
+        public virtual User AccountingClosedByUserUser { get; set; }
 
     }
 }

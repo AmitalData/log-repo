@@ -109,13 +109,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     this.SubmitChanges();
                 }
-                
 
+                bool inReconcileProgress = entityPM.ChangeSetOp == ChangeSetOperation.Insert;
+                
                 var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                 if (listTransactionId.Count > 0)
                 {
                     var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, true);
+                    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, inReconcileProgress /*true*/);
                 }
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
@@ -132,7 +133,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     this.SubmitChanges();
                 }
 
-
+                bool inReconcileProgress = entityPM.ChangeSetOp == ChangeSetOperation.Insert;
                 var listTransactionId = entityPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
                 if (listTransactionId.Count > 0)
                 {
@@ -143,7 +144,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (listReconcileExternalPageLineId.Count > 0)
                 {
                     var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                    reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, Tenant, true);
+                    reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, Tenant, inReconcileProgress/*true*/);
                 }
 
             }

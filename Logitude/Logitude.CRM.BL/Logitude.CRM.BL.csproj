@@ -103,6 +103,8 @@
     <Compile Include="CloseTables\EnumGenerated\OccasionStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TimeUnitStruct.Generated.cs" />
     <Compile Include="DataContracts\CRMChartingClass.cs" />
+    <Compile Include="DataContracts\LogitudeCRMReportFilter.cs" />
+    <Compile Include="DataContracts\OpportunityCRMDetails.cs" />
     <Compile Include="EntityDataMappings\ActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActivityEmailRecipientDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActivityInviteeDataMapping.cs" />

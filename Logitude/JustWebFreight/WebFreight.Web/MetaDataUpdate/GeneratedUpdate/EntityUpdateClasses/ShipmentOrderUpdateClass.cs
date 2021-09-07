@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ShipmentOrderUpdateClass
    {  		
-		public const string HashString = "72f60642bf81016b551ab68cedd1b0fd";
+		public const string HashString = "1e8b619a4373a98776b22112af20cb4d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3730,6 +3730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipmentId",
 					  						ListPropertyPath =  "ShipmentId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3750,6 +3751,190 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Shipment",
 					  						ListFieldLable =  "ShipmentIdListLable",
 					  						ListLableDefaultText =  "Shipment",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Quantity",
+					  						ObjectTableName =  "ShipmentOrder",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  true,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Quantity",
+					  						ListPropertyPath =  "Quantity",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShipmentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Quantity",
+					  						DefaultText =  "Quantity",
+					  						ListFieldLable =  "QuantityListLable",
+					  						ListLableDefaultText =  "Quantity",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "GrossWeight",
+					  						ObjectTableName =  "ShipmentOrder",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  true,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "GrossWeight",
+					  						ListPropertyPath =  "GrossWeight",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShipmentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "GrossWeight",
+					  						DefaultText =  "Gross Weight",
+					  						ListFieldLable =  "GrossWeightListLable",
+					  						ListLableDefaultText =  "Gross Weight",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Volume",
+					  						ObjectTableName =  "ShipmentOrder",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  true,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Volume",
+					  						ListPropertyPath =  "Volume",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ShipmentOrder",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Volume",
+					  						DefaultText =  "Volume",
+					  						ListFieldLable =  "VolumeListLable",
+					  						ListLableDefaultText =  "Volume",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3854,7 +4039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen ShipmentOrderShipmentOrderGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentOrder.GeneralTabScreen", Name = "ShipmentOrderGeneralTabScreen", ObjectTableId = ShipmentOrderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 19, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ShipmentOrderShipmentOrderGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentOrder.GeneralTabScreen", Name = "ShipmentOrderGeneralTabScreen", ObjectTableId = ShipmentOrderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 20, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.OrderNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -3894,41 +4079,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField18 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 18, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.PODate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField19 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField19 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 19, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.Quantity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField20 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.ConsigneeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField20 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField21 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField21 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.ConsigneeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField22 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.AccountManagerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField22 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.AgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField23 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField23 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.AccountManagerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField24 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.House", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField24 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.Master", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField25 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.VesselId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField25 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.House", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField26 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.ForwarderId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField26 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.VesselId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField27 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 8, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CustomerReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField27 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.ForwarderId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField28 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 9, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.PickupActualDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField28 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 8, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CustomerReferences", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField29 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 10, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.OriginPortId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField29 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 9, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.PickupActualDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField30 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 11, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DestinationPortId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField30 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 10, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.OriginPortId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField31 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 12, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.GatewayId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField31 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 11, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DestinationPortId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField32 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 13, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DirectionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField32 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 12, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.GatewayId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField33 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 14, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CasualImporterName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField33 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 13, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DirectionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField34 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 15, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CasualSupplierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField34 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 14, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CasualImporterName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField35 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 16, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.BookingConfirmationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField35 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 15, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.CasualSupplierName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField36 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 17, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DescriptionOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField36 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 16, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.BookingConfirmationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField37 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 17, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.GrossWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField38 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 18, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.Volume", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentOrderShipmentOrderGeneralTabScreenScreenField39 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 19, ScreenId = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Id,ScreenCode = ShipmentOrderShipmentOrderGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentOrder.DescriptionOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
@@ -3940,12 +4131,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode ShipmentOrderGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentOrder.TH.General", DefaultText = "General",LocalDefaultText = "", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ShipmentOrderGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentOrder.Tab.General", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentOrderFeatures.SHGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentOrderObjectTable);
+ 
+                 
+			   TextCode ShipmentOrderDocsInTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentOrder.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = "Docs In", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentOrderDocsInFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentOrder.Tab.DocsIn", ObjectTableId = ShipmentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentOrderFeatures.SODI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentOrderObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SHGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentOrderGeneralFeature_TH0.Id,FeatureUniqeCode = ShipmentOrderGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentOrderObjectTable.Id, TabNameTextCodeId = ShipmentOrderGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShipmentOrderGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SODI",HtmlComponentName = "ShipmentOrderDocsInTabComponent",HtmlComponentUrl = "./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent", FeatureId = ShipmentOrderDocsInFeature_TH1.Id,FeatureUniqeCode = ShipmentOrderDocsInFeature_TH1.FeatureUniqeCode, ControlPath = "./ShipmentOrder/Components/EditTabs/DocsIn/ShipmentOrderDocsInTabComponent", ObjectTableId = ShipmentOrderObjectTable.Id, TabNameTextCodeId = ShipmentOrderDocsInTextCode_TH1.Id, TabNameTextCodeCode = ShipmentOrderDocsInTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

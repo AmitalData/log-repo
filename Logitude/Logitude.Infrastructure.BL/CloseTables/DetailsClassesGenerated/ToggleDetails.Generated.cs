@@ -269,16 +269,8 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
-            
-			 
-            
-			 
-            
-			 
             all.Add(new ToggleDetails()
             {    
-
-
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
@@ -301,10 +293,13 @@ namespace Logitude.Infrastructure.BL
                 Code = "LCP", 
 			});
 			 
-
-
-
-
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PLE", 
+                Name = "PL Export Shipments", 
+                SearchFields = "PLE,PL Export Shipments,Allow to Create New Air Shipment From Private Label", 
+                Description = "Allow to Create New Air Shipment From Private Label", 
+			});
 			 
             all.Add(new ToggleDetails()
             {    
@@ -328,6 +323,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Carta Porte", 
                 Description = "Carta Porte", 
                 SearchFields = "CPT,Carta Porte", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPD", 
+                Name = "Standalone Pickups/Deliveries Only ", 
+                SearchFields = "OPD,Standalone Pickups/Deliveries Only ", 
+                Description = "Only Allow Pickups/Deliveries to be Created with a Standalone Shipment", 
 			});
 			
             return all;

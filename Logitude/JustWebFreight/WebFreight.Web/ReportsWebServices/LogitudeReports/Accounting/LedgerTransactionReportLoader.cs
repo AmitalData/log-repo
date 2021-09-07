@@ -248,15 +248,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count > 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
         }
-
+     
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
         {
             List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
-            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);
-            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant,false).ToList();
+            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);        
+              var   glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant, false).ToList();
             return glaccounts;
         }
-
+      
         private void FillReportTransactionGLAccountFields(List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
         {
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
@@ -459,7 +459,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IsReconciled = GetFilterValue<bool?>("IsReconciled"),
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
-
+                UseSecurityLevel = GetFilterValue<bool>("UseSecurityLevel"),
             };
             SetReportCategoryParameters(cardIndexParameters);
 

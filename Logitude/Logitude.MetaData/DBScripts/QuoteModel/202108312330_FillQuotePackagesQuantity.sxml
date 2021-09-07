@@ -1,0 +1,45 @@
+﻿
+<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
+  <Sql Version="4">
+    <![CDATA[
+
+
+
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @PackagesQuantity as int
+declare @IsLCL as bit
+
+BEGIN
+		DECLARE DataCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant
+		FROM Quotes
+		WHERE $LastCounterWhere$
+		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+				
+				set @PackagesQuantity = 0
+
+				if exists (select * from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
+				begin					
+						set @PackagesQuantity = (select SUM(Quantity) from QuotePackages where QuoteId = @EntityId AND Tenant = @Tenant)
+				end
+
+				if(@PackagesQuantity > 0)
+        begin
+					update Quotes set
+					PackagesQuantity = @PackagesQuantity
+					where Id = @EntityId AND Tenant = @Tenant
+        end
+
+			FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant
+			END
+		CLOSE DataCursor
+		DEALLOCATE DataCursor
+END
+
+    ]]>
+  </Sql>
+</Script>

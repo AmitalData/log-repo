@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class GLAccountList {
-   
+
 	Id: string;
 	Tenant: number;
 	InternalNumber: string;
@@ -159,5 +159,6 @@ export class GLAccountList {
 	ForeignBalanceInDue: number;
 	ChartOfAccountSecurityLevel: number;
 	
+    Access: boolean;
+
 }
- 

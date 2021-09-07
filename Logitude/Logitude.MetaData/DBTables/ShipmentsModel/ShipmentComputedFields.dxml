@@ -370,6 +370,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AccountingClosedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
@@ -393,6 +400,11 @@
   <Relation
     ForeignKeyColumn="PickupTruckerId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountingClosedByUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -133,7 +133,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     get IsCreateStandaloneShipmentEnabled() {
         var isEnabled: boolean = false;
 
-        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+        if (this.EntityPM.FullResponsibility) {
             isEnabled = true;
         }
 
@@ -954,8 +954,16 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "Shipments Search";
         var args: any = {};
         args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+        args.FromType = this.EntityPM.PickUpDeliveryFromTypeCode;
+        args.ToType = this.EntityPM.PickUpDeliveryToTypeCode;
         args.FromPartnerId = this.EntityPM.FromPartnerCardId;
         args.ToPartnerId = this.EntityPM.ToPartnerCardId;
+        args.FromPortId = this.EntityPM.FromPortId;
+        args.ToPortId = this.EntityPM.ToPortId;
+        args.FromCity = this.EntityPM.FromAddressCity;
+        args.ToCity = this.EntityPM.ToAddressCity;
+        args.FromCountryId = this.EntityPM.FromAddressCountryId;
+        args.ToCountryId = this.EntityPM.ToAddressCountryId;
         args.CarrierId = this.EntityPM.CarrierId;
         args.NumberOfPackages = this.EntityPM.ShipmentPickUpDeliveryPackages != null ? this.EntityPM.ShipmentPickUpDeliveryPackages.length : 0;
         logWindow.WindowArgs = args;
@@ -977,25 +985,9 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.StandaloneShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment" + ": " + this.ShipmentPM.ShipmentNumber });
-
-                let isEditComponentSaved = false;
-
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-                });
-
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
+                    
                 });
             });
     }

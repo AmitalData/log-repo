@@ -2057,7 +2057,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                 }
 
-                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR")
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR" || item.MeasurementCode == "PFCL")
                                 {
                                     var price = item.UnitPrice / 100;
                                     TotalAmount = item.Quantity * price;
@@ -4358,8 +4358,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildShipmentsNumbers()
         {
-            ARInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsNumbersBehaviour(entityPM);
-            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
+            ARInvoiceShipmentsDataBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsDataBehaviour(entityPM);
+            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsData();
         }
 
         private void CreateARInvoiceChargesConstraint(ARInvoiceLinePM invoiceLine)
@@ -4437,6 +4437,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void ComputeInvoiceAmounts()
         {
+            if (IsFullAccountingActivated(entityPM.Tenant))
+            {
+                return;
+            }
+            
             List<ARInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             entityPM.SubTotalInLocalCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
             entityPM.SubTotalInInvoiceCurrency = MethodHelper.Round(invoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);

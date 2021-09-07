@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -29,7 +30,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
-
+            
             IQueryable<GLAccount> iQueryable = (from a in context.GLAccounts
                                               
                    where a.Tenant == tenant select a);
@@ -46,7 +47,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             int skippedPorts = queryOperations.PageIndex;
 
             IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable);
-           
+            
+            User loggedUser = GetLoggedUser(tenant);
+
+            query2 = MapListFields(query2, loggedUser);
+
+            FullAccountingSettingListQueryService fullAccountingSettingListQueryService = new FullAccountingSettingListQueryService(AccountingContext.GetContext(tenant));
+            var settings = fullAccountingSettingListQueryService.GetSingle(tenant.ToString());
+
             query2 = filter.GetFilteredQuery<GLAccountList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))

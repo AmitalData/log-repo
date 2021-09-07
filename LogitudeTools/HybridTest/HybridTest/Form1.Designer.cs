@@ -222,6 +222,7 @@
             "ShipmentWarehouseLeg",
             "ShipmentTrucker",
             "Shipment CustomAgentImportId",
+            "Shipment PaymentRequestDateTime",
             "AccountingPartner",
             "Hybrid Tenant State",
             "Address"});

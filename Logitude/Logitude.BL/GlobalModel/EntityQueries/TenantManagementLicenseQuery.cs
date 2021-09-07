@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -82,5 +83,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return entityPM;
         }
+
     }
 }

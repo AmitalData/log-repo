@@ -201,7 +201,10 @@ using Logitude.ShipmentOrderModule.Data;
 				   
 				   temp.CreateDate = MyEntityPM.CreateDate;
 				   temp.SecurityKey = MyEntityPM.SecurityKey;
-				   temp.IsCancelled = MyEntityPM.IsCancelled;					
+				   temp.IsCancelled = MyEntityPM.IsCancelled;
+				   temp.Quantity = MyEntityPM.Quantity;
+				   temp.GrossWeight = MyEntityPM.GrossWeight;
+				   temp.Volume = MyEntityPM.Volume;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -448,7 +451,10 @@ using Logitude.ShipmentOrderModule.Data;
 					
 					temp.CreateDate = MyEntity.CreateDate;
 					temp.SecurityKey = MyEntity.SecurityKey;
-					temp.IsCancelled = MyEntity.IsCancelled;					   
+					temp.IsCancelled = MyEntity.IsCancelled;
+					temp.Quantity = MyEntity.Quantity;
+					temp.GrossWeight = MyEntity.GrossWeight;
+					temp.Volume = MyEntity.Volume;					   
 					   return temp;
 		    }
             catch (Exception ex)

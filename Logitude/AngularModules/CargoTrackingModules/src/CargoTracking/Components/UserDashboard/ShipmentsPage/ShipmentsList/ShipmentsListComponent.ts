@@ -1,4 +1,6 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, AfterContentInit } from '@angular/core';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -12,6 +14,8 @@ import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrack
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -24,7 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent implements AfterViewInit
+export class ShipmentsListComponent implements AfterViewInit, OnInit
 {
 
 
@@ -60,9 +64,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
     ShipmenTypeForRouting: string;
 
-
-
-
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -76,16 +77,27 @@ export class ShipmentsListComponent implements AfterViewInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService)
     {
-
-
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
+
+    ngOnInit(): void {
+        this.GetPreservedToggleFiltersFromSessionInfo();
+        this.GetCompanyLoginsFromCache();
+    }
+
+
+
     ngAfterViewInit(): void
     {
-        this.GetCompanyLoginsFromCache();
-        this.GetPreservedToggleFiltersFromSessionInfo();
+        this.LoadScreenData();
+        this.SetShipmentsScrollPosition();
 
+    }
+
+    private SetShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
     }
 
     private SetDefaultBackgroundColor()
@@ -208,9 +220,10 @@ export class ShipmentsListComponent implements AfterViewInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
-            this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
+            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText:'';
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
         }
     }
 
@@ -260,7 +273,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
 
-        this.LoadScreenData();
     }
 
 
@@ -309,6 +321,7 @@ export class ShipmentsListComponent implements AfterViewInit
     Clear()
     {
         this.SearchText = '';
+        RootContext.LastSearchText = '';
         this.LoadScreenData();
     }
 
@@ -316,6 +329,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
         }
 
@@ -327,10 +341,16 @@ export class ShipmentsListComponent implements AfterViewInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
-
+            
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
+        this.SaveShipmentsScrollPosition();
+    }
+
+    private SaveShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        RootContext.ShipmentsScrollPosition = shipmentCardsContainer.scrollTop;
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
@@ -363,6 +383,7 @@ export class ShipmentsListComponent implements AfterViewInit
             console.log("[GetUserShipmentsCounter]", counter);
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
+            this.SetShipmentsScrollPosition();
         });
     }
 
@@ -390,8 +411,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
-
+        shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortDescending = this.isSortDescending;
 
@@ -412,6 +432,7 @@ export class ShipmentsListComponent implements AfterViewInit
 
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
+        shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -559,10 +580,17 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.LoadScreenData();
     }
+
+    SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
+        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
+        if (!item)
+            this.SelectedFilters.push(filter);
+    }
+
     SelectFilterByCode(filterCode: string)
     {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        this.SelectFilter(filter);
+        this.SelectFilterWithoutLoadScreenData(filter);
     }
     DeselectFilter(filter: ToggleFilter)
     {

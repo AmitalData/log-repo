@@ -161,6 +161,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> AccountingCloseDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AccountingClosedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AccountingInformation1Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -210,6 +213,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool AdditionalHandlingInfoEditedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AgentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AgentAddressCountryCodeField;
@@ -279,6 +285,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BasketIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingStatusIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BookingConfNumber_OriginalField;
@@ -1068,18 +1077,6 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> FlightDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> FollowUpDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpNotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.ShipmentProxy.ShipmentFollowUpPM[] FollowUpsField;
@@ -2282,6 +2279,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> OperationalDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OperationalStatusIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OrderChargeableWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2412,6 +2412,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> PaymentDateTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PaymentRequestDateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PaymentRequestXMLField;
@@ -4129,6 +4132,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AccountingClosedByUserId {
+            get {
+                return this.AccountingClosedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AccountingClosedByUserIdField, value) != true)) {
+                    this.AccountingClosedByUserIdField = value;
+                    this.RaisePropertyChanged("AccountingClosedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AccountingInformation1 {
             get {
                 return this.AccountingInformation1Field;
@@ -4345,6 +4361,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.AdditionalHandlingInfoEditedField.Equals(value) != true)) {
                     this.AdditionalHandlingInfoEditedField = value;
                     this.RaisePropertyChanged("AdditionalHandlingInfoEdited");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Agent {
+            get {
+                return this.AgentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgentField, value) != true)) {
+                    this.AgentField = value;
+                    this.RaisePropertyChanged("Agent");
                 }
             }
         }
@@ -4644,6 +4673,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.BasketIdField, value) != true)) {
                     this.BasketIdField = value;
                     this.RaisePropertyChanged("BasketId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingStatusId {
+            get {
+                return this.BillingStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingStatusIdField, value) != true)) {
+                    this.BillingStatusIdField = value;
+                    this.RaisePropertyChanged("BillingStatusId");
                 }
             }
         }
@@ -8063,58 +8105,6 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.FlightDateField.Equals(value) != true)) {
                     this.FlightDateField = value;
                     this.RaisePropertyChanged("FlightDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> FollowUpDate {
-            get {
-                return this.FollowUpDateField;
-            }
-            set {
-                if ((this.FollowUpDateField.Equals(value) != true)) {
-                    this.FollowUpDateField = value;
-                    this.RaisePropertyChanged("FollowUpDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpId {
-            get {
-                return this.FollowUpIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpIdField, value) != true)) {
-                    this.FollowUpIdField = value;
-                    this.RaisePropertyChanged("FollowUpId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpNotes {
-            get {
-                return this.FollowUpNotesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpNotesField, value) != true)) {
-                    this.FollowUpNotesField = value;
-                    this.RaisePropertyChanged("FollowUpNotes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpType {
-            get {
-                return this.FollowUpTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpTypeField, value) != true)) {
-                    this.FollowUpTypeField = value;
-                    this.RaisePropertyChanged("FollowUpType");
                 }
             }
         }
@@ -13320,6 +13310,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OperationalStatusId {
+            get {
+                return this.OperationalStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OperationalStatusIdField, value) != true)) {
+                    this.OperationalStatusIdField = value;
+                    this.RaisePropertyChanged("OperationalStatusId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> OrderChargeableWeight {
             get {
                 return this.OrderChargeableWeightField;
@@ -13887,6 +13890,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.PaymentDateTimeField.Equals(value) != true)) {
                     this.PaymentDateTimeField = value;
                     this.RaisePropertyChanged("PaymentDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PaymentRequestDateTime {
+            get {
+                return this.PaymentRequestDateTimeField;
+            }
+            set {
+                if ((this.PaymentRequestDateTimeField.Equals(value) != true)) {
+                    this.PaymentRequestDateTimeField = value;
+                    this.RaisePropertyChanged("PaymentRequestDateTime");
                 }
             }
         }
@@ -21008,7 +21024,7 @@ namespace HypredTest.ShipmentProxy {
         private bool ManualActivatedFollowUpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NoteField;
+        private string NotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OwnerUserIdField;
@@ -21319,14 +21335,14 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Note {
+        public string Notes {
             get {
-                return this.NoteField;
+                return this.NotesField;
             }
             set {
-                if ((object.ReferenceEquals(this.NoteField, value) != true)) {
-                    this.NoteField = value;
-                    this.RaisePropertyChanged("Note");
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
                 }
             }
         }
@@ -25864,6 +25880,9 @@ namespace HypredTest.ShipmentProxy {
         private string CarrierIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CarrierLocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -26186,6 +26205,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CarrierIdField, value) != true)) {
                     this.CarrierIdField = value;
                     this.RaisePropertyChanged("CarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CarrierLocalName {
+            get {
+                return this.CarrierLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CarrierLocalNameField, value) != true)) {
+                    this.CarrierLocalNameField = value;
+                    this.RaisePropertyChanged("CarrierLocalName");
                 }
             }
         }
@@ -28668,6 +28700,9 @@ namespace HypredTest.ShipmentProxy {
         private string CarrierIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CarrierLocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -28965,6 +29000,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CarrierIdField, value) != true)) {
                     this.CarrierIdField = value;
                     this.RaisePropertyChanged("CarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CarrierLocalName {
+            get {
+                return this.CarrierLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CarrierLocalNameField, value) != true)) {
+                    this.CarrierLocalNameField = value;
+                    this.RaisePropertyChanged("CarrierLocalName");
                 }
             }
         }
@@ -34224,6 +34272,9 @@ namespace HypredTest.ShipmentProxy {
         private string BasketIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingStatusIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BookingConfirmationNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -35175,6 +35226,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> OperationalDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OperationalStatusIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OrderChargeableWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -36010,6 +36064,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.BasketIdField, value) != true)) {
                     this.BasketIdField = value;
                     this.RaisePropertyChanged("BasketId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingStatusId {
+            get {
+                return this.BillingStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingStatusIdField, value) != true)) {
+                    this.BillingStatusIdField = value;
+                    this.RaisePropertyChanged("BillingStatusId");
                 }
             }
         }
@@ -40131,6 +40198,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.OperationalDateField.Equals(value) != true)) {
                     this.OperationalDateField = value;
                     this.RaisePropertyChanged("OperationalDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OperationalStatusId {
+            get {
+                return this.OperationalStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OperationalStatusIdField, value) != true)) {
+                    this.OperationalStatusIdField = value;
+                    this.RaisePropertyChanged("OperationalStatusId");
                 }
             }
         }

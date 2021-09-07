@@ -183,9 +183,19 @@
                             <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentCurrencyId)">{{FieldValue}}</a>
                         </div>
                     </div>
+
                     <div class="TextTrimming" *ngIf="FieldName && FieldName.includes('CalculatedAgingPeriod')" style="text-align: right; padding: 0px 2px;direction: ltr;">
                         {{ GetCalculatedAgingPeriod() | NumbersPipe:'N2'  }}
 
+                    </div>
+
+                    <div *ngIf="FieldName == 'Access'">
+                        <LogToolTip *ngIf="!FieldValue" [direction]="''"
+                            [mode]="'Warning'"
+                            class="CenterCenter"
+                            style="text-align: center;width: 28px;">
+                            {{'GLAccount.O.LevelWarningMsg' | TextCodeTranslationPipe}}
+                        </LogToolTip>
                     </div>
                 </div>
 

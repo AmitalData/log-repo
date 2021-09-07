@@ -2937,8 +2937,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<DomesticCountry> GetDomesticCountries(ShipmentPickUpDelivery pickUpDelivery, int tenant)
         {
             List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-            AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
-            AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
+            switch (pickUpDelivery.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(iDomesticCountries, pickUpDelivery.FromPortId, tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.FromAddressCountryId, tenant);
+                        break;
+                    }
+            }
+
+            switch (pickUpDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(iDomesticCountries, pickUpDelivery.ToPortId, tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.ToAddressCountryId, tenant);
+                        break;
+                    }
+            }
 
             return iDomesticCountries;
         }
@@ -2955,7 +2994,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iAddress.Id,
+                            Id = iAddress.Id + "A",
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
@@ -2964,7 +3003,50 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
-       
+        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iCountryId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
+                {
+                    CountryRepository countryRepository = new CountryRepository(iTenant);
+                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
+
+                    if (iCountry != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iCountry.Id + "C",
+                            CountryId = iCountry.Id,
+                            CountryIsEC = iCountry.EC,
+                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id + "P",
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+
         public HttpResponseMessage GetIfShipmentPackageConnectedToPickUpDeliveryPackage(string containerId)
         {
             try

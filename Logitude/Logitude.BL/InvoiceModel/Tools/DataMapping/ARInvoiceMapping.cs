@@ -92,6 +92,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
             entity.PartnerId = entityPM.PartnerId;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
+            entity.MasterNumbers = entityPM.MasterNumbers;
+            entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
+            entity.HouseNumbers = entityPM.HouseNumbers;
 
             if (entityPM.HouseNumber != null)
             {
@@ -112,6 +115,37 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.MasterNumber = null;
                 }
             }
+
+            if (entityPM.HouseNumbers != null)
+            {
+                entityPM.HouseNumbers = entityPM.HouseNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.HouseNumbers))
+                {
+                    entityPM.HouseNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterNumbers != null)
+            {
+                entityPM.MasterNumbers = entityPM.MasterNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterNumbers))
+                {
+                    entityPM.MasterNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterShipmentNumbers != null)
+            {
+                entityPM.MasterShipmentNumbers = entityPM.MasterShipmentNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterShipmentNumbers))
+                {
+                    entityPM.MasterShipmentNumbers = null;
+                }
+            }
+
             entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.HouseNumber = entityPM.HouseNumber;
             entity.MasterNumber = entityPM.MasterNumber;

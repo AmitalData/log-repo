@@ -235,9 +235,207 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    InsuredCreditLimit = CardsDatas.InsuredcreditLimit,
                                                    ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
 
+                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
+                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel
 
                                                }) ;
             return query;
+        }
+        public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
+        {
+            var list = from glaccount in iQueryable.AsEnumerable()
+                       select new GLAccountList()
+                       {
+                           Id = glaccount.Id,
+                           Tenant = glaccount.Tenant,
+                           InternalNumber = glaccount.InternalNumber,
+                           AccountTypeCode = glaccount.AccountTypeCode,
+                           DisplayNumber = glaccount.DisplayNumber,
+                           LocalName = glaccount.LocalName,
+                           EnglishName = glaccount.EnglishName,
+                           SearchFields = glaccount.SearchFields,
+                           IsMultiCurrency = glaccount.IsMultiCurrency,
+                           CurrencyId = glaccount.CurrencyId,
+                           RevenueExpenseType = glaccount.RevenueExpenseType,
+                           IsControlAccount = glaccount.IsControlAccount,
+                           ChartOfAccountsId = glaccount.ChartOfAccountsId,
+                           Inactive = glaccount.Inactive,
+                           AccountTypeName = glaccount.AccountTypeName,
+                           CurrencyName = glaccount.CurrencyName,
+                           RevenueExpenseName = glaccount.RevenueExpenseName,
+                           ChartOfAccountsName = glaccount.ChartOfAccountsName,
+                           ChartOfAccountsTypeCode = glaccount.ChartOfAccountsTypeCode,
+                           ChartOfAccountsTypeName = glaccount.ChartOfAccountsTypeName,
+                           CurrencyCode = glaccount.CurrencyCode,
+                           ReconcileMethodCode = glaccount.ReconcileMethodCode,
+                           ReconcileMethodName = glaccount.ReconcileMethodName,
+                           ControlAccountId = glaccount.ControlAccountId,
+                           ControlAccountName = glaccount.ControlAccountName,
+                           ControlAccountNumber = glaccount.ControlAccountNumber,
+                           ActiveStatusName = glaccount.ActiveStatusName,
+                           AutomaticReconcileId = glaccount.AutomaticReconcileId,
+                           AutomaticReconcileName = glaccount.AutomaticReconcileName,
+                           PreviousEnglishName = glaccount.PreviousEnglishName,
+                           PreviousEnglishNameChangeDate = glaccount.PreviousEnglishNameChangeDate,
+                           PreviousLocalName = glaccount.PreviousLocalName,
+                           PreviousLocalNameChangeDate = glaccount.PreviousLocalNameChangeDate,
+                           PreviousNumber = glaccount.PreviousNumber,
+                           PreviousNumberChangeDate = glaccount.PreviousNumberChangeDate,
+                           PreviousChartOfAccountsId = glaccount.PreviousChartOfAccountsId,
+                           PreviousChartOfAccountsChangeDate = glaccount.PreviousChartOfAccountsChangeDate,
+                           CustomerGLAccountId = glaccount.CustomerGLAccountId,
+                           CustomerGLAccountName = glaccount.CustomerGLAccountName,
+                           CustomerGLAccountNumber = glaccount.CustomerGLAccountNumber,
+                           RevaluationEnabled = glaccount.RevaluationEnabled,
+                           ParentAccountId = glaccount.ParentAccountId,
+                           ParentAccountName = glaccount.ParentAccountName,
+                           ParentAccountNumber = glaccount.ParentAccountNumber,
+                           Category1Id = glaccount.Category1Id,
+                           Category1Name = glaccount.Category1Name,
+                           Category2Id = glaccount.Category2Id,
+                           Category2Name = glaccount.Category2Name,
+                           Category3Id = glaccount.Category3Id,
+                           Category3Name = glaccount.Category3Name,
+                           Category4Id = glaccount.Category4Id,
+                           Category4Name = glaccount.Category4Name,
+                           Category5Id = glaccount.Category5Id,
+                           Category5Name = glaccount.Category5Name,
+                           IsVATExempt = glaccount.IsVATExempt,
+                           LastActivityDate = glaccount.LastActivityDate,
+                           LastActivityTypeName = glaccount.LastActivityTypeName,
+                           LastActivityByUserName = glaccount.LastActivityByUserName,
+                           VatNumber = glaccount.VatNumber,
+                           PaymentTermId = glaccount.PaymentTermId,
+                           SalesmanUserId = glaccount.SalesmanUserId,
+                           NewGLAccountCardId = glaccount.NewGLAccountCardId,
+                           NextDueDate = glaccount.NextDueDate,
+                           CurrencySign = glaccount.CurrencySign,
+                           DeductionFileTypeId = glaccount.DeductionFileTypeId,
+                           DeductionFileNumber = glaccount.DeductionFileNumber,
+                           AssessingOfficeCode = glaccount.AssessingOfficeCode,
+                           Occupation = glaccount.Occupation,
+                           DeductionTypeId = glaccount.DeductionTypeId,
+                           ConsolidationVat = glaccount.ConsolidationVat,
+                           IsEquipmentVendor = glaccount.IsEquipmentVendor,
+                           ExcludeFromDeductionReport = glaccount.ExcludeFromDeductionReport,
+                           Parent = glaccount.Parent,
+                           DeductionTypeName = glaccount.DeductionTypeName,
+                           DeductionFileTypeCode = glaccount.DeductionFileTypeCode,
+                           DeductionFileTypeName = glaccount.DeductionFileTypeName,
+                           AssessingOfficeName = glaccount.AssessingOfficeName,
+                           DeductionTypeEnglishName = glaccount.DeductionTypeEnglishName,
+                           AutomaticReconcileLocalName = glaccount.AutomaticReconcileLocalName,
+                           ReconcileMethodLocalName = glaccount.ReconcileMethodLocalName,
+                           CardId = glaccount.CardId,
+                           CreatedByUserId = glaccount.CreatedByUserId,
+                           UpdatedByUserId = glaccount.UpdatedByUserId,
+                           CreateDate = glaccount.CreateDate,
+                           UpdateDate = glaccount.UpdateDate,
+                           CreatedByUserName = glaccount.CreatedByUserName,
+                           UpdatedByUserName = glaccount.UpdatedByUserName,
+                           CreatedByLocalName = glaccount.CreatedByLocalName,
+                           UpdatedByLocalName = glaccount.UpdatedByLocalName,
+                           AllowEditChequePayToName = glaccount.AllowEditChequePayToName,
+                           ActiveForInterest = glaccount.ActiveForInterest,
+                           InterestCalculationStartDate = glaccount.InterestCalculationStartDate,
+                           ActiveForInterestCreditInvoice = glaccount.ActiveForInterestCreditInvoice,
+                           InterestCreditLimit = glaccount.InterestCreditLimit,
+                           NameForPrintingCheques = glaccount.NameForPrintingCheques,
+                           Smallcashbook = glaccount.Smallcashbook,
+                           MinimumInterestInvoiceBilling = glaccount.MinimumInterestInvoiceBilling,
+                           SalesmanName = glaccount.SalesmanName,
+                           CollectorName = glaccount.CollectorName,
+                           SplitCurrencyAccount = glaccount.SplitCurrencyAccount,
+                           ParentName = glaccount.ParentName,
+                           ParentCurrencyId = glaccount.ParentCurrencyId,
+                           ReportingAsAnotherDocument = glaccount.ReportingAsAnotherDocument,
+                           CreditAllotmentPercentage = glaccount.CreditAllotmentPercentage,
+                           Category1LocalName = glaccount.Category1LocalName,
+                           Category2LocalName = glaccount.Category2LocalName,
+                           Category3LocalName = glaccount.Category3LocalName,
+                           Category4LocalName = glaccount.Category4LocalName,
+                           Category5LocalName = glaccount.Category5LocalName,
+                           RelatedGLAccount = glaccount.RelatedGLAccount,
+                           ChartOfAccountsEnglishName = glaccount.ChartOfAccountsEnglishName,
+                           ChartOfAccountsTypeEnglishName = glaccount.ChartOfAccountsTypeEnglishName,
+                           ChartOfAccountsTypeLocalName = glaccount.ChartOfAccountsTypeLocalName,
+                           ChartOfAccountsLocalName = glaccount.ChartOfAccountsLocalName,
+                           CardsDataId = glaccount.CardsDataId,
+                           PaymentTermName = glaccount.PaymentTermName,
+                           TotalOpenTransactions = glaccount.TotalOpenTransactions,
+                           LastReconciledBy = glaccount.LastReconciledBy,
+                           LastReconcileDate = glaccount.LastReconcileDate,
+                           CreditLimit = glaccount.CreditLimit,
+                           PaymentTerm = glaccount.PaymentTerm,
+                           TotalOpenShipments = glaccount.TotalOpenShipments,
+                           Phone = glaccount.Phone,
+                           Salesman = glaccount.Salesman,
+                           Collector = glaccount.Collector,
+                           FollowupDate = glaccount.FollowupDate,
+                           FollowupNotes = glaccount.FollowupNotes,
+                           FirstPeriodsMonths = glaccount.FirstPeriodsMonths,
+                           SecondPeriodsMonths = glaccount.SecondPeriodsMonths,
+                           ThirdPeriodsMonths = glaccount.ThirdPeriodsMonths,
+                           InsuredCreditLimit = glaccount.InsuredCreditLimit,
+                           PostponedChequesCommission = glaccount.PostponedChequesCommission,
+
+
+                           Period0 = GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
+                           Period1 = GetPeriodValue("1", glaccount, loggedUser.SecurityLevel),
+                           Period2 = GetPeriodValue("2", glaccount, loggedUser.SecurityLevel),
+                           Period3 = GetPeriodValue("3", glaccount, loggedUser.SecurityLevel),
+                           Period4 = GetPeriodValue("4", glaccount, loggedUser.SecurityLevel),
+                           Period5 = GetPeriodValue("5", glaccount, loggedUser.SecurityLevel),
+                           PeriodFuture = GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
+                           PeriodPast = GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
+
+                           BalanceInForeignCurrency = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.BalanceInForeignCurrency : 0,
+                           BalanceInLocalCurrency = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.BalanceInLocalCurrency : 0,
+                           ForeignBalanceInDue = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.ForeignBalanceInDue : 0,
+                           LocalBalanceInDue = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.LocalBalanceInDue : 0,
+                           CalculatedAgingPeriod1 = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.CalculatedAgingPeriod1 : 0,
+                           CalculatedAgingPeriod2 = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.CalculatedAgingPeriod2 : 0,
+                           CalculatedAgingPeriod3 = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.CalculatedAgingPeriod3 : 0,
+                           TotalOpenChequesInLocalCur = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.TotalOpenChequesInLocalCur : 0,
+                           TotFutureOpenChequesInLocalCur = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount) ? glaccount.TotFutureOpenChequesInLocalCur : 0,
+
+                           Access = CheckIfUserHasAccessToGLAccount(loggedUser.SecurityLevel, glaccount),
+                       };
+
+
+
+            return list.AsQueryable();
+        }
+
+        private decimal? GetPeriodValue(string periodName,GLAccountList glaccount, int? loggedUserSecurityLevel)
+        {
+            if (CheckIfUserHasAccessToGLAccount(loggedUserSecurityLevel, glaccount))
+                return GetPeriodValueFromGLAccount(periodName, glaccount);
+                
+            return 0;
+        }
+
+        private static bool CheckIfUserHasAccessToGLAccount(int? loggedUserSecurityLevel, GLAccountList glaccount)
+        {
+            return !glaccount.IsSecurityLevelsEnabled 
+                || (glaccount.IsSecurityLevelsEnabled && glaccount.ChartOfAccountSecurityLevel == null)
+                || (glaccount.IsSecurityLevelsEnabled && glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel);
+        }
+
+        private static decimal? GetPeriodValueFromGLAccount(string periodName, GLAccountList glaccount)
+        {
+            switch (periodName)
+            {
+                case "0": return glaccount.Period0;
+                case "1": return glaccount.Period1;
+                case "2": return glaccount.Period2;
+                case "3": return glaccount.Period3;
+                case "4": return glaccount.Period4;
+                case "5": return glaccount.Period5;
+                case "Future": return glaccount.PeriodFuture;
+                case "Past": return glaccount.PeriodPast;
+            }
+            return 0;
         }
 
         private Contact GetLoggedContact(int tenant)
@@ -246,6 +444,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant, true);
             return loggedContact;
+        }
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            return loggedUser;
         }
         private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
         {
@@ -460,12 +665,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountList;
         }
-        
+       
         public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant, bool noNeedTenant)
         {
+          
             IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
                                                       //where a.Tenant == tenant && ids.Contains(a.Id)
-                                                  where ids.Contains(a.Id)
+                                                  where ids.Contains(a.Id) 
                                                   select a);
             if (!noNeedTenant)
             {
@@ -477,6 +683,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return accountListQuery;
         }
+   
 
     }
 }

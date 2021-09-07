@@ -196,5 +196,6 @@ export class QuoteList {
 		PickupDeliveryVolumetricWeight: number;
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
+		PackagesQuantity: number;
 	
 }

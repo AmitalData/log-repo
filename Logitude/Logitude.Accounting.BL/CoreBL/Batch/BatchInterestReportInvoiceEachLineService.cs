@@ -168,7 +168,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.MasterShipmentNumbers = null;
+            aRInvoicePM.MasterNumbers = null;
+            aRInvoicePM.HouseNumbers = null;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;

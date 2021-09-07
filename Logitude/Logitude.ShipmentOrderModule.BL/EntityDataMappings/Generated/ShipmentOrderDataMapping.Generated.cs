@@ -68,7 +68,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         CarrierId, 
 	         IsCancelled, 
 	         SecurityKey, 
-	         ShipmentId,
+	         ShipmentId, 
+	         Quantity, 
+	         GrossWeight, 
+	         Volume,
 	      }
 
 
@@ -137,7 +140,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         CarrierName, 
 	         IsCancelled, 
 	         SecurityKey, 
-	         ShipmentId,
+	         ShipmentId, 
+	         Quantity, 
+	         GrossWeight, 
+	         Volume,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -374,6 +380,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
 				entityPOCO.ShipmentId = entityPM.ShipmentId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Quantity))
+            {
+				entityPOCO.Quantity = entityPM.Quantity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeight))
+            {
+				entityPOCO.GrossWeight = entityPM.GrossWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Volume))
+            {
+				entityPOCO.Volume = entityPM.Volume;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -617,6 +638,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.ShipmentId = entityPOCO.ShipmentId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Quantity))
+            {
+					entityPM.Quantity = entityPOCO.Quantity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeight))
+            {
+					entityPM.GrossWeight = entityPOCO.GrossWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Volume))
+            {
+					entityPM.Volume = entityPOCO.Volume;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -851,6 +887,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
                 oldEntityPM.ShipmentId = entityPM.ShipmentId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Quantity))
+            {
+                oldEntityPM.Quantity = entityPM.Quantity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeight))
+            {
+                oldEntityPM.GrossWeight = entityPM.GrossWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Volume))
+            {
+                oldEntityPM.Volume = entityPM.Volume;
             }
 			
 		}

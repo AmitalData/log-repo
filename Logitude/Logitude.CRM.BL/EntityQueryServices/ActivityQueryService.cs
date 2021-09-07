@@ -808,92 +808,92 @@ namespace Logitude.CRM.BL.EntityQueryServices
         public List<ActivitiyDW> GetctivitiesDWListsByDates(int tenant, DateTime fromdate, DateTime todate, int skip, int take)
         {
 
-            ICRMContext context = MainContext as ICRMContext;
-            List<ActivitiyDW> activitiyDWList = (from a in context.Activities.Include("Customer").Include("Contact").Include("Customer.SalesmanUser.Contact").Include("ActivityType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ActivityStatus")
-                                                                             where a.Tenant == tenant && a.CreateDate >= fromdate && a.CreateDate <= todate
-                                                                             select new ActivitiyDW()
-                                                                             {
-                                                                                 ActivityId = a.Id,
-                                                                                 ActivityTypeCode = a.ActivityTypeCode,
-                                                                                 ActivityTypeName = a.ActivityType != null ? a.ActivityType.Name : "",
-                                                                                 OpportunityId = a.OpportunityId,
-                                                                                 CustomerId = a.CustomerId,
-                                                                                 CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
-                                                                                 CustomerCode = a.Customer != null ? a.Customer.Code : "",
-                                                                                 OwnerId = a.OwnerId,
-                                                                                 OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
-                                                                                 CreatedbyUserId = a.CreatedByUserId,
-                                                                                 CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
-                                                                                 Subject = a.Subject,
-                                                                                 Description = a.Description,
-                                                                                 ActivityStatusCode = a.ActivityStatusCode,
-                                                                                 ActivityStatusName = a.ActivityStatus != null ? a.ActivityStatus.Name : "",
-                                                                                 MeetingSummary = a.MeetingSummary,
-                                                                                 IsOpen = a.IsOpen,
-                                                                                 QuoteId = a.QuoteId,
-                                                                                 Notes = a.Notes,
-                                                                                 CreateDate = a.CreateDate,
-                                                                                 UpdateDate = a.UpdateDate,
-                                                                                 DueDate = a.DueDate,
-                                                                                 SalesmanId = a.Customer != null ? a.Customer.SalesmanUserId : "",
-                                                                                 SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : "" : "" : "",
+            //ICRMContext context = MainContext as ICRMContext;
+            //List<ActivitiyDW> activitiyDWList = (from a in context.Activities.Include("Customer").Include("Contact").Include("Customer.SalesmanUser.Contact").Include("ActivityType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ActivityStatus")
+            //                                                                 where a.Tenant == tenant && a.CreateDate >= fromdate && a.CreateDate <= todate
+            //                                                                 select new ActivitiyDW()
+            //                                                                 {
+            //                                                                     ActivityId = a.Id,
+            //                                                                     ActivityTypeCode = a.ActivityTypeCode,
+            //                                                                     ActivityTypeName = a.ActivityType != null ? a.ActivityType.Name : "",
+            //                                                                     OpportunityId = a.OpportunityId,
+            //                                                                     CustomerId = a.CustomerId,
+            //                                                                     CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
+            //                                                                     CustomerCode = a.Customer != null ? a.Customer.Code : "",
+            //                                                                     OwnerId = a.OwnerId,
+            //                                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
+            //                                                                     CreatedbyUserId = a.CreatedByUserId,
+            //                                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+            //                                                                     Subject = a.Subject,
+            //                                                                     Description = a.Description,
+            //                                                                     ActivityStatusCode = a.ActivityStatusCode,
+            //                                                                     ActivityStatusName = a.ActivityStatus != null ? a.ActivityStatus.Name : "",
+            //                                                                     MeetingSummary = a.MeetingSummary,
+            //                                                                     IsOpen = a.IsOpen,
+            //                                                                     QuoteId = a.QuoteId,
+            //                                                                     Notes = a.Notes,
+            //                                                                     CreateDate = a.CreateDate,
+            //                                                                     UpdateDate = a.UpdateDate,
+            //                                                                     DueDate = a.DueDate,
+            //                                                                     SalesmanId = a.Customer != null ? a.Customer.SalesmanUserId : "",
+            //                                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact != null ? a.Customer.SalesmanUser.Contact.EnglishName : "" : "" : "",
                                                                                 
-                                                                             }).OrderBy(d => d.CreateDate).Skip(skip).Take(take).ToList();
+            //                                                                 }).OrderBy(d => d.CreateDate).Skip(skip).Take(take).ToList();
 
-            return activitiyDWList;
+            return new List<ActivitiyDW> ();
 
 
         }
 
         public int GetctivitiesDWListsCountByDates(int tenant, DateTime fromDate, DateTime toDate)
         {
-            return context.Activities.Where(a => a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate).Count();
+            return 0;//context.Activities.Where(a => a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate).Count();
         }
 
         public List<ActivitiyDW> GetActivitiesDWBListsByUpdateDate(int tenant, DateTime updateDate, int skip, int take)
         {
 
-            ICRMContext context = MainContext as ICRMContext;
-            List<ActivitiyDW> activitiyDWList = (from a in context.Activities.Include("Customer").Include("Contact").Include("Customer.SalesmanUser.Contact").Include("ActivityType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ActivityStatus")
-                                                 where a.Tenant == tenant && a.UpdateDate > updateDate
-                                                 select new ActivitiyDW()
-                                                 {
-                                                     ActivityId = a.Id,
-                                                     ActivityTypeCode = a.ActivityTypeCode,
-                                                     ActivityTypeName = a.ActivityType != null ? a.ActivityType.Name : "",
-                                                     OpportunityId = a.OpportunityId,
-                                                     CustomerId = a.CustomerId,
-                                                     CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
-                                                     CustomerCode = a.Customer != null ? a.Customer.Code : "",
-                                                     OwnerId = a.OwnerId,
-                                                     OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
-                                                     CreatedbyUserId = a.CreatedByUserId,
-                                                     CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
-                                                     Subject = a.Subject,
-                                                     Description = a.Description,
-                                                     ActivityStatusCode = a.ActivityStatusCode,
-                                                     ActivityStatusName = a.ActivityStatus != null ? a.ActivityStatus.Name : "",
-                                                     MeetingSummary = a.MeetingSummary,
-                                                     IsOpen = a.IsOpen,
-                                                     QuoteId = a.QuoteId,
-                                                     CreateDate = a.CreateDate,
-                                                     UpdateDate = a.UpdateDate,
-                                                     Notes = a.Notes,
-                                                     DueDate = a.DueDate,
-                                                     SalesmanId =   a.Customer != null ?  a.Customer.SalesmanUserId:"",
-                                                     SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact !=null ? a.Customer.SalesmanUser.Contact.EnglishName: "": "" : "",
-                                                  }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
+            //ICRMContext context = MainContext as ICRMContext;
+            //List<ActivitiyDW> activitiyDWList = (from a in context.Activities.Include("Customer").Include("Contact").Include("Customer.SalesmanUser.Contact").Include("ActivityType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ActivityStatus")
+            //                                     where a.Tenant == tenant && a.UpdateDate > updateDate
+            //                                     select new ActivitiyDW()
+            //                                     {
+            //                                         ActivityId = a.Id,
+            //                                         ActivityTypeCode = a.ActivityTypeCode,
+            //                                         ActivityTypeName = a.ActivityType != null ? a.ActivityType.Name : "",
+            //                                         OpportunityId = a.OpportunityId,
+            //                                         CustomerId = a.CustomerId,
+            //                                         CustomerName = a.Customer != null ? a.Customer.EnglishName : "",
+            //                                         CustomerCode = a.Customer != null ? a.Customer.Code : "",
+            //                                         OwnerId = a.OwnerId,
+            //                                         OwnerName = a.Owner != null ? a.Owner.Contact != null ? a.Owner.Contact.EnglishName : "" : "",
+            //                                         CreatedbyUserId = a.CreatedByUserId,
+            //                                         CreatedbyUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+            //                                         Subject = a.Subject,
+            //                                         Description = a.Description,
+            //                                         ActivityStatusCode = a.ActivityStatusCode,
+            //                                         ActivityStatusName = a.ActivityStatus != null ? a.ActivityStatus.Name : "",
+            //                                         MeetingSummary = a.MeetingSummary,
+            //                                         IsOpen = a.IsOpen,
+            //                                         QuoteId = a.QuoteId,
+            //                                         CreateDate = a.CreateDate,
+            //                                         UpdateDate = a.UpdateDate,
+            //                                         Notes = a.Notes,
+            //                                         DueDate = a.DueDate,
+            //                                         SalesmanId =   a.Customer != null ?  a.Customer.SalesmanUserId:"",
+            //                                         SalesmanName = a.Customer != null ? a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact !=null ? a.Customer.SalesmanUser.Contact.EnglishName: "": "" : "",
+            //                                      }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
 
 
 
-            return activitiyDWList;
+            return new List<ActivitiyDW>();// activitiyDWList;
 
 
         }
 
         public int GetctivitiesDWCountByUpdateDate(int tenant, DateTime updateDate)
         {
-            return context.Activities.Where(a => a.Tenant == tenant && a.UpdateDate > updateDate).Count();
+            return 0;//context.Activities.Where(a => a.Tenant == tenant && a.UpdateDate > updateDate).Count();
         }
     }
 }

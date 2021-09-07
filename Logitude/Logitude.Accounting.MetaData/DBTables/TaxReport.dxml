@@ -191,6 +191,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CreatedInTwoMonthsLogic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

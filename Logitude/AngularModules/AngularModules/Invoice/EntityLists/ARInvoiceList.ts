@@ -147,5 +147,8 @@ export class ARInvoiceList {
 		PartnerId: string;
 		PartnerName: string;
 		ShipmentsNumbers: string;
+		MasterNumbers: string;
+		MasterShipmentNumbers: string;
+		HouseNumbers: string;
 	
 }

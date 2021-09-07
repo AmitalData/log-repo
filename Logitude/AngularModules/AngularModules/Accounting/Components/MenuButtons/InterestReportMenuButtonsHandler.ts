@@ -421,7 +421,10 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
      InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
     _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
     _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
-    if (this.cardList  != null) {
+    _ARInvoicePM.MasterShipmentNumbers = null;
+    _ARInvoicePM.MasterNumbers = null;
+    _ARInvoicePM.HouseNumbers = null;
+      if (this.cardList != null) {
          _ARInvoicePM.BillToName = this.cardList .EnglishName;
          _ARInvoicePM.BillToLocalName = this.cardList .LocalName;
         if (!AppTool.IsNullOrEmpty(this.cardList .SATPaymentMethodCode)) {
