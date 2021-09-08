@@ -204,7 +204,14 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.IsCancelled = MyEntityPM.IsCancelled;
 				   temp.Quantity = MyEntityPM.Quantity;
 				   temp.GrossWeight = MyEntityPM.GrossWeight;
-				   temp.Volume = MyEntityPM.Volume;					
+				   temp.Volume = MyEntityPM.Volume;			  
+				   if(MyEntityPM.CustomerId != null)
+				   {
+					   CardQueryService CardService16 = new CardQueryService(Tenant);
+					   					   temp.Customer = CardService16.GetCardById(MyEntityPM.CustomerId,Tenant); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -454,7 +461,19 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.IsCancelled = MyEntity.IsCancelled;
 					temp.Quantity = MyEntity.Quantity;
 					temp.GrossWeight = MyEntity.GrossWeight;
-					temp.Volume = MyEntity.Volume;					   
+					temp.Volume = MyEntity.Volume;
+					CardQueryService CustomerCardService = new CardQueryService(Tenant);
+					if(MyEntity.Customer != null)
+					{
+						var myCustomerPM = CustomerCardService.CardDataMappingAndValidatin(MyEntity.Customer,Tenant,ComputingPartnerName);
+												if(myCustomerPM != null)
+						{
+							temp.CustomerId = myCustomerPM.Id;
+						}
+						 
+					}
+			
+										   
 					   return temp;
 		    }
             catch (Exception ex)
