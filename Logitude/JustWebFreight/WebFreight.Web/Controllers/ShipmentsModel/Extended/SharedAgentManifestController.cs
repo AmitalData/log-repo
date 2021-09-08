@@ -116,6 +116,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                             City = pm.ShipperCity,
                             CountryCode = countryShipper != null ? countryShipper.Code : "",
                             CountryName = countryShipper != null ? countryShipper.EnglishName : "",
+                            ZipCode = shipperCard != null ? shipperCard.ZipCode : "",
 
                         };
 
@@ -132,6 +133,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                             City = pm.ConsigneeCity,
                             CountryCode = countryConsignee != null ? countryConsignee.Code : "",
                             CountryName = countryConsignee != null ? countryConsignee.EnglishName : "",
+                            ZipCode = consigneeCard != null ? consigneeCard.ZipCode : "",
 
                         };
 
@@ -150,6 +152,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         City = pm.Notify1City,
                         CountryCode = countryNotify1 != null ? countryNotify1.Code : "",
                         CountryName = countryNotify1 != null ? countryNotify1.EnglishName : "",
+                        ZipCode = notify1Card != null ? notify1Card.ZipCode : "",
 
                     };
                     #endregion
