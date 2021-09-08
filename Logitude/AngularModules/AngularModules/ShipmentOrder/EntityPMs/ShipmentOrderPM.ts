@@ -354,6 +354,16 @@ export class ShipmentOrderPM {
     public set Volume(newValue: number) { if (this.volume != newValue) { this.volume = newValue; this.MarkAsDirty("Volume"); } }
        
 	 
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+       
+	 
+    private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

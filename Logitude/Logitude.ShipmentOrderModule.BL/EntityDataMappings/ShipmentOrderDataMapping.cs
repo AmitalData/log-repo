@@ -41,6 +41,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.CustomsAgentName = cards.Where(d => d.Id == entityPOCO.CustomsAgentId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.ForwarderName = cards.Where(d => d.Id == entityPOCO.ForwarderId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.CarrierName = cards.Where(d => d.Id == entityPOCO.CarrierId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.CustomerReferences = cards.Where(d => d.Id == entityPOCO.CustomerId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.OriginPortName = ports.Where(d => d.Id == entityPOCO.OriginPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.DestinationPortName = ports.Where(d => d.Id == entityPOCO.DestinationPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.GatewayName = ports.Where(d => d.Id == entityPOCO.GatewayId).Select(d => d.EnglishName).FirstOrDefault();
@@ -51,7 +52,6 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.ShipmentLevelName = GetShipmentLevelNameByCode(entityPOCO.ShipmentLevelCode, entityPOCO.Tenant);
             entityPM.TransportModeName = GetTransportModeNameById(entityPOCO.TransportModeId, entityPOCO.Tenant);
             entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPOCO.Tenant);
-
         }
 
 
@@ -73,6 +73,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 entityPOCO.CustomsAgentId,
                 entityPOCO.ForwarderId,
                 entityPOCO.CarrierId,
+                entityPOCO.CustomerId
             };
         }
         #endregion

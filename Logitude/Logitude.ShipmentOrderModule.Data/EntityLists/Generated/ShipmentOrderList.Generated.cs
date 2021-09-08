@@ -142,6 +142,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public double? GrossWeight  { get; set; }
        [DataMember]
        public double? Volume  { get; set; }
+       [DataMember]
+       public string CustomerId  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
    }
 
 }

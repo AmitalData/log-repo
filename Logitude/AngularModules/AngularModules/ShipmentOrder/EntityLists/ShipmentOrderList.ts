@@ -72,6 +72,8 @@ export class ShipmentOrderList {
 	Quantity: number;
 	GrossWeight: number;
 	Volume: number;
+	CustomerId: string;
+	CustomerName: string;
 	
 }
  

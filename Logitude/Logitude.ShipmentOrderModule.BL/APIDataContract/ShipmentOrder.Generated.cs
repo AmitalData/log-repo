@@ -109,5 +109,7 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public double? GrossWeight { get; set; }
     
     public double? Volume { get; set; }
+    
+    public Card Customer { get; set; }
     }
 } 
