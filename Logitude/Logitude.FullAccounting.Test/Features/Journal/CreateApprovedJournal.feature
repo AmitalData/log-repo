@@ -1,5 +1,5 @@
 ﻿Feature: CreateApprovedJournal
-	Simple calculator for adding two numbers
+	We want to create an approved journal
 
 @mytag
 Scenario: Create approved journal
