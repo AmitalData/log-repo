@@ -447,7 +447,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         private User GetLoggedUser(int tenant)
         {
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant); 
             UserRepository userRepository = new UserRepository(tenant);
             var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
             return loggedUser;
