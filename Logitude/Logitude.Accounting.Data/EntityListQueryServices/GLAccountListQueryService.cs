@@ -449,7 +449,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
             UserRepository userRepository = new UserRepository(tenant);
-            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
             return loggedUser;
         }
         private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
