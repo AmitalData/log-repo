@@ -220,5 +220,9 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public virtual Card Partner { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
     }
 }

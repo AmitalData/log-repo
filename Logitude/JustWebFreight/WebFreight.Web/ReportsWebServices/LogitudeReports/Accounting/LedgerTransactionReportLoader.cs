@@ -248,15 +248,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count > 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
         }
-
+     
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
         {
             List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
-            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);
-            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant,false).ToList();
+            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);        
+              var   glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant, false).ToList();
             return glaccounts;
         }
-
+      
         private void FillReportTransactionGLAccountFields(List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
         {
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
@@ -324,8 +324,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillPrintingInformation()
         {
-            var loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
-            var loggedContactName = GetContactName(loggedContact);
+            string loggedContactName = GetLoggedContactName();           
             transactionsDataProvider.PrintedByUser = loggedContactName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
@@ -335,6 +334,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
         }
 
+        private ContactPM  GetLoggedContact()
+        {
+            return LoggedContactResolver.GetLoggedContact(tenant);
+           
+        }
+        private string GetLoggedContactName()
+        {
+            ContactPM loggedContact;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return GetContactName(loggedContact);
+            }
+            else
+            {
+
+                loggedContact = GetLoggedContact();
+               return GetContactName(loggedContact);
+            }
+        }
         private ContactPM GetContactByEmail(string email)
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
@@ -440,7 +459,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IsReconciled = GetFilterValue<bool?>("IsReconciled"),
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
-
+                UseSecurityLevel = GetFilterValue<bool>("UseSecurityLevel"),
             };
             SetReportCategoryParameters(cardIndexParameters);
 

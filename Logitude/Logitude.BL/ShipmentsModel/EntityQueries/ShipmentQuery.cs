@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -35,7 +36,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
     {
 
         ShipmentRepository repository;
-
+        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
+        private const string MasterUserId = "13793";
         public ShipmentQuery(int tenant)
         {
             repository = new ShipmentRepository(tenant);
@@ -1795,7 +1797,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.TruckerId = shipment.TruckerId;
             shipmentPM.AssignedToTruckerDate = shipment.AssignedToTruckerDate;
             shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate; 
-             
 
             shipmentPM.PrivateLabelInvoiceNumber = shipment.PrivateLabelInvoiceNumber; 
             shipmentPM.PrivateLabelIncludePickup = shipment.PrivateLabelIncludePickup;
@@ -1851,6 +1852,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
+            shipmentPM.BillingStatusId = shipment.BillingStatusId;
+            shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
 
             if (shipmentPM.ProfitCurrencyId != null)
             {
@@ -1931,18 +1934,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Done = follow.Done,
                     DoneDateTime = follow.DoneDateTime,
                     DoneNote = follow.DoneNote,
-                    //EntityTypeId = follow.EntityTypeId,
                     ExternalDocumentId = follow.DocumentsFilingId,
-                    //FollowUpTypeId = follow.FollowUpTypeId,
                     Id = follow.Id,
                     InternalDocumentId = follow.InternalDocumentId,
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Note = follow.Notes,
+                    Notes = follow.Notes,
                     ShipmentId = follow.ShipmentId,
-                    //FollowUpTypeName = follow.FollowUpType.Name,
-                    //EntityDateId = follow.FollowUpType.EntityDateId
                     EventTypeId = follow.EventTypeId,
                     EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,
                     ManualActivatedFollowUp = follow.EventType.ManualActivatedFollowUp,
@@ -3835,6 +3834,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
             shipmentPM.StatusId = shipment.StatusId;
+            shipmentPM.BillingStatusId = shipment.BillingStatusId;
+            shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
             shipmentPM.UpdatedByUserId = shipment.UpdatedByUserId;
             shipmentPM.CustomerId = shipment.CustomerId;
             shipmentPM.DirectionId = shipment.DirectionId;
@@ -3969,6 +3970,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
+                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
             }
         }
 
@@ -4098,14 +4100,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (string.IsNullOrEmpty(house)) { return null; }
 
             List<Shipment> shipments = repository.GetAllShipmentsByHouseNumber(house, tenant);
-
+            CreateSearchEventForMixPanel(house,tenant,shipments);
             if (shipments.Count == 0) { throw new Exception("There is no Shipment found with house " + house); }
 
             if (shipments.Count == 1) { return shipments[0].Id; }
             return null;
         }
 
+        private static void CreateSearchEventForMixPanel(string searchKey, int tenant, List<Shipment> shipments)
+        {
+            if (searchKey != null)
+            {
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+                MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments);
+                eventTracker.TrackEvent(searchEvent);
+            }
+        }
 
+        private static MixPanelEvent BuildMixPanelSearchEvent(string searchKey, List<Shipment> shipments)
+        {
+            MixPanelEvent mixPanelEvent = new MixPanelEvent();
+            mixPanelEvent.Name = "Search";
+            mixPanelEvent.AddProperty("search_key", searchKey);
+            mixPanelEvent.AddProperty("results_count", shipments.Count().ToString());
+            return mixPanelEvent;
+        }
         public ShipmentPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
@@ -4122,12 +4141,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
+
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
                     ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                    
+
+
                     var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
                                      where a.Id == shipment.Id
                                      select a).FirstOrDefault();
@@ -4152,6 +4176,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
                         returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
+ 
+
 
                     MapShipmentComputedFields(returnShipment);
 
@@ -4769,6 +4795,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ComputedStatusId = s.ComputedStatusId,
                                                         ComputedStatusDate = s.ComputedStatusDate,
                                                         StatusId = s.StatusId,
+                                                        BillingStatusId = s.BillingStatusId,
+                                                        OperationalStatusId = s.OperationalStatusId,
                                                         StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                         StatusDate = s.StatusDate,
                                                         StatusLocation = s.StatusLocation,
@@ -4953,6 +4981,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
                     shipmentPM.SalesmanUserId = shipment.SalesmanUserId;
                     shipmentPM.StatusId = shipment.StatusId;
+                    shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
+                    shipmentPM.BillingStatusId = shipment.BillingStatusId;
                     shipmentPM.TransportModeId = shipment.TransportModeId;
                     shipmentPM.MainCarriageTransportModeId = shipment.TransportModeId;
                     shipmentPM.IncotermId = shipment.IncotermId;
@@ -11753,6 +11783,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfInsidePackagesDetails = s.NumberOfInsidePackagesDetails,
                                                          ComputedStatusId = s.ComputedStatusId,
                                                          ComputedStatusDate = s.ComputedStatusDate,
+                                                         BillingStatusId = s.BillingStatusId,
+                                                         OperationalStatusId = s.OperationalStatusId,
                                                          StatusId = s.StatusId,
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,
@@ -13508,6 +13540,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfInsidePackagesDetails = s.NumberOfInsidePackagesDetails,
                                                          ComputedStatusId = s.ComputedStatusId,
                                                          ComputedStatusDate = s.ComputedStatusDate,
+                                                         BillingStatusId = s.BillingStatusId,
+                                                         OperationalStatusId = s.OperationalStatusId,
                                                          StatusId = s.StatusId,
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,

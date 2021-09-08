@@ -1,4 +1,4 @@
-@release @stable @all
+@release @dev @all
 Feature: Change Time Zone and Date Time Format from Maintenance
     The user changes time zone and date time format from the Maintenance Module.
 
@@ -28,7 +28,7 @@ Feature: Change Time Zone and Date Time Format from Maintenance
         Then the date format should be "MM/dd/yyyy"
 
     Scenario: Validate Shipment Updated with time in "UTC-06:00" timezone
-        Given the user update the shipment
+        Given the user update the shipment for UTC-6
         When navigate to event tab
         Then the "Shipment Updated" event should include the time of "UTC-06:00" timezone
 
@@ -47,6 +47,6 @@ Feature: Change Time Zone and Date Time Format from Maintenance
         Then the date format should be "dd/MM/yyyy"
 
     Scenario: Validate Shipment Updated with time in "UTC+03:00" timezone
-        Given the user update the shipment
+        Given the user update the shipment for UTC+3
         When navigate to event tab
         Then the "Shipment Updated" event should include the time of "UTC+03:00" timezone

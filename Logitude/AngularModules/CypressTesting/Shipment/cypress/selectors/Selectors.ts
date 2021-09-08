@@ -17,10 +17,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
   public static readonly Backbutton_1 = '#EditBackbutton_1';
+  public static readonly Backbutton = '#EditBackbutton';
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
-
+  public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   //#endregion
 
   //#region Create shipment
@@ -34,6 +35,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CreateShipmentButton = '#ShipmentCreatebtn';
   public static readonly CreateMasterShipmentButton = '#MasterCreatebtn';
   public static readonly LogLovShipmentCustomer = "#LogLov_Shipment_ShipmentCustomerTypeCode"
+  public static readonly Row = 'div[id^=row]'
   //#endregion
 
   //#region Shipment tabs
@@ -42,6 +44,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PartnersTab = '#ShipmentTHPartners';
   public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
   public static readonly PackagesTab = '#ShipmentTHPackages';
+  public static readonly PackagesTab_Number = '[id^=ShipmentTHPackages]'
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
   public static readonly PayablesTab = '#ShipmentTHPayables';

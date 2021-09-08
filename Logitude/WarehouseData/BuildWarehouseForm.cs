@@ -135,32 +135,32 @@ namespace WarehouseData
                             #region Create and Build  DW Table
 
                             TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
-                           Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
-                           {
-                               stepName = table.DBTableName;
+                            Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
+                            {
+                                stepName = table.DBTableName;
 
 
-                               Stopwatch stopWatchDWTable = null;
-                               if (table.DispayInScreen)
-                               {
-                                   stopWatchDWTable = new Stopwatch();
-                                   stopWatchDWTable.Start();
-                                   SetControlPropertyValue("Text", "Copying...", table);
-                               }
+                                Stopwatch stopWatchDWTable = null;
+                                if (table.DispayInScreen)
+                                {
+                                    stopWatchDWTable = new Stopwatch();
+                                    stopWatchDWTable.Start();
+                                    SetControlPropertyValue("Text", "Copying...", table);
+                                }
 
 
-                               mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
+                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
 
-                               if (table.DispayInScreen)
-                               {
-                                   stopWatchDWTable.Stop();
-                                   TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
-                                   SetControlPropertyValue("ForeColor", Color.Green, table);
-                                   SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
-                               }
+                                if (table.DispayInScreen)
+                                {
+                                    stopWatchDWTable.Stop();
+                                    TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
+                                    SetControlPropertyValue("ForeColor", Color.Green, table);
+                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
+                                }
 
 
-                           });
+                            });
 
 
                             mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, waterMark, TotalCountLabel);
@@ -185,9 +185,9 @@ namespace WarehouseData
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
 
-                               //if (table.Dw_TableName == "dw_ARInvoiceTypes")
-                               // { 
-                               // }
+                                //if (table.Dw_TableName == "dw_ARInvoiceTypes")
+                                // { 
+                                // }
 
                                 if (table.DispayInScreen)
                                 {

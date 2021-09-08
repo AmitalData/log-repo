@@ -274,6 +274,16 @@ export class FullAccountingSettingPM {
     public set ThirdsPeriodsMonths(newValue: string) { if (this.thirdsPeriodsMonths != newValue) { this.thirdsPeriodsMonths = newValue; this.MarkAsDirty("ThirdsPeriodsMonths"); } }
        
 	 
+    private isSecurityLevelActivated: boolean;
+    public get IsSecurityLevelActivated() { return this.isSecurityLevelActivated; }
+    public set IsSecurityLevelActivated(newValue: boolean) { if (this.isSecurityLevelActivated != newValue) { this.isSecurityLevelActivated = newValue; this.MarkAsDirty("IsSecurityLevelActivated"); } }
+       
+	 
+    private vATreportEveryTwoMonths: boolean;
+    public get VATreportEveryTwoMonths() { return this.vATreportEveryTwoMonths; }
+    public set VATreportEveryTwoMonths(newValue: boolean) { if (this.vATreportEveryTwoMonths != newValue) { this.vATreportEveryTwoMonths = newValue; this.MarkAsDirty("VATreportEveryTwoMonths"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

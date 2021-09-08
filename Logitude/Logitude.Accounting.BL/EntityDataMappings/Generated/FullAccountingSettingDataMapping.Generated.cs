@@ -54,7 +54,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths,
 	      }
 
 
@@ -110,7 +112,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -277,6 +281,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
 				entityPOCO.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
+            {
+				entityPOCO.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+				entityPOCO.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
 			}
 			}
 
@@ -448,6 +462,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ThirdsPeriodsMonths = entityPOCO.ThirdsPeriodsMonths;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSecurityLevelActivated))
+            {
+					entityPM.IsSecurityLevelActivated = entityPOCO.IsSecurityLevelActivated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VATreportEveryTwoMonths))
+            {
+					entityPM.VATreportEveryTwoMonths = entityPOCO.VATreportEveryTwoMonths;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -612,6 +636,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
                 oldEntityPM.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
+            {
+                oldEntityPM.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+                oldEntityPM.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
             }
 			
 		}

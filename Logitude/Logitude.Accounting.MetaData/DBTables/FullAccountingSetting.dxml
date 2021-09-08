@@ -234,6 +234,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSecurityLevelActivated"
+    OldNames="ActiveSecurityLevel"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VATreportEveryTwoMonths"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

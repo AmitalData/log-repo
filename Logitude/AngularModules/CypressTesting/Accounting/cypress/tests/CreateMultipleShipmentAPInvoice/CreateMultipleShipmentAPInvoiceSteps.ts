@@ -101,6 +101,7 @@ Given("the user add payable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
   payableDetails = Assists.CreateInstance<PayableDetails>(dataTable, true);
   ShipmentActions.FillPayablesTab(payableDetails);
+  cy.wait(5000)
 });
 
 When("update shipment", () => {

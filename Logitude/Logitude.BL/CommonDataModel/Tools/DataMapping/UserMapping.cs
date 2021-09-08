@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.ShowLogBoxToolTip = userPm.ShowLogBoxToolTip;
             user.ShowInboxToolTip = userPm.ShowInboxToolTip;
             user.ShowLocalNameInLOV = userPm.ShowLocalNameInLOV;
+            user.SecurityLevel = userPm.SecurityLevel;
             user.UserRoles = userPm.UserRoles;
             user.AdditionalPackagesOnly = userPm.AdditionalPackagesOnly;
             user.LayoutDirection = userPm.LayoutDirection;

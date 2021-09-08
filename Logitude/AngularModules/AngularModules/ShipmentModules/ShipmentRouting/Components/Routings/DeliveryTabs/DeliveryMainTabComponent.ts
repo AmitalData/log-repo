@@ -133,6 +133,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
                 this.UIProperties.SetRequired("FromAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCity) && AppTool.IsNullOrEmpty(this.FromAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("FromAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FromAddressCountryId) ? true : false);
 
+                this.UIProperties.SetEnabled("FromAddressZipCode", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("FromAddressCity", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("FromAddressCountryId", this.ObjectTableName, this.IsEditingEnabled);
                 break;
@@ -166,6 +167,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
                 this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
                 this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
 
+                this.UIProperties.SetEnabled("ToAddressZipCode", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("ToAddressCity", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("ToAddressCountryId", this.ObjectTableName, this.IsEditingEnabled);
                 break;
@@ -198,6 +200,68 @@ export class DeliveryMainTabComponent extends BaseComponent {
             var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATA"));
             this.UIProperties.SetValidity("ATA", this.ObjectTableName, false, errorMessage);
         }
+    }
+
+    get IsFromRequired() {
+        var myResult: boolean = false;
+
+        if (this.FullResponsibility) {
+            switch (this.FromTypeCode) {
+                case "PART": {
+                    if (AppTool.IsNullOrEmpty(this.FromPartnerCardId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "PORT": {
+                    if (AppTool.IsNullOrEmpty(this.FromPortId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "CASL": {
+                    if (AppTool.IsNullOrEmpty(this.FromAddressCity) || AppTool.IsNullOrEmpty(this.FromAddressCountryId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return myResult;
+    }
+
+    get IsToRequired() {
+        var myResult: boolean = false;
+
+        if (this.FullResponsibility) {
+            switch (this.ToTypeCode) {
+                case "PART": {
+                    if (AppTool.IsNullOrEmpty(this.ToPartnerCardId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "PORT": {
+                    if (AppTool.IsNullOrEmpty(this.ToPortId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
+                case "CASL": {
+                    if (AppTool.IsNullOrEmpty(this.ToAddressCity) || AppTool.IsNullOrEmpty(this.ToAddressCountryId)) {
+                        myResult = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return myResult;
     }
 
     // On Open Edit Mood

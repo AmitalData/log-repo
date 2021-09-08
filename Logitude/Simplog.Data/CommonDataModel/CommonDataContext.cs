@@ -461,7 +461,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
             modelBuilder.Configurations.Add(new CardSearchMap());
             modelBuilder.Configurations.Add(new HorseMap());
-
+            modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
             modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
 
 
@@ -950,6 +950,11 @@ namespace Simplog.Data.CommonDataModel
             set;
         }
         public IDbSet<AutomationLastUpdate> AutomationLastUpdates
+        {
+            get;
+            set;
+        }
+        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions
         {
             get;
             set;

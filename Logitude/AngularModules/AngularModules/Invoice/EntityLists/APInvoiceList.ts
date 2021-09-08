@@ -95,5 +95,8 @@ export class APInvoiceList {
 		TotalVATOnly: boolean;
 		PaidDate: Date;
 		ShipmentsNumbers: string;
+		MasterNumbers: string;
+		MasterShipmentNumbers: string;
+		HouseNumbers: string;
 	
 }

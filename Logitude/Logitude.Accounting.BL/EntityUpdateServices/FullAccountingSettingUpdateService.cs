@@ -52,6 +52,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update
+                && entityPM.IsSecurityLevelActivated != entityPOCO.IsSecurityLevelActivated)
+            {
+                if (entityPM.IsSecurityLevelActivated) { 
+                    
+                } else
+                {
+
+                }
+            }
+
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
             tenant.PaymentTermId = entityPM.TenantPaymentTermId;

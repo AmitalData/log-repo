@@ -335,6 +335,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.DescriptionRightToLeft).HasColumnName("DescriptionRightToLeft");
             this.Property(t => t.NotifyReference1).HasColumnName("NotifyReference1");
             this.Property(t => t.NotifyReference2).HasColumnName("NotifyReference2");
+            this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
+
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
             this.HasOptional(t => t.ToPartnerAddress).WithMany().HasForeignKey(d => d.ToPartnerAddressId);

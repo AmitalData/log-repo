@@ -216,6 +216,21 @@
                                     </td>
                                 </tr>
 
+                                <!-- SecurityLevel -->
+                                <tr class="FormFieldRow" *ngIf="IsSecurityLevelVisibile">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="top:10px;">
+                                        <div style="width:110px">
+                                            <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="10"></NumberInput>
+                                        </div>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
                                 <!-- DontShowLocalLabels  -->
                                 <tr class="FormFieldRow" *ngIf="IsDontShowLocalLabelsVisibile">
                                     <td>
@@ -269,7 +284,7 @@
                                                       [DataContext]="DataContext"></LogLabel>
                                         </span>
                                         <span class="ImageSize">Size: (100X100 pixels)</span>
-                                    </td> 
+                                    </td>
 
                                     <td style="vertical-align:top">
                                         <div style="width:120px;height:120px">

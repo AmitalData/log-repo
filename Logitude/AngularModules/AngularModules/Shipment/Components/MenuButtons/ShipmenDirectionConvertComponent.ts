@@ -262,6 +262,9 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     }
 
     SetPartners() {
+        this.EntityPM.InlandDomesticFromTypeCode = "PART";
+        this.EntityPM.InlandDomesticToTypeCode = "PART";
+
         this.IsShipperMyCustomer = false;
         this.IsConsigneeMyCustomer = false;
         var myCRMCustomerId = null;

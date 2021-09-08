@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", authToken.Tenant);
 	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountListQueryService gLAccountQuery = new GLAccountListQueryService(MyContext);
-                GLAccountList gLAccountList = gLAccountQuery.GetSingle(id);
+                GLAccountList gLAccountList = gLAccountQuery.GetSingle(id, authToken.Tenant);
             
                 return Request.CreateResponse(HttpStatusCode.OK,  gLAccountList);
             }

@@ -58,7 +58,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ChargeableWeightLabel: string;
     public VolumetricWeightColumnHeader: string;
     public IsDSVTenant: boolean = false;
-     
+    public FromPort: string;
     constructor() {
         super(); 
         this.InitializeServices();
@@ -70,9 +70,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.BuildFiltersLists(); 
         this.SetUnits();
         this.SetLabels();
+        this.SetFromPort();
+
     }
 
    
+    SetFromPort() {
+        this._PortExtendedPMService.getSinglePort("TLV", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
+            this.FromPort =  Result.Result.Id;
+        })
+
+    }
+
 
     SetUnits() { 
         this.SetDimensionsUnitCode(); 
@@ -347,10 +356,11 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ShipmentCustomerTypeCode = "SHI";
-        this.EntityPM.MainCarriageFromPortId = this.EntityPM.MainCarriageToPortId;
+        this.EntityPM.MainCarriageFromPortId = this.FromPort;
         this.EntityPM.OtherPrepaidCollectId = "C";
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
+        this.EntityPM.FromPortId = this.FromPort;
 
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
@@ -367,7 +377,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
 
     }
-
+   
     private SetShipmentStatus(myResult: any) {
         this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0]?.Id;
         this.EntityProgressStatusId = myResult.Result.filter(a => a.Code == "INPS")[0]?.Id;
@@ -379,7 +389,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
-        if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.PushErrorMessage("Reference");
         }
 

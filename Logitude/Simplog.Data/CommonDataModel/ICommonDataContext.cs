@@ -237,7 +237,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
         IDbSet<ProductItem> ProductItems { get; set; }
         IDbSet<HTSCode> HTSCodes { get; set; }
-
+        IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

@@ -273,6 +273,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? chartOfAccountSecurityLevel ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ChartOfAccountSecurityLevel  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountSecurityLevel;
+		 }
+		 set
+		 {
+		   if(chartOfAccountSecurityLevel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountSecurityLevel",OldValue=chartOfAccountSecurityLevel,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountSecurityLevel=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

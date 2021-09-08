@@ -889,7 +889,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Note = follow.Notes,
+                    Notes = follow.Notes,
                     ShipmentId = follow.ShipmentId,
                     EventTypeId = follow.EventTypeId,
                     EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,
@@ -3204,25 +3204,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (isNewEntity)
                 {
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
-                    {
-                        entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+                    //{
+                    //    entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
-                    {
-                        entityPM.MainCarriageFromAddressId = entityPM.ShipperAddressId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId))
+                    //{
+                    //    entityPM.MainCarriageFromAddressId = entityPM.ShipperAddressId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
-                    {
-                        entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+                    //{
+                    //    entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
+                    //}
 
-                    if (string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
-                    {
-                        entityPM.MainCarriageToAddressId = entityPM.ConsigneeAddressId;
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
+                    //{
+                    //    entityPM.MainCarriageToAddressId = entityPM.ConsigneeAddressId;
+                    //}
                 }
 
                 //entityPM.FromPortId = null;
@@ -4366,7 +4366,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (this.entityPM.IsAccountingClosed)
                         {
                             entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-
+                            this.entityPM.AccountingClosedByUserId = this.entityPM.UpdatedByUserId;
                             if (this.entityPM.FirstAccountingCloseDate == null)
                             {
                                 this.entityPM.FirstAccountingCloseDate = this.entityPM.AccountingCloseDate;
@@ -4376,6 +4376,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else
                         {
                             entityPM.AccountingCloseDate = null;
+                            this.entityPM.AccountingClosedByUserId = null;
                         }
                     }
                 }

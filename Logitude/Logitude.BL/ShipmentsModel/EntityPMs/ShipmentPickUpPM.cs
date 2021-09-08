@@ -192,5 +192,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StandaloneShipmentId { get; set; }
         public string StandaloneShipmentNumber { get; set; }
         public bool IsConnectedToStandalone { get; set; }
+        public string CarrierLocalName { get; set; }
+
     }
 }

@@ -308,9 +308,9 @@ namespace WarehouseData.Service
 
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryToPortId DEFAULT '-1' FOR DeliveryToPortId;"
                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OperationallyClosedByUserId DEFAULT '-1' FOR OperationallyClosedByUserId;"
-                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PickupTruckerId DEFAULT '-1' FOR PickupTruckerId;"
-                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryTruckerId DEFAULT '-1' FOR DeliveryTruckerId;";
-
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PickupTruckerId DEFAULT '-1' FOR PickupTruckerId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryTruckerId DEFAULT '-1' FOR DeliveryTruckerId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AccountingClosedByUserId DEFAULT '-1' FOR AccountingClosedByUserId;";
                     break;
 
                 case "ARInvoices":

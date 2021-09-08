@@ -143,6 +143,16 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        IsCancelled = a.IsCancelled,
 
+                                                       Quantity = a.Quantity,
+
+                                                       Volume = a.Volume,
+
+                                                       GrossWeight = a.GrossWeight,
+
+                                                       CustomerId = a.CustomerId,
+
+                                                       CustomerName = a.Customer == null ? "" : a.Customer.EnglishName,
+
                                                    });
             return query;
         }

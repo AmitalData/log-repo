@@ -208,16 +208,14 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string Field18 { get; set; }
         public string Field19 { get; set; }
         public string Field20 { get; set; }
-
         public DateTime? RequestDate { get; set; }
         public double? EstimatedProfitInLocal { get; set; }
         public double? EstimatedProfitInProfit { get; set; }
-
         public string ShipmentSubTypeId { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public double? PickupDeliveryVolumetricWeight { get; set; }
-
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
+        public int? PackagesQuantity { get; set; }
     }
 }

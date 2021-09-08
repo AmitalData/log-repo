@@ -61,7 +61,7 @@
   <Column
     Name="QueryCode"
     Type="varchar"
-    Size="30">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

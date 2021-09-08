@@ -346,8 +346,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ParentShipmentType).HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);  
-
+            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OperationalStatusId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Shipments");
@@ -793,6 +794,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentShipmentDirectionId).HasColumnName("ParentShipmentDirectionId");
             this.Property(t => t.ParentShipmentNumber).HasColumnName("ParentShipmentNumber");
             this.Property(t => t.ParentShipmentType).HasColumnName("ParentShipmentType");
+            this.Property(t => t.BillingStatusId).HasColumnName("BillingStatusId");
+            this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
 
             if (dbms == "oracle")
             {
@@ -1003,7 +1006,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.OnForwardingFromPort).WithMany().HasForeignKey(d => d.OnForwardingFromPortId);
             this.HasOptional(t => t.OnForwardingToPort).WithMany().HasForeignKey(d => d.OnForwardingToPortId);
             this.HasOptional(t => t.OnForwardingVessel).WithMany().HasForeignKey(d => d.OnForwardingVesselId);
-            this.HasOptional(t => t.OnForwardingAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnForwardingAdditionalTransportModeCode); 
+            this.HasOptional(t => t.OnForwardingAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnForwardingAdditionalTransportModeCode);
+            this.HasOptional(t => t.BillingStatus).WithMany().HasForeignKey(d => d.BillingStatusId);
+            this.HasOptional(t => t.OperationalStatus).WithMany().HasForeignKey(d => d.OperationalStatusId);
         }
     }
 }

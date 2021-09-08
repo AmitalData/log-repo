@@ -107,13 +107,23 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.BookingConfirmationNumber).HasColumnName("BookingConfirmationNumber").HasMaxLength(25).IsUnicode(false);
 
-            this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsFixedLength();
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.CarrierId).HasColumnName("CarrierId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
 
             this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Quantity).HasColumnName("Quantity");
+
+            this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+
+            this.Property(t => t.Volume).HasColumnName("Volume");
+
+            this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

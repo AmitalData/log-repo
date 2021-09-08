@@ -42,6 +42,18 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CurrentLocation { get; set; }
         public bool HasContainerException { get; set; }
 
+        public string ShipmentPreCarriageFromId { get; set; }
+        public string ShipmentPreCarriageToId { get; set; }
+        public string ShipmentMainCarriageFromId { get; set; }
+        public string ShipmentMainCarriageToId { get; set; }
+        public string ShipmentTransshipment1FromId { get; set; }
+        public string ShipmentTransshipment1ToId { get; set; }
+        public string ShipmentTransshipment2FromId { get; set; }
+        public string ShipmentTransshipment2ToId { get; set; }
+        public string ShipmentTransshipment3FromId { get; set; }
+        public string ShipmentTransshipment3ToId { get; set; }
+        public string ShipmentOnCarriageFromId { get; set; }
+        public string ShipmentOnCarriageToId { get; set; }
         public string ShipmentFirstPickupFrom { get; set; }
         public string ShipmentFirstPickupTo { get; set; }
         public string ShipmentPreCarriageFrom { get; set; }

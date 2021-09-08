@@ -33,7 +33,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.QueryFilterXML).HasColumnName("QueryFilterXML").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.QueryCode).HasColumnName("QueryCode").HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.QueryCode).HasColumnName("QueryCode").HasMaxLength(200).IsUnicode(false);
         }
     }
 }

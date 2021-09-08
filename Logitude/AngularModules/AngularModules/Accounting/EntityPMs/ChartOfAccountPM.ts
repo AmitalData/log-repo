@@ -79,6 +79,11 @@ export class ChartOfAccountPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private chartOfAccountSecurityLevel: number;
+    public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
+    public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
+       
+	 
 
     public OldEntityPM: ChartOfAccountPM;
 		

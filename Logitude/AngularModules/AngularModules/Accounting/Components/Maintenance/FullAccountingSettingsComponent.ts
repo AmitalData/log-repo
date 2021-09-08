@@ -167,6 +167,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, enableAllFields);
         this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, enableAllFields);
         this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, enableAllFields);
+
     }
 
     //#region Full Accounting Setting Properties
@@ -198,6 +200,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.ToggleAgingDefinitionTab(value);
 
             this.ReloadTenantPM();
+            this.SetUIProperties();
+        }
+    }
+
+    get VATreportEveryTwoMonths() { return this.EntityPM.VATreportEveryTwoMonths; }
+    set VATreportEveryTwoMonths(value: boolean) {
+        if (this.EntityPM.VATreportEveryTwoMonths != value) {
+            this.EntityPM.VATreportEveryTwoMonths = value;
             this.SetUIProperties();
         }
     }
@@ -462,6 +472,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get IsSecurityLevelActivated() { return this.EntityPM.IsSecurityLevelActivated; }
+    set IsSecurityLevelActivated(value: boolean) {
+        if (this.EntityPM.IsSecurityLevelActivated != value) {
+            this.EntityPM.IsSecurityLevelActivated = value;
+            this.SetUIProperties();
+        }
+    }
 
     get NumberOfAgingMonths () { return this.EntityPM.NumberOfAgingMonths ; }
     set NumberOfAgingMonths (value: number) {

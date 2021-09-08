@@ -44,6 +44,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackageHarmonizeRepository ShipmentPackageHarmonizeRepository { get; private set; }
         public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
 
+        public PortRepository PortRepository { get; private set; }
         public Tenant LoggedTenant { get; private set; }
         public ContactPM LoggedContact { get; private set; }
         public string LoggedContactId { get; private set; }
@@ -110,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);
+            this.PortRepository = new PortRepository(this.CommonContext);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
 

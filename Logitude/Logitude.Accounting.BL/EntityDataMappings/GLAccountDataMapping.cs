@@ -228,6 +228,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
                     entityPM.ChartOfAccountsCode = chartOfAccounts.Code;
+                    entityPM.ChartOfAccountSecurityLevel = chartOfAccounts.ChartOfAccountSecurityLevel;
                 }
 
                 if (entityPOCO.ChartOfAccountsTypeCode != null)

@@ -55,6 +55,7 @@ export class FullAccountingSettingList {
 	FirstPeriodsMonths: string;
 	SecondPeriodsMonths: string;
 	ThirdsPeriodsMonths: string;
+	IsSecurityLevelActivated: boolean;
 	
 }
  

@@ -838,23 +838,8 @@ export class ShipmentPM {
     private shipmentType: string;
     public get ShipmentType() { return this.shipmentType; }
     public set ShipmentType(newValue: string) { if (this.shipmentType != newValue) { this.shipmentType = newValue; this.MarkAsDirty("ShipmentType"); } }
-       
-	 
-    private followUpType: string;
-    public get FollowUpType() { return this.followUpType; }
-    public set FollowUpType(newValue: string) { if (this.followUpType != newValue) { this.followUpType = newValue; this.MarkAsDirty("FollowUpType"); } }
-       
-	 
-    private followUpId: string;
-    public get FollowUpId() { return this.followUpId; }
-    public set FollowUpId(newValue: string) { if (this.followUpId != newValue) { this.followUpId = newValue; this.MarkAsDirty("FollowUpId"); } }
-       
-	 
-    private followUpDate: Date;
-    public get FollowUpDate() { return this.followUpDate; }
-    public set FollowUpDate(newValue: Date) { if (this.followUpDate != newValue) { this.followUpDate = newValue; this.MarkAsDirty("FollowUpDate"); } }
-       
-	 
+
+ 
     private shipmentPMId: string;
     public get ShipmentPMId() { return this.shipmentPMId; }
     public set ShipmentPMId(newValue: string) { if (this.shipmentPMId != newValue) { this.shipmentPMId = newValue; this.MarkAsDirty("ShipmentPMId"); } }
@@ -869,12 +854,7 @@ export class ShipmentPM {
     public get NewMessage() { return this.newMessage; }
     public set NewMessage(newValue: boolean) { if (this.newMessage != newValue) { this.newMessage = newValue; this.MarkAsDirty("NewMessage"); } }
        
-	 
-    private followUpNotes: string;
-    public get FollowUpNotes() { return this.followUpNotes; }
-    public set FollowUpNotes(newValue: string) { if (this.followUpNotes != newValue) { this.followUpNotes = newValue; this.MarkAsDirty("FollowUpNotes"); } }
-       
-	 
+	
     private isAnyConversation: boolean;
     public get IsAnyConversation() { return this.isAnyConversation; }
     public set IsAnyConversation(newValue: boolean) { if (this.isAnyConversation != newValue) { this.isAnyConversation = newValue; this.MarkAsDirty("IsAnyConversation"); } }

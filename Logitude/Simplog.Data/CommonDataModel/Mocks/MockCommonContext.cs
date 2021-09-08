@@ -2778,6 +2778,17 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations => throw new NotImplementedException();
 

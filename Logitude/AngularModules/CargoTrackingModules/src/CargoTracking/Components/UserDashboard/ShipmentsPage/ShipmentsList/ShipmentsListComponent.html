@@ -32,7 +32,7 @@
                 </div>
 
                 <button class="search-button" type="submit"
-                    (onsubmit)="LoadScreenData()">{{isLoading?'Loading...': 'Search'}}</button>
+                    (click)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
 
@@ -116,7 +116,9 @@
     <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
         <div class="table" style="height: calc(100vh - 274px)">
 
-            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
+
+            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 10px)">
+
 
 
                 <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
@@ -255,11 +257,14 @@
                                 <div class="value truncateText">{{SupplierOrClientValue}}</div>
 
 
-                                <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
-                                <div class="value truncateText">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
-                                    <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
+
+
+
+                                <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
+                                <div class="value truncateText hide-mobile">
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}}
                                 </div>
+                                    <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
 
                             </div>
                         </div>
@@ -317,7 +322,25 @@
                         <div class="column col-md-1 status" style="width: 12%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
+
+                                <div class="value truncateText" style="height:auto">
+
+
+                                    <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
+                                        <div tooltip-trigger>
+                                            <div class="icon-danger">!</div>
+                                        </div>
+                                        <div tooltip-body>
+                                            <div style="text-align: right;">
+                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'dd/MM/yyyy, HH:mm'}}
+                                                <br>
+                                                {{shipment.CurrentMilestoneExceptions.substring(shipment.CurrentMilestoneExceptions.indexOf(',')+1)}}
+                                            </div>
+                                        </div>
+                                    </app-tooltip>
+                                        {{ shipment.CurrentMilestoneName }}
+                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                </div>
 
 
                                 <div class="subtitle hide-mobile">Last Updated</div>

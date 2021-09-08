@@ -192,96 +192,108 @@
   <Column
     Name="ShipmentFirstPickupFrom"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ShipmentFirstPickupTo"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentPreCarriageFrom"
+    Name="ShipmentPreCarriageFromId"
+    OldNames="ShipmentPreCarriageFrom"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentPreCarriageTo"
+    Name="ShipmentPreCarriageToId"
+    OldNames="ShipmentPreCarriageTo"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentMainCarriageFrom"
+    Name="ShipmentMainCarriageFromId"
+    OldNames="ShipmentMainCarriageFrom"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentMainCarriageTo"
+    Name="ShipmentMainCarriageToId"
+    OldNames="ShipmentMainCarriageTo"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment1From"
+    Name="ShipmentTransshipment1FromId"
+    OldNames="ShipmentTransshipment1From"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment1To"
+    Name="ShipmentTransshipment1ToId"
+    OldNames="ShipmentTransshipment1To"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment2From"
+    Name="ShipmentTransshipment2FromId"
+    OldNames="ShipmentTransshipment2From"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment2To"
+    Name="ShipmentTransshipment2ToId"
+    OldNames="ShipmentTransshipment2To"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment3From"
+    Name="ShipmentTransshipment3FromId"
+    OldNames="ShipmentTransshipment3From"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentTransshipment3To"
+    Name="ShipmentTransshipment3ToId"
+    OldNames="ShipmentTransshipment3To"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentOnCarriageFrom"
+    Name="ShipmentOnCarriageFromId"
+    OldNames="ShipmentOnCarriageFrom"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentOnCarriageTo"
+    Name="ShipmentOnCarriageToId"
+    OldNames="ShipmentOnCarriageTo"
     Type="varchar"
     Size="15">
     <Constraints
@@ -290,14 +302,14 @@
   <Column
     Name="ShipmentLastDeliveryFrom"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ShipmentLastDeliveryTo"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -831,6 +843,66 @@
   <Relation
     ForeignKeyColumn="MainCarriageCarrierId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentPreCarriageFromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentPreCarriageToId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentMainCarriageFromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentMainCarriageToId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment1FromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment1ToId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment2FromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment2ToId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment3FromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentTransshipment3ToId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentOnCarriageFromId"
+    ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentOnCarriageToId"
+    ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

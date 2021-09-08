@@ -128,10 +128,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     LoadShipment()
     {
         //this.isLoading = true;
-        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
+        this.searchService.getUserShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
-            console.log("[getShipment]", result);
+            console.log("[getUserShipment]", result);
             this.ShipmentWithMilestones = result;
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result;
@@ -847,7 +847,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private CreateSinglePickupsRoute(i: number) {
         var step = new RoutingStep();
         step.TransportModeCode = this.InlandTransportMode;
-        step.Description = this.ShipmentPM.ShipmentPickUps[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentPickUps[i].CarrierName : null;
+        step.Description = this.ShipmentPM.ShipmentPickUps[i].CarrierLocalName != null ? "Via " + this.ShipmentPM.ShipmentPickUps[i].CarrierLocalName : null;
 
         this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
@@ -878,7 +878,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private CreateSingleShipmentDeliveriesRoute(i: number) {
         var step = new RoutingStep();
         step.TransportModeCode = this.InlandTransportMode;
-        step.Description = this.ShipmentPM.ShipmentDeliveries[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierName : null;
+        step.Description = this.ShipmentPM.ShipmentDeliveries[i].CarrierLocalName != null ? "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierLocalName : null;
 
         this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentDeliveries[i], step);
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);

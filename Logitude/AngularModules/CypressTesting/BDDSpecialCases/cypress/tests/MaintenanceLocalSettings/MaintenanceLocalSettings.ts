@@ -27,7 +27,6 @@ Given("the user open {string} in maintenance menu", (maintenanceItemName) => {
 
 Given("local settings with the following details", (dataTable) => {
     localSettingsDetails = Assists.CreateInstance<LocalSettingsDetails>(dataTable, true);
-    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
     Actions.FillLocalSettingsDetails(localSettingsDetails);
 });
 
@@ -79,10 +78,18 @@ Then("the date format should be {string}", (dateFormat) => {
 //#endregion
 
 //#region Event time zone
-Given("the user update the shipment", () => {
+Given("the user update the shipment for UTC-6", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "America/Costa_Rica" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "America/Costa_Rica" })
+});
+
+Given("the user update the shipment for UTC+3", () => {
+    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Jerusalem" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Jerusalem" })
 });
 
 When("navigate to event tab", () => {

@@ -93,6 +93,7 @@ function AssertTimeOneOf(text: string) {
 
 function GetTimeZoneDateTime() {
   var TimeZone = LocalSettingsDetails.UpdateTime
+  cy.log(TimeZone)
   var DateTimeList = TimeZone.split(":")
   DateTimeList[0] = HourFormat(DateTimeList[0], DateTimeList[2])
   TimeZone = DateTimeList[0] + ":" + DateTimeList[1]
@@ -131,7 +132,7 @@ function DateTimeRange(time: string) {
   var hour = Number(timelist[0])
   var minutes = Number(timelist[1])
   var dateTimeRange = []
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
     if (minutes == 0) {
       hour = subHour(hour)
       minutes = 59
@@ -143,7 +144,7 @@ function DateTimeRange(time: string) {
   hour = Number(timelist[0])
   minutes = Number(timelist[1])
   dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
     if (minutes == 59) {
       hour = hour + 1
       minutes = 0

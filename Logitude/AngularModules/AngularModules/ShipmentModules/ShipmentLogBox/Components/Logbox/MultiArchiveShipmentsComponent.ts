@@ -81,6 +81,17 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     SearchFilter: string = "";
     SourceEntity: any;
 
+
+    private selectedDirectionFilter: string = "All";
+    public get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
+    public set SelectedDirectionFilter(newValue: string) {
+        if (this.selectedDirectionFilter != newValue) {
+            this.selectedDirectionFilter = newValue;
+             this.LoadImporterShipments();
+        }
+    }
+
+
     private mySelectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
@@ -288,6 +299,11 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         if (this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
         }
+
+        if (this.SelectedDirectionFilter != "All") {
+            this.AddDirectionFilter();
+        }
+
         else {
             if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
                 this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
@@ -355,6 +371,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+
+    private AddDirectionFilter() {
+        this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.selectedDirectionFilter == "All" ? true : false);
     }
 
     GridAfterViewInitCompleted($event) {
