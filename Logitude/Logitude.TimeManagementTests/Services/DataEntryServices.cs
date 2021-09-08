@@ -50,7 +50,7 @@ namespace Logitude.TimeManagementTests.Services
                 .LocationCode((string)dataTable.Location)
                 .Description((string)dataTable.Description)
                 .TimeInMinutes((int)dataTable.Minuts)
-                .DateOfWork(DateTime.Now.AddDays(TimeManagementData.UpdatedDateNumber))
+                .DateOfWork(item.DateOfWork.AddDays(TimeManagementData.UpdatedDateNumber))
                 .ProjectId(TimeManagementData.UpdateProjectId)
                 .sprintId(TimeManagementData.UpdateSprintId)
                 .Build();

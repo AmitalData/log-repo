@@ -15,10 +15,6 @@ namespace Logitude.TimeManagementTests.Hooks
         {
             new TimeManagementDataPreparation().Prepar();
         }
-        [BeforeFeature("Pre-Prepare-UpdateDataEntry")]
-        public static void SetupUpdateTimeManagementPreparation()
-        {
-            new TimeManagementDataPreparation().PreparForUpdate();
-        }
+        
     }
 }
