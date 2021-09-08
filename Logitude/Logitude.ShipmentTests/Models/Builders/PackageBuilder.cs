@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Test.Base.Models.PackageTypesPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -72,7 +73,7 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
-        public PackageBuilder ChangeSetOp(int changeSetOp)
+        public PackageBuilder ChangeSetOp(string changeSetOp)
         {
             _packagePM.ChangeSetOp = changeSetOp;
             return this;
@@ -106,6 +107,60 @@ namespace Logitude.ShipmentTests.Models.Builders
         {
             _packagePM = dataTable.CreateInstance<PackagePM>();
             return this;
+        }
+
+        public PackageBuilder PackageTypeByCode(string code)
+        {
+            _packagePM.PackageTypeId = PackageTypeCodeMapping(code);
+            return this;
+        }
+        public PackageBuilder ContainerEntityId(string ContainerEntityId)
+        {
+            _packagePM.ContainerEntityId = ContainerEntityId;
+            return this;
+        }
+
+        public PackageBuilder ContainerNumber(string containerNumber)
+        {
+            _packagePM.ContainerNumber = containerNumber;
+            return this;
+        }
+
+        public PackageBuilder FlashPointTemperatureUnitCode(string flashPointTemperatureUnitCode)
+        {
+            _packagePM.FlashPointTemperatureUnitCode = flashPointTemperatureUnitCode;
+            return this;
+        }
+
+        public PackageBuilder PackageTypeId(string PackageTypeId)
+        {
+            _packagePM.PackageTypeId = PackageTypeId;
+            return this;
+        }
+
+        public PackageBuilder TemperatureUnitCode(string TemperatureUnitCode)
+        {
+            _packagePM.TemperatureUnitCode = TemperatureUnitCode;
+            return this;
+        }
+
+       
+
+        private string PackageTypeCodeMapping(string portCode)
+        {
+            switch (portCode)
+            {
+                case "PC2":
+                    return PackageTypesData.PackageTypeOceanPC2Id;
+                case "PC1":
+                    return PackageTypesData.PackageTypeOceanPC1Id;
+                case "PP1":
+                    return PackageTypesData.PackageTypeAirPP1Id;
+                case "PP2":
+                    return PackageTypesData.PackageTypeAirPP2Id;
+                default:
+                    return null;
+            }
         }
     }
 }

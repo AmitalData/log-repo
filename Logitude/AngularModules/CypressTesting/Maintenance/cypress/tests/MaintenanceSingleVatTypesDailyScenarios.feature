@@ -15,7 +15,6 @@ Feature: Single Vat Type fake Create, Search and Edit from Maintenance
             | LocalName          | Testing single vat type Scenario |
             | Percentage         | 15                               |
             | PercentageDate     | CurrentDate                      |
-            | IsRegionalTax      | YES                              |
             | Description        | Description                      |
             | LocalDescription   | LocalDescription                 |
         When create single vat type
