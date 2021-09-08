@@ -668,6 +668,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 this.SelectedInvitedCustomers.splice(index,1);
 
         this.LoadScreenData();
+        RootContext.ShipmentsScrollPosition = 0;
 
     }
     FiltersInvitedCustomers: any[] = [];
