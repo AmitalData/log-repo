@@ -377,7 +377,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            ThirdPeriodsMonths = glaccount.ThirdPeriodsMonths,
                            InsuredCreditLimit = glaccount.InsuredCreditLimit,
                            PostponedChequesCommission = glaccount.PostponedChequesCommission,
-
+                           ChartOfAccountSecurityLevel = glaccount.ChartOfAccountSecurityLevel,
+                           IsSecurityLevelsEnabled = glaccount.IsSecurityLevelsEnabled,
 
                            Period0 = GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
                            Period1 = GetPeriodValue("1", glaccount, loggedUser.SecurityLevel),
