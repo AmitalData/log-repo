@@ -579,7 +579,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
         if (!item)
             this.SelectedFilters.push(filter);
-
+            RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
 
@@ -598,6 +598,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
+        RootContext.ShipmentsScrollPosition = 0;
 
         this.LoadScreenData();
 
@@ -614,12 +615,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.isFiltersSideBarOpened = false;
 
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
-
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
