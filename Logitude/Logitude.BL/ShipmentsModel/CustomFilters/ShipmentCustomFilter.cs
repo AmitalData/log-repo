@@ -28,7 +28,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
             bool showIsCancelled = false;
+            bool showIsStandalonePickupDelivery = false;
             bool isMasterConnectedHouses = false;
+            bool isAllShipments = false;
 
             foreach (QueryFilterItem item in queryFilters)
             {
@@ -70,6 +72,16 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             showIsCancelled = true;
                         }
                     }
+
+                    if (item.FieldName == "IsStandalonePickupDelivery")
+                    {
+                        bool value = Convert.ToBoolean(item.FieldValue);
+                        if (value)
+                        {
+                            showIsStandalonePickupDelivery = true;
+                        }
+                    }
+                    
 
                     if (item.FieldName == "Partner")
                     {
@@ -157,6 +169,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AllShipments")
                     {
+                        isAllShipments = true;
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
                     }
 
@@ -655,22 +668,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 }
             }
 
-            if (isMasterConnectedHouses)
+            if (isMasterConnectedHouses || isAllShipments)
             {
                 return queryableData;
             }
 
             else
             {
-                if (showIsCancelled)
-                {
-                    queryableData = queryableData.Where(d => d.IsCancelled == true);
-                }
 
-                else
-                {
-                    queryableData = queryableData.Where(d => d.IsCancelled == false);
-                }
+                queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled && d.IsStandalonePickupDelivery == showIsStandalonePickupDelivery);
 
                 return queryableData;
             }
@@ -680,7 +686,9 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
             bool showIsCancelled = false;
+            bool showIsStandalonePickupDelivery = false;
             bool isMasterConnectedHouses = false;
+            bool isAllShipments = false; 
 
             foreach (QueryFilterItem item in queryFilters)
             {
@@ -697,6 +705,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         if (value)
                         {
                             showIsCancelled = true;
+                        }
+                    }
+
+                    if (item.FieldName == "IsStandalonePickupDelivery")
+                    {
+                        bool value = Convert.ToBoolean(item.FieldValue);
+                        if (value)
+                        {
+                            showIsStandalonePickupDelivery= true;
                         }
                     }
 
@@ -786,6 +803,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "AllShipments")
                     {
+                        isAllShipments = true;
                         queryableData = queryableData.Where(d => d.ShipmentLevelCode != "C" && d.IsCancelled == false);
                     }
 
@@ -1208,22 +1226,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 }
             }
 
-            if (isMasterConnectedHouses)
+            if (isMasterConnectedHouses || isAllShipments)
             {
                 return queryableData;
             }
 
             else
             {
-                if (showIsCancelled)
-                {
-                    queryableData = queryableData.Where(d => d.IsCancelled == true);
-                }
 
-                else
-                {
-                    queryableData = queryableData.Where(d => d.IsCancelled == false);
-                }
+                queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled && d.IsStandalonePickupDelivery == showIsStandalonePickupDelivery);
 
                 return queryableData;
             }

@@ -139,7 +139,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {CargoTrackingMilestoneValues.Departure, "DPT"},
                 {CargoTrackingMilestoneValues.Arrival, "ATA"},
                 {CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
-                {CargoTrackingMilestoneValues.AssignedToCustomsAgent, "ASG"},
+                {CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
                 {CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
                 {CargoTrackingMilestoneValues.CustomsPayment, "RSH"},
                 {CargoTrackingMilestoneValues.Clearance, "RSG"},

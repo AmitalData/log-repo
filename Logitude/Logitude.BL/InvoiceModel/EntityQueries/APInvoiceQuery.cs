@@ -174,7 +174,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              CreatedByPartner = a.CreatedByPartner,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
-                             ShipmentsNumbers = a.ShipmentsNumbers
+                             ShipmentsNumbers = a.ShipmentsNumbers,
+                             MasterNumbers = a.MasterNumbers,
+                             MasterShipmentNumbers = a.MasterShipmentNumbers,
+                             HouseNumbers = a.HouseNumbers,
                          });          
 
             return query;
@@ -576,7 +579,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
                                         PaidDate = a.PaidDate,
-                                        ShipmentsNumbers = a.ShipmentsNumbers
+                                        ShipmentsNumbers = a.ShipmentsNumbers, 
+                                        MasterNumbers = a.MasterNumbers,
+                                        MasterShipmentNumbers = a.MasterShipmentNumbers, 
+                                        HouseNumbers = a.HouseNumbers, 
+
                                     }).FirstOrDefault();
 
 
@@ -666,7 +673,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
                                         PaidDate = a.PaidDate,
-                                        ShipmentsNumbers = a.ShipmentsNumbers
+                                        ShipmentsNumbers = a.ShipmentsNumbers,
+                                        MasterNumbers = a.MasterNumbers,
+                                        MasterShipmentNumbers = a.MasterShipmentNumbers,
+                                        HouseNumbers = a.HouseNumbers,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1076,7 +1086,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
-                             ShipmentsNumbers = a.ShipmentsNumbers
+                             ShipmentsNumbers = a.ShipmentsNumbers,
+                             MasterNumbers = a.MasterNumbers,
+                             MasterShipmentNumbers = a.MasterShipmentNumbers,
+                             HouseNumbers = a.HouseNumbers,
                          };
 
             return result;

@@ -57,6 +57,7 @@ Then("the house should create successfully", () => {
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
     Actions.ValidateCheckHouseCheckBox();
+    cy.wait(5000)
 });
 //#endregion
 
@@ -71,7 +72,7 @@ Given("the following details", (dataTable) => {
 });
 
 When("save shipment", () => {
-    Actions.UpdateShipment('[id^=Shipment-Save]' + BaseSelectors.LastElement)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveCloseButton + BaseSelectors.LastElement)
 });
 
 Then("the shipment should save successfully", () => {

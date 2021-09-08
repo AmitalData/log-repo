@@ -91,6 +91,7 @@ import { ShipmentDetailsFilterComponent } from './Components/FilterReportCompone
 //VDK Templates
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
+import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 
 export const Components =
     [
@@ -168,7 +169,8 @@ export const Components =
         RacingQuotesComponent,
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
-        UserDefinedReportFilterControl
+        UserDefinedReportFilterControl,
+        LogitudeCRMReportFilterComponent
     ];
 
 export class ModuleDeclarations {
@@ -252,7 +254,7 @@ export class ModuleDeclarations {
             case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
             case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
-
+            case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
         }
 
         return myResult;

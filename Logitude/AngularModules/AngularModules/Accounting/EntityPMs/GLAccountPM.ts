@@ -878,6 +878,11 @@ export class GLAccountPM {
     public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
        
 	 
+    private chartOfAccountSecurityLevel: number;
+    public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
+    public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

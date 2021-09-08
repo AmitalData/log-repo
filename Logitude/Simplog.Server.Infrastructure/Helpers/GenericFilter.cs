@@ -736,7 +736,7 @@ namespace Simplog.Server.Infrastructure.Helpers
                                     }
 
                                 default:
-                                    {
+                                     {
                                         Expression left = Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
 
                                         Expression right = Expression.Constant(item.FieldValue, left.Type);

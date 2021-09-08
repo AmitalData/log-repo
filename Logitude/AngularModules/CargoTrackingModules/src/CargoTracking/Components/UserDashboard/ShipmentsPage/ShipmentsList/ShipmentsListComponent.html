@@ -32,7 +32,7 @@
                 </div>
 
                 <button class="search-button" type="submit"
-                    (onsubmit)="LoadScreenData()">{{isLoading?'Loading...': 'Search'}}</button>
+                    (click)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
             </form>
         </div>
 
@@ -116,7 +116,9 @@
     <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
         <div class="table" style="height: calc(100vh - 274px)">
 
-            <cdk-virtual-scroll-viewport *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 274px)">
+
+            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 10px)">
+
 
 
                 <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
@@ -321,7 +323,7 @@
                             <div>
                                 <div class="subtitle">Status</div>
 
-                                <div class="value truncateText">
+                                <div class="value truncateText" style="height:auto">
 
 
                                     <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">

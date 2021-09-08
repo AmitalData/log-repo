@@ -1,0 +1,20 @@
+﻿<Script DBType="Main" Module="Quote">
+  <Sql Version="1">
+    <![CDATA[
+    
+    declare @QuoteTableId as varchar(15)
+    set @QuoteTableId = (select Id from ObjectTables where Name = 'Quote')
+    
+    declare @ShipmentTableId as varchar(15)
+    set @ShipmentTableId = (select Id from ObjectTables where Name = 'Shipment')
+
+    delete from QueryColumns where ObjectFieldId = (select Id from ObjectFields where FieldName = 'OrderNumberOfPackages' and ObjectTableId = @QuoteTableId)
+    delete from ScreenFields where ObjectFieldId = (select Id from ObjectFields where FieldName = 'OrderNumberOfPackages' and ObjectTableId = @QuoteTableId)
+
+    delete from QueryColumns where ObjectFieldId = (select Id from ObjectFields where FieldName = 'NumberOfPackages' and ObjectTableId = @ShipmentTableId)
+    ]]>
+  </Sql>
+</Script>
+
+
+

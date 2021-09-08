@@ -1,9 +1,9 @@
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {EventTypePM} from '../../../Infrastructure/EntityPMs/EventTypePM';
+import { CargoTenantMilestoneDefinitionPM } from '../../../Common/EntityPMs/CargoTenantMilestoneDefinitionPM';
 
 export class MilestonePermissiosViewModel {
     public CustomerChooseCheckedBoxId: string;
-    public entityPM: EventTypePM;
+    public entityPM: any;
 
     public get MilestoneName() { return this.entityPM.EnglishName }
 
@@ -19,8 +19,9 @@ export class MilestonePermissiosViewModel {
         }
     }
 
-    constructor(currentEvent: EventTypePM) {
-        this.entityPM = currentEvent;
+    constructor(currentPM: any) {
+        this.entityPM = currentPM;
         this.CustomerChooseCheckedBoxId = Guid.newGuid();
+        this.CustomerChooseIsChecked = currentPM.CustomerChooseIsChecked;
     }
 }

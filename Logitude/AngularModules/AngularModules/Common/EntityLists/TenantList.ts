@@ -109,5 +109,5 @@ export class TenantList {
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
 		IsCargoTrackWebAccessActivated: boolean;
-	
-}
+		IsQuotesRequestActivatedInShared: boolean;
+}

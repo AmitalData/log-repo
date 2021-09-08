@@ -72,9 +72,10 @@ namespace Logitude.CargoTracking.BL
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "7", 
-                EnglishName = "Assigned To Customs Agent", 
-                SearchFields = "7,Assigned To Customs Agent", 
-                LocalName = "Assigned To Customs Agent", 
+                EnglishName = "Assigned To Customs Broker", 
+                SearchFields = "7,Assigned To Customs Broker", 
+                LocalName = "Assigned To Customs Broker", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()

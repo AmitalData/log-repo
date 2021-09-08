@@ -802,6 +802,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool createdInTwoMonthsLogic ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CreatedInTwoMonthsLogic  
+	   {
+	    
+	     get
+		{
+		   return createdInTwoMonthsLogic;
+		 }
+		 set
+		 {
+		   if(createdInTwoMonthsLogic != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedInTwoMonthsLogic",OldValue=createdInTwoMonthsLogic,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   createdInTwoMonthsLogic=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

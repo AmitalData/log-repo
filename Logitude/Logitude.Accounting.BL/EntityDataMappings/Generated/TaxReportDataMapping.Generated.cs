@@ -48,7 +48,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ProcessStartDate, 
 	         ProcessEndDate, 
 	         ProcessProgress, 
-	         NeedsRebulid,
+	         NeedsRebulid, 
+	         CreatedInTwoMonthsLogic,
 	      }
 
 
@@ -88,7 +89,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportLineLastLine, 
 	         NeedsRebulid, 
 	         IsNew, 
-	         UpdatedByUserName,
+	         UpdatedByUserName, 
+	         CreatedInTwoMonthsLogic,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -225,6 +227,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsRebulid))
             {
 				entityPOCO.NeedsRebulid = entityPM.NeedsRebulid;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedInTwoMonthsLogic))
+            {
+				entityPOCO.CreatedInTwoMonthsLogic = entityPM.CreatedInTwoMonthsLogic;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -368,6 +375,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.NeedsRebulid = entityPOCO.NeedsRebulid;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedInTwoMonthsLogic))
+            {
+					entityPM.CreatedInTwoMonthsLogic = entityPOCO.CreatedInTwoMonthsLogic;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportPM entityPM, TaxReportPM oldEntityPM)
@@ -502,6 +514,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsRebulid))
             {
                 oldEntityPM.NeedsRebulid = entityPM.NeedsRebulid;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedInTwoMonthsLogic))
+            {
+                oldEntityPM.CreatedInTwoMonthsLogic = entityPM.CreatedInTwoMonthsLogic;
             }
 			
 		}

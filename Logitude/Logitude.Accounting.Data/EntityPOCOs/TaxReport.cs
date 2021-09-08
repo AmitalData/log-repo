@@ -82,6 +82,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? ProcessProgress { get; set; }
         [Column("NeedsRebulid")]
 	    public bool NeedsRebulid { get; set; }
+        [Column("CreatedInTwoMonthsLogic")]
+	    public bool CreatedInTwoMonthsLogic { get; set; }
     }
 }
 	 

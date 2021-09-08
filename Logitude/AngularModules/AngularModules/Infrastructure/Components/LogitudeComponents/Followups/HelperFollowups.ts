@@ -390,7 +390,7 @@ export class HelperFollowup {
         this.Done = entityPM.Done;
         this.Date = entityPM.Date;
         this.Name = entityPM.EventTypeFollowUpName;
-        this.Notes = entityPM.Note;
+        this.Notes = entityPM.Notes;
         this.TextColor = this.Done ? '#8F9293' : '#292E30';
 
         if (this.Date) {
@@ -560,7 +560,7 @@ export class AddDataContext extends BaseComponent {
                 myQuoteFollowUpPM.ManualActivatedFollowUp = this.ManualActivatedFollowUp;
                 myQuoteFollowUpPM.Date = this.Date;
                 myQuoteFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myQuoteFollowUpPM.Note = this.Notes;
+                myQuoteFollowUpPM.Notes = this.Notes;
                 myQuoteFollowUpPM.Done = this.EntityPM.Done;
                 myQuoteFollowUpPM.IsNew = this.EntityPM.IsNew;
                 this.father.QuotePM.AddQuoteFollowUpPM(myQuoteFollowUpPM);
@@ -575,7 +575,7 @@ export class AddDataContext extends BaseComponent {
                 myShipmentFollowUpPM.ManualActivatedFollowUp = this.ManualActivatedFollowUp;
                 myShipmentFollowUpPM.Date = this.Date;
                 myShipmentFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myShipmentFollowUpPM.Note = this.Notes;
+                myShipmentFollowUpPM.Notes = this.Notes;
                 myShipmentFollowUpPM.Done = this.EntityPM.Done;
                 myShipmentFollowUpPM.IsNew = this.EntityPM.IsNew;
                 this.father.ShipmentPM.AddShipmentFollowUp(myShipmentFollowUpPM);
@@ -614,10 +614,10 @@ export class EditDataContext extends BaseComponent {
         }
     }
 
-    get Notes() { return this.EntityPM.Note; }
+    get Notes() { return this.EntityPM.Notes; }
     set Notes(value: string) {
-        if (this.EntityPM.Note != value) {
-            this.EntityPM.Note = value;
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
 

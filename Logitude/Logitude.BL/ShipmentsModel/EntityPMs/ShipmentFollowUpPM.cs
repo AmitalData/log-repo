@@ -43,7 +43,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsNew { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Note { get; set; }
+        public string Notes { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DoneNote { get; set; }

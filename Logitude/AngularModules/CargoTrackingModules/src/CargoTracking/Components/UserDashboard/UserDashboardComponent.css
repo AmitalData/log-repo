@@ -18,6 +18,19 @@ h1{
     color: white;
   }
 
+.DisbleBox {
+    display: inline-block;
+    border: 1px solid var(--MainColor);
+    border-radius: 13px;
+    background: var(--MainColor);
+    padding: 2px 10px;
+    margin: 60px 0px;
+    color: white;
+    font-family: 'Open Sans', Arial;
+    width:100px;
+    text-align:center;
+}
+
   .sidebar a {
     display: block;
     padding: 17px;

@@ -187,6 +187,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
@@ -396,6 +397,7 @@
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTableMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CreditLimitSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CargoTenantMilestoneDefinitionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerDepositionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerFieldsUpdateSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerOpenFilesAmountMap.cs" />
@@ -510,6 +512,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CargoTenantMilestoneDefinitionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />

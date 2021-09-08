@@ -699,7 +699,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string HandlerUserId { get; set; }
 
         public string ForwarderPickUpDeliveryType { get; set; }
-        public string StandalonePickupDeliveryId { get; set; } 
+        public string StandalonePickupDeliveryId { get; set; }
+
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; }
+
+        public virtual EntityStatus OperationalStatus { get; set; }
+
+        public virtual EntityStatus BillingStatus { get; set; }
 
     }
 }

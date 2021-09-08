@@ -203,10 +203,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             }
 
             //CustomsProcess
-            //AssignedToCustomsAgent
+            //AssignedToCustomsBroker
             else if (!IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDone") && !tableRow["AssignedCustomsAgentDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsAgent);
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsBroker);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))

@@ -26,7 +26,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.DocumentsFilingId = itemPM.ExternalDocumentId;
             itemPoco.InternalDocumentId = itemPM.InternalDocumentId;
             itemPoco.LegType = itemPM.LegType;
-            itemPoco.Notes = itemPM.Note;
+            itemPoco.Notes = itemPM.Notes;
             itemPoco.EventTypeId = itemPM.EventTypeId;
             itemPoco.OwnerUserId = itemPM.OwnerUserId;
             itemPoco.DocumentTypeId = itemPM.DocumentTypeId;

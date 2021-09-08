@@ -6,7 +6,7 @@ export class CargoTrackingMilestones
     public static Departure = "4";
     public static Arrival = "5";
     public static ToWarehouse = "6";
-    public static AssignedToCustomsAgent = "7";
+    public static AssignedToCustomsBroker = "7";
     public static CustomsProcess = "8";
     public static GoodsClassification = "9";
     public static DocumentInspection = "10";

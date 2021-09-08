@@ -1,9 +1,11 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -11,6 +13,7 @@ using Logitude.BL.Resolvers;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -48,8 +51,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
             UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
-        
-          
+
+            entityPM.LastUpdateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -68,7 +71,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
             }
-            entityPM.LastUpdateDateTime = DateTime.Now;
+            
             base.OnUpdating(entityPM, entityPOCO);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
@@ -154,7 +157,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private  void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
         {
        
-            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);           
+            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
+            FullAccountingSetting setting = GetTenantFullAccountingSetting(entityPM.Tenant);
             string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
             entityPM.StatusCode = "6";
             entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
@@ -163,11 +167,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CheckIfInvoiceNumberIsNotValid(entityPM);
             if (entityPM.OutputOrInput == "O")
             {
-               
-                if(entityPM.ReferenceDate.Value.Month != entityPM.TaxReportDate.Value.Month)
+                DateTime referenceDate = new DateTime(entityPM.ReferenceDate.Value.Year, entityPM.ReferenceDate.Value.Month, 1);
+                DateTime taxReportDate = new DateTime(entityPM.TaxReportDate.Value.Year, entityPM.TaxReportDate.Value.Month, 1);
+                DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
+
+                if ((setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date && referenceDate.Date != taxReportDatePreviousMonth.Date)
+                            || (!setting.VATreportEveryTwoMonths && referenceDate.Date != taxReportDate.Date))
                 {
-                    entityPM.StatusCode = "7";
+                    entityPM.StatusCode = TaxReportLineStatusValues.Invoicenotpreviouslyreported;
                 }
+
                 if (entityPM.VatNumber == vatNumber)
                 {
                     entityPM.LineTypeCode = "M";
@@ -470,6 +479,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 taxreportLine.Reference= taxreportLine.Reference.Substring(taxreportLine.Reference.Length - 9);
             }
+        }
+
+        private static FullAccountingSetting GetTenantFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            return fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
         }
     }
 

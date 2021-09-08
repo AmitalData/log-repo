@@ -446,15 +446,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentType { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string FollowUpType { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string FollowUpId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? FollowUpDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentPMId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -462,8 +453,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool NewMessage { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string FollowUpNotes { get; set; }
         public bool IsAnyConversation { get; set; }
         public int NumberOfShipments { get; set; }
 
@@ -2146,6 +2135,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssginedToCustomsAgentDate { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? PaymentRequestDateTime { get; set; }
 
         #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2740,6 +2731,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string InlandDomesticToTypeCode { get; set; }
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
+
+ 
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; } 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AccountingClosedByUserId { get; set; } 
     }
 
     public class TransshipmentLeg

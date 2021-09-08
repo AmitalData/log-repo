@@ -312,7 +312,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? BalanceInForeignCurrency  { get; set; }
        [DataMember]
        public decimal? ForeignBalanceInDue  { get; set; }
-   }
+
+        [DataMember]
+        public bool IsSecurityLevelsEnabled { get; set; }
+        [DataMember]
+        public int? ChartOfAccountSecurityLevel { get; set; }
+        [DataMember]
+        public bool Access { get; set; }
+    }
 
 }
 	 

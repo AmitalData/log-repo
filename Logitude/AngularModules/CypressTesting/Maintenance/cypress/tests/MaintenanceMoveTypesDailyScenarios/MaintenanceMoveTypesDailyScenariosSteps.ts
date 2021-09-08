@@ -6,6 +6,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
+import * as GeneralActions from "../../actions/BaseActions";
 
 //#region variable
 let moveTypeDetails: MoveTypeDetails
@@ -26,31 +27,32 @@ Then("a validation message with {string} error should appear", (ValidationMessag
     MaintenanceActions.ValidateErrorPopUpMessage(ValidationMessage)
 });
 //#endregion
+
 //#region  Create a new move type
 Given("a move type with the following details", (dataTable) => {
     moveTypeDetails = Assists.CreateInstance<MoveTypeDetails>(dataTable, true);
-    MaintenanceActions.FillMoveTypeDetails(moveTypeDetails) 
+    MaintenanceActions.FillMoveTypeDetails(moveTypeDetails)
 });
- 
+
 When("create move type", () => {
     MaintenanceActions.CreateMoveTypeMockCreate();
 });
- 
+
 Then("the move type should create successfully", () => {
     MaintenanceActions.AssertCreateMoveTypeMockCreate();
 });
- 
 //#endregion
+
 //#region Search for the move type by code
 When("search for {string} move type", (moveType) => {
-    MaintenanceActions.SearchMoveTypeByCode(moveType)
+    GeneralActions.Search(moveType)
 });
 
 Then("the {string} move type should appear successfully", (moveType) => {
-    MaintenanceActions.AssertSearchMoveTypeByCode(moveType)
+    GeneralActions.AssertSearch(moveType);
 });
-
 //#endregion
+
 //#region Open the move type
 When("open move type", () => {
     MaintenanceActions.OpenMoveType()
@@ -60,15 +62,16 @@ Then("the move type should open successfully", () => {
     MaintenanceActions.AssertOpenMoveType()
 });
 //#endregion
+
 //#region  Edit the move type
 Given("fill move type local name", () => {
     MaintenanceActions.FillMoveTypeLocalName()
 });
- 
+
 When("update move type", () => {
     MaintenanceActions.UpdateMoveType()
 });
- 
+
 Then("the move type should update successfully", () => {
     MaintenanceActions.AssertUpdateMoveType()
 });

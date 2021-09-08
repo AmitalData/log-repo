@@ -38,7 +38,7 @@ export class CargoTrackingSearchService {
 		});
 	}
     GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
-        var authHeaders = ServiceHelper.GetHeaders();
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
 
         var urlparameters = '';
 		var mykeys = Object.keys(shipmentFilters);
@@ -58,7 +58,7 @@ export class CargoTrackingSearchService {
             return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters
             + '&pageIndex=' + pageIndex
             + '&pageSize=' + pageSize,
-             {headers: authHeaders})
+            authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
@@ -71,9 +71,10 @@ export class CargoTrackingSearchService {
 		});
     }
     GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
 		return defer(() => {
             return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + this.ParseFiltersIntoURL(shipmentFilters),
-             {headers: ServiceHelper.GetHeaders()})
+            authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						return response;
@@ -142,12 +143,12 @@ export class CargoTrackingSearchService {
     }
 
     getUserShipment(SecurityKey: string, tenant: number) {
-        var authHeaders = ServiceHelper.GetHeaders();
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
 
 
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetUserShipment/?' + 'SecurityKey=' + SecurityKey + '&tenant=' + tenant,
-                { headers: authHeaders })
+            authHeaders)
                 .pipe(
                     map((response: HttpResponse<any>) => {
 
