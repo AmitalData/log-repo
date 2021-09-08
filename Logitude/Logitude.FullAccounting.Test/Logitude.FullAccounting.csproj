@@ -7,8 +7,8 @@
     <ProjectGuid>{5F5B0456-70AC-4D6C-A7A5-FF7A74956501}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logitude.FullAccounting</RootNamespace>
-    <AssemblyName>Logitude.FullAccounting</AssemblyName>
+    <RootNamespace>Logitude.FullAccounting.Test</RootNamespace>
+    <AssemblyName>Logitude.FullAccounting.Test</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\Journal\CreateApprovedJournal.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +125,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\" />
     <Folder Include="Models\Builders\" />
     <Folder Include="Steps\" />
   </ItemGroup>

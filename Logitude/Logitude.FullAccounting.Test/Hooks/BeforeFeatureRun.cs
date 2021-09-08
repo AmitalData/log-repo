@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace Logitude.FullAccounting.Hooks
+namespace Logitude.Logitude.FullAccounting.Test.Hooks
 {
     [Binding]
     public class BeforeFeatureRun
