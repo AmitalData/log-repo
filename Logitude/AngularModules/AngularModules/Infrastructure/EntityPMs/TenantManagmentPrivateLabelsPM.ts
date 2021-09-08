@@ -135,6 +135,16 @@ export class TenantManagmentPrivateLabelsPM {
     public set DocumentTypeHighlightColor(newValue: string) { if (this.documentTypeHighlightColor != newValue) { this.documentTypeHighlightColor = newValue; this.MarkAsDirty("DocumentTypeHighlightColor"); } }
        
 	 
+    private isExportActivated: boolean;
+    public get IsExportActivated() { return this.isExportActivated; }
+    public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
+       
+	 
+    private isImportActivated: boolean;
+    public get IsImportActivated() { return this.isImportActivated; }
+    public set IsImportActivated(newValue: boolean) { if (this.isImportActivated != newValue) { this.isImportActivated = newValue; this.MarkAsDirty("IsImportActivated"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		
