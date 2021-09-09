@@ -10,6 +10,6 @@
         public string PaymentTermCashId { get; set; }
         public string VATTypeZeroId { get; set; }
         public string CreditCardTSId { get; set; }
-
+        public string CurrencyNISId { get; set; }
     }
 }

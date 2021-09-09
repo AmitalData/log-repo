@@ -1,9 +1,17 @@
 ﻿Feature: CreateApprovedJournal
 	We want to create an approved journal
 
-@mytag
 Scenario: Create approved journal
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+	Given I have the following Journal lines:
+		| Line | Action | AccountingDate | documentDate | dueDate    | creditAccountId | debitAccountId | localAmount | currencyId | exchangeRate |
+		| 1    | זכות   | 3              | 01/09/2021   | 24/09/2021 | TEVA TEST\USD   | רחל2\DM        | 5           | NIS        | 1            |
+		| 2    | חובה   | 5              | 01/09/2021   | 24/09/2021 | TEVA TEST\USD   | רחל2\DM        | 5           | NIS        | 1            |
+	And a journal with the following properties
+		| property       | Value    |
+		| AccountingDate | Now      |
+		| currencyId     | NIS      |
+		| statusCode     | Approved |
+		| typeCode       | 0        |
+		| journalLines   | 1,2      |
+	When create approved journal
+	Then the journal should create successfully

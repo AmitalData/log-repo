@@ -230,6 +230,7 @@ namespace Logitude.Test.Base.Hooks
         private static void BillingDataMap(BillingVariables billingVariables)
         {
             BillingData.CurrencyEURId = billingVariables.CurrencyEURId;
+            BillingData.CurrencyNISId = billingVariables.CurrencyNISId;
             BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
             BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
             BillingData.ChargeTypeOFTId = billingVariables.ChargeTypeOFTId;

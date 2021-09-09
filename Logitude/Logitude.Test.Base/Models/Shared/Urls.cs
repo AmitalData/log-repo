@@ -240,5 +240,9 @@ namespace Logitude.Test.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
+        public static string GetJournalActionTypeByFilters(string code)
+        {
+            return $"JournalActionTypeViews/GetByFilters?getAll=true&filter1Name=Code&filter1Value={code}";
+        }
     }
 }

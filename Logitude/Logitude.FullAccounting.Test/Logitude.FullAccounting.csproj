@@ -44,7 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
+    <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\Builders\JournalPMBuilder.cs" />
+    <Compile Include="Models\Builders\JournalLinePMBuilder.cs" />
+    <Compile Include="Models\FullAccountingContext.cs" />
+    <Compile Include="Models\FullAccountingData.cs" />
+    <Compile Include="Models\JournalActionType.cs" />
+    <Compile Include="Models\JournalLinePM.cs" />
+    <Compile Include="Models\JournalPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\JournalService.cs" />
+    <Compile Include="Services\Preparation\ActoinPreparation.cs" />
+    <Compile Include="Steps\Journal\CreateApprovedJournalSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -124,9 +135,12 @@
       <Version>1.3.12</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\Builders\" />
-    <Folder Include="Steps\" />
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+      <Project>{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}</Project>
+      <Name>Logitude.Test.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

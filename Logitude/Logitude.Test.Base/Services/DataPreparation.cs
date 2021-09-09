@@ -120,6 +120,7 @@ namespace Logitude.Test.Base.Services
             return new BillingVariables
             {
                 CurrencyEURId = GetCurrencyId("EUR"),
+                CurrencyNISId = GetCurrencyId("NIS"),
                 MeasurementGRWTId = GetMeasurementId("GRWT"),
                 ChargeTypeAFTId = GetChargeTypeId("AFT"),
                 ChargeTypeOFTId = GetChargeTypeId("OFT"),
