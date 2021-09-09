@@ -23,6 +23,7 @@ namespace Amital.QuoteOPM.Data
 		 IDbSet<QuoteOPClosingReason> QuoteOPClosingReasons { get; }
 		 IDbSet<QuoteOPComputedField> QuoteOPComputedFields { get; }
 		 IDbSet<QuoteOPCustomerType> QuoteOPCustomerTypes { get; }
+		 IDbSet<QuoteOPDocumentVersion> QuoteOPDocumentVersions { get; }
 		 IDbSet<QuoteOPPackage> QuoteOPPackages { get; }
 		 IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps { get; }
 		 IDbSet<QuoteOPRating> QuoteOPRatings { get; }

@@ -697,7 +697,7 @@ export class QuotesComponent extends BaseComponent {
     RunQuoteWizard() {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
-        logWindow.RTL = false;
+        //logWindow.RTL = false;
         logWindow.Width = 1200;
         logWindow.Height = 800;
         logWindow.WindowArgs = args;

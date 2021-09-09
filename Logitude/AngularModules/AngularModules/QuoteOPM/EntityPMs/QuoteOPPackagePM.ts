@@ -89,7 +89,7 @@ export class QuoteOPPackagePM {
 	 
     private quote: string;
     public get Quote() { return this.quote; }
-    public set Quote(newValue: string) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("QuoteOP"); } }
+    public set Quote(newValue: string) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("Quote"); } }
        
 	 
     private dimensions: string;
@@ -137,4 +137,4 @@ export class QuoteOPPackagePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

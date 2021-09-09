@@ -68,6 +68,7 @@
     <Compile Include="EntityDataMappings\Generated\QuoteOPCostChargeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPCustomerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteOPDocumentVersionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPPackageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPPriceStepsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPRatingDataMapping.Generated.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="EntityDataMappings\QuoteOPCostChargeDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPCustomerTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteOPDocumentVersionDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPPackageDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPPriceStepsDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPRatingDataMapping.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="EntityQueryServices\Generated\QuoteOPClosingReasonQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPComputedFieldQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPCustomerTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteOPDocumentVersionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPPackageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPPriceStepsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPQueryService.Generated.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPClosingReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPComputedFieldUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPCustomerTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuoteOPDocumentVersionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPPackageUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPPriceStepsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPRatingUpdateService.Generated.cs" />
@@ -157,8 +161,10 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\OPSpecialServicesTypeRepository.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPDocumentVersionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPriceStepsUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPTotalVATUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuoteOPBusinessUnitFilter.cs" />
