@@ -1024,6 +1024,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var quoteOPMUpdate = new QuoteOPMUpdate();
             quoteOPMUpdate.LoadObjectsTenantZero(context);
+            context.SaveChanges();
 
             performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
         }
