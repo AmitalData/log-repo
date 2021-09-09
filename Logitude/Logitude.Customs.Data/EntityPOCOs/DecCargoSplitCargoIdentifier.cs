@@ -35,6 +35,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CargoIdentifierKey2 { get; set; }
         [Column("CargoIdentifierKey3")]
 	    public string CargoIdentifierKey3 { get; set; }
+        [ForeignKey("CargoType")]
+        [Column("CargoTypeCode")]
+	    public string CargoTypeCode { get; set; }
+	      
+        public virtual CargoIdentifireType CargoType { get; set; }
     }
 }
 	 

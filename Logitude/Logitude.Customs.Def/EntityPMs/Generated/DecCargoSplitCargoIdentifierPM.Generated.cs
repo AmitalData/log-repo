@@ -160,6 +160,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cargoTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTypeCode  
+	   {
+	    
+	     get
+		{
+		   return cargoTypeCode;
+		 }
+		 set
+		 {
+		   if(cargoTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeCode",OldValue=cargoTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
