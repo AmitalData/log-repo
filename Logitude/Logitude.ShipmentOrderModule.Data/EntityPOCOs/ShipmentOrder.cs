@@ -170,6 +170,17 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string ShipmentId { get; set; }
 	      
         public virtual Shipment Shipment { get; set; }
+        [Column("Quantity")]
+	    public int? Quantity { get; set; }
+        [Column("GrossWeight")]
+	    public double? GrossWeight { get; set; }
+        [Column("Volume")]
+	    public double? Volume { get; set; }
+        [ForeignKey("Customer")]
+        [Column("CustomerId")]
+	    public string CustomerId { get; set; }
+	      
+        public virtual Card Customer { get; set; }
     }
 }
 	 
