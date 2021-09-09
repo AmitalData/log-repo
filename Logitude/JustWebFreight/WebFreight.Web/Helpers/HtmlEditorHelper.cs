@@ -4446,7 +4446,7 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
-                if (fieldName == "ticketheader" || fieldName == "ticketfooter" || fieldName == "iosapplink" || fieldName == "androidapplink" || fieldName == "resetpasswordurl" || fieldName == "systemurl" || fieldName == "InviteeName" || fieldName == "CargoTrackingURL")
+                if (fieldName == "ticketheader" || fieldName == "ticketfooter" || fieldName == "iosapplink" || fieldName == "androidapplink" || fieldName == "resetpasswordurl" || fieldName == "systemurl" || fieldName == "inviteename" || fieldName == "cargotrackingurl")
                 {
                     result = true;
                 }
