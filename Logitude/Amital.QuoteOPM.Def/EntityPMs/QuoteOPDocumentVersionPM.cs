@@ -36,10 +36,11 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 
 
 
-#endif
+
         public double? FileSize { get; set; }
         public string FileName { get; set; }
         public string Extension { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+#endif
     }
 }
