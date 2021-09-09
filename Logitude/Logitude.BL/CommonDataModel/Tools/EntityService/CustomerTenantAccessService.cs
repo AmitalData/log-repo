@@ -250,7 +250,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     //IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
                 }
 
@@ -297,7 +297,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             bool BuildBatch = itemPM.BuildBatch;
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);
-            CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant); 
+            CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant);
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+
+
             customerTenantAccessCardRepository.Update(itemPoco);
             customerTenantAccessCardRepository.SubmitChanges();
            

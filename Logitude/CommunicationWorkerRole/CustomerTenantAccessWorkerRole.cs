@@ -1,7 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
@@ -36,7 +38,8 @@ namespace CommunicationWorkerRole
         IQueueService queue;
         string URI = "";//"http://localhost:9996/api/CustomerTenantAccessRequestApprovalController";//// controller
 
-        public CustomerTenantAccessWorkerRole()
+        public CustomerTenantAccessWorkerRole
+            ()
         {
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository SettingRepository = new SettingRepository(objectContext);
@@ -106,6 +109,8 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         int tenant = 0;
                         int CustomerTenant = 0;
+                        bool IsImportActivated = false ;
+                        bool IsExportActivated = false;
 
 
                         if (response != null && response.MessageId != null)
@@ -113,6 +118,8 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["CustomerTenant"], out CustomerTenant);
+                            bool.TryParse(response.MessageValues["IsImportActivated"], out IsImportActivated);
+                            bool.TryParse(response.MessageValues["IsExportActivated"], out IsExportActivated);
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -169,10 +176,36 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("Token", Token);
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+
+                                    TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
+                                    HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
+
+                                    HybridPartnerPM hybridPartnerPM = HybridPartnerQuery.GetSinglePMByPartnerTenant(tenant);
+
+                                    if(hybridPartnerPM != null)
+                                    {
+                                        TenantManagmentPrivateLabelsPM privateLabel = tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
+                                        if(privateLabel != null)
+                                        {
+                                            privateLabel.IsExportActivated = IsExportActivated;
+                                            privateLabel.IsImportActivated = IsImportActivated;
+                                             
+                                            IGlobalContext Context = GlobalContext.GetContext();
+                                            TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(Context);
+                                            service.Update(privateLabel); 
+                                             
+                                        }
+                                    }
+                                 
+
+
+
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
                                         CustomerTenant = CustomerTenant,
-                                        PartnerTenant = tenant
+                                        PartnerTenant = tenant,
+                                        IsExportActivated = IsExportActivated,
+                                        IsImportActivated = IsImportActivated
                                     };
                                     var serializedObject = JsonConvert.SerializeObject(customerTenantAccessRequest);
                                     LogPM.Subject = "Start To Send Response To Importer By CustomerTenantAccessRequestApproval Controller";
