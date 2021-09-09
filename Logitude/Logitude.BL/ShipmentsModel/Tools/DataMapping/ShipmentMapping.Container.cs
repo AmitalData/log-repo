@@ -142,6 +142,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.CarrierReleaseState = containerPM.CarrierReleaseState;
             container.CarrierReleaseDate = containerPM.CarrierReleaseDate;
             container.AvailablityDate = containerPM.AvailablityDate;
+            container.AvailabilityLocation = containerPM.AvailabilityLocation;
+            container.FreeDays = containerPM.FreeDays;
+            container.LastFreeDayDate = containerPM.LastFreeDayDate;
+            container.ShipmentStatusId = containerPM.ShipmentStatusId;
             BuildSearchField(containerPM, container);
         }
 
