@@ -24,7 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 string[] test = systemURL.Split('/');
                 url = systemURL.Replace("/" + test[test.Length - 1], "");
             }
-    
+            string cargoTrackingPath = url + "/cargo-tracking/login";
             return new SharedLogisticsPM()
             {
                 SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url  + "</a>",
@@ -34,6 +34,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 AndroidAppLink = "<a style=" + styleLink + " href='" + LogitudeSettings.AndroidAppLink + "'" + "><img  width='120' height='40' src='cid:GooglePlay' /></a>",
                 ResetPasswordURL = "<a style=" + styleLink + " href='" + url + "[ResetPasswordURL]" + "'" + ">Reset my Password</a>", 
                 InviteeName = "[InviteeName]",
+                CargoTrackingURL = "<a style=" + styleLink + " href='" + cargoTrackingPath + "'" + ">" + cargoTrackingPath + "</a>",
             };
         }
 
