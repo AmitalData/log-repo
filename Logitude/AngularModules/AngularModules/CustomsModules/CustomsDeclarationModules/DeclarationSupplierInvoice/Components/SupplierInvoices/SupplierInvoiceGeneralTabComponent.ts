@@ -3563,6 +3563,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         if (GITITEMCacheService.Instance.IsCountryPURForItems) {
                             itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
+                            //itemCodeDetails.TariffID = this.TradeAgreementCode;
                         }
                         itemCodeDetails.IsNew = true;
                     }
@@ -3593,10 +3594,12 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     private AdditemCodeDetail() {
         var originCountryCode: string = null;
         var originCountryName: string = null;
+        var tariffID: string = null;
         var invoiceQuantityType: string = null;
         if ( /*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
             originCountryCode = this.OriginCountryCode;
             originCountryName = this.OriginCountryName;
+            //tariffID = this.TradeAgreementCode;
         }
         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
             invoiceQuantityType = this.InvoiceQuantityType;
@@ -3673,6 +3676,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
                                             this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
                                             this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                                            this.TradeAgreementCode = itemCodeDetails.TariffID;
                                         }
                                         this.GetQuantityType();
                                     }
@@ -4423,6 +4427,7 @@ export class ItemCodeComponent extends BaseComponent {
     private _ItemDescription: string;
     private _OriginCountryCode: string;
     private _OriginCountryName: string;
+    private _TariffID: string;
     private _InvoiceQuantityType: string;
     private _IsNew: boolean;
 
@@ -4462,6 +4467,9 @@ export class ItemCodeComponent extends BaseComponent {
 
     public get CustomerCode() { return this._CustomerCode; }
     public set CustomerCode(newValue: string) { this._CustomerCode = newValue; }
+
+    public get TariffID() { return this.TariffID; }
+    public set TariffID(newValue: string) { this._TariffID = newValue; }
 
     public get IsNew() { return this._IsNew; }
     public set IsNew(newValue: boolean) { this._IsNew = newValue; }
