@@ -195,7 +195,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 
             }
 
-
+            this.UpdateTotalVats_Upsert_TODO_CHANGE2UpdateService();
 
             base.UpdateComposition(entityPM);
         }
@@ -245,7 +245,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                 //Composition this.UpdateQuotePackageCollection();
 #warning  todo !! this.UpdateQuoteDocumentVersionCollection();
 
-                this.UpdateTotalVats_TODO_CHANGE2UpdateService(); 
+                
 
                 //QuoteTracing.Trace(entityPM, entityPoco, initializer.LoggedContactId, isNewEntity);
 
@@ -259,7 +259,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                         SentQuoteStatusMessageToUnifreight(objecttable.Id,entityPoco);
                     }
 
-#warning            ???? SendQuoteToIntegratedSystem(objecttable.Id);
+///warning            ???? SendQuoteToIntegratedSystem(objecttable.Id);
                 }
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuoteOPPM(), AutomationType = "OnUpdate", ObjectTableName = "QuoteOP", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationQuoteOPMappingPMFields() });
 
@@ -269,10 +269,10 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                 //entityRepository.SubmitChanges();
                 //quoteComputedFieldRepository.Update(quoteComputedFieldEntityPOCO);
                 //quoteComputedFieldRepository.SubmitChanges();
-#warning            ????                 followUpRepository.SubmitChanges();
+//warning            ????                 followUpRepository.SubmitChanges();
 
                 //map poco 2 pm this.GetForeignFields(entityPM, entityPoco);
-#warning LastModified is IsRowVersion() is sqlserver todo change in oracle !!
+//warning LastModified is IsRowVersion() is sqlserver todo change in oracle !!
                 int lastMod = 0;
                 int.TryParse(entityPM.LastModified, out lastMod);
                 lastMod++;
@@ -468,7 +468,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             }
         }
 
-        private void UpdateTotalVats_TODO_CHANGE2UpdateService()
+        private void UpdateTotalVats_Upsert_TODO_CHANGE2UpdateService()
         {
 #warning UpdateTotalVats_TODO_CHANGE2UpdateService!!!!!
             int tenant = entityPM.Tenant;
@@ -609,7 +609,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 
                             var record = new QuoteOPTotalVAT()
                             {
-                                Id = IdCounter.GetNumber("QuoteTotalVAT", entityPM.Tenant).ToString(),
+                                Id = IdCounter.GetNumber("QuoteOPTotalVAT", entityPM.Tenant).ToString(),
                                 Tenant = entityPM.Tenant,
                                 QuoteOPId = entityPM.Id,
                                 VatOPTypeId = item.Id,

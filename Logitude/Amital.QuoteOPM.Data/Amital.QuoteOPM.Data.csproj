@@ -83,6 +83,7 @@
     <Compile Include="EntityKeys\QuoteOPClosingReasonKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPComputedFieldKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPCustomerTypeKeys.cs" />
+    <Compile Include="EntityKeys\QuoteOPDocumentVersionKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPPackageKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPPriceStepsKeys.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="EntityListQueryServices\Generated\QuoteOPClosingReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPComputedFieldListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPCustomerTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\QuoteOPDocumentVersionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPPackageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPPriceStepsListQueryService.Generated.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="EntityListQueryServices\QuoteOPComputedFieldListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPCostChargeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPCustomerTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\QuoteOPDocumentVersionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPPackageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPPriceStepsListQueryService.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="EntityLists\Generated\QuoteOPComputedFieldList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPCostChargeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPCustomerTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\QuoteOPDocumentVersionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPPackageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPPriceStepsList.Generated.cs" />
@@ -177,6 +181,7 @@
     <Compile Include="EntityMapping\QuoteOPComputedFieldMap.cs" />
     <Compile Include="EntityMapping\QuoteOPCostChargeMap.cs" />
     <Compile Include="EntityMapping\QuoteOPCustomerTypeMap.cs" />
+    <Compile Include="EntityMapping\QuoteOPDocumentVersionMap.cs" />
     <Compile Include="EntityMapping\QuoteOPMap.cs" />
     <Compile Include="EntityMapping\QuoteOPPackageMap.cs" />
     <Compile Include="EntityMapping\QuoteOPPriceStepsMap.cs" />
@@ -204,6 +209,7 @@
     <Compile Include="EntityPOCOs\QuoteOPComputedField.cs" />
     <Compile Include="EntityPOCOs\QuoteOPCostCharge.cs" />
     <Compile Include="EntityPOCOs\QuoteOPCustomerType.cs" />
+    <Compile Include="EntityPOCOs\QuoteOPDocumentVersion.cs" />
     <Compile Include="EntityPOCOs\QuoteOPPackage.cs" />
     <Compile Include="EntityPOCOs\QuoteOPPriceSteps.cs" />
     <Compile Include="EntityPOCOs\QuoteOPRating.cs" />
@@ -232,6 +238,7 @@
     <Compile Include="Repsitories\Generated\QuoteOPClosingReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPComputedFieldRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPCustomerTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\QuoteOPDocumentVersionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPPackageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPPriceStepsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPRatingRepository.Generated.cs" />
@@ -253,6 +260,7 @@
     <Compile Include="Repsitories\QuoteOPClosingReasonRepository.cs" />
     <Compile Include="Repsitories\QuoteOPComputedFieldRepository.cs" />
     <Compile Include="Repsitories\QuoteOPCustomerTypeRepository.cs" />
+    <Compile Include="Repsitories\QuoteOPDocumentVersionRepository.cs" />
     <Compile Include="Repsitories\QuoteOPPackageRepository.cs" />
     <Compile Include="Repsitories\QuoteOPPriceStepsRepository.cs" />
     <Compile Include="Repsitories\QuoteOPRatingRepository.cs" />
