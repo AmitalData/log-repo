@@ -2372,13 +2372,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         //do not close Win !!
                     }
                     else {
-                        //if OK then  close Win !!
-                       // if (SessionLocator.SelectedSession.CurrentWindow != null)
-                        //    SessionLocator.SelectedSession.CloseCurrentWindow();
+                         //SessionLocator.SelectedSession.CloseCurrentWindow();
                     }
                 }
             };
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
             var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
             if (ResponseData && ResponseData.ContinueProcessInBackground) {
                 SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
@@ -2390,6 +2388,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             let myPaymentResponseData: CustomFileCreditResponseData = res;
             this.RefreshDeclaration();
             SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         })
             .catch(err => {
                 err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
@@ -2409,10 +2408,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     .subscribe(res1 => {
                     });
         }
-
-        debugger;
-        SessionLocator.SelectedSession.CloseCurrentWindow();
-
     }
 
     InstructionActualSendToTransfer() {
