@@ -93,6 +93,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadJournals_ISL_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadInterestTransactions_Click":
+                    {
+                        return ButtonLoadInterestTransactions_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "ButtonLoadChargeTypes_Click":
                     {
                         return ButtonLoadChargeTypes_Click(tenant, _TextBoxParam);
@@ -966,6 +971,46 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+
+
+        private GateWayTesterResult ButtonLoadInterestTransactions_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileInterestTransactions = textBoxParam;
+
+
+                var myInterestTransactionsCSVFlatFileAnalyser = new InterestTransactionsCSVFlatFileAnalyser();
+                myInterestTransactionsCSVFlatFileAnalyser.Analyse(null, fileInterestTransactions);
+
+                gateWayTesterResult.JsonOut = "Interest Transactions Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
 
 
         private GateWayTesterResult ButtonLoadChargeTypes_Click(int tenant, string textBoxParam)
