@@ -23,6 +23,7 @@ import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -55,6 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     public hasAirShipmentToggle: boolean = false;
 
+    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1";
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -924,7 +926,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-        if (this.hasAirShipmentToggle) {
+        if (!this.isLogbox) {
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
             newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);
