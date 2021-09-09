@@ -75,11 +75,17 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class ChargesGroupUpdateClass
    {  		
-		public const string HashString = "6d8d6eff864f14fc8b65d2fa432786f1";
+		public const string HashString = "cf1ec0e4fb6de230c7888712bdd16b5b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +95,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "ChargesGroup",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ChargesGroups",
-			      				    OldDBTableName =  "ChargesGroups",
 			      				    ObjectTableSingular =  "Charge Group",
 			      				    ObjectTablePlural =  "ChargesGroups",
 			      				    HasCustomFilter =  false,
@@ -149,7 +154,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ChargesGroup",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -214,7 +218,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "ChargesGroup",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -278,7 +281,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "ChargesGroup",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -341,7 +343,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "ChargesGroup",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -404,7 +405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ViewOrder",
-					  						OldFieldName =  "ViewOrder",
 					  						ObjectTableName =  "ChargesGroup",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -444,6 +444,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "View Order",
 					  						HelpTextCode =  "ViewOrder",
 					  						HelpTextDefaultText =  "To determine the order in which charge groups will appear in the Quotation templates, enter a numeric value that represents this charge group’s relative position (e.g. 10, 20, 30, 40, etc.)",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteGroupSectionID",
+					  						ObjectTableName =  "ChargesGroup",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "QuoteGroupSection",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "QuoteGroupSectionID",
+					  						ListPropertyPath =  "QuoteGroupSectionID",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargesGroup",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "QuoteGroupSectionID",
+					  						DefaultText =  "Quote Group Section",
+					  						ListFieldLable =  "QuoteGroupSectionIDListLable",
+					  						ListLableDefaultText =  "Quote Group Section",
+					  						HelpTextCode =  "QuoteGroupSectionID",
+					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

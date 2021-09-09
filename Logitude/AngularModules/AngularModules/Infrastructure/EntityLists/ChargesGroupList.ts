@@ -7,12 +7,13 @@
 //------------------------------------------------------------------------------
 
 export class ChargesGroupList {
-   		Id: string;
-		Code: string;
-		Name: string;
-		SearchFields: string;
-		Tenant: number;
-		LocalName: string;
-		ViewOrder: number;
-	
+    Id: string;
+    Code: string;
+    Name: string;
+    SearchFields: string;
+    Tenant: number;
+    LocalName: string;
+    ViewOrder: number;
+    QuoteGroupSectionID: string;
+
 }

@@ -75,6 +75,12 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class TraceEventUpdateClass
