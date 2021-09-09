@@ -381,6 +381,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             console.log("[GetUserShipmentsCounter]", counter);
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
+            this.SetShipmentsScrollPosition();
         });
     }
 
