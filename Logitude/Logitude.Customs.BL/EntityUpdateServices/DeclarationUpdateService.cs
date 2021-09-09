@@ -521,7 +521,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //entityPM.TransportModeId = houseType.TransportModeId;
 
                 UpdateNotification(entityPM); // moran 2.9.14 - Task 7086
-
                 if (entityPM.ResetDeclarationNumber)//לא לאפשר איפוס הצהרה  במקרה וישנה בקשה לש הגשת תשלום בגליון בקשות (Call# 310088) CALL#310416
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
@@ -723,6 +722,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //mohammad insurance if taxation changed
             
             ReCalculateDueTaxationDateChange(entityPM, entityPOCO);
+            UpdateContainerizationDueHatraDateChange(entityPM, entityPOCO);
             if (this.SuppressNewConcurrencyGUID)
             {
                 LogMessagingUtil.Instance.AppendLine("SuppressNewConcurrencyGUID");
@@ -2953,6 +2953,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.MarkAsChanged = true;
         }
 
+        public void UpdateContainerizationDueHatraDateChange(DeclarationPM entityPM, Declaration entityPOCO)
+        {
+            if (entityPM.Direction == "E" && !string.IsNullOrEmpty(entityPM.ExportContainerizationID))
+            {
+                if (entityPM.HatraDate.HasValue && entityPM.HatraDate != entityPOCO.HatraDate)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+                    var list = declarationQueryService.GetDeclarationsByExportContainerizationId(entityPM.ExportContainerizationID);
+                    if (list.All(x => x.HatraDate.HasValue))
+                    {
+                        ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
+                        var containerization = containerizationQueryService.GetSingle(entityPM.ExportContainerizationID, false, true);
+                        containerization.HataraStatus = "1";
+                        containerization.ChangeSetOp = ChangeSetOperation.Update;
+                        ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        containerizationUpdateService.Update(containerization, true);
+                    }
+                }
+            }
+        }
         public void ReCalculateDueTaxationDateChange(DeclarationPM entityPM,Declaration entityPOCO)
         {
             if(entityPOCO.TaxationDateTime!= entityPM.TaxationDateTime)
