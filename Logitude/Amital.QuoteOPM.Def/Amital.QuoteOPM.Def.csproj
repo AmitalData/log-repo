@@ -60,6 +60,7 @@
     <Compile Include="EntityPMs\Generated\QuoteOPComputedFieldPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPCostChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPCustomerTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuoteOPDocumentVersionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPackagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPriceStepsPM.Generated.cs" />

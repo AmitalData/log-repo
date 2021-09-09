@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Amital.QuoteOPM.Def.EntityPMs
 {
-    public class QuoteOPDocumentVersionPM
+    public  partial class QuoteOPDocumentVersionPM
     {
-
+#if false
         [Key]
         public string QuoteId { get; set; }
 
@@ -33,6 +33,10 @@ namespace Amital.QuoteOPM.Def.EntityPMs
         public string UpdateByUserName { get; set; }
         public string VersionTypeName { get; set; }
 
+
+
+
+#endif
         public double? FileSize { get; set; }
         public string FileName { get; set; }
         public string Extension { get; set; }
