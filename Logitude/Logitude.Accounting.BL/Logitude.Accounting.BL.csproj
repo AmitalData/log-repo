@@ -292,6 +292,7 @@
     <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
+    <Compile Include="CoreBL\InterestTransactionsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\JournalAdditionalDataCreationService.cs" />
     <Compile Include="CoreBL\JournalsCSVFlatFileAnalyser.cs" />

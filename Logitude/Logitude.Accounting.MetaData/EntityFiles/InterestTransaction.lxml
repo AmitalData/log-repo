@@ -1738,6 +1738,60 @@
       LocalDefaultText="&quot;סה''כ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.IsMissing&quot;"
+      DefaultText="&quot;is missing&quot;"
+      LocalDefaultText="&quot;חסר/ה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.NotFound&quot;"
+      DefaultText="&quot;not found&quot;"
+      LocalDefaultText="&quot;לא נמצא/ת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.AlreadyFound&quot;"
+      DefaultText="&quot;already found&quot;"
+      LocalDefaultText="&quot;כבר נמצא/ת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.GLAccount&quot;"
+      DefaultText="&quot;GLAccount Id&quot;"
+      LocalDefaultText="&quot;חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.JExternalNumber&quot;"
+      DefaultText="&quot;External Journal Number&quot;"
+      LocalDefaultText="&quot;מספר פקודת יומן חיצוני&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.Journal&quot;"
+      DefaultText="&quot;Journal&quot;"
+      LocalDefaultText="&quot;פקודת יומן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.JournalLine&quot;"
+      DefaultText="&quot;Journal Line&quot;"
+      LocalDefaultText="&quot;שורת פקודת יומן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestTransactionsCSV.O.TransactionLine&quot;"
+      DefaultText="&quot;Transaction Line&quot;"
+      LocalDefaultText="&quot;שורת תנועת ריבית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
