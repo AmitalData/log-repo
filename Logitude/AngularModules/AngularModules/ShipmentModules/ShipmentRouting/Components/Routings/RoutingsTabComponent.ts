@@ -249,7 +249,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(
+                function (a, b) {
+                    if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                        return a.ChildIndex - b.ChildIndex;
+                    }
+                    return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+                });
+                
+
             myShipmentPickUps.forEach((item) => {
                 this.ItemsSource.push(new RoutingItem(item, "Pick Up", this));
             });
@@ -305,7 +313,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
-        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(
+                function (a, b) {
+                if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                    return a.ChildIndex - b.ChildIndex;
+                }
+                return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+            });
+
         var allEmptyContainerReturns = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "EMPT").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
 
         if (allDeliveries.length == 0) {
