@@ -20,6 +20,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryNumber { get; set; }
+        public int PickUpDeliveryIndex { get; set; }
+        public int ChildIndex { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryTypeCode { get; set; }
