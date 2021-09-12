@@ -39,6 +39,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+  Name="CostTariffUse"
+  Type="varchar"
+  Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="SaleTariffUse"
+  Type="varchar"
+  Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ProductTypeCode"
     ReferencedTable="ProductTypes"
