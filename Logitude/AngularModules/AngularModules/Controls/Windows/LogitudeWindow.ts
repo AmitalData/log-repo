@@ -51,7 +51,7 @@ export class LogitudeWindow {
     private CurrentSession = SessionLocator.SelectedSession;
     
     constructor(forceSelectedSession?: SessionComponent ) {
-        if (AppTool.IsNullOrEmpty(forceSelectedSession)) {
+        if (!AppTool.IsNullOrEmpty(forceSelectedSession)) {
             this.CurrentSession=forceSelectedSession;
         }
         this.LayoutDirection = Settings.LayoutDirection;
