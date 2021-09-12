@@ -3,6 +3,8 @@ import { ChildDirective } from '../Directives/ChildDirective';
 import { Settings } from '../../Infrastructure/Settings';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
+import { SessionComponent } from '../../Infrastructure/Components/Session/SessionComponent';
+import { AppTool } from '../../Infrastructure/Tools';
 
 declare var dragger: any;
 
@@ -47,7 +49,11 @@ export class LogitudeWindow {
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    
+    constructor(forceSelectedSession?: SessionComponent ) {
+        if (!AppTool.IsNullOrEmpty(forceSelectedSession)) {
+            this.CurrentSession=forceSelectedSession;
+        }
         this.LayoutDirection = Settings.LayoutDirection;
         if (this.LayoutDirection == 'rtl') {
             this.RTL = true;
