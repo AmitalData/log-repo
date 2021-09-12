@@ -2537,6 +2537,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notify1Reference2 = shipment.Notify1Reference2;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
+            shipmentPM.ShipperNotExporterReference1 = shipment.ShipperNotExporterReference1;
+            shipmentPM.ShipperNotExporterReference2 = shipment.ShipperNotExporterReference2;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
@@ -12386,6 +12388,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Notify1Reference2 = f.Notify1Reference2,
                                Notify2Reference = f.Notify2Reference,
                                ShipperNotExporterReference = f.ShipperNotExporterReference,
+                               ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                               ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -12763,6 +12767,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
+                    ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                    ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -13042,6 +13048,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
+                    ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                    ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,

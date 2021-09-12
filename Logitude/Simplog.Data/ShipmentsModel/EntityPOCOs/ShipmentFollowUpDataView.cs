@@ -647,5 +647,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         public string HandlerUserName { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
     }
 }

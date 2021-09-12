@@ -438,6 +438,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.Notify1Reference2 = entityPM.Notify1Reference2;
             entityPoco.Notify2Reference = entityPM.Notify2Reference;
             entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
+            entityPoco.ShipperNotExporterReference1 = entityPM.ShipperNotExporterReference1;
+            entityPoco.ShipperNotExporterReference2 = entityPM.ShipperNotExporterReference2;
             entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
             entityPoco.ProjectNumber = entityPM.ProjectNumber;
             entityPoco.ContainerLastStatusDate = entityPM.ContainerLastStatusDate;
