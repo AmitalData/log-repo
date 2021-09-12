@@ -223,4 +223,7 @@
 		<ICAO />
 	</Carrier>
 	<CreateDate>2021-03-12T11:29:10.12</CreateDate>
+	<Quantity>1</Quantity>
+	<GrossWeight>2</GrossWeight>
+	<Volume>3</Volume>
 </ShipmentOrder>

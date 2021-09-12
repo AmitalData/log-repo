@@ -76,6 +76,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 CarrierId = shipmentOrder.CarrierId,
                 IsCancelled = shipmentOrder.IsCancelled,
                 SecurityKey = shipmentOrder.SecurityKey,
+                Quantity = shipmentOrder.Quantity,
+                Volume = shipmentOrder.Volume,
+                GrossWeight = shipmentOrder.GrossWeight,
+                CustomerId = shipmentOrder.CustomerId
             };
         }
 
