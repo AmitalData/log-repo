@@ -56,6 +56,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              HasLogboxAccess = a.HasLogboxAccess,
                                              MainTabHighlightColor = a.MainTabHighlightColor,
                                              DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                             IsImportActivated = a.IsImportActivated,
+                                             IsExportActivated = a.IsExportActivated,
                                          }).FirstOrDefault();
 
             return entity;
@@ -87,6 +89,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          HasLogboxAccess = a.HasLogboxAccess,
                                                          MainTabHighlightColor = a.MainTabHighlightColor,
                                                          DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                                         IsImportActivated = a.IsImportActivated,
+                                                         IsExportActivated = a.IsExportActivated,
                                                      }).FirstOrDefault();
 
             return entity;
@@ -118,6 +122,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            HasLogboxAccess = a.HasLogboxAccess,
                                                            MainTabHighlightColor = a.MainTabHighlightColor,
                                                            DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                                           IsImportActivated = a.IsImportActivated,
+                                                           IsExportActivated = a.IsExportActivated,
                                                        }).FirstOrDefault();
 
             return entity;
@@ -148,6 +154,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                         MainTabHighlightColor = a.MainTabHighlightColor,
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                        IsImportActivated = a.IsImportActivated,
+                        IsExportActivated = a.IsExportActivated,
                     });
         }
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
@@ -176,6 +184,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                         MainTabHighlightColor = a.MainTabHighlightColor,
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                        IsImportActivated = a.IsImportActivated,
+                        IsExportActivated = a.IsExportActivated,
                     });
         }
 
@@ -206,6 +216,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        HasLogboxAccess = a.HasLogboxAccess,
                        MainTabHighlightColor = a.MainTabHighlightColor,
                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                       IsImportActivated = a.IsImportActivated,
+                       IsExportActivated = a.IsExportActivated,
                    };
 
         }

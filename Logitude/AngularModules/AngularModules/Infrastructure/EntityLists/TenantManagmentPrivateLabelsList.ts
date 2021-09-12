@@ -28,5 +28,7 @@ export class TenantManagmentPrivateLabelsList {
 		HasLogboxAccess: boolean;
 		MainTabHighlightColor: string;
 		DocumentTypeHighlightColor: string;
+		IsImportActivated: boolean;
+		IsExportActivated: boolean;
 	
 }
