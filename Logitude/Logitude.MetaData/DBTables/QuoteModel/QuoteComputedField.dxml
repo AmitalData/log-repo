@@ -92,6 +92,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MarkupPercentage"
+    OldNames="MarkupAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Quotes"
