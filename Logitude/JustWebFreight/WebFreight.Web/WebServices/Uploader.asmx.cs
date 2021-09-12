@@ -144,54 +144,43 @@ namespace WebFreight.Web.WebServices
 
 
                  if (externalDocument != null)
-                 {
-                     if (externalDocument.DocumentId != null) document = docRepository.GetSingleDocument(tenant, externalDocument.DocumentId);
+                {
+                    if (externalDocument.DocumentId != null) document = docRepository.GetSingleDocument(tenant, externalDocument.DocumentId);
                     string[] fileParams = fileName.Split('.');
                     string fileextension = fileParams[fileParams.Length - 1];
-                     string finalFileName = externalDocumentId + "." + fileextension;
+                    string finalFileName = externalDocumentId + "." + fileextension;
 
-                     string realFileName = null;
-                     if (!string.IsNullOrEmpty(fileName))
-                     {
-                         realFileName = fileName.Substring(0, fileName.LastIndexOf('.'));
-                     }
+                    string realFileName = null;
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        realFileName = fileName.Substring(0, fileName.LastIndexOf('.'));
+                    }
 
-                     if (document == null)
-                     {
-                         document = new Document()
-                         {
-                             CreateDate = DateTime.Now,
-                             Extension = fileextension,
-                             FileSize = Convert.ToInt32(fileSize),
-                             Tenant = Convert.ToInt32(externalDocument.Tenant),
-                             Id = IdCounter.GetNumber("Document", tenant).ToString(),//externalDocumentId,
-                             HasFile = true,
-                             Folder = "docsin",
-                             FileName = TruncateLongString(realFileName, 120),
-                             CalculatedFileName = TruncateLongString(realFileName, 120),
 
-                         };
-                         docRepository.Add(document);
-                     }
-                     else
-                     {
-                         document.CreateDate = DateTime.Now;
-                         document.Extension = fileextension;
-                         document.FileSize = Convert.ToInt32(fileSize);
-                         document.Tenant = Convert.ToInt32(externalDocument.Tenant);
-                         document.HasFile = true;
-                         document.Folder = "docsin";
-                         document.IsEncrypted = true;
-                         document.FileName = document.CalculatedFileName = TruncateLongString(realFileName, 120);
-                         docRepository.Update(document);
-                     }
+                    document.CreateDate = DateTime.Now;
+                    document.Extension = fileextension;
+                    document.FileSize = Convert.ToInt32(fileSize);
+                    document.Tenant = Convert.ToInt32(externalDocument.Tenant);
+                    document.HasFile = true;
+                    document.Folder = "docsin";
+                    document.IsEncrypted = true;
+                    document.FileName =  TruncateLongString(realFileName, 120);
+                    document.CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument , document.FileName).Calculate(); 
 
-                     docRepository.SubmitChanges();
-                     fileNameAndExtension = document.Id + "." + document.Extension;
-                     externalDocument.DocumentId = document.Id;
-                     externalDocumentRepository.Update(externalDocument);
-                     externalDocumentRepository.SubmitChanges();
-                 }
+                    if (document == null)
+                    {
+                        document.Id = IdCounter.GetNumber("Document", tenant).ToString();//externalDocumentId,
+                        docRepository.Add(document);
+                    }
+                    else docRepository.Update(document);
+             
+
+                    docRepository.SubmitChanges();
+                    fileNameAndExtension = document.Id + "." + document.Extension;
+                    externalDocument.DocumentId = document.Id;
+                    externalDocumentRepository.Update(externalDocument);
+                    externalDocumentRepository.SubmitChanges();
+                }
                 return fileNameAndExtension;
 
             }
@@ -213,6 +202,24 @@ namespace WebFreight.Web.WebServices
             return documentIdAndExtension;
         }
 
+        private string CalculatedDocumentFileName(int tenant, DocumentsFiling externalDocument)
+        {
+            DocumentFileNameParameter documentFileNameParameter = GetDocumentFileNameParameter(tenant, externalDocument);
+           return new DocumentTypeCalculateFileNameService(documentFileNameParameter).Calculate();
+        }
+
+        private static DocumentFileNameParameter GetDocumentFileNameParameter(int tenant, DocumentsFiling externalDocument)
+        {
+            return new DocumentFileNameParameter
+            {
+                EntityId = externalDocument.EntityId,
+                EntityObjectTableId = externalDocument.ObjectTableId,
+                ChildEntityId = externalDocument.ChildEntityId,
+                Tenant = tenant,
+                UserId = externalDocument.CreatedByUserId,
+                DocumentType = externalDocument.DocumentType,
+            };
+        }
 
         [WebMethod]
         public string UploadPdfFile(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList)
