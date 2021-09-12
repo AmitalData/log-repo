@@ -66,7 +66,6 @@ namespace WarehouseData
                     IsBuildDataRunning = true;
 
                     MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
-
                     string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                     try
                     {
@@ -156,12 +155,26 @@ namespace WarehouseData
                         SetControlPropertyValue(label, "Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
                         SetControlPropertyValue(label, "ForeColor", Color.Green);
                     }
-                    catch (Exception ex)
+
+                    catch (AggregateException aggregateException)
                     {
+
+                        foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                        {
+                            MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                        }
                         IsBuildDataRunning = false;
-                        MessageBox.Show(ex.Message, ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""));
 
                     }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                        IsBuildDataRunning = false;
+
+                    }
+
+
+
                 }
             }
             else MessageBox.Show("Connection Problem");
