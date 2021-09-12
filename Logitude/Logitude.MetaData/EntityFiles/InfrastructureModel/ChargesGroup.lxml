@@ -759,7 +759,7 @@
     ObjectTableName="&quot;ChargesGroup&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;ChargesGroup.GeneralOPTabScreen&quot;"
+    Code="&quot;ChargesGroupOP.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="5">
     <ScreenFields>

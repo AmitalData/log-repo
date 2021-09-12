@@ -6762,9 +6762,7 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-
-        
-    }
+   }
    
 }
 	 
