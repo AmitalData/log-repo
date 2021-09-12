@@ -299,9 +299,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);
             CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant);
 
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            //IQueueService queueservice = new DbQueueService();
+            //queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
+            //queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
 
             customerTenantAccessCardRepository.Update(itemPoco);

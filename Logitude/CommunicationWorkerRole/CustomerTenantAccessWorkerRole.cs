@@ -177,28 +177,7 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
 
-                                    TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
-                                    HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
-
-                                    HybridPartnerPM hybridPartnerPM = HybridPartnerQuery.GetSinglePMByPartnerTenant(tenant);
-
-                                    if(hybridPartnerPM != null)
-                                    {
-                                        TenantManagmentPrivateLabelsPM privateLabel = tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
-                                        if(privateLabel != null)
-                                        {
-                                            privateLabel.IsExportActivated = IsExportActivated;
-                                            privateLabel.IsImportActivated = IsImportActivated;
-                                             
-                                            IGlobalContext Context = GlobalContext.GetContext();
-                                            TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(Context);
-                                            service.Update(privateLabel); 
-                                             
-                                        }
-                                    }
-                                 
-
-
+                                    MapPrivateLabel(tenant, IsImportActivated, IsExportActivated);
 
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
@@ -275,7 +254,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
                                             }
-                                            
+
                                         }
                                         queue.Complete();
                                         CustomerTenantAccessRepository repo = new CustomerTenantAccessRepository(tenant);
@@ -371,6 +350,35 @@ namespace CommunicationWorkerRole
             }
            
         }
+
+        private static void MapPrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
+        {
+            TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
+            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
+
+            HybridPartnerPM hybridPartnerPM = HybridPartnerQuery.GetSinglePMByPartnerTenant(tenant);
+
+            if (hybridPartnerPM != null)
+            {
+                TenantManagmentPrivateLabelsPM privateLabel = tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
+                if (privateLabel != null)
+                {
+                    UpdatePrivateLabel(IsImportActivated, IsExportActivated, privateLabel);
+
+                }
+            }
+        }
+
+        private static void UpdatePrivateLabel(bool IsImportActivated, bool IsExportActivated, TenantManagmentPrivateLabelsPM privateLabel)
+        {
+            privateLabel.IsExportActivated = IsExportActivated;
+            privateLabel.IsImportActivated = IsImportActivated;
+
+            IGlobalContext context = GlobalContext.GetContext();
+            TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(context);
+            service.Update(privateLabel);
+        }
+
         private void ConnectClient()
         {
             try
