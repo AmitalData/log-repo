@@ -12,21 +12,24 @@ using Simplog.Server.Infrastructure;
 
 namespace Amital.QuoteOPM.Data.Repsitories
 {
-   public partial class QuoteOPChargeRepository:IRepository<QuoteOPCharge>
+   public partial class QuoteOPDocumentVersionRepository:IRepository<QuoteOPDocumentVersion>
    {
         
-		public List<QuoteOPCharge> GetMulti(EntityKeyFields entityKeys)
+		public List<QuoteOPDocumentVersion> GetMulti(EntityKeyFields entityKeys)
         {
 
             QuoteOPKeys quoteOPKeys = entityKeys as QuoteOPKeys;
 
-            return (from a in context.QuoteOPCharges
+            return (from a in context.QuoteOPDocumentVersions
                     where a.QuoteOPId == quoteOPKeys.Id
                     select a)
                     .ToList();
         }
-
-   }
+        public IQueryable<QuoteOPDocumentVersion> GetQuoteDocumentVersionsByQuoteId(string quoteId, int tenant)
+        {
+            return (from record in context.QuoteOPDocumentVersions where record.Tenant == tenant && record.QuoteOPId == quoteId select record);
+        }
+    }
 
 }
    

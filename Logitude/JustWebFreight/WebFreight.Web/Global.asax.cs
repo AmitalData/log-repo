@@ -138,6 +138,8 @@ namespace WebFreight.Web
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            ContainerAccessor.RegisterTypeFactory<QuoteOPTemplateReportHelper, QuoteOPTemplateReportHelper>("QuoteOPTemplateReportHelper", new QuoteOPTemplateReportHelper());
+            
 
             LoggedContactResolver.RegisterLoggedContactUtil();
             DateTimeUtilResolver.RegisterDateTimeUtil();
