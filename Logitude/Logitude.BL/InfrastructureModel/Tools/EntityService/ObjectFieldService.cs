@@ -17,6 +17,7 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -239,7 +240,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                 #endregion
             }
-
+            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+            {
+                AddObjectFieldKafkaQueueMessage();
+            }
         }
 
         public void Update(ObjectFieldPM theEntityPm , List<ObjectFieldValidationPM> objectfieldValidationList = null)
@@ -394,7 +398,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
-          
+            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+            {
+                AddObjectFieldKafkaQueueMessage();
+            }
         }
 
         public void Update(ObjectFieldPM theEntityPm, bool mapComposition = false)
@@ -560,7 +567,30 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
+            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+            {
+                AddObjectFieldKafkaQueueMessage();
+            }
+        }
 
+        private void AddObjectFieldKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "ObjectField" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }
