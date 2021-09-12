@@ -102,6 +102,7 @@ namespace WebFreight.Web.WebPages
                 string CustomName = "";
                 string Tenant = Request["tenant"] ?? "";
                 string cardId = Request["cardId"] ?? "";
+                string requestArea = Request["requestArea"] ?? "";
 
                 SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
@@ -135,7 +136,7 @@ namespace WebFreight.Web.WebPages
 
                     if (overrideSecDueIsConnectedToUniFreight || CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0)
                     {
-                        isValid = CheckAuthenticationForNoUsers(cardId, isValid, overrideSecDueIsConnectedToUniFreight);
+                        isValid = CheckAuthenticationForNoUsers(cardId, isValid, overrideSecDueIsConnectedToUniFreight, requestArea);
                     }
                     else isValid = false;
                 }
@@ -557,9 +558,9 @@ ExceptionInErrorLog.ToString()
 
         }
 
-        private bool CheckAuthenticationForNoUsers(string cardId, bool isValid, bool overrideSecDueIsConnectedToUniFreight)
+        private bool CheckAuthenticationForNoUsers(string cardId, bool isValid, bool overrideSecDueIsConnectedToUniFreight, string requestArea)
         {
-            if (IsUser(email, (int)tenant))
+            if (IsUser(email, (int)tenant) || requestArea == "CargoTracking")
                 return isValid;
 
             if (CheckSharedContactAuthenticationByCardId(cardId, (int)tenant))
