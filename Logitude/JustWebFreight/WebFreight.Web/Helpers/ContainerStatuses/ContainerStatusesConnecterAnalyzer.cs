@@ -182,6 +182,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string customs_release_state = null;
         string carrier_release_state = null;
         string availability_date = null;
+        string availability_loc =  null;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -330,6 +331,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.GetDeliveryLocationElement(node);
                 this.GetLifLocationElement(node);
                 this.GetEmptyReturnElement(node);
+                this.GetAvailabilityLocationElement(node);
             }
         }
         private void GetDirectFieldsOfShipment(XmlNode node)
@@ -369,6 +371,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
             pod_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_actual").FirstOrDefault()?.InnerText;
         }
+
         private void GetEmptyPickupLocationElement(XmlNode node)
         {
             XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
@@ -571,6 +574,16 @@ namespace WebFreight.Web.Helpers.Analyzers
             carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
             availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
         }
+
+        private void GetAvailabilityLocationElement(XmlNode node)
+        {
+            XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
+            if (availabilityemptyPickupLocationElement != null)
+            {
+                availability_loc = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+        }
+
         private void GetLogitudeOceanInsights()
         {
             if (!string.IsNullOrEmpty(this.oceanInsightsId))
@@ -1076,6 +1089,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.CarrierReleaseState = containerUpdatedFields.CarrierReleaseState;
                 container.CarrierReleaseDate = containerUpdatedFields.CarrierReleaseDate;
                 container.AvailablityDate = containerUpdatedFields.AvailablityDate;
+                container.AvailabilityLocation = containerUpdatedFields.AvailabilityLocation;
                 this.SaveContainer();
             }
         }
@@ -1204,6 +1218,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
+            containerUpdatedFields.AvailabilityLocation = availability_loc;
+
             return containerUpdatedFields;
         }
         private DateTime? ComputeMainCarriageETD()
@@ -2246,5 +2262,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
+        public string AvailabilityLocation { get; set; }
     }
 }

@@ -147,5 +147,10 @@ export class ContainerList {
 		CarrierReleaseState: string;
 		CarrierReleaseDate: Date;
 		AvailablityDate: Date;
+		AvailabilityLocation: string;
+		LastFreeDayDate: Date;
+		FreeDays: number;
+		ShipmentStatusId: string;
+		ShipmentStatusName: string;
 	
 }

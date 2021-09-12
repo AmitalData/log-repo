@@ -165,7 +165,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
-
-
+        public string AvailabilityLocation { get; set; }
+        public DateTime? LastFreeDayDate { get; set; }
+        public int? FreeDays { get; set; }
+        public string ShipmentStatusId { get; set; }
+        public string ShipmentStatusName { get; set; }
     }
 }

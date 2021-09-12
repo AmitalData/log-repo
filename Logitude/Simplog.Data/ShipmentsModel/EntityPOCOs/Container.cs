@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Linq;
 using System.Text;
-
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -210,6 +210,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port ShipmentOnCarriageToPort { get; set; }
 
 
+        public string AvailabilityLocation { get; set; }
+        public DateTime? LastFreeDayDate { get; set; }
+        public int? FreeDays { get; set; }
+        public string ShipmentStatusId { get; set; }
+        [ForeignKey("ShipmentStatusId")]
+        public virtual EntityStatus ShipmentEntityStatus { get; set; }
 
     }
 }
