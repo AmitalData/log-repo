@@ -78,39 +78,56 @@ export class ARInvoiceDocsOutTabComponent implements OnInit {
 
             else if (this.EntityPM.StatusCode != "VD") {
                 this.IsVisible = true;
-                var entityObjectTable = null;
-                if (this.EntityPM.InvoiceEntities.length > 1) {
-                    entityObjectTable = window.ObjectTables.filter(d => d.Name == "Master")[0];
-                    this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
+                if (table) this.ObjectTableId = table.Id;
+                this.EntityId = this.EntityPM.Id;
+                var myReference: string = null;
+
+                if (this.EntityPM.InvoiceNumber == null) {
+                    myReference = "Draft: " + this.EntityPM.DraftNumber;
                 }
 
-                else if (this.EntityPM.InvoiceEntities.length == 1) {
-                    entityObjectTable = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-                    this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
-                    if (this.currentInvoiceEntity == null) {
-                        entityObjectTable = window.ObjectTables.filter(d => d.Name == "Master")[0];
-                        this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
-                    }
-                }
-
-                if (entityObjectTable != null) {
-                    this.ObjectTableId = entityObjectTable.Id;
-                }
-
-                var invoiceEntityId = "";
-                if (this.currentInvoiceEntity != null) {
-                    invoiceEntityId = this.currentInvoiceEntity.EntityId;
-                }
                 else {
-                    invoiceEntityId = this.EntityPM.MainEntityId;
-
+                    myReference = this.EntityPM.InvoiceNumber;
                 }
 
-                this.EntityId = invoiceEntityId;
-                if (table) this.ChildObjectTableId = table.Id;
-
+                this.EntityReference = myReference;
                 this.CustomFilterOperation = "NotEqual";
                 this.CustomFilterValue = "999C";
+
+                // this.IsVisible = true;
+                // var entityObjectTable = null;
+                // if (this.EntityPM.InvoiceEntities.length > 1) {
+                //     entityObjectTable = window.ObjectTables.filter(d => d.Name == "Master")[0];
+                //     this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
+                // }
+
+                // else if (this.EntityPM.InvoiceEntities.length == 1) {
+                //     entityObjectTable = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
+                //     this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
+                //     if (this.currentInvoiceEntity == null) {
+                //         entityObjectTable = window.ObjectTables.filter(d => d.Name == "Master")[0];
+                //         this.currentInvoiceEntity = this.EntityPM.InvoiceEntities.filter(a => a.ObjectTableId == entityObjectTable.Id)[0];
+                //     }
+                // }
+
+                // if (entityObjectTable != null) {
+                //     this.ObjectTableId = entityObjectTable.Id;
+                // }
+
+                // var invoiceEntityId = "";
+                // if (this.currentInvoiceEntity != null) {
+                //     invoiceEntityId = this.currentInvoiceEntity.EntityId;
+                // }
+                // else {
+                //     invoiceEntityId = this.EntityPM.MainEntityId;
+
+                // }
+
+                // this.EntityId = invoiceEntityId;
+                // if (table) this.ChildObjectTableId = table.Id;
+
+                // this.CustomFilterOperation = "NotEqual";
+                // this.CustomFilterValue = "999C";
             }
         }
     }
