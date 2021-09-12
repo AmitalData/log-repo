@@ -19,5 +19,6 @@
         public static long EntityStatus = 15;
         public static long SpecialServicesType = 16;
         public static long PackageType = 17;
+        public static long CustomField = 18;
     }
 }
