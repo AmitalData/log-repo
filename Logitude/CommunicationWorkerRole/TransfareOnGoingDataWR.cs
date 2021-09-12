@@ -112,9 +112,18 @@ namespace CommunicationWorkerRole
                     return GetSpecialServicesTypeById(Tenant, EntityId);
                 case "PackageType":
                     return GetPackageTypeById(Tenant, EntityId);
+                case "ObjectField":
+                    return GetObjectFieldById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetObjectFieldById(int tenant, string id)
+        {
+            ObjectFieldQuery objectFeildQuery = new ObjectFieldQuery(tenant);
+            ObjectFieldPM objectFieldPM = objectFeildQuery.GetSinglePM(id, tenant);
+            return objectFieldPM;
         }
 
         private object GetPackageTypeById(int tenant, string id)
@@ -210,6 +219,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.SpecialServicesType;
                 case "PackageType":
                     return KakaMessageTypes.PackageType;
+                case "ObjectField":
+                    return KakaMessageTypes.CustomField;
                 default:
                     return 0;
             }

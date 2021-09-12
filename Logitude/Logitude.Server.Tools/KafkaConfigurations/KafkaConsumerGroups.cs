@@ -19,5 +19,6 @@
         public static string LogitudePackageTypes = "packagetypes";
         public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
         public static string ObjectFieldTrackChanges = "objectfieldtrackchanges";
+        public static string LogitudeCustomFields = "customfields";
     }
 }

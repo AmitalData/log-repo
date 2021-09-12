@@ -7,6 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Newtonsoft.Json;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -112,6 +113,25 @@ namespace LogitudeTransferData
             List<PackageTypePM> packageTypePMs = GetAllPackageTypes(tenant);
 
             ProduceKafkaMessages<PackageTypePM>(packageTypePMs, KakaMessageTypes.PackageType);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<ObjectFieldPM> objectFieldPMs = GetAllCustomObjectFields(tenant);
+
+            ProduceKafkaMessages<ObjectFieldPM>(objectFieldPMs, KakaMessageTypes.CustomField);
+        }
+
+        private List<ObjectFieldPM> GetAllCustomObjectFields(int tenant)
+        {
+            ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", tenant);
+            string shipmentObjectId = shipmentObject.Id;
+
+            ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);
+            ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
+            List<ObjectFieldPM> objectFieldPMs = objectFieldsQuery.GetCustomFieldsBytableIDAndDataTypeCode(shipmentObjectId, tenant, "Text").ToList();
+            return objectFieldPMs;
         }
 
         private List<PackageTypePM> GetAllPackageTypes(int tenant)
