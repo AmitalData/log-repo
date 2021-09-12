@@ -251,4 +251,10 @@ export class RequestAliases {
     public static readonly PutOpportunities = "PutOpportunities"
     public static readonly GetQuotesByOpportunityId = "GetQuotesByOpportunityId"
 
+    //Full Accounting
+    public static readonly PostAPPayments = 'PostAPPayments';
+    public static readonly PutAPPayments = 'PutAPPayments';
+    public static readonly ARInvoiceView = 'APInvoiceView';
+    public static readonly ARPaymentView = 'ARPaymentView';
+
 }
