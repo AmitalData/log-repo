@@ -1,3 +1,4 @@
+import { SessionInfo } from './../../Infrastructure/Utilities/SessionInfo';
 import { FullAccountingSettingList } from "Accounting/EntityLists/FullAccountingSettingList";
 import { GLAccountList } from "Accounting/EntityLists/GLAccountList";
 import { FullAccountingSettingListService } from "Accounting/Services/StandardLists/FullAccountingSettingListService";
@@ -22,6 +23,8 @@ export class GLAccountSecurityLevelService{
 
                     var loginService = new LoginService();
                     loginService.CurrentTenant = SessionLocator.Tenant;
+                    loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
+
                     loginService.GetLoggedUser().subscribe((myResult: any) => {
                         var loggedUserSecurityLevel = myResult?.SecurityLevel || 1;
 
