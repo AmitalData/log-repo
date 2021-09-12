@@ -21,6 +21,7 @@ export class GLAccountSecurityLevelService{
                 if (settings.IsSecurityLevelActivated) {
 
                     var loginService = new LoginService();
+                    loginService.CurrentTenant = SessionLocator.Tenant;
                     loginService.GetLoggedUser().subscribe((myResult: any) => {
                         var loggedUserSecurityLevel = myResult?.SecurityLevel || 1;
 
