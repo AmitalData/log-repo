@@ -177,7 +177,7 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
 
-                                    MapPrivateLabel(tenant, IsImportActivated, IsExportActivated);
+                                    UpdatePrivateLabel(tenant, IsImportActivated, IsExportActivated);
 
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
@@ -350,8 +350,25 @@ namespace CommunicationWorkerRole
             }
            
         }
+ 
 
-        private static void MapPrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
+        private static void UpdatePrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
+        {
+
+            TenantManagmentPrivateLabelsPM privateLabel = GetPrivateLabel(tenant);
+
+            if (privateLabel != null)
+            { 
+                privateLabel.IsExportActivated = IsExportActivated;
+                privateLabel.IsImportActivated = IsImportActivated;
+                IGlobalContext context = GlobalContext.GetContext();
+                TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(context);
+                service.Update(privateLabel);
+            }
+             
+        }
+
+        private static TenantManagmentPrivateLabelsPM GetPrivateLabel(int tenant)
         {
             TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
             HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
@@ -360,23 +377,10 @@ namespace CommunicationWorkerRole
 
             if (hybridPartnerPM != null)
             {
-                TenantManagmentPrivateLabelsPM privateLabel = tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
-                if (privateLabel != null)
-                {
-                    UpdatePrivateLabel(IsImportActivated, IsExportActivated, privateLabel);
-
-                }
+               return tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
+              
             }
-        }
-
-        private static void UpdatePrivateLabel(bool IsImportActivated, bool IsExportActivated, TenantManagmentPrivateLabelsPM privateLabel)
-        {
-            privateLabel.IsExportActivated = IsExportActivated;
-            privateLabel.IsImportActivated = IsImportActivated;
-
-            IGlobalContext context = GlobalContext.GetContext();
-            TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(context);
-            service.Update(privateLabel);
+            return null;
         }
 
         private void ConnectClient()
