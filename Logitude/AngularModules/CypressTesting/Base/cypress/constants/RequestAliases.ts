@@ -257,4 +257,8 @@ export class RequestAliases {
     public static readonly ARInvoiceView = 'APInvoiceView';
     public static readonly ARPaymentView = 'ARPaymentView';
 
+    public static readonly PostGLAccounts = 'PostGLAccounts';
+
+    public static readonly PostBankAccounts = 'PostBankAccounts';
+
 }

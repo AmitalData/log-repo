@@ -7,4 +7,6 @@ export class URLs {
     public static readonly ARInvoiceViewsGetByFilters = '**/arinvoiceviews/getbyfilters?**';
     public static readonly APPayments = '**/appayments';
     public static readonly ARPayments = '**/arpayments';
+    public static readonly GLAccounts = '**/glaccounts';
+    public static readonly Bankaccounts = '**/bankaccounts';
 }
