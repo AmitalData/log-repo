@@ -5,24 +5,11 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="1">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -31,5 +18,12 @@
     Size="40">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Searchfields"
+    Type="nvarchar"
+    Size="1001">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

@@ -10,15 +10,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.ToTable("QuoteGroupSections");
 
-            this.HasKey(t => new { t.Id });
-
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.HasKey(t => new { t.Code });
 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(1).IsUnicode(false);
-
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.Searchfields).HasMaxLength(1000).IsUnicode(true);
+
         }
     }
 }

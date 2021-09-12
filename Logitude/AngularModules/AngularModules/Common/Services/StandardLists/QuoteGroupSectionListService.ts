@@ -32,12 +32,12 @@ export class QuoteGroupSectionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/quotegroupsectionviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(code: string) {
 
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class QuoteGroupSectionListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteGroupSection", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteGroupSection", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -153,19 +153,19 @@ export class QuoteGroupSectionListService {
 		});
 	}
 
-	getSingleFromCache(id: string) {
+	getSingleFromCache(code: string) {
 
 		var callTime = new Date(); 	    
 
 		if (!SessionLocator.UseCachedData) {
-            return this.getSingle(id);
+            return this.getSingle(code);
         }
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
 		if (QuoteGroupSectionListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = QuoteGroupSectionListService.CachedData.filter(a => a.Id === id)[0];
+				var filteredData = QuoteGroupSectionListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -187,11 +187,11 @@ export class QuoteGroupSectionListService {
 
 					QuoteGroupSectionListService.CachedData = _mappedListsArray;
 
-					var filteredData = QuoteGroupSectionListService.CachedData.filter(a => a.Id === id)[0];
+					var filteredData = QuoteGroupSectionListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "QuoteGroupSection", "GetSingleListFromCache", 'id=' + id); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "QuoteGroupSection", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),

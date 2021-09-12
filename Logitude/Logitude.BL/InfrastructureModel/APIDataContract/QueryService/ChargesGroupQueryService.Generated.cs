@@ -22,122 +22,123 @@ using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 
- namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
-{ 
-   public partial class ChargesGroupQueryService
-   {
-   
-		IWebFreightContext  context;
-		//ChargesGroupService service; 
-		
-		ChargesGroupQuery query; 
+namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
+{
+    public partial class ChargesGroupQueryService
+    {
+
+        IWebFreightContext context;
+        //ChargesGroupService service; 
+
+        ChargesGroupQuery query;
 
         public ChargesGroupQueryService(int tenant)
         {
-				    context = WebFreightContext.GetContext(tenant); 
-			//service = new ChargesGroupService(context, tenant); 
-			query = new ChargesGroupQuery(tenant);
+            context = WebFreightContext.GetContext(tenant);
+            //service = new ChargesGroupService(context, tenant); 
+            query = new ChargesGroupQuery(tenant);
         }
 
-		
-		public ChargesGroup GetChargesGroupById(string Id,int Tenant,string ComputingPartnerName = "")
-        { 
-		    try
+
+        public ChargesGroup GetChargesGroupById(string Id, int Tenant, string ComputingPartnerName = "")
+        {
+            try
             {
 
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
-				 if (temp == null)
+
+                var temp = query.GetSinglePM(Id, Tenant);
+                if (temp == null)
                     throw new ApplicationException("ChargesGroup with Id " + Id + " doesn't exist");
 
-				return ChargesGroupDataMapping(temp,Tenant,ComputingPartnerName);
-			}
+                return ChargesGroupDataMapping(temp, Tenant, ComputingPartnerName);
+            }
             catch (Exception ex)
             {
 
                 throw ex;
             }
         }
-		
-		public ChargesGroup ChargesGroupDataMapping(ChargesGroupPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+
+        public ChargesGroup ChargesGroupDataMapping(ChargesGroupPM MyEntityPM, int Tenant, string ComputingPartnerName = "")
         {
-		    try
+            try
             {
-				   
-				   var temp = new ChargesGroup(); 
-				   temp.Id = MyEntityPM.Id;
-				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;					
-				   return temp;
-			}
+
+                var temp = new ChargesGroup();
+                temp.Id = MyEntityPM.Id;
+                temp.Code = MyEntityPM.Code;
+                temp.Name = MyEntityPM.Name;
+                temp.QuoteGroupSectionID = MyEntityPM.QuoteGroupSectionID;
+                return temp;
+            }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-        } 
+        }
 
-		public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+        public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-		    try
+            try
             {
-				   					var temp = new ChargesGroupPM();								  
-					if (!string.IsNullOrEmpty(MyEntity.Id))
-					{
-						temp = query.GetSinglePM(MyEntity.Id, Tenant);
-					} 
-										   
-					if(temp == null)
-					{   
-					    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
-					} 
-					
-					if(string.IsNullOrEmpty(temp.Id))
-					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("ChargesGroup with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
+                var temp = new ChargesGroupPM();
+                if (!string.IsNullOrEmpty(MyEntity.Id))
+                {
+                    temp = query.GetSinglePM(MyEntity.Id, Tenant);
+                }
 
-						//} 
+                if (temp == null)
+                {
+                    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
+                }
 
-						
-					}
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
-								
-						
-						}  
+                if (string.IsNullOrEmpty(temp.Id))
+                {
 
-						
-					}
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+                    if (!string.IsNullOrEmpty(MyEntity.Id))
+                    {
+                        throw new ApplicationException("ChargesGroup with provided key doesn't exist");
 
-										}  
+                    }
+                    //else
+                    //{
+                    //    temp.Id = MyEntity.Id;
 
-										   
-					return temp;
-		    }
+                    //} 
+
+
+                }
+                if (string.IsNullOrEmpty(temp.Code))
+                {
+
+
+                    if (!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+                    {
+                        //throw new ApplicationException("Code Can't be update"); 
+                        temp.Code = MyEntity.Code;
+
+
+                    }
+
+
+                }
+
+                if (!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
+                {                           //throw new ApplicationException("Name Can't be update"); 
+                    temp.Name = MyEntity.Name;
+
+                }
+
+
+                return temp;
+            }
             catch (Exception ex)
             {
 
                 throw ex;
-            } 
+            }
         }
-		 
-   }
+
+    }
 }

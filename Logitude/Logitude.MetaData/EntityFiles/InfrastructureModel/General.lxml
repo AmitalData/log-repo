@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;8257&quot;"
+  Code="&quot;1ca9&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2650,14 +2650,7 @@
       LocalDefaultText="&quot;רשימת בלדרים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-	  <TextCode
-  Code="&quot;General.MC.Tables.CouriersVat&quot;"
-  DefaultText="&quot;Couriers Vat&quot;"
-  LocalDefaultText="&quot;רשימת בלדרים&quot;"
-  TextCodeTypeCode="&quot;MC&quot;"
-  IsSpellChecked="false" />
-
-	  <TextCode
+    <TextCode
       Code="&quot;General.MH.DocumentsFiling&quot;"
       DefaultText="&quot;Documents&quot;"
       LocalDefaultText="&quot;מסמכים&quot;"

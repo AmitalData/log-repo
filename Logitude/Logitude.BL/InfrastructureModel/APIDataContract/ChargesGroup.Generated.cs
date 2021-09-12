@@ -31,5 +31,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
     public  string  ComputingPartnerCode { get; set; }
 
+    public string QuoteGroupSectionID { get; set; }
+
     }
 } 

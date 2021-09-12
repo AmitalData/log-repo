@@ -744,9 +744,9 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 if (quoteGroupSections == null)
                 {
                     quoteGroupSections = new List<QuoteGroupSection>() {
-                        new QuoteGroupSection() { Id= "1" },
-                        new QuoteGroupSection() { Id = "2" },
-                        new QuoteGroupSection() { Id= "3" },
+                        new QuoteGroupSection() { Code= "O" },
+                        new QuoteGroupSection() { Code = "F" },
+                        new QuoteGroupSection() { Code= "D" },
                     };
                 }
                 return new MockObjectSet<QuoteGroupSection>(quoteGroupSections);
