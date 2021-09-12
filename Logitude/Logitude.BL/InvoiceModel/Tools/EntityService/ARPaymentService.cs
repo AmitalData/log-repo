@@ -43,7 +43,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     public class ARPaymentService
     {
         const string PartnerTypeId_Customer = "CS";
-
+       const string ChequeARPaymentAccountingMethod= "CH";
         private int tenant;
         public ARPayment paymentPoco { get; set; }
         private ARPaymentPM paymentPM;
@@ -672,17 +672,41 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
             if (tenantPOCO != null && 
-                tenantPOCO.AccountingActivated && 
-                payment.BillToPartnerTypeId == PartnerTypeId_Customer)
+                tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode != ChequeARPaymentAccountingMethod
+               && payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
-            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment);
-            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
-            interestTransactionUpdateService.Create(interestTransaction);
-
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment,2);
+            SaveInterestTransaction(interestTransaction);
+            }
+            else  if(payment.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && isFromVoidARPayment)
+            {
+                CancelARPaymentChequesInterestTransactions(payment);
+                
             }
         }
+        private void CancelARPaymentChequesInterestTransactions(ARPaymentPM payment)
+        {
+            List<InterestTransactionPM> interestTransactions = GetARPaymentChequeInterestTransactions(payment);
+            int MaxLineNumber = interestTransactions.Max(d => d.OriginalEntityLineNumber);
+            foreach (InterestTransactionPM transaction in interestTransactions)
+            {
+                MaxLineNumber++;
+                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, true, MaxLineNumber);
+                SaveInterestTransaction(interestTransaction);
+            }
+        }
+        private List<InterestTransactionPM> GetARPaymentChequeInterestTransactions(ARPaymentPM payment)
+        {
+            IInterestTransactionQueryServiceExt interestTransactionQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionQueryServiceExt), "InterestTransactionQueryServiceExt", new ParameterOverride("", 1)) as IInterestTransactionQueryServiceExt;
+            return  interestTransactionQueryServiceExt.GetInterestTransactionsByPaymentId(payment.Id, payment.Tenant);
 
-        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
+        }
+        private void SaveInterestTransaction(InterestTransactionPM interestTransaction)
+        {
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+        }
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment,int lineNumber)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
@@ -690,7 +714,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                OriginalEntityLineNumber = isFromVoidARPayment ? 2 : 1,
+                OriginalEntityLineNumber = isFromVoidARPayment ? lineNumber : 1,
                 LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
                                                                      (decimal)payment.AmountInLocalCurrency * -1,
                 ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
@@ -2011,3 +2035,4 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
     }
 }
+

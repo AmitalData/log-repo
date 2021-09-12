@@ -41,6 +41,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 {
     public class FullAccountingARPaymentApproveService
     {
+        const string PartnerTypeId_Customer = "CS";
         GLAccountPM paymentGLAccount = null;
         CashBookPM PaymentCashbook = null;
         ARPaymentPM paymentPM = null;
@@ -94,17 +95,53 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 AddNewChequesForEachReplica();
 
                 SetARPaymentFieldsForFirstReplica();
-
-               // ValidateIfAllReplicasHaveSameValueDate();
+               
+                // ValidateIfAllReplicasHaveSameValueDate();
             }
             else
             {
                 ARPaymentChequePM cheque = CreateARPaymentCheque();
+                CreateInterestTransactionLine(cheque,paymentPM, false);
                 AddChequeToCashbook(cheque);
                 newlyAddedCheque = cheque;
             }
 
         }
+        private int originalEntityLineNumber = 0;
+        private void CreateInterestTransactionLine(ARPaymentChequePM cheque,ARPaymentPM payment, bool isFromVoidARPayment = false)
+        {
+            if (payment.BillToPartnerTypeId == PartnerTypeId_Customer)
+            {
+                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque,payment, isFromVoidARPayment);
+                IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+                interestTransactionUpdateService.Create(interestTransaction);
+
+            }
+        }
+
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque,ARPaymentPM payment, bool isFromVoidARPayment)
+        {
+            DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
+            GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "2",
+                EntityId = payment.Id,
+                OriginalEntityLineNumber = cheque.LineNumber,
+                LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
+                                                                     (decimal)payment.AmountInLocalCurrency * -1,
+                ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
+                                                                     (decimal?)payment.AmountInPaymentCurrency * -1,
+
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = paymentPM.Tenant,
+                GLAccountId = account != null ? account.Id : null,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = payment.PaymentCurrencyId,
+            };
+            return interestTransaction;
+        }
+
         private void SetARPaymentFieldsForFirstReplica()
         {
             var firstCheque = paymentPM.ARPaymentChequeReplicas.FirstOrDefault(p => p.LineNumber == 1);
@@ -135,6 +172,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 ARPaymentChequePM cheque = CreateARPaymentChequeForReplica(paymentPM, ref LineNumberCounter, chequeReplica);
                 AddChequeToCashbook(cheque);
+                CreateInterestTransactionLine(cheque,paymentPM, false);
             }
         }
 
