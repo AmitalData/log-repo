@@ -114,6 +114,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 this.Address2 = !AppTool.IsNullOrEmpty(DefaultValueData[2]) ? DefaultValueData[2] : "";
                 this.City = !AppTool.IsNullOrEmpty(DefaultValueData[3]) ? DefaultValueData[3] : "";
                 this.CountryId = !AppTool.IsNullOrEmpty(DefaultValueData[4]) ? DefaultValueData[4] : ""; 
+                this.ZipCode = !AppTool.IsNullOrEmpty(DefaultValueData[5]) ? DefaultValueData[5] : ""; 
             }
    
 

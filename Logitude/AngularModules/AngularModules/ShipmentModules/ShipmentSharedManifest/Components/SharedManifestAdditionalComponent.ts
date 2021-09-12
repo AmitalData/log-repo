@@ -1901,11 +1901,15 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             var Address1 = !AppTool.IsNullOrEmpty(this.AgentSideData.Shipper.Address1) ? this.AgentSideData.Shipper.Address1 : "";
             var Address2 = !AppTool.IsNullOrEmpty(this.AgentSideData.Shipper.Address2) ? this.AgentSideData.Shipper.Address2 : "";
             var city = !AppTool.IsNullOrEmpty(this.AgentSideData.Shipper.City) ? this.AgentSideData.Shipper.City : "";
+            var zipCode = !AppTool.IsNullOrEmpty(this.AgentSideData.Shipper.ZipCode) ? this.AgentSideData.Shipper.ZipCode : "";
 
             this.ShiperDefaultValues = englishName + "^";
             this.ShiperDefaultValues += (Address1 + "^");
             this.ShiperDefaultValues += (Address2 + "^");
             this.ShiperDefaultValues += (city + "^");
+            this.ShiperDefaultValues += ("^");
+            this.ShiperDefaultValues += (zipCode + "^");
+
             var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
@@ -1932,11 +1936,15 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             var Address1 = !AppTool.IsNullOrEmpty(this.AgentSideData.Consignee.Address1) ? this.AgentSideData.Consignee.Address1 : "";
             var Address2 = !AppTool.IsNullOrEmpty(this.AgentSideData.Consignee.Address2) ? this.AgentSideData.Consignee.Address2 : "";
             var city = !AppTool.IsNullOrEmpty(this.AgentSideData.Consignee.City) ? this.AgentSideData.Consignee.City : "";
+            var zipCode = !AppTool.IsNullOrEmpty(this.AgentSideData.Consignee.ZipCode) ? this.AgentSideData.Consignee.ZipCode : "";
 
             this.ConsigneeDefaultValues = englishName + "^";
             this.ConsigneeDefaultValues += (Address1 + "^");
             this.ConsigneeDefaultValues += (Address2 + "^");
             this.ConsigneeDefaultValues += (city + "^");
+            this.ConsigneeDefaultValues += ("^");
+            this.ConsigneeDefaultValues += (zipCode + "^");
+
             var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
@@ -2420,11 +2428,14 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     var Address1 = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.Address1) ? this.AgentSideData.Notify1.Address1 : "";
                     var Address2 = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.Address2) ? this.AgentSideData.Notify1.Address2 : "";
                     var city = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.City) ? this.AgentSideData.Notify1.City : "";
+                    var zipCode = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.ZipCode) ? this.AgentSideData.Notify1.ZipCode : "";
 
                     this.Notify1DefaultValues = englishName + "^";
                     this.Notify1DefaultValues += (Address1 + "^");
                     this.Notify1DefaultValues += (Address2 + "^");
                     this.Notify1DefaultValues += (city + "^");
+                    this.Notify1DefaultValues += ("^");
+                    this.Notify1DefaultValues += (zipCode + "^");
 
 
                     var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();

@@ -1,11 +1,40 @@
 ﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
+declare @ShipmentId as varchar(15)
+declare @ContactId as varchar(15)
+declare @PlannedCargoReadyDate as Datetime 
+declare @Field4 as nvarchar(2000)
+declare @Field15 as nvarchar(2000)
+declare @PickListValue as nvarchar(1000)
 
-  Update Shipments
-  Set PlannedCargoReadyDate = DATETIMEFROMPARTS(SUBSTRING(Shipments.Field4,1,4),SUBSTRING(Shipments.Field4,5,2),SUBSTRING(Shipments.Field4,7,2),SUBSTRING(Shipments.Field4,9,2),SUBSTRING(Shipments.Field4,11,2),SUBSTRING(Shipments.Field4,13,2),0) ,
-  HandlerUserId = (Select Id from Contacts where EnglishName = (select value from CustomPickLists where Id = Shipments.Field15 And Tenant = 570) And Tenant = 570)
-  Where Tenant = 570  And (Field4 is not null or Field15 is not null) And $LastCounterWhere$
+BEGIN
+    DECLARE CardsCursor CURSOR READ_ONLY
+    FOR
+    SELECT Id, Field4, Field15 from Shipments
+    Where Tenant = 570  And (Field4 is not null or Field15 is not null) And $LastCounterWhere$
+    OPEN CardsCursor FETCH NEXT FROM CardsCursor INTO @ShipmentId,@Field4,@Field15     
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+	set @PickListValue = null
+	set @ContactId = null
+	set @PlannedCargoReadyDate =null
+
+	Set @PickListValue = (Select value from CustomPickLists where CustomPickLists.Id = @Field15)
+	set @ContactId = (select Users.Id from Users join Contacts on Contacts.Id = Users.Id where Contacts.EnglishName = @PickListValue And Contacts.Tenant = 570)
+	Set @PlannedCargoReadyDate = ( select DATETIMEFROMPARTS(SUBSTRING(@Field4,1,4),SUBSTRING(@Field4,5,2),SUBSTRING(@Field4,7,2),SUBSTRING(@Field4,9,2),SUBSTRING(@Field4,11,2),SUBSTRING(@Field4,13,2),0) )
+
+   Update Shipments set 
+   HandlerUserId = @ContactId,
+   PlannedCargoReadyDate = @PlannedCargoReadyDate
+   where Shipments.Id = @ShipmentId
+
+
+        FETCH NEXT FROM CardsCursor INTO  @ShipmentId,@Field4,@Field15               
+        END
+    CLOSE CardsCursor
+    DEALLOCATE CardsCursor
+END
     
     ]]>
   </Sql>

@@ -99,6 +99,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     SecurityKey: string = "";
     Tenant: number = null;
     WhatsAppMessagingNumber: string = "00";
+    ShowWhatsAppIcon: boolean = false;
+
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -180,6 +182,13 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     MapFieldsFromResponseData(responseResult) {
         if (responseResult.Data) {
             this.WhatsAppMessagingNumber = responseResult.Data;
+            this.SetShowWatsAppIcon();
+        }
+    }
+
+    private SetShowWatsAppIcon() {
+        if (this.WhatsAppMessagingNumber != null) {
+            this.ShowWhatsAppIcon = true;
         }
     }
 

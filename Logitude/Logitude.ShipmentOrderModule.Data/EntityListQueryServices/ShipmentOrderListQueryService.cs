@@ -149,6 +149,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        GrossWeight = a.GrossWeight,
 
+                                                       CustomerId = a.CustomerId,
+
+                                                       CustomerName = a.Customer == null ? "" : a.Customer.EnglishName,
+
                                                    });
             return query;
         }
