@@ -730,7 +730,7 @@
     IsHeaderScreen="false"
     Code="&quot;ChargesGroup.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="5">
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -752,11 +752,42 @@
         Row="3"
         ObjectFieldName="&quot;ViewOrder&quot;"
         ScreenName="General Tab Screen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;GeneralOP Tab Screen&quot;"
+    ObjectTableName="&quot;ChargesGroup&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ChargesGroup.GeneralOPTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="5">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="GeneralOP Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="GeneralOP Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="GeneralOP Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;ViewOrder&quot;"
+        ScreenName="GeneralOP Tab Screen" />
       <ScreenField
         Column="0"
         Row="4"
         ObjectFieldName="&quot;QuoteGroupSectionID&quot;"
-        ScreenName="General Tab Screen" />
+        ScreenName="GeneralOP Tab Screen" />
     </ScreenFields>
   </Screen>
   <Tab

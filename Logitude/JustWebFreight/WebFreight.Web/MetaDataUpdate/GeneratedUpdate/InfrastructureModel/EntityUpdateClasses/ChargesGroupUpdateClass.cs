@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ChargesGroupUpdateClass
    {  		
-		public const string HashString = "022e88f83342b1430dc2d11bd91e6b4e";
+		public const string HashString = "0ec2918e29fc56394552a83b3b052b7c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -467,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "QuoteGroupSection",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -588,7 +588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	   		  
 	      
 
-	         Screen ChargesGroupGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesGroup.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ChargesGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ChargesGroupGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesGroup.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ChargesGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -597,8 +597,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
              ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.ViewOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
+	      
+
+	         Screen ChargesGroupGeneralOPTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesGroup.GeneralOPTabScreen", Name = "GeneralOP Tab Screen", ObjectTableId = ChargesGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField ChargesGroupChargesGroupGeneralOPTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesGroupGeneralOPTabScreenScreen2.Id,ScreenCode = ChargesGroupGeneralOPTabScreenScreen2.Code, ObjectFieldCode = "ChargesGroup.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.QuoteGroupSectionID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ChargesGroupChargesGroupGeneralOPTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ChargesGroupGeneralOPTabScreenScreen2.Id,ScreenCode = ChargesGroupGeneralOPTabScreenScreen2.Code, ObjectFieldCode = "ChargesGroup.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChargesGroupChargesGroupGeneralOPTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ChargesGroupGeneralOPTabScreenScreen2.Id,ScreenCode = ChargesGroupGeneralOPTabScreenScreen2.Code, ObjectFieldCode = "ChargesGroup.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChargesGroupChargesGroupGeneralOPTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ChargesGroupGeneralOPTabScreenScreen2.Id,ScreenCode = ChargesGroupGeneralOPTabScreenScreen2.Code, ObjectFieldCode = "ChargesGroup.ViewOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ChargesGroupChargesGroupGeneralOPTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ChargesGroupGeneralOPTabScreenScreen2.Id,ScreenCode = ChargesGroupGeneralOPTabScreenScreen2.Code, ObjectFieldCode = "ChargesGroup.QuoteGroupSectionID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
