@@ -9,7 +9,7 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
-let RndomNumber = gr.GenerateRandomNumber(100000, 999999)
+let currentDateTime = gr.GenerateCurrentDatetimeString("")
 
 export function NavigatesGLAccountWizerd() {
     cy.Click(GLAccountsSelectors.NewGLAccountButton, null)
@@ -18,8 +18,8 @@ export function NavigatesGLAccountWizerd() {
 export function FillGLAccountDetails(gLAccountsDetails: GLAccountsDetails) {
     cy.FillLogLov(GLAccountsSelectors.ChartOfAccountsType, gLAccountsDetails.ChartOfAccountsType, true)
     cy.FillLogLov(GLAccountsSelectors.ChartOfAccounts, gLAccountsDetails.ChartOfAccounts, true)
-    cy.FillLogTextBox(GLAccountsSelectors.LocalName, gLAccountsDetails.LocalName + RndomNumber)
-    cy.FillLogTextBox(GLAccountsSelectors.EnglishName, gLAccountsDetails.EnglishName + RndomNumber)
+    cy.FillLogTextBox(GLAccountsSelectors.LocalName, gLAccountsDetails.LocalName + currentDateTime)
+    cy.FillLogTextBox(GLAccountsSelectors.EnglishName, gLAccountsDetails.EnglishName + currentDateTime)
     cy.FillLogLov(GLAccountsSelectors.Currency, gLAccountsDetails.Currency, true)
     cy.FillLogLov(GLAccountsSelectors.RevenueExpenseType, gLAccountsDetails.RevenueExpenseType, true)
 }
@@ -40,15 +40,16 @@ export function NavigatesBankAccountWizerd() {
 }
 
 export function FillBankAccountDetails(bankAccountsDetails: BankAccountsDetails) {
+    let accountNumber = gr.GenerateRandomNumberAndString(14)
     cy.FillLogLov(BankAccountsSelectors.BankCode, bankAccountsDetails.BankCode, true)
     cy.FillLogTextBox(BankAccountsSelectors.BranchCode, bankAccountsDetails.BranchCode)
-    cy.FillLogTextBox(BankAccountsSelectors.AccountNumber, bankAccountsDetails.AccountNumber)
+    cy.FillLogTextBox(BankAccountsSelectors.AccountNumber, accountNumber)
     cy.FillLogTextBox(BankAccountsSelectors.LocalBanchName, bankAccountsDetails.LocalBankName)
     cy.FillLogTextBox(BankAccountsSelectors.EnglishBankName, bankAccountsDetails.EnglishBankName)
     cy.FillLogLov(BankAccountsSelectors.Currency, bankAccountsDetails.Currency, true)
-    cy.FillLogLov(BankAccountsSelectors.GLAccount, bankAccountsDetails.GLAccount + RndomNumber, true)
-    cy.FillLogLov(BankAccountsSelectors.DefferedGLAccount, bankAccountsDetails.DefferedGLAccount + RndomNumber, true)
-    cy.FillLogLov(BankAccountsSelectors.TransferGLAcccount, bankAccountsDetails.TransferGLAcccount + RndomNumber, true)
+    cy.FillLogLov(BankAccountsSelectors.GLAccount, bankAccountsDetails.GLAccount + currentDateTime, true)
+    cy.FillLogLov(BankAccountsSelectors.DefferedGLAccount, bankAccountsDetails.DefferedGLAccount + currentDateTime, true)
+    cy.FillLogLov(BankAccountsSelectors.TransferGLAcccount, bankAccountsDetails.TransferGLAcccount + currentDateTime, true)
 }
 
 export function CreateBankAccount() {

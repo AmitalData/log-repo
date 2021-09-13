@@ -261,4 +261,6 @@ export class RequestAliases {
 
     public static readonly PostBankAccounts = 'PostBankAccounts';
 
+    public static readonly PostCustomer = 'PostCustomer';
+
 }
