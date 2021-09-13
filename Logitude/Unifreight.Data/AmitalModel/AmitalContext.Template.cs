@@ -7858,6 +7858,89 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+
+
+            #region GTBPTYPE
+
+            modelBuilder.Entity<GTBPTYPE>()
+                .HasKey(p => new { p.APPLICATION, p.PRICETYPE })
+                .ToTable("GTBPTYPE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.APPLICATION)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.PRICETYPE)
+                    .HasColumnName(@"PRICE_TYPE")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.OWNERTYPE)
+                    .HasColumnName(@"OWNER_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.OWNER)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.QUOTESMANAGM)
+                    .HasColumnName(@"QUOTES_MANAGM")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.TARIFFTYPE)
+                    .HasColumnName(@"TARIFF_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.STEPBREAKBY)
+                    .HasColumnName(@"STEP_BREAK_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.CALCBREAK)
+                    .HasColumnName(@"CALC_BREAK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.STEPTYPE)
+                    .HasColumnName(@"STEP_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.TARIFFUSE)
+                    .HasColumnName(@"TARIFF_USE")
+                    .HasColumnType("long");
+
+            #endregion
+
+
             #region Disabled conventions
 
 
@@ -7967,5 +8050,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
         public virtual DbSet<GGGQC> GGGQCs { get; set; }
         public virtual DbSet<GAQTEAMUSR> GAQTEAMUSRs { get; set; }
+
+        public virtual DbSet<GTBPTYPE> GTBPTYPEs { get; set; }
     }
 }

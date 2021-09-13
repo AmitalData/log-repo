@@ -160,6 +160,7 @@
     <Compile Include="AmitalModel\EntityKeys\GTBITEMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITMCNKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBMANDTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBPTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBREQCERT.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTRTRANKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITMCN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBMANDT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBPTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBREQCERT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
@@ -339,6 +341,7 @@
     <Compile Include="AmitalModel\Repsitories\GTBITEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITMCNRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBMANDTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBPTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBREQCERTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
