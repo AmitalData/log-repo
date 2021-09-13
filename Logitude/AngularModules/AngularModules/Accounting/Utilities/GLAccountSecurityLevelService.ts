@@ -1,9 +1,11 @@
+import { SessionInfo } from './../../Infrastructure/Utilities/SessionInfo';
 import { FullAccountingSettingList } from "Accounting/EntityLists/FullAccountingSettingList";
 import { GLAccountList } from "Accounting/EntityLists/GLAccountList";
 import { FullAccountingSettingListService } from "Accounting/Services/StandardLists/FullAccountingSettingListService";
 import { GLAccountListService } from "Accounting/Services/StandardLists/GLAccountListService";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
+import { LoginService } from "Infrastructure/Services/LoginService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 
@@ -18,13 +20,21 @@ export class GLAccountSecurityLevelService{
             {
                 var settings = response.Result;
                 if (settings.IsSecurityLevelActivated) {
-                    var loggedUserSecurityLevel = SessionLocator.LoggedUserPM.SecurityLevel || 1;
-                    var glaccountService = new GLAccountListService();
-                    glaccountService.getSingle(glaccountId).subscribe((response: any) =>
-                    {
-                        var glaccount = response.Result;
-                        var hasAccess = (glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel || glaccount.ChartOfAccountSecurityLevel == null);
-                        resolve(hasAccess);
+
+                    var loginService = new LoginService();
+                    loginService.CurrentTenant = SessionLocator.Tenant;
+                    loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
+
+                    loginService.GetLoggedUser().subscribe((myResult: any) => {
+                        var loggedUserSecurityLevel = myResult?.SecurityLevel || 1;
+
+                        var glaccountService = new GLAccountListService();
+                        glaccountService.getSingle(glaccountId).subscribe((response: any) =>
+                        {
+                            var glaccount = response.Result;
+                            var hasAccess = (glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel || glaccount.ChartOfAccountSecurityLevel == null);
+                            resolve(hasAccess);
+                        });
                     });
                 }else{
                     resolve(true);

@@ -375,6 +375,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 foreach (ShipmentDeliveryPM item in dataList)
                 {
                     item.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(item.Id, tenant);
+                    this.GetPickUpDeliveryIndexes(item);
 
                     #region From PART
                     if (item.PickUpDeliveryFromTypeCode == "PART")
@@ -569,6 +570,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return dataList;
+        }
+
+        private void GetPickUpDeliveryIndexes(ShipmentDeliveryPM item)
+        {
+            string[] numberArray = item.PickUpDeliveryNumber.Split('/');
+
+            item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[1]);
+            if (numberArray.Length > 2)
+            {
+                item.ChildIndex = Convert.ToInt32(numberArray[2]);
+            }
         }
 
         public List<ShipmentDeliveryPM> GetShipmentDeliveryByTenant(int tenant)

@@ -675,14 +675,14 @@ export class ContainerPM {
     public set ActualLIFDeparture(newValue: Date) { if (this.actualLIFDeparture != newValue) { this.actualLIFDeparture = newValue; this.MarkAsDirty("ActualLIFDeparture"); } }
        
 	 
-    private gateIn: string;
+    private gateIn: Date;
     public get GateIn() { return this.gateIn; }
-    public set GateIn(newValue: string) { if (this.gateIn != newValue) { this.gateIn = newValue; this.MarkAsDirty("GateIn"); } }
+    public set GateIn(newValue: Date) { if (this.gateIn != newValue) { this.gateIn = newValue; this.MarkAsDirty("GateIn"); } }
        
 	 
-    private gateOut: string;
+    private gateOut: Date;
     public get GateOut() { return this.gateOut; }
-    public set GateOut(newValue: string) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
+    public set GateOut(newValue: Date) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
        
 	 
     private emptyReturnLocation: string;
@@ -723,6 +723,31 @@ export class ContainerPM {
     private availablityDate: Date;
     public get AvailablityDate() { return this.availablityDate; }
     public set AvailablityDate(newValue: Date) { if (this.availablityDate != newValue) { this.availablityDate = newValue; this.MarkAsDirty("AvailablityDate"); } }
+       
+	 
+    private availabilityLocation: string;
+    public get AvailabilityLocation() { return this.availabilityLocation; }
+    public set AvailabilityLocation(newValue: string) { if (this.availabilityLocation != newValue) { this.availabilityLocation = newValue; this.MarkAsDirty("AvailabilityLocation"); } }
+       
+	 
+    private lastFreeDayDate: Date;
+    public get LastFreeDayDate() { return this.lastFreeDayDate; }
+    public set LastFreeDayDate(newValue: Date) { if (this.lastFreeDayDate != newValue) { this.lastFreeDayDate = newValue; this.MarkAsDirty("LastFreeDayDate"); } }
+       
+	 
+    private freeDays: number;
+    public get FreeDays() { return this.freeDays; }
+    public set FreeDays(newValue: number) { if (this.freeDays != newValue) { this.freeDays = newValue; this.MarkAsDirty("FreeDays"); } }
+       
+	 
+    private shipmentStatusId: string;
+    public get ShipmentStatusId() { return this.shipmentStatusId; }
+    public set ShipmentStatusId(newValue: string) { if (this.shipmentStatusId != newValue) { this.shipmentStatusId = newValue; this.MarkAsDirty("ShipmentStatusId"); } }
+       
+	 
+    private shipmentStatusName: string;
+    public get ShipmentStatusName() { return this.shipmentStatusName; }
+    public set ShipmentStatusName(newValue: string) { if (this.shipmentStatusName != newValue) { this.shipmentStatusName = newValue; this.MarkAsDirty("ShipmentStatusName"); } }
        
 	 
 

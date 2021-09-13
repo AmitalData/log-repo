@@ -253,6 +253,11 @@ namespace WebFreight.Web.DataProviders
         public string CustomsAgent { get; set; }
         public string ShipmentSubTypeName { get; set; }
         public byte[] CustomerLogo { get; set; }
+        public string CustomsDeclarationNumber { get; set; }
+        public DateTime? CustomsDeclarationDate { get; set; }
+        public DateTime? CustomsClearanceDate { get; set; }
+
+
     }
 
     public class ReceivablesCharges

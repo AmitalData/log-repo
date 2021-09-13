@@ -125,6 +125,9 @@
             this.label47 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.FactInvoicesLabel = new System.Windows.Forms.Label();
+            this.DWCheckBox = new System.Windows.Forms.CheckBox();
+            this.DIMCheckBox = new System.Windows.Forms.CheckBox();
+            this.FactCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1306,11 +1309,44 @@
             this.FactInvoicesLabel.Size = new System.Drawing.Size(0, 25);
             this.FactInvoicesLabel.TabIndex = 199;
             // 
+            // DWCheckBox
+            // 
+            this.DWCheckBox.AutoSize = true;
+            this.DWCheckBox.Location = new System.Drawing.Point(1032, 11);
+            this.DWCheckBox.Name = "DWCheckBox";
+            this.DWCheckBox.Size = new System.Drawing.Size(47, 21);
+            this.DWCheckBox.TabIndex = 200;
+            this.DWCheckBox.Text = "dw";
+            this.DWCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // DIMCheckBox
+            // 
+            this.DIMCheckBox.AutoSize = true;
+            this.DIMCheckBox.Location = new System.Drawing.Point(1112, 13);
+            this.DIMCheckBox.Name = "DIMCheckBox";
+            this.DIMCheckBox.Size = new System.Drawing.Size(54, 21);
+            this.DIMCheckBox.TabIndex = 201;
+            this.DIMCheckBox.Text = "Dim";
+            this.DIMCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FactCheckBox
+            // 
+            this.FactCheckBox.AutoSize = true;
+            this.FactCheckBox.Location = new System.Drawing.Point(1194, 11);
+            this.FactCheckBox.Name = "FactCheckBox";
+            this.FactCheckBox.Size = new System.Drawing.Size(57, 21);
+            this.FactCheckBox.TabIndex = 202;
+            this.FactCheckBox.Text = "Fact";
+            this.FactCheckBox.UseVisualStyleBackColor = true;
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1789, 859);
+            this.Controls.Add(this.FactCheckBox);
+            this.Controls.Add(this.DIMCheckBox);
+            this.Controls.Add(this.DWCheckBox);
             this.Controls.Add(this.FactInvoicesLabel);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.DWAPInvoiceTypeslabel);
@@ -1515,6 +1551,9 @@
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label FactInvoicesLabel;
+        private System.Windows.Forms.CheckBox DWCheckBox;
+        private System.Windows.Forms.CheckBox DIMCheckBox;
+        private System.Windows.Forms.CheckBox FactCheckBox;
     }
 }
 

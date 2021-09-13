@@ -1483,7 +1483,9 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 myDataProvider.FinalDestination = myServicHelper.GetFinalDestination(myFirstDelivery, shipment);
-
+                myDataProvider.CustomsDeclarationNumber = shipment.DeclarationNumber;
+                myDataProvider.CustomsDeclarationDate = shipment.DeclarationDate;
+                myDataProvider.CustomsClearanceDate = shipment.CustomsClearanceDate;
                 //HBL
                 myDataProvider.House = shipment.House != null ? shipment.House : "";
                 myDataProvider.Master = shipment.Master != null ? shipment.Master : "";

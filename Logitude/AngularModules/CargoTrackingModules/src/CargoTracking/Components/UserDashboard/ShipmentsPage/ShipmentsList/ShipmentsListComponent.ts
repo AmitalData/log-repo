@@ -1,6 +1,5 @@
 
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, AfterContentInit } from '@angular/core';
-
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -85,9 +84,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
     }
-
-
-
     ngAfterViewInit(): void
     {
 
@@ -599,7 +595,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
         RootContext.ShipmentsScrollPosition = 0;
-
         this.LoadScreenData();
 
     }
@@ -667,7 +662,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             if(index >= 0)
                 this.SelectedInvitedCustomers.splice(index,1);
                 RootContext.ShipmentsScrollPosition = 0;
-
         this.LoadScreenData();
 
     }
