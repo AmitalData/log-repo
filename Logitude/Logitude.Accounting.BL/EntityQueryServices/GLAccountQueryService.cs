@@ -419,7 +419,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
 
-            if (!CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
+            if (gLAccountPM != null && !CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
                 return null;
 
             return gLAccountPM;
