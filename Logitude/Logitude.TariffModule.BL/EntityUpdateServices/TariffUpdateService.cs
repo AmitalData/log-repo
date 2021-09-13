@@ -601,6 +601,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
+                              && !d.InActive
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && (d.TypeCode == "ASC" || d.TypeCode == "OSC")
@@ -619,6 +620,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
+                              && !d.InActive
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && d.TypeCode == "OFS"
