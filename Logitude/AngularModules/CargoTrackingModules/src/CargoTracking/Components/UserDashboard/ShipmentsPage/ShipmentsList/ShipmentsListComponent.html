@@ -15,24 +15,16 @@
     <div class="toolbar">
 
         <div class="search-bar">
-            <form [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
+            <form  class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
-                <div class="search-text ">
+                <div class="search-text">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
                         formControlName="SearchText" name="SearchText " />
-                    <!-- [(ngModel)]="SearchText " -->
-
-                    <div class="icon ">
-                        <!-- <img src="./assets/search.png " alt=" " /> -->
-                        <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
-                        <img *ngIf="SearchText" (click)="Clear()" class="delete" src="./assets/images/icons/delete.svg "
-                            alt=" " />
-                    </div>
-
                 </div>
-
-                <button class="search-button" type="submit"
-                    (onsubmit)="LoadScreenData()">{{isLoading?'Loading...': 'Search'}}</button>
+                
+                <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit" (onsubmit)="LoadScreenData()">
+                    <mat-icon>search</mat-icon>
+                </button>
             </form>
         </div>
 
@@ -43,9 +35,8 @@
             </ul>
         </div>-->
     <div class="hide-mobile">
-        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,1).concat(ToggleFilters.slice(3,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
-        <multiple-selection [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
-
+        <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+        <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
     </div>
 
         <div class="actions-buttons hide-mobile">

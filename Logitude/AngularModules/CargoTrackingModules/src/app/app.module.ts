@@ -41,6 +41,7 @@ import { MultipleSelectionComponent } from '../Infrastructure/Components/Multipl
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export function getBaseUrl() {
@@ -91,6 +92,7 @@ export function getBaseUrl() {
         MatInputModule,
         MatSelectModule,
         MatFormFieldModule,
+        MatIconModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
     ],
     providers: [
