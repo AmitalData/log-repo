@@ -29,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using System.Xml;
+using Simplog.Server.Infrastructure; 
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -11501,12 +11502,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public ImporterQueriesDataCounts GetShipmentsQueriesCounts(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
+
+
             ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
-            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
-            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+            IQueryable<ShipmentDataView> allShipments = GetAllShipments(shipmentsQueriesCountsArgs);
+
             allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
             allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
             allShipments = GetAllFliteredShipments(allShipments, shipmentsQueriesCountsArgs);
+
+
+
 
             myResult.AllShipmentsCount = allShipments.Take(1001).Count();
             MapOpenShipmentsCount(myResult, allShipments);
@@ -11518,6 +11524,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             MapRequiredActionsCount(myResult, allShipments);
 
             return myResult;
+        }
+
+        private static IQueryable<ShipmentDataView> GetAllShipments(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
+        {
+            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
+            IQueryable<ShipmentDataView> allShipments;
+
+            bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+            if (isLogbox)
+            {
+                allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false && f.DirectionId != "E" select f);
+            }
+            else
+            {
+                allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+            }
+
+            return allShipments;
         }
 
         private void MapRequiredActionsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)

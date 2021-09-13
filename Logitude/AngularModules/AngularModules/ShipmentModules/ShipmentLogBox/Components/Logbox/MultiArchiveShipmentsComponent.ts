@@ -21,6 +21,7 @@ import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/Shipm
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -45,6 +46,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
+    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1";
+
     constructor(private _entityListService: EntityListService) {
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
@@ -368,11 +371,18 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.addAdditionalFilter("CreateDateTime", FilterDate, null, null, "LessThanOrEqual", false, true, false, "Date", true);
         }
 
+        this.FilterLogboxShipments();
+
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
+    private FilterLogboxShipments() {
+        if (this.isLogbox) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
+        }
+    }
     private AddDirectionFilter() {
         this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.selectedDirectionFilter == "All" ? true : false);
     }

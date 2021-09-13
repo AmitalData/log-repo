@@ -56,7 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     public hasAirShipmentToggle: boolean = false;
 
-    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1";
+    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"; 
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -318,7 +318,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             if (!Result.HasError && Result.Result != null) {
                 var myFiltersSettings = Result.Result;
                 var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
-                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');
+                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');               
                 var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
 
                 if (myArchiveFilter.length > 0) {
@@ -776,7 +776,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
         else {
             if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'DirectionId').length > 0) {
-                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId');
+                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId'); 
             }
         }
         if (this.SelectedArchiveFilter != "All") {
@@ -873,8 +873,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.filterAgrs.SortBy = "ComputedStatusDate";
             this.filterAgrs.SortDirection = "Descending";
         }
+         
+        this.FilterLogboxShipments();
 
         return this.filterAgrs;
+    }
+
+    private FilterLogboxShipments() {
+        if (this.isLogbox) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
+        }
     }
 
     GridAfterViewInitCompleted($event) {
