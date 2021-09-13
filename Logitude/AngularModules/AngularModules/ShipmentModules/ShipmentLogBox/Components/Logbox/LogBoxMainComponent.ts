@@ -22,8 +22,8 @@ import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/E
 import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'; 
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -56,7 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     public hasAirShipmentToggle: boolean = false;
 
-    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"; 
+    private isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();

@@ -20,8 +20,8 @@ import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Por
 import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow'; 
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     
@@ -46,7 +46,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
-    private isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1";
+    private isLogbox = SystemEnvironmentService.IsLogBox();
 
     constructor(private _entityListService: EntityListService) {
         super();

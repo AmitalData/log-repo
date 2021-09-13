@@ -11529,18 +11529,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private static IQueryable<ShipmentDataView> GetAllShipments(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
-            IQueryable<ShipmentDataView> allShipments;
-
-            bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
-            if (isLogbox)
+            IQueryable<ShipmentDataView> allShipments; 
+             
+            if (SystemEnvironmentService.IsLogBox())
             {
                 allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false && f.DirectionId != "E" select f);
             }
             else
             {
                 allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
-            }
-
+            } 
             return allShipments;
         }
 
