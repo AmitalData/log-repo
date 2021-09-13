@@ -144,13 +144,7 @@ namespace WebFreight.Web.Helpers
             List<string> documentTypeIds = defultAttachmentList.Where(d => d.Type == "DocIn").Select(d => d.DocumentTypeId).ToList();
             if (documentTypeIds.Count() > 0)
             {
-                IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings.Include("Document").Include("DocumentType")
-                                                                where a.Tenant == defultAttachmentArgs.Tenant && (a.ObjectTableId == defultAttachmentArgs.ObjectTableId || a.ObjectTableId == shipmentObjectId) && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I" && a.EntityId == defultAttachmentArgs.EntityId && a.IsDeleted == false && (a.Document != null && a.Document.HasFile)
-                                                                select a);
-                if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
-                {
-                    documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
-                }
+                IQueryable<DocumentsFiling> documentsFilings = GetDocumentsFiligns(documentTypeIds);
 
                 List<AttachmentsList> attachments = new List<DocumentsFiling>(documentsFilings).Select(d => GetAttachment(d)).ToList();
 
@@ -160,6 +154,20 @@ namespace WebFreight.Web.Helpers
                 }
             }
         }
+
+        private IQueryable<DocumentsFiling> GetDocumentsFiligns(List<string> documentTypeIds)
+        {
+            IQueryable<DocumentsFiling> documentsFilings = (from a in commonDataContext.DocumentsFilings.Include("Document").Include("DocumentType")
+                                                            where a.Tenant == defultAttachmentArgs.Tenant && (a.ObjectTableId == defultAttachmentArgs.ObjectTableId || a.ObjectTableId == shipmentObjectId) && documentTypeIds.Contains(a.DocumentTypeId) && a.DirectionCode == "I" && a.EntityId == defultAttachmentArgs.EntityId && a.IsDeleted == false && (a.Document != null && a.Document.HasFile)
+                                                            select a);
+            if (!string.IsNullOrEmpty(defultAttachmentArgs.ChildEntityId))
+            {
+                documentsFilings = documentsFilings.Where(d => d.ChildEntityId == defultAttachmentArgs.ChildEntityId);
+            }
+
+            return documentsFilings;
+        }
+
         private static AttachmentsList GetAttachment(DocumentsFiling d)
         {
             return new AttachmentsList()
