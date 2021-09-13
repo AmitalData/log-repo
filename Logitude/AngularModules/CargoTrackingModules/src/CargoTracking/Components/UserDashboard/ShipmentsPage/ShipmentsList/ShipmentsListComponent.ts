@@ -14,7 +14,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
-import { MultipleSelectionComponent } from '../../../../../Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 
 
 @Component({
@@ -233,7 +233,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     this.SelectFilterByCode(filterCode);
                 });
             }
-            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
+            this.GetInvitedCustomers();
             this.SelectedFilters.map(x => {
                 if(x.FilterName == 'shipmentType')
                 {
