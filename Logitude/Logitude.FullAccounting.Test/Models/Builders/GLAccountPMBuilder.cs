@@ -47,6 +47,11 @@ namespace Logitude.TimeManagementTests.Models.Builders
             glAccountPM.CurrencyId = currencyId;
             return this;
         }
+        public GLAccountPMBuilder CurrencyCode(string currencyCode)
+        {
+            glAccountPM.CurrencyCode = currencyCode;
+            return this;
+        }
         
         public GLAccountPMBuilder LocalName(string localName)
         {

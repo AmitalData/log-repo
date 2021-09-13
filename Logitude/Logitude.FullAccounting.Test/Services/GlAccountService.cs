@@ -18,14 +18,15 @@ namespace Logitude.FullAccounting.Test.Services
             dynamic gLAccountNewProperty = table.CreateDynamicInstance();
             return new GLAccountPMBuilder().WithModel(gLAccount)
                 .IsMultiCurrency((bool)gLAccountNewProperty.IsMultiCurrency)
-                .DisplayNumber(DateTime.Now.Ticks + "")
+                .DisplayNumber(DateTime.Now.Ticks.ToString().Substring(3))
                 .AccountTypeCode((int)GLAccountTypeEnum.Vendor + "")
                 .LocalName((string)gLAccountNewProperty.LocalName)
                 .EnglishName((string)gLAccountNewProperty.EnglishName)
                 .CurrencyId(null)
+                .CurrencyCode(null)
                 .RevenueExpenseType((int)RevenueExpenseTypeEnum.Other + "")
                 .IsControlAccount((bool)gLAccountNewProperty.IsControlAccount)
-                .ControlAccountId((string)gLAccountNewProperty.ControlAccountId)
+                .ControlAccountId(FullAccountingData.GLAccount1921681254Id)
                 .Build();
 
 

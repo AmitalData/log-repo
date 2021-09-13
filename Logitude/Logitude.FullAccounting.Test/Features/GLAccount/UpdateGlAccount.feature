@@ -11,7 +11,6 @@ Scenario: Update glAccount
 		| AccountTypeCode    | Vendor               |
 		| LocalName          | VendGlAccountLocal   |
 		| EnglishName        | VendGlAccountEnglish |
-		| CurrencyId         | null                 |
 		| RevenueExpenseType | Other                |
 		| IsControlAccount   | false                |
 		| ControlAccountId   | 1921681254           |

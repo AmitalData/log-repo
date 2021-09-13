@@ -133,9 +133,6 @@ this.ScenarioInitialize(scenarioInfo);
                             "EnglishName",
                             "VendGlAccountEnglish"});
                 table1.AddRow(new string[] {
-                            "CurrencyId",
-                            "null"});
-                table1.AddRow(new string[] {
                             "RevenueExpenseType",
                             "Other"});
                 table1.AddRow(new string[] {
@@ -147,10 +144,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
  testRunner.And("following new glAccount properties", ((string)(null)), table1, "And ");
 #line hidden
-#line 18
+#line 17
  testRunner.When("update glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 18
  testRunner.Then("the glAccount should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
