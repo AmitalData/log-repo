@@ -265,4 +265,7 @@ export class RequestAliases {
 
     public static readonly PostCustomer = 'PostCustomer';
 
+    public static readonly PostChartOfAccount = 'PostChartOfAccount';
+    public static readonly PutChartOfAccount = 'PutChartOfAccount';
+
 }
