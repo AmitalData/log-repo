@@ -264,6 +264,7 @@
     <Compile Include="EntityPMs\UGenerated\GTBITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBITMCNPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBMANDTPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\GTBPTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBREQCERTPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTRTRANPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ITBPCKTYPM.cs" />
