@@ -419,8 +419,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
 
-            if (!CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
+            if (gLAccountPM == null)
                 return null;
+
+            if (!CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
+            {
+                gLAccountPM.Access = false;
+                gLAccountPM.BalanceInForeignCurrency = 0;
+                gLAccountPM.BalanceInLocalCurrency = 0;
+                gLAccountPM.LocalBalanceInDue = 0;
+                gLAccountPM.ForeignBalanceInDue = 0;
+                gLAccountPM.Period0 = 0;
+                gLAccountPM.Period1 = 0;
+                gLAccountPM.Period2 = 0;
+                gLAccountPM.Period3 = 0;
+                gLAccountPM.Period4 = 0;
+                gLAccountPM.Period5 = 0;
+                gLAccountPM.PeriodFuture = 0;
+                gLAccountPM.PeriodPast = 0;
+                gLAccountPM.CalculatedAgingPeriod1 = 0;
+                gLAccountPM.CalculatedAgingPeriod2 = 0;
+                gLAccountPM.CalculatedAgingPeriod3 = 0;
+                gLAccountPM.TotalOpenChequesInLocalCur = 0;
+                gLAccountPM.TotFutureOpenChequesInLocalCur = 0;
+            }
+            else
+            {
+                gLAccountPM.Access = true;
+            }
 
             return gLAccountPM;
         }

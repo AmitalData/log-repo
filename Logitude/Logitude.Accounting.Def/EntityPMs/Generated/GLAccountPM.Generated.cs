@@ -3562,7 +3562,33 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+
+
+		private bool access;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public bool Access
+		{
+
+			get
+			{
+				return access;
+			}
+			set
+			{
+				if (access != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Access", OldValue = Access, NewValue = value, PropertyType = "bool" };
+					NotifyPropertyChanged(values);
+					access = value;
+				}
+
+			}
+		}
+	}
    
 }
 	 
