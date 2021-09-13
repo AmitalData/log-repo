@@ -69,7 +69,7 @@ namespace WebFreight.Web.Monitoring
             DateTime todayDateTime = DateTime.Now;
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
             bool incrementalDWUpdateFailed = (from d in commonDataContext.DWHBuildStatus
-                             where (d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && (!d.IsFullBuildDWRunning || (d.IsFullBuildDWRunning && EntityFunctions.DiffHours(d.LastIncrementalDWUpdateDate, todayDateTime) > 10))
+                             where (d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) >10)) && (!d.IsFullBuildDWRunning || (d.IsFullBuildDWRunning && EntityFunctions.DiffHours(d.LastIncrementalDWUpdateDate, todayDateTime) > 5))
                                               select d).Any();
             if (incrementalDWUpdateFailed)
             {
