@@ -152,8 +152,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? EstimatedLIFDeparture { get; set; }
         public DateTime? ActualLIFDeparture { get; set; }
 
-        public string GateIn { get; set; }
-        public string GateOut { get; set; }
+        public DateTime? GateIn { get; set; }
+        public DateTime? GateOut { get; set; }
 
         public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
