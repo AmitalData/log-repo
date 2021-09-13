@@ -338,11 +338,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.DeleteTraceEvent("AFD");
             }
-            else if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
+
+            if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
             {
                 if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
                 {
-                    this.CreateTraceEvent("CUCD", entityPM.CustomsClearanceDate);
+                    this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
+                }
+
+                else if (entityPM.DirectionId == "E")
+                {
+                    this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
                 }
             }
 
@@ -427,21 +433,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("SCNL", entityPM.EventNote);
             }
 
-            if (entityPoco.CustomsClearanceDate == null && entityPM.CustomsClearanceDate != null)
+            if (!entityPoco.IsCancelled && entityPM.IsCancelled)
             {
-                if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
-                {
-                    this.CreateTraceEvent("ICUC", entityPM.CustomsClearanceDate);
-                }
-
-                else if (entityPM.DirectionId == "E")
-                {
-                    this.CreateTraceEvent("ECUC", entityPM.CustomsClearanceDate);
-                }
+                this.CreateTraceEvent("SCNL", entityPM.EventNote);
             }
 
+            this.TraceCargoReadyForPickup();
 
         }
+
         private void TraceMasterData()
         {
             if ((entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C") && entityMasterData != null)
@@ -1848,6 +1848,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
         }
 
+        private void TraceCargoReadyForPickup()
+        {
+            if (this.IsApprovedCargoReadyDateAdded())
+            {
+                this.CreateTraceEvent("CRFP", entityPoco.ApprovedCargoReadyDate);
+            }
+            else if (this.IsApprovedCargoReadyDateDeleted())
+            {
+                this.DeleteTraceEvent("CRFP");
+            }
+            else if (this.IsApprovedCargoReadyDateUpdated())
+            {
+                this.DeleteTraceEvent("CRFP");
+                this.CreateTraceEvent("CRFP", entityPM.ApprovedCargoReadyDate);
+            }
+        }
+        private bool IsApprovedCargoReadyDateAdded()
+        {
+            return (entityPoco.ApprovedCargoReadyDate == null && entityPM.ApprovedCargoReadyDate != null);
+        }
+        private bool IsApprovedCargoReadyDateDeleted()
+        {
+            return (entityPoco.ApprovedCargoReadyDate != null && entityPM.ApprovedCargoReadyDate == null);
+        }
+        private bool IsApprovedCargoReadyDateUpdated()
+        {
+            return (entityPoco.ApprovedCargoReadyDate != null && entityPM.ApprovedCargoReadyDate != null
+                && entityPoco.ApprovedCargoReadyDate != entityPM.ApprovedCargoReadyDate);
+        }
     }
 
 

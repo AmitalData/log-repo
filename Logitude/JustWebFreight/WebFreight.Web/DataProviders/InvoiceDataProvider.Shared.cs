@@ -499,13 +499,11 @@ namespace WebFreight.Web.DataProviders
             public double? subInLocal { get; set; }
             public string LocalCurrency { get; set; }
             public DateTime? CreateDate { get; set; }
-            public DateTime? DueDate { get; set; }
-            
+            public DateTime? DueDate { get; set; }            
             public double? VAT1Amount { get; set; }
             public double? VAT2Amount { get; set; }
             public double? VAT3Amount { get; set; }
             public double? VAT4Amount { get; set; }
-
             public string ARInvoiceField1 { get; set; }
             public string ARInvoiceField2 { get; set; }
             public string ARInvoiceField3 { get; set; }
@@ -524,6 +522,8 @@ namespace WebFreight.Web.DataProviders
             public double? ExpenseChargesInLocalCurrency { get; set; }
             public string UUID { get; set; }
             public string BillToCode { get; set; }
+
+            public string BillToType { get; set; }
         }
 
         public class InvoiceTotals

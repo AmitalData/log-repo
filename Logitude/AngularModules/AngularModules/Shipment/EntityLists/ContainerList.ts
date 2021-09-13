@@ -37,6 +37,18 @@ export class ContainerList {
 		CurrentStatusDate: Date;
 		CurrentLocation: string;
 		HasContainerException: boolean;
+		ShipmentPreCarriageFromId: string;
+		ShipmentPreCarriageToId: string;
+		ShipmentMainCarriageFromId: string;
+		ShipmentMainCarriageToId: string;
+		ShipmentTransshipment1FromId: string;
+		ShipmentTransshipment1ToId: string;
+		ShipmentTransshipment2FromId: string;
+		ShipmentTransshipment2ToId: string;
+		ShipmentTransshipment3FromId: string;
+		ShipmentTransshipment3ToId: string;
+		ShipmentOnCarriageFromId: string;
+		ShipmentOnCarriageToId: string;
 		ShipmentFirstPickupFrom: string;
 		ShipmentFirstPickupTo: string;
 		ShipmentPreCarriageFrom: string;
@@ -125,8 +137,8 @@ export class ContainerList {
 		ActualLIFArrival: Date;
 		EstimatedLIFDeparture: Date;
 		ActualLIFDeparture: Date;
-		GateIn: string;
-		GateOut: string;
+		GateIn: Date;
+		GateOut: Date;
 		EmptyReturnLocation: string;
 		EstimatedEmptyReturn: Date;
 		ActualEmptyReturn: Date;
@@ -135,5 +147,10 @@ export class ContainerList {
 		CarrierReleaseState: string;
 		CarrierReleaseDate: Date;
 		AvailablityDate: Date;
+		AvailabilityLocation: string;
+		LastFreeDayDate: Date;
+		FreeDays: number;
+		ShipmentStatusId: string;
+		ShipmentStatusName: string;
 	
 }

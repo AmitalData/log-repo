@@ -14,9 +14,10 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {GLAccountSummary, JournalSummary} from '../../../DataContracts/AccountingSummery';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
-    
+
     templateUrl: './GLAccountsPageComponent.html',
 
 })
@@ -107,7 +108,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.AllGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLGLACCOUNTS") ? true : false;
         this.OpenFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "OPENFILESGLACCOUNTS") ? true : false;
         this.OpenMastersVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "GLAccount.Q.OpenMasters") ? true : false;
- 
+
         this.ClosedFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLOSEDFILESGLACCOUNTS") ? true : false;
         this.AllFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLFILESGLACCOUNTS") ? true : false;
         this.AllJobsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLJOBSGLACCOUNTS") ? true : false;
@@ -155,17 +156,30 @@ export class GLAccountsPageComponent implements AfterViewInit {
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main") });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.RefreshButtonClicked();
-                    });
+            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
+                {
+                    if (hasAccess)
+                        this.OpenGLAccountEditWindow(entity);
+                    else
+                        GLAccountSecurityLevelService.ShowSecurityBockingMessage();
                 });
+
+
         }
     }
-
+    OpenGLAccountEditWindow(entity)
+    {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef =>
+            {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main") });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) =>
+                {
+                    this.RefreshButtonClicked();
+                });
+            });
+    }
     RunNewGLAccountWizard() {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewAccount"); // "New Account";
         //var windowArgs: BookingWizardArgs = new BookingWizardArgs();

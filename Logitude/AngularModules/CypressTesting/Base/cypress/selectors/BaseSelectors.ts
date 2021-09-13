@@ -11,6 +11,12 @@ export class BaseSelectors extends RegexSelectors {
 	public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
     //#endregion
+
+    //#region Full Accounting
+    public static readonly FullAccountingTab = "#GeneralMHFullAccounting"
+    public static readonly VendorsTab = "#FAVND"
+    //#endregion
+
     //#region CRM
     public static readonly CRMCustomers="#CRMCUS"
     //#endregion

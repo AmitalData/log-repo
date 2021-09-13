@@ -47,7 +47,7 @@ namespace WebFreight.Web.WebPages
                     {
                         Uploader up = new Uploader();
                         var containername = StorageAcountDetails.GetCurrentContainer((int)tenant);
-                        byte[] _DatainByte = up.DownloadStaticFile(filename, containername.Name);
+                        byte[] _DatainByte = up.DownloadStaticFile(filename, containername.Name,(int)tenant);
 
                         if (_DatainByte != null)
                         {

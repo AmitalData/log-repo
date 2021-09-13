@@ -52,6 +52,7 @@
       <xs:element minOccurs="0" name="AccountedReceivablesInLocalCurrency" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="AccountedReceivablesInProfitCurrency" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="AccountingCloseDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AccountingClosedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingInformation1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingInformation2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AccountingInformation3" nillable="true" type="xs:string" />
@@ -69,6 +70,7 @@
       <xs:element minOccurs="0" name="AdditionalChargesId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AdditionalHandlingInfo" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AdditionalHandlingInfoEdited" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Agent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentAddressCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AgentAddressText" nillable="true" type="xs:string" />
@@ -92,6 +94,7 @@
       <xs:element minOccurs="0" name="BaseShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasicFreightId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BasketId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillingStatusId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BookingConfNumber_Original" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BookingConfirmationNotes" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BookingConfirmationNumber" nillable="true" type="xs:string" />
@@ -355,10 +358,6 @@
       <xs:element minOccurs="0" name="FirstPickupETD" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FirstPickupLocation" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FlightDate" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="FollowUpDate" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="FollowUpId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FollowUpNotes" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FollowUpType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FollowUps" nillable="true" type="tns:ArrayOfShipmentFollowUpPM" />
       <xs:element minOccurs="0" name="ForeignPartnerCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ForwarderPartnerId" nillable="true" type="xs:string" />
@@ -759,6 +758,7 @@
       <xs:element minOccurs="0" name="OperationalCloseDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="OperationalClosedByUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OperationalDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OperationalStatusId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrderChargeableWeight" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="OrderChargeableWeightEdited" type="xs:boolean" />
       <xs:element minOccurs="0" name="OrderGrossWeight" nillable="true" type="xs:double" />
@@ -803,6 +803,7 @@
       <xs:element minOccurs="0" name="ParentShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ParentShipmentType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PaymentDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PaymentRequestDateTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="PaymentRequestXML" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PickUpAddressId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlannedCargoReadyDate" nillable="true" type="xs:dateTime" />
@@ -1458,7 +1459,7 @@
       <xs:element minOccurs="0" name="JobId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LegType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ManualActivatedFollowUp" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OwnerUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OwnerUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShipmentId" nillable="true" type="xs:string" />
@@ -1769,6 +1770,7 @@
       <xs:element minOccurs="0" name="BookingConfirmationNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CarrierLocalName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierWebSite" nillable="true" type="xs:string" />
@@ -2027,6 +2029,7 @@
       <xs:element minOccurs="0" name="BookingConfirmationNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CarrierLocalName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CarrierWebSite" nillable="true" type="xs:string" />

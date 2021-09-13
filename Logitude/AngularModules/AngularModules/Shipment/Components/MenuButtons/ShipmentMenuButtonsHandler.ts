@@ -24,6 +24,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -129,6 +130,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             }
                             else {
                                 button.IsDisabled = false;
+                            }
+                            if (this.IsStandAloneFeatureShipment() && this.SetIsStandaloneWithPickupDeliveryOnlyVisible()) {
+                                button.IsDisabled = true;
                             }
                         }
                         else {
@@ -1709,6 +1713,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             );
         }
         return result;
+    }
+
+    SetIsStandaloneWithPickupDeliveryOnlyVisible() {
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OPD")[0];
+        if (featureToggle) {
+            return true;
+        }
+        return false;
     }
 }
 export class ActionValidationArgs {

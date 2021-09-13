@@ -21,7 +21,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
-
+  public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   //#endregion
 
   //#region Create shipment

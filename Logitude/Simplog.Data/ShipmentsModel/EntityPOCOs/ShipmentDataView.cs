@@ -740,5 +740,15 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         public string HandlerUserName { get; set; }
+        public string InlandDomesticFromZipCode { get; set; }
+        public string InlandDomesticToZipCode { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
     }
 }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class SharedLogisticsUpdateClass
    {  		
-		public const string HashString = "0b8fc38324333f778b1a8d5db756600c";
+		public const string HashString = "a2bc268637db13640b551447d5f4e052";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "SharedLogistics",
 			      				    IsNew =  false,
 			      				    DBTableName =  "NONE",
-			      				    OldDBTableName =  "NONE",
 			      				    ObjectTableSingular =  "SharedLogistics",
 			      				    ObjectTablePlural =  "Shared Logistics",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SharedLogistics",
-			      				    Code =  "c49e",
+			      				    Code =  "d9d1",
 			      				    Name =  "SharedLogistics",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SystemURL",
-					  						OldFieldName =  "SystemURL",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -206,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ResetPasswordURL",
-					  						OldFieldName =  "ResetPasswordURL",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -268,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AndroidAppLink",
-					  						OldFieldName =  "AndroidAppLink",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -330,7 +326,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IOSAppLink",
-					  						OldFieldName =  "IOSAppLink",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -392,7 +387,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -454,7 +448,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Email",
-					  						OldFieldName =  "Email",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -516,7 +509,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvitationPassword",
-					  						OldFieldName =  "InvitationPassword",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -578,7 +570,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvitationEmail",
-					  						OldFieldName =  "InvitationEmail",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -640,7 +631,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InviteeName",
-					  						OldFieldName =  "InviteeName",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -693,6 +683,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Invitee Name",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CargoTrackingURL",
+					  						ObjectTableName =  "SharedLogistics",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  200,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CargoTrackingURL",
+					  						ListPropertyPath =  "CargoTrackingURL",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CargoTrackingURL",
+					  						DefaultText =  "Cargo Tracking URL",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);

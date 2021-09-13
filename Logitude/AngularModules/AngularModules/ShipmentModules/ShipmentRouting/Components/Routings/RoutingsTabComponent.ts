@@ -76,7 +76,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private BackCompletedEvent: any = null; 
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -85,13 +87,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
 
-                if (s == "RefreshWareHouseLeg") {
+                else if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
-                
-                if (s == "ReloadForwarderShipmentFromStandAlone") {
-                      this.entityArgs.EditComponent.ReloadEntityPM();
+
+                else if (s == "ReloadForwarderShipmentFromStandAlone") {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
                 }
+
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -131,6 +134,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
             });
+
         }
     }
     ngOnDestroy() {
@@ -138,6 +142,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.BackCompletedEvent);
     }
     ngOnInit() {
         if (this.EntityPM != null) {
@@ -244,7 +249,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(
+                function (a, b) {
+                    if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                        return a.ChildIndex - b.ChildIndex;
+                    }
+                    return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+                });
+                
+
             myShipmentPickUps.forEach((item) => {
                 this.ItemsSource.push(new RoutingItem(item, "Pick Up", this));
             });
@@ -300,7 +313,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
-        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(
+                function (a, b) {
+                if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                    return a.ChildIndex - b.ChildIndex;
+                }
+                return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+            });
+
         var allEmptyContainerReturns = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "EMPT").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
 
         if (allDeliveries.length == 0) {

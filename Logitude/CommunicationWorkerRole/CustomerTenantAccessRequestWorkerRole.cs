@@ -149,6 +149,7 @@ namespace CommunicationWorkerRole
                                     ExpirationDate = DateTime.Now.AddDays(90),
                                     Status = "I",
                                     Tenant = tenant
+                                    //
                                 };
                             }
                             else
@@ -200,7 +201,7 @@ namespace CommunicationWorkerRole
                                         ContactMobile = Tenant.CustomerMobile,
                                         ContactPhone = Tenant.CustomerPhone,
                                         IsPrivateLabelCustomer = false,
-                                        StockTypeCode = Tenant.StockTypeCode,
+                                        StockTypeCode = Tenant.StockTypeCode,///
                                     };
                                     GlobalTenant Globaltenant = null;
                                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())

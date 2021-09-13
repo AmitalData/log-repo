@@ -1193,6 +1193,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool vATreportEveryTwoMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool VATreportEveryTwoMonths  
+	   {
+	    
+	     get
+		{
+		   return vATreportEveryTwoMonths;
+		 }
+		 set
+		 {
+		   if(vATreportEveryTwoMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATreportEveryTwoMonths",OldValue=vATreportEveryTwoMonths,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   vATreportEveryTwoMonths=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1564,7 +1564,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaidDate = entity.PaidDate,
                              IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
                              PartnerId = entity.PartnerId,
-                             ShipmentsNumbers = entity.ShipmentsNumbers
+                             ShipmentsNumbers = entity.ShipmentsNumbers,
+                             MasterNumbers = entity.MasterNumbers,
+                             MasterShipmentNumbers = entity.MasterShipmentNumbers,
+                             HouseNumbers = entity.HouseNumbers,
                          };
 
             return result;
@@ -1681,7 +1684,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
                                               PaidDate = a.PaidDate,
                                               PartnerId = a.PartnerId,
-                                              ShipmentsNumbers = a.ShipmentsNumbers
+                                              ShipmentsNumbers = a.ShipmentsNumbers,
+                                              MasterNumbers = a.MasterNumbers,
+                                              MasterShipmentNumbers = a.MasterShipmentNumbers,
+                                              HouseNumbers = a.HouseNumbers,
                                           }).ToList();
             return invoices;
         }
@@ -1802,7 +1808,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
                     PartnerId = entityPOCO.PartnerId,
-                    ShipmentsNumbers = entityPOCO.ShipmentsNumbers
+                    ShipmentsNumbers = entityPOCO.ShipmentsNumbers,
+                    MasterNumbers = entityPOCO.MasterNumbers,
+                    MasterShipmentNumbers = entityPOCO.MasterShipmentNumbers,
+                    HouseNumbers = entityPOCO.HouseNumbers,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

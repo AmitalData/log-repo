@@ -88,7 +88,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapCustomsClearance();
             MapMasterHouses();
             MapDocumentFields();
-
+            MapAccountingClosed();
 
             shipmentPM.IsShipmentComputedFieldChange = false;
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
@@ -376,7 +376,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.NumberOfHouses = shipmentPM.NumberOfHouses;
                 entity.ImporterDepositionRequestDetails = shipmentPM.ImporterDepositionRequestDetails;
             }
-        }
+        } 
+          private void MapAccountingClosed()
+        {
+            entity.AccountingClosedByUserId = shipmentPM.AccountingClosedByUserId; 
+        } 
         private void MapOperationalClosed()
         {
             entity.OperationallyClosedByUserId = shipmentPM.OperationalClosedByUserId;

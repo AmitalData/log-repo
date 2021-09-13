@@ -2135,6 +2135,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssginedToCustomsAgentDate { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? PaymentRequestDateTime { get; set; }
 
         #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2730,8 +2732,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
 
+ 
         public string OperationalStatusId { get; set; }
-        public string BillingStatusId { get; set; }
+        public string BillingStatusId { get; set; } 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AccountingClosedByUserId { get; set; } 
     }
 
     public class TransshipmentLeg

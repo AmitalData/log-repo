@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -21,42 +23,44 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-        public bool CheckIfTaxReportExist(int month, int year, int tenant)
+        public bool CheckIfTaxReportExist(DateTime taxReportDate, int tenant)
         {
-
-            return (from a in context.TaxReports where a.TaxReportMonth.Month == month && a.TaxReportMonth.Year == year
-                   && a.Tenant == tenant && a.IsCancelled == false select a).Any();
-        }
-
-        public bool CheckIfPreviousReportExist(int month, int year, int tenant)
-        {
-            int preMonth = month - 1;
-            bool exist = false;
-
-            if(month == 1)
-            {
-                preMonth = 12;
-
-                exist = (from a in context.TaxReports
-                         where a.TaxReportMonth.Month == preMonth && a.TaxReportMonth.Year == year-1
-                                && a.Tenant == tenant && a.StatusCode == "T" && a.IsCancelled == false
-                         select a).Any();
-            }
-            else
-            {
-                exist = (from a in context.TaxReports
-                 where a.TaxReportMonth.Month == preMonth && a.TaxReportMonth.Year == year
-                        && a.Tenant == tenant && a.StatusCode == "T" && a.IsCancelled == false
-                 select a).Any();
-            }
-            return exist;
-        }
-
-        public bool CheckIfPreviousNotCompReportExist(int month, int year, int tenant)
-        {
-            int preMonth = month - 1;
             return (from a in context.TaxReports
-                    where a.TaxReportMonth.Month == preMonth && a.TaxReportMonth.Year == year
+                    where (DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDate.Date ||
+                    (a.CreatedInTwoMonthsLogic == true && SqlFunctions.DateAdd("month", -1, a.TaxReportMonth) == taxReportDate.Date))
+                    && a.Tenant == tenant
+                    && a.IsCancelled == false
+                    select a).Any();
+        }
+
+        public bool CheckIfTaxReportExistForPreviousMonth(DateTime taxReportDate, int tenant)
+        {
+            DateTime taxReportDateWithPreviousMonth = taxReportDate.AddMonths(-1);
+            return (from a in context.TaxReports
+                    where DbFunctions.TruncateTime(a.TaxReportMonth) == taxReportDateWithPreviousMonth.Date
+                    && a.Tenant == tenant
+                    && a.IsCancelled == false
+                    select a).Any();
+        }
+
+        public bool CheckIfPreviousReportExist(DateTime taxReportDate, int tenant, bool VATreportEveryTwoMonths)
+        {
+            DateTime taxReportDateWithPreviousMonth = taxReportDate.AddMonths(-1);
+            DateTime taxReportDateWithPreviousTwoMonths = taxReportDate.AddMonths(-2);
+            return (from a in context.TaxReports
+                     where DbFunctions.TruncateTime(a.TaxReportMonth) == (VATreportEveryTwoMonths == true ?
+                     taxReportDateWithPreviousTwoMonths.Date : taxReportDateWithPreviousMonth.Date)
+                            && a.Tenant == tenant && a.StatusCode == "T" && a.IsCancelled == false
+                     select a).Any();
+        }
+
+        public bool CheckIfPreviousNotCompReportExist(DateTime taxReportDate, int tenant, bool VATreportEveryTwoMonths)
+        {
+            DateTime taxReportDateWithPreviousMonth = taxReportDate.AddMonths(-1);
+            DateTime taxReportDateWithPreviousTwoMonths = taxReportDate.AddMonths(-2);
+            return (from a in context.TaxReports
+                    where DbFunctions.TruncateTime(a.TaxReportMonth) == (VATreportEveryTwoMonths == true ?
+                    taxReportDateWithPreviousTwoMonths.Date : taxReportDateWithPreviousMonth.Date)
                            && a.Tenant == tenant && a.StatusCode != "T" && a.IsCancelled == false
                     select a).Any();
         }

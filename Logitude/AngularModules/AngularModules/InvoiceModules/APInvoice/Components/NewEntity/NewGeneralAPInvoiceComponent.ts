@@ -105,7 +105,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             this.EntityPM.MainEntityId = null;
             this.EntityPM.MainEntityReference = null;
             this.EntityPM.HouseNumber = null;
-            this.EntityPM.MasterNumber = null;
+            this.EntityPM.MasterNumber = null
+            this.EntityPM.MasterShipmentNumbers = null;
+            this.EntityPM.MasterNumbers = null;
+            this.EntityPM.HouseNumbers = null;
             InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
             this.IsResourcesReady = true;
             this.SetUIProperties();

@@ -88,7 +88,7 @@ export const Components =
         AddEditPartnerAddressComponent,
         UploadPartnersComponent,
         StorageDefaultsComponents,
-        ShippingAgentGeneralTabComponent,
+        ShippingAgentGeneralTabComponent
     ];
 
 export class ModuleDeclarations {

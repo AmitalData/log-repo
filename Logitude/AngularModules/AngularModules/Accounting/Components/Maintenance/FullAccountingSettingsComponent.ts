@@ -204,6 +204,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get VATreportEveryTwoMonths() { return this.EntityPM.VATreportEveryTwoMonths; }
+    set VATreportEveryTwoMonths(value: boolean) {
+        if (this.EntityPM.VATreportEveryTwoMonths != value) {
+            this.EntityPM.VATreportEveryTwoMonths = value;
+            this.SetUIProperties();
+        }
+    }
+
     private ToggleAgingDefinitionTab(value: boolean)
     {
         if (value)

@@ -94,5 +94,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool TotalVATOnly { get; set; }
         public DateTime? PaidDate { get; set; }
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
     }
 }

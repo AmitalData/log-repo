@@ -1,3 +1,4 @@
+
 import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -12,7 +13,9 @@ import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrack
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { MultipleSelectionComponent } from '../../../../../Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -63,8 +66,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ShipmenTypeForRouting: string;
 
-
-
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -81,13 +82,23 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
+
     ngOnInit(): void {
         this.GetPreservedToggleFiltersFromSessionInfo();
+        this.GetCompanyLoginsFromCache();
     }
     ngAfterViewInit(): void
     {
-        this.GetCompanyLoginsFromCache();
+
+        this.LoadScreenData();
+        this.SetShipmentsScrollPosition();
     }
+
+    private SetShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+    }
+
 
     private SetDefaultBackgroundColor()
     {
@@ -209,9 +220,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
-            this.SearchText = SessionInfo.ShipmentsFilters.SearchText;
-            // this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
-            // this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
+            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
             if(SessionInfo.ShipmentsFilters.TransportModeCodes){
                 var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
                 splitted.forEach(filterCode=>{
@@ -224,7 +233,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     this.SelectFilterByCode(filterCode);
                 });
             }
-            this.GetInvitedCustomers();
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
             this.SelectedFilters.map(x => {
                 if(x.FilterName == 'shipmentType')
                 {
@@ -329,6 +338,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     Clear()
     {
         this.SearchText = '';
+        RootContext.LastSearchText = '';
         this.LoadScreenData();
     }
 
@@ -336,6 +346,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         if (this.tenant!=null && this.SearchText) {
             this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
         }
 
@@ -351,6 +362,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
 
+        this.SaveShipmentsScrollPosition();
+    }
+
+    private SaveShipmentsScrollPosition() {
+        const shipmentCardsContainer = document.getElementById("scrollArea");
+        RootContext.ShipmentsScrollPosition = shipmentCardsContainer.scrollTop;
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
@@ -361,6 +378,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments(shipmentFilters);
             this.LoadShipmentsCounter(shipmentFilters);
+            this.SetShipmentsScrollPosition();
         }
     }
     references: string[];
@@ -382,6 +400,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         {
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
+            this.SetShipmentsScrollPosition();
         });
     }
 
@@ -431,6 +450,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
+        shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -612,7 +632,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
         if (!item)
             this.SelectedFilters.push(filter);
-
+            RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
 
@@ -643,6 +663,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         {
             this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
         }
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
     }
@@ -660,12 +681,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.isFiltersSideBarOpened = false;
 
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
-
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
@@ -709,7 +731,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
             if(index >= 0)
                 this.SelectedInvitedCustomers.splice(index,1);
-
+                RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
     }

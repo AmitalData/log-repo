@@ -65,6 +65,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<GLAccountPM> parentGLAccounts;
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const int maxAllowedLinesCount = 3000;
+
+
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -113,10 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                     if (invoice != null)
                     {
-                        if (invoice.InvoiceDate.Value.Month != taxReport.TaxReportMonth.Month)
-                        {
-                            transmitStatus = "0";
-                        }
+                        transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
                         VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
                         //if (invoice.InvoiceNumber.Length > 9)
@@ -238,7 +237,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 SetVatAmounts(transaction);
 
              
-                string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate);
+                string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate, setting.VATreportEveryTwoMonths);
                 TaxReportLinePM inputReportLine = new TaxReportLinePM()
                 {
 
@@ -317,6 +316,20 @@ namespace Logitude.Accounting.BL.CoreBL
             UpdateTaxReport(taxReport);
             reportLinesList = HandleTaxReportLines(taxReport, reportLinesList);
             return reportLinesList;
+        }
+
+        private static string SetTransmitStaus(DateTime invoiceDate, DateTime taxReportMonth, FullAccountingSetting setting)
+        {
+            DateTime invoiceDateVal = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);
+            DateTime taxReportDate = new DateTime(taxReportMonth.Year, taxReportMonth.Month, 1);
+            DateTime taxReportDatePreviousMonth = taxReportDate.AddMonths(-1);
+
+            if ((setting.VATreportEveryTwoMonths && invoiceDateVal != taxReportDate && invoiceDateVal != taxReportDatePreviousMonth)
+                || (!setting.VATreportEveryTwoMonths && invoiceDateVal != taxReportDate))
+            {
+                return TaxReportLineTransmitStatusValues.WithoutTransmit;
+            }
+            return TaxReportLineTransmitStatusValues.Fortransmit;
         }
 
         private static void UpdateTaxReport(TaxReportPM taxReport)
@@ -501,11 +514,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate)
+        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate, bool vatReportEveryTwoMonths)
         {
-            DateTime date = DateTime.Now.AddDays(-180);
-            DateTime last180days = new DateTime(date.Year, date.Month, 1);
-            if (referenceDate <= last180days)
+            DateTime dateBefore210Days = DateTime.Now.AddDays(-210);
+            DateTime dateBefore180Days = DateTime.Now.AddDays(-180);
+            DateTime last180days = new DateTime(dateBefore180Days.Year, dateBefore180Days.Month, 1);
+            DateTime last210days = new DateTime(dateBefore210Days.Year, dateBefore210Days.Month, 1);
+            if ((vatReportEveryTwoMonths && referenceDate <= last210days) || (!vatReportEveryTwoMonths && referenceDate <= last180days))
             {
                 return "3";
             }

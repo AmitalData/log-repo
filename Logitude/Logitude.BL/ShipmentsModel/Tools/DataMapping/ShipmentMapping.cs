@@ -381,7 +381,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             {
                 entityPoco.OperationalClosedByUserId = entityPM.OperationalClosedByUserId;
             }
-
+              
             entityPoco.OperationalCloseDate = entityPM.OperationalCloseDate;
             entityPoco.AccountingCloseDate = entityPM.AccountingCloseDate;
             entityPoco.ForwarderPartnerId = entityPM.ForwarderPartnerId;

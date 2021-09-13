@@ -398,6 +398,26 @@ namespace WarehouseData.Helper
 
         }
 
+
+        public static  string GetFullExceptionMessageFromException(Exception exception)
+        {
+            var exceptionMessage = string.Empty;
+
+            if (exception != null)
+            {
+                exceptionMessage = exception.Message;
+                if (exception.InnerException != null)
+                {
+                    exceptionMessage = exceptionMessage + Environment.NewLine + exception.InnerException;
+                }
+                if (exception.StackTrace != null)
+                {
+                    exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + exception.StackTrace;
+                }
+            }
+            return exceptionMessage;
+        }
+
     }
 
 

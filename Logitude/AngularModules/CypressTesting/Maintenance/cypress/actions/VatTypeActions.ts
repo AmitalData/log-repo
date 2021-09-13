@@ -49,7 +49,6 @@ export function FillVatTypeDetails(vatTypeDetails: VatTypeDetails, codeDigits: n
     }
     cy.FillLogTextBox(VatTypesSelectors.Code, GenerateRandomNumberAndString(codeDigits));
     cy.FillLogTextBox(VatTypesSelectors.Name, vatTypeDetails.Name);
-    Actions.FillCheckBoxProcess(VatTypesSelectors.IsRegionalTaxCheckBox + BaseSelectors.LastElement, vatTypeDetails.IsRegionalTax)
     cy.FillLogTextBox(VatTypesSelectors.LocalName, vatTypeDetails.LocalName);
     cy.FillLogTextBox(VatTypesSelectors.Description, vatTypeDetails.Description);
     cy.FillLogTextBox(VatTypesSelectors.LocalDescription, vatTypeDetails.LocalDescription);

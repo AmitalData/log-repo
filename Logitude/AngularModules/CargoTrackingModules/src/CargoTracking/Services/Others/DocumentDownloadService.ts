@@ -21,7 +21,7 @@ export class DocumentDownloadService {
         var url: string = "id=" + id;
         this.GetCurrenctUserValidity().subscribe((response:any) => {
             this.token = response.Result.DocumentDownloadToken;
-            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + this.token;
+            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + this.token + "&requestArea=CargoTracking";
             var win = window.open(link, '_blank');
 
             if (win) {

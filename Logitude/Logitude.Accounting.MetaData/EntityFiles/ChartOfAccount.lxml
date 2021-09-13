@@ -1364,6 +1364,12 @@
       LocalDefaultText="&quot;לא ניתן לקשר כרטיס זה כאב מכיוון שהוא מוגדר כבר כבן לכרטיס&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.SecurityLevelErrorMessage&quot;"
+      DefaultText="&quot;Can't run the report for this specific GLAccount due to insufficient security clearance&quot;"
+      LocalDefaultText="&quot;לא ניתן להציג את נתוני הדוח מכיון שלמשתמש אין הרשאה לקבוצת המאזן שנבחרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

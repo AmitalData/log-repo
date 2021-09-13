@@ -13,6 +13,10 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { FullAccountingSettingPM } from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
+import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
+import { ChartOfAccountListService } from '../../../../Accounting/Services/StandardLists/ChartOfAccountListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -31,7 +35,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public TenantPM: TenantPM = SessionLocator.TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    gLAccountListService: GLAccountListService = new GLAccountListService();
+    chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
@@ -86,17 +91,17 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
     }
-
+    private loggedUser: any;
     GetSalesmanFeature()
     {
         var salesmanAging = FeatureLocator.HasFeaturePermession("GLAccount", "SalesmanAging");
         var isSalesmanRestrictionsEnabled = !!salesmanAging;
         console.log("[Salesman Aging]", salesmanAging);
 
-        var loggedUser = SessionLocator.LoggedUserPM;
-        if(loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
+        this.loggedUser = SessionLocator.LoggedUserPM;
+        if(this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
             this.IsSalesmanRestricted = true;
-            this.Salesman = loggedUser.Id;
+            this.Salesman = this.loggedUser.Id;
         }
     }
 
@@ -174,10 +179,23 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                 this.IsCategoryDisabled = false;
 
             this.SetUIProperties();
+            this.SetGLAccountChartOfAccountSecurityLevel();
 
         }
     }
-
+    private securityLevel: any;
+    SetGLAccountChartOfAccountSecurityLevel() {
+        this.gLAccountListService.getSingle(this.Customer).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.chartOfAccountListService.getSingle(response.Result.ChartOfAccountsId).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        var chartOfAccount = response.Result;
+                        this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel;
+                    }
+                });
+            }
+        });
+    }
     private _ChartOfAccountsTypeCode : string = "3";
     public get ChartOfAccountsTypeCode() : string {
         return this._ChartOfAccountsTypeCode;
@@ -186,14 +204,14 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         this._ChartOfAccountsTypeCode = v;
         this.ChartOfAccountsId_Dummy = null;
     }
-
+    private ChartOfAccountSecurityLevel: any;
     private chartOfAccount: any;
     public get ChartOfAccount() { return this.chartOfAccount; }
     public set ChartOfAccount(value: any)
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            // this.ChartOfAccountsId = value.Id;
+            this.ChartOfAccountSecurityLevel = value? value.ChartOfAccountSecurityLevel: null;
         }
     }
 
@@ -348,31 +366,31 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     }
 
     //#endregion
-
+     private errors: string[];
     RunButtonClicked()
     {
         this.SetUIProperties();
 
-        var errors: string[] = [];
+         this.errors = [];
         var categoryValue = null;
         var categoryIndex = null;
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        if (!this.AgingForDate) { errors.push("Aging for date field is requierd"); }
+        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
         //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        if (!this.NumberOfMonths) { errors.push("Number of months field is requierd"); }
+        if (!this.NumberOfMonths) { this.errors.push("Number of months field is requierd"); }
         //#endregion
 
         //#region Date validation
         var isDateValid = this.ValidateDate();
         if (!isDateValid)
-            errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+            this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
         //#endregion
+        this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
 
 
-
-        if (errors.length == 0) {
+        if (this.errors.length == 0) {
 
 
             // Selecting category
@@ -420,10 +438,44 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             this.RunReportEvent.emit(myReportFliter);
 
         } else {
-            this.ValidationErrorsList = errors;
+            this.ValidationErrorsList = this.errors;
         }
     }
+   
+    private CheckGLAccountChartOfAccountSecurityLevel() {
+        if (this.Customer) {
+            return this.CheckSecurityLevel(this.securityLevel);
+        } else return true;
 
+    }
+    private CheckChartOfAccountSecurityLevel() {
+        if (this.ChartOfAccount) {
+            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
+        }
+        else return true;
+    }
+    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
+
+        if (this.CheckGLAccountChartOfAccountSecurityLevel()) {
+
+            return this.CheckChartOfAccountSecurityLevel();
+        }
+        else return false;
+    }
+    private CheckSecurityLevel(securityLevel: any) {
+        if (!this.loggedUser.IsCustomerCare) {
+            if (securityLevel == undefined) {
+                securityLevel = 0;
+            }
+            if (securityLevel > this.loggedUser.SecurityLevel) {
+               this.errors.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+                return false;
+            }
+            else return true;
+
+        }
+        else return true;
+    }
     private selectedAgingMethod: CodeNameClass;
     get SelectedAgingMethod() { return this.selectedAgingMethod; }
     set SelectedAgingMethod(value: CodeNameClass)

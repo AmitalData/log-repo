@@ -39,11 +39,22 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public List<GLAccount> GetChildAccountsQ(IQueryable<String> gLAccountIdQ, int tenant)
+        public List<GLAccount> GetChildAccountsQ(IQueryable<String> gLAccountIdQ, int tenant, int? userSecurityLevel)
         {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b)
-                    select a).ToList();
+            if(userSecurityLevel != null)
+            {
+                return (from a in context.GLAccounts
+                        join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
+                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) && chartOfAccount.ChartOfAccountSecurityLevel >= userSecurityLevel
+                        select a).ToList();
+            }
+            else
+            {
+                return (from a in context.GLAccounts                    
+                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) 
+                        select a).ToList();
+            }
+          
         }
 
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
@@ -243,12 +254,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount)
+             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel)
             .Select(a => a.Id);
 
         }
@@ -361,7 +372,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount)
+            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -417,15 +428,28 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 q = (
                     from glacc in q
-                    
+
                     join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
                     on glacc.Id equals card.GLAccountId
 
                     join cust in (this.context as AccountingContext).Customers
                        .Where(r => r.SalesmanUserId == salesmanId && r.Tenant == tenant)
                     on card.Id equals cust.Id
-                    
+
                     select glacc
+                     );
+
+            }
+
+            if (securityLevel != null)
+            {
+                q = (
+                    from glaccount in q
+
+                    join chartOfAccount in (this.context as AccountingContext).ChartOfAccounts.Where(r => r.Tenant == tenant && (r.ChartOfAccountSecurityLevel <= securityLevel || r.ChartOfAccountSecurityLevel==null))
+                    on glaccount.ChartOfAccountsId equals chartOfAccount.Id
+
+                    select glaccount
                      );
 
             }

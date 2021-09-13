@@ -75,7 +75,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? T1Received { get; set; }
 
 
-
+        public string AccountingClosedByUserId { get; set; }
 
 
 

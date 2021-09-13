@@ -72,7 +72,7 @@ Given("the following details", (dataTable) => {
 });
 
 When("save shipment", () => {
-    Actions.UpdateShipment('[id^=Shipment-Save]' + BaseSelectors.LastElement)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveCloseButton + BaseSelectors.LastElement)
 });
 
 Then("the shipment should save successfully", () => {

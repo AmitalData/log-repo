@@ -84,7 +84,7 @@ export class RelatedCustomerComponent extends BaseComponent{
 
 
     private UpdateCustomerTenantAccess() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
         let customerTenantAccessPMService: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
         customerTenantAccessPMService.update(this.EntityPM).subscribe((res: any) => {
             this.CurrentSession.StopBusyIndicator();
@@ -224,10 +224,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                 this.RealCustomerTenantAccessPM = res.Result;
                 var customerTenantAccessCardPM: CustomerTenantAccessCardPM = new CustomerTenantAccessCardPM(this.EntityPM);
                
-                customerTenantAccessCardPM.CustomerTenantAccessId = this.RealCustomerTenantAccessPM.Id;
-                customerTenantAccessCardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-                customerTenantAccessCardPM.UpdateDateTime = DateTool.GetCurrentDateTimeAsUtc();
-                customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;
+                this.InitializeCustomerTenantAccessCard(customerTenantAccessCardPM);
 
                 var viewModel: AddEditCustomerTenantAccessCardViewModel = new AddEditCustomerTenantAccessCardViewModel(this.RealCustomerTenantAccessPM, customerTenantAccessCardPM, true, this);
                 viewModel.DataLoaded.subscribe(output => {
@@ -272,7 +269,16 @@ export class RelatedCustomerComponent extends BaseComponent{
      
     }
 
-    private isAddEnabled: boolean=true;
+    private isAddEnabled: boolean = true;
+
+    private InitializeCustomerTenantAccessCard(customerTenantAccessCardPM: CustomerTenantAccessCardPM) {
+        customerTenantAccessCardPM.CustomerTenantAccessId = this.RealCustomerTenantAccessPM.Id;
+        customerTenantAccessCardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        customerTenantAccessCardPM.UpdateDateTime = DateTool.GetCurrentDateTimeAsUtc();
+        customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;
+        customerTenantAccessCardPM.IsImportActivated = true;
+    }
+
     public get IsAddEnabled() { return this.isAddEnabled; }
     public set IsAddEnabled(value: boolean) { if (this.isAddEnabled != value) this.isAddEnabled = value; }
 

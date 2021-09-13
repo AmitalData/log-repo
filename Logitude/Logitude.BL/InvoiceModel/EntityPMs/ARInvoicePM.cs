@@ -100,6 +100,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
+        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description { get; set; }
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
@@ -210,6 +211,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }

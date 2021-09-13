@@ -63,5 +63,6 @@ export class ShipmentComputedFieldsList {
 		ExpectedArrivalNoticeSent: Date;
 		ArrivalNoticeSent: Date;
 		T1Received: Date;
+		AccountingClosedByUserId: string;
 	
 }

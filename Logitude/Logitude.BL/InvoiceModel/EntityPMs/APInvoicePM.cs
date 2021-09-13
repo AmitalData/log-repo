@@ -93,9 +93,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
         public string BranchName { get; set; }
-
         public string HouseNumber {get; set;}
         public string MasterNumber {get; set;}
+        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description {get; set;}
         public string VendorPartnerTypeId { get; set; }
         public string CreditAccount { get; set; }
@@ -170,6 +170,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public CustomFieldClass Field10 { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
 
         private List<APInvoiceLinePM> invoiceLines;
         [Include]

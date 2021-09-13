@@ -45,6 +45,16 @@ namespace Logitude.TimeManagementTests.Models.Builders
             _timeManagementAPIHelper.ItemsPM.Add(tMEmployeeTime);
             return this;
         }
+        public TimeManagementAPIHelperBuilder WithItemsPM(List<TMEmployeeTimePM> tMEmployeeTimePMs)
+        {
+            _timeManagementAPIHelper.ItemsPM = tMEmployeeTimePMs;
+            return this;
+        }
+        public TimeManagementAPIHelperBuilder WithItems(List<TimeSheetItem> items)
+        {
+            _timeManagementAPIHelper.Items = items;
+            return this;
+        }
 
         public TimeManagementAPIHelper Build()
         {

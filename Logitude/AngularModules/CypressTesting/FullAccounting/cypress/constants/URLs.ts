@@ -1,0 +1,10 @@
+export class URLs {
+    public static readonly InvoicesGetSingle = '**/cardviews/getsingle/?**';
+    public static readonly APInvoices = '**/apinvoices';
+    public static readonly ARInvoices = '**/arinvoices';
+    public static readonly ARInvoicesGetSingle = '**/arinvoices/getsingle?**';
+    public static readonly APInvoiceViewsGetByFilters = '**/cardviews/getbyfilters?**';
+    public static readonly ARInvoiceViewsGetByFilters = '**/arinvoiceviews/getbyfilters?**';
+    public static readonly APPayments = '**/appayments';
+    public static readonly ARPayments = '**/arpayments';
+}

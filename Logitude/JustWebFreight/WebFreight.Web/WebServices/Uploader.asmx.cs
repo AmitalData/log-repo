@@ -949,7 +949,7 @@ namespace WebFreight.Web.WebServices
         //}
 
 
-        public byte[] DownloadStaticFile(string filename, string containername)
+        public byte[] DownloadStaticFile(string filename, string containername,int tenant = 0)
         {
             byte[] theDatainByte = null;
 
@@ -974,7 +974,7 @@ namespace WebFreight.Web.WebServices
                     Extension = fileparams[1],
                     ExternalContainerName = containername,
                     HasExternalContainer = true,
-
+                    Tenant = tenant
                 };
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;

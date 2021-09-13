@@ -14,11 +14,11 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 1px;">
+                    <td *ngIf ="!IsAddingStandaloneWithPickUpDeliveryOnlyVisible" style="width: 1px;">
                         <button class="Button" (click)="SelectAction('PickupDelivery')">{{MainButtonRoutingLinkText}}</button>
                     </td>
 
-                    <td style="width: 10px;">
+                    <td *ngIf ="!IsAddingStandaloneWithPickUpDeliveryOnlyVisible" style="width: 10px;">
                         <div></div>
                     </td>
 
