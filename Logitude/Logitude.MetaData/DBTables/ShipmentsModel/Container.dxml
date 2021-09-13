@@ -830,6 +830,32 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AvailabilityLocation"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastFreeDayDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FreeDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentStatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -903,6 +929,11 @@
   <Relation
     ForeignKeyColumn="ShipmentOnCarriageToId"
     ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentStatusId"
+    ReferencedTable="EntityStatus"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
