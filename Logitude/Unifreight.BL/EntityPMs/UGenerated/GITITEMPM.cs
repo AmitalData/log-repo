@@ -48,6 +48,21 @@ namespace Unifreight.BL.EntityPMs
         public string ORIGINCOUNTRY { get; set; }
 
         public string UNITID { get; set; }
+
+        public decimal? FACTOR { get; set; }
+
+        public string VERIFICATIONNUMBER { get; set; }
+
+        public string TARIFFID { get; set; }
+
+        public string IMPAPPROVTYPEID { get; set; }
+
+        public string SIVUGINSTRUCTION { get; set; }
+
+        public string REMARKSMAKAT { get; set; }
+
+        public string REMARKSPROTEST { get; set; }
+
     }
 
 
@@ -92,5 +107,19 @@ namespace Unifreight.BL.EntityPMs
         public string ORIGINCOUNTRY { get; set; }
 
         public string UNITID { get; set; }
+
+        public decimal? FACTOR { get; set; }
+
+        public string VERIFICATIONNUMBER { get; set; }
+
+        public string TARIFFID { get; set; }
+
+        public string IMPAPPROVTYPEID { get; set; }
+
+        public string SIVUGINSTRUCTION { get; set; }
+
+        public string REMARKSMAKAT { get; set; }
+
+        public string REMARKSPROTEST { get; set; }
     }
 }

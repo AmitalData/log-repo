@@ -51,23 +51,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 var q =
-    (from p in context.DeclarationPendings
-     where p.Status == "A"
-     select p
-    );
+                    (from p in context.DeclarationPendings
+                    where p.Status == "A"
+                    group p by p.DeclarationID into g
+                    select new
+                    {
+                        DeclarationID = g.Key,
+                        ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+                    });
 
 
                 var qDeclarationPaymentPendingHold = (
                     from p in q
                     where customResponse.ServerSplitDeclarationsList.Contains(p.DeclarationID)
-                
-                select new MyDTO
+                    
+                    select new MyDTO
                     {
                         DeclarationID =p.DeclarationID,
-                        ErrorPlace = q.Any(r => r.DeclarationID == p.DeclarationID &&
-                        p.CourierPendingReason.ErrorPlace == "1")
-                    }
-                         );
+                        ErrorPlace = p.ErrorPlace
+                    });
+
                 var listDeclarationPaymentPendingHold = qDeclarationPaymentPendingHold.ToList();
 
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
@@ -137,8 +140,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
+               
+                var holdUrHorses =listDeclarationPaymentPendingHold.FirstOrDefault(r => r.DeclarationID == itemPoco.DeclarationId);
+                if (holdUrHorses != null)
+                    mess.AppendLine($" Pending.ErrorPlace =  " + holdUrHorses.ErrorPlace);
+                else
+                    mess.AppendLine($" Pending = null ");
 
-                var holdUrHorses=listDeclarationPaymentPendingHold.FirstOrDefault(r => r.DeclarationID == itemPoco.DeclarationId);
                 if (holdUrHorses!=null && holdUrHorses.ErrorPlace)
                 {
                     mess.AppendLine($" קיים Pending " +
