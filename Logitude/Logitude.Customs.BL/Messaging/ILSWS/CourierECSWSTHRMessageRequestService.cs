@@ -8,6 +8,8 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -185,7 +187,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
                 ImporterName = myDeclarationPM.ImporterName ?? "",
                 ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
-                DistributionLine = "",
+                DistributionLine = string.IsNullOrEmpty( currentDeclarationCourierStatusPM.DistributionArea)?"כללי" : currentDeclarationCourierStatusPM.DistributionArea,
+
+
+
                 DistributionCompanyVat = "",
 
 
@@ -198,6 +203,18 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
             };
+
+
+            if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
+            {
+                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
+                Card card = cardRep.GetSingleCardCache(currentDeclarationCourierStatusPM.TruckerId, myDeclarationPM.Tenant);
+                if (card != null)
+                {
+                    courierHawbMamanModel.DistributionCompanyVat = card.VatNumber;
+                }
+            }
+
 
             return courierHawbMamanModel;
         }
