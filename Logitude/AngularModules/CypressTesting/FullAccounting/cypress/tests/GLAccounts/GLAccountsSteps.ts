@@ -4,10 +4,10 @@ import * as GLAccountsActions from '../../actions/GLAccountsActions';
 import * as Actions from '../../actions/Actions';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { GLAccountsDetails } from '../../models/GLAccountsDetails';
-import { BankAccountsDetails } from '../../models/BankAccountsDetails';
 import { GLAccountsSelectors } from "../../selectors/GLAccountsSelectors";
 
 let currentDateTime = BankAccountsActions.GetCurrentDateTime()
+let gLAccountsDetails = null
 
 //#region Create new GL Account
 Given("the user logged in and navigates to GL Account workspace", () => {
@@ -18,7 +18,7 @@ Given("the user logged in and navigates to GL Account workspace", () => {
 
 Given("a GL Account with the following details", (dataTable) => {
     GLAccountsActions.NavigatesGLAccountWizerd()
-    let gLAccountsDetails = Assists.CreateInstance<GLAccountsDetails>(dataTable, true);
+    gLAccountsDetails = Assists.CreateInstance<GLAccountsDetails>(dataTable, true);
     GLAccountsActions.FillGLAccountDetails(gLAccountsDetails, currentDateTime)
 });
 
@@ -31,21 +31,37 @@ Then("the GL Account should create successfully", () => {
 });
 //#endregion
 
-//#region Create new Bank Account
-Given("the user navigates Bank Accounts wizerd", () => {
-    BankAccountsActions.NavigatesBankAccountWizerd()
+//#region Search for the GL Account by name
+When("search GL Account", () => {
+    GLAccountsActions.Search(gLAccountsDetails.LocalName + currentDateTime)
 });
 
-Given("a Bank Account with the following details", (dataTable) => {
-    let bankAccountsDetails = Assists.CreateInstance<BankAccountsDetails>(dataTable, true);
-    BankAccountsActions.FillBankAccountDetails(bankAccountsDetails);
+Then("the GL Account should appear successfully", () => {
+    GLAccountsActions.AssertSearch()
+});
+//#endregion
+
+//#region Open the GL Account
+When("open GL Account", () => {
+    GLAccountsActions.OpenGLAccounts();
 });
 
-When("create Bank Account", () => {
-    BankAccountsActions.CreateBankAccount();
+Then("the GL Account should open successfully", () => {
+    Actions.AssertGetSingle();
+});
+//#endregion
+
+//#region Edit the GL Account
+Given("fill {string} as EnglishName", (englishName) => {
+    cy.Click(GLAccountsSelectors.GeneralTab, null)
+    GLAccountsActions.FillEnglishName(englishName)
 });
 
-Then("the Bank Account should create successfully", () => {
-    BankAccountsActions.AssertCreateBankAccount();
+When("save GL Account", () => {
+    GLAccountsActions.SaveGLAccounts();
+});
+
+Then("the GL Account should update successfully", () => {
+    GLAccountsActions.ASsertSaveGLAccounts();
 });
 //#endregion

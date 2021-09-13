@@ -11,8 +11,13 @@ export class URLs {
     public static readonly Bankaccounts = '**/bankaccounts';
     public static readonly PartnersDomain = '**/PartnersDomain';
     public static readonly CustomerGetSingle = '**/customers/getsingle?**';
+    public static readonly GLAccountGetSingle = '**/fullaccountingsettingviews/getsingle/?**';
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
+    }
+
+    public static GetQuickSearch(filterBy: string) {
+        return '**/GetQuickSearch?**' + filterBy + '**'
     }
 }

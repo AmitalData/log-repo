@@ -1,12 +1,14 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import * as CustomerGLAActions from '../../actions/CustomerGLAActions';
-import * as BankAccountsActions from '../../actions/BankAccountsActions';
+import * as GLAccountsActions from '../../actions/GLAccountsActions';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { CustomersGLADetails } from '../../models/CustomersGLADetails';
 import { GLAccountsDetails } from '../../models/GLAccountsDetails';
 import * as Actions from '../../actions/Actions';
+import * as gr from '../../../../Base/cypress/actions/GenerateRandoms';
 
-let searchFieldValue = ""
+let currentDateTime = gr.GenerateCurrentDatetimeString("")
+let searchFieldValue = null
 
 //#region Create new customer
 Given("the user logged in and navigates to Customers workspace", () => {
@@ -56,14 +58,14 @@ Given("navigates new account wizerd inside the customer", () => {
 
 Given("a GL Account with the following details", (dataTable) => {
     let gLAccountsDetails = Assists.CreateInstance<GLAccountsDetails>(dataTable, true);
-    BankAccountsActions.FillGLAccountDetails(gLAccountsDetails)
+    GLAccountsActions.FillGLAccountDetails(gLAccountsDetails, currentDateTime)
 });
 
 When("create GL Account", () => {
-    BankAccountsActions.CreateGLAccount()
+    GLAccountsActions.CreateGLAccount()
 });
 
 Then("the GL Account should create successfully", () => {
-    BankAccountsActions.AssertCreateGLAccount()
+    GLAccountsActions.AssertCreateGLAccount()
 });
 //#endregion

@@ -1,6 +1,4 @@
 import { BankAccountsSelectors } from "../selectors/BankAccountsSelectors";
-import { GLAccountsSelectors } from "../selectors/GLAccountsSelectors";
-import { GLAccountsDetails } from "cypress/models/GLAccountsDetails";
 import { BankAccountsDetails } from "cypress/models/BankAccountsDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
@@ -11,27 +9,8 @@ import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 
 let currentDateTime = gr.GenerateCurrentDatetimeString("")
 
-export function NavigatesGLAccountWizerd() {
-    cy.Click(GLAccountsSelectors.NewGLAccountButton, null)
-}
-
-export function FillGLAccountDetails(gLAccountsDetails: GLAccountsDetails) {
-    cy.FillLogLov(GLAccountsSelectors.ChartOfAccountsType, gLAccountsDetails.ChartOfAccountsType, true)
-    cy.FillLogLov(GLAccountsSelectors.ChartOfAccounts, gLAccountsDetails.ChartOfAccounts, true)
-    cy.FillLogTextBox(GLAccountsSelectors.LocalName, gLAccountsDetails.LocalName + currentDateTime)
-    cy.FillLogTextBox(GLAccountsSelectors.EnglishName, gLAccountsDetails.EnglishName + currentDateTime)
-    cy.FillLogLov(GLAccountsSelectors.Currency, gLAccountsDetails.Currency, true)
-    cy.FillLogLov(GLAccountsSelectors.RevenueExpenseType, gLAccountsDetails.RevenueExpenseType, true)
-}
-
-export function CreateGLAccount() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.GLAccounts, RequestAliases.PostGLAccounts)
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-}
-
-export function AssertCreateGLAccount() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-    BaseAssertion.AssertStatusCode(RequestAliases.PostGLAccounts, 200)
+export function GetCurrentDateTime() {
+    return currentDateTime;
 }
 
 export function NavigatesBankAccountWizerd() {

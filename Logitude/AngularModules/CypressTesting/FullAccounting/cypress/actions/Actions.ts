@@ -17,7 +17,7 @@ function DefineViewsGetByFiltersRequest(searchFieldValue: string) {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetFilterSearch(searchFieldValue), RequestAliases.GetFilterSearch);
 }
 
-function AssertViewsGetByFilters() {
+export function AssertViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 
@@ -27,4 +27,8 @@ export function AssertSearch(searchFieldValue) {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(searchFieldValue);
     });
+}
+
+export function AssertGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
