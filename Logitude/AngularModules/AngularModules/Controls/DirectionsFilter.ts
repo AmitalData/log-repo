@@ -4,7 +4,7 @@ import { FeatureLocator } from '../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'DirectionsFilter',
-    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters', 'ShowCustomFilter'],
+    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters', 'ShowCustomFilter', 'HideExport'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -13,7 +13,7 @@ import { FeatureLocator } from '../Infrastructure/Utilities/FeatureLocator';
         <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
             All
         </li>
-        <li (click)="itemClicked('E')" (mouseover)="itemMouseOver('E')" (mouseleave)="itemMouseLeave('E')" [class.SelectedFilter]="SelectedValue === 'E'" title="Export">
+        <li *ngIf="!HideExport" (click)="itemClicked('E')" (mouseover)="itemMouseOver('E')" (mouseleave)="itemMouseLeave('E')" [class.SelectedFilter]="SelectedValue === 'E'" title="Export">
             <img [attr.id]="FilterId_E" class="CenterCenter" [attr.src]="SelectedValue === 'E' ? './_Resources/Images/Icons/Directions/E_w.png' : './_Resources/Images/Icons/Directions/E_g.png'"   />
         </li>
         <li *ngIf="!itmImportDomistic" (click)="itemClicked('I')" (mouseover)="itemMouseOver('I')" (mouseleave)="itemMouseLeave('I')" [class.SelectedFilter]="SelectedValue === 'I'" title="Import">
@@ -43,7 +43,8 @@ export class DirectionsFilter {
     public itmImportShipments: boolean = false;
     public itmImportDomistic: boolean = false;
     public HideAMANACFilters: boolean = false;
-
+    public HideExport: boolean = false;
+     
     @Output() SelectedValueChanged = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
