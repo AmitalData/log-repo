@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 
 namespace Logitude.FullAccounting.Test.Models
 {
-   public partial class JournalActionTypeList
+   public class JournalActionType
    {
    
        

@@ -1,4 +1,7 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
 using Logitude.TimeManagementTests.Models.Builders;
 using System;
 using System.Collections.Generic;
@@ -12,7 +15,8 @@ namespace Logitude.FullAccounting.Test.Services
 {
     public class JournalService
     {
-        internal List<JournalLinePM> CreateLines(Table table)
+        const string JournalAccountingEntityCode = "1";
+        public List<JournalLinePM> CreateLines(Table table)
         {
             var lines = new List<JournalLinePM>();
             var linsSet = table.CreateDynamicSet();
@@ -26,7 +30,54 @@ namespace Logitude.FullAccounting.Test.Services
         private JournalLinePM CreateLine(dynamic line)
         {
             return new JournalLinePMBuilder().WithDefualtValues()
-                .Line()
+                .Line((int)line.Line)
+                .CurrencyIdByCode((string)line.CurrencyId)
+                .AccountingDate((DateTime)line.DocumentDate)
+                .ExchangeRate((decimal?)line.ExchangeRate)
+                .ActionIdByCode(GetActionCodeByName((string)line.Action))
+                .ActionCode(GetActionCodeByName((string)line.Action))
+                .DueDate((DateTime)line.DueDate)
+                .DocumentDate((DateTime)line.DocumentDate)
+                .CreditAccountIdByNumber(line.CreditAccountNumber.ToString())
+                .DebitAccountIdByNumber(line.DebitAccountNumber.ToString())
+                .LocalAmount((decimal)line.LocalAmount)
+                .ForeignAmount((decimal)line.LocalAmount)
+                .Build();
+        }
+        public JournalPM Create(Table table, List<JournalLinePM> journallines)
+        {
+            dynamic journal = table.CreateDynamicInstance();
+            return new JournalPMBuilder()
+                .WithDefualtValues()
+                .AccountingDate((DateTime)journal.AccountingDate)
+                .DueDate((DateTime)journal.AccountingDate)
+                .DocumentDate((DateTime)journal.AccountingDate)
+                .AccountingDate((DateTime)journal.AccountingDate)
+                .StatusCode((int)StatusCodeEnum.Approved + "")
+                .AccountingEntityCode(JournalAccountingEntityCode)
+                .WithJournalLines(journallines)
+                .TypeCode((int)JournalTypeEnum.Regular + "")
+                .Build();
+
+        }
+        public JournalPM Add(JournalPM approvedJournal)
+        {
+            var journal = APICaller.CallPost<JournalPM>(approvedJournal, Urls.JournalsController, UserTenant.Token);
+            return journal.Data;
+        }
+
+
+        private string GetActionCodeByName(string actionName)
+        {
+            switch (actionName)
+            {
+                case "Credit":
+                    return "1";
+                case "Debit":
+                    return "2";
+                default:
+                    return "1";
+            }
         }
     }
 }

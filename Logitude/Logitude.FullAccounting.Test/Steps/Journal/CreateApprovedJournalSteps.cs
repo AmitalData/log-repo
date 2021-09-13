@@ -1,4 +1,5 @@
-﻿using Logitude.FullAccounting.Test.Models;
+﻿using FluentAssertions;
+using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Services;
 using System;
 using TechTalk.SpecFlow;
@@ -8,8 +9,8 @@ namespace Logitude.FullAccounting.Test.Steps.Journal
     [Binding]
     public class CreateApprovedJournalSteps
     {
-        public FullAccountingContext context { get; set; }
-        public JournalService journalService { get; set; }
+        private readonly FullAccountingContext context;
+        private readonly JournalService journalService;
         public CreateApprovedJournalSteps(FullAccountingContext context, JournalService journalService)
         {
             this.context = context;
@@ -24,19 +25,19 @@ namespace Logitude.FullAccounting.Test.Steps.Journal
         [Given(@"a journal with the following properties")]
         public void GivenAJournalWithTheFollowingJournalProperties(Table table)
         {
-            ScenarioContext.Current.Pending();
+            context.ApprovedJournal = journalService.Create(table, context.Journallines);
         }
 
         [When(@"create approved journal")]
         public void WhenCreateApprovedJournal()
         {
-            ScenarioContext.Current.Pending();
+            context.AddedApprovedJournal = journalService.Add(context.ApprovedJournal);
         }
 
         [Then(@"the journal should create successfully")]
         public void ThenTheJournalShouldCreateSuccessfully()
         {
-            ScenarioContext.Current.Pending();
+            context.AddedApprovedJournal.Id.Should().NotBeNullOrEmpty();
         }
     }
 }

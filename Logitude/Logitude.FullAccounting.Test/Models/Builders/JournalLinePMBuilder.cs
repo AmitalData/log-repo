@@ -8,7 +8,7 @@ namespace Logitude.TimeManagementTests.Models.Builders
 {
     public class JournalLinePMBuilder
     {
-        private JournalLinePM journalLinePM;
+        private JournalLinePM JournalLine;
         
         public JournalLinePMBuilder()
         {
@@ -17,85 +17,114 @@ namespace Logitude.TimeManagementTests.Models.Builders
 
         public JournalLinePM Build()
         {
-            JournalLinePM result = journalLinePM;
+            JournalLinePM result = JournalLine;
             this.Reset();
             return result;
         }
 
         private void Reset()
         {
-            journalLinePM = new JournalLinePM();
+            JournalLine = new JournalLinePM();
         }
 
         
         public JournalLinePMBuilder AccountingDate(DateTime AccountingDate)
         {
-            journalLinePM.AccountingDate = AccountingDate;
+            JournalLine.AccountingDate = AccountingDate;
+            return this;
+        }
+        public JournalLinePMBuilder CreditAccountIdByNumber(string creditAccountNumber)
+        {
+            JournalLine.CreditAccountId = MapAccountNumber(creditAccountNumber);
+            return this;
+        }
+        public JournalLinePMBuilder DebitAccountIdByNumber(string debitAccountId)
+        {
+            JournalLine.DebitAccountId = MapAccountNumber(debitAccountId);
+            return this;
+        }
+        public JournalLinePMBuilder LocalAmount(decimal localAmount)
+        {
+            JournalLine.LocalAmount = localAmount;
+            return this;
+        }
+        public JournalLinePMBuilder ForeignAmount(decimal foreignAmount)
+        {
+            JournalLine.ForeignAmount = foreignAmount;
             return this;
         }
 
-        public JournalLinePMBuilder Days(string ActionId)
-        {
-            journalLinePM.ActionId = ActionId;
-            return this;
-        }
+        
 
-        public JournalLinePMBuilder Description(string ActionTypeCode)
+        public JournalLinePMBuilder ActionTypeCode(string ActionTypeCode)
         {
-            journalLinePM.ActionTypeCode = ActionTypeCode;
+            JournalLine.ActionTypeCode = ActionTypeCode;
             return this;
         }
         public JournalLinePMBuilder Line(int Line)
         {
-            journalLinePM.Line = Line;
+            JournalLine.Line = Line;
             return this;
         }
         public JournalLinePMBuilder ExchangeRate(decimal? ExchangeRate)
         {
-            journalLinePM.ExchangeRate = ExchangeRate;
+            JournalLine.ExchangeRate = ExchangeRate;
             return this;
         }
 
         public JournalLinePMBuilder CurrencyId(string CurrencyId)
         {
-            journalLinePM.CurrencyId = CurrencyId;
+            JournalLine.CurrencyId = CurrencyId;
             return this;
         }
         public JournalLinePMBuilder CurrencyIdByCode(string code)
         {
-            journalLinePM.CurrencyId = MapCurrencyCode(code);
+            JournalLine.CurrencyId = MapCurrencyCode(code);
             return this;
         }
         public JournalLinePMBuilder ActionId(string actionId)
         {
-            journalLinePM.ActionId = actionId;
+            JournalLine.ActionId = actionId;
+            return this;
+        }
+        public JournalLinePMBuilder ActionCode(string actionCode)
+        {
+            JournalLine.ActionCode = actionCode;
             return this;
         }
         public JournalLinePMBuilder ActionIdByCode(string actionCode)
         {
-            journalLinePM.CurrencyId = MapCurrencyCode(actionCode);
+            JournalLine.ActionId = MapActionCode(actionCode);
+            return this;
+        }
+        public JournalLinePMBuilder DocumentDate(DateTime documentDate)
+        {
+            JournalLine.DocumentDate = documentDate;
+            return this;
+        }
+        public JournalLinePMBuilder DueDate(DateTime dueDate)
+        {
+            JournalLine.DueDate = dueDate;
             return this;
         }
 
-        
-        
-
-        public JournalLinePMBuilder WithModel(JournalLinePM tMEmployeeTime)
+        public JournalLinePMBuilder WithModel(JournalLinePM journalLine)
         {
-            journalLinePM = tMEmployeeTime;
+            this.JournalLine = journalLine;
             return this;
         }
 
         public JournalLinePMBuilder WithDefualtValues()
         {
-            journalLinePM = new JournalLinePM
+            JournalLine = new JournalLinePM
             {
-                Tenant = UserTenant.Tenant
+                Tenant = UserTenant.Tenant,
+                
             };
             return this;
         }
 
-        public string MapCurrencyCode(string code)
+        private string MapCurrencyCode(string code)
         {
             switch (code)
             {
@@ -106,18 +135,30 @@ namespace Logitude.TimeManagementTests.Models.Builders
             }
             
         }
-        public string MapActionCode(string code)
+        private string MapActionCode(string code)
         {
             switch (code)
             {
-                case "Credit":
-                    return FullAccountingData.Credit;
-                case "Debit":
-                    return FullAccountingData.Debit;
+                case "1":
+                    return FullAccountingData.CreditActoinId;
+                case "2":
+                    return FullAccountingData.DebitActoinId;
                 default:
                     return null;
             }
             
+        }
+        private string MapAccountNumber(string creditAccountNumber)
+        {
+            switch (creditAccountNumber)
+            {
+                case "1921681254":
+                    return FullAccountingData.GLAccount1921681254Id;
+                case "1921681253":
+                    return FullAccountingData.GLAccount1921681253Id;
+                default:
+                    return null;
+            }
         }
 
 

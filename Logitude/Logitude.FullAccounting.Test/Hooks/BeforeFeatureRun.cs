@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Services.Preparation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,11 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         [BeforeFeature("Pre-Prepare")]
         public static void SetUpPrepareDataBeforeFeatureRun()
         {
+            new ActoinPreparation().Prepare();
+            new ChartOfAccountPreparation().Prepare();
+            new AutomaticReconcilePreparation().Prepare();
+            new AccountPreparation().Prepare();
+            
 
         }
     }

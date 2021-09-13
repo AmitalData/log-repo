@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
-    public class ActoinPreparation
+    public class AutomaticReconcilePreparation
     {
-        const string CreditActoinCode = "1";
-        const string DebitActoinCode = "2";
+        const string OpenAmount = "A";
         public void Prepare()
         {
-            FullAccountingData.CreditActoinId = GetByCode(CreditActoinCode);
-            FullAccountingData.DebitActoinId = GetByCode(DebitActoinCode);
+            FullAccountingData.AutomaticReconcile_A = GetByCode(OpenAmount);
+            //add more
         }
         private string GetByCode(string code)
         {
@@ -32,10 +31,9 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
-            var response = APICaller.CallGetByFilters<List<JournalActionType>>(Urls.JournalActionTypeViewsByFilters, UserTenant.Token, filter);
+            var response = APICaller.CallGetByFilters<List<AutomaticReconcileMethodPM>>(Urls.AutomaticReconcileMethodViewsByFilters, UserTenant.Token, filter);
             return response.Data?.FirstOrDefault()?.Id;
         }
-
         private ApiQueryFilters GetFilterByCode(string code)
         {
             return new ApiQueryFiltersBuilder()
@@ -44,47 +42,32 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Filter1Value(code)
                 .Build();
         }
-
         private string Create(string code)
         {
-            var JournalActionType = CreateInstance(code);
-            var response = APICaller.CallPost<JournalActionType>(JournalActionType,Urls.JournalActionTypesController, UserTenant.Token);
+            var AutomaticReconcileMethod = CreateInstance(code);
+            var response = APICaller.CallPost<AutomaticReconcileMethodPM>(AutomaticReconcileMethod, Urls.AutomaticReconcileMethods, UserTenant.Token);
             return response.Data?.Id;
         }
-        private JournalActionType CreateInstance(string code)
+        private AutomaticReconcileMethodPM CreateInstance(string code)
         {
             switch (code)
             {
-                case CreditActoinCode:
-                    return CreateCreditInstance(code);
-                case DebitActoinCode:
-                    return CreateDebitInstance(code);
+                case OpenAmount:
+                    return CreateOpenAmountInstance(code);
                 default:
                     return null;
             }
         }
-
-        private JournalActionType CreateCreditInstance(string code)
+        private AutomaticReconcileMethodPM CreateOpenAmountInstance(string code)
         {
-            return new JournalActionType()
-            { 
-                Code = code,
-                EnglishName = "Credit",
-                LocalName = "Credit",
-                Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Credit"
-
-            };
-        }
-        private JournalActionType CreateDebitInstance(string code)
-        {
-            return new JournalActionType()
+            return new AutomaticReconcileMethodPM()
             {
                 Code = code,
-                EnglishName = "Debit",
-                LocalName = "Debit",
+                Name = "Open Amount",
+                LocalName = "Open Amount",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Debit"
+                SearchFields = $"{code},Open Amount",
+                AutomaticReconcile1 = (int)AutomaticReconcileEnum.OpenAmount + "",
 
             };
         }

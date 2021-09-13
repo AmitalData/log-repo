@@ -1,6 +1,7 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
-
+using System.Collections.Generic;
 
 namespace Logitude.TimeManagementTests.Models.Builders
 {
@@ -25,9 +26,45 @@ namespace Logitude.TimeManagementTests.Models.Builders
             journalPM = new JournalPM();
         }
 
-        public JournalPMBuilder LocationCode(DateTime AccountingDate)
+        public JournalPMBuilder AccountingDate(DateTime accountingDate)
         {
-            journalPM.AccountingDate = AccountingDate;
+            journalPM.AccountingDate = accountingDate;
+            return this;
+        }
+        public JournalPMBuilder DocumentDate(DateTime documentDate)
+        {
+            journalPM.DocumentDate = documentDate;
+            return this;
+        }
+        public JournalPMBuilder DueDate(DateTime dueDate)
+        {
+            journalPM.DueDate = dueDate;
+            return this;
+        }
+
+        public JournalPMBuilder CurrencyId(string currencyId)
+        {
+            journalPM.CurrencyId = currencyId;
+            return this;
+        }
+        public JournalPMBuilder StatusCode(string statusCode)
+        {
+            journalPM.StatusCode = statusCode;
+            return this;
+        }
+        public JournalPMBuilder AccountingEntityCode(string accountingEntityCode)
+        {
+            journalPM.AccountingEntityCode = accountingEntityCode;
+            return this;
+        }
+        public JournalPMBuilder WithJournalLines(List<JournalLinePM> journalLines)
+        {
+            journalPM.JournalLines = journalLines;
+            return this;
+        }
+        public JournalPMBuilder TypeCode(string typeCode)
+        {
+            journalPM.TypeCode = typeCode;
             return this;
         }
 
@@ -41,7 +78,8 @@ namespace Logitude.TimeManagementTests.Models.Builders
         {
             journalPM = new JournalPM
             {
-                
+                Tenant = UserTenant.Tenant,
+                CreatedByUserId = UserTenant.UserId
             };
             return this;
         }

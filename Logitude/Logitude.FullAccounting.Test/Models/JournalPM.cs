@@ -24,6 +24,16 @@ namespace Logitude.FullAccounting.Test.Models
         public string AccountingEntityReference { get; set; }
         public string OriginalJournalId { get; set; }
         public bool IsLedgerCreated { get; set; }
-         
+		public string LineCreditAccountTypeCode { get; set; }
+		public int TaxReportJournalLineNumber { get; set; }
+		public DateTime? DocumentDate { get; set; }
+		public DateTime? DueDate { get; set; }
+		public DateTime? APPaymentCancelDate { get; set; }
+		public string CurrencyId { get; set; }
+		public bool IsNew { get; set; }
+		public bool Copied { get; set; }
+		public string CopiedFrom { get; set; }
+		public string CreatedByUserId { get; set; }
+
     }
 }

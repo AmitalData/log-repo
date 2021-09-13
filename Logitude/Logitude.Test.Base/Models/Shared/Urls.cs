@@ -10,6 +10,15 @@ namespace Logitude.Test.Base.Models.Shared
         public static string StatesController = "States";
         public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
+        public static string GLAccountsController = "GLAccounts";
+        public static string JournalsController = "journals";
+        public static string JournalActionTypesController = "JournalActionTypes";
+        public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
+        public static string AutomaticReconcileMethodViewsByFilters = "AutomaticReconcileMethodViews/GetByFilters";
+        public static string JournalActionTypeViewsByFilters = "JournalActionTypeViews/GetByFilters";
+        public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
+        public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
+        public static string ChartOfAccountsController = "ChartOfAccounts";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
         public static string AddressViewsGetByFilters = "AddressViews/GetByFilters";
@@ -124,6 +133,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ContactsGetSingle(string id)
         {
             return "Contacts/GetSingle?id=" + id;
+        }
+        public static string GLAccountsGetSingle(string id)
+        {
+            return "GLAccounts/GetSingle?id=" + id;
         }
 
         public static string AddressesGetSingle(string id)
@@ -240,9 +253,8 @@ namespace Logitude.Test.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
-        public static string GetJournalActionTypeByFilters(string code)
-        {
-            return $"JournalActionTypeViews/GetByFilters?getAll=true&filter1Name=Code&filter1Value={code}";
-        }
+        
+
+
     }
 }
