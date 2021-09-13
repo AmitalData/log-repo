@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "20c6af22838cd15538720bcbb392cef2";
+		public const string HashString = "331067ab29964370c911c12cbec427f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97,7 +97,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "ChargesTypes",
 			      				    ObjectTableSingular =  "Charges Type",
 			      				    ObjectTablePlural =  "Charges Types",
-			      				    DescriptionDefaultText =  "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.",
+			      				    DescriptionDefaultText =  "Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB. ",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,

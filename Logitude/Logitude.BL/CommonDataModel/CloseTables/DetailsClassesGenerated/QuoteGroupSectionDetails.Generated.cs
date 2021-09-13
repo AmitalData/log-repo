@@ -24,14 +24,14 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new QuoteGroupSectionDetails()
             {    
                 Code = "O", 
-                Name = "Origin Charges",
+                Name = "Origin Charges", 
                 Searchfields = "l,origin charges", 
 			});
 			 
             all.Add(new QuoteGroupSectionDetails()
             {    
                 Code = "F", 
-                Name = "Freight Charges",
+                Name = "Freight Charges", 
                 Searchfields = "l,freight charges", 
 			});
 			 
@@ -49,12 +49,12 @@ namespace Logitude.BL.CommonDataModel
         {   
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
-			newPoco.Searchfields = GetSearchFields(this);    
+		    newPoco.Searchfields = this.Searchfields;   
         }
 
 		public string GetSearchFields(QuoteGroupSection rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.Searchfields,",");
         }
    }
 }

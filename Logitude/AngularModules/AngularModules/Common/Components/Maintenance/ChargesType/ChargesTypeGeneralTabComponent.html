@@ -64,7 +64,6 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'ChargesGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ChargesGroupId'"
                                                             [ObjectTableName]="ObjectTableName"
@@ -73,13 +72,33 @@
                                                     </LogLov>
                                                 </td>
                                             </tr>
-
+                                            <tr *ngIf="IsQuoteOPMaintence" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'QuoteGroupSectionID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'QuoteGroupSectionID'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'QuoteGroupSection'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-
-                                                <td style="padding-right:18px;">
+                                                <td *ngIf="!IsQuoteOPMaintence" style="padding-right:18px;">
+                                                    <LogLov [ObjectFieldName]="'MeasurementId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true"
+                                                            [QueryFilterItems]="MeasurementsQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td *ngIf="IsQuoteOPMaintence" style="padding-left:18px;">
                                                     <LogLov [ObjectFieldName]="'MeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"

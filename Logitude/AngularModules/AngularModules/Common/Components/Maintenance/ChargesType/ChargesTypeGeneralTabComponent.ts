@@ -11,6 +11,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AccountingSettingPM } from '../../../EntityPMs/AccountingSettingPM';
 import { AccountingSettingPMService } from '../../../Services/StandardPMs/AccountingSettingPMService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
@@ -26,17 +27,20 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public DisplayRegoinalTax: boolean = false;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
-
+    public IsQuoteOPMaintence = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             this.DisplaySATSettings = true;
         }
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
             this.DisplayRegoinalTax = true;
         }
         this.ReadChargeTypesRestrictedFeatureToggleFeature();
+        if (FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteOPMaintence")) {
+            this.IsQuoteOPMaintence = true;
+        }
     }
 
     ngOnInit() {
@@ -165,6 +169,13 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
 
             this.SetUIProperties();
             this.CheckWarnings();
+        }
+    }
+
+    get QuoteGroupSectionID() { return this.EntityPM.QuoteGroupSectionID; }
+    set QuoteGroupSectionID(newValue: string) {
+        if (this.EntityPM.QuoteGroupSectionID != newValue) {
+            this.EntityPM.QuoteGroupSectionID = newValue;
         }
     }
 
