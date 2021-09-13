@@ -32,3 +32,13 @@ export function AssertSearch(searchFieldValue) {
 export function AssertGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
+
+export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSearch: string, maintenanceItemSelector: string) {
+    cy.Click(BaseSelectors.MaintenanceMenu, null)
+    cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceItemNameToSearch);
+    cy.Click(maintenanceItemSelector, null);
+}
+
+export function OpenNewWizard(tabName: string) {
+    cy.Click(BaseSelectors.NewWizardButton(tabName), null);
+}
