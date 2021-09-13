@@ -9,4 +9,5 @@ export class CargoTrackingShipmentFilters
     public SortDescending: boolean = true;
     public SortFieldName: string;
     public SelectedInvitedCustomers: any[];
+    public HasException: boolean = false;
 }

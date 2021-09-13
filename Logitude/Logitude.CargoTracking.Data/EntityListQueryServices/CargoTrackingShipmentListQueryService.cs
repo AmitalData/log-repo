@@ -543,6 +543,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterByCustomers(shipmentFilters, shipments);
             shipments = FilterTransportMode(shipmentFilters, shipments);
             shipments = FilterDirections(shipmentFilters, shipments);
+            shipments = FilterShipmentsWhichHaveExceptions(shipmentFilters, shipments);
 
             return shipments;
         }
@@ -571,6 +572,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.Where(d =>
                             shipmentFilters.CustomersIds.Contains(d.CustomerId)
                         );
+            return shipments;
+        }
+
+        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichHaveExceptions(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentFilters.HasException)
+                shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
             return shipments;
         }
 

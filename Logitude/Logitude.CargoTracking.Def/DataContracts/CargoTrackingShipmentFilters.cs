@@ -26,6 +26,7 @@ public string TransportModeCodes { get; set; }
         public string DirectionCodes { get; set; }
         public bool SortDescending { get; set; }
         public string SortFieldName { get; set; }
+        public bool HasException { get; set; }
 
     }
 }

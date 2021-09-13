@@ -37,6 +37,11 @@
     <div class="hide-mobile">
         <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
         <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+        
+        <div class="has-exception-checkbox-filter">
+            <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasException"></CheckBox>
+        </div>
+
     </div>
 
         <div class="actions-buttons hide-mobile">
@@ -73,7 +78,7 @@
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 ">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException ">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
@@ -82,6 +87,9 @@
 
             <li *ngFor="let customer of SelectedInvitedCustomers" (click)="UnselectCustomer(customer)">
                 {{customer.Name}}
+                <span class="filter-close-btn">×</span>
+            </li>
+            <li *ngIf="hasException" (click)="OnHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
 

@@ -233,6 +233,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     this.SelectFilterByCode(filterCode);
                 });
             }
+            if(SessionInfo.ShipmentsFilters.HasException){
+                this.hasException = SessionInfo.ShipmentsFilters.HasException;
+            }
             this.GetInvitedCustomers();
             this.SelectedFilters.map(x => {
                 if(x.FilterName == 'shipmentType')
@@ -383,6 +386,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     references: string[];
     isSortDescending: boolean = true;
+    hasException: boolean = false;
     private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
     {
         if (this.ShipmentsDataSource)
@@ -432,6 +436,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortDescending = this.isSortDescending;
+        shipmentFilters.HasException = this.hasException;
 
         this.SetCustomersFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
@@ -475,6 +480,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     SelectionChangedHandler(toggleFilterCodes: string) {
         this.SelectToggleFilters(toggleFilterCodes);
+    }
+
+    
+    OnHasExceptionChanged(event){
+        this.hasException = event;
+        console.log(this.hasException)
+        this.LoadScreenData();
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
@@ -649,7 +661,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SelectFilterByCode(filterCode: string)
     {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        console.log('filter', filter)
         this.SelectFilterWithoutLoadScreenData(filter);
     }
     DeselectFilter(filter: ToggleFilter)
@@ -673,6 +684,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.ClearAdvancedFilters();
         this.shipmentTypeMultipleSelection.ClearFilters();
         this.shipmentDirectionMultipleSelection.ClearFilters();
+        this.hasException =false;
         this.LoadScreenData();
     }
 

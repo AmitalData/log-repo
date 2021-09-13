@@ -821,3 +821,20 @@ h1{
 .multipe-select:not(:first-of-type) {
     margin-left: 20px;
 }
+
+.has-exception-checkbox-filter {
+    display: inline-block;
+    width: 150px;
+    background: #FFF;
+    height: 45px;
+    border-radius: 6px;
+    border: 1px solid var(--MainColor);
+    top: 0px;
+    position: absolute;
+    margin-left: 20px;
+}
+.has-exception-checkbox-filter CheckBox{
+    display: block;
+    margin-top: 12px;
+    margin-left: 5px;
+}
