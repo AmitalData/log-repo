@@ -12,7 +12,7 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
     [Binding]
     public class BeforeFeatureRun
     {
-        [BeforeFeature("Pre-Prepare")]
+        [BeforeFeature("Pre-Prepare-Accounting")]
         public static void SetUpPrepareDataBeforeFeatureRun()
         {
             new ActoinPreparation().Prepare();

@@ -1,4 +1,4 @@
-﻿@Pre-Prepare
+﻿@Pre-Prepare-Accounting
 Feature: CreateApprovedJournal
 	We want to create an approved journal
 

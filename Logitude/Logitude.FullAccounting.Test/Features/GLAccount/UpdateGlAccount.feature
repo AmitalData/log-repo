@@ -1,4 +1,4 @@
-﻿@Pre-Prepare
+﻿@Pre-Prepare-Accounting
 Feature: Update GlAccount
 	We want to update a GlAccount
 
