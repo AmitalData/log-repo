@@ -354,7 +354,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServiceContextUser: SessionLocator.LoggedUserId,
             TypeCode: this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter,
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
+            DirectionOperator : 'Equal',
         };
+        if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
         this.myShipmentDomainService.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {
                 this.setAllShipmentsQueriesCounts(myResult);
@@ -372,6 +374,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             return tempo;
         },
     };
+
+    private SetDirectionFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) { 
+       shipmentsQueriesCountsArgs.DirectionId = 'E';
+       shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual'; 
+    }
 
     private setAllShipmentsQueriesCounts(myResult: ImporterQueriesDataCounts) {
         this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();

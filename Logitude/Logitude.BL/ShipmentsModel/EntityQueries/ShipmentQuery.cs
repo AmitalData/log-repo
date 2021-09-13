@@ -11503,9 +11503,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ImporterQueriesDataCounts GetShipmentsQueriesCounts(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
 
-
+            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
             ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
-            IQueryable<ShipmentDataView> allShipments = GetAllShipments(shipmentsQueriesCountsArgs);
+            
+            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+
 
             allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
             allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
@@ -11525,23 +11527,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
-
-        private static IQueryable<ShipmentDataView> GetAllShipments(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
-        {
-            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
-            IQueryable<ShipmentDataView> allShipments; 
-             
-            if (SystemEnvironmentService.IsLogBox())
-            {
-                allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false && f.DirectionId != "E" select f);
-            }
-            else
-            {
-                allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
-            } 
-            return allShipments;
-        }
-
+          
         private void MapRequiredActionsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
         {
             IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
@@ -11618,8 +11604,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.DirectionId))
             {
-                allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
+                if (shipmentsQueriesCountsArgs.DirectionOperator == "NotEqual")
+                {
+                    allShipments = allShipments.Where(d => d.DirectionId != shipmentsQueriesCountsArgs.DirectionId);
+                }
+                else allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
             }
+
             if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.SearchFilter))
             {
                 allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper())));
@@ -14145,6 +14136,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string ServiceContextUser { get; set; }
         public string TypeCode { get; set; }
         public string ForwarderPartnerId { get; set; }
+
+        public string DirectionOperator { get; set; }
     }
 
     public class HouseMaster
