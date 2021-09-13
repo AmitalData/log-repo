@@ -675,14 +675,14 @@ export class ContainerPM {
     public set ActualLIFDeparture(newValue: Date) { if (this.actualLIFDeparture != newValue) { this.actualLIFDeparture = newValue; this.MarkAsDirty("ActualLIFDeparture"); } }
        
 	 
-    private gateIn: string;
+    private gateIn: Date;
     public get GateIn() { return this.gateIn; }
-    public set GateIn(newValue: string) { if (this.gateIn != newValue) { this.gateIn = newValue; this.MarkAsDirty("GateIn"); } }
+    public set GateIn(newValue: Date) { if (this.gateIn != newValue) { this.gateIn = newValue; this.MarkAsDirty("GateIn"); } }
        
 	 
-    private gateOut: string;
+    private gateOut: Date;
     public get GateOut() { return this.gateOut; }
-    public set GateOut(newValue: string) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
+    public set GateOut(newValue: Date) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
        
 	 
     private emptyReturnLocation: string;
