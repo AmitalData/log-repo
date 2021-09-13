@@ -122,7 +122,7 @@ export class CargoTrackingShipmentList {
 	GatepassArrivedNotes: string;
 	GatepassArrivedDone: boolean;
 	ImportManifest: string;
-
+	CreatedDone: boolean;
 	
 }
  

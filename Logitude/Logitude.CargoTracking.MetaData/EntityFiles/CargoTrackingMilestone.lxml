@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;8e39&quot;"
+  Code="&quot;fd3a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -456,91 +456,98 @@
   </EventTypes>
   <Records>
     <Record
-      Code="&quot;1&quot;"
-      EnglishName="&quot;Booking&quot;"
-      SearchFields="&quot;1,Booking&quot;"
-      LocalName="&quot;Booking&quot;" />
+    Code="&quot;1&quot;"
+    EnglishName="&quot;Created&quot;"
+    SearchFields="&quot;1,Created&quot;"
+    LocalName="&quot;Created&quot;"
+    Inactive="false" />
     <Record
       Code="&quot;2&quot;"
-      EnglishName="&quot;Pickup&quot;"
-      SearchFields="&quot;2,Pickup&quot;"
-      LocalName="&quot;Pickup&quot;" />
+      EnglishName="&quot;Booking&quot;"
+      SearchFields="&quot;2,Booking&quot;"
+      LocalName="&quot;Booking&quot;" />
     <Record
       Code="&quot;3&quot;"
-      EnglishName="&quot;From Warehouse&quot;"
-      SearchFields="&quot;3,From Warehouse&quot;"
-      LocalName="&quot;From Warehouse&quot;" />
+      EnglishName="&quot;Pickup&quot;"
+      SearchFields="&quot;3,Pickup&quot;"
+      LocalName="&quot;Pickup&quot;" />
     <Record
       Code="&quot;4&quot;"
-      EnglishName="&quot;Departure&quot;"
-      SearchFields="&quot;4,Departure&quot;"
-      LocalName="&quot;Departure&quot;" />
+      EnglishName="&quot;From Warehouse&quot;"
+      SearchFields="&quot;4,From Warehouse&quot;"
+      LocalName="&quot;From Warehouse&quot;" />
     <Record
       Code="&quot;5&quot;"
-      EnglishName="&quot;Arrival&quot;"
-      SearchFields="&quot;5,Arrival&quot;"
-      LocalName="&quot;Arrival&quot;" />
+      EnglishName="&quot;Departure&quot;"
+      SearchFields="&quot;5,Departure&quot;"
+      LocalName="&quot;Departure&quot;" />
     <Record
       Code="&quot;6&quot;"
-      EnglishName="&quot;To Warehouse&quot;"
-      SearchFields="&quot;6,To Warehouse&quot;"
-      LocalName="&quot;To Warehouse&quot;" />
+      EnglishName="&quot;Arrival&quot;"
+      SearchFields="&quot;6,Arrival&quot;"
+      LocalName="&quot;Arrival&quot;" />
     <Record
       Code="&quot;7&quot;"
+      EnglishName="&quot;To Warehouse&quot;"
+      SearchFields="&quot;7,To Warehouse&quot;"
+      LocalName="&quot;To Warehouse&quot;" />
+    <Record
+      Code="&quot;8&quot;"
       EnglishName="&quot;Assigned To Customs Broker&quot;"
-      SearchFields="&quot;7,Assigned To Customs Broker&quot;"
+      SearchFields="&quot;8,Assigned To Customs Broker&quot;"
       LocalName="&quot;Assigned To Customs Broker&quot;"
       Inactive="false" />
     <Record
-      Code="&quot;8&quot;"
+      Code="&quot;9&quot;"
       EnglishName="&quot;Customs Process&quot;"
-      SearchFields="&quot;8,Customs Process&quot;"
+      SearchFields="&quot;9,Customs Process&quot;"
       LocalName="&quot;Customs Process&quot;" />
     <Record
-      Code="&quot;9&quot;"
+      Code="&quot;10&quot;"
       EnglishName="&quot;Goods Classification&quot;"
-      SearchFields="&quot;9,Goods Classification&quot;"
+      SearchFields="&quot;10,Goods Classification&quot;"
       LocalName="&quot;Goods Classification&quot;" />
     <Record
-      Code="&quot;10&quot;"
+      Code="&quot;11&quot;"
       EnglishName="&quot;Document Inspection&quot;"
-      SearchFields="&quot;10,Document Inspection&quot;"
+      SearchFields="&quot;11,Document Inspection&quot;"
       LocalName="&quot;Document Inspection&quot;" />
     <Record
-      Code="&quot;11&quot;"
+      Code="&quot;12&quot;"
       EnglishName="&quot;Customs Payment&quot;"
-      SearchFields="&quot;11,Customs Payment&quot;"
+      SearchFields="&quot;12,Customs Payment&quot;"
       LocalName="&quot;Customs Payment&quot;" />
     <Record
-      Code="&quot;12&quot;"
+      Code="&quot;13&quot;"
       EnglishName="&quot;Clearance&quot;"
-      SearchFields="&quot;12,Clearance&quot;"
+      SearchFields="&quot;13,Clearance&quot;"
       LocalName="&quot;Clearance&quot;" />
     <Record
-      Code="&quot;13&quot;"
+      Code="&quot;14&quot;"
       EnglishName="&quot;Gatepass Arrived&quot;"
-      SearchFields="&quot;13,Gatepass Arrived&quot;"
+      SearchFields="&quot;14,Gatepass Arrived&quot;"
       LocalName="&quot;Gatepass Arrived&quot;" />
     <Record
-      Code="&quot;14&quot;"
+      Code="&quot;15&quot;"
       EnglishName="&quot;Assigned to Trucker&quot;"
-      SearchFields="&quot;14,Assigned to Trucker&quot;"
+      SearchFields="&quot;15,Assigned to Trucker&quot;"
       LocalName="&quot;Assigned to Trucker&quot;" />
     <Record
-      Code="&quot;15&quot;"
+      Code="&quot;16&quot;"
       EnglishName="&quot;Delivery Out&quot;"
-      SearchFields="&quot;15,Delivery Out&quot;"
+      SearchFields="&quot;16,Delivery Out&quot;"
       LocalName="&quot;Delivery Out&quot;" />
     <Record
-      Code="&quot;16&quot;"
+      Code="&quot;17&quot;"
       EnglishName="&quot;Delivered&quot;"
-      SearchFields="&quot;16,Delivered&quot;"
+      SearchFields="&quot;17,Delivered&quot;"
       LocalName="&quot;Delivered&quot;" />
     <Record
-      Code="&quot;17&quot;"
+      Code="&quot;18&quot;"
       EnglishName="&quot;Invoiced&quot;"
-      SearchFields="&quot;17,Invoiced&quot;"
+      SearchFields="&quot;18,Invoiced&quot;"
       LocalName="&quot;Invoiced&quot;" />
+  
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
