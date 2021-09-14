@@ -398,7 +398,9 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
-				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;					
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
+				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
+				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1264,6 +1266,18 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
 							temp.Notify1Reference2 = MyEntity.Notify1Reference2;
+
+					 
+
+					
+                    							//throw new ApplicationException("ShipperNotExporterReference1 Can't be update"); 
+							temp.ShipperNotExporterReference1 = MyEntity.ShipperNotExporterReference1;
+
+					 
+
+					
+                    							//throw new ApplicationException("ShipperNotExporterReference2 Can't be update"); 
+							temp.ShipperNotExporterReference2 = MyEntity.ShipperNotExporterReference2;
 
 					 
 
