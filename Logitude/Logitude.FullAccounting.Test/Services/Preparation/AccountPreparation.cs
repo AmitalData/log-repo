@@ -21,6 +21,9 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         {
             FullAccountingData.GLAccount1921681253Id = GetByNumber(AccountNumber1);
             FullAccountingData.GLAccount1921681254Id = GetByNumber(AccountNumber2);
+        }
+        public void PrepareNewAccount()
+        {
             FullAccountingData.GLAccountId = Create();
         }
 

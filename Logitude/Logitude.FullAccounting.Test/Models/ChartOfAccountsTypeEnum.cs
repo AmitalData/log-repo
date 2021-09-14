@@ -10,8 +10,10 @@ namespace Logitude.FullAccounting.Test.Models
     {
         Revenues = 1,
         Expenses = 2,
+        Customers = 3,
+        Vendors = 4,
         Banks = 5,
-        Works = 3,
+        Works = 6,
         DebtorsAndCreditors = 7
 
     }

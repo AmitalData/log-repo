@@ -13,14 +13,18 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
     public class BeforeFeatureRun
     {
         [BeforeFeature("Pre-Prepare-Accounting")]
-        public static void SetUpPrepareDataBeforeFeatureRun()
+        public static void PrePrepareAccounting()
         {
             new ActoinPreparation().Prepare();
             new ChartOfAccountPreparation().Prepare();
             new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
-            
-
         }
+        [BeforeFeature("Pre-Prepare-NewGLAccount")]
+        public static void PrePrepareNewGLAccount()
+        {
+            new AccountPreparation().PrepareNewAccount();
+        }
+
     }
 }

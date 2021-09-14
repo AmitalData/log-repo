@@ -16,5 +16,7 @@ namespace Logitude.FullAccounting.Test.Models
         public static string GLAccount1921681254Id { get; internal set; }
         public static string DebtorsAndCreditorsChartOfAccountId { get; internal set; }
         public static string GLAccountId { get; internal set; }
+        public static string CustomerId { get; internal set; }
+        public static string CustomerChartOfAccountId { get; internal set; }
     }
 }

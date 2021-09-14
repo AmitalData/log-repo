@@ -24,6 +24,5 @@
         public string ShippingLineMAEUId { get; set; }
         public string ShippingLineYMLUId { get; set; }
         public string CustomerContactId { get; set; }
-        public string CustomerAccountingId { get; set; }
     }
 }

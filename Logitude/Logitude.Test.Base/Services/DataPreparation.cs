@@ -91,7 +91,6 @@ namespace Logitude.Test.Base.Services
                 AgentId = GetPartnerId(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }),
                 AgentCode = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }, "Code"),
                 CustomerId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestCustomer", IsCustomer = true }),
-                CustomerAccountingId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "FL Acc Customer", IsCustomer = true }),
                 CustomerContactId = GetPartnerPropertyValue(new PartnerParameters { TypeCode = "CS", Name = "TestCustomer", IsCustomer = true }, "PrimaryContactId"),
                 PotentialCustomerId = GetPartnerId(new PartnerParameters { TypeCode = "PO", Name = "TestPotentialCustomer" }),
                 CustomAgentId = GetPartnerId(new PartnerParameters { TypeCode = "CG", Name = "TestCustomAgent" }),

@@ -138,6 +138,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "GLAccounts/GetSingle?id=" + id;
         }
+        public static string CustomersGetSingle(string id)
+        {
+            return "customers/getsingle?id=" + id;
+        }
 
         public static string AddressesGetSingle(string id)
         {

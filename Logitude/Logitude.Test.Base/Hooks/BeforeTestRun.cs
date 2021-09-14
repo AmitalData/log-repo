@@ -207,7 +207,6 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.AgentId = partnersVariables.AgentId;
             PartnersData.AgentCode = partnersVariables.AgentCode;
             PartnersData.CustomerId = partnersVariables.CustomerId;
-            PartnersData.CustomerAccountingId = partnersVariables.CustomerAccountingId;
             PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
             PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
             PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;

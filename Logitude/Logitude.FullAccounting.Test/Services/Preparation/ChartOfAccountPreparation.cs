@@ -15,9 +15,11 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
     public class ChartOfAccountPreparation
     {
         const string DebtorsAndCreditorsChartCode = "DCCHR";
+        const string CustomerChartCode = "CCCHR";
         public void Prepare()
         {
             FullAccountingData.DebtorsAndCreditorsChartOfAccountId = GetByCode(DebtorsAndCreditorsChartCode);
+            FullAccountingData.CustomerChartOfAccountId = GetByCode(CustomerChartCode);
         }
         private string GetByCode(string code)
         {
@@ -54,6 +56,8 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             {
                 case DebtorsAndCreditorsChartCode:
                     return CreateRCHARInstance(code);
+                case CustomerChartCode:
+                    return CreateCustomerChartCodeInstance(code);
                 default:
                     return null;
             }
@@ -71,5 +75,19 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 
             };
         }
+        private ChartOfAccountPM CreateCustomersChartCodeInstance(string code)
+        {
+            return new ChartOfAccountPM()
+            { 
+                Code = code,
+                EnglishName = "Customer Chart",
+                LocalName = "Customer Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{code},Customer Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Customers +""
+
+            };
+        }
+
     }
 }
