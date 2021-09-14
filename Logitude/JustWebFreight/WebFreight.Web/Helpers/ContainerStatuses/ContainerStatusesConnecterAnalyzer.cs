@@ -1922,7 +1922,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         bool isSavingShipment = false;
         private void UpdateShipment()
         {
-            if (FeatureToggleHelper.HasFeatureToggle("", tenant))
+            if (FeatureToggleHelper.HasFeatureToggle("OIU", this.logitudeTenant.Value))
             {
                 if (shipmentPM == null)
                 {
@@ -1944,7 +1944,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
         private string GetPortId(string portCode)
         {
             Port port = portRepository.GetOceanPortByCombinedCode(portCode, this.logitudeTenant.Value);
@@ -2083,13 +2082,22 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
                 this.FillFieldsNewValues("PreCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
-                this.FillFieldsNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.PreCarriageATD == null)
+                {
+                    this.FillFieldsNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
             }
 
             else if(POLShipmentUpdateIndicator == "Main Carriage")
             {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
                 this.FillFieldsNewValues("MainCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
-                this.FillFieldsNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.MainCarriageATD == null)
+                {
+                    this.FillFieldsNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
             }
         }
         private void UpdatePODDates(Container container)
@@ -2097,13 +2105,22 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
                 this.FillFieldsNewValues("OnCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
-                this.FillFieldsNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.OnCarriageATA == null)
+                {
+                    this.FillFieldsNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }                
             }
 
             else if (PODShipmentUpdateIndicator == "Main Carriage")
             {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
                 this.FillFieldsNewValues("MainCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
-                this.FillFieldsNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.MainCarriageATA == null)
+                {
+                    this.FillFieldsNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }
             }
         }
         private void FillFieldsNewValues(string propertyName, object newValue, object entity)
