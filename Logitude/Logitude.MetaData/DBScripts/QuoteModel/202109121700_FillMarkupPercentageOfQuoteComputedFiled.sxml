@@ -1,0 +1,83 @@
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes" BatchSize ="5000">
+  <Sql Version="1">
+    <![CDATA[ 
+
+		If(OBJECT_ID('tempdb..#temp ')  Is Not Null)
+		Begin
+				Drop Table #temp
+		End
+
+		If(OBJECT_ID(' tempdb..#temp_QuoteComputedFields ') Is Not Null)
+		Begin
+				Drop Table #temp_QuoteComputedFields
+		End
+
+		CREATE TABLE #temp_QuoteComputedFields
+		(
+			Id varchar(15) not null,
+			Tenant int not null,
+			MarkupPercentage float 
+		)
+
+		select  
+		Quotes.Id as Id,
+		Quotes.Tenant as Tenant
+		into #temp
+		from Quotes  where $LastCounterWhere$
+
+			declare @Id as varchar(15)
+			declare @Tenant as int
+			declare @MarkupPercentage as  float
+			declare @SummaryCostAmount as float 
+			declare @SummarySaleAmount as float
+			declare @Count as int
+			set @Count = 0;
+
+			DECLARE DataCursor CURSOR READ_ONLY
+			FOR
+			SELECT Id,Tenant
+			FROM #temp	
+			OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@Tenant
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @SummaryCostAmount =  (select Sum(QuoteCharges.CostTotalAmountLocal) from QuoteCharges where QuoteCharges.QuoteId = @Id And CostTotalAmountLocal is not null)
+				set @SummarySaleAmount =  (select Sum(QuoteCharges.SaleTotalAmountLocal)  from QuoteCharges where QuoteCharges.QuoteId = @Id AND QuoteCharges.IsAllIN ='0' And SaleTotalAmountLocal is not null)
+				if (@SummaryCostAmount is not null and @SummaryCostAmount != '0')
+				begin
+					 set @MarkupPercentage = (@SummarySaleAmount - @SummaryCostAmount) * 100 / @SummaryCostAmount;    
+					 insert into #temp_QuoteComputedFields (Id,Tenant,MarkupPercentage) values(@Id, @Tenant,ROUND(@MarkupPercentage,2))
+				end
+
+				set @Count = @Count + 1;
+				if(@Count = 1000)
+				begin		
+						update QuoteComputedFields set MarkupPercentage = #temp_QuoteComputedFields.MarkupPercentage
+					FROM #temp_QuoteComputedFields
+					where #temp_QuoteComputedFields.Id = QuoteComputedFields.Id and #temp_QuoteComputedFields.Tenant = QuoteComputedFields.Tenant
+					truncate table #temp_QuoteComputedFields
+					set @Count = 0
+				end
+
+			FETCH NEXT FROM DataCursor INTO @Id,@Tenant
+			END
+			CLOSE DataCursor
+			DEALLOCATE DataCursor
+			if (@Count > 0)
+			begin
+						update QuoteComputedFields set MarkupPercentage = #temp_QuoteComputedFields.MarkupPercentage
+					FROM #temp_QuoteComputedFields
+					where #temp_QuoteComputedFields.Id = QuoteComputedFields.Id and #temp_QuoteComputedFields.Tenant = QuoteComputedFields.Tenant
+
+			end
+
+		drop table #temp
+		drop table #temp_QuoteComputedFields
+    
+    ]]>
+  </Sql>
+</Script>
+
+
+
+
