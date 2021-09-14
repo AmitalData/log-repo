@@ -419,7 +419,8 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
-				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;					
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
+				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1368,6 +1369,12 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("Notify1Reference2 Can't be update"); 
 							temp.Notify1Reference2 = MyEntity.Notify1Reference2;
+
+					 
+
+					
+                    							//throw new ApplicationException("CustomsClearanceDate Can't be update"); 
+							temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
 
 					 
 
