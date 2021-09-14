@@ -810,6 +810,21 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             this.EntityPM.HasLogboxAccess = value;
     }
 
+    get IsImportActivated() {
+        return this.EntityPM.IsImportActivated;
+    }
+    set IsImportActivated(value: boolean) {
+        if (value != this.EntityPM.IsImportActivated)
+            this.EntityPM.IsImportActivated = value;
+    }
+    get IsExportActivated() {
+        return this.EntityPM.IsExportActivated;
+    }
+    set IsExportActivated(value: boolean) {
+        if (value != this.EntityPM.IsExportActivated)
+            this.EntityPM.IsExportActivated = value;
+    }
+
      get MainLogo() {
          return this.EntityPM.MainLogo;
      }
