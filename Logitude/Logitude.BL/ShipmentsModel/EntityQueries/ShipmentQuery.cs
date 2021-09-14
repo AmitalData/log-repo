@@ -12441,6 +12441,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                HandlerUserId = f.HandlerUserId,
                                HandlerUserName = f.HandlerUserName,
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
+                               AccrualsApprovalDate = f.AccrualsApprovalDate,
+                               IsAccrualsApproved = f.IsAccrualsApproved,
                            };
             return myResult;
         }
@@ -12814,6 +12816,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    AccrualsApprovalDate = f.AccrualsApprovalDate,
+                    IsAccrualsApproved = f.IsAccrualsApproved,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
