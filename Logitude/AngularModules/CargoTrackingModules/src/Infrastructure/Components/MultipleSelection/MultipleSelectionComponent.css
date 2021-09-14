@@ -39,18 +39,24 @@ mat-option-text {
     background-color: var(--MainColor) !important;
 }
 
-/* ::ng-deep .cdk-overlay-pane{
-    top: 246px !important;
-} */
+::ng-deep .cdk-overlay-pane{
+    margin-left: 29px;
+}
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
     background-color: #FFF;
     border-radius: 6px !important;
     padding: 3px .75em 0 .75em !important;
     height: 40px;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%) !important;
 }
 
 
 ::ng-deep .mat-form-field-underline{
 display: none;
 }
+
+::ng-deep .mat-select-panel {
+    min-width: calc(100% + 20px) !important;
+}
+
