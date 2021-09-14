@@ -18053,7 +18053,33 @@
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false"
     Perspective="&quot;customers&quot;">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;RankCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CityName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;StartWorkingDate&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
   <Screen
