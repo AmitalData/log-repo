@@ -56,7 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     public hasAirShipmentToggle: boolean = false;
 
-    private isLogbox: boolean = SystemEnvironmentService.IsLogBox();
+    public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();

@@ -46,7 +46,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
-    private isLogbox = SystemEnvironmentService.IsLogBox();
+    public isLogbox = SystemEnvironmentService.IsLogBox();
 
     constructor(private _entityListService: EntityListService) {
         super();
