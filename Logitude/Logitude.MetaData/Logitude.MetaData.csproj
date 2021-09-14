@@ -1075,7 +1075,6 @@
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\UpdateDocInDocumentCalculatedFileName.sxml" />
     <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseStoragePricing.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightMeasurement.lxml" />
