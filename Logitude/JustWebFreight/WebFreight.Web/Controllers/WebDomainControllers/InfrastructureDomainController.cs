@@ -1956,7 +1956,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             DWQueryData.ColumnsSort += "[" + item.Code + "]" + " " + item.SortDirction + ",";
                         }
-                        DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+                        DWQueryData.ColumnsSort = DWQueryData.ColumnsSort.TrimEnd(',');
                     }
 
                     QueryData_Updated.BIReportPM = entityPM;
