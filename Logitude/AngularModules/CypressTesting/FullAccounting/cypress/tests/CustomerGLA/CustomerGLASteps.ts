@@ -1,11 +1,12 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import * as CustomerGLAActions from '../../actions/CustomerGLAActions';
+import * as CustomerGLAActions from '../../actions/CardActions';
 import * as GLAccountsActions from '../../actions/GLAccountsActions';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import { CustomersGLADetails } from '../../models/CustomersGLADetails';
+import { CardDetails } from '../../models/CardDetails';
 import { GLAccountsDetails } from '../../models/GLAccountsDetails';
 import * as Actions from '../../actions/Actions';
 import * as gr from '../../../../Base/cypress/actions/GenerateRandoms';
+import { Constants } from "../../constants/Constants";
 
 let currentDateTime = gr.GenerateCurrentDatetimeString("")
 let searchFieldValue = null
@@ -17,22 +18,22 @@ Given("the user logged in and navigates to Customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-    let customersGLADetails = Assists.CreateInstance<CustomersGLADetails>(dataTable, true);
-    CustomerGLAActions.FillCustomerDetails(customersGLADetails)
+    let customersGLADetails = Assists.CreateInstance<CardDetails>(dataTable, true);
+    CustomerGLAActions.FillCardDetails(customersGLADetails)
 });
 
 When("create customer", () => {
-    CustomerGLAActions.CreateCustomer()
+    CustomerGLAActions.CreateCard()
 });
 
 Then("the customer should create successfully", () => {
-    CustomerGLAActions.AssertCreateCustomer()
+    CustomerGLAActions.AssertCreateCard(Constants.Customer)
 });
 //#endregion
 
 //#region Search for the Customer by name
 When("search customer", () => {
-    searchFieldValue = CustomerGLAActions.GetSearchFieldValue()
+    searchFieldValue = CustomerGLAActions.getCardCode()
     Actions.Search(searchFieldValue)
 });
 
@@ -43,17 +44,17 @@ Then("the customer should appear successfully", () => {
 
 //#region Open the customer
 When("open the customer", () => {
-    CustomerGLAActions.OpenCutomer();
+    CustomerGLAActions.OpenCard(Constants.Customer);
 });
 
 Then("the customer should open successfully", () => {
-    CustomerGLAActions.AssertOpenCutomer();
+    Actions.AssertGetSingle();
 });
 //#endregion
 
 //#region Activate the customer in accounting system
 Given("navigates new account wizerd inside the customer", () => {
-    CustomerGLAActions.NavigateNewAccountWizerd()
+    CustomerGLAActions.NavigateGLAccountWizerdFromCustomer()
 });
 
 Given("a GL Account with the following details", (dataTable) => {
