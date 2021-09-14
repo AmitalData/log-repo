@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class ContainerizationHatataStatusViewsController : ApiController
+    public partial class ContainerizationHataraStatusViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ContainerizationHatataStatusListQueryService containerizationHatataStatusQuery = new ContainerizationHatataStatusListQueryService(MyContext);
-                ContainerizationHatataStatusList containerizationHatataStatusList = containerizationHatataStatusQuery.GetSingle(code);
+                ContainerizationHataraStatusListQueryService containerizationHataraStatusQuery = new ContainerizationHataraStatusListQueryService(MyContext);
+                ContainerizationHataraStatusList containerizationHataraStatusList = containerizationHataraStatusQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  containerizationHatataStatusList);
+                return Request.CreateResponse(HttpStatusCode.OK,  containerizationHataraStatusList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ContainerizationHatataStatusListQueryService containerizationHatataStatusQuery = new ContainerizationHatataStatusListQueryService(MyContext);
-                List<ContainerizationHatataStatusList> result = containerizationHatataStatusQuery.GetList(authToken.Tenant);
+                ContainerizationHataraStatusListQueryService containerizationHataraStatusQuery = new ContainerizationHataraStatusListQueryService(MyContext);
+                List<ContainerizationHataraStatusList> result = containerizationHataraStatusQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.ContainerizationHatataStatus",
+                    ObjectTableName = "Customs.ContainerizationHataraStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.ContainerizationHatataStatuss",
+                    QuerySection = "Customs.ContainerizationHataraStatuss",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> ContainerizationHatataStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ContainerizationHatataStatus",tenant);
+				List<ObjectField> ContainerizationHataraStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ContainerizationHataraStatus",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ContainerizationHatataStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ContainerizationHataraStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ContainerizationHatataStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ContainerizationHataraStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				ContainerizationHatataStatusListQueryService containerizationHatataStatusQuery = new ContainerizationHatataStatusListQueryService(MyContext);
+				ContainerizationHataraStatusListQueryService containerizationHataraStatusQuery = new ContainerizationHataraStatusListQueryService(MyContext);
 
-                List<ContainerizationHatataStatusList> entityLists = containerizationHatataStatusQuery.GetList(queryOperations, tenant);
+                List<ContainerizationHataraStatusList> entityLists = containerizationHataraStatusQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = containerizationHatataStatusQuery.GetListCount(queryOperations);
+                    int count = containerizationHataraStatusQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

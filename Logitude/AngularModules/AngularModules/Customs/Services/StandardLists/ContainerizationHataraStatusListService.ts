@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {ContainerizationHatataStatusList} from '../../EntityLists/ContainerizationHatataStatusList';
+import {ContainerizationHataraStatusList} from '../../EntityLists/ContainerizationHataraStatusList';
 
 @Injectable()
 
-export class ContainerizationHatataStatusListService {
+export class ContainerizationHataraStatusListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<ContainerizationHatataStatusList> = [];
+	public static CachedData: Array<ContainerizationHataraStatusList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerizationhatatastatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerizationhatarastatusviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class ContainerizationHatataStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: ContainerizationHatataStatusList;
+						var entity: ContainerizationHataraStatusList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class ContainerizationHatataStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHatataStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHataraStatus", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class ContainerizationHatataStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<ContainerizationHatataStatusList> = [];
+						var _mappedListsArray: Array<ContainerizationHataraStatusList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: ContainerizationHatataStatusList = this.MapJsonToEntityList(allLists[key]);
+								var entity: ContainerizationHataraStatusList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class ContainerizationHatataStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHatataStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHataraStatus", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class ContainerizationHatataStatusListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<ContainerizationHatataStatusList> = [];
+						var _mappedListsArray: Array<ContainerizationHataraStatusList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: ContainerizationHatataStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: ContainerizationHataraStatusList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class ContainerizationHatataStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHatataStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerizationHataraStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -163,9 +163,9 @@ export class ContainerizationHatataStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (ContainerizationHatataStatusListService.CachedData.length > 0) {
+		if (ContainerizationHataraStatusListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = ContainerizationHatataStatusListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = ContainerizationHataraStatusListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -173,25 +173,25 @@ export class ContainerizationHatataStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.ContainerizationHatataStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.ContainerizationHataraStatus").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ContainerizationHatataStatusList> = [];
+					var _mappedListsArray: Array<ContainerizationHataraStatusList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ContainerizationHatataStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ContainerizationHataraStatusList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ContainerizationHatataStatusListService.CachedData = _mappedListsArray;
+					ContainerizationHataraStatusListService.CachedData = _mappedListsArray;
 
-					var filteredData = ContainerizationHatataStatusListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = ContainerizationHataraStatusListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerizationHatataStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerizationHataraStatus", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -222,14 +222,14 @@ export class ContainerizationHatataStatusListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (ContainerizationHatataStatusListService.CachedData.length > 0) {
+        if (ContainerizationHataraStatusListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = ContainerizationHatataStatusListService.CachedData; 
+					serviceResponse.Result = ContainerizationHataraStatusListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(ContainerizationHatataStatusListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(ContainerizationHataraStatusListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -239,18 +239,18 @@ export class ContainerizationHatataStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.ContainerizationHatataStatus").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.ContainerizationHataraStatus").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ContainerizationHatataStatusList> = [];
+					var _mappedListsArray: Array<ContainerizationHataraStatusList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ContainerizationHatataStatusList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ContainerizationHataraStatusList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ContainerizationHatataStatusListService.CachedData = _mappedListsArray;
+					ContainerizationHataraStatusListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -260,7 +260,7 @@ export class ContainerizationHatataStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerizationHatataStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ContainerizationHataraStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -275,8 +275,8 @@ export class ContainerizationHatataStatusListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: ContainerizationHatataStatusList;
-            entityList = new ContainerizationHatataStatusList();
+            var entityList: ContainerizationHataraStatusList;
+            entityList = new ContainerizationHataraStatusList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

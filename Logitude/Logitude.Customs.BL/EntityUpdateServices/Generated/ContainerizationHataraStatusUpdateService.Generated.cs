@@ -22,44 +22,44 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ContainerizationHatataStatusUpdateService:EntityUpdateService<ContainerizationHatataStatus,ContainerizationHatataStatusPM,EntityPM>
+   public partial class ContainerizationHataraStatusUpdateService:EntityUpdateService<ContainerizationHataraStatus,ContainerizationHataraStatusPM,EntityPM>
    {
    
-        ContainerizationHatataStatusRepository entityRepository;
-        public ContainerizationHatataStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        ContainerizationHataraStatusRepository entityRepository;
+        public ContainerizationHataraStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new ContainerizationHatataStatusDataMapping();
-            Repository = new ContainerizationHatataStatusRepository(context);
+            Mapping = new ContainerizationHataraStatusDataMapping();
+            Repository = new ContainerizationHataraStatusRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public ContainerizationHatataStatusUpdateService(int tenant)
+        public ContainerizationHataraStatusUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public ContainerizationHatataStatusUpdateService(ICustomContext context)
+        public ContainerizationHataraStatusUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(ContainerizationHatataStatusPM entityPM)
+		protected override EntityKeyFields GetKeys(ContainerizationHataraStatusPM entityPM)
         {
-            ContainerizationHatataStatusKeys entityKeys = new ContainerizationHatataStatusKeys() { Code = entityPM.Code };
+            ContainerizationHataraStatusKeys entityKeys = new ContainerizationHataraStatusKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(ContainerizationHatataStatusPM entityPM)
+	    protected override void FillDefaultValuesOnCreate(ContainerizationHataraStatusPM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(ContainerizationHatataStatusPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(ContainerizationHataraStatusPM entityPM)
 		{
  
 		}
