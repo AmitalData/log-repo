@@ -517,12 +517,13 @@
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\AmedmentType.lxml" />
+    <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\BuyerRoleType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
-    <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
+    <None Include="EntityFiles\ContainerizationHataraStatus.lxml" />
     <None Include="EntityFiles\CustomerClassificationType.lxml">
       <SubType>Designer</SubType>
     </None>
