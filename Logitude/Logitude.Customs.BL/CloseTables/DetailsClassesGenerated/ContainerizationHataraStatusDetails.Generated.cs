@@ -16,19 +16,19 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL
 {
-   public class ContainerizationHatataStatusDetails : ContainerizationHatataStatus, ICloseTable<ContainerizationHatataStatus, ContainerizationHatataStatusDetails>
+   public class ContainerizationHataraStatusDetails : ContainerizationHataraStatus, ICloseTable<ContainerizationHataraStatus, ContainerizationHataraStatusDetails>
    {
-       public List<ContainerizationHatataStatusDetails> GetAll()
+       public List<ContainerizationHataraStatusDetails> GetAll()
        {
-		    var all = new List<ContainerizationHatataStatusDetails>();  
-            all.Add(new ContainerizationHatataStatusDetails()
+		    var all = new List<ContainerizationHataraStatusDetails>();  
+            all.Add(new ContainerizationHataraStatusDetails()
             {    
                 Code = "1", 
                 Name = "המכלה הותרה", 
                 SearchFields = "המכלה הותרה", 
 			});
 			 
-            all.Add(new ContainerizationHatataStatusDetails()
+            all.Add(new ContainerizationHataraStatusDetails()
             {    
                 Code = "2", 
                 Name = "המכלה טרם הותרה", 
@@ -38,14 +38,14 @@ namespace Logitude.Customs.BL
             return all;
        }
 
-	    public void MapPoco(ContainerizationHatataStatus newPoco)
+	    public void MapPoco(ContainerizationHataraStatus newPoco)
         {   
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
 			newPoco.SearchFields = GetSearchFields(this);    
         }
 
-		public string GetSearchFields(ContainerizationHatataStatus rec)
+		public string GetSearchFields(ContainerizationHataraStatus rec)
         {   
            return String.Concat(rec.Code,",",rec.Name,",");
         }

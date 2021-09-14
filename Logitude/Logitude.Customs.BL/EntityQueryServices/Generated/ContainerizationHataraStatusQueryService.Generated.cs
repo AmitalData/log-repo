@@ -17,48 +17,48 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ContainerizationHatataStatusQueryService: EntityQueryService<ContainerizationHatataStatus,ContainerizationHatataStatusKeys,ContainerizationHatataStatusPM,object,ContainerizationHatataStatusKeys>
+   public partial class ContainerizationHataraStatusQueryService: EntityQueryService<ContainerizationHataraStatus,ContainerizationHataraStatusKeys,ContainerizationHataraStatusPM,object,ContainerizationHataraStatusKeys>
    {
    
-        ContainerizationHatataStatusRepository repository;
+        ContainerizationHataraStatusRepository repository;
 		ICustomContext  context;
-        public ContainerizationHatataStatusQueryService(int tenant)
+        public ContainerizationHataraStatusQueryService(int tenant)
         {
 		    context = CustomContext.GetContext(tenant);
             MainContext = context;
-            repository = new ContainerizationHatataStatusRepository(context);
+            repository = new ContainerizationHataraStatusRepository(context);
             Repository = repository;
-            mapping = new ContainerizationHatataStatusDataMapping();
+            mapping = new ContainerizationHataraStatusDataMapping();
         }
 
-        public ContainerizationHatataStatusQueryService(ContainerizationHatataStatusRepository repository)
+        public ContainerizationHataraStatusQueryService(ContainerizationHataraStatusRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new ContainerizationHatataStatusDataMapping();
+            mapping = new ContainerizationHataraStatusDataMapping();
         }
 
-        public ContainerizationHatataStatusQueryService(ICustomContext context)
+        public ContainerizationHataraStatusQueryService(ICustomContext context)
         {
-            this.repository = new ContainerizationHatataStatusRepository(context);
+            this.repository = new ContainerizationHataraStatusRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new ContainerizationHatataStatusDataMapping();
+            mapping = new ContainerizationHataraStatusDataMapping();
         }
 		 
-		public  ContainerizationHatataStatusPM GetSingle(string code,bool getComposition, bool getFromCache)
+		public  ContainerizationHataraStatusPM GetSingle(string code,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ContainerizationHatataStatusKeys(){ Code = code };
+             EntityKeys = new ContainerizationHataraStatusKeys(){ Code = code };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(ContainerizationHatataStatus entityPOCO)
+	    protected override EntityKeyFields GetKeys(ContainerizationHataraStatus entityPOCO)
         {
-            ContainerizationHatataStatusKeys entityKeys = new ContainerizationHatataStatusKeys() { Code = entityPOCO.Code,  };
+            ContainerizationHataraStatusKeys entityKeys = new ContainerizationHataraStatusKeys() { Code = entityPOCO.Code,  };
             return entityKeys;
         }
      

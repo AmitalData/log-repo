@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class ContainerizationHatataStatusRepository:IRepository<ContainerizationHatataStatus>
+   public partial class ContainerizationHataraStatusRepository:IRepository<ContainerizationHataraStatus>
    {
    
         private ICustomContext currentContext;
-        public ContainerizationHatataStatusRepository(int tenant)
+        public ContainerizationHataraStatusRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public ContainerizationHatataStatusRepository(ICustomContext context)
+        public ContainerizationHataraStatusRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  ContainerizationHatataStatus GetSingle(string code)
+		public  ContainerizationHataraStatus GetSingle(string code)
         {
-            return (from a in context.ContainerizationHatataStatuses
+            return (from a in context.ContainerizationHataraStatuses
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<ContainerizationHatataStatus> GetAll()
+        public IQueryable<ContainerizationHataraStatus> GetAll()
         {
-            return from a in context.ContainerizationHatataStatuses  
+            return from a in context.ContainerizationHataraStatuses  
                    select a;
         }
 				 
-        public ContainerizationHatataStatus GetSingle(EntityKeyFields entityKeys)
+        public ContainerizationHataraStatus GetSingle(EntityKeyFields entityKeys)
         {
-            ContainerizationHatataStatusKeys keys = entityKeys as ContainerizationHatataStatusKeys;
-            return (from a in context.ContainerizationHatataStatuses
+            ContainerizationHataraStatusKeys keys = entityKeys as ContainerizationHataraStatusKeys;
+            return (from a in context.ContainerizationHataraStatuses
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(ContainerizationHatataStatus entity)
+        public void Add(ContainerizationHataraStatus entity)
         {
             onAdd();
-            context.ContainerizationHatataStatuses.Add(entity);
+            context.ContainerizationHataraStatuses.Add(entity);
         }
 
-        public void Remove(ContainerizationHatataStatus entity)
+        public void Remove(ContainerizationHataraStatus entity)
         {
-            context.ContainerizationHatataStatuses.Attach(entity);
-            context.ContainerizationHatataStatuses.Remove(entity);
+            context.ContainerizationHataraStatuses.Attach(entity);
+            context.ContainerizationHataraStatuses.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(ContainerizationHatataStatus entity)
+        public void Update(ContainerizationHataraStatus entity)
         {
             onUpdate();
-            context.ContainerizationHatataStatuses.Attach(entity);
+            context.ContainerizationHataraStatuses.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<ContainerizationHatataStatus> All()
+        public List<ContainerizationHataraStatus> All()
         {
-            return context.ContainerizationHatataStatuses.ToList();
+            return context.ContainerizationHataraStatuses.ToList();
         }
 
         private ICustomContext context

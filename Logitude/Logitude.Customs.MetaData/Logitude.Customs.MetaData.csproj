@@ -235,6 +235,7 @@
     <None Include="DBTables\ConstraintType.dxml" />
     <None Include="DBTables\ContactRoleType.dxml" />
     <None Include="DBTables\Containerization.dxml" />
+    <None Include="DBTables\ContainerizationHataraStatus.dxml" />
     <None Include="DBTables\ContainerizationStatusCode.dxml" />
     <None Include="DBTables\ContainerType.dxml" />
     <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />

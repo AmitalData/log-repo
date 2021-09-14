@@ -16,7 +16,7 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class ContainerizationHatataStatusPM : EntityPM
+   public partial class ContainerizationHataraStatusPM : EntityPM
    {
    	  private string code ;
 	  
