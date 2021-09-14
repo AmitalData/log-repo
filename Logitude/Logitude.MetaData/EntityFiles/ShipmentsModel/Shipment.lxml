@@ -100322,7 +100322,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
