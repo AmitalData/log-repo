@@ -182,6 +182,7 @@ namespace WebFreight.Web.WebServices
                         document.HasFile = true;
                         document.Folder = "docsin";
                         document.IsEncrypted = true;
+                        document.FileName = TruncateLongString(realFileName, 120);
                         document.CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, document.FileName).Calculate();
                         docRepository.Update(document);
                     }
