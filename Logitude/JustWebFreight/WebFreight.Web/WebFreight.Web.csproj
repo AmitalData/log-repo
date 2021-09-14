@@ -1079,9 +1079,11 @@
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\OPSpecialServicesTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPPropertiesViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\OPSpecialServicesTypeController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPPropertiesController.Generated.cs" />
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
@@ -3191,6 +3193,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPDocumentVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPriceStepsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPropertiesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPRatingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSalesTotalUpdateClass.cs" />

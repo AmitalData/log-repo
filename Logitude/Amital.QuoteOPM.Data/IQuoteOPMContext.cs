@@ -26,6 +26,7 @@ namespace Amital.QuoteOPM.Data
 		 IDbSet<QuoteOPDocumentVersion> QuoteOPDocumentVersions { get; }
 		 IDbSet<QuoteOPPackage> QuoteOPPackages { get; }
 		 IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps { get; }
+		 IDbSet<QuoteOPProperties> QuoteOPPropertiess { get; }
 		 IDbSet<QuoteOPRating> QuoteOPRatings { get; }
 		 IDbSet<QuoteOPSetting> QuoteOPSettings { get; }
 		 IDbSet<QuoteOPStage> QuoteOPStages { get; }

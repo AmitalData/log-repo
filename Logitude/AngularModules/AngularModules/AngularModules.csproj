@@ -4807,6 +4807,7 @@
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPCostChargeList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPCustomerTypeList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPList.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPPropertiesList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPRatingList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPSaleChargeList.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityLists\QuoteOPSalesTotalList.ts" />
@@ -4835,6 +4836,7 @@
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPPackagePM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPPriceStepsPM.ts" />
+    <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPPropertiesPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPRatingPM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPSaleChargePM.ts" />
     <TypeScriptCompile Include="QuoteOPM\EntityPMs\QuoteOPSalesTotalPM.ts" />
@@ -4868,6 +4870,7 @@
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPClosingReasonListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPCustomerTypeListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPListService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPPropertiesListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPRatingListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPStageListService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardLists\QuoteOPTemplateListService.ts" />
@@ -4875,6 +4878,7 @@
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\OPSpecialServicesTypePMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPClosingReasonPMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPPMService.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPPropertiesPMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPStagePMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPTemplatePMService.ts" />
     <TypeScriptCompile Include="QuoteOPM\Services\StandardPMs\QuoteOPTemplateSectionPMService.ts" />

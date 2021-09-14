@@ -111,6 +111,7 @@
     <None Include="EntityFiles\QuoteOPCustomerType.lxml" />
     <None Include="EntityFiles\QuoteOPPackage.lxml" />
     <None Include="EntityFiles\QuoteOPPriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteOPProperties.lxml" />
     <None Include="EntityFiles\QuoteOPRating.lxml" />
     <None Include="EntityFiles\QuoteOPSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteOPSalesTotal.lxml" />
