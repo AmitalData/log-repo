@@ -28,6 +28,7 @@ mat-option-text {
 
 ::ng-deep .mat-form-field-flex{
     border: 1px solid var(--MainColor);
+    width: 170px !important;
 }
 
 ::ng-deep .mat-form-field-underline{
@@ -46,6 +47,7 @@ mat-option-text {
     background-color: #FFF;
     border-radius: 6px !important;
     padding: 3px .75em 0 .75em !important;
+    height: 40px;
 }
 
 

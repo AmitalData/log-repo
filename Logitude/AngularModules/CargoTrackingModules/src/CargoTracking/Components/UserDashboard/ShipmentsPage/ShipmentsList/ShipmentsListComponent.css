@@ -68,7 +68,7 @@ h1{
     margin: 0 auto;
     position: relative;
     display: inline-block;
-    width: calc(100% - 130px);
+    width: calc(100% - 90px);
     color: black;
 }
 
@@ -322,7 +322,7 @@ h1{
     margin: 0 auto;
     position: relative;
     display: inline-block;
-    width: calc(100% - 130px);
+    width: calc(100% - 90px);
     color: black;
 }
 
@@ -388,12 +388,12 @@ h1{
 
 
     .search-bar{
-        width: 25%;
+        width: 35%;
         height: 53px;
     }
 
     .search-bar form{
-        margin-top: 6px;
+        margin-top: 12px;
     }
 
     .toolbar{
@@ -519,10 +519,6 @@ h1{
 
     }
 
-    .selected-filters ul li.toggle-menu{
-
-    }
-
 .row-count {
     margin-top: 10px;
     font-size: 16px;
@@ -532,6 +528,7 @@ h1{
     .actions-buttons{
         position: absolute;
         right: 0;
+        top: 15px;
     }
     .actions-buttons > div{
         display: inline-block;
@@ -826,15 +823,19 @@ h1{
     display: inline-block;
     width: 150px;
     background: #FFF;
-    height: 45px;
+    height: 40px;
     border-radius: 6px;
     border: 1px solid var(--MainColor);
-    top: 0px;
-    position: absolute;
+    top: 10px;
+    position: relative;
     margin-left: 20px;
 }
 .has-exception-checkbox-filter CheckBox{
     display: block;
-    margin-top: 12px;
+    margin-top: 10px;
     margin-left: 5px;
+}
+
+::ng-deep .mat-option.ATD{
+ border-bottom: 1px solid var(--MainColor);
 }

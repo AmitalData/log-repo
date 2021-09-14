@@ -505,9 +505,42 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private static IQueryable<CargoTrackingShipmentList> SortShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentFilters.SortDescending == true)
-                shipments = shipments.OrderByDescending(d => d.CreateDate);
+                shipments = SortShipmentsDescending(shipmentFilters, shipments);
             else
+                shipments = SortShipmentsAscending(shipmentFilters, shipments);
+            return shipments;
+        }
+
+        private static IQueryable<CargoTrackingShipmentList> SortShipmentsDescending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderByDescending(d => d.ArrivalDate);
+            }
+            else if (shipmentFilters.SortFieldName == "ATD")
+            {
+                shipments = shipments.OrderByDescending(d => d.DepartureDate);
+            }
+            else {
+                shipments = shipments.OrderByDescending(d => d.CreateDate);
+            }
+            return shipments;
+        }
+
+        private static IQueryable<CargoTrackingShipmentList> SortShipmentsAscending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderBy(d => d.ArrivalDate);
+            }
+            else if (shipmentFilters.SortFieldName == "ATD")
+            {
+                shipments = shipments.OrderBy(d => d.DepartureDate);
+            }
+            else
+            {
                 shipments = shipments.OrderBy(d => d.CreateDate);
+            }
             return shipments;
         }
 
