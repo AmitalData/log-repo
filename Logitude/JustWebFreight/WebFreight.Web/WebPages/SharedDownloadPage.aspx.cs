@@ -223,6 +223,11 @@ namespace WebFreight.Web.WebPages
 
                          if (!string.IsNullOrEmpty(document.FileExtension))
                         {
+                            var bytes = up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant);
+                            if(bytes == null) {
+                                Response.Output.Write("There are some empty document files.");
+                                throw new ApplicationException("There are some empty document files.");
+                            }
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
                             fileName= fileName.Replace('/', ' ');
@@ -236,7 +241,7 @@ namespace WebFreight.Web.WebPages
                                 fileName += ("." + document.FileExtension);
                             }
                             ItemNum = 0;
-                            CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant));
+                            CompressedArray.Add(document.FileExtension + "@" + fileName, bytes);
                         }
 
                     }
@@ -566,9 +571,8 @@ namespace WebFreight.Web.WebPages
 
             catch (Exception errorInfo)
             {
-                throw errorInfo;
-
-
+                Response.Clear();
+                Response.Output.Write(errorInfo.Message.ToString());
 
                 // string ErrorMessage = errorInfo.Message;
 
