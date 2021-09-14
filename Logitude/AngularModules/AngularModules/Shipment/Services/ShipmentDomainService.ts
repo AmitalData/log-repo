@@ -1136,4 +1136,5 @@ export class ShipmentsQueriesCountsArgs {
     ServiceContextUser: string;
     TypeCode: string = null;
     ForwarderPartnerId: string;
+    DirectionOperator: string;
 }
