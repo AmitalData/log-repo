@@ -1558,6 +1558,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }
                     }
                 }
+
+                entityPM.FromPortId = entityPOCO.FromPortId;
+                entityPM.ToPortId = entityPOCO.ToPortId;
+                entityPM.InlandDomesticFromZipCode = entityPOCO.InlandDomesticFromZipCode;
+                entityPM.InlandDomesticToZipCode = entityPOCO.InlandDomesticToZipCode;
+                entityPM.InlandDomesticFromCity = entityPOCO.InlandDomesticFromCity;
+                entityPM.InlandDomesticToCity = entityPOCO.InlandDomesticToCity;
+                entityPM.InlandDomesticFromCountryId = entityPOCO.InlandDomesticFromCountryId;
+                entityPM.InlandDomesticToCountryId = entityPOCO.InlandDomesticToCountryId;
+                entityPM.InlandDomesticFromTypeCode = entityPOCO.InlandDomesticFromTypeCode;
+                entityPM.InlandDomesticToTypeCode = entityPOCO.InlandDomesticToTypeCode;
+                entityPM.MainCarriageFromPortAddress = entityPOCO.MainCarriageFromPortAddress;
+                entityPM.MainCarriageToPortAddress = entityPOCO.MainCarriageToPortAddress;
             }
 
             else

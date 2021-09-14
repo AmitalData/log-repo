@@ -206,9 +206,6 @@ export class QuoteUtilities {
         entityPM.IsByKG = copiedEntityPM.IsByKG;
         entityPM.IsByContainer = copiedEntityPM.IsByContainer;
         entityPM.BaseShipmentNumber = copiedEntityPM.QuoteNumber;
-        //entityPM.IsAutomaticallyClosed = copiedEntityPM.IsAutomaticallyClosed;
-        //entityPM.AutomaticallyCloseDate = copiedEntityPM.AutomaticallyCloseDate;
-        //entityPM.AutomaticallyCloseDays = copiedEntityPM.AutomaticallyCloseDays;
         entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
         entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
         entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
@@ -250,37 +247,22 @@ export class QuoteUtilities {
         entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
         entityPM.ShipmentSubTypeId = copiedEntityPM.ShipmentSubTypeId;
-
-        //entityPM.ShipperId = copiedEntityPM.ShipperId;
-        //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
-        //entityPM.ShipperReference1 = copiedEntityPM.ShipperReference1;
-        //entityPM.ShipperReference2 = copiedEntityPM.ShipperReference2;
-        //entityPM.ShipperNote = copiedEntityPM.ShipperNote;
-        //entityPM.ShipperMainAddressId = copiedEntityPM.ShipperMainAddressId;
-        //entityPM.ShipperPickAddressId = copiedEntityPM.ShipperPickAddressId;
-
-        //entityPM.ConsigneeId = copiedEntityPM.ConsigneeId;
-        //entityPM.ConsigneeContactId = copiedEntityPM.ConsigneeContactId;
-        //entityPM.ConsigneeReference1 = copiedEntityPM.ConsigneeReference1;
-        //entityPM.ConsigneeReference2 = copiedEntityPM.ConsigneeReference2;
-        //entityPM.ConsigneeNote = copiedEntityPM.ConsigneeNote;
-        //entityPM.ConsigneeMainAddressId = copiedEntityPM.ConsigneeMainAddressId;
-        //entityPM.ConsigneePickAddressId = copiedEntityPM.ConsigneePickAddressId;
-
-        //entityPM.FromPort = copiedEntityPM.FromPort;
-        //entityPM.FromPortCountry = copiedEntityPM.FromPortCountry;
-        //entityPM.FromPortId = copiedEntityPM.FromPortId;
-        //entityPM.FromPortName = copiedEntityPM.FromPortName;
-        //entityPM.ToPort = copiedEntityPM.ToPort;
-        //entityPM.ToPortCountry = copiedEntityPM.ToPortCountry;
-        //entityPM.ToPortId = copiedEntityPM.ToPortId;
-        //entityPM.ToPortName = copiedEntityPM.ToPortName;
-
         entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
         entityPM.TransitTime = copiedEntityPM.TransitTime;
         entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
         entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
-        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;       
+        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;
+
+        entityPM.InlandDomesticFromZipCode = copiedEntityPM.InlandDomesticFromZipCode;
+        entityPM.InlandDomesticToZipCode = copiedEntityPM.InlandDomesticToZipCode;
+        entityPM.InlandDomesticFromCity = copiedEntityPM.InlandDomesticFromCity;
+        entityPM.InlandDomesticToCity = copiedEntityPM.InlandDomesticToCity;
+        entityPM.InlandDomesticFromCountryId = copiedEntityPM.InlandDomesticFromCountryId;
+        entityPM.InlandDomesticToCountryId = copiedEntityPM.InlandDomesticToCountryId;
+        entityPM.InlandDomesticFromTypeCode = copiedEntityPM.InlandDomesticFromTypeCode;
+        entityPM.InlandDomesticToTypeCode = copiedEntityPM.InlandDomesticToTypeCode;
+        entityPM.MainCarriageFromPortAddress = copiedEntityPM.MainCarriageFromPortAddress;
+        entityPM.MainCarriageToPortAddress = copiedEntityPM.MainCarriageToPortAddress;
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {

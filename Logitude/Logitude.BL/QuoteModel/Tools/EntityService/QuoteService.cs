@@ -1054,45 +1054,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)
-            {
-                entityPM.FromPortId = null;
-                entityPM.ToPortId = null;
+            {                
                 entityPM.IncludePickUp = false;
                 entityPM.IncludeDelivery = false;
 
-                if (!string.IsNullOrEmpty(entityPM.ShipperId))
-                {
-                    if (string.IsNullOrEmpty(entityPM.FromPartnerId))
-                    {
-                        entityPM.FromPartnerId = entityPM.ShipperId;
-                    }
+                //if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                //{
+                //    if (string.IsNullOrEmpty(entityPM.FromPartnerId))
+                //    {
+                //        entityPM.FromPartnerId = entityPM.ShipperId;
+                //    }
 
-                    if (string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
-                    {
-                        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
-                        if (adr != null)
-                        {
-                            entityPM.FromPartnerAddressId = adr.Id;
-                        }
-                    }
-                }
+                //    if (string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
+                //    {
+                //        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
+                //        if (adr != null)
+                //        {
+                //            entityPM.FromPartnerAddressId = adr.Id;
+                //        }
+                //    }
+                //}
 
-                if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-                {
-                    if (string.IsNullOrEmpty(entityPM.ToPartnerId))
-                    {
-                        entityPM.ToPartnerId = entityPM.ConsigneeId;
-                    }
+                //if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                //{
+                //    if (string.IsNullOrEmpty(entityPM.ToPartnerId))
+                //    {
+                //        entityPM.ToPartnerId = entityPM.ConsigneeId;
+                //    }
 
-                    if (string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
-                    {
-                        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
-                        if (adr != null)
-                        {
-                            entityPM.ToPartnerAddressId = adr.Id;
-                        }
-                    }
-                }
+                //    if (string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
+                //    {
+                //        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
+                //        if (adr != null)
+                //        {
+                //            entityPM.ToPartnerAddressId = adr.Id;
+                //        }
+                //    }
+                //}
             }
         }
         private void InitializePickupDelivery()
