@@ -14,6 +14,7 @@ export class URLs {
     public static readonly GLAccountGetSingle = '**/fullaccountingsettingviews/getsingle/?**';
     public static readonly ChartOfAccounts = '**/chartofaccounts';
     public static readonly ChartOfAccountsGetSingle = "**/chartofaccounts/getsingle?**";
+    public static readonly VendorsGetSingle = "**/vendors/getsingle?**";
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'

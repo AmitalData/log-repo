@@ -1,6 +1,6 @@
-export interface CustomersGLADetails {
+export interface CardDetails {
     CompanyName: string,
-    Address: string,
+    Address1: string,
     City: string,
     Country: string,
     Phone: string
