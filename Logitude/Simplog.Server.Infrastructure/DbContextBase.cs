@@ -390,7 +390,10 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 Type type = //Type.GetType(typeName);
                             //item.GetType().Assembly.GetType(typeName);
                     this.GetType().Assembly.GetType(typeName);
-
+                if (type==null)
+                {
+                    throw new Exception($"Problem with DbSet<{typeName}> defintion .. Maybe namespace not  Unifreight.Data.AmitalModel.EntityPOCOs ");
+                }
                 string sql = this.Set(type).ToString();
 
                 var m = objectRegex.Match(sql);
