@@ -224,10 +224,8 @@ namespace WebFreight.Web.WebPages
                          if (!string.IsNullOrEmpty(document.FileExtension))
                         {
                             var bytes = up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant);
-                            if(bytes == null) {
-                                Response.Output.Write("There are some empty document files.");
-                                throw new ApplicationException("There are some empty document files.");
-                            }
+                            checkIfFileIsEmpty(bytes);
+                            
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
                             fileName= fileName.Replace('/', ' ');
@@ -277,6 +275,15 @@ namespace WebFreight.Web.WebPages
             catch(Exception e)
             {
                 throw e;
+            }
+        }
+
+        private void checkIfFileIsEmpty(byte[] bytes)
+        {
+            if (bytes == null)
+            {
+                Response.Output.Write("There are some empty document files.");
+                throw new ApplicationException("There are some empty document files.");
             }
         }
 
