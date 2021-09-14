@@ -14,12 +14,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class ContainerizationHatataStatusMap : EntityTypeConfiguration<ContainerizationHatataStatus>
+    public class ContainerizationHataraStatusMap : EntityTypeConfiguration<ContainerizationHataraStatus>
     {
 	    string dbms;
-        public ContainerizationHatataStatusMap()
+        public ContainerizationHataraStatusMap()
         { 
-			  this.ToTable("ContainerizationHatataStatuses", "Customs");
+			  this.ToTable("ContainerizationHataraStatuses", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

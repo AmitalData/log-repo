@@ -54,7 +54,7 @@
   <Column
     Name="HataraStatus"
     Type="varchar"
-    Size="2">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -75,14 +75,14 @@
     Name="IsMultiCustomers"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IsMultiExportFiles"
     OldNames="IsMultiCustomers"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="ContainerizationStatus"
@@ -91,7 +91,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="HataraStatus"
-    ReferencedTable="DeclarationStatusTypes"
+    ReferencedTable="ContainerizationHataraStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

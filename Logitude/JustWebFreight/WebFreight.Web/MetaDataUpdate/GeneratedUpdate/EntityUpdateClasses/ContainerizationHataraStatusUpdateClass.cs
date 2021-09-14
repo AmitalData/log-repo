@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class ContainerizationHatataStatusUpdateClass
+   public class ContainerizationHataraStatusUpdateClass
    {  		
-		public const string HashString = "7591ba42b336150a36527c7ad2dd620a";
+		public const string HashString = "a4993669af4082a5b462a911ccb1554b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.ContainerizationHatataStatus",
+	             				    ObjectTableName =  "Customs.ContainerizationHataraStatus",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.ContainerizationHatataStatuses",
-			      				    ObjectTableSingular =  "Customs.ContainerizationHatataStatus",
-			      				    ObjectTablePlural =  "Customs.ContainerizationHatataStatuses",
+			      				    DBTableName =  "Customs.ContainerizationHataraStatuses",
+			      				    ObjectTableSingular =  "Customs.ContainerizationHataraStatus",
+			      				    ObjectTablePlural =  "Customs.ContainerizationHataraStatuses",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -127,8 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס התרה להמכלה",
-			      				    DefaultText =  "Containerization Hatata Status",
-			      				    Code =  "3cb6",
+			      				    DefaultText =  "Containerization Hatara Status",
+			      				    Code =  "6a2a",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  ContainerizationHatataStatusUpdateClass.HashString,
+			      				    HashString =  ContainerizationHataraStatusUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.ContainerizationHatataStatus",
+					  						ObjectTableName =  "Customs.ContainerizationHataraStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
@@ -182,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ContainerizationHatataStatus",
+					  						ValidForQuerySection1 =  "Customs.ContainerizationHataraStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -214,7 +214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "Customs.ContainerizationHatataStatus",
+					  						ObjectTableName =  "Customs.ContainerizationHataraStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -241,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ContainerizationHatataStatus",
+					  						ValidForQuerySection1 =  "Customs.ContainerizationHataraStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -273,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.ContainerizationHatataStatus",
+					  						ObjectTableName =  "Customs.ContainerizationHataraStatus",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -300,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ContainerizationHatataStatus",
+					  						ValidForQuerySection1 =  "Customs.ContainerizationHataraStatus",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -336,15 +336,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable ContainerizationHatataStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContainerizationHatataStatus" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> ContainerizationHatataStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContainerizationHatataStatus").ToList();
+		   ObjectTable ContainerizationHataraStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContainerizationHataraStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ContainerizationHataraStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContainerizationHataraStatus").ToList();
 		       
 	      
 
-	         Screen ContainerizationHatataStatusCustomsContainerizationHatataStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerizationHatataStatus.HeaderScreen", Name = "Customs.ContainerizationHatataStatusHeaderScreen", ObjectTableId = ContainerizationHatataStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ContainerizationHataraStatusCustomsContainerizationHataraStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerizationHataraStatus.HeaderScreen", Name = "Customs.ContainerizationHataraStatusHeaderScreen", ObjectTableId = ContainerizationHataraStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ContainerizationHatataStatusObjectTable.HeaderScreenId = ContainerizationHatataStatusCustomsContainerizationHatataStatusHeaderScreenScreen0.Id;
-		    ContainerizationHatataStatusObjectTable.HeaderScreenCode = ContainerizationHatataStatusCustomsContainerizationHatataStatusHeaderScreenScreen0.Code;
+		    ContainerizationHataraStatusObjectTable.HeaderScreenId = ContainerizationHataraStatusCustomsContainerizationHataraStatusHeaderScreenScreen0.Id;
+		    ContainerizationHataraStatusObjectTable.HeaderScreenCode = ContainerizationHataraStatusCustomsContainerizationHataraStatusHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -361,7 +361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ContainerizationHatataStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContainerizationHatataStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable ContainerizationHataraStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContainerizationHataraStatus" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ContainerizationHatataStatusObjectTable.Id,
+                ObjectTableId = ContainerizationHataraStatusObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -393,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ContainerizationHatataStatusObjectTable.Id,
+                ObjectTableId = ContainerizationHataraStatusObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

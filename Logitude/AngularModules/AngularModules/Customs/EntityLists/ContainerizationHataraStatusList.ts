@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ContainerizationHatataStatusList {
+export class ContainerizationHataraStatusList {
    
 	Code: string;
 	Name: string;

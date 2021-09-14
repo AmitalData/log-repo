@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Customs.Data.EntityPOCOs
 {
    
-    public class ContainerizationHatataStatus
+    public class ContainerizationHataraStatus
     {
 	 string dbms;
 

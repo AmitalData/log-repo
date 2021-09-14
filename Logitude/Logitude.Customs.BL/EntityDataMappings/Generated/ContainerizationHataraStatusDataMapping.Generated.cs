@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class ContainerizationHatataStatusDataMapping: IMapping<ContainerizationHatataStatusPM, ContainerizationHatataStatus>,IMappingEncodeBase64NVARCHARFields<ContainerizationHatataStatusPM>
+   public partial class ContainerizationHataraStatusDataMapping: IMapping<ContainerizationHataraStatusPM, ContainerizationHataraStatus>,IMappingEncodeBase64NVARCHARFields<ContainerizationHataraStatusPM>
    {
           public enum POCOPropertyNames
           { 
@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatus entityPOCO)
+	    public void PMToPOCO(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatus entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatus entityPOCO)
+		public void POCOToPM(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatus entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatusPM oldEntityPM)
+		public void PMToOldPM(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatusPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -91,7 +91,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(ContainerizationHatataStatusPM entityPM)
+	    public void EncodeBase64NVARCHARFields(ContainerizationHataraStatusPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -116,7 +116,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatus entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatus entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

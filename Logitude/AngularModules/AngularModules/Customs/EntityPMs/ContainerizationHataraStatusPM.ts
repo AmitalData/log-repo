@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class ContainerizationHatataStatusPM {
+export class ContainerizationHataraStatusPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -40,7 +40,7 @@ export class ContainerizationHatataStatusPM {
        
 	 
 
-    public OldEntityPM: ContainerizationHatataStatusPM;
+    public OldEntityPM: ContainerizationHataraStatusPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -51,13 +51,13 @@ export class ContainerizationHatataStatusPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ContainerizationHatataStatus");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ContainerizationHataraStatus");
            
         }
        }
     }
 
-    private MyClone: ContainerizationHatataStatusPM;
+    private MyClone: ContainerizationHataraStatusPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
