@@ -16,6 +16,7 @@ export class MessageWindow {
     public RTL: boolean = false;
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
+    public ShowIcon: boolean = true;
     public ShowWarningIcon: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsMessageMultiLine: boolean = false;
@@ -91,7 +92,7 @@ export class MessageWindow {
 
 @Component({
     selector: 'MessageWindow',
-    
+
     templateUrl: "./MessageWindow.html",
 })
 
@@ -103,6 +104,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     public Title: string = null;
     public Message: string = null;
     public ShowModal: boolean = true;
+    public ShowIcon: boolean = true;
     public WindowId: string = null;
     public OkButtonId: string = null;
     public IsOverAll: boolean = false;
@@ -139,6 +141,8 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
         this.ZIndex = myWindow.ZIndex;
         this.RTL = myWindow.RTL;
         this.ShowSuccessIcon = myWindow.ShowSuccessIcon;
+        this.ShowErrorIcon = myWindow.ShowErrorIcon;
+        this.ShowIcon = !(myWindow.ShowIcon == false);
         this.ShowErrorIcon = myWindow.ShowErrorIcon;
         this.ShowWarningIcon = myWindow.ShowWarningIcon;
         this.IsMessageMultiLine = myWindow.IsMessageMultiLine;
@@ -247,7 +251,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
             path = "./Images/ErrorIcon.png";
         if (this.ShowWarningIcon)
             path = "./Images/SimplogIcons/Warning.png";
-        
+
         return path;
     }
 }

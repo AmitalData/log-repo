@@ -227,14 +227,14 @@ export class GLAccountPMService {
             }
 			   			   			   
             entityPM.OldEntityPM.GLAccountCurrencies = [];
-            for (var item in entityPM.GLAccountCurrencies) {
-            var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
-            var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
-						
-							 
-            entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
-            }
-			   			   			   
+            // for (var item in entityPM.GLAccountCurrencies) {
+            // var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
+            // var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
+
+
+            // entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+            // }
+
             entityPM.OldEntityPM.GLAccountChildren = [];
             for (var item in entityPM.GLAccountChildren) {
             var myGLAccountPM = entityPM.GLAccountChildren[item];

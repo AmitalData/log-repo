@@ -152,8 +152,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? EstimatedLIFDeparture { get; set; }
         public DateTime? ActualLIFDeparture { get; set; }
 
-        public string GateIn { get; set; }
-        public string GateOut { get; set; }
+        public DateTime? GateIn { get; set; }
+        public DateTime? GateOut { get; set; }
 
         public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
@@ -165,7 +165,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
-
-
+        public string AvailabilityLocation { get; set; }
+        public DateTime? LastFreeDayDate { get; set; }
+        public int? FreeDays { get; set; }
+        public string ShipmentStatusId { get; set; }
+        public string ShipmentStatusName { get; set; }
     }
 }

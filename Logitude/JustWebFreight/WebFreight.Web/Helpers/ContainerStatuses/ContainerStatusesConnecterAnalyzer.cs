@@ -97,6 +97,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp1_vslarrival_planned_initial = null;
         string tsp1_vslarrival_planned_last = null;
         string tsp1_vslarrival_actual = null;
+        string tsp1_vslarrival_detected = null;
         string tsp1_discharge_planned_last = null;
         string tsp1_discharge_actual = null;
         string tsp1_loaded_planned_initial = null;
@@ -105,11 +106,13 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp1_vsldeparture_planned_initial = null;
         string tsp1_vsldeparture_planned_last = null;
         string tsp1_vsldeparture_actual = null;
+        string tsp1_vsldeparture_detected = null ; 
         string tsp1_discharge_planned_initial = null;
         string tsp2_loc_locode = null;
         string tsp2_vslarrival_planned_initial = null;
         string tsp2_vslarrival_planned_last = null;
         string tsp2_vslarrival_actual = null;
+        string tsp2_vslarrival_detected = null;
         string tsp2_discharge_planned_initial = null;
         string tsp2_discharge_planned_last = null;
         string tsp2_discharge_actual = null;
@@ -119,10 +122,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp2_vsldeparture_planned_initial = null;
         string tsp2_vsldeparture_planned_last = null;
         string tsp2_vsldeparture_actual = null;
+        string tsp2_vsldeparture_detected = null;
         string tsp3_loc_locode = null;
         string tsp3_vslarrival_planned_initial = null;
         string tsp3_vslarrival_planned_last = null;
         string tsp3_vslarrival_actual = null;
+        string tsp3_vslarrival_detected = null;
         string tsp3_discharge_planned_initial = null;
         string tsp3_discharge_planned_last = null;
         string tsp3_discharge_actual = null;
@@ -132,10 +137,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp3_vsldeparture_planned_initial = null;
         string tsp3_vsldeparture_planned_last = null;
         string tsp3_vsldeparture_actual = null;
+        string tsp3_vsldeparture_detected = null;
         string tsp4_loc_locode = null;
         string tsp4_vslarrival_planned_initial = null;
         string tsp4_vslarrival_planned_last = null;
         string tsp4_vslarrival_actual = null;
+        string tsp4_vslarrival_detected = null;
         string tsp4_discharge_planned_initial = null;
         string tsp4_discharge_planned_last = null;
         string tsp4_discharge_actual = null;
@@ -145,6 +152,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp4_vsldeparture_planned_initial = null;
         string tsp4_vsldeparture_planned_last = null;
         string tsp4_vsldeparture_actual = null;
+        string tsp4_vsldeparture_detected = null;
         string leg1_vessel_name = null;
         string leg1_voyage = null;
         string leg2_vessel_name = null;
@@ -182,6 +190,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string customs_release_state = null;
         string carrier_release_state = null;
         string availability_date = null;
+        string availability_loc =  null;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -330,6 +339,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.GetDeliveryLocationElement(node);
                 this.GetLifLocationElement(node);
                 this.GetEmptyReturnElement(node);
+                this.GetAvailabilityLocationElement(node);
             }
         }
         private void GetDirectFieldsOfShipment(XmlNode node)
@@ -369,6 +379,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
             pod_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_actual").FirstOrDefault()?.InnerText;
         }
+
         private void GetEmptyPickupLocationElement(XmlNode node)
         {
             XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
@@ -414,6 +425,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_detected").FirstOrDefault()?.InnerText;
             tsp1_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_initial").FirstOrDefault()?.InnerText;
             tsp1_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_last").FirstOrDefault()?.InnerText;
             tsp1_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_actual").FirstOrDefault()?.InnerText;
@@ -423,7 +435,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp1_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
             tsp1_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
             tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
-
+            tsp1_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_detected").FirstOrDefault()?.InnerText;
         }
         private void GetTransshipment2Leg(XmlNode node)
         {
@@ -435,6 +447,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_detected").FirstOrDefault()?.InnerText;
             tsp2_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_initial").FirstOrDefault()?.InnerText;
             tsp2_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_last").FirstOrDefault()?.InnerText;
             tsp2_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_actual").FirstOrDefault()?.InnerText;
@@ -444,6 +457,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp2_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
             tsp2_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
             tsp2_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_detected").FirstOrDefault()?.InnerText;
         }
         private void GetTransshipment3Leg(XmlNode node)
         {
@@ -455,6 +469,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_detected").FirstOrDefault()?.InnerText;
             tsp3_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_initial").FirstOrDefault()?.InnerText;
             tsp3_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_last").FirstOrDefault()?.InnerText;
             tsp3_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_actual").FirstOrDefault()?.InnerText;
@@ -464,6 +479,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp3_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
             tsp3_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
             tsp3_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_detected").FirstOrDefault()?.InnerText;
         }
         private void GetTransshipment4Leg(XmlNode node)
         {
@@ -475,6 +491,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_detected").FirstOrDefault()?.InnerText;
             tsp4_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_initial").FirstOrDefault()?.InnerText;
             tsp4_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_last").FirstOrDefault()?.InnerText;
             tsp4_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_actual").FirstOrDefault()?.InnerText;
@@ -484,6 +501,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             tsp4_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
             tsp4_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
             tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_detected").FirstOrDefault()?.InnerText;
         }
         private void GetLeg1Element(XmlNode node)
         {
@@ -571,6 +589,16 @@ namespace WebFreight.Web.Helpers.Analyzers
             carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
             availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
         }
+
+        private void GetAvailabilityLocationElement(XmlNode node)
+        {
+            XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
+            if (availabilityemptyPickupLocationElement != null)
+            {
+                availability_loc = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+            }
+        }
+
         private void GetLogitudeOceanInsights()
         {
             if (!string.IsNullOrEmpty(this.oceanInsightsId))
@@ -1076,6 +1104,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.CarrierReleaseState = containerUpdatedFields.CarrierReleaseState;
                 container.CarrierReleaseDate = containerUpdatedFields.CarrierReleaseDate;
                 container.AvailablityDate = containerUpdatedFields.AvailablityDate;
+                container.AvailabilityLocation = containerUpdatedFields.AvailabilityLocation;
                 this.SaveContainer();
             }
         }
@@ -1204,6 +1233,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
+            containerUpdatedFields.AvailabilityLocation = availability_loc;
+
             return containerUpdatedFields;
         }
         private DateTime? ComputeMainCarriageETD()
@@ -1398,6 +1429,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return ConvertStringToDateTime(ATD_actual);
             }
+            else if (!string.IsNullOrEmpty(ATD_detected))
+            {
+                return ConvertStringToDateTime(ATD_detected);
+
+            }
             return null;
         }
         private DateTime? ComputeEstimatedTrans1VesselArrival()
@@ -1418,6 +1454,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (!string.IsNullOrEmpty(tsp1_vslarrival_actual))
             {
                 return ConvertStringToDateTime(tsp1_vslarrival_actual);
+            } 
+            else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
+            {
+                return ConvertStringToDateTime(tsp1_vslarrival_detected);
             }
 
             return null;
@@ -1482,6 +1522,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return ConvertStringToDateTime(tsp1_vsldeparture_actual);
             }
+            else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
+            {
+                return ConvertStringToDateTime(tsp1_vsldeparture_detected);
+            }
 
             return null;
         }
@@ -1503,6 +1547,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (!string.IsNullOrEmpty(tsp2_vslarrival_actual))
             {
                 return ConvertStringToDateTime(tsp2_vslarrival_actual);
+            }
+            else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
+            {
+                return ConvertStringToDateTime(tsp2_vslarrival_detected);
             }
 
             return null;
@@ -1567,6 +1615,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return ConvertStringToDateTime(tsp2_vsldeparture_actual);
             }
+            else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
+            {
+                return ConvertStringToDateTime(tsp2_vsldeparture_detected);
+            }
 
             return null;
         }
@@ -1588,6 +1640,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (!string.IsNullOrEmpty(tsp3_vslarrival_actual))
             {
                 return ConvertStringToDateTime(tsp3_vslarrival_actual);
+            }
+            else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
+            {
+                return ConvertStringToDateTime(tsp3_vslarrival_detected);
             }
 
             return null;
@@ -1652,6 +1708,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return ConvertStringToDateTime(tsp3_vsldeparture_actual);
             }
+            else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
+            {
+                return ConvertStringToDateTime(tsp3_vsldeparture_detected);
+            }
 
             return null;
         }
@@ -1673,6 +1733,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (!string.IsNullOrEmpty(tsp4_vslarrival_actual))
             {
                 return ConvertStringToDateTime(tsp4_vslarrival_actual);
+            }
+            else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
+            {
+                return ConvertStringToDateTime(tsp4_vslarrival_detected);
             }
 
             return null;
@@ -1737,6 +1801,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return ConvertStringToDateTime(tsp4_vsldeparture_actual);
             }
+            else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
+            {
+                return ConvertStringToDateTime(tsp4_vsldeparture_detected);
+            }
 
             return null;
         }
@@ -1759,6 +1827,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (!string.IsNullOrEmpty(ATA_actual))
             {
                 return ConvertStringToDateTime(ATA_actual);
+            }
+            else if (!string.IsNullOrEmpty(ATA_detected))
+            {
+                return ConvertStringToDateTime(ATA_detected);
             }
 
             return null;
@@ -2246,5 +2318,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
+        public string AvailabilityLocation { get; set; }
     }
 }

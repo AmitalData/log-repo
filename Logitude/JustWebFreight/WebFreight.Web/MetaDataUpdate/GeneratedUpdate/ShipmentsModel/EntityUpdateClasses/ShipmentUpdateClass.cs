@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "1dea279f11c74bbe899387446e1e1285";
+		public const string HashString = "b1fd12d212086a0c28a2e2f9d2fd26c1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -49778,6 +49778,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CRFP",
+                EnglishName =  "Cargo Ready for Pickup",
+                LocalName =  "Cargo Ready for Pickup",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "CRFP").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

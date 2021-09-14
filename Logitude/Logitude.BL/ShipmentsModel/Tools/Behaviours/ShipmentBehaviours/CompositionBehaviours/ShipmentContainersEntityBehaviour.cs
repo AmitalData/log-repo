@@ -102,6 +102,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.OnCarriageFromPortId != this.initializer.EntityMasterData.OnCarriageFromPortId)
                 return true;
+            if (this.initializer.EntityPM.StatusId != this.initializer.EntityMasterData.StatusId)
+                return true;
 
             return false; 
         }
@@ -245,6 +247,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentTransshipment3ToId = this.initializer.EntityPM?.Transshipment3ToPortId;
             container.ShipmentOnCarriageFromId = this.initializer.EntityPM?.OnCarriageFromPortId;
             container.ShipmentOnCarriageToId = this.initializer.EntityPM?.OnCarriageToPortId;
+            container.ShipmentStatusId = this.initializer.EntityPM?.StatusId;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }

@@ -152,6 +152,24 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
            
         }
 
+        public GLAccountList GetSingle(string id, int tenant)
+        {
+            IQueryable<GLAccount> GLAccountQuery = (from a in context.GLAccounts
+                                                    where a.Id == id
+                                                    select a);
+
+
+            IQueryable<GLAccountList> GLAccountListQuery = GetIqueryableList(GLAccountQuery);
+
+
+            User loggedUser = GetLoggedUser(tenant);
+            GLAccountListQuery = MapListFields(GLAccountListQuery, loggedUser);
+
+            GLAccountList GLAccountList = GLAccountListQuery.FirstOrDefault();
+            return GLAccountList;
+
+        }
+
         public int GetListCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
@@ -167,10 +185,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-            
-			iQueryable = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, iQueryable);
+
+
+            iQueryable = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, iQueryable);
 
             IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable);
+            
+            User loggedUser = GetLoggedUser(tenant);
+
+            query2 = MapListFields(query2, loggedUser);
 
             query2 = filter.GetFilteredQuery<GLAccountList>(listQueryOperation, query2);
             int count = query2.Count();

@@ -34,5 +34,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string MainTabHighlightColor { get; set; }
         public string DocumentTypeHighlightColor { get; set; }
 
+        public bool IsExportActivated { get; set; }
+
+        public bool IsImportActivated { get; set; }
     }
 }

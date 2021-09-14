@@ -34,7 +34,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentTransshipment3ToId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentOnCarriageFromId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentOnCarriageToId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.AvailabilityLocation).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.ShipmentStatusId).HasMaxLength(15).IsUnicode(false);
 
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -169,7 +170,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CarrierReleaseState).HasColumnName("CarrierReleaseState");
             this.Property(t => t.CarrierReleaseDate).HasColumnName("CarrierReleaseDate");
             this.Property(t => t.AvailablityDate).HasColumnName("AvailablityDate");
-
+            this.Property(t => t.AvailabilityLocation).HasColumnName("AvailabilityLocation");
+            this.Property(t => t.FreeDays).HasColumnName("FreeDays");
+            this.Property(t => t.ShipmentStatusId).HasColumnName("ShipmentStatusId");
+            this.Property(t => t.LastFreeDayDate).HasColumnName("LastFreeDayDate");
 
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
@@ -188,6 +192,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ShipmentTransshipment3ToPort).WithMany().HasForeignKey(d => d.ShipmentTransshipment3ToId); 
             this.HasOptional(t => t.ShipmentOnCarriageFromPort).WithMany().HasForeignKey(d => d.ShipmentOnCarriageFromId);
             this.HasOptional(t => t.ShipmentOnCarriageToPort).WithMany().HasForeignKey(d => d.ShipmentOnCarriageToId);
+            this.HasOptional(t => t.ShipmentEntityStatus).WithMany().HasForeignKey(d => d.ShipmentStatusId);
         }
     }
 }

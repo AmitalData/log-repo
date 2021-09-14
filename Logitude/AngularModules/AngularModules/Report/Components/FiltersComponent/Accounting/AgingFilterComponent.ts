@@ -211,7 +211,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel;
+            this.ChartOfAccountSecurityLevel = value? value.ChartOfAccountSecurityLevel: null;
         }
     }
 

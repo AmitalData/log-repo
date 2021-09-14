@@ -54,7 +54,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private entityResourceService: EntityResourceService;
 
 
-    public hasAirShipmentToggle: boolean = false;
+    public IsExportActivated: boolean = false;
 
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
@@ -64,9 +64,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
-        }
-
-        this.checkAirShipmentToggle();
+        } 
     }
      
     private InitializeServices() {
@@ -78,14 +76,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
         this.entityResourceService = new EntityResourceService();
     }
-
-    private checkAirShipmentToggle() {
-        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
-        if (AirShipmentFeatureToggle) {
-            this.hasAirShipmentToggle = true;
-
-        }
-    }
+ 
 
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
@@ -136,7 +127,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = '150px';
-
+            this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
@@ -941,7 +932,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-        if (!this.isLogbox) {
+ 
+        if (!this.isLogbox && this.IsExportActivated) {
+ 
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
             newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);

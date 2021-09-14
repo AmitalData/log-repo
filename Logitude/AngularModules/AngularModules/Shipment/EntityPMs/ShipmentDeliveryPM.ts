@@ -30,6 +30,14 @@ export class ShipmentDeliveryPM {
     public get PickUpDeliveryNumber() { return this.pickUpDeliveryNumber; }
     public set PickUpDeliveryNumber(newValue: string) { this.pickUpDeliveryNumber = newValue; this.MarkAsDirty(); }
 
+    private pickUpDeliveryIndex: number;
+    public get PickUpDeliveryIndex() { return this.pickUpDeliveryIndex; }
+    public set PickUpDeliveryIndex(newValue: number) { this.pickUpDeliveryIndex = newValue; this.MarkAsDirty(); }
+
+    private childIndex: number;
+    public get ChildIndex() { return this.childIndex; }
+    public set ChildIndex(newValue: number) { this.childIndex = newValue; this.MarkAsDirty(); }
+
     private pickUpDeliveryTypeCode: string;
     public get PickUpDeliveryTypeCode() { return this.pickUpDeliveryTypeCode; }
     public set PickUpDeliveryTypeCode(newValue: string) { this.pickUpDeliveryTypeCode = newValue; this.MarkAsDirty(); }

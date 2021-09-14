@@ -162,4 +162,16 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsImportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

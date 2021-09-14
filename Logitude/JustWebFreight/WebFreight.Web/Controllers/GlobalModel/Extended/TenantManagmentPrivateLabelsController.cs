@@ -109,6 +109,9 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor,
                             MainTabHighlightColor = entityPM.MainTabHighlightColor,
                             HasLogboxAccess = entityPM.HasLogboxAccess,
+                            IsImportActivated = entityPM.IsImportActivated,
+                            IsExportActivated = entityPM.IsExportActivated,
+
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
                             Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
                         };
@@ -169,6 +172,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.HasLogboxAccess = entityPM.HasLogboxAccess;
                         Poco.MainTabHighlightColor = entityPM.MainTabHighlightColor;
                         Poco.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
+                        Poco.IsImportActivated = entityPM.IsImportActivated;
+                        Poco.IsExportActivated = entityPM.IsExportActivated;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();

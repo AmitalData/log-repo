@@ -67,7 +67,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                DefaultExternalDiffGLAccountId= a.DefaultExternalDiffGLAccountId,
                                                                DefaultTaxWithholdPercentage = a.DefaultTaxWithholdPercentage,
                                                                GLAccounterCounterLength = a.GLAccounterCounterLength,
-                                                               IsSecurityLevelActivated = a.IsSecurityLevelActivated
+                                                               IsSecurityLevelActivated = a.IsSecurityLevelActivated,
                                                            });
             return query;
         }

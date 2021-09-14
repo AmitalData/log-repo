@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagmentPrivateLabelsUpdateClass
    {  		
-		public const string HashString = "96ed07fc0a3399251331548bdfea75d6";
+		public const string HashString = "31c0c16c7bf5273e57c76762ab983383";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

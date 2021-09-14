@@ -39,7 +39,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
             entityPOCO.MainTabHighlightColor = entityPM.MainTabHighlightColor;
             entityPOCO.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
-
+            entityPOCO.IsImportActivated = entityPM.IsImportActivated;
+            entityPOCO.IsExportActivated = entityPM.IsExportActivated;
 
         }
     }

@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-            
+
             IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                                                join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
@@ -132,7 +132,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                    BalanceInForeignCurrency = MoreDatas.BalanceInForeignCurrency,
                                                    ForeignBalanceInDue = MoreDatas.ForeignBalanceInDue,
-                                                    
+
 
                                                    DeductionFileNumber = a.DeductionFileNumber,
 
@@ -182,12 +182,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PeriodPast = AgingDatas.PeriodPast,
                                                    PeriodFuture = AgingDatas.PeriodFuture,
                                                    TotalOpenTransactions = AgingDatas.TotalOpenTransactions,
-                                                   
+
                                                    FirstPeriodsMonths = fullAccountingSettings.FirstPeriodsMonths,
                                                    SecondPeriodsMonths = fullAccountingSettings.SecondPeriodsMonths,
                                                    ThirdPeriodsMonths = fullAccountingSettings.ThirdsPeriodsMonths,
 
-                                                   CalculatedAgingPeriod1 =  ( fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
+                                                   CalculatedAgingPeriod1 = (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period3") ? AgingDatas.Period3 : 0)
@@ -217,7 +217,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
                                                    // GLAccount Recocile Datas
-                                                   LastReconciledBy =  RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
+                                                   LastReconciledBy = RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
                                                    LastReconcileDate = RecocileDatas.LastReconcileDateTime,
 
                                                    // GLAccount Cards Datas
@@ -226,18 +226,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
                                                    TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
-                                                   Salesman = CardsDatas != null ?  CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
+                                                   Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                                                    Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
-                                                   
+
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                                                    FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
-                                                   InsuredCreditLimit= CardsDatas.InsuredcreditLimit,
+                                                   InsuredCreditLimit = CardsDatas.InsuredcreditLimit,
+                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
 
-                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
-                                                   ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel
+                                                   IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated
 
-                                               });
+                                               }) ;
             return query;
         }
         public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
@@ -377,7 +377,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            ThirdPeriodsMonths = glaccount.ThirdPeriodsMonths,
                            InsuredCreditLimit = glaccount.InsuredCreditLimit,
                            PostponedChequesCommission = glaccount.PostponedChequesCommission,
-
+                           ChartOfAccountSecurityLevel = glaccount.ChartOfAccountSecurityLevel,
+                           IsSecurityLevelsEnabled = glaccount.IsSecurityLevelsEnabled,
 
                            Period0 = GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
                            Period1 = GetPeriodValue("1", glaccount, loggedUser.SecurityLevel),
@@ -446,9 +447,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         private User GetLoggedUser(int tenant)
         {
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant); 
             UserRepository userRepository = new UserRepository(tenant);
-            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, true);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
             return loggedUser;
         }
         private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)

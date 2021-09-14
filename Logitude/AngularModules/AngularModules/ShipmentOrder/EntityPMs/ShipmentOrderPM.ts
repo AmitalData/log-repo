@@ -339,6 +339,31 @@ export class ShipmentOrderPM {
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
+    private grossWeight: number;
+    public get GrossWeight() { return this.grossWeight; }
+    public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
+       
+	 
+    private volume: number;
+    public get Volume() { return this.volume; }
+    public set Volume(newValue: number) { if (this.volume != newValue) { this.volume = newValue; this.MarkAsDirty("Volume"); } }
+       
+	 
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+       
+	 
+    private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

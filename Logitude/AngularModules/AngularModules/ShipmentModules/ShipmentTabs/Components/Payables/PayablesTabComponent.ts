@@ -692,7 +692,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
 
     public ShipmentGenerator: ShipmentGenerator;
-    private InitializeShipmentGenerator() {
+    public InitializeShipmentGenerator() {
         this.ShipmentGenerator = new ShipmentGenerator(this.EntityPM, this.AllRates);
     }
     StartGenerating(myCommandCode: string) {
@@ -2293,6 +2293,11 @@ export class ShipmentPayableItem extends BaseComponent {
             });
 
             this.ComputeInsidePayablesData();
+
+            if (!this.fatherComponent.ShipmentGenerator) {
+                this.fatherComponent.InitializeShipmentGenerator();
+            }
+
             this.fatherComponent.ShipmentGenerator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
@@ -2301,6 +2306,11 @@ export class ShipmentPayableItem extends BaseComponent {
     set ExpectedAmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.ExpectedAmountInProfitCurrency != newVaule) {
             this.EntityPM.ExpectedAmountInProfitCurrency = AppTool.Round(newVaule, 2);
+
+            if (!this.fatherComponent.ShipmentGenerator) {
+                this.fatherComponent.InitializeShipmentGenerator();
+            }
+
             this.fatherComponent.ShipmentGenerator.CalculatePayableVatAmount(this.EntityPM);
         }
     }

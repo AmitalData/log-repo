@@ -213,7 +213,13 @@
                         <td>
                             <div class="MediaFill">
                                 <div *ngIf="FieldName == 'ShipmentId'" class="TemplateTrimming">
-                                    <span class="hyperlink" (click)="ViewShipmentClicked()">View</span>                                    
+                                    <span class="hyperlink" (click)="ViewShipmentClicked()">View</span>
+                                </div>
+
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'ShipmentStatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [ngStyle]="{color: Entity.ShipmentStatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </td>
