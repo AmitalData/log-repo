@@ -301,6 +301,7 @@ namespace CommunicationWorkerRole
                                                     MainCarriageATA = ForwarderShipment.MainCarriageATA,
                                                     MainCarriageETA = ForwarderShipment.MainCarriageETA,
                                                     MainCarriageATD = ForwarderShipment.MainCarriageATD,
+                                                    MainCarriageETD = ForwarderShipment.MainCarriageETD, 
                                                     OnCarriageATA = ForwarderShipment.OnCarriageATA,
                                                     OnCarriageATD = ForwarderShipment.OnCarriageATD,
                                                     PreCarriageATA = ForwarderShipment.PreCarriageATA,
