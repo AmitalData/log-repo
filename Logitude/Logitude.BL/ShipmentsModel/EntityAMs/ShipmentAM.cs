@@ -24,6 +24,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageETD { get; set; } 
         public DateTime? OnCarriageATA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
         public DateTime? PreCarriageATD { get; set; }
