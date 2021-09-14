@@ -511,6 +511,7 @@
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerizationHataraStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationStatusCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerTypeList.Generated.cs" />
@@ -639,6 +640,7 @@
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
+    <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
     <Compile Include="EntityMapping\ContainerizationStatusCodeMap.cs" />
     <Compile Include="EntityMapping\ContainerTypeMap.cs" />
@@ -767,6 +769,7 @@
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
+    <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
     <Compile Include="EntityPOCOs\ContainerizationStatusCode.cs" />
     <Compile Include="EntityPOCOs\ContainerType.cs" />
     <Compile Include="EntityPOCOs\ContinuousRequestType.cs" />
