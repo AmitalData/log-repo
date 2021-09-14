@@ -17099,7 +17099,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  
   <field
     Id="&quot;68b6c16c-973d-4d50-b245-0d455badfb44&quot;"
     FieldName="&quot;InsuredcreditLimit&quot;"
@@ -18040,6 +18039,49 @@
         IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;AllCustomers&quot;"
+    TextCode="&quot;AllCustomers&quot;"
+    QueryGroupCode="&quot;CLNT&quot;"
+    IndexOrder="10"
+    ObjectTableName="&quot;Customer&quot;"
+    QuerySection="&quot;Customer&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;Id&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false"
+    Perspective="&quot;customers&quot;">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;RankCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CityName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;StartWorkingDate&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;Customer&quot;"
@@ -18201,7 +18243,7 @@
     FeatureTextCodeCode="&quot;Customer.Features.Overview&quot;"
     FeatureDefaultText="&quot;Overview&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />  
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Sales&quot;"
     ObjectTableName="&quot;Customer&quot;"
