@@ -13,12 +13,16 @@ namespace Logitude.Test.Base.Models.Shared
         public static string GLAccountsController = "GLAccounts";
         public static string JournalsController = "journals";
         public static string JournalActionTypesController = "JournalActionTypes";
+        public static string BranchesController = "branches";
         public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
+
         public static string AutomaticReconcileMethodViewsByFilters = "AutomaticReconcileMethodViews/GetByFilters";
         public static string JournalActionTypeViewsByFilters = "JournalActionTypeViews/GetByFilters";
+        public static string BranchviewsByFilters = "branchviews/getbyfilters";
         public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
         public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
         public static string ChartOfAccountsController = "ChartOfAccounts";
+        public static string ChargesGroupsController = "ChargesGroups";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
         public static string AddressViewsGetByFilters = "AddressViews/GetByFilters";
@@ -93,6 +97,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
+        public static string ChargesgroupviewsGetByFilters = "chargesgroupviews/getbyfilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
         public static string PaymentTermViewsGetByFilters = "PaymentTermViews/GetByFilters";
         public static string VatTypeViewsGetByFilters = "VatTypeViews/GetByFilters";
@@ -141,6 +146,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;
+        }
+        public static string VendorssGetSingle(string id)
+        {
+            return "vendors/getsingle?id=" + id;
         }
 
         public static string AddressesGetSingle(string id)

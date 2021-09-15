@@ -1,9 +1,8 @@
-﻿using Logitude.FullAccounting.Test.Models;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 
-namespace Logitude.TimeManagementTests.Models.Builders
+namespace Logitude.FullAccounting.Test.Models.Builders
 {
     public class JournalPMBuilder
     {

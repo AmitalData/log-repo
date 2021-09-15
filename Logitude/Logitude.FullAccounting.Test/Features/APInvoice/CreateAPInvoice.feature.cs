@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.Journal
+namespace Logitude.FullAccounting.Test.Features.APInvoice
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,21 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.Journal
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Accounting")]
-    public partial class CreateApprovedJournalFeature : object, Xunit.IClassFixture<CreateApprovedJournalFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-APIvoice")]
+    public partial class CreateAPInvoiceFeature : object, Xunit.IClassFixture<CreateAPInvoiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Accounting"};
+                "Pre-Prepare-APIvoice"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateApprovedJournal.feature"
+#line 1 "CreateAPInvoice.feature"
 #line hidden
         
-        public CreateApprovedJournalFeature(CreateApprovedJournalFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateAPInvoiceFeature(CreateAPInvoiceFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.Journal
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Journal", "CreateApprovedJournal", "\tWe want to create an approved journal", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Accounting"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/APInvoice", "Create AP Invoice", "\tWe want to create AP invoice.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-APIvoice"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,14 +83,14 @@ namespace Logitude.FullAccounting.Test.Features.Journal
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create approved journal")]
-        [Xunit.TraitAttribute("FeatureTitle", "CreateApprovedJournal")]
-        [Xunit.TraitAttribute("Description", "Create approved journal")]
-        public virtual void CreateApprovedJournal()
+        [Xunit.SkippableFactAttribute(DisplayName="Create AP Invoice")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create AP Invoice")]
+        [Xunit.TraitAttribute("Description", "Create AP Invoice")]
+        public virtual void CreateAPInvoice()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create approved journal", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create AP Invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -111,74 +111,73 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Line",
-                            "Action",
-                            "AccountingDate",
-                            "DocumentDate",
+                            "InvoiceCurrency",
+                            "ForiegnCurrency",
+                            "ForiegnExchangeRate",
+                            "Description",
+                            "VatType",
+                            "VatPercentage",
                             "DueDate",
-                            "CreditAccountNumber",
-                            "DebitAccountNumber",
-                            "LocalAmount",
-                            "CurrencyId",
-                            "ExchangeRate"});
-                table6.AddRow(new string[] {
+                            "Quantity",
+                            "InvoiceCurrencyAmount",
+                            "UnitPrice",
+                            "ChargesType",
+                            "ProfitCurrencyAmount",
+                            "LocalCurrencyAmount",
+                            "ForiegnCurrencyAmount"});
+                table1.AddRow(new string[] {
                             "1",
-                            "Credit",
-                            "09/01/2021",
-                            "09/01/2021",
-                            "09/24/2021",
-                            "Account1",
-                            "Account2",
-                            "5",
                             "NIS",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "2",
-                            "Debit",
-                            "09/01/2021",
-                            "09/01/2021",
-                            "09/24/2021",
-                            "Account1",
-                            "Account2",
-                            "5",
                             "NIS",
+                            "1",
+                            "SpecFlowTest",
+                            "Zero",
+                            "0",
+                            "09/01/2021",
+                            "1",
+                            "1",
+                            "1",
+                            "ITMS",
+                            "2.12",
+                            "1",
                             "1"});
 #line 6
- testRunner.Given("I have the following Journal lines:", ((string)(null)), table6, "Given ");
+ testRunner.Given("I have the following AP invoice lines:", ((string)(null)), table1, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table7.AddRow(new string[] {
-                            "AccountingDate",
-                            "09/01/2021"});
-                table7.AddRow(new string[] {
-                            "currencyId",
+                table2.AddRow(new string[] {
+                            "Branch",
+                            "BZU"});
+                table2.AddRow(new string[] {
+                            "InvoiceCurrency",
                             "NIS"});
-                table7.AddRow(new string[] {
-                            "statusCode",
-                            "Approved"});
-                table7.AddRow(new string[] {
-                            "typeCode",
-                            "0"});
-                table7.AddRow(new string[] {
+                table2.AddRow(new string[] {
+                            "InvoiceCurrencyExchangeRate",
+                            "1"});
+                table2.AddRow(new string[] {
+                            "ProfitCurrency",
+                            "NIS"});
+                table2.AddRow(new string[] {
+                            "VatNumber",
+                            "1"});
+                table2.AddRow(new string[] {
+                            "ProfitCurrencyExchangeRate",
+                            "1"});
+                table2.AddRow(new string[] {
                             "DueDate",
-                            "09/24/2021"});
-                table7.AddRow(new string[] {
-                            "DocumentDate",
-                            "09/01/2021"});
-                table7.AddRow(new string[] {
-                            "journalLines",
-                            "1,2"});
-#line 10
- testRunner.And("a journal with the following properties", ((string)(null)), table7, "And ");
+                            "Tomorrow"});
+#line 9
+ testRunner.And("a AP invoice with the following properties", ((string)(null)), table2, "And ");
+#line hidden
+#line 18
+ testRunner.When("create AP invoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 19
- testRunner.When("create approved journal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 20
- testRunner.Then("the journal should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the AP invoice should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -191,12 +190,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateApprovedJournalFeature.FeatureSetup();
+                CreateAPInvoiceFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateApprovedJournalFeature.FeatureTearDown();
+                CreateAPInvoiceFeature.FeatureTearDown();
             }
         }
     }

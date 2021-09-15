@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.GLAccount
+namespace Logitude.FullAccounting.Test.Features.ARInvoice
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,23 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Accounting")]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-NewGLAccount")]
-    public partial class UpdateGlAccountFeature : object, Xunit.IClassFixture<UpdateGlAccountFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-GetARIvoice")]
+    public partial class GetARInvoiceFeature : object, Xunit.IClassFixture<GetARInvoiceFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Accounting",
-                "Pre-Prepare-NewGLAccount"};
+                "Pre-Prepare-GetARIvoice"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateGlAccount.feature"
+#line 1 "GetARInvoice.feature"
 #line hidden
         
-        public UpdateGlAccountFeature(UpdateGlAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetARInvoiceFeature(GetARInvoiceFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -44,9 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/GLAccount", "Update GlAccount", "\tWe want to update a GlAccount", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Accounting",
-                        "Pre-Prepare-NewGLAccount"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ARInvoice", "Get AR Invoice", "\tWe want to get ar invoice.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-GetARIvoice"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -86,15 +83,15 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update glAccount")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update GlAccount")]
-        [Xunit.TraitAttribute("Description", "Update glAccount")]
-        public virtual void UpdateGlAccount()
+        [Xunit.SkippableFactAttribute(DisplayName="Get ar invoice")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get AR Invoice")]
+        [Xunit.TraitAttribute("Description", "Get ar invoice")]
+        public virtual void GetArInvoice()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update glAccount", null, tagsOfScenario, argumentsOfScenario);
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ar invoice", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -114,44 +111,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 6
+ testRunner.When("get ar invoice with ARInvoiceId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 7
- testRunner.Given("glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table5.AddRow(new string[] {
-                            "IsMultiCurrency",
-                            "true"});
-                table5.AddRow(new string[] {
-                            "DisplayNumber",
-                            "Unique Number"});
-                table5.AddRow(new string[] {
-                            "AccountTypeCode",
-                            "Vendor"});
-                table5.AddRow(new string[] {
-                            "LocalName",
-                            "VendGlAccountLocal"});
-                table5.AddRow(new string[] {
-                            "EnglishName",
-                            "VendGlAccountEnglish"});
-                table5.AddRow(new string[] {
-                            "RevenueExpenseType",
-                            "Other"});
-                table5.AddRow(new string[] {
-                            "IsControlAccount",
-                            "false"});
-                table5.AddRow(new string[] {
-                            "ControlAccountId",
-                            "1921681254"});
-#line 8
- testRunner.And("following new glAccount properties", ((string)(null)), table5, "And ");
-#line hidden
-#line 18
- testRunner.When("update glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 19
- testRunner.Then("the glAccount should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("ar invoice should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -164,12 +128,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateGlAccountFeature.FeatureSetup();
+                GetARInvoiceFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateGlAccountFeature.FeatureTearDown();
+                GetARInvoiceFeature.FeatureTearDown();
             }
         }
     }

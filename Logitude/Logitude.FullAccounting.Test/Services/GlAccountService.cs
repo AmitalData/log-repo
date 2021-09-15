@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Logitude.FullAccounting.Test.Models;
-using Logitude.TimeManagementTests.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Logitude.FullAccounting.Test.Services
                 .CurrencyCode(null)
                 .RevenueExpenseType((int)RevenueExpenseTypeEnum.Other + "")
                 .IsControlAccount((bool)gLAccountNewProperty.IsControlAccount)
-                .ControlAccountId(FullAccountingData.GLAccount1921681254Id)
+                .ControlAccountId(FullAccountingData.GLAccount1Id)
                 .Build();
 
 

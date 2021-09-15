@@ -26,5 +26,55 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new AccountPreparation().PrepareNewAccount();
         }
 
+        [BeforeFeature("Pre-Prepare-ARIvoice")]
+        public static void PrePrepareARIvoice()
+        {
+            new ActoinPreparation().Prepare();
+            new ChartOfAccountPreparation().Prepare();
+            new AutomaticReconcilePreparation().Prepare();
+            new AccountPreparation().Prepare();
+            new CustomerPreparation().Prepare();
+            new ChargesGroupPreparation().Prepare();
+            new ChargeTypePreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-APIvoice")]
+        public static void PrePrepareAPIvoice()
+        {
+            new ActoinPreparation().Prepare();
+            new ChartOfAccountPreparation().Prepare();
+            new AutomaticReconcilePreparation().Prepare();
+            new AccountPreparation().Prepare();
+            new ChargesGroupPreparation().Prepare();
+            new ChargeTypePreparation().Prepare();
+            new VendorPreparation().Prepare();
+        }
+
+
+        [BeforeFeature("Pre-Prepare-GetARIvoice")]
+        public static void PrePrepareGetARIvoice()
+        {
+            new ActoinPreparation().Prepare();
+            new ChartOfAccountPreparation().Prepare();
+            new AutomaticReconcilePreparation().Prepare();
+            new AccountPreparation().Prepare();
+            new CustomerPreparation().Prepare();
+            new ChargesGroupPreparation().Prepare();
+            new ChargeTypePreparation().Prepare();
+            new ARInvoicePreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-GetAPIvoice")]
+        public static void PrePrepareGetAPIvoice()
+        {
+            new ActoinPreparation().Prepare();
+            new ChartOfAccountPreparation().Prepare();
+            new AutomaticReconcilePreparation().Prepare();
+            new AccountPreparation().Prepare();
+            new VendorPreparation().Prepare();
+            new ChargesGroupPreparation().Prepare();
+            new ChargeTypePreparation().Prepare();
+            new APInvoicePreparation().Prepare();
+        }
+
+
     }
 }

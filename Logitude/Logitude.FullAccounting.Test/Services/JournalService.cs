@@ -1,8 +1,9 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Builders;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
-using Logitude.TimeManagementTests.Models.Builders;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,8 @@ namespace Logitude.FullAccounting.Test.Services
                 .ActionCode(GetActionCodeByName((string)line.Action))
                 .DueDate((DateTime)line.DueDate)
                 .DocumentDate((DateTime)line.DocumentDate)
-                .CreditAccountIdByNumber(line.CreditAccountNumber.ToString())
-                .DebitAccountIdByNumber(line.DebitAccountNumber.ToString())
+                .CreditAccountId(FullAccountingData.GLAccount1Id)
+                .DebitAccountId(FullAccountingData.GLAccount2Id)
                 .LocalAmount((decimal)line.LocalAmount)
                 .ForeignAmount((decimal)line.LocalAmount)
                 .Build();

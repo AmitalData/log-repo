@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
-    public class ActoinPreparation
+    public class BranchPreparation
     {
-        const string CreditActoinCode = "1";
-        const string DebitActoinCode = "2";
+        const string BZU = "BZU";
+        const string Ramallah = "RMLAH";
         public void Prepare()
         {
-            FullAccountingData.CreditActoinId = GetByCode(CreditActoinCode);
-            FullAccountingData.DebitActoinId = GetByCode(DebitActoinCode);
+            FullAccountingData.BZUBranchID = GetByCode(BZU);
+            FullAccountingData.RamallahBranchID = GetByCode(Ramallah);
         }
         private string GetByCode(string code)
         {
@@ -32,7 +32,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
-            var response = APICaller.CallGetByFilters<List<JournalActionType>>(Urls.JournalActionTypeViewsByFilters, UserTenant.Token, filter);
+            var response = APICaller.CallGetByFilters<List<BranchPM>>(Urls.JournalActionTypeViewsByFilters, UserTenant.Token, filter);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
@@ -47,46 +47,47 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 
         private string Create(string code)
         {
-            var journalActionType = CreateInstance(code);
-            var response = APICaller.CallPost<JournalActionType>(journalActionType, Urls.JournalActionTypesController, UserTenant.Token);
+            var branchPM = CreateInstance(code);
+            var response = APICaller.CallPost<BranchPM>(branchPM, Urls.BranchesController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private JournalActionType CreateInstance(string code)
+        private BranchPM CreateInstance(string code)
         {
             switch (code)
             {
-                case CreditActoinCode:
-                    return CreateCreditInstance(code);
-                case DebitActoinCode:
-                    return CreateDebitInstance(code);
+                case BZU:
+                    return CreateBZUInstance(code);
+                case Ramallah:
+                    return CreateRamallahInstance(Ramallah);
                 default:
                     return null;
             }
         }
 
-        private JournalActionType CreateCreditInstance(string code)
+        private BranchPM CreateBZUInstance(string code)
         {
-            return new JournalActionType()
+            return new BranchPM()
             { 
                 Code = code,
-                EnglishName = "Credit",
-                LocalName = "Credit",
+                EnglishName = "BZU",
+                LocalName = "BZU",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Credit"
+                SearchFields = $"{code},BZU"
 
             };
         }
-        private JournalActionType CreateDebitInstance(string code)
+        private BranchPM CreateRamallahInstance(string code)
         {
-            return new JournalActionType()
-            {
+            return new BranchPM()
+            { 
                 Code = code,
-                EnglishName = "Debit",
-                LocalName = "Debit",
+                EnglishName = "BZU",
+                LocalName = "BZU",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Debit"
+                SearchFields = $"{code},BZU"
 
             };
         }
+        
     }
 }

@@ -16,10 +16,12 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
     {
         const string DebtorsAndCreditorsChartCode = "DCCHR";
         const string CustomerChartCode = "CCCHR";
+        const string VendorChartCode = "VNCHR";
         public void Prepare()
         {
             FullAccountingData.DebtorsAndCreditorsChartOfAccountId = GetByCode(DebtorsAndCreditorsChartCode);
             FullAccountingData.CustomerChartOfAccountId = GetByCode(CustomerChartCode);
+            FullAccountingData.VendorChartOfAccountId = GetByCode(VendorChartCode);
         }
         private string GetByCode(string code)
         {
@@ -47,7 +49,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string Create(string code)
         {
             var ChartOfAccountPM = CreateInstance(code);
-            var response = APICaller.CallPost<ChartOfAccountPM>(ChartOfAccountPM,Urls.ChartOfAccountsController, UserTenant.Token);
+            var response = APICaller.CallPost<ChartOfAccountPM>(ChartOfAccountPM, Urls.ChartOfAccountsController, UserTenant.Token);
             return response.Data?.Id;
         }
         private ChartOfAccountPM CreateInstance(string code)
@@ -57,7 +59,10 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 case DebtorsAndCreditorsChartCode:
                     return CreateRCHARInstance(code);
                 case CustomerChartCode:
-                    return CreateCustomerChartCodeInstance(code);
+                    return CreateCustomersChartCodeInstance(code);
+                case VendorChartCode:
+                    return CreateVendorChartCodeInstance(code);
+
                 default:
                     return null;
             }
@@ -65,26 +70,39 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private ChartOfAccountPM CreateRCHARInstance(string code)
         {
             return new ChartOfAccountPM()
-            { 
+            {
                 Code = code,
                 EnglishName = "Debtors And Creditors Chart",
                 LocalName = "Debtors And Creditors Chart",
                 Tenant = UserTenant.Tenant,
                 SearchFields = $"{code},Debtors And Creditors Chart",
-                TypeCode = (int)ChartOfAccountsTypeEnum.DebtorsAndCreditors +""
+                TypeCode = (int)ChartOfAccountsTypeEnum.DebtorsAndCreditors + ""
 
             };
         }
         private ChartOfAccountPM CreateCustomersChartCodeInstance(string code)
         {
             return new ChartOfAccountPM()
-            { 
+            {
                 Code = code,
                 EnglishName = "Customer Chart",
                 LocalName = "Customer Chart",
                 Tenant = UserTenant.Tenant,
                 SearchFields = $"{code},Customer Chart",
-                TypeCode = (int)ChartOfAccountsTypeEnum.Customers +""
+                TypeCode = (int)ChartOfAccountsTypeEnum.Customers + ""
+
+            };
+        }
+        private ChartOfAccountPM CreateVendorChartCodeInstance(string code)
+        {
+            return new ChartOfAccountPM()
+            {
+                Code = code,
+                EnglishName = "Vendors Chart",
+                LocalName = "Vendors Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{code},Vendors Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Vendors + ""
 
             };
         }

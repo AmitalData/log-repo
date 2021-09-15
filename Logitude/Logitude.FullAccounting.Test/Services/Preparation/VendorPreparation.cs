@@ -13,58 +13,57 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
-    public class CustomerPreparation
+    public class VendorPreparation
     {
 
         public void Prepare()
         {
             var partnerParameters = GetPartnerParameters();
-            FullAccountingData.CustomerId = DataPreparation.GetPartnerId(partnerParameters);
-            CheckConnectWithGLAccount(FullAccountingData.CustomerId);
+            FullAccountingData.VendorId = DataPreparation.GetPartnerId(partnerParameters);
+            CheckConnectWithGLAccount(FullAccountingData.VendorId);
         }
         
         private PartnerParameters GetPartnerParameters()
         {
             return new PartnerParameters()
             {
-                Code = "FACSpecFlowTest",
-                IsCustomer = true,
+                Code = "FVDSpecFlowT12",
                 Name = "FAC SpecFlowTest",
-                TypeCode = "CS"
+                TypeCode = "VD"
             };
         }
-        private void CheckConnectWithGLAccount(string customerId)
+        private void CheckConnectWithGLAccount(string VendorId)
         {
-            var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(customerId), UserTenant.Token)?.Data;
-            if (string.IsNullOrEmpty(customer.Card?.GLAccountId))
+            var vendor = APICaller.CallGet<VendorPM>(Urls.VendorssGetSingle(VendorId), UserTenant.Token)?.Data;
+            if (string.IsNullOrEmpty(vendor.GLAccountId))
             {
-                ConnectWithGLAccount(customer);
+                ConnectWithGLAccount(vendor);
             }
         }
 
-        private void ConnectWithGLAccount(CustomerPM customer)
+        private void ConnectWithGLAccount(VendorPM vendor)
         {
-            var account = CreateGLAccountInstance(customer);
+            var account = CreateGLAccountInstance(vendor);
             var response = APICaller.CallPost<GLAccountPM>(account, Urls.GLAccountsController, UserTenant.Token);
 
         }
-        private GLAccountPM CreateGLAccountInstance(CustomerPM customer)
+        private GLAccountPM CreateGLAccountInstance(VendorPM vendor)
         {
             return new GLAccountPM()
             {
-                DisplayNumber = customer.Id,
-                NewGLAccountCardId = customer.Card.Id,
+                DisplayNumber = vendor.Id,
+                NewGLAccountCardId = vendor.Card.Id,
                 IsMultiCurrency = false,
                 AccountTypeCode = (int)GLAccountTypeEnum.Client + "",
                 CurrencyId = BillingData.CurrencyNISId,
                 Tenant = UserTenant.Tenant,
                 AutomaticReconcileId = FullAccountingData.AutomaticReconcile_A,
-                ChartOfAccountsTypeCode = (int)ChartOfAccountsTypeEnum.Customers + "",
+                ChartOfAccountsTypeCode = (int)ChartOfAccountsTypeEnum.Vendors + "",
                 ReconcileMethodCode = (int)ReconcileMethodEnum.Local + "",
                 RevenueExpenseType = (int)RevenueExpenseTypeEnum.Other + "",
-                ChartOfAccountsId = FullAccountingData.CustomerChartOfAccountId,
-                LocalName = customer.LocalName,
-                EnglishName = customer.EnglishName,
+                ChartOfAccountsId = FullAccountingData.VendorChartOfAccountId,
+                LocalName = vendor.LocalName,
+                EnglishName = vendor.EnglishName,
             };
         }
     }

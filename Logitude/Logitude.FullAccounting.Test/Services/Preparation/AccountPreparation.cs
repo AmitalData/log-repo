@@ -14,22 +14,26 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 {
     public class AccountPreparation
     {
-        const string AccountNumber1 = "1921681253";
-        const string AccountNumber2 = "1921681254";
+
 
         public void Prepare()
         {
-            FullAccountingData.GLAccount1921681253Id = GetByNumber(AccountNumber1);
-            FullAccountingData.GLAccount1921681254Id = GetByNumber(AccountNumber2);
+            FullAccountingData.GLAccount1Id = Create();
+            FullAccountingData.GLAccount2Id = Create();
         }
         public void PrepareNewAccount()
         {
             FullAccountingData.GLAccountId = Create();
         }
-
-        private string Create()
+        public void PrepareAccounts()
         {
-            var gLAccount = CreateInstance();
+            FullAccountingData.GLAccountRevenuesId = Create(ChartOfAccountsTypeEnum.Revenues);
+            FullAccountingData.GLAccountExpensesId = Create(ChartOfAccountsTypeEnum.Expenses);
+        }
+
+        private string Create(ChartOfAccountsTypeEnum ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
+        {
+            var gLAccount = CreateInstance(ChartOfAccountsTypeCode);
             var response = APICaller.CallPost<GLAccountPM>(gLAccount, Urls.GLAccountsController, UserTenant.Token);
             return response.Data?.Id;
         }
@@ -73,7 +77,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             data.EnglishName = data.LocalName;
         }
 
-        private GLAccountPM CreateInstance()
+        private GLAccountPM CreateInstance(ChartOfAccountsTypeEnum chartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
         {
             return new GLAccountPM()
             {
@@ -82,7 +86,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CurrencyId = BillingData.CurrencyNISId,
                 Tenant = UserTenant.Tenant,
                 AutomaticReconcileId = FullAccountingData.AutomaticReconcile_A,
-                ChartOfAccountsTypeCode = (int)ChartOfAccountsTypeEnum.DebtorsAndCreditors + "",
+                ChartOfAccountsTypeCode = (int)chartOfAccountsTypeCode + "",
                 ReconcileMethodCode = (int)ReconcileMethodEnum.Local + "",
                 RevenueExpenseType = (int)RevenueExpenseTypeEnum.Revenue + "",
                 ChartOfAccountsId = FullAccountingData.DebtorsAndCreditorsChartOfAccountId,

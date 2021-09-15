@@ -4,7 +4,7 @@ using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 
 
-namespace Logitude.TimeManagementTests.Models.Builders
+namespace Logitude.FullAccounting.Test.Models.Builders
 {
     public class JournalLinePMBuilder
     {
@@ -33,14 +33,14 @@ namespace Logitude.TimeManagementTests.Models.Builders
             JournalLine.AccountingDate = AccountingDate;
             return this;
         }
-        public JournalLinePMBuilder CreditAccountIdByNumber(string creditAccountNumber)
+        public JournalLinePMBuilder CreditAccountId(string creditAccountId)
         {
-            JournalLine.CreditAccountId = MapAccountNumber(creditAccountNumber);
+            JournalLine.CreditAccountId = creditAccountId;
             return this;
         }
-        public JournalLinePMBuilder DebitAccountIdByNumber(string debitAccountId)
+        public JournalLinePMBuilder DebitAccountId(string debitAccountId)
         {
-            JournalLine.DebitAccountId = MapAccountNumber(debitAccountId);
+            JournalLine.DebitAccountId = debitAccountId;
             return this;
         }
         public JournalLinePMBuilder LocalAmount(decimal localAmount)
@@ -148,18 +148,7 @@ namespace Logitude.TimeManagementTests.Models.Builders
             }
             
         }
-        private string MapAccountNumber(string creditAccountNumber)
-        {
-            switch (creditAccountNumber)
-            {
-                case "1921681254":
-                    return FullAccountingData.GLAccount1921681254Id;
-                case "1921681253":
-                    return FullAccountingData.GLAccount1921681253Id;
-                default:
-                    return null;
-            }
-        }
+        
 
 
     }

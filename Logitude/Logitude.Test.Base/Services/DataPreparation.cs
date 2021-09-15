@@ -329,7 +329,7 @@ namespace Logitude.Test.Base.Services
 
         #region Partners Data Preparation
 
-        private static string GetPartnerId(PartnerParameters partnerParameters)
+        public static string GetPartnerId(PartnerParameters partnerParameters)
         {
             string userTenantPartnerId = GetPartnerIdFromTenant(partnerParameters, false);
             if (string.IsNullOrEmpty(userTenantPartnerId))
