@@ -2,55 +2,56 @@
   <Sql Version="4">
     <![CDATA[
 
--- declare @Tenant as int
--- declare @EntityId as varchar(15)
--- declare @EventTypeId as varchar(15)
--- declare @ObjectTableId as varchar(15) 
--- declare @UserId as varchar(15) 
+--declare @AccountingEventTypeId as varchar(15)
+--declare @ShipmentId as varchar(15)
+--declare @MasterId as varchar(15)
+--declare @IsAccountingClosed as bit
+--declare @AccountingClosingDate as datetime
+--declare @Tenant as int
+--declare @UserId as varchar(15)
+--declare @TableId as varchar(15)
+--set @TableId = (select Id from ObjectTables where Name = 'Shipment')
+
  
--- set @ObjectTableId = (select Id from ObjectTables where Name = 'Shipment') 
 
--- DECLARE TenantsCursor CURSOR READ_ONLY
--- FOR
--- SELECT Id
--- FROM Tenants
--- OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
--- WHILE @@FETCH_STATUS = 0
--- BEGIN
+--BEGIN 
+    --DECLARE ShipmentsCursor CURSOR READ_ONLY
+    --FOR
+    --SELECT Id, IsAccountingClosed, Tenant, MasterShipmentDataId
+    --FROM Shipments
+    --where IsAccountingClosed = 1 and AccountingCloseDate is NULL and ShipmentLevelCode = 'H' and MasterShipmentDataId is not NULL
+    --OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @IsAccountingClosed, @Tenant, @MasterId    
+    --WHILE @@FETCH_STATUS = 0
+        --BEGIN
 
---	set @EventTypeId = (select Id from EventTypes where Code = 'ACCL' AND Tenant = @Tenant AND ObjectTableId in (@ObjectTableId))
---	if (@EventTypeId is not null)
---	begin
---			DECLARE TraceEventsCursor CURSOR READ_ONLY
---			FOR
---			SELECT EntityId
---			FROM TraceEvents where Tenant = @Tenant AND EventTypeId = @EventTypeId AND ObjectTableId in (@ObjectTableId)
---			Group by EntityId
---			OPEN TraceEventsCursor FETCH NEXT FROM TraceEventsCursor INTO @EntityId
---			WHILE @@FETCH_STATUS = 0
---			BEGIN
---				if exists (select * from Shipments where Tenant = @Tenant AND Id = @EntityId and AccountingCloseDate Is not null)
---		begin
---			set @UserId = (select top 1 UserId from TraceEvents 
---								where Tenant = @Tenant
---								AND EventTypeId = @EventTypeId
---								AND ObjectTableId in (@ObjectTableId)
---								AND EntityId = @EntityId
---								order by LogDateTime desc)		
---						
---				update ShipmentComputedFields set AccountingClosedByUserId = @UserId where Tenant = @Tenant AND Id = @EntityId
---				end
---			FETCH NEXT FROM TraceEventsCursor INTO @EntityId
---			END
---			CLOSE TraceEventsCursor
---			DEALLOCATE TraceEventsCursor
---
---	end
+ 
 
---FETCH NEXT FROM TenantsCursor INTO @Tenant
+            --set @AccountingClosingDate = null
+            --set @UserId = null
+
+ 
+
+           -- if(@IsAccountingClosed = 1)            
+           -- BEGIN
+              -- set @AccountingEventTypeId = (select Id from EventTypes where Tenant = @Tenant and Code = 'ACCL' and ObjectTableId = @TableId)
+               --set @AccountingClosingDate = (select MAX(LogDateTime) from TraceEvents where Tenant = @Tenant and EntityId = @MasterId and ObjectTableId = @TableId and EventTypeId = @AccountingEventTypeId)
+               --set @UserId = (select Top 1 UserId from TraceEvents where Tenant = @Tenant and EntityId = @MasterId and ObjectTableId = @TableId and EventTypeId = @AccountingEventTypeId 
+              --order by LogDateTime desc)
+            --END
+
+ 
+
+           -- update Shipments set AccountingCloseDate = @AccountingClosingDate where Id = @ShipmentId            
+           --update ShipmentComputedFields set AccountingClosedByUserId = @UserId where Id = @ShipmentId
+
+ 
+
+           -- FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @IsAccountingClosed, @Tenant, @MasterId
+       -- END
+    --CLOSE ShipmentsCursor
+    --DEALLOCATE ShipmentsCursor
 --END
---CLOSE TenantsCursor
---DEALLOCATE TenantsCursor
+
     ]]>
   </Sql>
 </Script>
