@@ -756,8 +756,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
-
-        public bool IsAccrualsApproved { get; set; }
-        public DateTime? AccrualsApprovalDate { get; set; }
     }
 }
