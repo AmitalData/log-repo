@@ -198,7 +198,7 @@ namespace WebFreight.Web.WebPages
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
-
+                    documents = documents.Where(x => x.HasFile && x.DirectionCode == "I").ToList();
                     foreach (DocumentsFilingPM document in documents)
                     {
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
@@ -221,14 +221,11 @@ namespace WebFreight.Web.WebPages
                         }
 
 
-                         if (!string.IsNullOrEmpty(document.FileExtension))
+                        if (!string.IsNullOrEmpty(document.FileExtension))
                         {
-                            var bytes = up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant);
-                            checkIfFileIsEmpty(bytes);
-                            
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
-                            fileName= fileName.Replace('/', ' ');
+                            fileName = fileName.Replace('/', ' ');
                             fileName += ("." + document.FileExtension);
 
                             while (CompressedArray.ContainsKey(document.FileExtension + "@" + fileName))
@@ -239,14 +236,14 @@ namespace WebFreight.Web.WebPages
                                 fileName += ("." + document.FileExtension);
                             }
                             ItemNum = 0;
-                            CompressedArray.Add(document.FileExtension + "@" + fileName, bytes);
+                            CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant));
                         }
 
                     }
                     if (DocumentsExistance)
                     {
                         string name = "Documents";
-                        if(!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
+                        if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                         {
                             name = shipment.ShipmentNumber;
                         }
@@ -257,7 +254,7 @@ namespace WebFreight.Web.WebPages
                         byte[] CompressedData = CompressionData(name, CompressedArray, false);
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", CompressedData.Length.ToString());
-                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename="+ name+".zip");
+                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + name + ".zip");
                         HttpContext.Current.Response.ContentType = "application/zip";
                         HttpContext.Current.Response.BinaryWrite(CompressedData);
 
@@ -269,21 +266,12 @@ namespace WebFreight.Web.WebPages
 
                         }
                     }
-                }               
+                }
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
-            }
-        }
-
-        private void checkIfFileIsEmpty(byte[] bytes)
-        {
-            if (bytes == null)
-            {
-                Response.Output.Write("There are some empty document files.");
-                throw new ApplicationException("There are some empty document files.");
             }
         }
 
@@ -578,8 +566,9 @@ namespace WebFreight.Web.WebPages
 
             catch (Exception errorInfo)
             {
-                Response.Clear();
-                Response.Output.Write(errorInfo.Message.ToString());
+                throw errorInfo;
+
+
 
                 // string ErrorMessage = errorInfo.Message;
 
