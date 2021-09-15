@@ -222,32 +222,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         if (SessionInfo.ShipmentsFilters) {
             this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
-            if(SessionInfo.ShipmentsFilters.TransportModeCodes){
-                var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
-                splitted.forEach(filterCode=>{
-                    this.SelectFilterByCode(filterCode);
-                });
-            }
-            if(SessionInfo.ShipmentsFilters.DirectionCodes){
-                var splitted = SessionInfo.ShipmentsFilters.DirectionCodes.split(',');
-                splitted.forEach(filterCode=>{
-                    this.SelectFilterByCode(filterCode);
-                });
-            }
-            if(SessionInfo.ShipmentsFilters.HasException){
-                this.hasException = SessionInfo.ShipmentsFilters.HasException;
-            }
-            
+            this.updateShipmentTypeAndDirectionSelectedFilters();
+            this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
             this.GetInvitedCustomers();
-            this.SelectedFilters.map(x => {
-                if(x.FilterName == 'shipmentType')
-                {
-                    this.shipmentTypeMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
-                } else if (x.FilterName == 'shipmentDirection')
-                {
-                    this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
-                }
-            });
+            this.updateShipmentTypeAndDirectionSelection();
             this.setSortFilterValues();
             this.LoadScreenData();
         }
@@ -257,6 +235,33 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.InitForm();
         ''.substring(''.indexOf('('))
+    }
+
+    private updateShipmentTypeAndDirectionSelectedFilters(){
+        if(SessionInfo.ShipmentsFilters.TransportModeCodes){
+            var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
+            splitted.forEach(filterCode=>{
+                this.SelectFilterByCode(filterCode);
+            });
+        }
+        if(SessionInfo.ShipmentsFilters.DirectionCodes){
+            var splitted = SessionInfo.ShipmentsFilters.DirectionCodes.split(',');
+            splitted.forEach(filterCode=>{
+                this.SelectFilterByCode(filterCode);
+            });
+        }
+    }
+
+    private updateShipmentTypeAndDirectionSelection(){
+        this.SelectedFilters.map(x => {
+            if(x.FilterName == 'shipmentType')
+            {
+                this.shipmentTypeMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
+            } else if (x.FilterName == 'shipmentDirection')
+            {
+                this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
+            }
+        });
     }
 
     private setSortFilterValues()
