@@ -60,8 +60,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                                Id = a.Id,
                                                                OriginalEntityLineNumber = a.OriginalEntityLineNumber,
                                                                EntityId = a.EntityId,
-                                                               InterestEntityTypeCode = a.InterestEntityTypeCode
-
+                                                               InterestEntityTypeCode = a.InterestEntityTypeCode,
+                                                               InterestValueDate = a.InterestValueDate,
+                                                               LocalAmount = a.LocalAmount,
+                                                               ForeignAmount= a.ForeignAmount
+                                                              
                                                            }).ToList();
 
             return interestTransactionPMs;

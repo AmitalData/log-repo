@@ -675,10 +675,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode != ChequeARPaymentAccountingMethod
                && payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
-            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment,2);
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment);
             SaveInterestTransaction(interestTransaction);
             }
-            else  if(payment.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && isFromVoidARPayment)
+            else  if(tenantPOCO != null && tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && isFromVoidARPayment)
             {
                 CancelARPaymentChequesInterestTransactions(payment);
                 
@@ -691,7 +691,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             foreach (InterestTransactionPM transaction in interestTransactions)
             {
                 MaxLineNumber++;
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, true, MaxLineNumber);
+                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentCheque(transaction, payment,MaxLineNumber);
                 SaveInterestTransaction(interestTransaction);
             }
         }
@@ -706,7 +706,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
             interestTransactionUpdateService.Create(interestTransaction);
         }
-        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment,int lineNumber)
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentPM payment, bool isFromVoidARPayment)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
@@ -714,7 +714,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 InterestEntityTypeCode = "2",
                 EntityId = payment.Id,
-                OriginalEntityLineNumber = isFromVoidARPayment ? lineNumber : 1,
+                OriginalEntityLineNumber = isFromVoidARPayment ? 2 : 1,
                 LocalAmount = isFromVoidARPayment ? (decimal)payment.AmountInLocalCurrency :
                                                                      (decimal)payment.AmountInLocalCurrency * -1,
                 ForeignAmount = isFromVoidARPayment ? (decimal?)payment.AmountInPaymentCurrency :
@@ -728,7 +728,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 };
             return interestTransaction;
         }
- 
+
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentCheque(InterestTransactionPM transaction, ARPaymentPM payment,  int lineNumber)
+        {
+            GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "2",
+                EntityId = payment.Id,
+                OriginalEntityLineNumber =  lineNumber,
+                LocalAmount = transaction.LocalAmount * -1,
+                ForeignAmount = transaction.ForeignAmount * -1,
+                InterestValueDate = transaction.InterestValueDate,
+                Tenant = paymentPM.Tenant,
+                GLAccountId = account != null ? account.Id : null,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = payment.PaymentCurrencyId,
+            };
+            return interestTransaction;
+        }
+
         private void UpdatePaymentInvoice(ARPaymentInvoicePM item)
         {
             ARInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleARInvoicePayment(item.Id, paymentPM.Tenant);
