@@ -752,5 +752,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPortAddress { get; set; }
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
     }
 }

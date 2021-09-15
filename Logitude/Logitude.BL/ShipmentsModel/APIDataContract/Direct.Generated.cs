@@ -187,6 +187,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string Notify1Reference { get; set; }
     
     public string Notify1Reference2 { get; set; }
+    
+    public string ShipperNotExporterReference1 { get; set; }
+    
+    public string ShipperNotExporterReference2 { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
