@@ -413,6 +413,6 @@ END CATCH
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor
 
-	update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Shipment'
+
 
 	end
