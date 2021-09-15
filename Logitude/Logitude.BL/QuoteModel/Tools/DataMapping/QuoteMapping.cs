@@ -169,7 +169,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
             entityPoco.IsChargesByVAT = entityPM.IsChargesByVAT;
             entityPoco.IsQuoteDataExternal = entityPM.IsQuoteDataExternal;
-            //entityPoco.IsQuoteDocumentExternal = entityPM.IsQuoteDocumentExternal;
             entityPoco.LastStageDate = entityPM.LastStageDate;
             entityPoco.QuotationSections = entityPM.QuotationSections;
             entityPoco.NotifyId = entityPM.NotifyId;
