@@ -104,7 +104,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (bankAccountPM.CurrencyId != _GLAccount?.CurrencyId
                 || bankAccountPM.CurrencyId != _DeferredGLAccount?.CurrencyId
-                || bankAccountPM.CurrencyId != _TransferGLAcccount?.CurrencyId)
+                || (bankAccountPM.CurrencyId != _TransferGLAcccount?.CurrencyId && _TransferGLAcccount != null))
             {
                 string msg = TextCodesTranslator.TranslateText("BankAccount.O.Bank_and_GL_Account_must_be_same_currency", bankAccountPM.Tenant, useLocal);
                 throw new ApplicationException(msg);

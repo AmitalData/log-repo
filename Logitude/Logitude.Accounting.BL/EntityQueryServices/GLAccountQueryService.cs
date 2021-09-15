@@ -270,21 +270,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return allIdAccounts;// new HashSet<string>(allIdAccounts);
         }
 
-        private UserPM GetLoggedUser(int tenant)
-        {
-            UserPM loggedUser;
-            UserQuery userQuery = new UserQuery(tenant);
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            { // user set and passed from from WR
-                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
-            }
-            else
-            {
-                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
-            }
-            return loggedUser;
-        }
+      
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
             var fullPM=FullAccountingSettingQueryService.Get(tenant);
@@ -381,11 +367,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return dic;
         }
 
-        public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
-        {
-            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
-            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
-        }
+       
         internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
         {
             (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
@@ -419,22 +401,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccount gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
             GLAccountPM gLAccountPM = GetEntityPM(gLAccountPOCO);
 
-            if (gLAccountPM != null && !CheckIfUserHasSecurityAccessToGLAccount(tenant, gLAccountPM.ChartOfAccountSecurityLevel))
-                return null;
-
             return gLAccountPM;
         }
-
-        private bool CheckIfUserHasSecurityAccessToGLAccount(int tenant, int? chartOfAccountSecurityLevel)
+        public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
         {
-            var settings = GetFullAccountingSettings(tenant);
-            var loggedUser = GetLoggedUser(tenant);         
-
-            bool hasSecurityAccess = 
-                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel <= loggedUser.SecurityLevel)
-                || (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel == null)
-                || !settings.IsSecurityLevelActivated;
-            return hasSecurityAccess;
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
+        private UserPM GetLoggedUser(int tenant)
+        {
+            UserPM loggedUser;
+            UserQuery userQuery = new UserQuery(tenant);
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            { // user set and passed from from WR
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            }
+            return loggedUser;
         }
 
         public GLAccount  GetSingleByAccountId(string gLAccountId, int tenant)
