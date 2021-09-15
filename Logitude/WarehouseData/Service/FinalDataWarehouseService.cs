@@ -136,6 +136,11 @@ namespace WarehouseData.Helper
             return result;
         }
 
+        public void FinishUpdatingDataWarehouse(string destinationConnectionString)
+        {
+            generalDataWarehouseService.ExecuteScript("Others", "UpdateSharedFactDWWaterMark", destinationConnectionString);
+        }
+
         private  string GetAutomaticDWObjectIndex(List<TableClass> tableLists)
         {
             string result = string.Empty;

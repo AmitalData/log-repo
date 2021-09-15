@@ -370,6 +370,9 @@
     <Content Include="WarehouseScript\Others\AddAdditionalIndexesToDWTables.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\UpdateSharedFactDWWaterMark.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\Others\[Abed] FillDWHEnvironmentSettingsTable.sql" />
   </ItemGroup>
   <ItemGroup>

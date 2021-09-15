@@ -178,6 +178,8 @@ namespace WarehouseData
                             });
 
 
+                            mainDataWarehouseService.FinishUpdatingDataWarehouse(destinationConnectionString);
+
                             #endregion
 
                             stopWatch.Stop();
