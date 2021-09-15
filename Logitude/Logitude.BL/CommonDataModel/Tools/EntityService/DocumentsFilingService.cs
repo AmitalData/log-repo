@@ -934,7 +934,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.entityPM.FileExtension = this.entityPM.FileExtension.ToLower();
             }
-
+            
             if (isnew)
             {
                 document = new Document()
@@ -957,7 +957,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     document.FileName = !string.IsNullOrEmpty(this.entityPM.FileName) ? this.entityPM.FileName : documentType != null ? documentType.Name : "";
                 }
 
-                document.CalculatedFileName = document.FileName;
+               // document.CalculatedFileName = new DocumentTypeCalculateFileNameService(entityPM).Calculate();
                 if (fileData != null)
                 {
                     document.HasFile = true;

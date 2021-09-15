@@ -63,9 +63,9 @@
 
                                                         <td class="GridViewCell" style="width: 40px; min-width: 40px; max-width: 40px; position: relative;">
                                                             <!--<div class="CheckBox">
-                                                                <input class="CenterCenter" style="text-align:center" (change)="CheckboxClick(item)" [attr.id]="item.Id" type="checkbox" />
-                                                                <label class="CenterCenter" [attr.for]="item.Id"></label>
-                                                            </div>-->
+            <input class="CenterCenter" style="text-align:center" (change)="CheckboxClick(item)" [attr.id]="item.Id" type="checkbox" />
+            <label class="CenterCenter" [attr.for]="item.Id"></label>
+        </div>-->
                                                             <CheckBox (Checked)="CheckboxClick(item)"></CheckBox>
                                                         </td>
 
@@ -77,10 +77,12 @@
 
                                                         <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px; position: relative;">
 
-                                                       {{item.FileName}}
+
+                                                            <span *ngIf="!item.CalculatedFileName"> {{item.FileName}} </span>
+                                                            <span *ngIf="item.CalculatedFileName"> {{item.CalculatedFileName}} </span>
+
 
                                                         </td>
-
 
 
 

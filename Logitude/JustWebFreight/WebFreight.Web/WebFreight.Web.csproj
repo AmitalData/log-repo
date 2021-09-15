@@ -2614,6 +2614,7 @@
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
+    <Compile Include="Helpers\DocumentTypeCalculateFileNameService.cs" />
     <Compile Include="Helpers\EntityPropertyValueService.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />

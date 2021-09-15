@@ -1424,6 +1424,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
                                        }).ToList();
             }
             else
@@ -1498,6 +1499,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
+
 
                                        }).ToList();
             }
