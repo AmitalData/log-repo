@@ -1771,7 +1771,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return "ReleasingAgentReference1"; }
             case "NOTF1": { return "Notify1Reference"; }
             case "NOTF2": { return "Notify2Reference"; }
-            case "SHPNT": { return "ShipperNotExporterReference"; }
+            case "SHPNT": { return "ShipperNotExporterReference1"; }
             case "CONNT": { return "ConsigneeNotImporterReference"; }
             default: { return null; }
         }
@@ -1792,7 +1792,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return this.ReleasingAgentReference1; }
             case "NOTF1": { return this.Notify1Reference; }
             case "NOTF2": { return this.Notify2Reference; }
-            case "SHPNT": { return this.ShipperNotExporterReference; }
+            case "SHPNT": { return this.ShipperNotExporterReference1; }
             case "CONNT": { return this.ConsigneeNotImporterReference; }
             default: { return null; }
         }
@@ -1813,7 +1813,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { this.ReleasingAgentReference1 = newValue; break; }
             case "NOTF1": { this.Notify1Reference = newValue; break; }
             case "NOTF2": { this.Notify2Reference = newValue; break; }
-            case "SHPNT": { this.ShipperNotExporterReference = newValue; break; }
+            case "SHPNT": { this.ShipperNotExporterReference1 = newValue; break; }
             case "CONNT": { this.ConsigneeNotImporterReference = newValue; break; }
         }
     }
@@ -1943,10 +1943,10 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
-    get ShipperNotExporterReference() { return this.EntityPM.ShipperNotExporterReference; }
-    set ShipperNotExporterReference(value: string) {
-        if (this.EntityPM.ShipperNotExporterReference != value) {
-            this.EntityPM.ShipperNotExporterReference = value;
+    get ShipperNotExporterReference1() { return this.EntityPM.ShipperNotExporterReference1; }
+    set ShipperNotExporterReference1(value: string) {
+        if (this.EntityPM.ShipperNotExporterReference1 != value) {
+            this.EntityPM.ShipperNotExporterReference1 = value;
         }
     }
 
@@ -1968,6 +1968,7 @@ export class PartnerItem extends BaseComponent {
             case "REAGT":
             case "CSTMR":
             case "NOTF1":
+            case "SHPNT":
                 {
                     myResult = true;
                 }
@@ -1983,6 +1984,8 @@ export class PartnerItem extends BaseComponent {
             case "CSTMR": { return "CustomerReference2"; }
             case "REAGT": { return "ReleasingAgentReference2"; }
             case "NOTF1": { return "Notify1Reference2"; }
+            case "SHPNT": { return "ShipperNotExporterReference2"; }
+
             default: { return null; }
         }
     }
@@ -1994,6 +1997,8 @@ export class PartnerItem extends BaseComponent {
             case "CSTMR": { return this.CustomerReference2; }
             case "REAGT": { return this.ReleasingAgentReference2; }
             case "NOTF1": { return this.Notify1Reference2; }
+            case "SHPNT": { return this.ShipperNotExporterReference2; }
+
             default: { return null; }
         }
     }
@@ -2005,6 +2010,8 @@ export class PartnerItem extends BaseComponent {
             case "CSTMR": { this.CustomerReference2 = newValue; break; }
             case "REAGT": { this.ReleasingAgentReference2 = newValue; break; }
             case "NOTF1": { this.Notify1Reference2 = newValue; break; }
+            case "SHPNT": { this.ShipperNotExporterReference2; }
+
         }
     }
 
@@ -2050,6 +2057,13 @@ export class PartnerItem extends BaseComponent {
     set ReleasingAgentReference2(newValue: string) {
         if (this.EntityPM.ReleasingAgentReference2 != newValue) {
             this.EntityPM.ReleasingAgentReference2 = newValue;
+        }
+    }
+
+    get ShipperNotExporterReference2() { return this.EntityPM.ShipperNotExporterReference2; }
+    set ShipperNotExporterReference2(value: string) {
+        if (this.EntityPM.ShipperNotExporterReference2 != value) {
+            this.EntityPM.ShipperNotExporterReference2 = value;
         }
     }
 

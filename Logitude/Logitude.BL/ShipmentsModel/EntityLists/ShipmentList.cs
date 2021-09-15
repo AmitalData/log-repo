@@ -574,5 +574,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string GrossWeightUnitCode { get; set; }
         public string OperationalStatusId { get; set; }
         public string BillingStatusId { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
     }
 }

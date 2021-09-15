@@ -767,15 +767,13 @@
   </Column>
   <Column
     Name="GateIn"
-    Type="varchar"
-    Size="10">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="GateOut"
-    Type="varchar"
-    Size="10">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

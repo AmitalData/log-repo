@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="ShipmentMasterDatas">
+  <Sql Version="1">
+    <![CDATA[
+
+    update ShipmentMasterDatas set InlandDomesticFromTypeCode = 'PART', InlandDomesticToTypeCode = 'PART'
+    where $LastCounterWhere$ and  Id in (select Id from Shipments  where DirectionId = 'D' and TransportModeId = 'I')
+  
+    
+    ]]>
+  </Sql>
+</Script>

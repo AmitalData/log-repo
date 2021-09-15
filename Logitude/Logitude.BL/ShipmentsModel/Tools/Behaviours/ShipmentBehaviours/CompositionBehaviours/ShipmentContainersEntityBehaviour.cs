@@ -102,6 +102,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.OnCarriageFromPortId != this.initializer.EntityMasterData.OnCarriageFromPortId)
                 return true;
+            if (this.initializer.EntityPM.StatusId != this.initializer.EntityMasterData.StatusId)
+                return true;
 
             return false; 
         }

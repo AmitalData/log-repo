@@ -9,6 +9,7 @@ import { DWSubQueryPMService } from '../../../../Infrastructure/Services/Standar
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
@@ -89,6 +90,7 @@ export class DWAskUserFiltersComponent extends DWQueryBuilderBaseComponent imple
         this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator(this.LoadingMsg);
+            this.DWQueryData.ColumnsSort = (AppTool.IsNullOrEmpty(this.DWQueryData.ColumnsSort) || this.DWQueryData.Columns.some(e => e.Name === this.DWQueryData.ColumnsSort.split('[').pop().split(']')[0])) ? this.DWQueryData.ColumnsSort : null;
             this.GetRowDataRecursive();
         }
         else {

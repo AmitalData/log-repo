@@ -4172,12 +4172,21 @@ export class ShipmentPM {
         }
     }
 
-    private shipperNotExporterReference: string;
-    public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
-    public set ShipperNotExporterReference(newValue: string) {
-        if (this.shipperNotExporterReference != newValue) {
-            this.shipperNotExporterReference = newValue;
-            this.MarkAsDirty("ShipperNotExporterReference");
+    private shipperNotExporterReference1: string;
+    public get ShipperNotExporterReference1() { return this.shipperNotExporterReference1; }
+    public set ShipperNotExporterReference1(newValue: string) {
+        if (this.shipperNotExporterReference1 != newValue) {
+            this.shipperNotExporterReference1 = newValue;
+            this.MarkAsDirty("ShipperNotExporterReference1");
+        }
+    }
+
+    private shipperNotExporterReference2: string;
+    public get ShipperNotExporterReference2() { return this.shipperNotExporterReference2; }
+    public set ShipperNotExporterReference2(newValue: string) {
+        if (this.shipperNotExporterReference2 != newValue) {
+            this.shipperNotExporterReference2 = newValue;
+            this.MarkAsDirty("ShipperNotExporterReference2");
         }
     }
 

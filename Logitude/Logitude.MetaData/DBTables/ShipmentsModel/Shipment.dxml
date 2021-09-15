@@ -3254,6 +3254,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipperNotExporterReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperNotExporterReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

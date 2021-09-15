@@ -1989,6 +1989,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\SystemEnvironmentService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />
