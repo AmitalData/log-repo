@@ -10,7 +10,7 @@ h1{
     margin: 0;
     padding: 0;
     width: 170px;
-    background-color: var(--secondaryColor);
+    background-color: #FFF;
     position: fixed;
     height: 100%;
     overflow: auto;

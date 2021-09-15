@@ -518,14 +518,23 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     }
 
-    OpenMessageWindow(references) {
+    OpenReferencesMessageWindow(references, isMobile: boolean) {
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: references.slice(1, references.length + 1).join("\n"),
+                description: isMobile ? references.join("\n") : references.slice(4, references.length + 1).join("\n"),
             }
         });
-    } 
+    }
+
+    OpenExceptionMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Exception',
+                description: messageDescription,
+            }
+        });
+    }
 
     GetModeIcon(mode: string)
     {
