@@ -90,7 +90,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingMaster");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomFileNumber");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber", "Forward Customs Declaration No");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipperName");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingConsigneeName");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber");
@@ -226,7 +226,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
 
 
-        private static void AddNewRecord(DataRow tableRow, DataTable dataTable, string coulmnName)
+        private static void AddNewRecord(DataRow tableRow, DataTable dataTable, string coulmnName, string referenceTypeName = null)
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
@@ -240,7 +240,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     TableRow = tableRow,
 
                 };
-                AddNewReference(ReferencecArgs);
+
+                if(referenceTypeName == null)
+                    AddNewReference(ReferencecArgs);
+                else
+                    AddNewReference(ReferencecArgs, referenceTypeName);
+
             }
         }
 
@@ -251,6 +256,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
             TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
             TableRow1.SetField("ReferenceType", GetReferenceTypeFromCoulmnName(referencecArgs.CoulmnName));
+            SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
+            if (!IsNullOrEmpty(TableRow1, "SearchFields"))
+                referencecArgs.DataTable.Rows.Add(TableRow1);
+        }
+        private static void AddNewReference(ReferencecArgs referencecArgs,string typeName)
+        {
+            DataRow TableRow1 = referencecArgs.DataTable.NewRow();
+            TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
+            TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
+            TableRow1.SetField("ReferenceType", typeName);
             SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
             if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                 referencecArgs.DataTable.Rows.Add(TableRow1);

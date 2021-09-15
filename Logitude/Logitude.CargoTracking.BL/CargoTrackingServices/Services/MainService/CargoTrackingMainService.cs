@@ -18,7 +18,9 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
  
@@ -542,9 +544,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                                        Environment.NewLine + "Erros: " + exception.Message +
                                        Environment.NewLine + "Stack Trace: " + exception.StackTrace +
                                        Environment.NewLine;
-       
+
+
+            if (RecordUpdated.ErrorLogs == null)
+                RecordUpdated.ErrorLogs = ErrorsLog;
+
             if (!RecordUpdated.ErrorLogs.Contains(ErrorsLog))
                 RecordUpdated.ErrorLogs += ErrorsLog;
+
         }
 
         private void SetAutomaticLastUpdateDateAfterWriteData(BulkDataPreperation bulkDataPreperation)
@@ -567,9 +574,40 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             bulkCopy.BulkCopyTimeout = (int)ServiceHelper.TimeOut;
             bulkCopy.EnableStreaming = true;
             bulkCopy.BatchSize = 100000;
-            bulkCopy.WriteToServer(bulkDataPreperation.SelectedDataTable);
+
+            try
+            {
+                bulkCopy.WriteToServer(bulkDataPreperation.SelectedDataTable);
+
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("Received an invalid column length from the bcp client for colid"))
+                    ThrowColumnWidthValidation(bulkCopy, ex);
+                throw ex;
+            }
             bulkCopy.Close();
         }
+
+        private static void ThrowColumnWidthValidation(SqlBulkCopy bulkCopy, SqlException ex)
+        {
+            string pattern = @"\d+";
+            Match match = Regex.Match(ex.Message.ToString(), pattern);
+            var index = Convert.ToInt32(match.Value) - 1;
+
+            FieldInfo fi = typeof(SqlBulkCopy).GetField("_sortedColumnMappings", BindingFlags.NonPublic | BindingFlags.Instance);
+            var sortedColumns = fi.GetValue(bulkCopy);
+            var items = (Object[])sortedColumns.GetType().GetField("_items", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(sortedColumns);
+
+            FieldInfo itemdata = items[index].GetType().GetField("_metadata", BindingFlags.NonPublic | BindingFlags.Instance);
+            var metadata = itemdata.GetValue(items[index]);
+
+            var column = metadata.GetType().GetField("column", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(metadata);
+            var length = metadata.GetType().GetField("length", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(metadata);
+            var message = (String.Format("Data copy failed: Column {0} contains data with a length greater than: {1}", column, length));
+            throw new ApplicationException(message);
+        }
+
         private void MapCargoTrackingDate(SqlBulkCopy bulkCopy,
                         BulkDataPreperation bulkDataPreperation, 
                         bool isFromInnerCargoTrackingTable = false)
