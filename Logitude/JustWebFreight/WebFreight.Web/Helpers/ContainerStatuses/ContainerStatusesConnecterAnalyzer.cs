@@ -1092,13 +1092,13 @@ namespace WebFreight.Web.Helpers.Analyzers
                 {
                     eventData = todatDate;
                 }
+
                 if (package.LastStatusDate == null)
                 {
                     package.LastStatusCode = container_status;
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
                 }
                 else if (eventData > package.LastStatusDate)
                 {
@@ -1106,7 +1106,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
                 }
             }
         }
@@ -1919,7 +1918,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             return null;
         }
 
-        bool isSavingShipment = false;
         private void UpdateShipment()
         {
             if (FeatureToggleHelper.HasFeatureToggle("OIU", this.logitudeTenant.Value))
@@ -1994,90 +1992,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void StartProcessingUpdateShipment()
         {
-            isSavingShipment = false;
-            this.UpdatePackage();
-
-            List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
-            if (shipmentContainers.Count() == 1)
-            {
-                shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                this.UpdateShipmentDates(shipmentContainers.FirstOrDefault());
-                isSavingShipment = true;
-            }
-
-            else
-            {
-                List<Container> nullValuesContainers = shipmentContainers.Where(d => d.MainCarriageATA == null && d.MainCarriageATD == null
-                && d.MainCarriageETA == null && d.MainCarriageETD == null
-                && string.IsNullOrEmpty(d.DepartureLocation) && string.IsNullOrEmpty(d.DestinationLocation)).ToList();
-
-                shipmentContainers = shipmentContainers.Except(nullValuesContainers).ToList();
-                List<ContainerGroup> shipmentContainers_grouped = this.GetShipmentContainersGrouped(shipmentContainers);
-
-                if (shipmentContainers_grouped != null && shipmentContainers_grouped.Count() == 1)
-                {
-                    shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                    this.UpdateShipmentDates(shipmentContainers.FirstOrDefault());
-                    isSavingShipment = true;
-                }
-            }
-
-            if (isSavingShipment)
-            {
-                this.SaveShipment(shipmentPM);
-            }
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            this.UpdatePackage();            
+            this.UpdateShipmentDates();
+            this.SaveShipment(shipmentPM);            
         }
-        private List<ContainerGroup> GetShipmentContainersGrouped(List<Container> shipmentContainers)
+        private void UpdateShipmentDates()
         {
-            List<ContainerGroup> shipmentContainers_grouped = (from s in shipmentContainers
-                                          group s by new
-                                          {
-                                              s.DepartureLocation,
-                                              s.DestinationLocation,
-                                              s.MainCarriageETD,
-                                              s.MainCarriageETA,
-                                              s.MainCarriageATD,
-                                              s.MainCarriageATA,
-                                          } into m
-                                          select new ContainerGroup
-                                          {
-                                              MainCarriageETD = m.Key.MainCarriageETD,
-                                              MainCarriageETA = m.Key.MainCarriageETA,
-                                              MainCarriageATD = m.Key.MainCarriageATD,
-                                              MainCarriageATA = m.Key.MainCarriageATA,
-                                              GroupList = m.ToList(),
-                                          }).ToList();
-
-            return shipmentContainers_grouped;
+            this.UpdatePOLDates();
+            this.UpdatePODDates();            
         }
-
-        //private void UpdateContainersException(List<Container> shipmentContainers, bool sameConatiner)
-        //{
-        //    foreach (Container item in shipmentContainers)
-        //    {
-        //        item.HasContainerException = false;
-
-        //        if (!sameConatiner && item.ContainerNumber != container_number)
-        //        {
-        //            if (item.DepartureLocation != departureLocation || item.DestinationLocation != destinationLocation
-        //                || item.MainCarriageATA != ComputeMainCarriageATA()
-        //                || item.MainCarriageATD != ComputeMainCarriageATD()
-        //                || item.MainCarriageETA != ComputeMainCarriageETA()
-        //                || item.MainCarriageETD != ComputeMainCarriageETD())
-        //            {
-        //                item.HasContainerException = true;
-        //            }
-        //        }
-
-        //        containerRepository.Update(item);
-        //    }
-        //}
-        private void UpdateShipmentDates(Container container)
-        {
-            this.UpdatePOLDates(container);
-            this.UpdatePODDates(container);            
-        }
-        private void UpdatePOLDates(Container container)
+        private void UpdatePOLDates()
         {
             if (POLShipmentUpdateIndicator == "Pre Carriage")
             {
@@ -2100,7 +2025,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-        private void UpdatePODDates(Container container)
+        private void UpdatePODDates()
         {
             if (PODShipmentUpdateIndicator == "On Carriage")
             {
