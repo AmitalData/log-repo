@@ -90717,7 +90717,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -90768,7 +90768,7 @@
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
+    AllowedinAutomationConditions="true"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
@@ -99024,6 +99024,22 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;CustomsClearanceDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;CustomsClearanceDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Direct&quot;"
@@ -100322,7 +100338,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Notify1Reference2&quot;"
         FieldName="&quot;Notify1Reference2&quot;"
@@ -100337,7 +100353,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ShipperNotExporterReference1&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -100363,6 +100379,22 @@
         IsMulti="false"
         FieldsDataType="&quot;Text&quot;"
         IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;CustomsClearanceDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;CustomsClearanceDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
@@ -102098,6 +102130,22 @@
         IsMulti="false"
         FieldsDataType="&quot;Text&quot;"
         IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;CustomsClearanceDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;CustomsClearanceDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
