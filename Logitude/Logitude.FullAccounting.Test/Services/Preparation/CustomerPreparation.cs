@@ -20,7 +20,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         {
             var partnerParameters = GetPartnerParameters();
             FullAccountingData.CustomerId = DataPreparation.GetPartnerId(partnerParameters);
-            CheckConnectWithGLAccount(FullAccountingData.CustomerId);
+            FullAccountingData.CustomerGLAccountId = ConnectWithGLAccount(FullAccountingData.CustomerId);
         }
         
         private PartnerParameters GetPartnerParameters()
@@ -33,20 +33,24 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 TypeCode = "CS"
             };
         }
-        private void CheckConnectWithGLAccount(string customerId)
+        private string ConnectWithGLAccount(string customerId)
         {
             var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(customerId), UserTenant.Token)?.Data;
             if (string.IsNullOrEmpty(customer.Card?.GLAccountId))
             {
-                ConnectWithGLAccount(customer);
+                return ConnectWithGLAccount(customer);
+            }
+            else
+            {
+                return customer.Card.GLAccountId;
             }
         }
 
-        private void ConnectWithGLAccount(CustomerPM customer)
+        private string ConnectWithGLAccount(CustomerPM customer)
         {
             var account = CreateGLAccountInstance(customer);
             var response = APICaller.CallPost<GLAccountPM>(account, Urls.GLAccountsController, UserTenant.Token);
-
+            return response.Data?.Id;
         }
         private GLAccountPM CreateGLAccountInstance(CustomerPM customer)
         {

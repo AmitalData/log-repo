@@ -11,12 +11,14 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
         public static string GLAccountsController = "GLAccounts";
+        public static string CashBooksController = "cashbooks";
         public static string JournalsController = "journals";
         public static string JournalActionTypesController = "JournalActionTypes";
         public static string BranchesController = "branches";
         public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
 
         public static string AutomaticReconcileMethodViewsByFilters = "AutomaticReconcileMethodViews/GetByFilters";
+        public static string CashBookViewsByFilters = "cashbookviews/getbyfilters";
         public static string JournalActionTypeViewsByFilters = "JournalActionTypeViews/GetByFilters";
         public static string BranchviewsByFilters = "branchviews/getbyfilters";
         public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";

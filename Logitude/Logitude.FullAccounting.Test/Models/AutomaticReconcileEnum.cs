@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Models
 {
-    public enum AutomaticReconcileEnum
+    public enum CashBookTypeCodeEnum
     {
-        OpenAmount = 1,
-        ReferenceDate = 2,
-        DueDate = 3,
-        AccountingDate = 4,
-        Reference1 = 5,
-        Reference2 = 6,
-        Reference3 = 7,
+        Cash = 1,
+        Cheques = 2
+        
 
     }
 }

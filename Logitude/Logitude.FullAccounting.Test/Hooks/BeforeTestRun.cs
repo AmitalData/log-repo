@@ -17,10 +17,9 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new ActoinPreparation().Prepare();
             new ChartOfAccountPreparation().Prepare();
             new AutomaticReconcilePreparation().Prepare();
-            new AccountPreparation().Prepare();
-            new CustomerPreparation().Prepare();
             new ChargesGroupPreparation().Prepare();
             new ChargeTypePreparation().Prepare();
+            new CashBookPreparation().Prepare();
         }
         
     }

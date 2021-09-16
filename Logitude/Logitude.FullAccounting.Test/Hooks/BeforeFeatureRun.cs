@@ -15,9 +15,6 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         [BeforeFeature("Pre-Prepare-Accounting")]
         public static void PrePrepareAccounting()
         {
-            new ActoinPreparation().Prepare();
-            new ChartOfAccountPreparation().Prepare();
-            new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
         }
         [BeforeFeature("Pre-Prepare-NewGLAccount")]
@@ -29,23 +26,13 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         [BeforeFeature("Pre-Prepare-ARIvoice")]
         public static void PrePrepareARIvoice()
         {
-            new ActoinPreparation().Prepare();
-            new ChartOfAccountPreparation().Prepare();
-            new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
             new CustomerPreparation().Prepare();
-            new ChargesGroupPreparation().Prepare();
-            new ChargeTypePreparation().Prepare();
         }
         [BeforeFeature("Pre-Prepare-APIvoice")]
         public static void PrePrepareAPIvoice()
         {
-            new ActoinPreparation().Prepare();
-            new ChartOfAccountPreparation().Prepare();
-            new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
-            new ChargesGroupPreparation().Prepare();
-            new ChargeTypePreparation().Prepare();
             new VendorPreparation().Prepare();
         }
 
@@ -53,26 +40,21 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         [BeforeFeature("Pre-Prepare-GetARIvoice")]
         public static void PrePrepareGetARIvoice()
         {
-            new ActoinPreparation().Prepare();
-            new ChartOfAccountPreparation().Prepare();
-            new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
             new CustomerPreparation().Prepare();
-            new ChargesGroupPreparation().Prepare();
-            new ChargeTypePreparation().Prepare();
             new ARInvoicePreparation().Prepare();
         }
         [BeforeFeature("Pre-Prepare-GetAPIvoice")]
         public static void PrePrepareGetAPIvoice()
         {
-            new ActoinPreparation().Prepare();
-            new ChartOfAccountPreparation().Prepare();
-            new AutomaticReconcilePreparation().Prepare();
             new AccountPreparation().Prepare();
             new VendorPreparation().Prepare();
-            new ChargesGroupPreparation().Prepare();
-            new ChargeTypePreparation().Prepare();
             new APInvoicePreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-CrateARPayment")]
+        public static void PrePrepareCrateARPayment()
+        {
+
         }
 
 

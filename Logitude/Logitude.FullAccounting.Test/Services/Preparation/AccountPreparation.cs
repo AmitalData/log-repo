@@ -31,7 +31,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             FullAccountingData.GLAccountExpensesId = Create(ChartOfAccountsTypeEnum.Expenses);
         }
 
-        private string Create(ChartOfAccountsTypeEnum ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
+        public string Create(ChartOfAccountsTypeEnum ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
         {
             var gLAccount = CreateInstance(ChartOfAccountsTypeCode);
             var response = APICaller.CallPost<GLAccountPM>(gLAccount, Urls.GLAccountsController, UserTenant.Token);

@@ -27,5 +27,8 @@ namespace Logitude.FullAccounting.Test.Models
         public static string VendorId { get; internal set; }
         public static string VendorChartOfAccountId { get; internal set; }
         public static string APInvoiceId { get; internal set; }
+        public static string CashBookCash1 { get; internal set; }
+        public static string CashBookCheques1 { get; internal set; }
+        public static object CustomerGLAccountId { get; internal set; }
     }
 }
