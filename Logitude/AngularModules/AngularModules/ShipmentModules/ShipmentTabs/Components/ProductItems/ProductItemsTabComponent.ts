@@ -242,6 +242,11 @@ export class ProductItem extends BaseComponent {
                         this.HTSCode = htsCode.Code;
                         this.ApprovedByCustomer = htsCode.ApprovedByCustomer;
                     }
+
+                    else {
+                        this.HTSCode = null;
+                        this.ApprovedByCustomer = false;
+                    }
                 }
             });
         }
