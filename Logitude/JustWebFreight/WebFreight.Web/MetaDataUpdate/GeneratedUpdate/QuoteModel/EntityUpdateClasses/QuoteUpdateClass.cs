@@ -78,8 +78,7 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteUpdateClass
-   {  		
-		public const string HashString = "106e04f68863d7c9dbfd4b4bfd5ebab7";
+   {  		 
 		public const string HashString = "bdf00bbce72eeffdffb8897cde0d60ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
