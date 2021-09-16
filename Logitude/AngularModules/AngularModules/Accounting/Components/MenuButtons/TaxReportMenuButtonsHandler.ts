@@ -25,7 +25,7 @@ export class TaxReportMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "TaxReport"
     private fullAccountingSettingListService: FullAccountingSettingListService;
-    _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
+    taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -71,12 +71,30 @@ export class TaxReportMenuButtonsHandler {
                             
                             break;
                         }
+                        case MenuButton.ReturnToDraft: {
+
+                            this.SetReturnToDraftButtonStatus(button);
+                        }
                     }
                 }
             }
         }
 
         return menuButtons;
+    }
+    private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
+        this.taxReportExtendedPMService.GetReturnToDraftButtonStatus(this.EntityPM.CreateDate).subscribe((response: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response != null) {
+                if (!response.Result.Result && this.EntityPM.StatusCode == TaxReportStatus.Transmitted) {
+                    button.IsDisabled = false;
+                }
+                else {
+                    button.IsDisabled = true;
+                }
+            }
+         
+        });
     }
     private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
         this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((response: any) => {
@@ -138,8 +156,21 @@ export class TaxReportMenuButtonsHandler {
                     logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
                     break;
                 }
+            case MenuButton.ReturnToDraft: // Cancel
+                {
+                    this.EntityPM.StatusCode = TaxReportStatus.Darft;
+                    this.entityArgs.EditComponent.SaveChanges();
+                    this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        } else {
+                            this.EntityPM.StatusCode = TaxReportStatus.Transmitted;
+                        }
+                    });
 
-            case ManuButton.Upload: // upload 
+                    break;
+                }
+            case MenuButton.Upload: // upload 
                 {
                     //this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
@@ -172,7 +203,14 @@ export class TaxReportMenuButtonsHandler {
     }
 }
 
-enum ManuButton {
+enum MenuButton {
    
-    Upload ="UPLD",
+    Upload = "UPLD",
+    ReturnToDraft ="RTDR",
+}
+
+enum TaxReportStatus {
+
+    Darft = "D",
+    Transmitted = "T",
 }
