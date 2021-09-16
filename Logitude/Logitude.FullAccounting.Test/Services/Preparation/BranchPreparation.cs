@@ -32,7 +32,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
-            var response = APICaller.CallGetByFilters<List<BranchPM>>(Urls.JournalActionTypeViewsByFilters, UserTenant.Token, filter);
+            var response = APICaller.CallGetByFilters<List<BranchPM>>(Urls.BranchviewsByFilters, UserTenant.Token, filter);
             return response.Data?.FirstOrDefault()?.Id;
         }
 

@@ -37,6 +37,11 @@ namespace Logitude.FullAccounting.Test.Models.Builders
             apInvoicePM.BranchId = MapBranchCode(code);
             return this;
         }
+        public APInvoiceBuilder VATNumber(string vatNumber)
+        {
+            apInvoicePM.VATNumber = vatNumber;
+            return this;
+        }
         
         public APInvoiceBuilder LocalCurrencyId(string localCurrencyId)
         {
@@ -132,6 +137,11 @@ namespace Logitude.FullAccounting.Test.Models.Builders
             apInvoicePM.DueDate = dueDate;
             return this;
         }
+        public APInvoiceBuilder AccountingDate(DateTime accountingDate)
+        {
+            apInvoicePM.AccountingDate = accountingDate;
+            return this;
+        }
 
         public APInvoiceBuilder InvoiceCurrencyCode(string invoiceCurrencyCode)
         {
@@ -169,9 +179,14 @@ namespace Logitude.FullAccounting.Test.Models.Builders
                 apInvoicePM.SubTotalInLocalCurrency += item.LocalCurrencyAmount;
                 apInvoicePM.AmountDue += item.InvoiceCurrencyAmount;
                 apInvoicePM.AmountDueInLocalCurrency += item.LocalCurrencyAmount;
+                apInvoicePM.InvoiceExpectedAmount += item.LocalCurrencyAmount;
                 apInvoicePM.AmountInLocalCurrency += item.LocalCurrencyAmount;
                 apInvoicePM.AmountInInvoiceCurrency += item.InvoiceCurrencyAmount;
                 apInvoicePM.AmountDueInProfitCurrency += item.ProfitCurrencyAmount;
+                apInvoicePM.AmountInProfitCurrency += item.ProfitCurrencyAmount;
+                apInvoicePM.AmountInProfitCurrency_Summary += item.ProfitCurrencyAmount;
+                apInvoicePM.AmountInInvoiceCurrency_Summary += item.InvoiceCurrencyAmount;
+                apInvoicePM.AmountInLocalCurrency_Summary += item.LocalCurrencyAmount;
             }
             return this;
         }
@@ -198,9 +213,16 @@ namespace Logitude.FullAccounting.Test.Models.Builders
                 AmountDueInLocalCurrency = 0,
                 AmountDueInProfitCurrency = 0,
                 AmountInInvoiceCurrency = 0,
+                AmountInProfitCurrency = 0,
+                AmountInInvoiceCurrency_Summary = 0,
+                AmountInLocalCurrency_Summary = 0,
+                AmountInProfitCurrency_Summary = 0,
+                InvoiceExpectedAmount = 0,
+                RefundAmount = 0,
                 SubTotalInLocalCurrency = 0,
                 AmountInLocalCurrency = 0,
-                SubTotalInInvoiceCurrency = 0
+                SubTotalInInvoiceCurrency = 0,
+                StatusCode = "WA"
 
             };
             return this;

@@ -54,7 +54,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 DisplayNumber = vendor.Id,
                 NewGLAccountCardId = vendor.Card.Id,
                 IsMultiCurrency = false,
-                AccountTypeCode = (int)GLAccountTypeEnum.Client + "",
+                AccountTypeCode = (int)GLAccountTypeEnum.Vendor + "",
                 CurrencyId = BillingData.CurrencyNISId,
                 Tenant = UserTenant.Tenant,
                 AutomaticReconcileId = FullAccountingData.AutomaticReconcile_A,
