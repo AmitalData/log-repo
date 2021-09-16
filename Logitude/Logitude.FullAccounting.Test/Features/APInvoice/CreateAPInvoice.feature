@@ -4,8 +4,8 @@ Feature: Create AP Invoice
 
 Scenario: Create AP Invoice
 	Given I have the following AP invoice lines:
-		| Description  | VatType | VatPercentage |  InvoiceCurrencyAmount | ChargesType | ProfitCurrencyAmount | LocalCurrencyAmount | ForiegnCurrencyAmount |
-		| SpecFlowTest | Zero    | 0             |  1                     | ITMS        | 2.12                 | 1                   | 1                     |
+		| Description  | VatType | ForiegnCurrencyIdByCode | ForiegnExchangeRate | VatPercentage | InvoiceCurrencyAmount | ChargesType | ProfitCurrencyAmount | LocalCurrencyAmount | ForiegnCurrencyAmount |
+		| SpecFlowTest | Zero    | NIS                     | 1                   | 0             | 1                     | ITMS        | 2.12                 | 1                   | 1                     |
 	And a AP invoice with the following properties
 		| property                    | Value         |
 		| Vendor                      | Vendor1       |
@@ -16,5 +16,6 @@ Scenario: Create AP Invoice
 		| ProfitCurrencyExchangeRate  | 1             |
 		| DueDate                     | Tomorrow      |
 		| InvoiceNumber               | Random number |
+		| VATNumber                   | 1             |
 	When create AP invoice
 	Then the AP invoice should create successfully

@@ -114,6 +114,8 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Description",
                             "VatType",
+                            "ForiegnCurrencyIdByCode",
+                            "ForiegnExchangeRate",
                             "VatPercentage",
                             "InvoiceCurrencyAmount",
                             "ChargesType",
@@ -123,6 +125,8 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "SpecFlowTest",
                             "Zero",
+                            "NIS",
+                            "1",
                             "0",
                             "1",
                             "ITMS",
@@ -159,13 +163,16 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "InvoiceNumber",
                             "Random number"});
+                table2.AddRow(new string[] {
+                            "VATNumber",
+                            "1"});
 #line 9
  testRunner.And("a AP invoice with the following properties", ((string)(null)), table2, "And ");
 #line hidden
-#line 19
+#line 20
  testRunner.When("create AP invoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 21
  testRunner.Then("the AP invoice should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

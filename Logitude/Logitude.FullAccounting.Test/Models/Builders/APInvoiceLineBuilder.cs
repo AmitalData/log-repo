@@ -35,13 +35,29 @@ namespace Logitude.FullAccounting.Test.Models.Builders
             apInvoiceLinePM.LocalCurrencyAmount = localCurrencyAmount;
             return this;
         }
-       
+        public APInvoiceLineBuilder ForiegnCurrencyIdByCode(string Code)
+        {
+            apInvoiceLinePM.ForiegnCurrencyId = MapCurrencyCode(Code);
+            return this;
+        }
+        
         
         public APInvoiceLineBuilder InvoiceCurrencyAmount(double? invoiceCurrencyAmount)
         {
             apInvoiceLinePM.InvoiceCurrencyAmount = invoiceCurrencyAmount;
             return this;
         }
+        public APInvoiceLineBuilder ForiegnExchangeRate(double? foriegnExchangeRate)
+        {
+            apInvoiceLinePM.ForiegnExchangeRate = foriegnExchangeRate;
+            return this;
+        }
+        public APInvoiceLineBuilder VendorId(string vendorId)
+        {
+            apInvoiceLinePM.VendorId = vendorId;
+            return this;
+        }
+
         public APInvoiceLineBuilder ProfitCurrencyAmount(double? profitCurrencyAmount)
         {
             apInvoiceLinePM.ProfitCurrencyAmount = profitCurrencyAmount;

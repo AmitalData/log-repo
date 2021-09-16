@@ -37,6 +37,8 @@ namespace Logitude.FullAccounting.Test.Services
                 .ProfitCurrencyAmount((double)line.ProfitCurrencyAmount)
                 .LocalCurrencyAmount((double)line.LocalCurrencyAmount)
                 .ForiegnCurrencyAmount((double)line.ForiegnCurrencyAmount)
+                .ForiegnCurrencyIdByCode((string)line.ForiegnCurrencyIdByCode)
+                .ForiegnExchangeRate(1)
                 .Build();
         }
         public APInvoicePM Create(Table table, List<APInvoiceLinePM> apInvoiceLines)
@@ -47,7 +49,9 @@ namespace Logitude.FullAccounting.Test.Services
                 .BranchIdByCode((string)arInvoice.Branch)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .IsGeneralInvoice(true)
-                .InvoiceNumber(arInvoice.InvoiceNumber.ToString())
+                .AccountingDate(DateTime.Now)
+                .VATNumber((string)arInvoice.VATNumber.ToString())
+                .InvoiceNumber(DateTime.Now.Ticks.ToString())
                 .InvoiceCurrencyIdByCode((string)arInvoice.InvoiceCurrency)
                 .InvoiceCurrencyExchangeRate((double)arInvoice.InvoiceCurrencyExchangeRate)
                 .PaymentTermId(BillingData.PaymentTermCashId)
