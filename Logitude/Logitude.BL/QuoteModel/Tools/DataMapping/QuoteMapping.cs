@@ -169,7 +169,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
             entityPoco.IsChargesByVAT = entityPM.IsChargesByVAT;
             entityPoco.IsQuoteDataExternal = entityPM.IsQuoteDataExternal;
-            //entityPoco.IsQuoteDocumentExternal = entityPM.IsQuoteDocumentExternal;
             entityPoco.LastStageDate = entityPM.LastStageDate;
             entityPoco.QuotationSections = entityPM.QuotationSections;
             entityPoco.NotifyId = entityPM.NotifyId;
@@ -205,6 +204,16 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
             entityPoco.DescriptionRightToLeft = entityPM.DescriptionRightToLeft;
             entityPoco.IsMultiCurrency = entityPM.IsMultiCurrency;
+            entityPoco.InlandDomesticFromZipCode = entityPM.InlandDomesticFromZipCode;
+            entityPoco.InlandDomesticToZipCode = entityPM.InlandDomesticToZipCode;
+            entityPoco.InlandDomesticFromCity = entityPM.InlandDomesticFromCity;
+            entityPoco.InlandDomesticToCity = entityPM.InlandDomesticToCity;
+            entityPoco.InlandDomesticFromCountryId = entityPM.InlandDomesticFromCountryId;
+            entityPoco.InlandDomesticToCountryId = entityPM.InlandDomesticToCountryId;
+            entityPoco.InlandDomesticFromTypeCode = entityPM.InlandDomesticFromTypeCode;
+            entityPoco.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
+            entityPoco.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
+            entityPoco.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
 
             if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
             {

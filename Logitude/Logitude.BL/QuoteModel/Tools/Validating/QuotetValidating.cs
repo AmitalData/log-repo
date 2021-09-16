@@ -389,9 +389,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                 if (isInlandDomestic)
                 {
-                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-                    AddDomesticAddress(iDomesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
-                    AddDomesticAddress(iDomesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+                    List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
 
                     if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
                     {
@@ -423,26 +421,53 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
-        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        private static List<DomesticCountry> GetInlandDomesticCountries(QuotePM entityPM)
         {
-            if (!string.IsNullOrEmpty(iPortId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
-                {
-                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+            List<DomesticCountry> domesticCountries = new List<DomesticCountry>();
 
-                    if (iPort != null)
+            switch (entityPM.InlandDomesticFromTypeCode)
+            {
+                case "PART":
                     {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iPort.Id,
-                            CountryId = iPort.CountryId,
-                            CountryIsEC = iPort.CountryEC,
-                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
-                        });
+                        AddDomesticAddress(domesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
+                        break;
                     }
-                }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.FromPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
+                        break;
+                    }
             }
+
+            switch (entityPM.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(domesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.ToPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticToCountryId, entityPM.Tenant);
+                        break;
+                    }
+            }
+
+            return domesticCountries;
         }
         private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
         {
@@ -457,10 +482,53 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iAddress.Id,
+                            Id = iAddress.Id + "A",
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iCountryId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
+                {
+                    CountryRepository countryRepository = new CountryRepository(iTenant);
+                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
+
+                    if (iCountry != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iCountry.Id + "C",
+                            CountryId = iCountry.Id,
+                            CountryIsEC = iCountry.EC,
+                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id + "P",
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
                         });
                     }
                 }
