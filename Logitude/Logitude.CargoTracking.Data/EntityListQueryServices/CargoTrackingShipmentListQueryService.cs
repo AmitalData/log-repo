@@ -669,7 +669,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 Done = true,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation =true
+                IsEstimation =false
             });
 
             milestones.Add(new Milestone()
