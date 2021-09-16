@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Documents">
 
-    <Sql Version="25">
+    <Sql Version="30">
     <![CDATA[
     
 update Documents set CalculatedFileName = Documents.FileName
