@@ -122,7 +122,7 @@ h1{
     border-radius: 2px;
     box-shadow: none;
     border: none;
-    width: 45px;
+    width: 67px;
     font-size: 16px;
     font-weight: 500;
     margin-left: 10px;
@@ -373,7 +373,7 @@ h1{
     box-shadow: none;
     border: 1px solid #858788;
     border-radius: 5px;
-    width: 45px;
+    width: 67px;
     font-size: 14px;
     font-weight: 600;
     margin-left: 10px;
@@ -526,14 +526,13 @@ h1{
 }
 
     .actions-buttons{
-        position: absolute;
-        right: 0;
+        display: inline-block;
         top: 15px;
+        height: 27px;
     }
     .actions-buttons > div{
         display: inline-block;
         cursor: pointer;
-        margin: 0 15px;
         float: right;
     }
 
@@ -815,26 +814,27 @@ h1{
     padding-left: 9px;
 }
 
-.multipe-select:not(:first-of-type) {
-    margin-left: 20px;
+.multipe-select {
+    margin-right: 20px;
 }
 
 .has-exception-checkbox-filter {
     display: inline-block;
-    width: 150px;
+    width: 220px !important;
     background: #FFF;
     height: 38px;
     border-radius: 6px;
     border: 1px solid var(--MainColor);
     top: 8px;
     position: relative;
-    margin-left: 20px;
     box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%) !important;
+    color: rgba(0,0,0,.6);
+    margin-right: 20px;
 }
 .has-exception-checkbox-filter CheckBox{
     display: block;
     margin-top: 10px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 ::ng-deep .mat-option.ATD{

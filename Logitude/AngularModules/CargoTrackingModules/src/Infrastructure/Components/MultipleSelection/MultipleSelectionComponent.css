@@ -28,7 +28,7 @@ mat-option-text {
 
 ::ng-deep .mat-form-field-flex{
     border: 1px solid var(--MainColor);
-    width: 170px !important;
+    width: 220px !important;
 }
 
 ::ng-deep .mat-form-field-underline{

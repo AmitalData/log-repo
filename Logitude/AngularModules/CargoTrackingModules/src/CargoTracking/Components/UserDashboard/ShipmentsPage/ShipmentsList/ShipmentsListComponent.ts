@@ -90,7 +90,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     ngAfterViewInit(): void
     {
-        this.setSortFilterValues();
         this.LoadScreenData();
         this.SetShipmentsScrollPosition();
     }
@@ -266,6 +265,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     private setSortFilterValues()
     {
+        this.sortField = '';
         if(SessionInfo.ShipmentsFilters) {
             this.sortField = SessionInfo.ShipmentsFilters.SortFieldName;
             this.isSortDescending = SessionInfo.ShipmentsFilters.SortDescending;
@@ -273,7 +273,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
         var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
         var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
-        var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'Desc');
+        var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
         
         if(this.sortField == 'ATA') {
             AtdSelectOption.deselect();
@@ -282,10 +282,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             AtdSelectOption.select();
             AtaSelectOption.deselect();
         }
-        if(this.isSortDescending) {
+        if(this.isSortDescending == 'DESC') {
             AscSelectOption.deselect();
             DescSelectOption.select();
-        } else {
+        } else if(this.isSortDescending == 'ASC'){
             DescSelectOption.deselect();
             AscSelectOption.select();
         }
@@ -395,6 +395,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
             SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
+            console.log('ShipmentsFilters', SessionInfo.ShipmentsFilters)
             
             this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
         }
@@ -420,7 +421,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     references: string[];
     sortField: string = '';
-    isSortDescending?: boolean = true;
+    isSortDescending: string = '';
     hasException: boolean = false;
     private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
     {
@@ -431,14 +432,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.InitiateShipmentDataSource(shipmentFilters);
             this.ReloadShipments(shipmentFilters);
         }
-    }
-
-    parseCurrentMilestoneExceptionDate(){
-        var date = '21/01/2021 00:00:00'
-        var dateParts = date.split("/");
-        var dateObject = new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
-        console.log(dateObject)
-        return dateObject;
     }
 
     private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters)
@@ -532,31 +525,31 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     sortBySelectionChangedHandler(event) {
+        console.log(this.sortField + ' - ' + this.isSortDescending)
         const index = this.sortByOptions.findIndex(d => d.Code == event);
         var selectedCode = '';
-        this.sortField = '';
         switch(index) {
             case 0: {
                 selectedCode = this.sortByOptions[1].Code;
-                this.sortField = event;
+                this.sortField = this.sortField === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
                 break;
             }
             case 1:{
                 selectedCode = this.sortByOptions[0].Code;
-                this.sortField = event;
+                this.sortField = this.sortField === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
                 break;
             }
             case 2:{
                 selectedCode = this.sortByOptions[3].Code;
-                this.isSortDescending = false;
+                this.isSortDescending = this.isSortDescending === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
                 break;
             }
             case 3:{
                 selectedCode = this.sortByOptions[2].Code;
-                this.isSortDescending = true;
+                this.isSortDescending = this.isSortDescending === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
                 break;
             }
@@ -674,7 +667,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         new ToggleFilter('ATA', 'ATA', '', null),
         new ToggleFilter('ATD', 'ATD', '', null),
         new ToggleFilter('ASC', 'ASC', '', null),
-        new ToggleFilter('Desc', 'Desc', '', null),
+        new ToggleFilter('DESC', 'DESC', '', null),
     ];
 
     BuildToggleFilters(){
@@ -785,8 +778,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     SortMenuClicked(buttonCode: string)
     {
-        this.isSortDescending = buttonCode == "desc";
-        this.LoadScreenData();
+        // this.LoadScreenData();
     }
 
     lastClickedShipment: any;

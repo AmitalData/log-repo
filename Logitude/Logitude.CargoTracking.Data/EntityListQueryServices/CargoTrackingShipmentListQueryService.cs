@@ -504,10 +504,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> SortShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortDescending == true)
-                shipments = SortShipmentsDescending(shipmentFilters, shipments);
-            else
+            if (shipmentFilters.SortDescending == "ASC")
                 shipments = SortShipmentsAscending(shipmentFilters, shipments);
+            else
+                shipments = SortShipmentsDescending(shipmentFilters, shipments);
             return shipments;
         }
 

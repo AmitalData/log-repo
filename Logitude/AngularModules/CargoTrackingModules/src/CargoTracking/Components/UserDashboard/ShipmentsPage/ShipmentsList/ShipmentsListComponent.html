@@ -34,7 +34,7 @@
                     ({{filter.Count | number}})</li>
             </ul>
         </div>-->
-    <div class="hide-mobile">
+    <div class="hide-mobile" style="margin-left: 20px;">
         <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
         <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
         
@@ -42,12 +42,9 @@
             <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasException"></CheckBox>
         </div>
         <multiple-selection #sortByMultipleSelection class="multipe-select sort-by-multiple-selection" [MultipleSelectionList]="sortByOptions" [Title]="'Sort By'"  (SelectionChanged)="sortBySelectionChangedHandler($event)"> </multiple-selection>
-
-    </div>
-
         <div class="actions-buttons hide-mobile">
             <div (click)="OpenAdvancedFiltersSidebar()">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="24px" viewBox="0 0 20 24" version="1.1">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 20 24" version="1.1">
                     <title>1A845F15-4697-4185-B303-9C063716EB8A</title>
                     <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="White-label-2" transform="translate(-1764.000000, -130.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
@@ -60,6 +57,9 @@
                 <!-- <img src="./assets/images/icons/filter.svg" alt=" " /> -->
                 </div>
         </div>
+    </div>
+
+        
 
 
     </div>
