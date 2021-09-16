@@ -20,5 +20,10 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             InterestTransactionQueryService query = new InterestTransactionQueryService(tenant);
             return query.GetInterestTransactionPMByEntityId(entityId,tenant);
         }
+        public List<InterestTransactionPM> GetInterestTransactionsByPaymentId(string entityId, int tenant)
+        {
+            InterestTransactionQueryService query = new InterestTransactionQueryService(tenant);
+            return query.GetInterestTransactionsByPaymentId(entityId, tenant);
+        }
     }
 }
