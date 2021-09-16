@@ -10,5 +10,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface IInterestTransactionQueryServiceExt
     {
         InterestTransactionPM GetInterestTransactionPMByEntityId(string entityId, int tenant);
+        List<InterestTransactionPM> GetInterestTransactionsByPaymentId(string entityId, int tenant);
     }
 }
