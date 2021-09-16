@@ -6,10 +6,6 @@
 <div *ngIf="isLoading"> <br> Loading...</div>
 
 <div *ngIf="!isLoading" class="shipment-details-container">
-    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
-        <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
-    </div>
-
     <!-- Shipment Header -->
     <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
 
@@ -212,11 +208,33 @@
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-                <div>
-                    <div class="title">Incoterms</div>
-                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
+<!-- <div>
+            <div class="title">Customer Ref. &nbsp;&nbsp;&nbsp;<a *ngIf="HasReferences"
+                    (click)="OpenReferencesWindow(ShipmentReferences)"
+                    style="cursor: pointer;text-decoration: underline;">'See all'</a>
+            </div>
+            <ul *ngIf="showMoreReferences">
+                <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
+            </ul>
+            <ul *ngIf="!showMoreReferences">
+                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">{{ref}}</li>
+            </ul>
+        </div> -->
+                <div class="mobile-only">
+                    <div class="title">Customer Ref.</div>
+                    <div class="description">
+                        <span *ngFor="let item of ShipmentReferences, let i = index">
+                            <span *ngIf="i == 0">{{item}} </span>
+                        </span>
+                        <a *ngIf="HasReferences"
+                        (click)="OpenReferencesWindow(ShipmentReferences)"
+                        style="cursor: pointer;text-decoration: underline;">See all</a></div>
                 </div>
 
+                <div class="mobile-only">
+                    <div class="title">{{TitleOfCustomsOrForwarder}}</div>
+                    <div class="description">{{ValueOfCustomsOrForwarder}}</div>
+                </div>
                 <!-- ETD/ATD -->
                 <div>
                     <div class="title">
@@ -254,6 +272,11 @@
                             <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
                         </span>
                     </div>
+                </div>
+                
+                <div>
+                    <div class="title">Incoterms</div>
+                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
                 </div>
 
 
@@ -669,10 +692,13 @@
                     <div class="details-section">
                         <div class="row" style="margin-bottom: 5px;">
                             <div class="col-50 card-title">type</div>
-                            <div class="col-40 card-title">customs ref</div>
-                            <div class="col-10 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
+                            <div class="col-35 card-title">customs ref</div>
+                            <div class="col-15 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
                                 <a href="javascript:;" style="padding: 10px 3px 0px 13px;"><img
                                         src="./assets/images/icons/more.png" alt=""></a>
+
+                            <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
+
                             </div>
                         </div>
                         <div class="row">

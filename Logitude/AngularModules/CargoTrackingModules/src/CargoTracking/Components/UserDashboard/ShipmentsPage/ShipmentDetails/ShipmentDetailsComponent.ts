@@ -395,7 +395,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             for (let routing of this.ShipmentPM.ShipmentPickUps) {
                 this.AddTruckerPartnerCardIfCarrierIdExist(routing);
             }
-
         }
     }
    
@@ -1019,6 +1018,15 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 title: 'Exception',
                 date: messageDate,
                 description: messageDescription,
+            }
+        });
+    }
+
+    OpenReferencesWindow(references) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.join("\n"),
             }
         });
     }

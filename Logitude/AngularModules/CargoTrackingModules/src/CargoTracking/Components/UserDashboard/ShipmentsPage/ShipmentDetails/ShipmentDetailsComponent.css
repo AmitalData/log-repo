@@ -101,13 +101,13 @@ h1 {
     /* box-sizing: border-box; */
     /* margin: 0 50px; */
     display: inline-block;
-    padding: 15px 0px;
+    padding: 10px 0px;
     /* float: left; */
 }
 
     .slider .cards {
         width: 3000px;
-        height: 160px;
+        height: 120px;
         transition: margin-left 1s;
         text-align: left;
     }
@@ -159,7 +159,7 @@ h1 {
     color: #444444;
     border-radius: 5px;
     margin: 0 10px;
-    padding: 15px;
+    padding: 10px;
     box-shadow: 0px 0px 8px 0px #00000030;
 }
 
@@ -280,7 +280,7 @@ h1 {
         box-shadow: 0px 0px 8px 0px #00000025;
         color: rgb(66, 66, 66);
         background: var(--MainColor);
-        color: white;
+        color: black;
         border: none;
         cursor: pointer;
         margin-right: 20px;
@@ -350,7 +350,7 @@ h1 {
 
     .PanelsNavigator {
         width: 100%;
-        margin: 20px 0 0 0;
+        margin: 15px 0 0 0;
         overflow: auto;
         height: 60px;
     }
@@ -669,11 +669,11 @@ h1 {
 .col-50{
     width: 50%;
 }
-.col-40{
-    width: 40%;
+.col-35{
+    width: 35%;
 }
-.col-10{
-    width: 10%;
+.col-15{
+    width: 15%;
 }
 .text-end{
     text-align: end;
