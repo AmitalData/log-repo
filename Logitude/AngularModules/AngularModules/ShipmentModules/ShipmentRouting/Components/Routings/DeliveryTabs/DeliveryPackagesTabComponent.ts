@@ -218,12 +218,22 @@ export class DeliveryPackagesTabComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
+                    this.RemoveConnectedShipmentPackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
                     this.SetUIProperties();
                 }
             });
         }
     }
+
+    RemoveConnectedShipmentPackage(pickUpDeliveryPackagePM: ShipmentPickUpDeliveryPackagePM) {
+         var shipmentPackage = this.ShipmentPM?.ShipmentPackages?.find(p =>
+             (p.ContainerNumber == pickUpDeliveryPackagePM.ContainerNumber) && !AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerNumber)
+             && AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerEntityId))
+         if (shipmentPackage != null) {
+            this.ShipmentPM.RemovePackage(shipmentPackage);
+         }
+    } 
 
     CopyFromReleasesPackages() {
         var windowArgs: any = {};
