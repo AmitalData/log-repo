@@ -2789,6 +2789,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;RTDR&quot;"
+      ObjectTableName="&quot;TaxReport&quot;"
+      EnglishName="&quot;Return to Draft&quot;"
+      LocalName="&quot;החזר לטיוטה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -2821,6 +2834,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="2"
         LocalDefaultText="&quot;טעינת שורות&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;RTDR&quot;"
+        DefaultText="&quot;Return to Draft&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="3"
+        LocalDefaultText="&quot;החזר לטיוטה&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
