@@ -1,7 +1,6 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 
-@Component({
-    
+@Component({    
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -12,6 +11,7 @@ export class FieldTemplateComponent {
     public ObjectTableName: string = null;
     public SpotlightDataTemplate: string = null;
     public IsSpotLightTemplate: boolean = false;
+    public IsInlandDomestic: boolean = false;
     constructor() {
 
     }
@@ -25,6 +25,10 @@ export class FieldTemplateComponent {
 
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
+
+            if (this.Entity.DirectionId == 'D' && this.Entity.TransportModeId == "I") {
+                this.IsInlandDomestic = true;
+            }
         }
     }
 }

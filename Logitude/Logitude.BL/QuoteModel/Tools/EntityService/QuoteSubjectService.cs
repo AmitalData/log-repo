@@ -110,6 +110,29 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         }
         private void GetFromPartner()
         {
+            switch (entityPM.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        this.GetFromPartnerAddressData();
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        this.GetFromPort();
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        this.GetFromCasualAddressData();
+                        break;
+                    }
+            }
+        }
+        private void GetFromPartnerAddressData()
+        {
             if (!string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
             {
                 Address myAddress = iAddressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, tenant);
@@ -131,6 +154,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+        private void GetFromCasualAddressData()
+        {
+            if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromCity))
+            {
+                string field = entityPM.InlandDomesticFromCity;
+
+                if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromZipCode))
+                {
+                    field = string.IsNullOrEmpty(field) ? entityPM.InlandDomesticFromZipCode : field + " " + entityPM.InlandDomesticFromZipCode;
+                }
+
+                this.Append(field);
+            }
+        }
+
         private void GetToPort()
         {
             if (!string.IsNullOrEmpty(entityPM.ToPortId))
@@ -143,6 +181,29 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
         }
         private void GetToPartner()
+        {
+            switch (entityPM.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        this.GetToPartnerAddressData();
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        this.GetToPort();
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        this.GetToCasualAddressData();
+                        break;
+                    }
+            }            
+        }
+        private void GetToPartnerAddressData()
         {
             if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
             {
@@ -166,6 +227,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+        private void GetToCasualAddressData()
+        {
+            if (!string.IsNullOrEmpty(entityPM.InlandDomesticToCity))
+            {
+                string field = entityPM.InlandDomesticToCity;
+
+                if (!string.IsNullOrEmpty(entityPM.InlandDomesticToZipCode))
+                {
+                    field = string.IsNullOrEmpty(field) ? entityPM.InlandDomesticToZipCode : field + " " + entityPM.InlandDomesticToZipCode;
+                }
+
+                this.Append(field);
+            }
+        }
+
         private void GetDelivery()
         {
             if (entityPM.IncludeDelivery)
@@ -205,7 +281,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.Append(field);
             }
         }
-
         private void GetIncoterm()
         {
             if (!string.IsNullOrEmpty(entityPM.IncotermId))
