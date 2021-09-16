@@ -305,6 +305,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         {
             List<QuoteList> entityList = new List<QuoteList>();
 
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            CountryRepository countryRepository = new CountryRepository(tenant);
+
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
 
@@ -423,6 +426,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ToPartnerId = f.ToPartnerId,
                         FromPartnerAddressId = f.FromPartnerAddressId,
                         ToPartnerAddressId = f.ToPartnerAddressId,
+                        InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
+                        InlandDomesticToCountryId = f.InlandDomesticToCountryId,
                         StageId = f.StageId,
                         StageName = f.Stage == null ? "" : f.Stage.Name,
                         StageMaxDays = f.Stage == null ? null : f.Stage.MaxDays,
@@ -453,11 +458,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         (f.FromPort != null ? f.FromPort.Code : ""),
 
-                        FromCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.Code : ""))
-                        :
-                        ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
-
+                        FromCountryCode = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "",
                         FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
 
                         ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
@@ -465,11 +466,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         (f.ToPort != null ? f.ToPort.Code : ""),
 
-                        ToCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
-                        ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.Code : ""))
-                        :
-                        ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
-
+                        ToCountryCode = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "",
                         ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
 
                         Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
@@ -528,6 +525,63 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     else
                     {
                         list.Salesman = "";
+                    }
+
+                    if(list.DirectionId == "D" && list.TransportModeId == "I")
+                    {
+                        if (!string.IsNullOrEmpty(list.FromPartnerAddressId))
+                        {
+                            Address address = addressRepository.GetSingleAddress(list.FromPartnerAddressId, tenant);
+                            if (address != null)
+                            {
+                                if (!string.IsNullOrEmpty(address.CountryId))
+                                {
+                                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        list.FromCountryCode = country.Code;
+                                        list.FromPortCountry = country.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+
+                        else if (!string.IsNullOrEmpty(list.InlandDomesticFromCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(list.InlandDomesticFromCountryId, tenant);
+                            if (country != null)
+                            {
+                                list.FromCountryCode = country.Code;
+                                list.FromPortCountry = country.EnglishName;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(list.ToPartnerAddressId))
+                        {
+                            Address address = addressRepository.GetSingleAddress(list.ToPartnerAddressId, tenant);
+                            if (address != null)
+                            {
+                                if (!string.IsNullOrEmpty(address.CountryId))
+                                {
+                                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        list.ToCountryCode = country.Code;
+                                        list.ToPortCountry = country.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+
+                        else if (!string.IsNullOrEmpty(list.InlandDomesticToCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(list.InlandDomesticToCountryId, tenant);
+                            if (country != null)
+                            {
+                                list.ToCountryCode = country.Code;
+                                list.ToPortCountry = country.EnglishName;
+                            }
+                        }
                     }
 
                     entityList.Add(list);
@@ -1525,38 +1579,59 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             if (isInlandDomestic)
             {
-                if (!string.IsNullOrEmpty(entityPOCO.FromPartnerAddressId))
+                entityPM.FromPortId = entityPOCO.FromPortId;
+                entityPM.ToPortId = entityPOCO.ToPortId;
+                entityPM.InlandDomesticFromZipCode = entityPOCO.InlandDomesticFromZipCode;
+                entityPM.InlandDomesticToZipCode = entityPOCO.InlandDomesticToZipCode;
+                entityPM.InlandDomesticFromCity = entityPOCO.InlandDomesticFromCity;
+                entityPM.InlandDomesticToCity = entityPOCO.InlandDomesticToCity;
+                entityPM.InlandDomesticFromCountryId = entityPOCO.InlandDomesticFromCountryId;
+                entityPM.InlandDomesticToCountryId = entityPOCO.InlandDomesticToCountryId;
+                entityPM.InlandDomesticFromTypeCode = entityPOCO.InlandDomesticFromTypeCode;
+                entityPM.InlandDomesticToTypeCode = entityPOCO.InlandDomesticToTypeCode;
+                entityPM.MainCarriageFromPortAddress = entityPOCO.MainCarriageFromPortAddress;
+                entityPM.MainCarriageToPortAddress = entityPOCO.MainCarriageToPortAddress;
+
+                switch (entityPM.InlandDomesticFromTypeCode)
                 {
-                    Address address = addressRepository.GetSingleAddress(entityPOCO.FromPartnerAddressId, tenant);
-                    if (address != null)
-                    {
-                        if (!string.IsNullOrEmpty(address.CountryId))
+                    case "PART":
                         {
-                            Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
-                            if (country != null)
-                            {
-                                entityPM.FromCountryCode = country.Code;
-                                entityPM.FromCountryName = country.EnglishName;
-                            }
+                            this.GetFromPartnerAddressData(entityPM, addressRepository, countryRepository);
+                            break;
                         }
-                    }
+
+                    case "PORT":
+                        {
+                            this.GetFromPort(entityPM, portRepository, countryRepository);
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            this.GetFromCasualAddressData(entityPM, countryRepository);
+                            break;
+                        }
                 }
 
-                if (!string.IsNullOrEmpty(entityPOCO.ToPartnerAddressId))
+                switch (entityPM.InlandDomesticToTypeCode)
                 {
-                    Address address = addressRepository.GetSingleAddress(entityPOCO.ToPartnerAddressId, tenant);
-                    if (address != null)
-                    {
-                        if (!string.IsNullOrEmpty(address.CountryId))
+                    case "PART":
                         {
-                            Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
-                            if (country != null)
-                            {
-                                entityPM.ToCountryCode = country.Code;
-                                entityPM.ToCountryName = country.EnglishName;
-                            }
+                            this.GetToPartnerAddressData(entityPM, addressRepository, countryRepository);
+                            break;
                         }
-                    }
+
+                    case "PORT":
+                        {
+                            this.GetToPort(entityPM, portRepository, countryRepository);
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            this.GetToCasualAddressData(entityPM, countryRepository);
+                            break;
+                        }
                 }
             }
 
@@ -2645,6 +2720,108 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
             };
             return saleChargePM;
+        }
+
+        private void GetFromPartnerAddressData(QuotePM entityPM, AddressRepository addressRepository, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, entityPM.Tenant);
+                if (address != null)
+                {
+                    if (!string.IsNullOrEmpty(address.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
+                        if (country != null)
+                        {
+                            entityPM.FromCountryCode = country.Code;
+                            entityPM.FromCountryName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+        private void GetFromPort(QuotePM entityPM, PortRepository portRepository, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.FromPortId))
+            {
+                Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.FromPortId);
+                if (port != null)
+                {
+                    if (!string.IsNullOrEmpty(port.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
+                        if (country != null)
+                        {
+                            entityPM.FromCountryCode = country.Code;
+                            entityPM.FromCountryName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+        private void GetFromCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId))
+            {
+                Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
+                if (country != null)
+                {
+                    entityPM.FromCountryCode = country.Code;
+                    entityPM.FromCountryName = country.EnglishName;
+                }
+            }
+        }
+
+        private void GetToPartnerAddressData(QuotePM entityPM, AddressRepository addressRepository, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, entityPM.Tenant);
+                if (address != null)
+                {
+                    if (!string.IsNullOrEmpty(address.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
+                        if (country != null)
+                        {
+                            entityPM.ToCountryCode = country.Code;
+                            entityPM.ToCountryName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+        private void GetToPort(QuotePM entityPM, PortRepository portRepository, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.ToPortId))
+            {
+                Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.ToPortId);
+                if (port != null)
+                {
+                    if (!string.IsNullOrEmpty(port.CountryId))
+                    {
+                        Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
+                        if (country != null)
+                        {
+                            entityPM.ToCountryCode = country.Code;
+                            entityPM.ToCountryName = country.EnglishName;
+                        }
+                    }
+                }
+            }
+        }
+        private void GetToCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
+        {
+            if (!string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId))
+            {
+                Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);
+                if (country != null)
+                {
+                    entityPM.ToCountryCode = country.Code;
+                    entityPM.ToCountryName = country.EnglishName;
+                }
+            }
         }
     }
 }
