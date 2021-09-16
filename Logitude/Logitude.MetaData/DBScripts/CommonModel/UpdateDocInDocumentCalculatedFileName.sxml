@@ -1,0 +1,20 @@
+﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Documents">
+
+    <Sql Version="30">
+    <![CDATA[
+    
+update Documents set CalculatedFileName = Documents.FileName
+where  CalculatedFileName is not null and  Folder= 'docsin'
+and
+id in (select DocumentsFilings.DocumentId from DocumentsFilings
+inner join Documents on Documents.Id = DocumentsFilings.DocumentId
+where   DocumentsFilings.EntityId is not null   and DocumentsFilings.DirectionCode = 'I') 
+and 
+$LastCounterWhere$
+    
+
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>
+

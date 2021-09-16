@@ -1716,7 +1716,8 @@ namespace WebFreight.Web
                     item.Id = shipment.ShipperNotExporterId;
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
-                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference) ? "" : shipment.ShipperNotExporterReference;
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2;
                     item.PartnerType = "Shipper Not Exporter";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2519,7 +2520,8 @@ namespace WebFreight.Web
                     item.Id = shipment.ShipperNotExporterId;
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
-                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference) ? "" : shipment.ShipperNotExporterReference;
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2;
                     item.PartnerType = "Shipper Not Exporter";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -3479,7 +3481,8 @@ namespace WebFreight.Web
                 Id = shipment.ShipperNotExporterId,
                 AddressId = shipment.ShipperNotExporterAddressId,
                 ContactId = shipment.ShipperNotExporterContactId,
-                Reference1 = shipment.ShipperNotExporterReference,
+                Reference1 = shipment.ShipperNotExporterReference1,
+                Reference2 = shipment.ShipperNotExporterReference2,
                 IsShared = setting.IsShipperNotExporterShared
             });
 

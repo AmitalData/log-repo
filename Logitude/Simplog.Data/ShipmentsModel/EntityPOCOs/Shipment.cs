@@ -703,6 +703,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string OperationalStatusId { get; set; }
         public string BillingStatusId { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
 
         public virtual EntityStatus OperationalStatus { get; set; }
 

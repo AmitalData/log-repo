@@ -343,6 +343,8 @@
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.sxml" />
+    <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
     </None>
@@ -1012,6 +1014,7 @@
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />

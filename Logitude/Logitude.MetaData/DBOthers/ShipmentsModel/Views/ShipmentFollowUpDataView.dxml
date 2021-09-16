@@ -42,6 +42,8 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
               dbo.Shipments.Notify1Reference2,
 						 dbo.Shipments.Notify2Reference,
 						 dbo.Shipments.ShipperNotExporterReference,
+             dbo.Shipments.ShipperNotExporterReference1,
+						 dbo.Shipments.ShipperNotExporterReference2,
 						 dbo.Shipments.ConsigneeNotImporterReference,
 						 dbo.Shipments.ProjectNumber,
 						 dbo.Shipments.INTTRALastStatusDate,

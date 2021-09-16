@@ -476,5 +476,7 @@ export class ShipmentList {
 		GrossWeightUnitCode: string;
 		OperationalStatusId: string;
 		BillingStatusId: string;
+		ShipperNotExporterReference1: string;
+		ShipperNotExporterReference2: string;
 	
 }

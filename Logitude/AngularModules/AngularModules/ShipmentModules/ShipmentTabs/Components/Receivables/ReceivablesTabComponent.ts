@@ -753,7 +753,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     }
 
     public ShipmentGenerator: ShipmentGenerator;
-    private InitializeShipmentGenerator() {
+    public InitializeShipmentGenerator() {
         this.ShipmentGenerator = new ShipmentGenerator(this.EntityPM, this.AllRates);
     }
     StartGenerating(myCommandCode: string) {
@@ -2091,6 +2091,11 @@ export class ShipmentReceivableItem extends BaseComponent {
             });
 
             this.ComputeInsideReceivablesData();
+
+            if (!this.fatherComponent.ShipmentGenerator) {
+                this.fatherComponent.InitializeShipmentGenerator();
+            }
+
             this.fatherComponent.ShipmentGenerator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
@@ -2099,6 +2104,11 @@ export class ShipmentReceivableItem extends BaseComponent {
     set AmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.AmountInProfitCurrency != newVaule) {
             this.EntityPM.AmountInProfitCurrency = AppTool.Round(newVaule, 2);
+
+            if (!this.fatherComponent.ShipmentGenerator) {
+                this.fatherComponent.InitializeShipmentGenerator();
+            }
+
             this.fatherComponent.ShipmentGenerator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }

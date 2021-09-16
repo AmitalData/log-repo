@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "951a4742a7d221e15e3e86136e6b9582";
+		public const string HashString = "c8ae9158fe783256f5f63d5765c7f7b6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8457,9 +8457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastFreeDayDate",
-					  						DefaultText =  "Last Free  Day Date",
+					  						DefaultText =  "Last Free Day",
 					  						ListFieldLable =  "LastFreeDayDateListLable",
-					  						ListLableDefaultText =  "Last Free  Day Date",
+					  						ListLableDefaultText =  "Last Free Day",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8517,7 +8517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FreeDays",
-					  						DefaultText =  "FreeDays",
+					  						DefaultText =  "Free Days",
 					  						ListFieldLable =  "FreeDaysListLable",
 					  						ListLableDefaultText =  "Free Days",
 					  						IsMaxLength =  false,

@@ -217,5 +217,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
         public int? PackagesQuantity { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
     }
 }

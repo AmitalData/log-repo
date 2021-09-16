@@ -219,7 +219,6 @@ namespace WebFreight.Web.Helpers
                     string calculatedFileName = GetCalculatedDocumentFileName(documentFileNameParameter);
 
                     Document document = CreateOrUpdateDocument(documentOutId, tenant, documentTypeCopyId, docRepository, documentOutCopyRep, documentOut, documentTypeCopy, documentType, ref documentOutCopy, calculatedFileName);
-
                     SaveSTIDocumentInStorage(document, reportDdf, tenant);
 
                     var docFiling = documentsFilingRepository.GetSingleDocumentsFiling(documentOutId);
@@ -342,7 +341,9 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(documentFileNameParameter.DocumentType.FileName))
             {
                 if (documentFileNameParameter.DocumentType.FileName.Contains("["))
-                    calculatedFileName = GetDocumentFileNameFromDataFields(documentFileNameParameter);
+                {
+                    calculatedFileName = new DocumentTypeCalculateFileNameService(documentFileNameParameter).Calculate();
+                }
                 else 
                     calculatedFileName = documentFileNameParameter.DocumentType.FileName;
             }
@@ -357,125 +358,6 @@ namespace WebFreight.Web.Helpers
             return calculatedFileName;
         }
 
-        private static string GetDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
-        {
-            string calculatedFileName = string.Empty;
-            string htmlResolve = ResolveDocumentFileNameFromDataFields(documentFileNameParameter);
-            if (!string.IsNullOrEmpty(htmlResolve))
-            {
-                if (htmlResolve.Length > 120)
-                {
-                    calculatedFileName = htmlResolve.Substring(0, 119);
-                }
-                else calculatedFileName = htmlResolve;
-            }
-
-            return calculatedFileName;
-        }
-
-        private static string ResolveDocumentFileNameFromDataFields(DocumentFileNameParameter documentFileNameParameter)
-        {
-            string calculatedDocumentFileName = ResolveMainObjectTableFields(documentFileNameParameter);
-            calculatedDocumentFileName = ResolveDocumentTypeFields(documentFileNameParameter, calculatedDocumentFileName);
-            calculatedDocumentFileName = ResolveDocumentFilingFields(documentFileNameParameter, calculatedDocumentFileName);
-
-            return calculatedDocumentFileName;
-        }
-
-        private static string ResolveDocumentFilingFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
-        {
-            string calculatedDocumentFileName = documentFileName;
-            if (calculatedDocumentFileName.Contains("[DocumentsFiling"))
-            {
-                calculatedDocumentFileName = ResolveDocumentFileNameFromDocumentsFilingObjectTable(documentFileNameParameter, calculatedDocumentFileName);
-            }
-
-            return calculatedDocumentFileName;
-        }
-
-        private static string ResolveDocumentTypeFields(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
-        {
-            string calculatedDocumentFileName = documentFileName;
-
-            if (calculatedDocumentFileName.Contains("[DocumentTypeCopyName]"))
-            {
-                calculatedDocumentFileName = calculatedDocumentFileName.Replace("[DocumentTypeCopyName]", documentFileNameParameter?.DocumentTypeCopy?.Name);
-            }
-
-            if (calculatedDocumentFileName.Contains("[DocumentType"))
-            {
-                DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
-                {
-                    DocumentFileNameParameter = documentFileNameParameter,
-                    DocumentFileName = calculatedDocumentFileName,
-                    EntityId = documentFileNameParameter.DocumentType.Id,
-                    ObjectTableName = "DocumentType",
-                };
-                calculatedDocumentFileName = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
-            }
-
-            return calculatedDocumentFileName;
-        }
-
-        private static string ResolveDocumentFileNameFromDocumentsFilingObjectTable(DocumentFileNameParameter documentFileNameParameter, string documentFileName)
-        {
-            string calculatedDocumentFileName = documentFileName;
-
-            string id = documentFileNameParameter.EntityId;
-            if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
-                id = documentFileNameParameter.ChildEntityId;
-
-            Logitude.BL.CommonDataModel.EntityQueries.DocumentsFilingQuery documentsFilingQuery = new Logitude.BL.CommonDataModel.EntityQueries.DocumentsFilingQuery(documentFileNameParameter.Tenant);
-            DocumentsFilingPM documentsFilingPM = documentsFilingQuery.GetDocumentsFilingByDocumentType(documentFileNameParameter.DocumentType.Id, documentFileNameParameter.DocumentType.ObjectTableId, id, documentFileNameParameter.Tenant);
-            if (documentsFilingPM != null)
-            {
-                DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter = new DocumentFileNameFromObjectTableParameter
-                {
-                    DocumentFileNameParameter = documentFileNameParameter,
-                    DocumentFileName = calculatedDocumentFileName,
-                    EntityId = documentsFilingPM.Id,
-                    ObjectTableName = "DocumentsFiling",
-                };
-                calculatedDocumentFileName = GetDocumentFileNameFromDataFieldsByObjectTableName(documentFileNameFromObjectTableParameter);
-            }
-
-            return calculatedDocumentFileName;
-        }
-
-        private static string ResolveMainObjectTableFields(DocumentFileNameParameter documentFileNameParameter)
-        {
-            HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
-            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-
-            string id = documentFileNameParameter.EntityId;
-            if (!string.IsNullOrEmpty(documentFileNameParameter.ChildEntityId))
-                id = documentFileNameParameter.ChildEntityId;
-
-            htmlResolveArgs.EntityId = id;
-            htmlResolveArgs.ObjectTableId = documentFileNameParameter.DocumentType.ObjectTableId;
-            htmlResolveArgs.HtmlString = documentFileNameParameter.DocumentType.FileName;
-            htmlResolveArgs.UserId = documentFileNameParameter.UserId;
-            htmlResolveArgs.Tenant = documentFileNameParameter.Tenant;
-
-            string htmlResolve = htmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
-            return htmlResolve;
-        }
-
-        private static string GetDocumentFileNameFromDataFieldsByObjectTableName(DocumentFileNameFromObjectTableParameter documentFileNameFromObjectTableParameter)
-        {
-            HtmlEditorResolveArgs htmlResolveArgs = new HtmlEditorResolveArgs();
-            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-
-            htmlResolveArgs.EntityId = documentFileNameFromObjectTableParameter.EntityId;
-            htmlResolveArgs.ObjectTableId = "";
-            htmlResolveArgs.ObjectTableName = documentFileNameFromObjectTableParameter.ObjectTableName;
-            htmlResolveArgs.HtmlString = documentFileNameFromObjectTableParameter.DocumentFileName.Replace("[" + documentFileNameFromObjectTableParameter.ObjectTableName, "[");
-            htmlResolveArgs.UserId = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.UserId;
-            htmlResolveArgs.Tenant = documentFileNameFromObjectTableParameter.DocumentFileNameParameter.Tenant;
-
-            string resolveDocumentFileName = htmlEditorHelper.ResolveHtmlString(htmlResolveArgs);
-            return resolveDocumentFileName;
-        }
 
         private long t1;
         long t2;

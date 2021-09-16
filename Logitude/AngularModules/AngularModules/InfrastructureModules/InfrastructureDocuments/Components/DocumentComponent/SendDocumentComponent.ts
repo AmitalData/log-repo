@@ -521,7 +521,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                                     }
 
                                                     if (documentIn != null) {
-                                                        attachmentlog = this.GetAttachmentList(documentIn.DocumentTypeName, attachment.DocumentId, documentIn.FileSize, documentIn.Tenant);
+
+                                                        var fileName: string = !AppTool.IsNullOrEmpty(documentIn.CalculatedFileName) ? documentIn.CalculatedFileName : documentIn.FileName;
+                                                        attachmentlog = this.GetAttachmentList(fileName, attachment.DocumentId, documentIn.FileSize, documentIn.Tenant);
                                                     }
                                                     else if (this.SelectedInternalDocument.DocsOutTabComponent && this.SelectedInternalDocument.DocsOutTabComponent.DocumentOuts) {
 

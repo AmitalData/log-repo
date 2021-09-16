@@ -28,6 +28,7 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Text;
 using Logitude.Accounting.BL.CoreBL.Testers;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -232,6 +233,44 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage GetReturnToDraftButtonStatus(DateTime createDate)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                AuthenticationToken authToken = GetAuthenticationToken();
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                bool FutureReportExist = CheckIfActiveFutureReportsExist(createDate,tenant);              
+                ServiceResponse response = new ServiceResponse();
+                response.Result = FutureReportExist;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        private bool CheckIfActiveFutureReportsExist(DateTime createDate, int tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(MyContext);
+           return taxReportQueryService.GetFutureActiveReports(createDate, tenant).Any();
+
+        }
+        private AuthenticationToken GetAuthenticationToken()
+        {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            return authToken;
+        }
         public HttpResponseMessage GetErrorsCount(string reportId)
         {
             try

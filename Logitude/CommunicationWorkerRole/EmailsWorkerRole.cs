@@ -683,31 +683,30 @@ namespace CommunicationWorkerRole
 
                         string name = ca.DocumentId;
                         string calculatedFileName = "";
-                        if (docCopy != null)
+                        if (ca.Document != null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
                         {
-                            if (ca.Document != null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
+                            calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
+                        }
+                        else if (docCopy != null)
+                        {
+
+                            DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(docCopy.DocumentOutId, ca.Tenant);
+                            DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentOut.DocumentsFiling.DocumentTypeId, ca.Tenant);
+                            DocumentTypeCopy documentTypeCopy = documentTypeCopyRepository.GetSingleDocumentTypeCopy(docCopy.DocumentTypeCopyId);
+
+                            string DocumentTypeCopyNameWithDocumentTypeName = (documentType.Name != documentTypeCopy.Name ? documentType.Name + " - " + documentTypeCopy.Name : documentTypeCopy.Name);
+
+                            name = DocumentTypeCopyNameWithDocumentTypeName;
+
+                            string[] names = name.Split('-');
+                            if (names.Count() > 1)
                             {
-                                calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
-                            }
-                            else
-                            {
-                                DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(docCopy.DocumentOutId, ca.Tenant);
-                                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentOut.DocumentsFiling.DocumentTypeId, ca.Tenant);
-                                DocumentTypeCopy documentTypeCopy = documentTypeCopyRepository.GetSingleDocumentTypeCopy(docCopy.DocumentTypeCopyId);
-
-                                string DocumentTypeCopyNameWithDocumentTypeName = (documentType.Name != documentTypeCopy.Name ? documentType.Name + " - " + documentTypeCopy.Name : documentTypeCopy.Name);
-
-                                name = DocumentTypeCopyNameWithDocumentTypeName;
-
-                                string[] names = name.Split('-');
-                                if (names.Count() > 1)
+                                if (names[0].Trim() == names[1].Trim())
                                 {
-                                    if (names[0].Trim() == names[1].Trim())
-                                    {
-                                        name = docCopy.DocumentTypeCopy.Name;
-                                    }
+                                    name = docCopy.DocumentTypeCopy.Name;
                                 }
                             }
+
                         }
                         else
                         {

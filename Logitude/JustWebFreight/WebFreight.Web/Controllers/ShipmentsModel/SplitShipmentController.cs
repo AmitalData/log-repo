@@ -563,6 +563,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ShipperNotExporterName = oldEntity.ShipperNotExporterName;
             entityPM.ShipperNotExporterNote = oldEntity.ShipperNotExporterNote;
             entityPM.ShipperNotExporterReference = oldEntity.ShipperNotExporterReference;
+            entityPM.ShipperNotExporterReference1 = oldEntity.ShipperNotExporterReference1;
+            entityPM.ShipperNotExporterReference2 = oldEntity.ShipperNotExporterReference2;
+
             #endregion
 
             #region ConsigneeNotImporter

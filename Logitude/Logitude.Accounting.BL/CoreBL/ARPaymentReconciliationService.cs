@@ -22,6 +22,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public class ARPaymentReconciliationService
     {
         IInvoiceContext _invoiceContext = null;
+        private string autoCreditedInvoiceStatusCode = "AR";
         public ARPaymentReconciliationService(int tenant)
         {
             _invoiceContext = InvoiceContext.GetContext(tenant);
@@ -73,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ARPaymentService paymentService = new ARPaymentService(_invoiceContext, paymentPM.Tenant);
             paymentService.Update(paymentPM);
         }
-
+         
         public void UpdateConnectedInvoices(ReconciliationPM entityPM)
         {
             ARInvoiceService invoiceService = new ARInvoiceService(_invoiceContext, entityPM.Tenant);
@@ -178,9 +179,14 @@ namespace Logitude.Accounting.BL.CoreBL
             // get invoices
             List<ARInvoicePM> invoicesPM = invoicesQuery.GetARInvoicePMsByIdList(invoicesIds, entityPM.Tenant);
 
+            invoicesPM = ExcludeAutoCreditedInvoices(invoicesPM);
+
             return invoicesPM;
         }
-
+        private List<ARInvoicePM> ExcludeAutoCreditedInvoices(List<ARInvoicePM> invoicesPM)
+        {
+            return invoicesPM.Where(invoice => invoice.StatusCode != autoCreditedInvoiceStatusCode).ToList();
+        }
         private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode)
         {
             

@@ -2219,6 +2219,7 @@ namespace WebFreight.Web
                         UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins
                                                    where a.Id == user.Id
                                                    select a).FirstOrDefault();
+                        var loggedDomain = SecurityUtility.getLoggedDomain();
                         if (lastLogin == null)
                         {
                             lastLogin = new UserLastLogin()

@@ -615,6 +615,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Notify1Reference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);            
 
@@ -1034,6 +1036,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Notify1Reference2).HasColumnName("Notify1Reference2");
             this.Property(t => t.Notify2Reference).HasColumnName("Notify2Reference");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
+            this.Property(t => t.ShipperNotExporterReference1).HasColumnName("ShipperNotExporterReference1");
+            this.Property(t => t.ShipperNotExporterReference2).HasColumnName("ShipperNotExporterReference2");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
             this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
             this.Property(t => t.From).HasColumnName("From");

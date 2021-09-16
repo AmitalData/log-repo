@@ -150,9 +150,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.isNewEntity = initializer.IsNewEntity;
 
             this.GetQuoteSettings();
-
             this.InitializeComponent();
-
             initializer.HandleBehaviours();
 
             QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);
@@ -190,9 +188,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnCreate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
             entityAutomationService.RunAutomation();
-        }
-
-      
+        }      
 
         public class QuoteChangeTracking
         {
@@ -217,12 +213,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPoco = initializer.EntityPOCO;
             this.quoteComputedFieldEntityPOCO = initializer.QuoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
-
-
-            //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
-            //{
-            //   throw new Exception("Total per container cannot be chosen with Same as cost currency");
-            //}
 
             if (!entityPoco.IsCancelled || !entityPM.IsCancelled)
             {
@@ -265,8 +255,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     SendQuoteToIntegratedSystem(objecttable.Id);
                 }
+
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationQuoteMappingPMFields() });
-                // EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -315,11 +305,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
 
-
-
             this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant); 
-
-
             quoteFollowUpUpdateService.RefreshFollowUps(); 
         }
          
@@ -340,9 +326,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         public void SentQuoteStatusMessageToUnifreight(string objectTableId)
         {
-            //TenantQuery tenantQuery = new TenantQuery(tenant);
-            //TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-         
             if (CanSendQuoteToIntegratedSystem())
             {
                 bool IsQuoteStageChange = false;
@@ -355,6 +338,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     quoteStatus.QuoteCancelNote = "";
                     quoteStatus.QuoteNumber = entityPM.QuoteNumber;
                     quoteStatus.DueDate = entityPM.StageDueDate;
+
                     #region IsCancelled 
                     if (entityPM.IsCancelled)
                     {
@@ -597,7 +581,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 this.InitializeStage();
                 this.InitializeSaleCurrency();
-                //this.InitializeSalesman();
                 this.InitializeProfitCurrency();
 
                 if (!entityPM.IsHybrid)
@@ -893,96 +876,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.CustomerName = customer.EnglishName;                    
                 }
             }
-
-            //if (entityPM.QuoteCustomerTypeCode == "SHI")
-            //{
-            //    if (string.IsNullOrEmpty(entityPM.CustomerId))
-            //    {
-            //        entityPM.CustomerId = entityPM.ShipperId;
-            //    }
-
-            //    entityPM.CustomerName = entityPM.ShipperName;
-            //    entityPM.CustomerNote = entityPM.ShipperNote;
-            //    entityPM.CustomerContactId = entityPM.ShipperContactId;
-            //    entityPM.CustomerReference1 = entityPM.ShipperReference1;
-            //    entityPM.CustomerReference2 = entityPM.ShipperReference2;
-            //}
-
-            //else if (entityPM.QuoteCustomerTypeCode == "CON")
-            //{
-            //    if (string.IsNullOrEmpty(entityPM.CustomerId))
-            //    {
-            //        entityPM.CustomerId = entityPM.ConsigneeId;
-            //    }
-
-            //    entityPM.CustomerName = entityPM.ConsigneeName;
-            //    entityPM.CustomerNote = entityPM.ConsigneeNote;
-            //    entityPM.CustomerContactId = entityPM.ConsigneeContactId;
-            //    entityPM.CustomerReference1 = entityPM.ConsigneeReference1;
-            //    entityPM.CustomerReference2 = entityPM.ConsigneeReference2;
-            //}
-
-            //else
-            //{
-            //    if (!string.IsNullOrEmpty(entityPM.CustomerId))
-            //    {
-            //        if (entityPM.CustomerId == entityPM.AgentId)
-            //        {
-            //            entityPM.CustomerName = entityPM.AgentName;
-            //            entityPM.CustomerContactId = entityPM.AgentContactId;
-            //            entityPM.CustomerReference1 = entityPM.AgentReference1;
-            //            entityPM.CustomerReference2 = entityPM.AgentReference2;
-            //        }
-
-            //        if (entityPM.CustomerId == entityPM.NotifyId)
-            //        {
-            //            entityPM.CustomerName = entityPM.NotifyName;
-            //            entityPM.CustomerContactId = entityPM.NotifyContactId;
-            //            entityPM.CustomerReference1 = null;
-            //            entityPM.CustomerReference2 = null;
-            //        }
-            //    }
-            //}
         }
-        //private void InitializeSalesman()
-        //{
-        //    if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-        //    {
-        //        if (!string.IsNullOrEmpty(entityPM.CustomerId))
-        //        {
-        //            CustomerRepository customerRepository = new CustomerRepository(tenant);
-        //            Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, false);
-        //            if (customer != null)
-        //            {
-        //                if (!string.IsNullOrEmpty(customer.SalesmanUserId))
-        //                {
-        //                    if (entityPM.SalesmanUserId != customer.SalesmanUserId)
-        //                    {
-        //                        entityPM.SalesmanUserId = customer.SalesmanUserId;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-        //    {
-        //        if (entityPM.SalesmanUserId != entityPM.CreatedByUserId)
-        //        {
-        //            entityPM.SalesmanUserId = entityPM.CreatedByUserId;
-        //        }
-        //    }
-
-        //    UserRepository userRepository = new UserRepository(tenant);
-        //    User user = userRepository.GetSingleUser(entityPM.SalesmanUserId, tenant, false);
-        //    if (user != null)
-        //    {
-        //        if (entityPM.BusinessUnitId != user.BusinessUnitId)
-        //        {
-        //            entityPM.BusinessUnitId = user.BusinessUnitId;
-        //        }
-        //    }
-        //}
+       
         private void InitializeSaleCurrency()
         {
             if (isNewEntity)
@@ -1054,45 +949,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)
-            {
-                entityPM.FromPortId = null;
-                entityPM.ToPortId = null;
+            {                
                 entityPM.IncludePickUp = false;
                 entityPM.IncludeDelivery = false;
 
-                if (!string.IsNullOrEmpty(entityPM.ShipperId))
-                {
-                    if (string.IsNullOrEmpty(entityPM.FromPartnerId))
-                    {
-                        entityPM.FromPartnerId = entityPM.ShipperId;
-                    }
+                //if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                //{
+                //    if (string.IsNullOrEmpty(entityPM.FromPartnerId))
+                //    {
+                //        entityPM.FromPartnerId = entityPM.ShipperId;
+                //    }
 
-                    if (string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
-                    {
-                        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
-                        if (adr != null)
-                        {
-                            entityPM.FromPartnerAddressId = adr.Id;
-                        }
-                    }
-                }
+                //    if (string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
+                //    {
+                //        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
+                //        if (adr != null)
+                //        {
+                //            entityPM.FromPartnerAddressId = adr.Id;
+                //        }
+                //    }
+                //}
 
-                if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-                {
-                    if (string.IsNullOrEmpty(entityPM.ToPartnerId))
-                    {
-                        entityPM.ToPartnerId = entityPM.ConsigneeId;
-                    }
+                //if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                //{
+                //    if (string.IsNullOrEmpty(entityPM.ToPartnerId))
+                //    {
+                //        entityPM.ToPartnerId = entityPM.ConsigneeId;
+                //    }
 
-                    if (string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
-                    {
-                        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
-                        if (adr != null)
-                        {
-                            entityPM.ToPartnerAddressId = adr.Id;
-                        }
-                    }
-                }
+                //    if (string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
+                //    {
+                //        Address adr = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
+                //        if (adr != null)
+                //        {
+                //            entityPM.ToPartnerAddressId = adr.Id;
+                //        }
+                //    }
+                //}
             }
         }
         private void InitializePickupDelivery()
@@ -1151,7 +1044,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             if (isAutomaticUpdate)
             {
                 QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
-                entityPM.Subject = iSubjectService.GetSubject(); ;                
+                entityPM.Subject = iSubjectService.GetSubject();                
             }
         }
         private void InitializeExpirationValues()

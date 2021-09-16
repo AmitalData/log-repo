@@ -29,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using System.Xml;
+using Simplog.Server.Infrastructure; 
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2537,6 +2538,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notify1Reference2 = shipment.Notify1Reference2;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
+            shipmentPM.ShipperNotExporterReference1 = shipment.ShipperNotExporterReference1;
+            shipmentPM.ShipperNotExporterReference2 = shipment.ShipperNotExporterReference2;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
@@ -11501,12 +11504,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public ImporterQueriesDataCounts GetShipmentsQueriesCounts(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
-            ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
+
             IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
+            ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
+            
             IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+
+
             allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
             allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
             allShipments = GetAllFliteredShipments(allShipments, shipmentsQueriesCountsArgs);
+
+
+
 
             myResult.AllShipmentsCount = allShipments.Take(1001).Count();
             MapOpenShipmentsCount(myResult, allShipments);
@@ -11519,7 +11529,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
-
+          
         private void MapRequiredActionsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
         {
             IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
@@ -11596,8 +11606,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.DirectionId))
             {
-                allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
+                if (shipmentsQueriesCountsArgs.DirectionOperator == "NotEqual")
+                {
+                    allShipments = allShipments.Where(d => d.DirectionId != shipmentsQueriesCountsArgs.DirectionId);
+                }
+                else allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
             }
+
             if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.SearchFilter))
             {
                 allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper())));
@@ -12386,6 +12401,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Notify1Reference2 = f.Notify1Reference2,
                                Notify2Reference = f.Notify2Reference,
                                ShipperNotExporterReference = f.ShipperNotExporterReference,
+                               ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                               ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -12424,6 +12441,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                HandlerUserId = f.HandlerUserId,
                                HandlerUserName = f.HandlerUserName,
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
+                               AccrualsApprovalDate = f.AccrualsApprovalDate,
+                               IsAccrualsApproved = f.IsAccrualsApproved,
                            };
             return myResult;
         }
@@ -12763,6 +12782,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
+                    ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                    ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -12795,6 +12816,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    AccrualsApprovalDate = f.AccrualsApprovalDate,
+                    IsAccrualsApproved = f.IsAccrualsApproved,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13042,6 +13065,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify1Reference2 = f.Notify1Reference2,
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
+                    ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                    ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                     ProjectNumber = f.ProjectNumber,
                     ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -14123,6 +14148,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string ServiceContextUser { get; set; }
         public string TypeCode { get; set; }
         public string ForwarderPartnerId { get; set; }
+
+        public string DirectionOperator { get; set; }
     }
 
     public class HouseMaster

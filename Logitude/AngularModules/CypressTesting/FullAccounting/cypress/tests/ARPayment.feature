@@ -13,6 +13,6 @@ Feature: AR Payment
         When create AR Payment
         Then the AR Payment should get successfully
 
-    Scenario: ARprove the AR Payment
+    Scenario: Approve the AR Payment
         When ARprove the AR Payment
-        Then the AR Payment should ARprove successfully
+        Then the AR Payment should approve successfully

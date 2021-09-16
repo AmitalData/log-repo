@@ -341,6 +341,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   Notify1Reference = f.Notify1Reference,
                                   Notify2Reference = f.Notify2Reference,
                                   ShipperNotExporterReference = f.ShipperNotExporterReference,
+                                  ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                                  ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                                   ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                   MoveTypeName = f.MoveTypeName,
                                   ContainerLastStatusDate = f.ContainerLastStatusDate,

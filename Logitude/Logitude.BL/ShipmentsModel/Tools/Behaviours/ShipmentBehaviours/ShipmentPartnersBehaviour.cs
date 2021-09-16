@@ -174,6 +174,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperNotExporterContactId = null;
                 entityPM.ShipperNotExporterAddressId = null;
                 entityPM.ShipperNotExporterReference = null;
+                entityPM.ShipperNotExporterReference1 = null;
+                entityPM.ShipperNotExporterReference2 = null;
+
             }
 
             else if (entityPM.IsExternalAPI)

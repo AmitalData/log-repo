@@ -22,7 +22,8 @@ import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/E
 import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'; 
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -55,6 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     public IsExportActivated: boolean = false;
 
+    public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -307,7 +309,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             if (!Result.HasError && Result.Result != null) {
                 var myFiltersSettings = Result.Result;
                 var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
-                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');
+                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');               
                 var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
 
                 if (myArchiveFilter.length > 0) {
@@ -343,7 +345,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServiceContextUser: SessionLocator.LoggedUserId,
             TypeCode: this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter,
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
+            DirectionOperator : 'Equal',
         };
+        if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
         this.myShipmentDomainService.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {
                 this.setAllShipmentsQueriesCounts(myResult);
@@ -361,6 +365,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             return tempo;
         },
     };
+
+    private SetDirectionFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) { 
+       shipmentsQueriesCountsArgs.DirectionId = 'E';
+       shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual'; 
+    }
 
     private setAllShipmentsQueriesCounts(myResult: ImporterQueriesDataCounts) {
         this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
@@ -765,7 +774,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
         else {
             if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'DirectionId').length > 0) {
-                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId');
+                this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId'); 
             }
         }
         if (this.SelectedArchiveFilter != "All") {
@@ -862,8 +871,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.filterAgrs.SortBy = "ComputedStatusDate";
             this.filterAgrs.SortDirection = "Descending";
         }
+         
+        this.FilterLogboxShipments();
 
         return this.filterAgrs;
+    }
+
+    private FilterLogboxShipments() {
+        if (this.isLogbox) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
+        }
     }
 
     GridAfterViewInitCompleted($event) {
@@ -915,7 +932,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-        if (this.IsExportActivated) {
+
+        if (!this.isLogbox && this.IsExportActivated) {
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
             newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);

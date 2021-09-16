@@ -108,6 +108,9 @@ namespace CommunicationWorkerRole
                                             Master = "45454",
                                             MainCarriageATA = ship.MainCarriageATA,//DateTime.Now,
                                             MainCarriageETA = ship.MainCarriageETA,//DateTime.Now,
+                                            MainCarriageETD = ship.MainCarriageETD,//DateTime.Now,
+                                            MainCarriageATD = ship.MainCarriageATD,//DateTime.Now,
+
                                             AccountedPayablesInLocalCurrency = 100,
                                             AccountedPayablesInProfitCurrency = 200,
                                             AccountedReceivablesInLocalCurrency = 300,

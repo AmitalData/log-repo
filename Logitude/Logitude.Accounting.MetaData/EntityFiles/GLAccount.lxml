@@ -12756,7 +12756,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
