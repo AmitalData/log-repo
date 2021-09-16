@@ -121,8 +121,8 @@ export class TranslationComponent extends BaseComponent  {
             const filteredTranslations = this.loadedTranslations.filter(d => !AppTool.IsNullOrEmpty(d.DefaultText) && d.DefaultText.toUpperCase().startsWith(this.SearchText.toUpperCase())
                 || !AppTool.IsNullOrEmpty(d.TranslatedText) && d.TranslatedText.toUpperCase().startsWith(this.SearchText.toUpperCase())
                 || !AppTool.IsNullOrEmpty(d.TranslatedTextPlural) && d.TranslatedTextPlural.toUpperCase().startsWith(this.SearchText.toUpperCase()));
-            first40Translations = first40Translations.slice(0, 40);
-            filteredTranslations.forEach((item) => {
+            first40Translations = filteredTranslations.slice(0, 40);
+            first40Translations.forEach((item) => {
                     list.push(new TranslationItem(item, this));
                 });
         }
