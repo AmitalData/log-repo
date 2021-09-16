@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BoxItemRow td:not(:first-child) {
         color: #0B3861;
@@ -72,7 +72,13 @@
                 </table>
             </td>
         </tr>
-
+        <tr style="height: 1px;" *ngIf="IsBlockingUnifreightCustomer">
+            <td>
+                <div class="OrangeInfo" style="margin: 5px;">
+                    <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td>
                 <div class="ScrollViewer">
@@ -179,7 +185,7 @@
                                                 <div style="position: absolute; right:0; bottom:0;" *ngIf="item.InActive">
                                                     <table>
                                                         <tr>
-                                                            <td><img style="float: left;" src="./Images/RedX2.png"/></td>
+                                                            <td><img style="float: left;" src="./Images/RedX2.png" /></td>
                                                             <td style="font-size: 11px; padding-left: 3px;" class="ColorRed">Inactive</td>
                                                         </tr>
                                                     </table>
