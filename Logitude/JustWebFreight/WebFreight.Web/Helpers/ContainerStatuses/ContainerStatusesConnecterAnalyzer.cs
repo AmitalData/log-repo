@@ -648,14 +648,12 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
-
-                            if(IsUpdatingShipmentAndContainer())
+                            this.CreateLogitudeOceanInsightsResponse();
+                            if (IsUpdatingShipmentAndContainer())
                             { 
-
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
                                 this.UpdateShipment(item);
-
                             }
                         }
                     }
@@ -814,6 +812,46 @@ namespace WebFreight.Web.Helpers.Analyzers
             byte[] documentXML = memoryStream.ToArray();
             return documentXML;
         }
+
+        private void CreateLogitudeOceanInsightsResponse()
+        {
+            if (container != null)
+            {
+                LogitudeOceanInsightsResponseRepository logitudeOceanInsightsResponseRepository = new LogitudeOceanInsightsResponseRepository(tenant);
+                LogitudeOceanInsightsResponse logitudeOceanInsightsResponse = logitudeOceanInsightsResponseRepository.GetLogitudeOceanInsightsResponseByContainerNumberAndScac(container_number, carrier_scac, tenant);
+                if (logitudeOceanInsightsResponse == null)
+                {
+                    logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
+                    {
+                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", tenant),
+                        FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        ContainerNumber = container_number,
+                        SCACCode = carrier_scac,
+                        Tenant = tenant,
+                        CarrierName = GetCarrierName()
+                    };
+                    logitudeOceanInsightsResponseRepository.Add(logitudeOceanInsightsResponse);
+                }
+                else
+                {
+                    logitudeOceanInsightsResponse.LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    logitudeOceanInsightsResponseRepository.Update(logitudeOceanInsightsResponse);
+                }
+
+                logitudeOceanInsightsResponseRepository.SubmitChanges();
+            }
+        }
+
+        private string GetCarrierName()
+        {
+            string carrierName = "";
+            CardRepository cardRepository = new CardRepository(tenant);
+            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, tenant);
+            carrierName = shippingLine?.EnglishName;
+            return carrierName;
+        }
+
         private void CreateShipmentContainerStatus(LogitudeOceanInsightsRequest oceanInsight)
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
