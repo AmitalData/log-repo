@@ -1275,6 +1275,76 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InlandDomesticFromTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticFromCity"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InlandDomesticToCity"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageFromPortAddress"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainCarriageToPortAddress"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1548,6 +1618,26 @@
   <Relation
     ForeignKeyColumn="RegionalTaxId"
     ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticFromTypeCode"
+    ReferencedTable="PickUpDeliveryFromToTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticToTypeCode"
+    ReferencedTable="PickUpDeliveryFromToTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticFromCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InlandDomesticToCountryId"
+    ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

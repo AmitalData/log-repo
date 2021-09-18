@@ -560,16 +560,71 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
-                if (entityMasterData.MainCarriageFromAddressId != null)
+                switch (entityMasterData.InlandDomesticFromTypeCode)
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageFromAddressId, entityMasterData.Tenant);
-                    myRoutingField = fromAddress.City;
+                    case "PART":
+                        {
+                            if (entityMasterData.MainCarriageFromAddressId != null)
+                            {
+                                Address fromAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageFromAddressId, entityMasterData.Tenant);
+                                myRoutingField = fromAddress.City;
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (entityMasterData.MainCarriageFromPortId != null)
+                            {
+                                PortPM fromPort = PortQuery.GetSinglePort(entityMasterData.Tenant, entityMasterData.MainCarriageFromPortId, true);
+                                if (fromPort != null)
+                                {
+                                    myRoutingField = fromPort.Code;
+                                }
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            myRoutingField = entityMasterData.InlandDomesticFromCity;
+                            break;
+                        }
                 }
 
-                if (entityMasterData.MainCarriageToAddressId != null)
+                switch (entityMasterData.InlandDomesticToTypeCode)
                 {
-                    Address toAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageToAddressId, entityMasterData.Tenant);
-                    myRoutingField = myRoutingField + " , " + toAddress.City;
+                    case "PART":
+                        {
+                            if (entityMasterData.MainCarriageToAddressId != null)
+                            {
+                                Address toAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageToAddressId, entityMasterData.Tenant);
+                                if (toAddress != null)
+                                {
+                                    myRoutingField = myRoutingField + " , " + toAddress.City;
+                                }
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (entityMasterData.MainCarriageToPortId != null)
+                            {
+                                PortPM toPort = PortQuery.GetSinglePort(entityMasterData.Tenant, entityMasterData.MainCarriageToPortId, true);
+                                if(toPort != null)
+                                {
+                                    myRoutingField = myRoutingField + " , " + toPort.Code;
+                                }
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            myRoutingField = myRoutingField + " , " + entityMasterData.InlandDomesticToCity;
+                            break;
+                        }
                 }
             }
 
