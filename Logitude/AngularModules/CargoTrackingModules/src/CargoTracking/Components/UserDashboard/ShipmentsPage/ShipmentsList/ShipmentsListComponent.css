@@ -805,3 +805,7 @@ h1{
     position: absolute;
     padding-left: 9px;
 }
+
+.shipment-references{
+    display: inline-block;
+}

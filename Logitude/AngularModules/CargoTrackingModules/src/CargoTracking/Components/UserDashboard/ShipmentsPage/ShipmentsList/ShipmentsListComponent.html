@@ -216,11 +216,11 @@
                                                    alt="">
                                     </span>
                                 </div>
-                                <span class="mobile-only">
+                                <span class="mobile-only-inline-block">
                                     {{ shipment.ShipmentNumber }}
                                 </span>
-                                <div class="truncateText" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 4">
+                                <div class="truncateText mobile-inline-block" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
                                         {{item}}
                                     </span>
                                     <span class="more-mobile" *ngIf="i == 0">
@@ -230,7 +230,7 @@
                                 <span class="hide-mobile" (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()" *ngIf="references?.length > 4"
                                      [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
-                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 4}} More</u>
+                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 3}} More</u>
                                 </span>
 
                             </div>

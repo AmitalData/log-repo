@@ -521,7 +521,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: isMobile ? references.join("\n") : references.slice(4, references.length + 1).join("\n"),
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
             }
         });
     }
