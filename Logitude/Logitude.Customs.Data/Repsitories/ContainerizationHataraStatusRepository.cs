@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class ContainerizationHatataStatusRepository:IRepository<ContainerizationHatataStatus>
+   public partial class ContainerizationHataraStatusRepository:IRepository<ContainerizationHataraStatus>
    {
         
-		public List<ContainerizationHatataStatus> GetMulti(EntityKeyFields entityKeys)
+		public List<ContainerizationHataraStatus> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
