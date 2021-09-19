@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "38f3b718f875638f28e2a3d38af2cc70";
+		public const string HashString = "10b19d572d598441a097ac6a7567941c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18881,6 +18881,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOChangedDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ChangedDeclarationExport", DefaultText = "Declaration data was changed , please send again before trying to pay",LocalDefaultText = @"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOCorrectedByUserName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CorrectedByUserName", DefaultText = "Corrected By User Name",LocalDefaultText = @"נפתח עי", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOExistsClosingAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsClosingAmendments", DefaultText = "Exists declaration closing amendment in status ",LocalDefaultText = @"קיים תיקון הצהרה מסוג סגירה בסטטוס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
