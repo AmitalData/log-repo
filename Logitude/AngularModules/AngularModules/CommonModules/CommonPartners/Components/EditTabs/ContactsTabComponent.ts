@@ -10,8 +10,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ContactPMService } from '../../../../Common/Services/StandardPMs/ContactPMService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse'; 
 
 @Component({
     
@@ -31,7 +30,7 @@ export class ContactsTabComponent implements OnDestroy {
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsAllContactHasExternalId: boolean = false;
+    public HasExternalId: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -86,7 +85,7 @@ export class ContactsTabComponent implements OnDestroy {
     public IsBlockingUnifreightCustomer: boolean = false;
     private SetUIProperties() {
         var isBlockingUnifreightCustomer = false;
-        if (this.IsAllContactHasExternalId) {
+        if (this.HasExternalId) {
             if (this.Customer != null) {
                 if (SessionLocator.TenantPM.IsHybrid && (this.Customer.CustomerStatusCode == "ACT" || this.Customer.CustomerStatusCode == "WAC")) {
                     isBlockingUnifreightCustomer = true;
@@ -105,7 +104,7 @@ export class ContactsTabComponent implements OnDestroy {
         this.DomainService.GetAllContactsPMsbyCardId(this.EntityPM.Id).subscribe((myResult:any) => {
             this.BuildItemsSource(myResult);
             this.CurrentSession.StopBusyIndicator();
-            this.IsAllContactHasExternalId = this.IsAllContactsHaveExternalId(myResult);
+            this.HasExternalId = this.IsAllContactsHaveExternalId(myResult);
             this.SetUIProperties();
 
         });
@@ -222,13 +221,12 @@ export class ContactsTabComponent implements OnDestroy {
 export class ContactItemClass {
     public ObjectTableName = "Contact";
     public EntityPM: ContactPM;
-    public IsNewEntity: boolean = false;
-    public IsHasExternalId: boolean = false;
+    public IsNewEntity: boolean = false; 
     constructor(item: ContactPM, public fatherComponent: ContactsTabComponent, isNewEntity: boolean) {
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
-        this.IsHasExternalId = this.GetIsHasExternalId();
+      
     }
     GetIsHasExternalId() {
         return !AppTool.IsNullOrEmpty(this.EntityPM.ExternalId);
@@ -251,7 +249,7 @@ export class ContactItemClass {
     get BirthdayReminder() { return this.EntityPM.BirthdayReminder; }
     get AnniversaryReminder() { return this.EntityPM.AnniversaryReminder; }
     get DontShowLocalLabels() { return this.EntityPM.DontShowLocalLabels; }
-    get ExternalId() { return this.EntityPM.ExternalId; }
+    public get ExternalId() { return this.EntityPM.ExternalId; }
     
     
     public IsPrimary: boolean = false;
