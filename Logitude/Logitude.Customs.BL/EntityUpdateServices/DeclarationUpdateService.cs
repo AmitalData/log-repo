@@ -343,6 +343,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
+                    entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+
                     UpdateUnifreight(entityPMOrg);
 
 
