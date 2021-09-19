@@ -79,6 +79,8 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 
         private GLAccountPM CreateInstance(ChartOfAccountsTypeEnum chartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
         {
+            //ChartOfAccountsId = FullAccountingData.DebtorsAndCreditorsChartOfAccountId,
+            var chartOfAccountsId = GetChartOfAccountsId(chartOfAccountsTypeCode);
             return new GLAccountPM()
             {
                 IsMultiCurrency = false,
@@ -89,12 +91,31 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 ChartOfAccountsTypeCode = (int)chartOfAccountsTypeCode + "",
                 ReconcileMethodCode = (int)ReconcileMethodEnum.Local + "",
                 RevenueExpenseType = (int)RevenueExpenseTypeEnum.Revenue + "",
-                ChartOfAccountsId = FullAccountingData.DebtorsAndCreditorsChartOfAccountId,
+                ChartOfAccountsId = chartOfAccountsId,
                 LocalName = $"SpecFlow",
                 EnglishName = $"SpecFlow",
             };
         }
 
+        private string GetChartOfAccountsId(ChartOfAccountsTypeEnum chartOfAccountsTypeCode)
+        {
+            switch (chartOfAccountsTypeCode)
+            {
+                case ChartOfAccountsTypeEnum.Customers:
+                    return FullAccountingData.CustomerChartOfAccountId;
+                case ChartOfAccountsTypeEnum.Vendors:
+                    return FullAccountingData.VendorChartOfAccountId;
+                case ChartOfAccountsTypeEnum.Banks:
+                    return FullAccountingData.BankChartOfAccountId;
+                case ChartOfAccountsTypeEnum.DebtorsAndCreditors:
+                    return FullAccountingData.DebtorsAndCreditorsChartOfAccountId;
 
+                case ChartOfAccountsTypeEnum.Revenues:
+                case ChartOfAccountsTypeEnum.Expenses:
+                case ChartOfAccountsTypeEnum.Works:
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

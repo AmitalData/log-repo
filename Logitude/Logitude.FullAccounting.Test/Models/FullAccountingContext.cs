@@ -23,5 +23,13 @@ namespace Logitude.FullAccounting.Test.Models
         public ARPaymentPM AddedARPaymentPM { get; internal set; }
         public APPaymentPM APPaymentPM { get; internal set; }
         public APPaymentPM AddedAPPaymentPM { get; internal set; }
+        public CashBookPM CashbookCreated { get; internal set; }
+        public CashBookPM Cashbook { get; internal set; }
+        public CashBookPM AddedCashbook { get; internal set; }
+        public BankAccountPM BankAccount { get; internal set; }
+        public BankAccountPM AddedBankAccount { get; internal set; }
+        public BankAccountPM BankAccountPM { get; internal set; }
+        public PaymentChequePM PaymentChequeCreated { get; internal set; }
+        public PaymentChequePM AddedPaymentCheque { get; internal set; }
     }
 }

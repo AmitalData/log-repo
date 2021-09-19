@@ -20,7 +20,9 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new ChargesGroupPreparation().Prepare();
             new ChargeTypePreparation().Prepare();
             new CashBookPreparation().Prepare();
+            new BankCodePreparation().Prepare();
+
         }
-        
+
     }
 }

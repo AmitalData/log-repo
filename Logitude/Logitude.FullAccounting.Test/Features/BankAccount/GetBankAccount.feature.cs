@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.GLAccount
+namespace Logitude.FullAccounting.Test.Features.BankAccount
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,23 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Accounting")]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-NewGLAccount")]
-    public partial class UpdateGlAccountFeature : object, Xunit.IClassFixture<UpdateGlAccountFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-GetBankAccount")]
+    public partial class GetBankAccountFeature : object, Xunit.IClassFixture<GetBankAccountFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Accounting",
-                "Pre-Prepare-NewGLAccount"};
+                "Pre-Prepare-GetBankAccount"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateGlAccount.feature"
+#line 1 "GetBankAccount.feature"
 #line hidden
         
-        public UpdateGlAccountFeature(UpdateGlAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetBankAccountFeature(GetBankAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -44,9 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/GLAccount", "Update GlAccount", "\tWe want to update a GlAccount", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Accounting",
-                        "Pre-Prepare-NewGLAccount"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/BankAccount", "Get Bank Account", "\tWe want to get Bank Account.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-GetBankAccount"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -86,15 +83,15 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update glAccount")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update GlAccount")]
-        [Xunit.TraitAttribute("Description", "Update glAccount")]
-        public virtual void UpdateGlAccount()
+        [Xunit.SkippableFactAttribute(DisplayName="Get bank account")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Bank Account")]
+        [Xunit.TraitAttribute("Description", "Get bank account")]
+        public virtual void GetBankAccount()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update glAccount", null, tagsOfScenario, argumentsOfScenario);
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get bank account", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -114,44 +111,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 6
+ testRunner.When("get bank account with bankAccountId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 7
- testRunner.Given("glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table9.AddRow(new string[] {
-                            "IsMultiCurrency",
-                            "true"});
-                table9.AddRow(new string[] {
-                            "DisplayNumber",
-                            "Unique Number"});
-                table9.AddRow(new string[] {
-                            "AccountTypeCode",
-                            "Vendor"});
-                table9.AddRow(new string[] {
-                            "LocalName",
-                            "VendGlAccountLocal"});
-                table9.AddRow(new string[] {
-                            "EnglishName",
-                            "VendGlAccountEnglish"});
-                table9.AddRow(new string[] {
-                            "RevenueExpenseType",
-                            "Other"});
-                table9.AddRow(new string[] {
-                            "IsControlAccount",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "ControlAccountId",
-                            "1921681254"});
-#line 8
- testRunner.And("following new glAccount properties", ((string)(null)), table9, "And ");
-#line hidden
-#line 18
- testRunner.When("update glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 19
- testRunner.Then("the glAccount should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("bank account should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -164,12 +128,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateGlAccountFeature.FeatureSetup();
+                GetBankAccountFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateGlAccountFeature.FeatureTearDown();
+                GetBankAccountFeature.FeatureTearDown();
             }
         }
     }

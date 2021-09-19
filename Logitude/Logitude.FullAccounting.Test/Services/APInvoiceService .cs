@@ -14,7 +14,7 @@ namespace Logitude.FullAccounting.Test.Services
 {
     public class APInvoiceService
     {
-        const string JournalAccountingEntityCode = "1";
+
         public List<APInvoiceLinePM> CreateLines(Table table)
         {
             var lines = new List<APInvoiceLinePM>();

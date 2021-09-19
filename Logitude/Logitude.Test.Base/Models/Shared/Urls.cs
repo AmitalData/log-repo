@@ -11,7 +11,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
         public static string GLAccountsController = "GLAccounts";
+        public static string BankAccountsController = "bankaccounts";
+        public static string PaymentChequesController = "PaymentCheques";
         public static string CashBooksController = "cashbooks";
+        public static string BankCodesController = "BankCodes";
         public static string JournalsController = "journals";
         public static string JournalActionTypesController = "JournalActionTypes";
 
@@ -35,7 +38,9 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ChargesGroupsController = "ChargesGroups";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
+        public static string BankCodeViewsGetByFilters = "BankCodeViews/GetByFilters";
         public static string AddressViewsGetByFilters = "AddressViews/GetByFilters";
+        public static string BankAccountViewsGetByFilters = "BankAccountViews/GetByFilters";
         public static string ShipmentViewsGetByFilters = "ShipmentViews/GetByFilters";
         public static string FTPDetailViewsGetByFilters = "FTPDetailViews/GetByFilters";
         public static string APInvoiceViewsGetByFilters = "APInvoiceViews/GetByFilters";
@@ -155,6 +160,11 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "GLAccounts/GetSingle?id=" + id;
         }
+        public static string BankAccountsGetSingle(string id)
+        {
+            return "bankaccounts/GetSingle?id=" + id;
+        }
+
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;
@@ -277,6 +287,11 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Tariffs/GetSingle?id=" + id;
         }
+        public static string CashbooksSingle(string id)
+        {
+            return "cashbooks/GetSingle?id=" + id;
+        }
+
         public static string ShipmentOrderSingle(string orderNumber)
         {
             return "ShipmentOrder?orderNumber=" + orderNumber;

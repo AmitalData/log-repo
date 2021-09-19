@@ -17,11 +17,13 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         const string DebtorsAndCreditorsChartCode = "DCCHR";
         const string CustomerChartCode = "CCCHR";
         const string VendorChartCode = "VNCHR";
+        const string BankChartCode = "BNCHR";
         public void Prepare()
         {
             FullAccountingData.DebtorsAndCreditorsChartOfAccountId = GetByCode(DebtorsAndCreditorsChartCode);
             FullAccountingData.CustomerChartOfAccountId = GetByCode(CustomerChartCode);
             FullAccountingData.VendorChartOfAccountId = GetByCode(VendorChartCode);
+            FullAccountingData.BankChartOfAccountId = GetByCode(BankChartCode);
         }
         private string GetByCode(string code)
         {
@@ -62,6 +64,8 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                     return CreateCustomersChartCodeInstance(code);
                 case VendorChartCode:
                     return CreateVendorChartCodeInstance(code);
+                case BankChartCode:
+                    return CreateBankChartCodeInstance(code);
 
                 default:
                     return null;
@@ -103,6 +107,19 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 Tenant = UserTenant.Tenant,
                 SearchFields = $"{code},Vendors Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Vendors + ""
+
+            };
+        }
+        private ChartOfAccountPM CreateBankChartCodeInstance(string code)
+        {
+            return new ChartOfAccountPM()
+            {
+                Code = code,
+                EnglishName = "Banks Chart",
+                LocalName = "Banks Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{code},Banks Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Banks + ""
 
             };
         }

@@ -16,42 +16,34 @@ using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.FullAccounting.Test.Services
 {
-    public class ARPaymentService
+    public class APPaymentService
     {
-
         
 
-        public ARPaymentPM Create(Table table)
+        public APPaymentPM Create(Table table)
         {
             dynamic arPaymentTable = table.CreateDynamicInstance();
-            var arPayment = new ARPaymentPMBuilder().WithDefualtValues()
+            var arPayment = new APPaymentPMBuilder().WithDefualtValues()
                 .BranchIdByCode((string)arPaymentTable.Branch)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .PaymentCurrencyIdByCode((string)arPaymentTable.PaymentCurrency)
                 .PaymentCurrencyExchangeRate((double)arPaymentTable.PaymentCurrencyExchangeRate)
-                .PartnerId(FullAccountingData.CustomerId)
-                .IsFullAccounting(true)
                 .AccountingPaymentMethodId(FullAccountingData.CashPaymentMethodId)
-                .AccountingPaymentMethodCode("CA")
-                .BillToId(FullAccountingData.CustomerId)
                 .AmountInPaymentCurrency((double)arPaymentTable.AmountInPaymentCurrency)
                 .OpenAmount((double)arPaymentTable.AmountInPaymentCurrency)
-                .OpenAmountInLocalCurrency((double)arPaymentTable.OpenAmountInLocalCurrency)
-                .GLAccountId(FullAccountingData.CustomerGLAccountId)
-                .BillToAddressId(FullAccountingData.CustomerMainAddressId)
-                .CashbookId(FullAccountingData.CashBookCash1)
+                .AmountInLocalCurrency((double)arPaymentTable.AmountInLocalCurrency)
+                .VendorId(FullAccountingData.VendorId)
+                .VendorAddressId(FullAccountingData.VendorMainAddressId)
+                .VendorPartnerTypeId("VD")
+                .PaymentNo(DateTime.Now.Ticks +"")
+                .TaxDeductionLocalAmount((decimal)arPaymentTable.TaxDeductionLocalAmount)
+                .TaxDeductionPercentage((int)arPaymentTable.TaxDeductionPercentage)
                 .Build();
-            //arPayment.InvoicesLedgerTransactions = GetInvoicesLedgerTransactions(arPayment.GLAccountId, arPayment.PaymentCurrencyId);
 
             return arPayment;
 
         }
 
-        private List<LedgerTransactionPM> GetInvoicesLedgerTransactions(string glAccountId, string paymentCurrencyId)
-        {
-            var Transactions = APICaller.CallGet<ViewResponse<List<LedgerTransactionPM>>>(Urls.GetTransactionsForARPayment(glAccountId, paymentCurrencyId), UserTenant.Token).Data;
-            return new List<LedgerTransactionPM>() { Transactions.Result.FirstOrDefault() };
-        }
 
     }
 }

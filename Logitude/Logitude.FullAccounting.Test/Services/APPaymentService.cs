@@ -1,6 +1,7 @@
 ﻿
 using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Services.Preparation;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -16,32 +17,31 @@ using TechTalk.SpecFlow.Assist;
 
 namespace Logitude.FullAccounting.Test.Services
 {
-    public class APPaymentService
-    {
-        const string JournalAccountingEntityCode = "1";
-        
+    public class CashbooktService
+    {   
 
-        public APPaymentPM Create(Table table)
+        public CashBookPM Create(Table table)
         {
-            dynamic arPaymentTable = table.CreateDynamicInstance();
-            var arPayment = new APPaymentPMBuilder().WithDefualtValues()
-                .BranchIdByCode((string)arPaymentTable.Branch)
-                .LocalCurrencyId(UserTenant.LocalCurrencyId)
-                .PaymentCurrencyIdByCode((string)arPaymentTable.PaymentCurrency)
-                .PaymentCurrencyExchangeRate((double)arPaymentTable.PaymentCurrencyExchangeRate)
-                .AccountingPaymentMethodId(FullAccountingData.CashPaymentMethodId)
-                .AmountInPaymentCurrency((double)arPaymentTable.AmountInPaymentCurrency)
-                .OpenAmount((double)arPaymentTable.AmountInPaymentCurrency)
-                .AmountInLocalCurrency((double)arPaymentTable.AmountInLocalCurrency)
-                .VendorId(FullAccountingData.VendorId)
-                .VendorAddressId(FullAccountingData.VendorMainAddressId)
-                .VendorPartnerTypeId("VD")
-                .PaymentNo(DateTime.Now.Ticks +"")
-                .TaxDeductionLocalAmount((decimal)arPaymentTable.TaxDeductionLocalAmount)
-                .TaxDeductionPercentage((int)arPaymentTable.TaxDeductionPercentage)
-                .Build();
+            dynamic cashBookTable = table.CreateDynamicInstance();
+            var cashBook = new CashBookPM()
+            {
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                CreatedByUserId = UserTenant.UserId,
+                UpdatedByUserId = UserTenant.UserId,
+                CurrencyId = BillingData.CurrencyNISId,
+                AccountId = new AccountPreparation().Create(),
+                CashBookTypeCode = (int)CashBookTypeCodeEnum.Cash + "",
+                EnglishName = cashBookTable.Name,
+                BranchId = new BranchPreparation().Create(),
+                TotalAmount = 0,
+                LocalName = cashBookTable.Name,
+                Tenant = UserTenant.Tenant,
+                SearchFields = cashBookTable.Name
 
-            return arPayment;
+            };
+
+            return cashBook;
 
         }
 

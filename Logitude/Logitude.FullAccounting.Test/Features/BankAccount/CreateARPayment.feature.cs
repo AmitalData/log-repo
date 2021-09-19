@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.GLAccount
+namespace Logitude.FullAccounting.Test.Features.BankAccount
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,23 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-Accounting")]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-NewGLAccount")]
-    public partial class UpdateGlAccountFeature : object, Xunit.IClassFixture<UpdateGlAccountFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-CreateBankAccount")]
+    public partial class CreateBankAccountFeature : object, Xunit.IClassFixture<CreateBankAccountFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-Accounting",
-                "Pre-Prepare-NewGLAccount"};
+                "Pre-Prepare-CreateBankAccount"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "UpdateGlAccount.feature"
+#line 1 "CreateARPayment.feature"
 #line hidden
         
-        public UpdateGlAccountFeature(UpdateGlAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateBankAccountFeature(CreateBankAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -44,9 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/GLAccount", "Update GlAccount", "\tWe want to update a GlAccount", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-Accounting",
-                        "Pre-Prepare-NewGLAccount"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/BankAccount", "Create Bank Account", "\tWe want to create bank account.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-CreateBankAccount"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -86,15 +83,15 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update glAccount")]
-        [Xunit.TraitAttribute("FeatureTitle", "Update GlAccount")]
-        [Xunit.TraitAttribute("Description", "Update glAccount")]
-        public virtual void UpdateGlAccount()
+        [Xunit.SkippableFactAttribute(DisplayName="Create bank account")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Bank Account")]
+        [Xunit.TraitAttribute("Description", "Create bank account")]
+        public virtual void CreateBankAccount()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update glAccount", null, tagsOfScenario, argumentsOfScenario);
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create bank account", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -114,44 +111,41 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
- testRunner.Given("glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table9.AddRow(new string[] {
-                            "IsMultiCurrency",
-                            "true"});
-                table9.AddRow(new string[] {
-                            "DisplayNumber",
-                            "Unique Number"});
-                table9.AddRow(new string[] {
-                            "AccountTypeCode",
-                            "Vendor"});
-                table9.AddRow(new string[] {
-                            "LocalName",
-                            "VendGlAccountLocal"});
-                table9.AddRow(new string[] {
-                            "EnglishName",
-                            "VendGlAccountEnglish"});
-                table9.AddRow(new string[] {
-                            "RevenueExpenseType",
-                            "Other"});
-                table9.AddRow(new string[] {
-                            "IsControlAccount",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "ControlAccountId",
-                            "1921681254"});
-#line 8
- testRunner.And("following new glAccount properties", ((string)(null)), table9, "And ");
+                table7.AddRow(new string[] {
+                            "Bank",
+                            "bank1"});
+                table7.AddRow(new string[] {
+                            "BranchNumber",
+                            "1"});
+                table7.AddRow(new string[] {
+                            "AccountNumber",
+                            "Random"});
+                table7.AddRow(new string[] {
+                            "Currency",
+                            "NIS"});
+                table7.AddRow(new string[] {
+                            "GLAccount",
+                            "New Account"});
+                table7.AddRow(new string[] {
+                            "DeferredGLAccountId",
+                            "New Account"});
+                table7.AddRow(new string[] {
+                            "TransferGLAcccountId",
+                            "New Account"});
+                table7.AddRow(new string[] {
+                            "Name",
+                            "bank account Test"});
+#line 6
+ testRunner.Given("a bank account with the following properties", ((string)(null)), table7, "Given ");
 #line hidden
-#line 18
- testRunner.When("update glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.When("create bank account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
- testRunner.Then("the glAccount should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+ testRunner.Then("the bank account should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -164,12 +158,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                UpdateGlAccountFeature.FeatureSetup();
+                CreateBankAccountFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                UpdateGlAccountFeature.FeatureTearDown();
+                CreateBankAccountFeature.FeatureTearDown();
             }
         }
     }

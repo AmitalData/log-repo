@@ -11,14 +11,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
-    public class BranchPreparation
+    public class BankCodePreparation
     {
-        const string BZU = "BerzeitU";
-        const string Ramallah = "RMLAH";
+        const string BankCode1 = "Bank1";
         public void Prepare()
         {
-            FullAccountingData.BZUBranchID = GetByCode(BZU);
-            FullAccountingData.RamallahBranchID = GetByCode(Ramallah);
+            FullAccountingData.BankCodeId = GetByCode(BankCode1);
         }
         private string GetByCode(string code)
         {
@@ -32,7 +30,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
-            var response = APICaller.CallGetByFilters<List<BranchPM>>(Urls.BranchviewsByFilters, UserTenant.Token, filter);
+            var response = APICaller.CallGetByFilters<List<BankCodePM>>(Urls.BankCodeViewsGetByFilters, UserTenant.Token, filter);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
@@ -47,61 +45,46 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 
         public string Create(string code = null)
         {
-            var branchPM = CreateInstance(code);
-            var response = APICaller.CallPost<BranchPM>(branchPM, Urls.BranchesController, UserTenant.Token);
+            var bankCode = CreateInstance(code);
+            var response = APICaller.CallPost<BankCodePM>(bankCode, Urls.BankCodesController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private BranchPM CreateInstance(string code)
+        private BankCodePM CreateInstance(string code)
         {
             switch (code)
             {
-                case BZU:
-                    return CreateBZUInstance(code);
-                case Ramallah:
-                    return CreateRamallahInstance(Ramallah);
+                case BankCode1:
+                    return CreateBankCode1Instance(code);
                 default:
                     return CreateAny();
             }
         }
 
+        private BankCodePM CreateBankCode1Instance(string code)
+        {
+            return new BankCodePM()
+            { 
+                Code = code,
+                EnglishName = code,
+                LocalName = code,
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{code}"
+
+            };
+        }
         
-
-        private BranchPM CreateBZUInstance(string code)
+        private BankCodePM CreateAny()
         {
-            return new BranchPM()
-            { 
-                Code = code,
-                EnglishName = "BerzeitU",
-                LocalName = "BerzeitU",
-                Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},BerzeitU"
-
-            };
-        }
-        private BranchPM CreateRamallahInstance(string code)
-        {
-            return new BranchPM()
-            { 
-                Code = code,
-                EnglishName = "RMLAH",
-                LocalName = "RMLAH",
-                Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},RMLAH"
-
-            };
-        }
-        private BranchPM CreateAny()
-        {
-            string name = "Br" + DateTime.Now.Ticks;
-            return new BranchPM()
+            string code = "Br" + DateTime.Now.Ticks;
+            return new BankCodePM()
             {
-                EnglishName = name,
-                LocalName = name,
+                Code = code,
+                EnglishName = code,
+                LocalName = code,
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{name}"
+                SearchFields = $"{code}"
 
             };
         }
-
     }
 }
