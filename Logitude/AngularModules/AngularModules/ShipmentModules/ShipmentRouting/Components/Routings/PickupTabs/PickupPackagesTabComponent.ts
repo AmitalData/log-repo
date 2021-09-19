@@ -169,6 +169,7 @@ export class PickupPackagesTabComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.RestConnectedShipmentpackage(itemComponent.EntityPM);
+                    this.RemoveConnectedShipmentPackage(itemComponent.EntityPM);
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
                     this.SetUIProperties();
@@ -176,6 +177,15 @@ export class PickupPackagesTabComponent {
             });
         }
     }
+
+    RemoveConnectedShipmentPackage(pickUpDeliveryPackagePM: ShipmentPickUpDeliveryPackagePM) {
+        var shipmentPackage = this.ShipmentPM?.ShipmentPackages?.find(p =>
+            (p.ContainerNumber == pickUpDeliveryPackagePM.ContainerNumber) && !AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerNumber)
+            && AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerEntityId))
+        if (shipmentPackage != null) {
+            this.ShipmentPM.RemovePackage(shipmentPackage);
+        }
+    } 
 
     AddContainerClicked() {
         var windowArgs: any = {};
