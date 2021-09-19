@@ -198,7 +198,7 @@ namespace WebFreight.Web.WebPages
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
-
+                    documents = documents.Where(x => x.HasFile && x.DirectionCode == "I").ToList();
                     foreach (DocumentsFilingPM document in documents)
                     {
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
@@ -221,11 +221,11 @@ namespace WebFreight.Web.WebPages
                         }
 
 
-                         if (!string.IsNullOrEmpty(document.FileExtension))
+                        if (!string.IsNullOrEmpty(document.FileExtension))
                         {
                             DocumentsExistance = true;
                             string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
-                            fileName= fileName.Replace('/', ' ');
+                            fileName = fileName.Replace('/', ' ');
                             fileName += ("." + document.FileExtension);
 
                             while (CompressedArray.ContainsKey(document.FileExtension + "@" + fileName))
@@ -243,7 +243,7 @@ namespace WebFreight.Web.WebPages
                     if (DocumentsExistance)
                     {
                         string name = "Documents";
-                        if(!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
+                        if (!string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                         {
                             name = shipment.ShipmentNumber;
                         }
@@ -254,7 +254,7 @@ namespace WebFreight.Web.WebPages
                         byte[] CompressedData = CompressionData(name, CompressedArray, false);
                         HttpContext.Current.Response.Clear();
                         HttpContext.Current.Response.AddHeader("Content-Length", CompressedData.Length.ToString());
-                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename="+ name+".zip");
+                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + name + ".zip");
                         HttpContext.Current.Response.ContentType = "application/zip";
                         HttpContext.Current.Response.BinaryWrite(CompressedData);
 
@@ -266,10 +266,10 @@ namespace WebFreight.Web.WebPages
 
                         }
                     }
-                }               
+                }
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
