@@ -25,8 +25,22 @@ export function CreateInterestBases() {
 }
 
 export function AssertCreateInterestBases() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-    BaseAssertion.AssertStatusCode(RequestAliases.PostInterestBases, 200)
+    let intercept = cy.wait("@" + RequestAliases.PostInterestBases);
+    intercept.then((interception) => {
+        let statusCode = interception.response.statusCode;
+        if (statusCode === 400) {
+            ReCreateInterestBases();
+        }
+        else {
+            assert.equal(statusCode, 200)
+        }
+    })
+}
+
+function ReCreateInterestBases() {
+    cy.FillLogTextBox(InterestBasesSelectors.Code, GenerateRandomNumberAndString(4));
+    CreateInterestBases();
+    AssertCreateInterestBases();
 }
 
 export function AddInterestPeriods(interestBasesDetails: InterestBasesDetails) {
