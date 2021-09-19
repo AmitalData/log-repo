@@ -20,5 +20,8 @@
         public static long SpecialServicesType = 16;
         public static long PackageType = 17;
         public static long CustomField = 18;
+        public static long ContainerSetValue = 19;
+        public static long ContainerUpdate = 20;
+        public static long ContainerCreate = 21;
     }
 }
