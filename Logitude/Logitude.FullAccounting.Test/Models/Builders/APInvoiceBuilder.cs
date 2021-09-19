@@ -243,7 +243,7 @@ namespace Logitude.FullAccounting.Test.Models.Builders
         {
             switch (branchCode)
             {
-                case "BZU":
+                case "BerzeitU":
                     return FullAccountingData.BZUBranchID;
                 case "RMLAH":
                     return FullAccountingData.RamallahBranchID;

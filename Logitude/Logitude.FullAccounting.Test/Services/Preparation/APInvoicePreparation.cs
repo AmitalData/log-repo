@@ -36,7 +36,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CreateLine()
             };
             return new APInvoiceBuilder().WithDefualtValues()
-                .BranchIdByCode("BZU")
+                .BranchIdByCode("BerzeitU")
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .IsGeneralInvoice(true)
                 .AccountingDate(DateTime.Now)

@@ -20,9 +20,18 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         {
             var partnerParameters = GetPartnerParameters();
             FullAccountingData.CustomerId = DataPreparation.GetPartnerId(partnerParameters);
-            FullAccountingData.CustomerGLAccountId = ConnectWithGLAccount(FullAccountingData.CustomerId);
+            var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(FullAccountingData.CustomerId), UserTenant.Token)?.Data;
+            AssertConnectWithGLAccount(customer);
+            FullAccountingData.CustomerGLAccountId = customer.Card.GLAccountId;
+            FullAccountingData.CustomerMainAddressId = GetAddressID(customer);
         }
-        
+
+        private string GetAddressID(CustomerPM customer)
+        {
+            var address = APICaller.CallGet<List<AddressPM>>(Urls.GetAllAddressesPMsbyCardId(customer.Card.Id), UserTenant.Token)?.Data;
+            return address.FirstOrDefault().Id;
+        }
+
         private PartnerParameters GetPartnerParameters()
         {
             return new PartnerParameters()
@@ -33,24 +42,20 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 TypeCode = "CS"
             };
         }
-        private string ConnectWithGLAccount(string customerId)
+        private void AssertConnectWithGLAccount(CustomerPM customer)
         {
-            var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(customerId), UserTenant.Token)?.Data;
+
             if (string.IsNullOrEmpty(customer.Card?.GLAccountId))
             {
-                return ConnectWithGLAccount(customer);
+                ConnectWithGLAccount(customer);
             }
-            else
-            {
-                return customer.Card.GLAccountId;
-            }
+           
         }
 
-        private string ConnectWithGLAccount(CustomerPM customer)
+        private void ConnectWithGLAccount(CustomerPM customer)
         {
             var account = CreateGLAccountInstance(customer);
             var response = APICaller.CallPost<GLAccountPM>(account, Urls.GLAccountsController, UserTenant.Token);
-            return response.Data?.Id;
         }
         private GLAccountPM CreateGLAccountInstance(CustomerPM customer)
         {

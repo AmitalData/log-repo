@@ -22,6 +22,7 @@ namespace Logitude.FullAccounting.Test.Models
         public static string BZUBranchID { get; internal set; }
         public static string RamallahBranchID { get; internal set; }
         public static string ARInvoiceId { get; internal set; }
+        public static string ARPaymenId { get; internal set; }
         public static string GLAccount1Id { get; internal set; }
         public static string GLAccount2Id { get; internal set; }
         public static string VendorId { get; internal set; }
@@ -29,6 +30,8 @@ namespace Logitude.FullAccounting.Test.Models
         public static string APInvoiceId { get; internal set; }
         public static string CashBookCash1 { get; internal set; }
         public static string CashBookCheques1 { get; internal set; }
-        public static object CustomerGLAccountId { get; internal set; }
+        public static string CustomerGLAccountId { get; internal set; }
+        public static string CustomerMainAddressId { get; internal set; }
+        public static string CashPaymentMethodId { get; internal set; }
     }
 }

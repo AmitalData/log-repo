@@ -1,6 +1,7 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿
 using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -18,58 +19,39 @@ namespace Logitude.FullAccounting.Test.Services
     public class ARPaymentService
     {
         const string JournalAccountingEntityCode = "1";
-        public List<ARInvoiceLinePM> CreateLines(Table table)
-        {
-            var lines = new List<ARInvoiceLinePM>();
-            var linsSet = table.CreateDynamicSet();
-            foreach (var line in linsSet)
-            {
-                lines.Add(CreateLine(line));
-            }
-            return lines;
-        }
+        
 
         public ARPaymentPM Create(Table table)
         {
-            dynamic arPayment = table.CreateDynamicInstance();
-            return new ARPaymentPMBuilder().WithDefualtValues()
-                .BranchIdByCode((string)arPayment.Branch)
+            dynamic arPaymentTable = table.CreateDynamicInstance();
+            var arPayment = new ARPaymentPMBuilder().WithDefualtValues()
+                .BranchIdByCode((string)arPaymentTable.Branch)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
-                .PaymentCurrencyIdByCode((string)arPayment.PaymentCurrency)
-                .PaymentCurrencyExchangeRate((double)arPayment.PaymentCurrencyExchangeRate)
-                .BillToId()
-                .PartnerId((double)arPayment.PaymentCurrencyExchangeRate)
+                .PaymentCurrencyIdByCode((string)arPaymentTable.PaymentCurrency)
+                .PaymentCurrencyExchangeRate((double)arPaymentTable.PaymentCurrencyExchangeRate)
+                .PartnerId(FullAccountingData.CustomerId)
                 .IsFullAccounting(true)
+                .AccountingPaymentMethodId(FullAccountingData.CashPaymentMethodId)
+                .AccountingPaymentMethodCode("CA")
                 .BillToId(FullAccountingData.CustomerId)
-                .BillToPartnerTypeId("CS")
-                .ProfitCurrencyExchangeRate((double)arInvoice.ProfitCurrencyExchangeRate)
-                .SetApproved(true)
-                .CalculateAmmount()
+                .AmountInPaymentCurrency((double)arPaymentTable.AmountInPaymentCurrency)
+                .OpenAmount((double)arPaymentTable.AmountInPaymentCurrency)
+                .OpenAmountInLocalCurrency((double)arPaymentTable.OpenAmountInLocalCurrency)
+                .GLAccountId(FullAccountingData.CustomerGLAccountId)
+                .BillToAddressId(FullAccountingData.CustomerMainAddressId)
+                .CashbookId(FullAccountingData.CashBookCash1)
                 .Build();
-                
-                
+            //arPayment.InvoicesLedgerTransactions = GetInvoicesLedgerTransactions(arPayment.GLAccountId, arPayment.PaymentCurrencyId);
 
-
+            return arPayment;
 
         }
-        public JournalPM Add(JournalPM approvedJournal)
+
+        private List<LedgerTransactionPM> GetInvoicesLedgerTransactions(string glAccountId, string paymentCurrencyId)
         {
-            var journal = APICaller.CallPost<JournalPM>(approvedJournal, Urls.JournalsController, UserTenant.Token);
-            return journal.Data;
+            var Transactions = APICaller.CallGet<ViewResponse<List<LedgerTransactionPM>>>(Urls.GetTransactionsForARPayment(glAccountId, paymentCurrencyId), UserTenant.Token).Data;
+            return new List<LedgerTransactionPM>() { Transactions.Result.FirstOrDefault() };
         }
 
-
-        private string GetActionCodeByName(string actionName)
-        {
-            switch (actionName)
-            {
-                case "Credit":
-                    return "1";
-                case "Debit":
-                    return "2";
-                default:
-                    return "1";
-            }
-        }
     }
 }

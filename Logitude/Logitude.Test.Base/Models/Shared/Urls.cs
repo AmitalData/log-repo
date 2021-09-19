@@ -14,12 +14,14 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CashBooksController = "cashbooks";
         public static string JournalsController = "journals";
         public static string JournalActionTypesController = "JournalActionTypes";
+        public static string AccountingPaymentMethodsController = "accountingpaymentmethods";
         public static string BranchesController = "branches";
         public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
 
         public static string AutomaticReconcileMethodViewsByFilters = "AutomaticReconcileMethodViews/GetByFilters";
         public static string CashBookViewsByFilters = "cashbookviews/getbyfilters";
         public static string JournalActionTypeViewsByFilters = "JournalActionTypeViews/GetByFilters";
+        public static string AccountingPaymentMethodViewsByFilters = "accountingpaymentmethodviews/getbyfilters";
         public static string BranchviewsByFilters = "branchviews/getbyfilters";
         public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
         public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
@@ -72,6 +74,7 @@ namespace Logitude.Test.Base.Models.Shared
 
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
+        public static string ARPaymentController = "arpayments";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
         public static string Tariffsettings = "tariffsettings";
 
@@ -196,6 +199,15 @@ namespace Logitude.Test.Base.Models.Shared
         public static string AirlineGetSingle(string id)
         {
             return "airlines/getsingle?id=" + id;
+        }
+        public static string GetAllAddressesPMsbyCardId(string CardId)
+        {
+            return $"PartnersDomain/GetAllAddressesPMsbyCardId?myCardId={CardId}";
+        }
+
+        public static string GetTransactionsForARPayment(string glAccountId,string currencyId )
+        {
+            return $"LedgerTransactions/GetTransactionsForARPayment?arpaymentId=undefined&billToGLAccountId={glAccountId}&paymentCurrencyId={currencyId}";
         }
 
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)

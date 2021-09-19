@@ -36,7 +36,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CreateLine()
             };
             return new ARInvoicePMBuilder().WithDefualtValues()
-                .BranchIdByCode("BZU")
+                .BranchIdByCode("BerzeitU")
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .ARInvoiceTypeCode("IN")
                 .IsFullAccounting(true)

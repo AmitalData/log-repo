@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +20,6 @@ namespace Logitude.FullAccounting.Test.Models
         public List<ARInvoiceLinePM> ARInvoiceLinePM { get; internal set; }
         public List<APInvoiceLinePM> APInvoiceLinePM { get; internal set; }
         public ARPaymentPM ARPaymentPM { get; internal set; }
+        public ARPaymentPM AddedARPaymentPM { get; internal set; }
     }
 }

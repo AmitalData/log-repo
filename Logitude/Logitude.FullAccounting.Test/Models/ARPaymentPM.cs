@@ -1,10 +1,9 @@
 ﻿
-using Logitude.FullAccounting.Test.Models;
 using System;
 using System.Collections.Generic;
 
 
-namespace Logitude.BL.InvoiceModel.EntityPMs
+namespace Logitude.FullAccounting.Test.Models
 {
 
     public class ARPaymentPM

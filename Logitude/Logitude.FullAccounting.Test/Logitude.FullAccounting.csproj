@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\AccountingPaymentMethodPM.cs" />
+    <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\APInvoicePM.cs" />
     <Compile Include="Models\ARPaymentPM.cs" />
     <Compile Include="Models\Builders\ARPaymentPMBuilder.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="Services\GlAccountService.cs" />
     <Compile Include="Services\ARInvoiceService.cs" />
     <Compile Include="Services\JournalService.cs" />
+    <Compile Include="Services\Preparation\AccountingPaymentMethodPreparation.cs" />
+    <Compile Include="Services\Preparation\ARPaymentPreparation.cs" />
     <Compile Include="Services\Preparation\CashBookPreparation.cs" />
     <Compile Include="Services\Preparation\APInvoicePreparation.cs" />
     <Compile Include="Services\Preparation\ARInvoicePreparation.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="Steps\ARInvoice\CreateARInvoiceSteps.cs" />
     <Compile Include="Steps\ARInvoice\GetARInvoiceSteps.cs" />
     <Compile Include="Steps\ARPayment\CreateARPaymentSteps.cs" />
+    <Compile Include="Steps\ARPayment\GetARPaymentSteps.cs" />
     <Compile Include="Steps\GLAccount\UpdateGlAccountSteps.cs" />
     <Compile Include="Steps\Journal\CreateApprovedJournalSteps.cs" />
   </ItemGroup>
@@ -116,6 +121,7 @@
     <None Include="Features\ARInvoice\CreateARInvoice.feature" />
     <None Include="Features\ARInvoice\GetARInvoice.feature" />
     <None Include="Features\ARPayment\CreateARPayment.feature" />
+    <None Include="Features\ARPayment\GetARPayment.feature" />
     <None Include="Features\GLAccount\UpdateGlAccount.feature" />
     <None Include="Features\Journal\CreateApprovedJournal.feature" />
     <None Include="packages.config" />

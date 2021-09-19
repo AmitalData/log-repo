@@ -11,14 +11,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
-    public class BranchPreparation
+    public class AccountingPaymentMethodPreparation
     {
-        const string BZU = "BerzeitU";
-        const string Ramallah = "RMLAH";
+        const string CashPaymentMethod = "CA";
         public void Prepare()
         {
-            FullAccountingData.BZUBranchID = GetByCode(BZU);
-            FullAccountingData.RamallahBranchID = GetByCode(Ramallah);
+            FullAccountingData.CashPaymentMethodId = GetByCode(CashPaymentMethod);
         }
         private string GetByCode(string code)
         {
@@ -32,7 +30,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
-            var response = APICaller.CallGetByFilters<List<BranchPM>>(Urls.BranchviewsByFilters, UserTenant.Token, filter);
+            var response = APICaller.CallGetByFilters<List<AccountingPaymentMethodPM>>(Urls.AccountingPaymentMethodViewsByFilters, UserTenant.Token, filter);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
@@ -47,47 +45,34 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 
         private string Create(string code)
         {
-            var branchPM = CreateInstance(code);
-            var response = APICaller.CallPost<BranchPM>(branchPM, Urls.BranchesController, UserTenant.Token);
+            var accountingPaymentMethodPM = CreateInstance(code);
+            var response = APICaller.CallPost<AccountingPaymentMethodPM>(accountingPaymentMethodPM, Urls.AccountingPaymentMethodsController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private BranchPM CreateInstance(string code)
+        private AccountingPaymentMethodPM CreateInstance(string code)
         {
             switch (code)
             {
-                case BZU:
-                    return CreateBZUInstance(code);
-                case Ramallah:
-                    return CreateRamallahInstance(Ramallah);
+                case CashPaymentMethod:
+                    return CreateCashInstance(code);
+                
                 default:
                     return null;
             }
         }
 
-        private BranchPM CreateBZUInstance(string code)
+        private AccountingPaymentMethodPM CreateCashInstance(string code)
         {
-            return new BranchPM()
+            return new AccountingPaymentMethodPM()
             { 
                 Code = code,
-                EnglishName = "BerzeitU",
-                LocalName = "BerzeitU",
+                LocalName = "Cash",
+                Name = "Cash",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},BerzeitU"
+                SearchFields = $"{code},Cash"
 
             };
         }
-        private BranchPM CreateRamallahInstance(string code)
-        {
-            return new BranchPM()
-            { 
-                Code = code,
-                EnglishName = "RMLAH",
-                LocalName = "RMLAH",
-                Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},RMLAH"
-
-            };
-        }
-        
+       
     }
 }

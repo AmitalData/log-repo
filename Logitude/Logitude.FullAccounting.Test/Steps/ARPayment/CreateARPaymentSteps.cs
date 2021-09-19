@@ -1,5 +1,9 @@
-﻿using Logitude.FullAccounting.Test.Models;
+﻿using FluentAssertions;
+using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Services;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
 using System;
 using TechTalk.SpecFlow;
 
@@ -25,13 +29,13 @@ namespace Logitude.FullAccounting.Test.Steps.ARPayment
         [When(@"create ar payment")]
         public void WhenCreateArPayment()
         {
-            ScenarioContext.Current.Pending();
+            context.AddedARPaymentPM = APICaller.CallPost<ARPaymentPM>(context.ARPaymentPM, Urls.ARPaymentController, UserTenant.Token)?.Data;
         }
-        
+
         [Then(@"the ar payment should create successfully")]
         public void ThenTheArPaymentShouldCreateSuccessfully()
         {
-            ScenarioContext.Current.Pending();
+            context.AddedARPaymentPM.Id.Should().NotBeNullOrEmpty();
         }
     }
 }
