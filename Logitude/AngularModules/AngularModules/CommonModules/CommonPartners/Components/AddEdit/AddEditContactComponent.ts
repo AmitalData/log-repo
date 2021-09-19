@@ -22,6 +22,7 @@ export class AddEditContactComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     public IsBlockingUnifreightCustomer: Boolean = false;
+    public IsHasExternalId = false;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -37,6 +38,8 @@ export class AddEditContactComponent {
             this.CardId = dataContext.fatherComponent.EntityId;
             this.DomainService = dataContext.fatherComponent.DomainService;
             this.IsBlockingUnifreightCustomer = dataContext.fatherComponent.IsBlockingUnifreightCustomer;
+            this.IsHasExternalId = dataContext.IsHasExternalId;
+
         }
         else {
             this.CardId = dataContext.EntityPM.CardId;

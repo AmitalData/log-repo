@@ -136,7 +136,7 @@ export class ContactInputTemplate extends BaseComponent {
 
     public IsEditingEnabled: boolean = false;
     public IsEditingEmailEnabled: boolean = false;
-    public IsBlockingUnifreightCustomer: boolean = false;
+    public IsBlockingUnifreightCustomer: boolean = false; 
     private SetUIProperties() {
 
         this.IsEditingEnabled = true;
@@ -153,7 +153,7 @@ export class ContactInputTemplate extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ExternalId)) {
             if (this.EntityPM != null) {
                 if (SessionLocator.TenantPM.IsHybrid ) {
-                    isBlockingUnifreightCustomer = true;
+                    isBlockingUnifreightCustomer = true; 
                 }
             }
         }
