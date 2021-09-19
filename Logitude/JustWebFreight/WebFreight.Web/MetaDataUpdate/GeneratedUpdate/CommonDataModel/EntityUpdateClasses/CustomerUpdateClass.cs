@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "2bf71d6bf5827d960b7073be54628b43";
+		public const string HashString = "0d4212a0b8f9311b75f9feb9457e1d34";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9656,6 +9656,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode CustomerTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.AllCustomers", DefaultText = @"AllCustomers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Q.AllCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.AllCustomers", NameTextCodeDefaultText = "AllCustomers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -9933,6 +9937,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
              AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.InactiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+  
+	      
+
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_10.Id, NameTextCodeCode = CustomerTextCode_10.Code, ObjectTableName = "Customer", Code = "AllCustomers",  QueryGroupCode = "CLNT", IndexOrder = 10, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_10.Id,FeatureUniqeCode= CustomerFeature_10.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = "customers" }, addedQueries);
+	
+			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
