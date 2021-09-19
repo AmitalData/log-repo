@@ -92,7 +92,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                 
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
                     this.UpdateFiltersFields();
                     this.SetUIProperties();
@@ -104,6 +104,12 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 }
 
                 this.isLoadHousesRequested = false;
+            });
+
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "SHCO") {
+                    this.BuildSummary();
+                }
             });
         }
 
@@ -120,11 +126,13 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
     private allShipmentSubTypes: ShipmentSubTypeList[] = [];

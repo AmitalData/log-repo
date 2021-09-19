@@ -84,8 +84,21 @@ export class TaxReportExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
             
-
+        
     }
+    GetReturnToDraftButtonStatus(createDate:Date) {
+        return this.httpClient.get(this._apiUrl + '/GetReturnToDraftButtonStatus?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
   CreateNewTaxReportLine(taxReportPM: TaxReportPM) {
     return this.httpClient.put(this._apiUrl + "/PutCreateTaxReportLine", JSON.stringify(taxReportPM), ServiceHelper.GetHttpHeaders()).pipe(
       map(res => {

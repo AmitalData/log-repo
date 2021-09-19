@@ -14,32 +14,36 @@
 
     <div class="toolbar">
 
-        <div class="search-bar">
+        <div class="search-bar hide-mobile">
             <form [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
                 <div class="search-text ">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
-                        formControlName="SearchText" name="SearchText " />
+                           formControlName="SearchText" name="SearchText " />
                     <!-- [(ngModel)]="SearchText " -->
 
                     <div class="icon ">
                         <!-- <img src="./assets/search.png " alt=" " /> -->
                         <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
                         <img *ngIf="SearchText" (click)="Clear()" class="delete" src="./assets/images/icons/delete.svg "
-                            alt=" " />
+                             alt=" " />
                     </div>
 
                 </div>
 
                 <button class="search-button" type="submit"
-                    (click)="Search()">{{isLoading?'Loading...': 'Search'}}</button>
+                        (onsubmit)="LoadScreenData()">
+                    {{isLoading?'Loading...': 'Search'}}
+                </button>
             </form>
         </div>
 
         <div class="filters hide-mobile">
             <ul class="toolbar-filters">
-                <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">{{filter.Name}}
-                    ({{filter.Count | number}})</li>
+                <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">
+                    {{filter.Name}}
+                    ({{filter.Count | number}})
+                </li>
             </ul>
         </div>
 
@@ -50,20 +54,20 @@
                     <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="White-label-2" transform="translate(-1764.000000, -130.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
                             <g id="menu/filter" transform="translate(1764.000000, 130.000000)">
-                                <path d="M16.5972846,1.93784382e-15 C17.5198235,1.93784382e-15 18.3700527,0.503766826 18.8092506,1.32824314 C19.2302001,2.11853519 19.1982759,3.06285791 18.7389337,3.81676882 L18.6339704,3.97528117 L13.1410652,11.6367273 L13.1412942,19.0806175 C13.1412942,19.4198351 13.0407956,19.7481679 12.8564587,20.0250862 L12.7573809,20.1590731 L10.4096992,23.0249825 C9.92739776,23.6139801 9.22255424,23.9454545 8.48001414,23.9454545 C8.20253595,23.9454545 7.92549337,23.8992847 7.65960968,23.8079176 C6.70440511,23.480914 6.0452506,22.6311403 5.97100822,21.6225525 L5.96401273,21.43167 L5.96317043,11.6367273 L0.471431179,3.97550507 C-0.0489774033,3.25020961 -0.143566238,2.31025622 0.212753584,1.49986145 L0.296018638,1.32831391 C0.705886889,0.558761283 1.47391266,0.068597887 2.32457345,0.00666300146 L2.50802232,1.93784382e-15 L16.5972846,1.93784382e-15 Z M16.9195818,2.31628753 C16.8646458,2.25493445 16.7858984,2.20997198 16.6936506,2.19132532 L16.5972846,2.18181818 L2.50802232,2.18181818 C2.34117872,2.18181818 2.20228993,2.26410874 2.13912767,2.38269974 C2.09808179,2.4597594 2.09427622,2.54072376 2.12840425,2.61742489 L2.16112364,2.67402376 L7.8616453,10.627047 C7.96950773,10.7775301 8.03767385,10.9536087 8.0606258,11.1379948 L8.06927589,11.2775718 L8.06927589,21.43167 C8.06927589,21.5642781 8.15246903,21.6788701 8.3210656,21.7365879 C8.37391974,21.7547504 8.42724035,21.7636364 8.48001414,21.7636364 C8.58405865,21.7636364 8.67909973,21.7287264 8.75320031,21.6656132 L8.80466288,21.6130949 L11.035802,18.888 L11.036031,11.2776148 C11.036031,11.0901579 11.0826234,10.9066864 11.1702907,10.7444875 L11.2436565,10.6270971 L16.9443363,2.67371852 C16.9973431,2.59985834 17.0123526,2.51956522 16.9899688,2.44108815 L16.9661792,2.38269974 L16.9195818,2.31628753 Z"/>
+                                <path d="M16.5972846,1.93784382e-15 C17.5198235,1.93784382e-15 18.3700527,0.503766826 18.8092506,1.32824314 C19.2302001,2.11853519 19.1982759,3.06285791 18.7389337,3.81676882 L18.6339704,3.97528117 L13.1410652,11.6367273 L13.1412942,19.0806175 C13.1412942,19.4198351 13.0407956,19.7481679 12.8564587,20.0250862 L12.7573809,20.1590731 L10.4096992,23.0249825 C9.92739776,23.6139801 9.22255424,23.9454545 8.48001414,23.9454545 C8.20253595,23.9454545 7.92549337,23.8992847 7.65960968,23.8079176 C6.70440511,23.480914 6.0452506,22.6311403 5.97100822,21.6225525 L5.96401273,21.43167 L5.96317043,11.6367273 L0.471431179,3.97550507 C-0.0489774033,3.25020961 -0.143566238,2.31025622 0.212753584,1.49986145 L0.296018638,1.32831391 C0.705886889,0.558761283 1.47391266,0.068597887 2.32457345,0.00666300146 L2.50802232,1.93784382e-15 L16.5972846,1.93784382e-15 Z M16.9195818,2.31628753 C16.8646458,2.25493445 16.7858984,2.20997198 16.6936506,2.19132532 L16.5972846,2.18181818 L2.50802232,2.18181818 C2.34117872,2.18181818 2.20228993,2.26410874 2.13912767,2.38269974 C2.09808179,2.4597594 2.09427622,2.54072376 2.12840425,2.61742489 L2.16112364,2.67402376 L7.8616453,10.627047 C7.96950773,10.7775301 8.03767385,10.9536087 8.0606258,11.1379948 L8.06927589,11.2775718 L8.06927589,21.43167 C8.06927589,21.5642781 8.15246903,21.6788701 8.3210656,21.7365879 C8.37391974,21.7547504 8.42724035,21.7636364 8.48001414,21.7636364 C8.58405865,21.7636364 8.67909973,21.7287264 8.75320031,21.6656132 L8.80466288,21.6130949 L11.035802,18.888 L11.036031,11.2776148 C11.036031,11.0901579 11.0826234,10.9066864 11.1702907,10.7444875 L11.2436565,10.6270971 L16.9443363,2.67371852 C16.9973431,2.59985834 17.0123526,2.51956522 16.9899688,2.44108815 L16.9661792,2.38269974 L16.9195818,2.31628753 Z" />
                             </g>
                         </g>
                     </g>
                 </svg>
                 <!-- <img src="./assets/images/icons/filter.svg" alt=" " /> -->
-                </div>
-            <div (click)="SortClicked()" >
+            </div>
+            <div (click)="SortClicked()">
                 <svg [class.FlipImgVert]="!isSortDescending" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="23px" viewBox="0 0 24 23" version="1.1">
                     <title>EBE2AA67-439B-428C-ACB5-44210E8ED604</title>
                     <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="White-label-2" transform="translate(-1816.000000, -131.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
                             <g id="menu/sort" transform="translate(1816.000000, 131.000000)">
-                                <path d="M18.5454545,1.94553368e-15 C19.1049118,1.94553368e-15 19.5660078,0.422805923 19.6290243,0.967510196 L19.6363636,1.0952381 L19.636,18.216 L21.5426436,16.0286118 L21.6391509,15.9308388 C22.0440226,15.5689238 22.6634618,15.5579019 23.082005,15.9255804 C23.5354268,16.3238989 23.5813732,17.0158294 23.1846291,17.4710504 L23.1846291,17.4710504 L19.3664473,21.8520028 L19.2683837,21.9512323 C18.8231526,22.3481502 18.1280473,22.3150737 17.7244618,21.8520028 L17.7244618,21.8520028 L13.90628,17.4710504 L13.822566,17.3620389 C13.5190157,16.9111159 13.5903609,16.293259 14.0089041,15.9255804 L14.0089041,15.9255804 L14.1174848,15.8415343 C14.5666255,15.5367794 15.1820402,15.6084077 15.5482655,16.0286118 L15.5482655,16.0286118 L17.454,18.216 L17.4545455,1.0952381 C17.4545455,0.490354798 17.9429621,1.94553368e-15 18.5454545,1.94553368e-15 Z M14.1818182,11.7509921 C14.7843106,11.7509921 15.2727273,12.2413469 15.2727273,12.8462302 C15.2727273,13.4079075 14.8515925,13.8708332 14.3090412,13.9340998 L14.1818182,13.9414683 L8.66098485,13.9414683 C8.05849239,13.9414683 7.57007576,13.4511135 7.57007576,12.8462302 C7.57007576,12.2845528 7.99121051,11.8216271 8.5337618,11.7583605 L8.66098485,11.7509921 L14.1818182,11.7509921 Z M14.1818182,5.87549603 C14.7843106,5.87549603 15.2727273,6.36585083 15.2727273,6.97073413 C15.2727273,7.53241147 14.8515925,7.99533721 14.3090412,8.05860375 L14.1818182,8.06597222 L4.78693182,8.06597222 C4.18443936,8.06597222 3.69602273,7.57561742 3.69602273,6.97073413 C3.69602273,6.40905678 4.11715748,5.94613105 4.65970877,5.8828645 L4.78693182,5.87549603 L14.1818182,5.87549603 Z M14.1818182,1.94553368e-15 C14.7843106,1.94553368e-15 15.2727273,0.490354798 15.2727273,1.0952381 C15.2727273,1.65691544 14.8515925,2.11984118 14.3090412,2.18310772 L14.1818182,2.19047619 L1.09090909,2.19047619 C0.488416637,2.19047619 4.53455455e-13,1.70012139 4.53455455e-13,1.0952381 C4.53455455e-13,0.533560748 0.421134753,0.0706350145 0.963686045,0.00736846764 L1.09090909,1.94553368e-15 L14.1818182,1.94553368e-15 Z"/>
+                                <path d="M18.5454545,1.94553368e-15 C19.1049118,1.94553368e-15 19.5660078,0.422805923 19.6290243,0.967510196 L19.6363636,1.0952381 L19.636,18.216 L21.5426436,16.0286118 L21.6391509,15.9308388 C22.0440226,15.5689238 22.6634618,15.5579019 23.082005,15.9255804 C23.5354268,16.3238989 23.5813732,17.0158294 23.1846291,17.4710504 L23.1846291,17.4710504 L19.3664473,21.8520028 L19.2683837,21.9512323 C18.8231526,22.3481502 18.1280473,22.3150737 17.7244618,21.8520028 L17.7244618,21.8520028 L13.90628,17.4710504 L13.822566,17.3620389 C13.5190157,16.9111159 13.5903609,16.293259 14.0089041,15.9255804 L14.0089041,15.9255804 L14.1174848,15.8415343 C14.5666255,15.5367794 15.1820402,15.6084077 15.5482655,16.0286118 L15.5482655,16.0286118 L17.454,18.216 L17.4545455,1.0952381 C17.4545455,0.490354798 17.9429621,1.94553368e-15 18.5454545,1.94553368e-15 Z M14.1818182,11.7509921 C14.7843106,11.7509921 15.2727273,12.2413469 15.2727273,12.8462302 C15.2727273,13.4079075 14.8515925,13.8708332 14.3090412,13.9340998 L14.1818182,13.9414683 L8.66098485,13.9414683 C8.05849239,13.9414683 7.57007576,13.4511135 7.57007576,12.8462302 C7.57007576,12.2845528 7.99121051,11.8216271 8.5337618,11.7583605 L8.66098485,11.7509921 L14.1818182,11.7509921 Z M14.1818182,5.87549603 C14.7843106,5.87549603 15.2727273,6.36585083 15.2727273,6.97073413 C15.2727273,7.53241147 14.8515925,7.99533721 14.3090412,8.05860375 L14.1818182,8.06597222 L4.78693182,8.06597222 C4.18443936,8.06597222 3.69602273,7.57561742 3.69602273,6.97073413 C3.69602273,6.40905678 4.11715748,5.94613105 4.65970877,5.8828645 L4.78693182,5.87549603 L14.1818182,5.87549603 Z M14.1818182,1.94553368e-15 C14.7843106,1.94553368e-15 15.2727273,0.490354798 15.2727273,1.0952381 C15.2727273,1.65691544 14.8515925,2.11984118 14.3090412,2.18310772 L14.1818182,2.19047619 L1.09090909,2.19047619 C0.488416637,2.19047619 4.53455455e-13,1.70012139 4.53455455e-13,1.0952381 C4.53455455e-13,0.533560748 0.421134753,0.0706350145 0.963686045,0.00736846764 L1.09090909,1.94553368e-15 L14.1818182,1.94553368e-15 Z" />
                             </g>
                         </g>
                     </g>
@@ -122,7 +126,7 @@
 
 
                 <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
-                    style="cursor: pointer;">
+                     style="cursor: pointer;">
 
                     <!-- Shipment Skelton -->
                     <div *ngIf="!shipment" class="shipment-skelton">
@@ -138,13 +142,13 @@
                     </div>
 
                     <!-- Shipment Data -->
-                    <div *ngIf="shipment" style="width: 100%; height: 100%;"  [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;" [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
                         <div class="column mode-icon" [attr.title]="ShipmentTypeAndDirectionTooltip" style="width: 8%;">
                             <div class="circle-image">
                                 <!-- <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " /> -->
 
-                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;     top: 30px" [attr.title]="ShipmentTypeAndDirectionTooltip" >
-                                    <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;" [attr.title]="ShipmentTypeAndDirectionTooltip">
+                                    <svg *ngSwitchCase="'O'" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <title>0FD17A4A-5C03-438A-96BD-5AE25DEE0482</title>
                                         <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <g id="Search-Results" transform="translate(-370.000000, -405.000000)" fill="#002664">
@@ -159,7 +163,7 @@
                                         </g>
                                     </svg>
 
-                                    <svg *ngSwitchCase="'A'" width="36px" height="32px" viewBox="0 0 36 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <svg *ngSwitchCase="'A'" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <title>0115CEBC-E18D-4587-8E9E-7A1A01FA23E5</title>
                                         <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
@@ -197,12 +201,13 @@
                                 <g xmlns="http://www.w3.org/2000/svg">
                                 <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
                                       fill="var(--secondaryColor)" data-original="#000000" />
+
                                     </g>
                                     </svg>
                             </div>
                         </div>
                         <!-- References -->
-                        <div class="column col-md-2 reference" style="width: 12%;">
+                        <div class="column col-md-2 reference" style="width: 5%;">
                             <div>
                                 <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
                                     Reference NO.
@@ -227,6 +232,7 @@
                                     <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
                                     <u [attr.title]="MoreReferenceText">+ {{references?.length - 4}} More</u>
                                 </span>
+
                             </div>
                         </div>
 
@@ -258,17 +264,16 @@
 
                         <!-- Sender -->
                         <div class="column col-md-2 sender" style="width: 12%;">
-                            <div  [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
+                            <div [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
                                 <div class="value truncateText">{{SupplierOrClientValue}}</div>
 
 
 
-
-
                                 <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
                                 <div class="value truncateText hide-mobile">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}}
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
+                                    <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
                                 </div>
                                     <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
 
@@ -277,7 +282,7 @@
 
 
                         <!-- QUANTITY & WEIGHT -->
-                        <div class="column col-md-2 sender" style="width: 12%;">
+                        <div class="column col-md-2 sender hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">QUANTITY & WEIGHT </div>
                                 <div class="value truncateText">
@@ -293,6 +298,9 @@
                             </div>
                         </div>
                         <div class="column seperator"></div>
+
+
+
 
 
                         <!-- Pickup -->
@@ -355,7 +363,7 @@
                         </div>
 
                         <!-- NEXT STATUS -->
-                        <div class="column col-md-1 status hide-mobile" style="width: 12%;" *ngIf="shipment.FutureMilstoneName != null">
+                        <div class="column col-md-1 status hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">NEXT STATUS</div>
                                 <div class="value truncateText">{{ shipment.FutureMilstoneName }}</div>
@@ -370,7 +378,7 @@
                             <img src="/assets/images/icons/more.png" alt="">
                         </div>
                     </div>
-                    </div>
+                </div>
 
             </cdk-virtual-scroll-viewport>
 
@@ -397,14 +405,15 @@
             </li> -->
             <li [class.expanded]="isFilter2Expanded">
                 <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Customers</div>
-                <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded"><img
-                        src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter2Expanded" /></div>
+                <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter2Expanded" />
+                </div>
                 <div class="expanded-list" [class.show]="isFilter2Expanded">
 
 
                     <div class="checkbox-filteritem" *ngFor="let customer of FiltersInvitedCustomers">
                         <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected" (ValueChanged)="OnCustomerValueChanged($event, customer)"
-                            [Text]="customer.Name" [DataContext]="customer"></CheckBox>
+                                  [Text]="customer.Name" [DataContext]="customer"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
 
@@ -425,18 +434,18 @@
         <div class="rect3"></div>
         <div class="rect4"></div>
         <div class="rect5"></div>
-      </div>
+    </div>
 
     <!-- Details Menu - sort -->
     <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort'"
-        [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
-        (ButtonClicked)="SortMenuClicked($event)"></details-menu>
+                  [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
+                  (ButtonClicked)="SortMenuClicked($event)"></details-menu>
 
     <!-- Details Menu - shipment more -->
     <details-menu [Show]="showShipmentDetailsMenu" [Toggle]="'showShipmentDetailsMenu'" [DataContext]="this"
-        [MenuTitle]="'Sort By'"
-        [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
-        (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
+                  [MenuTitle]="'Sort By'"
+                  [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
+                  (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
 
 </div>
 

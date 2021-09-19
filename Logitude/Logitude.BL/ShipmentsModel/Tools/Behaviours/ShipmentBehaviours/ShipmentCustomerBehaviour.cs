@@ -334,7 +334,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.ShipperNotExporterContactId;
             entityPM.CustomerAddressId = entityPM.ShipperNotExporterAddressId;
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference;
-            entityPM.CustomerReference2 = null;
+            entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference1;
+            entityPM.CustomerReference2 = entityPM.ShipperNotExporterReference2;
         }
 
         private void MapConsigneeNotImporter()

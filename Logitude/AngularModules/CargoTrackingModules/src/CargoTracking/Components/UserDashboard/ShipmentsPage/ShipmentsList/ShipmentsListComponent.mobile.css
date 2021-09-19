@@ -46,7 +46,7 @@
         .page-title {
             margin-top: 70px !important;
             text-align: left;
-           
+
         }
         .column {
             display: block;
@@ -63,7 +63,7 @@
         }
 
 
-        
+
         .filters-sidebar{
             top: 50px; /* exc app bar*/
             left: 0;
@@ -71,7 +71,7 @@
         }
         .filters-sidebar::after{
             content: none;
-        
+
         }
         .filters-sidebar li{
             width: initial;
@@ -169,7 +169,6 @@
             height: 26px;
             width: 30px;
         }
-
         .more-mobile{
             display: inline;
             margin-left: 10px

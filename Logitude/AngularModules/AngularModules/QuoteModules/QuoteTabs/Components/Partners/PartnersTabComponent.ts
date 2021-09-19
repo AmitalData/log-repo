@@ -627,16 +627,10 @@ export class PartnerItem extends BaseComponent {
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.EntityPM.ShipperMainAddressId = null;
                 this.EntityPM.ShipperPickAddressId = null;
-                this.EntityPM.PickUpAddressId = null;
-                this.EntityPM.FromPartnerId = null;
-                this.EntityPM.FromPartnerAddressId = null;
+                this.EntityPM.PickUpAddressId = null;                
             }
 
             else {
-                if (this.IsInlandDomestic) {
-                    this.EntityPM.FromPartnerId = newValue;
-                }
-
                 this.EntityPM.FromAddressCity = null;
                 this.EntityPM.FromAddressZipCode = null;
                 this.EntityPM.FromAddressCountryId = null;
@@ -657,15 +651,9 @@ export class PartnerItem extends BaseComponent {
                 this.EntityPM.ConsigneeMainAddressId = null;
                 this.EntityPM.ConsigneePickAddressId = null;
                 this.EntityPM.DeliveryAddressId = null;
-                this.EntityPM.ToPartnerId = null;
-                this.EntityPM.ToPartnerAddressId = null;
             }
 
             else {
-                if (this.IsInlandDomestic) {
-                    this.EntityPM.ToPartnerId = newValue;
-                }
-
                 this.EntityPM.ToAddressCity = null;
                 this.EntityPM.ToAddressZipCode = null;
                 this.EntityPM.ToAddressCountryId = null;
@@ -1204,10 +1192,6 @@ export class PartnerItem extends BaseComponent {
                                         this.EntityPM.IsPotentialShipper = true;
                                     }
 
-                                    if (this.IsInlandDomestic) {
-                                        this.EntityPM.FromPartnerAddressId = this.EntityPM.ShipperMainAddressId;
-                                    }
-
                                     if (this.EntityPM.IncludePickUp) {
                                         if (!AppTool.IsNullOrEmpty(this.EntityPM.ShipperPickAddressId)) {
                                             this.EntityPM.PickUpAddressId = this.EntityPM.ShipperPickAddressId;
@@ -1232,10 +1216,6 @@ export class PartnerItem extends BaseComponent {
 
                                     if (list.PartnerTypeId == "PO") {
                                         this.EntityPM.IsPotentialConsignee = true;
-                                    }
-
-                                    if (this.IsInlandDomestic) {
-                                        this.EntityPM.ToPartnerAddressId = this.EntityPM.ConsigneeMainAddressId;
                                     }
 
                                     if (this.EntityPM.IncludeDelivery) {

@@ -20,7 +20,7 @@
         font-size: 12px !important;
     }
 }
-    
+
 @media screen and (max-width: 1470px) {
     .toolbar > div.search-bar {
         display: block;
@@ -110,11 +110,11 @@
     }
 
     .column .circle-image div {
-        top: 15px;
+        top: 30px;
     }
 
     .column .circle-image div svg {
-        height: 45px;
+        height: 20px;
         width: 47px;
     }
 
