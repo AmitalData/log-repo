@@ -248,6 +248,7 @@ import { CargoTypeListService } from './Services/StandardLists/CargoTypeListServ
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
+import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 
 //#endregion
 
@@ -702,6 +703,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "ContainerizationHataraStatusListService": { myResult = new ContainerizationHataraStatusListService(); break; }
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }

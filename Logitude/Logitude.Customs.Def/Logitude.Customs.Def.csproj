@@ -81,6 +81,7 @@
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\ClientsPoaPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerizationHataraStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
