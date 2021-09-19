@@ -37,6 +37,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         const int CargoTrackingTable_MultiConditions = 2;
         const int ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments = 1;
         const int ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments = 2;
+        const int ShipmentTable_GetShipmentOrders = 3;
         const int GeneralTable_WithoutCustomCondition = 0;
 
 
@@ -364,7 +365,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (buildCargoArgs.Table.ConditionsNumber > 1)
             {
-                if (buildCargoArgs.Table.CurrentCondition == 2)
+                if (buildCargoArgs.Table.CurrentCondition == 3)
                     StartRenameCargoTables(buildCargoArgs);
             }
             else
@@ -387,17 +388,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
 
-        private SqlDataReader GetSqlDataReader(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
-                                               CargoTrackingTable table, 
+        private SqlDataReader GetSqlDataReader(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
+                                               CargoTrackingTable table,
                                                SqlConnection sourceConnection)
         {
             string tableConditionCommand = "";
-            if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition ==
-                                                                                                                                                    ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
+            if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments"
+                && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition == ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
                 tableConditionCommand = ShipmentTableCondtions.GetAllCustomsShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
-            else if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments" && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition ==
-                                                                                                                                                    ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
+
+            else if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments"
+                && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition == ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
                 tableConditionCommand = ShipmentTableCondtions.GetAllNonCustomShipmentsThatContainForwardingShipments(cargoTrackingDataBaseArgs, table, LastUpdate);
+
+            else if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName == "CargoTrackingShipments"
+                && cargoTrackingDataBaseArgs.BuildCargoArgs.Table.CurrentCondition == ShipmentTable_GetShipmentOrders)
+                tableConditionCommand = ShipmentTableCondtions.GetShipmentOrders(cargoTrackingDataBaseArgs, table, LastUpdate);
+
             else
                 tableConditionCommand = AddDefaultWhereCondition(cargoTrackingDataBaseArgs, table);
 
@@ -577,6 +584,41 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             try
             {
+                //bulkCopy.ColumnMappings.Clear();
+
+                string[] targetColNames = bulkDataPreperation.CargoTrackingTable.CargoTracking_FieldsDBName.Split(',');
+                var firstRow = bulkDataPreperation.SelectedDataTable.Rows[0];
+
+                //foreach (string colName in targetColNames)
+                //{
+                //    var value = firstRow[colName];
+                //    Console.WriteLine(colName + ": (" + value+ ") ,Type: " + value.GetType().Name);
+                //    if (value.Equals("") && value.GetType().Name == "DateTime")
+                //        value = DateTime.MinValue;
+                //        //Console.WriteLine("what the fuck!!");
+                //}
+                //foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
+                //{
+                //    foreach (string colName in targetColNames)
+                //    {
+                //        //var value = row[colName];
+                //        ////Console.WriteLine(colName + ": (" + value + ") ,Type: " + value.GetType().Name);
+                //        //if (value.Equals("") && colName.Contains("Date"))
+                //        //{
+                //        //    row[colName] = DateTime.Now;
+                //        //    //Console.WriteLine("what the fuck!!");
+                //        //}
+                //    }
+                //}
+                //foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
+                //{
+                //    foreach (string colName in targetColNames)
+                //    {
+                //        var value = row[colName];
+                //        Console.WriteLine(colName + ": (" + value + ") ,Type: " + value.GetType().Name);
+                         
+                //    }
+                //}
                 bulkCopy.WriteToServer(bulkDataPreperation.SelectedDataTable);
 
             }
@@ -586,7 +628,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     ThrowColumnWidthValidation(bulkCopy, ex);
                 throw ex;
             }
+            catch (InvalidOperationException ex)
+            {
+                throw ex;
+            }
             bulkCopy.Close();
+        }
+
+        private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)
+        {
+            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
+                return true;
+            return false;
         }
 
         private static void ThrowColumnWidthValidation(SqlBulkCopy bulkCopy, SqlException ex)
@@ -789,7 +842,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionsNumber == CargoTrackingTable_MultiConditions)
                 {
                     UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
-                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments, true);
+                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments);
+                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
                 _recordUpdated.NumberOfRecordUpdated2 = updateCargoTrackingRecords.NumberRecordUpdated2;

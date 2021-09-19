@@ -17,6 +17,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
         public static List<string> PrivateShipmentTypes = new List<string> { "LCLD", "MYGO", "MYGI" };
+        const int ShipmentOrderTableCondition = 3;
 
         public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
@@ -25,7 +26,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 if (bulkDataPreperation.InnerDataTable == null)
                     bulkDataPreperation.InnerDataTable = bulkDataPreperation.MainDataTable.Clone();
 
-                CreateShipmentRefences(tableRow, bulkDataPreperation);
+                if (bulkDataPreperation.CargoTrackingTable.CurrentCondition == ShipmentOrderTableCondition)
+                { 
+                    // shipment order fields
+                }
+                else
+                    CreateShipmentRefences(tableRow, bulkDataPreperation);
             }
 
 
