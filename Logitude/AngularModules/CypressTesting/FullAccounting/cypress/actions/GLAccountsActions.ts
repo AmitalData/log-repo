@@ -5,6 +5,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
+import * as Actions from './Actions';
 
 export function NavigatesGLAccountWizerd() {
     cy.Click(GLAccountsSelectors.NewGLAccountButton, null)
@@ -15,13 +16,17 @@ export function FillGLAccountDetails(gLAccountsDetails: GLAccountsDetails, curre
     cy.FillLogLov(GLAccountsSelectors.ChartOfAccounts, gLAccountsDetails.ChartOfAccounts, true)
     cy.FillLogTextBox(GLAccountsSelectors.LocalName, gLAccountsDetails.LocalName + currentDateTime)
     FillEnglishName(gLAccountsDetails.EnglishName + currentDateTime)
-    cy.FillLogLov(GLAccountsSelectors.Currency, gLAccountsDetails.Currency, true)
+    FillCurrency(gLAccountsDetails.Currency)
+    Actions.FillCheckBoxProcess(GLAccountsSelectors.MultiCurrencyCheckBox, gLAccountsDetails.MultiCurrencyCheckBox)
     cy.FillLogLov(GLAccountsSelectors.RevenueExpenseType, gLAccountsDetails.RevenueExpenseType, true)
 }
 
 export function FillEnglishName(englishName) {
     cy.FillLogTextBox(GLAccountsSelectors.EnglishName, englishName)
+}
 
+export function FillCurrency(currency) {
+    cy.FillLogLov(GLAccountsSelectors.Currency, currency, true)
 }
 
 export function CreateGLAccount() {
@@ -30,7 +35,6 @@ export function CreateGLAccount() {
 }
 
 export function AssertCreateGLAccount() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
     BaseAssertion.AssertStatusCode(RequestAliases.PostGLAccounts, 200)
 }
 

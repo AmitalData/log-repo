@@ -70,3 +70,13 @@ Then("the GL Account should create successfully", () => {
     GLAccountsActions.AssertCreateGLAccount()
 });
 //#endregion
+
+//#region Connect Split by Currency Accounts
+Given("navigate split by currency accounts", () => {
+    CustomerGLAActions.NavigateSplitByCurrencyWizerd()
+});
+
+Given("fill the {string} as currency value", (currency) => {
+    GLAccountsActions.FillCurrency(currency)
+});
+//#endregion

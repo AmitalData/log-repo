@@ -24,10 +24,16 @@ Feature: Customer GLA
     Scenario: Activate the customer in accounting system
         Given navigates new account wizerd inside the customer
         And a GL Account with the following details
-            | ChartOfAccounts    | Customer1   |
-            | LocalName          | CurrentDate |
-            | EnglishName        | CurrentDate |
-            | Currency           | NIS         |
-            | RevenueExpenseType | Other       |
+            | ChartOfAccounts       | Customer1 |
+            | LocalName             | GL        |
+            | EnglishName           | GL        |
+            | MultiCurrencyCheckBox | Yes       |
+            | RevenueExpenseType    | Other     |
+        When create GL Account
+        Then the GL Account should create successfully
+
+    Scenario: Connect Split by Currency Accounts
+        Given navigate split by currency accounts
+        And fill the "NIS" as currency value
         When create GL Account
         Then the GL Account should create successfully
