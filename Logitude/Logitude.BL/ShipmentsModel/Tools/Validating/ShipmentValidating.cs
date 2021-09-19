@@ -1543,7 +1543,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             }
         }
 
-        private static void ValidateContainerNumbers(ShipmentPM entityPM)
+        public static void ValidateContainerNumbers(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")
             {
