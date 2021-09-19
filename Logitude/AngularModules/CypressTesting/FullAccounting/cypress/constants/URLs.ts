@@ -15,6 +15,9 @@ export class URLs {
     public static readonly ChartOfAccounts = '**/chartofaccounts';
     public static readonly ChartOfAccountsGetSingle = "**/chartofaccounts/getsingle?**";
     public static readonly VendorsGetSingle = "**/vendors/getsingle?**";
+    public static readonly Journals = "**/journals";
+    public static readonly InterestBases = "**/interestbasestypes";
+
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
