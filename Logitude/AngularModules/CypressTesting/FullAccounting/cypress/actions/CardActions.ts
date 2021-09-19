@@ -1,4 +1,5 @@
 import { CardSelectors } from "../selectors/CardSelectors";
+import { GLAccountsSelectors } from "../selectors/GLAccountsSelectors";
 import { CardDetails } from "cypress/models/CardDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
@@ -63,4 +64,10 @@ export function NavigateGLAccountWizerdFromCustomer() {
 export function NavigateGLAccountWizerdFromVendor() {
     cy.Click(CardSelectors.VendorAccountingTab, null)
     cy.Click(CardSelectors.ActivateHyperLink, null)
+}
+
+export function NavigateSplitByCurrencyWizerd() {
+    cy.Click(CardSelectors.DispalyTransactions, null)
+    cy.Click(GLAccountsSelectors.AdditionalDataTab, null)
+    cy.Click(GLAccountsSelectors.AddSplittedbyCurrencyHyperLink, null)
 }

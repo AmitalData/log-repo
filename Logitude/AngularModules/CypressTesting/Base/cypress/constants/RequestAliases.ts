@@ -268,4 +268,9 @@ export class RequestAliases {
     public static readonly PostChartOfAccount = 'PostChartOfAccount';
     public static readonly PutChartOfAccount = 'PutChartOfAccount';
 
+    public static readonly PostJournal = 'PostJournal';
+    public static readonly PutJournal = 'PutJournal';
+
+    public static readonly PostInterestBases = 'PostInterestBases';
+    public static readonly PutInterestBases = 'PutInterestBases';
 }

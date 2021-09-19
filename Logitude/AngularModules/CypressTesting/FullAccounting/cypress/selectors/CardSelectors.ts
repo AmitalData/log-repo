@@ -10,4 +10,5 @@ export class CardSelectors {
     public static readonly CustomerAccountingTab = '#CustomerTHAccounting';
     public static readonly VendorAccountingTab = '#VendorTHAccounting';
     public static readonly ActivateHyperLink = '#Activate';
+    public static readonly DispalyTransactions = '#DispalyTransactions';
 }

@@ -4,5 +4,6 @@ export interface GLAccountsDetails {
     LocalName: string,
     EnglishName: string,
     Currency: string,
+    MultiCurrencyCheckBox: string,
     RevenueExpenseType: string
 }

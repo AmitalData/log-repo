@@ -3,6 +3,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
+import { Constants } from '../constants/Constants';
 
 export function NavigatesFullAccounting() {
     cy.Click(BaseSelectors.FullAccountingTab, null)
@@ -41,4 +42,15 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
 
 export function OpenNewWizard(tabName: string) {
     cy.Click(BaseSelectors.NewWizardButton(tabName), null);
+}
+
+export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
+    if (IsCheck) {
+        if (IsCheck.toUpperCase() == Constants.YES) {
+            cy.get(CheckBoxSelector).check({ force: true })
+        }
+        else {
+            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
+        }
+    }
 }
