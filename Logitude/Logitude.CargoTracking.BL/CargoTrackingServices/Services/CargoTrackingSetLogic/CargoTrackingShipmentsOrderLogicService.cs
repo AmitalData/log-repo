@@ -61,7 +61,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetMainEntity(DataRow tableRow)
         {
-            tableRow.SetField("IsMainRecord", true);
+            tableRow.SetField("IsMainRecord", IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"));
         }
         private static void SetShipmentTypeCode(DataRow tableRow)
         {
