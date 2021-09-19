@@ -51,6 +51,22 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new VendorPreparation().Prepare();
             new APInvoicePreparation().Prepare();
         }
+        [BeforeFeature("Pre-Prepare-CrateAPPayment")]
+        public static void PrePrepareCrateAPPayment()
+        {
+            new AccountingPaymentMethodPreparation().Prepare();
+            new VendorPreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-GetAPPayment")]
+        public static void PrePrepareGetAPPayment()
+        {
+            new AccountingPaymentMethodPreparation().Prepare();
+            new VendorPreparation().Prepare();
+            new APPaymentPreparation().Prepare();
+
+        }
+
+
         [BeforeFeature("Pre-Prepare-GetARPayment")]
         public static void PrePrepareGetARPayment()
         {

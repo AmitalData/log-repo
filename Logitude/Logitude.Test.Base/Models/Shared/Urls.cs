@@ -14,6 +14,12 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CashBooksController = "cashbooks";
         public static string JournalsController = "journals";
         public static string JournalActionTypesController = "JournalActionTypes";
+
+        public static string APPaymentsGetSingle(object aPPaymenId)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string AccountingPaymentMethodsController = "accountingpaymentmethods";
         public static string BranchesController = "branches";
         public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
@@ -75,6 +81,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
         public static string ARPaymentController = "arpayments";
+        public static string APPaymentsController = "APPayments";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
         public static string Tariffsettings = "tariffsettings";
 

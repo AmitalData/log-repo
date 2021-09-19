@@ -2,6 +2,6 @@
 Feature: Get AR Payment
 	We want to get ar payment.
 
-Scenario: Get ar Payment
+Scenario: Get ar payment
 	When get ar payment with ARPaymentId
 	Then ar payment should be avaliable

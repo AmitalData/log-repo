@@ -13,11 +13,9 @@ namespace Logitude.FullAccounting.Test.Steps.ARPayment
     public class GetARPaymentSteps
     {
         private readonly FullAccountingContext context;
-        private readonly ARPaymentService aRPaymentService;
-        public GetARPaymentSteps(FullAccountingContext context, ARPaymentService aRPaymentService)
+        public GetARPaymentSteps(FullAccountingContext context)
         {
             this.context = context;
-            this.aRPaymentService = aRPaymentService;
         }
 
         [When(@"get ar payment with ARPaymentId")]

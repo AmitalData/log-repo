@@ -83,14 +83,14 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get ar Payment")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get ar payment")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AR Payment")]
-        [Xunit.TraitAttribute("Description", "Get ar Payment")]
+        [Xunit.TraitAttribute("Description", "Get ar payment")]
         public virtual void GetArPayment()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ar Payment", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ar payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

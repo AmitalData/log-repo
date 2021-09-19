@@ -20,9 +20,18 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         {
             var partnerParameters = GetPartnerParameters();
             FullAccountingData.VendorId = DataPreparation.GetPartnerId(partnerParameters);
-            CheckConnectWithGLAccount(FullAccountingData.VendorId);
+            var vendor = APICaller.CallGet<VendorPM>(Urls.VendorssGetSingle(FullAccountingData.VendorId), UserTenant.Token)?.Data;
+            CheckConnectWithGLAccount(vendor);
+            FullAccountingData.VendorGLAccountId = vendor.GLAccountId;
+            FullAccountingData.VendorMainAddressId = GetAddressID(vendor);
         }
-        
+
+        private string GetAddressID(VendorPM vendor)
+        {
+            var address = APICaller.CallGet<List<AddressPM>>(Urls.GetAllAddressesPMsbyCardId(vendor.Card.Id), UserTenant.Token)?.Data;
+            return address.FirstOrDefault().Id;
+        }
+
         private PartnerParameters GetPartnerParameters()
         {
             return new PartnerParameters()
@@ -32,9 +41,9 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 TypeCode = "VD"
             };
         }
-        private void CheckConnectWithGLAccount(string VendorId)
+        private void CheckConnectWithGLAccount(VendorPM vendor)
         {
-            var vendor = APICaller.CallGet<VendorPM>(Urls.VendorssGetSingle(VendorId), UserTenant.Token)?.Data;
+            
             if (string.IsNullOrEmpty(vendor.GLAccountId))
             {
                 ConnectWithGLAccount(vendor);

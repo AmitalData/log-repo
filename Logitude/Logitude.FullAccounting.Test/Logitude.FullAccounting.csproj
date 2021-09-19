@@ -48,7 +48,9 @@
     <Compile Include="Models\AccountingPaymentMethodPM.cs" />
     <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\APInvoicePM.cs" />
+    <Compile Include="Models\APPaymentPM.cs" />
     <Compile Include="Models\ARPaymentPM.cs" />
+    <Compile Include="Models\Builders\APPaymentPMBuilder.cs" />
     <Compile Include="Models\Builders\ARPaymentPMBuilder.cs" />
     <Compile Include="Models\CashBookTypeCodeEnum.cs" />
     <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
@@ -87,11 +89,13 @@
     <Compile Include="Models\VendorPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APInvoiceService .cs" />
+    <Compile Include="Services\APPaymentService.cs" />
     <Compile Include="Services\ARPaymentService.cs" />
     <Compile Include="Services\GlAccountService.cs" />
     <Compile Include="Services\ARInvoiceService.cs" />
     <Compile Include="Services\JournalService.cs" />
     <Compile Include="Services\Preparation\AccountingPaymentMethodPreparation.cs" />
+    <Compile Include="Services\Preparation\APPaymentPreparation.cs" />
     <Compile Include="Services\Preparation\ARPaymentPreparation.cs" />
     <Compile Include="Services\Preparation\CashBookPreparation.cs" />
     <Compile Include="Services\Preparation\APInvoicePreparation.cs" />
@@ -107,6 +111,8 @@
     <Compile Include="Services\Preparation\ActoinPreparation.cs" />
     <Compile Include="Steps\APInvoice\CreateAPInvoiceSteps.cs" />
     <Compile Include="Steps\APInvoice\GetAPInvoiceSteps.cs" />
+    <Compile Include="Steps\APPayment\CreateAPPaymentSteps.cs" />
+    <Compile Include="Steps\APPayment\GetAPPaymentSteps.cs" />
     <Compile Include="Steps\ARInvoice\CreateARInvoiceSteps.cs" />
     <Compile Include="Steps\ARInvoice\GetARInvoiceSteps.cs" />
     <Compile Include="Steps\ARPayment\CreateARPaymentSteps.cs" />
@@ -118,6 +124,8 @@
     <None Include="app.config" />
     <None Include="Features\APInvoice\CreateAPInvoice.feature" />
     <None Include="Features\APInvoice\GetAPInvoice.feature" />
+    <None Include="Features\APPayment\CreateAPPayment.feature" />
+    <None Include="Features\APPayment\GetAPPayment.feature" />
     <None Include="Features\ARInvoice\CreateARInvoice.feature" />
     <None Include="Features\ARInvoice\GetARInvoice.feature" />
     <None Include="Features\ARPayment\CreateARPayment.feature" />

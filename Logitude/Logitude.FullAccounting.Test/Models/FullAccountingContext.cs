@@ -21,5 +21,7 @@ namespace Logitude.FullAccounting.Test.Models
         public List<APInvoiceLinePM> APInvoiceLinePM { get; internal set; }
         public ARPaymentPM ARPaymentPM { get; internal set; }
         public ARPaymentPM AddedARPaymentPM { get; internal set; }
+        public APPaymentPM APPaymentPM { get; internal set; }
+        public APPaymentPM AddedAPPaymentPM { get; internal set; }
     }
 }

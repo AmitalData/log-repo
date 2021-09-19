@@ -111,7 +111,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Line",
                             "InvoiceCurrency",
                             "ForiegnCurrency",
@@ -127,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "ProfitCurrencyAmount",
                             "LocalCurrencyAmount",
                             "ForiegnCurrencyAmount"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "1",
                             "NIS",
                             "NIS",
@@ -144,34 +144,34 @@ this.ScenarioInitialize(scenarioInfo);
                             "1",
                             "1"});
 #line 6
- testRunner.Given("I have the following AR invoice lines:", ((string)(null)), table3, "Given ");
+ testRunner.Given("I have the following AR invoice lines:", ((string)(null)), table4, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Branch",
                             "BZU"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "InvoiceCurrency",
                             "NIS"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "InvoiceCurrencyExchangeRate",
                             "1"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "ProfitCurrency",
                             "NIS"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "VatNumber",
                             "1"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "ProfitCurrencyExchangeRate",
                             "1"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "DueDate",
                             "Tomorrow"});
 #line 9
- testRunner.And("a AR invoice with the following properties", ((string)(null)), table4, "And ");
+ testRunner.And("a AR invoice with the following properties", ((string)(null)), table5, "And ");
 #line hidden
 #line 18
  testRunner.When("create AR invoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

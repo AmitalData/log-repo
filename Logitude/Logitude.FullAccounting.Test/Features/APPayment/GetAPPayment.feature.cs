@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.ARPayment
+namespace Logitude.FullAccounting.Test.Features.APPayment
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,21 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-CrateARPayment")]
-    public partial class CreateARPaymentFeature : object, Xunit.IClassFixture<CreateARPaymentFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-GetAPPayment")]
+    public partial class GetAPPaymentFeature : object, Xunit.IClassFixture<GetAPPaymentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-CrateARPayment"};
+                "Pre-Prepare-GetAPPayment"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateARPayment.feature"
+#line 1 "GetAPPayment.feature"
 #line hidden
         
-        public CreateARPaymentFeature(CreateARPaymentFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetAPPaymentFeature(GetAPPaymentFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ARPayment", "Create AR Payment", "\tWe want to create ar payment.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-CrateARPayment"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/APPayment", "Get AP Payment", "\tWe want to get ap payment.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-GetAPPayment"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,14 +83,14 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create ar payment")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create AR Payment")]
-        [Xunit.TraitAttribute("Description", "Create ar payment")]
-        public virtual void CreateArPayment()
+        [Xunit.SkippableFactAttribute(DisplayName="Get ap payment")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get AP Payment")]
+        [Xunit.TraitAttribute("Description", "Get ap payment")]
+        public virtual void GetApPayment()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create ar payment", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ap payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -111,56 +111,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table6.AddRow(new string[] {
-                            "Branch",
-                            "BerzeitU"});
-                table6.AddRow(new string[] {
-                            "LocalCurrency",
-                            "NIS"});
-                table6.AddRow(new string[] {
-                            "PaymentCurrency",
-                            "NIS"});
-                table6.AddRow(new string[] {
-                            "BillTo",
-                            "FAC SpecFlowTest"});
-                table6.AddRow(new string[] {
-                            "BillToPartnerTypeId",
-                            "Customer"});
-                table6.AddRow(new string[] {
-                            "AmountInLocalCurrency",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "SATTransferStatusCode",
-                            "Not Transfered"});
-                table6.AddRow(new string[] {
-                            "PaymentCurrencyExchangeRate",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "OpenAmountInLocalCurrency",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "AccountingPaymentMethod",
-                            "Cash"});
-                table6.AddRow(new string[] {
-                            "AmountInPaymentCurrency",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "OpenAmount",
-                            "1"});
-                table6.AddRow(new string[] {
-                            "Cashbook",
-                            "CashNIS"});
 #line 6
- testRunner.Given("a ar payment with the following properties", ((string)(null)), table6, "Given ");
+ testRunner.When("get ap payment with APPaymentId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 21
- testRunner.When("create ar payment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 22
- testRunner.Then("the ar payment should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("ap payment should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -173,12 +128,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateARPaymentFeature.FeatureSetup();
+                GetAPPaymentFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateARPaymentFeature.FeatureTearDown();
+                GetAPPaymentFeature.FeatureTearDown();
             }
         }
     }
