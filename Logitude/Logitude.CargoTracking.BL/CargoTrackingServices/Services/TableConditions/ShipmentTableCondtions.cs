@@ -285,7 +285,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
                 "UpdateDate as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
-                "PickupEstimatedDateTime as PickupEstimationDate,";
+                "PickupEstimatedDateTime as PickupEstimationDate";
 
             var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
