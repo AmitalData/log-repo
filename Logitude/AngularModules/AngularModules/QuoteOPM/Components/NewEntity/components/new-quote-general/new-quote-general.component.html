@@ -1,0 +1,76 @@
+<div class="grid" [formGroup]='formGroup'>
+
+    <div class="col-12">
+      <h2>General</h2>
+      <h5>Quote Type</h5>
+      <div class='radio-row' *ngFor='let x of quoteTypes'>
+        <p-radioButton [id]="x" [value]="x" formControlName="quoteType"></p-radioButton>
+        <label [for]="x">{{x}}</label>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <div class="grid">
+        <div class="col-6 p-field">
+          <label for="StartDate_Date">Start Date</label>
+          <p-calendar formControlName='startDate' id="StartDate_Date"></p-calendar>
+        </div>
+
+        <div class="col-6 p-field">
+          <label></label>
+          <p-calendar formControlName='startDate' [timeOnly]="true" class="col-6"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <div class="p-field">
+        <label for='moveType'>Move Type</label>
+        <p-autoComplete formControlName="moveType" id="moveType" [suggestions]="moveTypeSelected"
+          [dropdown]="true" (completeMethod)="moveTypeSearch($event)"
+          (onKeyUp)='keyUp(formGroup.controls.moveType, moveTypeList)'>
+          <ng-template let-x pTemplate="item">{{x}}</ng-template>
+        </p-autoComplete>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <div class="p-field">
+        <label for="expirationDays">Expiration Days</label>
+        <p-inputNumber mode="decimal" inputId="expirationDays" [useGrouping]="false"
+          (onInput)="expirationDaysChange($event)">
+        </p-inputNumber>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <p-checkbox formControlName='closeAutomaitcally' [binary]="true"></p-checkbox>
+      Close automatically as declined after
+      <p-inputNumber mode="decimal" [useGrouping]="false" (onInput)="closeDaysChange($event)"
+        [disabled]='!formGroup.controls.closeAutomaitcally.value' class="w-4rem inline-block"></p-inputNumber>
+      days
+    </div>
+
+
+    <div class="col-6 p-fluid">
+      <div class="grid">
+        <div class="col-6 p-field">
+          <label for="expirationDate_Date">Expiration Date</label>
+          <p-calendar formControlName='expirationDate' id="expirationDate_Date"></p-calendar>
+        </div>
+
+        <div class="col-6 p-field">
+          <label></label>
+          <p-calendar formControlName='expirationDate' [timeOnly]="true" class="col-6"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <div class="p-field">
+        <label for="closeDate_Date">Close Date</label>
+        <p-calendar formControlName='closeDate' id="closeDate_Date"
+          [disabled]='!formGroup.controls.closeAutomaitcally.value'></p-calendar>
+      </div>
+    </div>
+  </div>

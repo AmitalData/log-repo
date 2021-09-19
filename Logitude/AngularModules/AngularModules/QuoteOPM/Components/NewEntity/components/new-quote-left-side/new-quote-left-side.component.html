@@ -1,0 +1,27 @@
+<div [formGroup]="formGroup">
+    <div class='radio-section'>
+        <div class='radio-row' *ngFor='let x of directions'
+            [ngClass]="{'radio-checked':formGroup.controls.direction.value === x.value}">
+            <label [for]="x.value"><img [src]="x.icon"></label>
+            <p-radioButton [inputId]="x.value" [value]="x.value" formControlName="direction" [label]='x.value'>
+            </p-radioButton>
+        </div>
+    </div>
+
+    <div class='radio-section'>
+        <div class='radio-row' *ngFor='let x of transporations'
+            [ngClass]="{'radio-checked':formGroup.controls.transporation.value === x.value}">
+            <label [for]="x.value"><img [src]="x.icon"></label>
+            <p-radioButton [inputId]="x.value" [value]="x.value" formControlName="transporation" [label]='x.value'>
+            </p-radioButton>
+        </div>
+    </div>
+
+    <div class='radio-row' *ngFor='let x of shipmentTypes'
+        [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value === x.value}"
+        [hidden]='formGroup.controls.transporation.value !== transporations[1].value && formGroup.controls.transporation.value !== transporations[2].value'>
+        <label [for]="x.value"><img [src]="x.icon"></label>
+        <p-radioButton [id]="x.value" [value]="x.value" formControlName="shipmentType" [label]='x.value'>
+        </p-radioButton>
+    </div>
+</div>

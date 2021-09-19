@@ -1,0 +1,48 @@
+<h3>Quote Properties</h3>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <label for="geteway">Geteway</label>
+      <p-autoComplete formControlName="geteway" id="geteway" [suggestions]="getewaySelected" [dropdown]="true"
+        (completeMethod)="getewaySearch($event)" (onKeyUp)='keyUp(formGroup.controls.geteway, getewayList)'>
+        <ng-template let-x pTemplate="item">{{x}}</ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="p-field">
+      <label for="destination">Destination</label>
+      <p-autoComplete formControlName="destination" id="destination" [suggestions]="destinationSelected"
+        [dropdown]="true" (completeMethod)="destinationSearch($event)"
+        (onKeyUp)='keyUp(formGroup.controls.destination, destinationList)'>
+        <ng-template let-x pTemplate="item">{{x}}</ng-template>
+      </p-autoComplete>
+    </div>
+  </div>
+
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <label for="airline">Airline</label>
+      <p-autoComplete formControlName="airline" id="airline" [suggestions]="airlineSelected" [dropdown]="true"
+        (completeMethod)="airlineSearch($event)" (onKeyUp)='keyUp(formGroup.controls.airline, airlineList)'>
+        <ng-template let-x pTemplate="item">{{x}}</ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="p-field">
+      <label for="incoterm">Incoterm</label>
+      <p-autoComplete formControlName="incoterm" id="incoterm" [suggestions]="incotermSelected"
+        [dropdown]="true" (completeMethod)="incotermSearch($event)"
+        (onKeyUp)='keyUp(formGroup.controls.incoterm, incotermList)'>
+        <ng-template let-x pTemplate="item">{{x}}</ng-template>
+      </p-autoComplete>
+    </div>
+  </div>
+
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <label for="sepcialServiceType">Special Services Type</label>
+      <input formControlName="sepcialServiceType" id="sepcialServiceType" type="text" pInputText>
+    </div>
+  </div>
+</div>

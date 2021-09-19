@@ -1,0 +1,56 @@
+:host ::ng-deep {
+    .p-field {
+        margin-bottom: 1em !important;
+    }
+    
+    .p-radiobutton {
+        display: none;
+    }
+}
+
+:host {
+    display: block;
+    height: 100%;
+    background-color: var(--surface-200);
+    font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif,
+        “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+}
+
+.container {
+    height: 700px;
+}
+
+.section {
+    background: var(--surface-0);
+    padding: 27px;
+    margin-bottom: 3px;
+    border-radius: 14px;
+}
+
+.root-header {
+    margin-bottom: 11px;
+    padding: 13px 0;
+
+    h2 {
+        margin: 0;
+    }
+}
+
+.right-side {
+    padding-left: 13px;
+    padding-top: 13px;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.section-pickup {
+}
+
+.section-delivery {
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #ccc;
+}

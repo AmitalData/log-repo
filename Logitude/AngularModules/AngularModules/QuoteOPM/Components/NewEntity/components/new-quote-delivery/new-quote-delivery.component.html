@@ -1,0 +1,28 @@
+<h3>Delivery</h3>
+<div [formGroup]='formGroup'>
+    <p-checkbox formControlName='deliveryInclude' [binary]="true" label='Include Delivery'></p-checkbox>
+
+    <h5>Delivery Address</h5>
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="deliveryZipCode">Zip code</label>
+            <p-inputNumber formControlName='deliveryZipCode' id="deliveryZipCode" mode="decimal" [useGrouping]="false">
+            </p-inputNumber>
+        </div>
+
+        <div class="p-field">
+            <label for="deliveryCity">City</label>
+            <input formControlName="deliveryCity" id="deliveryCity" type="text" pInputText>
+        </div>
+
+        <div class="p-field">
+            <label for="deliveryCountry">Country</label>
+            <p-autoComplete formControlName="deliveryCountry" id="deliveryCountry"
+                [suggestions]="deliveryCountrySelected" [dropdown]="true"
+                (completeMethod)="deliveryCountrySearch($event)"
+                (onKeyUp)='keyUp(formGroup.controls.deliveryCountry, countryList)'>
+                <ng-template let-x pTemplate="item">{{x}}</ng-template>
+            </p-autoComplete>
+        </div>
+    </div>
+</div>

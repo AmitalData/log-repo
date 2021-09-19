@@ -1,0 +1,47 @@
+<h2>Expected Order Detail <span>(Please Insert Data of <a>Fill Description</a>)</span></h2>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <label for="grrosWeight">Grros Weight (KG)</label>
+      <p-inputNumber formControlName='grrosWeight' id="grrosWeight" mode="decimal" [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="volume">Volume (CBM)</label>
+      <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="chargeableWeight">Chargeable Weight (KG)</label>
+      <p-inputNumber formControlName='chargeableWeight' id="chargeableWeight" mode="decimal"
+        [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="numberOfPackages">Number of Packages</label>
+      <p-inputNumber formControlName='numberOfPackages' id="numberOfPackages" mode="decimal"
+        [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+
+    <p-checkbox formControlName='dangerousGoods' [binary]="true" label='Dangerous Goods'></p-checkbox>
+
+    <div class="p-field">
+      <label for="descriptionOfGoods">Description of Goods</label>
+      <p-inputNumber formControlName='descriptionOfGoods' id="descriptionOfGoods" mode="decimal"
+        [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="notes">Notes</label>
+      <p-inputNumber formControlName='notes' id="notes" mode="decimal" [useGrouping]="false"></p-inputNumber>
+    </div>
+  </div>
+</div>
