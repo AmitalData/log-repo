@@ -14,15 +14,15 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class ContainerizationHatataStatusDataMapping: IMapping<ContainerizationHatataStatusPM, ContainerizationHatataStatus>
+   public partial class ContainerizationHataraStatusDataMapping: IMapping<ContainerizationHataraStatusPM, ContainerizationHataraStatus>
    {
 
-        public void CustomPMToPOCO(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatus entityPOCO)
+        public void CustomPMToPOCO(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatus entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(ContainerizationHatataStatusPM entityPM, ContainerizationHatataStatus entityPOCO)
+        public void CustomPOCOToPM(ContainerizationHataraStatusPM entityPM, ContainerizationHataraStatus entityPOCO)
         {
             //throw new NotImplementedException();
         }
