@@ -212,7 +212,7 @@
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-               
+
                 <div *ngIf="Shipment.ShipmentList.ForwardingMaster">
                     <div class="title">Master</div>
                     <div class="description">{{Shipment.ShipmentList?.ForwardingMaster}}</div>
@@ -272,11 +272,12 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="title">shipper</div>
                     <div class="description">{{Shipment.ShipmentList.ShipperName}}</div>
                 </div>
+
                 <div>
-                    <div>
-                        <div class="title">Incoterms</div>
-                        <div class="description">{{ShipmentPM?.IncotermName}}</div>
-                    </div>
+                    <div class="title">Incoterms</div>
+                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
+                </div>
+                <div>
                     <div class="title">quantity</div>
                     <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} units</div>
                 </div>
