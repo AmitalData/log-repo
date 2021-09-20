@@ -9,7 +9,7 @@ Scenario: Create AP Invoice
 	And a AP invoice with the following properties
 		| property                    | Value         |
 		| Vendor                      | Vendor1       |
-		| Branch                      | BZU           |
+		| Branch                      | BerzeitU      |
 		| InvoiceCurrency             | NIS           |
 		| InvoiceCurrencyExchangeRate | 1             |
 		| ProfitCurrency              | NIS           |

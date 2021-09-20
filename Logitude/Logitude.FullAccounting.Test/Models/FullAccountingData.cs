@@ -39,5 +39,7 @@ namespace Logitude.FullAccounting.Test.Models
         public static string BankCodeId { get; internal set; }
         public static string BankChartOfAccountId { get; internal set; }
         public static string BankAccountId { get; internal set; }
+        public static string PaymentCheque1 { get; internal set; }
+        public static string BankDeposit1 { get; internal set; }
     }
 }

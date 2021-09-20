@@ -8,7 +8,7 @@ Scenario: Create AR invoice
 		| 1    | NIS             | NIS             | 1                   | SpecFlowTest | Zero    | 0             | 09/01/2021 | 1        | 1                     | 1         | ITMS        | 2.12                 | 1                   | 1                     |
 	And a AR invoice with the following properties
 		| property                    | Value    |
-		| Branch                      | BZU      |
+		| Branch                      | BerzeitU |
 		| InvoiceCurrency             | NIS      |
 		| InvoiceCurrencyExchangeRate | 1        |
 		| ProfitCurrency              | NIS      |

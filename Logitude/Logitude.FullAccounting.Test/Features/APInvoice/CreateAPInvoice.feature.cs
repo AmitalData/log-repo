@@ -144,7 +144,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Vendor1"});
                 table2.AddRow(new string[] {
                             "Branch",
-                            "BZU"});
+                            "BerzeitU"});
                 table2.AddRow(new string[] {
                             "InvoiceCurrency",
                             "NIS"});

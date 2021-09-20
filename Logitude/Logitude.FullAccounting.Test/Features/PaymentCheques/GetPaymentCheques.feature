@@ -1,4 +1,5 @@
-﻿Feature: Get Payment cheques
+﻿@Pre-Prepare-GetPaymentCheques
+Feature: Get Payment cheques
 	We want to get payment cheques.
 
 Scenario: Get payment cheques

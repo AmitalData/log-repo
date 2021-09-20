@@ -84,18 +84,28 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new AccountingPaymentMethodPreparation().Prepare();
 
         }
-        [BeforeFeature("Pre-Prepare-CreateBankAccount")]
-        public static void PrePrepareCreateBankAccount()
+        [BeforeFeature("Pre-Prepare-GetPaymentCheques")]
+        public static void PrePrepareGetPaymentCheques()
         {
-
+            new PaymentChequesPreparation().Prepare();
         }
-       [BeforeFeature("Pre-Prepare-GetBankAccount")]
+        [BeforeFeature("Pre-Prepare-GetBankAccount")]
         public static void PrePrepareGetBankAccount()
         {
             new BankAccountPreparation().Prepare();
-
         }
-       
+        [BeforeFeature("Pre-Prepare-CreateBankDeposit")]
+        public static void PrePrepareCreateBankDeposit()
+        {
+            new BankAccountPreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-GetBankDeposit")]
+        public static void PrePrepareGetBankDeposit()
+        {
+            new BankAccountPreparation().Prepare();
+            new BankDepositPreparation().Prepare();
+        }
+
 
 
 

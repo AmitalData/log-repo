@@ -11,6 +11,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
         public static string GLAccountsController = "GLAccounts";
+        public static string BankDepositsController = "bankdeposits";
         public static string BankAccountsController = "bankaccounts";
         public static string PaymentChequesController = "PaymentCheques";
         public static string CashBooksController = "cashbooks";
@@ -173,6 +174,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "vendors/getsingle?id=" + id;
         }
+        public static string PaymentChequesGetSingle(string id)
+        {
+            return "PaymentCheques/getsingle?id=" + id;
+        }
 
         public static string AddressesGetSingle(string id)
         {
@@ -290,6 +295,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CashbooksSingle(string id)
         {
             return "cashbooks/GetSingle?id=" + id;
+        }
+        public static string BankDepositsSingle(string id)
+        {
+            return "bankdeposits/GetSingle?id=" + id;
         }
 
         public static string ShipmentOrderSingle(string orderNumber)

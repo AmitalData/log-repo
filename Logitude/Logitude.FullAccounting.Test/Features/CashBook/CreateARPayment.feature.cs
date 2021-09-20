@@ -108,26 +108,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "Branch",
                             "New Branch"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "Currency",
                             "NIS"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "Account",
                             "new Account"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "CashBookType",
                             "Cash"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "Name",
                             "CashBookTest"});
 #line 5
- testRunner.Given("a cashbook with the following properties", ((string)(null)), table8, "Given ");
+ testRunner.Given("a cashbook with the following properties", ((string)(null)), table9, "Given ");
 #line hidden
 #line 12
  testRunner.When("create cashbook", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
