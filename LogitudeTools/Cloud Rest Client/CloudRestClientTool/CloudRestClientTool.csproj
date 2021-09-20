@@ -54,9 +54,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="XmlRender, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dlls\XmlRender.dll</HintPath>
+    <Reference Include="XmlRender">
+      <HintPath>..\Cloud Rest Client\dlls\XmlRender.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
