@@ -146,7 +146,11 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         GrossWeight, 
 	         Volume, 
 	         CustomerId, 
-	         CustomerName,
+	         CustomerName, 
+	         OriginPortCode, 
+	         DestinationPortCode, 
+	         GatewayCode, 
+	         IncotermName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -124,5 +124,9 @@ export class CargoTrackingShipmentList {
 	ImportManifest: string;
 	CreatedDone: boolean;
 	
+	ShipmentOrderGateway: string;
+	ShipmentOrderPONumber: string;
+	
+	
 }
  
