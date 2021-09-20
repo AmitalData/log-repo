@@ -114,7 +114,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 case ChartOfAccountsTypeEnum.Expenses:
                 case ChartOfAccountsTypeEnum.Works:
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("Chart Of Accounts Type Code: "+ chartOfAccountsTypeCode+ " Not Implemented");
             }
         }
     }
