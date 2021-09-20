@@ -196,11 +196,11 @@
                 (click)="PanelsNavigatorClicked('Overview')">Overview</button>
             <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">Cargo
                 Info</button>
-            <button [class.active]="selectedNavButton=='CustomsDataPanel'"
+            <button *ngIf="Shipment.ShipmentList.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
                 (click)="PanelsNavigatorClicked('CustomsDataPanel')">Customs Data</button>
             <button [class.active]="selectedNavButton=='Routing'"
                 (click)="PanelsNavigatorClicked('RoutingPanel')">Routing</button>
-            <button [class.active]="selectedNavButton=='Documents'"
+            <button *ngIf="Shipment.ShipmentList.EntityType != 'O'" [class.active]="selectedNavButton=='Documents'"
                 (click)="PanelsNavigatorClicked('DocumentsPanel')">Documents</button>
             <button [class.active]="selectedNavButton=='Partners'"
                 (click)="PanelsNavigatorClicked('PartnersPanel')">Partners</button>
@@ -208,10 +208,14 @@
     </div>
 
 
-    <panel style="order: 3;" [Title]="'Overview'" [ShowGrayPanelOnMobile]="true" [Name]="'Overview'">
+    <panel style="order: 3;" [Title]="OverviewPanelTitle" [ShowGrayPanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
+                <div  *ngIf="Shipment.ShipmentList.EntityType == 'O'">
+                    <div class="title">po number</div>
+                    <div class="description">{{ShipmentOrder?.PONumber}}</div>
+                </div>
                 <div>
                     <div class="title">Incoterms</div>
                     <div class="description">{{ShipmentPM?.IncotermName}}</div>
@@ -221,16 +225,17 @@
                 <div>
                     <div class="title">
                         <span *ngIf="Shipment.ShipmentList.DepartureDate">atd</span>
-                        <span
-                            *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
-                        <span
-                            *ngIf="!Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
+                        <span *ngIf="!Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
                     </div>
                     <div class="description">
-                        <span *ngIf="Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureDate |
-                            date:'dd/MM/yyyy'}}</span>
-                        <span
-                            *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">
+                            {{
+Shipment.ShipmentList.DepartureDate |
+                            date:'dd/MM/yyyy'
+                            }}
+                        </span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">
                             {{Shipment.ShipmentList.DepartureEstimationDate | date:'dd/MM/yyyy'}}
                             <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
                         </span>
@@ -241,14 +246,16 @@
                 <div>
                     <div class="title">
                         <span *ngIf="Shipment.ShipmentList.ArrivalDate">ata</span>
-                        <span
-                            *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
-                        <span
-                            *ngIf="!Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
+                        <span *ngIf="!Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
                     </div>
                     <div class="description">
-                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalDate |
-                            date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">
+                            {{
+Shipment.ShipmentList.ArrivalDate |
+                            date:'dd/MM/yyyy'
+                            }}
+                        </span>
                         <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">
                             {{Shipment.ShipmentList.ArrivalEstimationDate | date:'dd/MM/yyyy'}}
                             <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
@@ -271,18 +278,20 @@
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">{{Shipment.ShipmentList.GrossWeight || 0 }}
-                        {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
+                    <div class="description">
+                        {{Shipment.ShipmentList.GrossWeight || 0 }}
+                        {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
+                    </div>
                 </div>
-                <div>
+                <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">total value nis</div>
                     <div class="description"></div>
                 </div>
-                <div>
+                <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">total taxes</div>
                     <div class="description">{{ShipmentPM?.TotalTax}}</div>
                 </div>
-                <div>
+                <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">declaration status</div>
                     <div class="description"></div>
                 </div>
@@ -293,7 +302,7 @@
     </panel>
 
 
-    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
+    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" Shipment.ShipmentList.EntityType != 'O'"
         [ShowWhitePanelOnMobile]="true"
         [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
         [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
@@ -301,9 +310,10 @@
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
-                    <div class="description">
+                    <div class="title">{{TypeTitle}}</div>
+
+
+                    <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="description">
                         <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
                             <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
@@ -311,53 +321,55 @@
                                 {{ShowDetailsSection?'Show less':'Show more'}}
                             </a>
                         </div>
+
                     </div>
+                    <div class="description">{{Shipment.ShipmentList.ShipmentTypeCode}}</div>
                 </div>
-                <div>
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">Shipment Type</div>
-                    <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
-                </div>
-                <div>
-                    <div class="title">quantity</div>
-                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
-                </div>
-                <div>
-                    <div class="title">weight</div>
-                    <div class="description">
-                        {{Shipment.ShipmentList.GrossWeight }}
-                        {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
+                    <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
+                        <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
+                        <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">Shipment Type</div>
+                        <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
                     </div>
-                </div>
-                <div>
-                    <div class="title">volume</div>
-                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
-                </div>
-                <div>
-                    <div class="title">storage site</div>
-                    <div class="description">
-                        {{ShipmentPM?.WarehouseLegEnglishName}}
+                    <div>
+                        <div class="title">quantity</div>
+                        <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
                     </div>
-                </div>
-                <div *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">
-                    <div class="title">containers</div>
-                    <div class="description">
-                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
-                            {{container}}
-                            <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                    <div>
+                        <div class="title">weight</div>
+                        <div class="description">
+                            {{Shipment.ShipmentList.GrossWeight }}
+                            {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
                         </div>
                     </div>
-                </div>
-
-                <div>
-                    <div class="title">Import Manifest</div>
-                    <div class="description">
-                        {{ShipmentPM?.ImportManifest}}
+                    <div>
+                        <div class="title">volume</div>
+                        <div class="description">{{Shipment.ShipmentList.Volume }}</div>
                     </div>
-                </div>
+                    <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
+                        <div class="title">storage site</div>
+                        <div class="description">
+                            {{ShipmentPM?.WarehouseLegEnglishName}}
+                        </div>
+                    </div>
+                    <div *ngIf="Shipment.ShipmentList.TransportModeId != 'A' && Shipment.ShipmentList.EntityType != 'O'">
+                        <div class="title">containers</div>
+                        <div class="description">
+                            <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
+                                {{container}}
+                                <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                                   style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                            </div>
+                        </div>
+                    </div>
 
-            </div>
+                    <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
+                        <div class="title">Import Manifest</div>
+                        <div class="description">
+                            {{ShipmentPM?.ImportManifest}}
+                        </div>
+                    </div>
+
+                </div>
         </div>
 
         <div details>
@@ -404,7 +416,7 @@
 
     </panel>
 
-    <panel style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
+    <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
         [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
@@ -606,7 +618,7 @@
     </panel>
 
 
-    <panel style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="false">
+    <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="false">
 
         <div body>
             <div *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>

@@ -37,7 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MessageWindowComponent } from '../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { ToolTipComponent } from 'src/Infrastructure/Components/ToolTip/ToolTipComponent';
 import { OverlayModule } from '@angular/cdk/overlay';
-
+import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -96,6 +96,7 @@ export function getBaseUrl() {
         AuthGuardService,
         AuthService,
         LoginServiceHelper,
+        CargoTrackingShipmentOrderService,
         DatePipe,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
