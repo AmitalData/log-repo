@@ -277,13 +277,13 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         this.ObsList = [];
         this.EntityPM.CustomerProducts.sort((a, b) => { return (a.ProductTypeCode === b.ProductTypeCode) ? 0 : (a.ProductTypeCode < b.ProductTypeCode) ? -1 : 1 }).forEach(item => {
 
-            if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
-                // continue;
-            }
+            //if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
+            //    // continue;
+            //}
 
-            else {
-                this.ObsList.push(new ProductViewModelData(this.EntityPM, item, false, "CustomerProductLocation"));
-            }
+            //else {
+            this.ObsList.push(new ProductViewModelData(this.EntityPM, item, false, "CustomerProductLocation"));
+            //}
         });
         if (this.ObsList.length > 0)
             this.SelectedItem = this.ObsList[0];
