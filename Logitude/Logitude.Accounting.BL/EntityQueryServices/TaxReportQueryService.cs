@@ -108,7 +108,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reports.Where(d=>d.IsCancelled == false).ToList();
         }
        
-
+    
     }
 
 }

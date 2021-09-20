@@ -132,6 +132,18 @@ namespace WarehouseData.Helper
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
         }
 
+
+
+        public void FinishUpdatingDataWarehouse(string destinationConnectionString)
+        {
+
+            finalDataWarehouseService.FinishUpdatingDataWarehouse(destinationConnectionString);
+        }
+
+
+
+
+
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)
         {
 
@@ -224,6 +236,8 @@ namespace WarehouseData.Helper
             Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
                 this.UpdateFactTable(destinationConnectionString, table);
             });
+
+            FinishUpdatingDataWarehouse(destinationConnectionString);
 
             #endregion
 

@@ -259,6 +259,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
+                
             }
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -390,9 +391,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     };
                     EventTracer.CreateTraceEvent(eventTracerArgs);
                 }
+                CreateTraceEventWhenTransmittedReportReturnToDraft(entityPM,loggedContact);
             }
 
             base.Trace(entityPM, entityPOCO, changesXml);
+        }
+        private void CreateTraceEventWhenTransmittedReportReturnToDraft(TaxReportPM entityPM, ContactPM loggedContact)
+        {
+            if(EntityPOCO.StatusCode == VatReportStatusValues.Transmitted && entityPM.StatusCode == VatReportStatusValues.Draft)
+            {
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "RTDR",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+            }
         }
     }
 }

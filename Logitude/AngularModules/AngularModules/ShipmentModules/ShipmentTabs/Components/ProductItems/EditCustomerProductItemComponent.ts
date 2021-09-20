@@ -177,6 +177,7 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.DataContext.maxHTSCodesLineNumber = ArrayTool.Max(this.HTSCodes.Collection, "LineNumber");
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {

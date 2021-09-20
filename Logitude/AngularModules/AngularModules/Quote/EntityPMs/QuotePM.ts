@@ -1342,7 +1342,46 @@ export class QuotePM {
     public get CountryForStatisticsId() { return this.countryForStatisticsId; }
     public set CountryForStatisticsId(newValue: string) { if (this.countryForStatisticsId != newValue) { this.countryForStatisticsId = newValue; this.MarkAsDirty("CountryForStatisticsId"); } }
        
-	 
+    private inlandDomesticFromZipCode: string;
+    public get InlandDomesticFromZipCode() { return this.inlandDomesticFromZipCode; }
+    public set InlandDomesticFromZipCode(newValue: string) { if (this.inlandDomesticFromZipCode != newValue) { this.inlandDomesticFromZipCode = newValue; this.MarkAsDirty("InlandDomesticFromZipCode"); } }
+
+    private inlandDomesticToZipCode: string;
+    public get InlandDomesticToZipCode() { return this.inlandDomesticToZipCode; }
+    public set InlandDomesticToZipCode(newValue: string) { if (this.inlandDomesticToZipCode != newValue) { this.inlandDomesticToZipCode = newValue; this.MarkAsDirty("InlandDomesticToZipCode"); } }
+
+    private inlandDomesticFromCity: string;
+    public get InlandDomesticFromCity() { return this.inlandDomesticFromCity; }
+    public set InlandDomesticFromCity(newValue: string) { if (this.inlandDomesticFromCity != newValue) { this.inlandDomesticFromCity = newValue; this.MarkAsDirty("InlandDomesticFromCity"); } }
+
+    private inlandDomesticToCity: string;
+    public get InlandDomesticToCity() { return this.inlandDomesticToCity; }
+    public set InlandDomesticToCity(newValue: string) { if (this.inlandDomesticToCity != newValue) { this.inlandDomesticToCity = newValue; this.MarkAsDirty("InlandDomesticToCity"); } }
+
+    private inlandDomesticFromCountryId: string;
+    public get InlandDomesticFromCountryId() { return this.inlandDomesticFromCountryId; }
+    public set InlandDomesticFromCountryId(newValue: string) { if (this.inlandDomesticFromCountryId != newValue) { this.inlandDomesticFromCountryId = newValue; this.MarkAsDirty("InlandDomesticFromCountryId"); } }
+
+    private inlandDomesticToCountryId: string;
+    public get InlandDomesticToCountryId() { return this.inlandDomesticToCountryId; }
+    public set InlandDomesticToCountryId(newValue: string) { if (this.inlandDomesticToCountryId != newValue) { this.inlandDomesticToCountryId = newValue; this.MarkAsDirty("InlandDomesticToCountryId"); } }
+
+    private inlandDomesticFromTypeCode: string;
+    public get InlandDomesticFromTypeCode() { return this.inlandDomesticFromTypeCode; }
+    public set InlandDomesticFromTypeCode(newValue: string) { if (this.inlandDomesticFromTypeCode != newValue) { this.inlandDomesticFromTypeCode = newValue; this.MarkAsDirty("InlandDomesticFromTypeCode"); } }
+
+    private inlandDomesticToTypeCode: string;
+    public get InlandDomesticToTypeCode() { return this.inlandDomesticToTypeCode; }
+    public set InlandDomesticToTypeCode(newValue: string) { if (this.inlandDomesticToTypeCode != newValue) { this.inlandDomesticToTypeCode = newValue; this.MarkAsDirty("InlandDomesticToTypeCode"); } }
+
+    private mainCarriageFromPortAddress: string;
+    public get MainCarriageFromPortAddress() { return this.mainCarriageFromPortAddress; }
+    public set MainCarriageFromPortAddress(newValue: string) { if (this.mainCarriageFromPortAddress != newValue) { this.mainCarriageFromPortAddress = newValue; this.MarkAsDirty("MainCarriageFromPortAddress"); } }
+
+    private mainCarriageToPortAddress: string;
+    public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
+    public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
+
      
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
