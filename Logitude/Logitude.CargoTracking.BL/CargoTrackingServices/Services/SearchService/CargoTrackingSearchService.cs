@@ -274,24 +274,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             AddNewReferenceForSplitCase(tableRow, dataTable,ColumnName);
             
         }
-        private static void  AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName)
-        {
-            var Value = tableRow[ColumnName];
-            string SearchField = (string)Value;
-            if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
-            {
-                string SearchArr = SearchField.Split('/')[1];
-                ReferencecArgs ReferencecArgs = new ReferencecArgs()
-                {
-                    DataTable = dataTable,
-                    CoulmnName = ColumnName,
-                    SearchField = SearchArr,
-                    TableRow = tableRow,
+        //private static void  AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName)
+        //{
+        //    var Value = tableRow[ColumnName];
+        //    string SearchField = (string)Value;
+        //    if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
+        //    {
+        //        string SearchArr = SearchField.Split('/')[1];
+        //        ReferencecArgs ReferencecArgs = new ReferencecArgs()
+        //        {
+        //            DataTable = dataTable,
+        //            CoulmnName = ColumnName,
+        //            SearchField = SearchArr,
+        //            TableRow = tableRow,
 
-                };
-                AddNewReference(ReferencecArgs);
-            }
-        }
+        //        };
+        //        AddNewReference(ReferencecArgs);
+        //    }
+        //}
         private static void AddSplittedData(SplittedDataArguments splittedDataArguments)
         {
             if (!IsNullOrEmpty(splittedDataArguments.TableRow, splittedDataArguments.CoulmnName))
