@@ -10,9 +10,38 @@ namespace Logitude.Test.Base.Models.Shared
         public static string StatesController = "States";
         public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
+        public static string GLAccountsController = "GLAccounts";
+        public static string BankDepositsController = "bankdeposits";
+        public static string BankAccountsController = "bankaccounts";
+        public static string PaymentChequesController = "PaymentCheques";
+        public static string CashBooksController = "cashbooks";
+        public static string BankCodesController = "BankCodes";
+        public static string JournalsController = "journals";
+        public static string JournalActionTypesController = "JournalActionTypes";
+
+        public static string APPaymentsGetSingle(object aPPaymenId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string AccountingPaymentMethodsController = "accountingpaymentmethods";
+        public static string BranchesController = "branches";
+        public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
+
+        public static string AutomaticReconcileMethodViewsByFilters = "AutomaticReconcileMethodViews/GetByFilters";
+        public static string CashBookViewsByFilters = "cashbookviews/getbyfilters";
+        public static string JournalActionTypeViewsByFilters = "JournalActionTypeViews/GetByFilters";
+        public static string AccountingPaymentMethodViewsByFilters = "accountingpaymentmethodviews/getbyfilters";
+        public static string BranchviewsByFilters = "branchviews/getbyfilters";
+        public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
+        public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
+        public static string ChartOfAccountsController = "ChartOfAccounts";
+        public static string ChargesGroupsController = "ChargesGroups";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
+        public static string BankCodeViewsGetByFilters = "BankCodeViews/GetByFilters";
         public static string AddressViewsGetByFilters = "AddressViews/GetByFilters";
+        public static string BankAccountViewsGetByFilters = "BankAccountViews/GetByFilters";
         public static string ShipmentViewsGetByFilters = "ShipmentViews/GetByFilters";
         public static string FTPDetailViewsGetByFilters = "FTPDetailViews/GetByFilters";
         public static string APInvoiceViewsGetByFilters = "APInvoiceViews/GetByFilters";
@@ -57,6 +86,8 @@ namespace Logitude.Test.Base.Models.Shared
 
         public static string APInvoicesController = "APInvoices";
         public static string ARInvoicesController = "ARInvoices";
+        public static string ARPaymentController = "arpayments";
+        public static string APPaymentsController = "APPayments";
         public static string CargoTrackingSearchController = "CargoTrackingSearch";
         public static string Tariffsettings = "tariffsettings";
 
@@ -84,6 +115,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
+        public static string ChargesgroupviewsGetByFilters = "chargesgroupviews/getbyfilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
         public static string PaymentTermViewsGetByFilters = "PaymentTermViews/GetByFilters";
         public static string VatTypeViewsGetByFilters = "VatTypeViews/GetByFilters";
@@ -124,6 +156,27 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ContactsGetSingle(string id)
         {
             return "Contacts/GetSingle?id=" + id;
+        }
+        public static string GLAccountsGetSingle(string id)
+        {
+            return "GLAccounts/GetSingle?id=" + id;
+        }
+        public static string BankAccountsGetSingle(string id)
+        {
+            return "bankaccounts/GetSingle?id=" + id;
+        }
+
+        public static string CustomersGetSingle(string id)
+        {
+            return "customers/getsingle?id=" + id;
+        }
+        public static string VendorssGetSingle(string id)
+        {
+            return "vendors/getsingle?id=" + id;
+        }
+        public static string PaymentChequesGetSingle(string id)
+        {
+            return "PaymentCheques/getsingle?id=" + id;
         }
 
         public static string AddressesGetSingle(string id)
@@ -168,6 +221,15 @@ namespace Logitude.Test.Base.Models.Shared
         public static string AirlineGetSingle(string id)
         {
             return "airlines/getsingle?id=" + id;
+        }
+        public static string GetAllAddressesPMsbyCardId(string CardId)
+        {
+            return $"PartnersDomain/GetAllAddressesPMsbyCardId?myCardId={CardId}";
+        }
+
+        public static string GetTransactionsForARPayment(string glAccountId,string currencyId )
+        {
+            return $"LedgerTransactions/GetTransactionsForARPayment?arpaymentId=undefined&billToGLAccountId={glAccountId}&paymentCurrencyId={currencyId}";
         }
 
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)
@@ -230,6 +292,15 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Tariffs/GetSingle?id=" + id;
         }
+        public static string CashbooksSingle(string id)
+        {
+            return "cashbooks/GetSingle?id=" + id;
+        }
+        public static string BankDepositsSingle(string id)
+        {
+            return "bankdeposits/GetSingle?id=" + id;
+        }
+
         public static string ShipmentOrderSingle(string orderNumber)
         {
             return "ShipmentOrder?orderNumber=" + orderNumber;
@@ -240,5 +311,8 @@ namespace Logitude.Test.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
+        
+
+
     }
 }
