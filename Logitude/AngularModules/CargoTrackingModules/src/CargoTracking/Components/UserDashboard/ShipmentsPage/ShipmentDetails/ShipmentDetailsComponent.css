@@ -353,7 +353,7 @@ h1 {
 
         .data-cards > div {
             width: calc(50% - 20px);
-            height: initial;
+            height: 50px;
         }
 
     .PanelsNavigator {
@@ -364,7 +364,7 @@ h1 {
         height: 50px;
         position: fixed;
         background-color: #F5F6FF;
-        z-index: 999;
+        z-index: 1;
     }
 
     .panels-wrapper {
@@ -408,7 +408,7 @@ h1 {
         width: 30px;
     }
 .routing-card {
-    width: calc(100% - 50px);
+    width: calc(100% - 70px);
     min-height: 80px;
     height:148px;
     border-radius: 5px;
@@ -712,3 +712,10 @@ h1 {
     padding: 10px 15px;
 }
 
+.package-list-table tr th{
+    font-size: 11px;
+}
+
+.package-list-table tr td{
+    font-size: 12px;
+}

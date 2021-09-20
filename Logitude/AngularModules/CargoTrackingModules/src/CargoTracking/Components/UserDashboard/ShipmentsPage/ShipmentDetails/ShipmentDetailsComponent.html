@@ -200,11 +200,11 @@
                 Info</button>
             <button [class.active]="selectedNavButton=='CustomsDataPanel'"
                 (click)="PanelsNavigatorClicked('CustomsDataPanel')">Customs Data</button>
-            <button [class.active]="selectedNavButton=='Routing'"
+            <button [class.active]="selectedNavButton=='RoutingPanel'"
                 (click)="PanelsNavigatorClicked('RoutingPanel')">Routing</button>
-            <button [class.active]="selectedNavButton=='Documents'"
+            <button [class.active]="selectedNavButton=='DocumentsPanel'"
                 (click)="PanelsNavigatorClicked('DocumentsPanel')">Documents</button>
-            <button [class.active]="selectedNavButton=='Partners'"
+            <button [class.active]="selectedNavButton=='PartnersPanel'"
                 (click)="PanelsNavigatorClicked('PartnersPanel')">Partners</button>
         </div>
     </div>
@@ -322,7 +322,7 @@
     </panel>
 
 
-    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
+    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="false"
         [ShowWhitePanelOnMobile]="true"
         [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
         [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
@@ -333,9 +333,9 @@
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div class="description">
-                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
+                        <div *ngFor="let package of ShipmentPackages?.slice(0,1), let i = index">
                             {{package.PackageTypeName}}
-                            <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                            <a *ngIf="ShipmentPackages.length > 1 && i == 0" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
                                 {{ShowDetailsSection?'Show less':'Show more'}}
                             </a>
@@ -411,7 +411,7 @@
                     </tr>
                 </table>
 
-                <table *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
+                <table class="package-list-table" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
                     <tr>
                         <th style="width: 400px;">Package Type</th>
                         <th style="width: 250px;">Quantity</th>
