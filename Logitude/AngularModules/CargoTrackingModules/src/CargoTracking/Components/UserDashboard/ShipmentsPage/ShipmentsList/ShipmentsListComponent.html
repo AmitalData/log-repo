@@ -193,6 +193,7 @@
                                             </g>
                                         </g>
                                     </svg>
+                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
                                 </div>
 
                                 <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
@@ -236,7 +237,7 @@
                         <!-- Shipment Number -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number`'}}</div>
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}</div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
                                 <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">

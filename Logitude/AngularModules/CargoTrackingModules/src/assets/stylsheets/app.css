@@ -267,3 +267,14 @@ h3 {
     line-height: 16px;
     color: white;
 }
+
+.order-icon{
+    position: absolute;
+    top:62px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
+}
