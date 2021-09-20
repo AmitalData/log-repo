@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Json2KeyValue, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Json2KeyValue.1.3.0.3\lib\net40\Json2KeyValue.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -54,9 +54,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="XmlRender, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dlls\XmlRender.dll</HintPath>
+    <Reference Include="XmlRender">
+      <HintPath>..\Cloud Rest Client\dlls\XmlRender.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
