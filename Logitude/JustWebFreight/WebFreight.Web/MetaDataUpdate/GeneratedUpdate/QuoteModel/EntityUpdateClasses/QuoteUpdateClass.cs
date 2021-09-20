@@ -78,7 +78,7 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteUpdateClass
-   {  		
+   {  		 
 
 		public const string HashString = "bdf00bbce72eeffdffb8897cde0d60ba";
 
