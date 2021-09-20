@@ -27,9 +27,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     bulkDataPreperation.InnerDataTable = bulkDataPreperation.MainDataTable.Clone();
 
                 if (bulkDataPreperation.CargoTrackingTable.CurrentCondition == ShipmentOrderTableCondition)
-                { 
-                    // shipment order fields
-                }
+                    CreateShipmentOrderRefences(tableRow, bulkDataPreperation);
                 else
                     CreateShipmentRefences(tableRow, bulkDataPreperation);
             }
@@ -85,6 +83,52 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 bool isCustomsShipment = tableRow["ShipmentLevelCode"].Equals("A");
                 if (isCustomsShipment)
                     AddForwardingSearchRecordsForCustomsShipment(tableRow, bulkDataPreperation);
+                
+                bool hasShipmentOrder = !IsNullOrEmpty(tableRow, "OrderShipmentNumber");
+                if(hasShipmentOrder)
+                    AddShipmentOrderSearchRecordsInForwardingShipment(tableRow, bulkDataPreperation);
+
+                SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
+            }
+
+        }
+        private static void CreateShipmentOrderRefences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            bool isValidToCreateRefrences = IsShipmentValidToCreateRefrences(tableRow, bulkDataPreperation);
+            if (isValidToCreateRefrences)
+            {
+                AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference1")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference2")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("House")
+                    .Delimiter('-')
+                    .Build());
+
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
 
                 SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
             }
@@ -134,6 +178,33 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .Build());
 
         }
+        private static void AddShipmentOrderSearchRecordsInForwardingShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderMaster");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipperName");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipmentNumber");
+
+            AddSplittedData(new SplittedDataArguments
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("OrderCustomerReference")
+                .Delimiter(',')
+                .Build());
+
+            AddSplittedData(new SplittedDataArguments
+                .Builder()
+                .TableRow(tableRow)
+                .DataTable(bulkDataPreperation.InnerDataTable)
+                .CoulmnName("OrderHouse")
+                .Delimiter('-')
+                .Build());
+
+            if (tableRow["OrderHouse"].ToString().Contains('-'))
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderHouse");
+
+        }
 
         private static void SaveTheWholeHouseReferenceinSearchTable(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
         {
@@ -142,6 +213,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
             }
 
+        }
+        private static void AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName)
+        {
+            var Value = tableRow[ColumnName];
+            string SearchField = (string)Value;
+            if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
+            {
+                string SearchArr = SearchField.Split('/')[1];
+                ReferencecArgs ReferencecArgs = new ReferencecArgs()
+                {
+                    DataTable = dataTable,
+                    CoulmnName = ColumnName,
+                    SearchField = SearchArr,
+                    TableRow = tableRow,
+
+                };
+                AddNewReference(ReferencecArgs);
+            }
         }
 
         private static void AddForwardingShipmentNumberReference(DataRow tableRow, DataTable innerDataTable)

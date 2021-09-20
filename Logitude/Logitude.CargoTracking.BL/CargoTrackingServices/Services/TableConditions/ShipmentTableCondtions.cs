@@ -157,8 +157,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
+            var shipmentOrderFields =
+             "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.House) as OrderHouse, " +
+             "min(SHO.CasualImporterName) as OrderShipperName, " +
+             "min(SHO.ShipmentNumber) as OrderShipmentNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} ";
+
+            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields} ";
 
 
 
@@ -169,6 +176,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
+                            LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON SHO.ShipmentId = P.Id
                             LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
                             LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
 
@@ -246,8 +254,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as FirstPickupETA," +
                 "NULL as AssginedToCustomsAgentDate," +
                 "NULL as AssignedToTruckerDate," +
-                "NULL as CreateDateTime," +
                 "NULL as ExceptionDate," +
+                "NULL as ContainersNumbers," +
 
                 "0 as PickupDone," +
                 "0 as DepartureDone," +
@@ -268,6 +276,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
                 " '' as CustomFileNumber," +
                 " '' as ForwarderShipmentNumber," +
+                " '' as ForwardingShipmentLevelCode," +
                 " '' as CustomsDeclarationNumber," +
                 " '' as ShipperName," +
                 " '' as MasterShipmentDataId," +
@@ -283,6 +292,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as ShipmentTypeId," +
                 " '' as ExceptionDescription," +
 
+                "'O' as EntityType," +
+                "CreateDate as CreateDateTime," +
                 "UpdateDate as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
                 "PickupEstimatedDateTime as PickupEstimationDate";
