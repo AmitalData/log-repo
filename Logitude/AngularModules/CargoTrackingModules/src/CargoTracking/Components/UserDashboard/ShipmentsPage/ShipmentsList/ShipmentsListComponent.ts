@@ -14,6 +14,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -40,6 +41,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
+    isMilestonesStatusFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
@@ -73,7 +75,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         public dialog: MatDialog,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService)
     {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -82,6 +85,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ngOnInit(): void {
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+        this.GetMilstones();
     }
     ngAfterViewInit(): void
     {
@@ -241,12 +245,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetCompanyLoginsFromCache()
     {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
         this.GetInvitedCustomers();
     }
 
     FiltersSelectedInvitedCustoms: any[] = [];
     SelectedInvitedCustomers: any[] = [];
+    selectedFilterMilestonesStatus: any[] = [];
+    appliedSelectedFilterMilestonesStatus: any[] = [];
     private GetInvitedCustomers()
     {
 
@@ -265,12 +270,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     ...d }
                 ));
 
-
-
-        console.log("[Invited Customers]", this.InvitedCustomersIds);
-
     }
 
+    
+
+    private GetMilstones(){
+        this.milestonesService.getAll(this.tenant)
+            .subscribe((milestones:any) => {
+                console.log(milestones)
+                this.MilestonesStatus  = milestones;
+            });
+    }
 
 
     private AddDemoCustomersForTest()
@@ -377,7 +387,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) =>
         {
-            console.log("[GetUserShipmentsCounter]", counter);
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
             this.SetShipmentsScrollPosition();
@@ -610,12 +619,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.isFiltersSideBarOpened = false;
 
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
+        this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
+        console.log('this.appliedSelectedFilterMilestonesStatus', this.appliedSelectedFilterMilestonesStatus)
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        this.appliedSelectedFilterMilestonesStatus= [];
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
@@ -636,7 +648,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     ShipmentDetailsMenuClicked(buttonCode: string)
     {
-        console.log("shipment more details", buttonCode, this.lastClickedShipment);
 
         if (buttonCode == "set")
             this.lastClickedShipment.IsFavorite = true;
@@ -661,6 +672,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
             if(index >= 0)
                 this.SelectedInvitedCustomers.splice(index,1);
+                RootContext.ShipmentsScrollPosition = 0;
+        this.LoadScreenData();
+
+    }
+
+    UnselectMiletone(state)
+    {
+        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
+            if(index >= 0)
+                this.appliedSelectedFilterMilestonesStatus.splice(index,1);
                 RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
@@ -690,7 +711,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             if(index >= 0)
                 this.FiltersSelectedInvitedCustoms.splice(index,1);
         }
+    }
 
+    // Milestones filter
+    MilestonesStatus: any[] = [];
+    OnMilestonesStatusFilterChanged(value,state){
+        var index = this.selectedFilterMilestonesStatus.findIndex(d=>d==state);
+        if(value === true && index < 0){
+                this.selectedFilterMilestonesStatus.push(state);
+        }
+        else if(value === false && index >= 0){
+                this.selectedFilterMilestonesStatus.splice(index,1);
+        }
+        console.log('OnMilestonesStatusFilterChanged', this.selectedFilterMilestonesStatus);
     }
 
 }
@@ -749,4 +782,24 @@ export class CargoTrackingShipmentsCounter{
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
+}
+
+enum Milestones {
+    Booking = "1",
+    Pickup = "2",
+    FromWarehouse = "3",
+    Departure = "4",
+    Arrival = "5",
+    ToWarehouse = "6",
+    AssignedToCustomsBroker = "7",
+    CustomsProcess = "8",
+    GoodsClassification = "9",
+    DocumentInspection = "10",
+    CustomsPayment = "11",
+    Clearance = "12",
+    GatepassArrived = "13",
+    AssignedtoTrucker = "14",
+    DeliveryOut = "15",
+    Delivered = "16",
+    Invoiced = "17"
 }

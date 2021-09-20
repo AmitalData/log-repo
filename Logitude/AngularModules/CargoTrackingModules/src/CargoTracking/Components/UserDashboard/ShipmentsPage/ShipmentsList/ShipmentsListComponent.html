@@ -81,7 +81,7 @@
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 ">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || appliedSelectedFilterMilestonesStatus.length > 0">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
@@ -90,6 +90,11 @@
 
             <li *ngFor="let customer of SelectedInvitedCustomers" (click)="UnselectCustomer(customer)">
                 {{customer.Name}}
+                <span class="filter-close-btn">×</span>
+            </li>
+
+            <li *ngFor="let state of appliedSelectedFilterMilestonesStatus" (click)="UnselectMiletone(state)">
+                {{state.EnglishName}}
                 <span class="filter-close-btn">×</span>
             </li>
 
@@ -411,6 +416,22 @@
                     <div class="checkbox-filteritem" *ngFor="let customer of FiltersInvitedCustomers">
                         <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected" (ValueChanged)="OnCustomerValueChanged($event, customer)"
                                   [Text]="customer.Name" [DataContext]="customer"></CheckBox>
+                        <!-- <div style="float: right;" class="counter">0</div> -->
+                    </div>
+
+                </div>
+            </li>
+
+            <li [class.expanded]="isMilestonesStatusFilterExpanded">
+                <div class="filter-title" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">Status</div>
+                <div class="expand-icon" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isMilestonesStatusFilterExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isMilestonesStatusFilterExpanded">
+
+
+                    <div class="checkbox-filteritem" *ngFor="let state of MilestonesStatus">
+                        <CheckBox  [IsChecked]="false" [Value]="state.Code" [Text]="state.EnglishName" [DataContext]="state"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
 
