@@ -8,56 +8,110 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 {
     public class CargoTrackingShipmentTableStructure
     {
+        public List<string> columnsForCopy = new List<string>
+            {
+                "Id",
+                "Tenant",
+                "CustomFileNumber",
+                "ForwarderShipmentNumber",
+                "CustomsDeclarationNumber",
+                "ShipperName",
+                "CustomerId",
+                "TransportModeId",
+                "DirectionId",
+                "MasterShipmentDataId",
+                "House",
+                "ShipmentNumber",
+                "FromPortId",
+                "ToPortId",
+                "ShipperId",
+                "ConsigneeId",
+                "GrossWeight",
+                "Volume",
+                "CustomConnectToShipment",
+                "AutomaticLastUpdateDate",
+                "ShipmentPickUpIndex",
+                "FirstPickupETA",
+                "ShipmentLevelCode",
+                "CustomsClearanceDate",
+                "CustomFileId",
+                "CreateDateTime",
+                "SecurityKey",
+                "ConsigneeName",
+                "CustomerReference1",
+                "CustomerReference2",
+                "FirstPickupETD",
+                "WarehouseLegActualEntryDate",
+                "WarehouseLegExpectedEntryDate",
+                "WarehouseLegRemarks",
+                "DeclarationDate",
+                "IsCancelled",
+                "SearchFields",
+                "PackagesQuantity",
+
+                "AssignedToTruckerDate",
+                "AssginedToCustomsAgentDate",
+                "GrossWeightUnitCode",
+                "ShipmentTypeId",
+
+                "ExceptionDate",
+                "ExceptionDescription"
+            };
+        public List<string> fields = new List<string>
+            {
+                "Id",
+                "Tenant",
+                "CreateDate",
+                "CreatedByUserId",
+                "UpdateDate",
+                "UpdatedByUserId",
+                "SearchFields",
+                "OrderNumber",
+                "TransportModeId",
+                "ConsigneeId",
+                "ShipperId",
+                "AgentId",
+                "IncotermId",
+                "AccountManagerId",
+                "PONumber",
+                "DescriptionOfGoods",
+                "Master",
+                "House",
+                "CarrierNumber",
+                "VesselId",
+                "ETD",
+                "ETA",
+                "ATD",
+                "ATA",
+                "CustomsAgentId",
+                "SpecialServicesTypeId",
+                "CustomerReferences",
+                "IsReadyForPickup",
+                "PickupEstimatedDateTime",
+                "PickupActualDateTime",
+                "ForwarderId",
+                "BookingConfirmationDate",
+                "SupplyDateTime",
+                "OriginPortId",
+                "DestinationPortId",
+                "GatewayId",
+                "CasualImporterName",
+                "CasualSupplierName",
+                "ShipmentLevelCode",
+                "PODate",
+                "BookingConfirmationNumber",
+                "DirectionId",
+                "CarrierId",
+                "IsCancelled",
+                "SecurityKey",
+                "ShipmentId",
+                "Quantity",
+                "GrossWeight",
+                "Volume",
+                "CustomerId"
+            };
         public string GetColumnsForCopy()
         {
-            List<string> columnsForCopy = new List<string>();
-            columnsForCopy.Add("Id");
-            columnsForCopy.Add("Tenant");
-            columnsForCopy.Add("CustomFileNumber");
-            columnsForCopy.Add("ForwarderShipmentNumber");
-            columnsForCopy.Add("CustomsDeclarationNumber");
-            columnsForCopy.Add("ShipperName");
-            columnsForCopy.Add("CustomerId");
-            columnsForCopy.Add("TransportModeId");
-            columnsForCopy.Add("DirectionId");
-            columnsForCopy.Add("MasterShipmentDataId");
-            columnsForCopy.Add("House");
-            columnsForCopy.Add("ShipmentNumber");
-            columnsForCopy.Add("FromPortId");
-            columnsForCopy.Add("ToPortId");
-            columnsForCopy.Add("ShipperId");
-            columnsForCopy.Add("ConsigneeId");
-            columnsForCopy.Add("GrossWeight");
-            columnsForCopy.Add("Volume");
-            columnsForCopy.Add("CustomConnectToShipment");
-            columnsForCopy.Add("AutomaticLastUpdateDate");
-            columnsForCopy.Add("ShipmentPickUpIndex");
-            columnsForCopy.Add("FirstPickupETA");
-            columnsForCopy.Add("ShipmentLevelCode");
-            columnsForCopy.Add("CustomsClearanceDate");
-            columnsForCopy.Add("CustomFileId");
-            columnsForCopy.Add("CreateDateTime");
-            columnsForCopy.Add("SecurityKey");
-            columnsForCopy.Add("ConsigneeName");
-            columnsForCopy.Add("CustomerReference1");
-            columnsForCopy.Add("CustomerReference2");
-            columnsForCopy.Add("FirstPickupETD");
-            columnsForCopy.Add("WarehouseLegActualEntryDate");
-            columnsForCopy.Add("WarehouseLegExpectedEntryDate");
-            columnsForCopy.Add("WarehouseLegRemarks");
-            columnsForCopy.Add("DeclarationDate");
-            columnsForCopy.Add("IsCancelled");
-            columnsForCopy.Add("SearchFields");
-            columnsForCopy.Add("PackagesQuantity");
-
-            columnsForCopy.Add("AssignedToTruckerDate");
-            columnsForCopy.Add("AssginedToCustomsAgentDate");
-            columnsForCopy.Add("GrossWeightUnitCode");
-            columnsForCopy.Add("ShipmentTypeId");
-
-            columnsForCopy.Add("ExceptionDate");
-            columnsForCopy.Add("ExceptionDescription");
-         
             return string.Join(",", columnsForCopy.ToArray());
         }
 
@@ -69,5 +123,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             return string.Join(",", ColumnsForCopy.ToArray());
         }
-   }
+        public string GetShipmentOrderFields()
+        {
+            
+
+            return string.Join(",", fields.ToArray());
+        }
+
+    }
 }

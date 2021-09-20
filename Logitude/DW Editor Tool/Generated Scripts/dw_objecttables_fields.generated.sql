@@ -1479,6 +1479,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_QuotesDeliveryToNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesDeliveryToNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesDeliveryToNewId,0,'Fact_Quotes','[Delivery To]','Delivery To','Text','false',0,500,'false','false','true','Routings','false','false','false','QuoteComputedField.DeliveryTo','false','false')  
+declare @Fact_QuotesSpotRatesMarkupNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesSpotRatesMarkupNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_QuotesSpotRatesMarkupNewId,0,'Fact_Quotes','[Spot Rates Markup]','Spot Rates Markup','Decimal','false',0,0,'false','false','true','General','false','false','false','QuoteComputedField.MarkupPercentage','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 
