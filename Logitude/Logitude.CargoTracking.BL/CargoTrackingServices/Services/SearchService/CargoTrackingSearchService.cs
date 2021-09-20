@@ -182,9 +182,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         }
         private static void AddShipmentNumberReference(DataRow tableRow, DataTable dataTable)
         {
-            string CoulmnName = "ShipmentNumber";
-            AddNewRecord(tableRow, dataTable, CoulmnName);
-            var Value = tableRow[CoulmnName];
+            string ColumnName = "ShipmentNumber";
+            AddNewRecord(tableRow, dataTable, ColumnName);
+            AddNewReferenceForSplitCase(tableRow, dataTable,ColumnName);
+            
+        }
+        private static void  AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName)
+        {
+            var Value = tableRow[ColumnName];
             string SearchField = (string)Value;
             if (!string.IsNullOrEmpty(SearchField) && SearchField.Contains("/"))
             {
@@ -192,16 +197,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 ReferencecArgs ReferencecArgs = new ReferencecArgs()
                 {
                     DataTable = dataTable,
-                    CoulmnName = CoulmnName,
+                    CoulmnName = ColumnName,
                     SearchField = SearchArr,
                     TableRow = tableRow,
 
                 };
                 AddNewReference(ReferencecArgs);
             }
-
         }
-
         private static void AddSplittedData(SplittedDataArguments splittedDataArguments)
         {
             if (!IsNullOrEmpty(splittedDataArguments.TableRow, splittedDataArguments.CoulmnName))
@@ -240,8 +243,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     TableRow = tableRow,
 
                 };
-
-                if(referenceTypeName == null)
+                if (ReferencecArgs.CoulmnName == "ForwardingShipmentNumber")
+                {
+                    AddNewReferenceForSplitCase(ReferencecArgs.TableRow, ReferencecArgs.DataTable, ReferencecArgs.CoulmnName);
+                }
+                if (referenceTypeName == null)
                     AddNewReference(ReferencecArgs);
                 else
                     AddNewReference(ReferencecArgs, referenceTypeName);
@@ -252,6 +258,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         private static void AddNewReference(ReferencecArgs referencecArgs)
         {
+           
             DataRow TableRow1 = referencecArgs.DataTable.NewRow();
             TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
             TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
