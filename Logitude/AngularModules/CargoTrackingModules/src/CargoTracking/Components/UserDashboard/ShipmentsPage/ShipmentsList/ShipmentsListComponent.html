@@ -431,7 +431,8 @@
 
 
                     <div class="checkbox-filteritem" *ngFor="let state of MilestonesStatus">
-                        <CheckBox  [IsChecked]="false" [Value]="state.Code" [Text]="state.EnglishName" [DataContext]="state"></CheckBox>
+                        <CheckBox [IsChecked] = "true" [Text]="state.EnglishName" [DataContext]="state"
+                        (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
 

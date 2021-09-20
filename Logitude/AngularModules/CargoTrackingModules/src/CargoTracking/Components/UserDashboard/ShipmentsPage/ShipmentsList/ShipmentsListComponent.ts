@@ -277,8 +277,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetMilstones(){
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones:any) => {
-                console.log(milestones)
-                this.MilestonesStatus  = milestones;
+                this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
             });
     }
 
@@ -718,12 +717,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     OnMilestonesStatusFilterChanged(value,state){
         var index = this.selectedFilterMilestonesStatus.findIndex(d=>d==state);
         if(value === true && index < 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = true;
                 this.selectedFilterMilestonesStatus.push(state);
         }
         else if(value === false && index >= 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
                 this.selectedFilterMilestonesStatus.splice(index,1);
         }
-        console.log('OnMilestonesStatusFilterChanged', this.selectedFilterMilestonesStatus);
+        console.log('aaaaa', this.MilestonesStatus);
     }
 
 }
