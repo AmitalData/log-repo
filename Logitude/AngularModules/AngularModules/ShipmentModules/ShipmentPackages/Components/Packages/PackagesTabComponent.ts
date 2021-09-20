@@ -1293,16 +1293,39 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     RebuildButtonClicked() {
+        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            var shipmentDomainService = new ShipmentDomainService();
+            var shipmentId = this.EntityPM.Id;
+            shipmentDomainService.GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    var isPackagesConnectedWithStandAlonePackage = myResponse.Result;
+                    if (isPackagesConnectedWithStandAlonePackage) {
+                        this.ValidateRebuildConnectedShipmetPackage()
+                    } else {
+                        this.ViewBuildPackagesConfirmationWindow();
+                    }
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+        } else {
+            this.ViewBuildPackagesConfirmationWindow();
+        }
+    }
+
+    ViewBuildPackagesConfirmationWindow() {
         var confirmWindow = new ConfirmWindow();
 
         if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
             confirmWindow.Show("Note that this will result in deleting container level statuses. Rebuild Packages?");
         }
-
         else {
             confirmWindow.Show("Rebuild Packages?");
         }
-        
+
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
@@ -1312,11 +1335,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.BuildItemsSource();
                     this.ComputeTotals();
                 }
-                
+
                 this.BuildButtonClicked();
             }
         });
     }
+
     BuildPackagesFromList(allPackages: ShipmentPackagePM[]) {
 
         if (this.TransportModeId == "A") {
@@ -1738,6 +1762,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         messageWindow.Show("Can't Delete a Container that is Connected to a Pickup/Delivery");
     }
 
+    ValidateRebuildConnectedShipmetPackage() {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show("Can't Rebuild a Container that is Connected to a Pickup/Delivery");
+    }
 
 
   DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
