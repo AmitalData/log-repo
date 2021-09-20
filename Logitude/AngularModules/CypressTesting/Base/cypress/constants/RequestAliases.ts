@@ -273,4 +273,8 @@ export class RequestAliases {
 
     public static readonly PostInterestBases = 'PostInterestBases';
     public static readonly PutInterestBases = 'PutInterestBases';
+
+    public static readonly PostChequeDeposit = "PostChequeDeposit"
+    public static readonly PutChequeDeposit = "PutChequeDeposit"
+    public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
 }

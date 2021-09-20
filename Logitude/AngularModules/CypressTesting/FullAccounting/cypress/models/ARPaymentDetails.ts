@@ -6,5 +6,10 @@ export interface ARPaymentDetails {
     RegisterDate: number,
     PaymentMethod: string,
     PaymentAmount: string,
-    PaymentBranch: string
+    PaymentBranch: string,
+    ChequeValueDate: string,
+    ChequeRef: string,
+    ChequeBank: string,
+    ChequeBankBranch: string,
+    ChequeAccount: string
 }
