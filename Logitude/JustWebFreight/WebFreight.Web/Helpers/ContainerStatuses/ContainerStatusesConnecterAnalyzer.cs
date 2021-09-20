@@ -828,7 +828,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                         LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                         ContainerNumber = container_number,
                         SCACCode = carrier_scac,
-                        Tenant = tenant,
+                        Tenant = logitudeTenant,
                         CarrierName = GetCarrierName()
                     };
                     logitudeOceanInsightsResponseRepository.Add(logitudeOceanInsightsResponse);
