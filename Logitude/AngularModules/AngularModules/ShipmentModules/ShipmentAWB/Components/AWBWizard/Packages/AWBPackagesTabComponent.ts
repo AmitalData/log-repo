@@ -39,8 +39,10 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         super();
         this.DomainService = new ShipmentDomainService();
         this.ItemsSource = [];
-        this.ItemsSourceOfCommodities = new ObservableCollection([]);      
+        this.ItemsSourceOfCommodities = new ObservableCollection([]);
     }
+
+    
 
     ngOnDestroy() {
 
@@ -62,6 +64,21 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
             if (hasToggleFeature) {
                 this.IsMultipleCommoditiesVisible = true;
             }
+        }
+
+        this.InitializePackageSetting();
+
+    }
+
+    InitializePackageSetting() {
+        if (this.IsMultipleCommodities) {
+            this.IsSingle = false;
+            this.IsMultiple = true;
+        }
+
+        else {
+            this.IsSingle = true;
+            this.IsMultiple = false;
         }
     }
 
@@ -876,15 +893,40 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         }
     }
 
+    private isSingle: boolean = false;
+    get IsSingle() { return this.isSingle; }
+    set IsSingle(value: boolean) {
+        if (this.isSingle != value) {
+            this.isSingle = value;
+        }
+    }
+
+    private isMultiple: boolean = false;
+    get IsMultiple() { return this.isMultiple; }
+    set IsMultiple(value: boolean) {
+        if (this.isMultiple != value) {
+            this.isMultiple = value;
+        }
+    }
+
     SetMultipleCommodities(newValue: boolean) {
+        this.IsSingle = null;
+        this.IsMultiple = null;
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Show("Changing between Single/Multi Commodity will cause the current packages to be updated to fit the change. Please confirm.");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.IsMultipleCommodities = newValue;
+                this.IsSingle = !newValue;
+                this.IsMultiple = newValue;
             }
+            else if (confirmWindow.No) {
+                this.IsSingle = newValue;
+                this.IsMultiple = !newValue;
+            }
+            this.IsMultipleCommodities = this.IsMultiple;
         });
     }
+
     get IsMultipleCommodities() { return this.EntityPM.IsMultipleCommodities; }
     set IsMultipleCommodities(newValue: boolean) {
         if (this.EntityPM.IsMultipleCommodities != newValue) {
