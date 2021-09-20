@@ -6,6 +6,10 @@
 <div *ngIf="isLoading"> <br> Loading...</div>
 
 <div *ngIf="!isLoading" class="shipment-details-container">
+
+    <div class="back-to-shipments" style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
+        <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
+    </div>
     <!-- Shipment Header -->
     <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
 
