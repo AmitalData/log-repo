@@ -21,6 +21,7 @@ export class AddEditContactComponent {
     public DataContext: ContactItemClass;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
+    public IsHasExternalId = false;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -35,6 +36,9 @@ export class AddEditContactComponent {
         if (dataContext.fatherComponent) {
             this.CardId = dataContext.fatherComponent.EntityId;
             this.DomainService = dataContext.fatherComponent.DomainService;
+
+            this.IsHasExternalId =  !AppTool.IsNullOrEmpty(dataContext.ExternalId)? true: false  ;
+
         }
         else {
             this.CardId = dataContext.EntityPM.CardId;

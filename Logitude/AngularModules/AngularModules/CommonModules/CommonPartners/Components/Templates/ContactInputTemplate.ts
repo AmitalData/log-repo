@@ -37,7 +37,7 @@ export class ContactInputTemplate extends BaseComponent {
     public ProductsList: Array<ProductItem> = [];
     public ServicesList: Array<AdditionalServiceItem> = [];
     public IsProductsAreaVisible: boolean = false;
-    public IsAdditionalServicesAreaVisible: boolean = false;
+    public IsAdditionalServicesAreaVisible: boolean = false; 
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -136,7 +136,7 @@ export class ContactInputTemplate extends BaseComponent {
 
     public IsEditingEnabled: boolean = false;
     public IsEditingEmailEnabled: boolean = false;
-    public IsBlockingUnifreightCustomer: boolean = false;
+    public IsBlockingUnifreightCustomer: boolean = false; 
     private SetUIProperties() {
 
         this.IsEditingEnabled = true;
@@ -147,8 +147,22 @@ export class ContactInputTemplate extends BaseComponent {
                 this.IsEditingEmailEnabled = false;
             }
         }
-        
-        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.IsEditingEmailEnabled);
+
+        var isBlockingUnifreightCustomer = false;
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ExternalId)) {
+            if (this.EntityPM != null) {
+                if (SessionLocator.TenantPM.IsHybrid ) {
+                    isBlockingUnifreightCustomer = true; 
+                }
+            }
+        }
+
+        this.IsBlockingUnifreightCustomer = isBlockingUnifreightCustomer;
+        this.IsEditingEnabled = !isBlockingUnifreightCustomer;
+        this.IsEditingEmailEnabled = this.IsBlockingUnifreightCustomer == true ? false : this.IsEditingEmailEnabled;
+
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.IsEditingEmailEnabled );
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Position", this.ObjectTableName, this.IsEditingEnabled);
