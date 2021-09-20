@@ -102,15 +102,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     .Builder()
                     .TableRow(tableRow)
                     .DataTable(bulkDataPreperation.InnerDataTable)
-                    .CoulmnName("CustomerReference1")
-                    .Delimiter(',')
-                    .Build());
-
-                AddSplittedData(new SplittedDataArguments
-                    .Builder()
-                    .TableRow(tableRow)
-                    .DataTable(bulkDataPreperation.InnerDataTable)
-                    .CoulmnName("CustomerReference2")
+                    .CoulmnName("CustomerReferences")
                     .Delimiter(',')
                     .Build());
 

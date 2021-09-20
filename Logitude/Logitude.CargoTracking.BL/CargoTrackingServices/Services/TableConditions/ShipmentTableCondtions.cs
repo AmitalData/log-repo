@@ -278,7 +278,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as ForwarderShipmentNumber," +
                 " '' as ForwardingShipmentLevelCode," +
                 " '' as CustomsDeclarationNumber," +
-                " '' as ShipperName," +
+                " CasualImporterName as ShipperName," +
                 " '' as MasterShipmentDataId," +
                 " '' as FromPortId," +
                 " '' as ToPortId," +
