@@ -85,7 +85,7 @@
    declare @EstimatedReceivablesInSales as float
    declare @EstimateProfit as float
    declare @LocalCurrency as int
-
+   declare @MarkupPercentage as float
 
 	DECLARE QuotesCursor CURSOR READ_ONLY
 	FOR
@@ -100,7 +100,7 @@
 	dw_Quotes.AutomaticallyCloseDate   , FromCountry.Id_Number , ToCountry.Id_Number , shipperPartners.[Partner Type]  , consigneePartners.[Partner Type], @dw_Quotes.CustomFieldsVariable  , customerPartners.[Partner Type],
 	dw_QuoteComputedFields.ConnectedToShipment, dw_QuoteComputedFields.ConnectedToTicket, dw_QuoteComputedFields.ToLocation, dw_QuoteComputedFields.FromLocation, 
 	dw_QuoteComputedFields.DeliveryTo, dw_QuoteComputedFields.PickupFrom, dw_QuoteComputedFields.EstimatedPayablesInSales, dw_QuoteComputedFields.EstimatedPayablesInLocal, 
-	dw_QuoteComputedFields.EstimatedReceivablesInLocal, dw_QuoteComputedFields.EstimatedReceivablesInSales, dw_Quotes.EstimateProfit, LocalCurrency.Id_Number
+	dw_QuoteComputedFields.EstimatedReceivablesInLocal, dw_QuoteComputedFields.EstimatedReceivablesInSales, dw_Quotes.EstimateProfit, LocalCurrency.Id_Number, dw_QuoteComputedFields.MarkupPercentage
 
 
 	From dw_Quotes
@@ -138,7 +138,7 @@
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate, @FromCountry,@ToCountry , @ShipperPartnerType,@ConsigneePartnerType , @CursorCustomFieldsVariable,  @CustomerPartnerType
 	 , @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales,  @EstimateProfit,  @LocalCurrency 	 
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales,  @EstimateProfit,  @LocalCurrency,  @MarkupPercentage 	 
 
 
 
@@ -170,7 +170,7 @@
 
 	    [CustomFieldNamesVariable], [Connected To Shipment], [Connected To Ticket],[To Location], [From Location],
 	   [Delivery To], [Pickup From], [Estimated Payables in Sales Currency], [Estimated Payables in Local Currency],
-	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency]  )
+	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency],[Spot Rates Markup]  )
 	   
 	   values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,dbo.GetDateFormateAsNumber(@OpenDate)    , dbo.GetDateFormateAsNumber(@SentDate)  , dbo.GetDateFormateAsNumber(@AcceptedDate)  ,dbo.GetDateFormateAsNumber(@DeclinedDate)    ,dbo.GetDateFormateAsNumber(@StartDate)   ,dbo.GetDateFormateAsNumber(@LastActivityDate) 
@@ -179,7 +179,7 @@
 	 , dbo.GetDateFormateAsNumber(@ExpirationDate)  ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,dbo.GetDateFormateAsNumber(@StageDueDate)   ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
 	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee,@IsPotentialCustomer,
 	 [CustomFieldValuesVariable] ,  @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency 
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency,  @MarkupPercentage
 	 )
 
 	   	END TRY 
@@ -203,7 +203,7 @@ END CATCH
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate,@FromCountry ,@ToCountry , @ShipperPartnerType,@ConsigneePartnerType , @CursorCustomFieldsVariable,  @CustomerPartnerType
 	  ,@ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales,  @EstimateProfit,  @LocalCurrency 	
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales,  @EstimateProfit,  @LocalCurrency,  @MarkupPercentage	
 		 
 
 
