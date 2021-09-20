@@ -46,6 +46,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "NULL OrderShipmentNumber , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
@@ -161,7 +162,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.Master) as OrderMaster, " +
              "min(SHO.House) as OrderHouse, " +
              "min(SHO.CasualImporterName) as OrderShipperName, " +
-             "min(SHO.ShipmentNumber) as OrderShipmentNumber, " +
+             "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
 
@@ -256,6 +257,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as AssignedToTruckerDate," +
                 "NULL as ExceptionDate," +
                 "NULL as ContainersNumbers," +
+                "SHO.OrderNumber as ShipmentNumber," +
 
                 "0 as PickupDone," +
                 "0 as DepartureDone," +

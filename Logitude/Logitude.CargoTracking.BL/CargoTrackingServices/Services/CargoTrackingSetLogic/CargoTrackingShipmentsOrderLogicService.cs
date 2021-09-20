@@ -26,7 +26,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("TransportModeId", "TransportModeId"),
             new FieldMap("Master", "Master"),
             new FieldMap("House", "House"),
-            new FieldMap("ShipmentNumber", "ShipmentNumber"),
+            new FieldMap("ShipmentNumber", "OrderNumber"),
             new FieldMap("FromPortId", "OriginPortId"),
             new FieldMap("ToPortId", "DestinationPortId"),
             new FieldMap("ShipperId", "ShipperId"),

@@ -83,8 +83,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 bool isCustomsShipment = tableRow["ShipmentLevelCode"].Equals("A");
                 if (isCustomsShipment)
                     AddForwardingSearchRecordsForCustomsShipment(tableRow, bulkDataPreperation);
-                
-                bool hasShipmentOrder = !IsNullOrEmpty(tableRow, "OrderShipmentNumber");
+
+                bool hasShipmentOrder =  !IsNullOrEmpty(tableRow, "OrderShipmentNumber");
                 if(hasShipmentOrder)
                     AddShipmentOrderSearchRecordsInForwardingShipment(tableRow, bulkDataPreperation);
 

@@ -91,7 +91,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "PickupActualDateTime",
                 "ForwarderId",
                 "BookingConfirmationDate",
-                "ShipmentNumber",
                 "SupplyDateTime",
                 "OriginPortId",
                 "DestinationPortId",
