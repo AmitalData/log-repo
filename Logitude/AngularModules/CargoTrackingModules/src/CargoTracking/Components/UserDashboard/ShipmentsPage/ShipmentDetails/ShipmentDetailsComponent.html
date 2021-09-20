@@ -218,7 +218,7 @@
                 </div>
                 <div>
                     <div class="title">Incoterms</div>
-                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
+                    <div class="description">{{ShipmentOrder? ShipmentOrder.IncotermCode : ShipmentPM?.IncotermName}}</div>
                 </div>
 
                 <!-- ETD/ATD -->
@@ -274,7 +274,8 @@ Shipment.ShipmentList.ArrivalDate |
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} units</div>
+                    <div *ngIf="ShipmentOrder == null" class="description">{{ ShipmentPM?.NumberOfPackages || 0}} units</div>
+                    <div *ngIf="ShipmentOrder != null" class="description">{{ ShipmentOrder?.Quantity || 0}} units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
@@ -325,10 +326,11 @@ Shipment.ShipmentList.ArrivalDate |
                     </div>
                     <div class="description">{{Shipment.ShipmentList.ShipmentTypeCode}}</div>
                 </div>
-                    <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
-                        <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
-                        <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">Shipment Type</div>
-                        <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
+                <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
+                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">Shipment Type</div>
+                    <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
+                    <div *ngIf="ShipmentOrder != null" class="description"> {{ShipmentPM?.ShipmentTypeName}} </div>
                     </div>
                     <div>
                         <div class="title">quantity</div>

@@ -913,8 +913,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var step = new RoutingStep();
         step.TransportModeCode = this.ShipmentOrder.TransportModeId;
         step.Description = "MainCarriageLeg";
-        step.FromPortLabel = this.ShipmentOrder.OriginPortName;
-        step.ToPortLabel = this.ShipmentOrder.DestinationPortName;
+        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;
+        step.ToPortLabel = this.ShipmentOrder.DestinationPortCode;
 
         step.Directions = this.BuildRouteDirections(this.ShipmentOrder);
         return step;
@@ -996,13 +996,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
         return step;
     }
     private SetFromAndToLabelsForShipmentOrderRoutes(step: RoutingStep) {
-        step.FromPortLabel = this.ShipmentOrder.OriginPortName;      
-        step.ToPortLabel = this.ShipmentOrder.GatewayName;
+        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;      
+        step.ToPortLabel = this.ShipmentOrder.GatewayCode;
     
     }
     private SetFromAndToLabelsForShipmentOrderOriginRoutes(step: RoutingStep) {
-        step.FromPortLabel = this.ShipmentOrder.GatewayName;     
-        step.ToPortLabel = this.ShipmentOrder.DestinationPortName;
+        step.FromPortLabel = this.ShipmentOrder.GatewayCode;     
+        step.ToPortLabel = this.ShipmentOrder.DestinationPortCode;
     }
     private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {
         step.FromPortLabel = this.GetFromPortLabel(shipmentRoute);
