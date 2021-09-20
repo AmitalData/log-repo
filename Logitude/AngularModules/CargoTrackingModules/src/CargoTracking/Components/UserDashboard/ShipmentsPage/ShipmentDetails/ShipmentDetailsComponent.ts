@@ -92,6 +92,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private SetOverviewPanelTitle() {
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
             this.OverviewPanelTitle = "Order Overview";
+
         }
         else {
             this.OverviewPanelTitle = "Overview";
@@ -154,8 +155,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.HasReferences = this.SetHasReferences();
 
                 this.SetRoutingVariables();
-                
-                if (this.Shipment.ShipmentList.EntityType == "O") {
+
+                if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
                     this.GetShipmentOrder();
                 }
                 else {

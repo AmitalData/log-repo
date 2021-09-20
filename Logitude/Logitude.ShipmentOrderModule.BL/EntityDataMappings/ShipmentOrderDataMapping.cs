@@ -34,7 +34,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
         {
             List<CardList> cards = GetCardList(entityPOCO.Tenant, entityPOCO);
             List<PortList> ports = GetPortList(entityPOCO.Tenant, entityPOCO);
-
+            incoterm = GetIncotermById(entityPM.IncotermId, entityPM.Tenant);
             entityPM.ConsigneeName = cards.Where(d => d.Id == entityPOCO.ConsigneeId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.ShipperName = cards.Where(d => d.Id == entityPOCO.ShipperId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.AgentName = cards.Where(d => d.Id == entityPOCO.AgentId).Select(d => d.EnglishName).FirstOrDefault();
@@ -48,14 +48,14 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.AccountManagerName = GetAccountManagerNameById(entityPOCO.AccountManagerId, entityPOCO.Tenant);
             entityPM.VesselName = GetVesselNameById(entityPOCO.VesselId, entityPOCO.Tenant);
             entityPM.SpecialServicesTypeName = GetSpecialServicesTypeNameById(entityPOCO.SpecialServicesTypeId, entityPOCO.Tenant);
-            entityPM.IncotermCode = GetIncotermCodeById(entityPOCO.IncotermId, entityPOCO.Tenant).Code;
+            entityPM.IncotermCode = incoterm?.Code;
             entityPM.ShipmentLevelName = GetShipmentLevelNameByCode(entityPOCO.ShipmentLevelCode, entityPOCO.Tenant);
             entityPM.TransportModeName = GetTransportModeNameById(entityPOCO.TransportModeId, entityPOCO.Tenant);
             entityPM.DirectionName = GetDirectionNameById(entityPOCO.DirectionId, entityPOCO.Tenant);
             entityPM.OriginPortCode = ports.Where(d => d.Id == entityPOCO.OriginPortId).Select(d => d.Code).FirstOrDefault();
             entityPM.GatewayCode = ports.Where(d => d.Id == entityPOCO.GatewayId).Select(d => d.Code).FirstOrDefault();
             entityPM.DestinationPortCode = ports.Where(d => d.Id == entityPOCO.DestinationPortId).Select(d => d.Code).FirstOrDefault();
-            //entityPM.IncotermName = GetIncotermCodeById(entityPOCO.IncotermId, entityPOCO.Tenant);
+            entityPM.IncotermName = incoterm?.Name;
         }
 
 
@@ -137,8 +137,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             }
             return null;
         }
-
-        private IncotermPM GetIncotermCodeById(string incotermId, int tenant)
+        IncotermPM incoterm;
+        private IncotermPM GetIncotermById(string incotermId, int tenant)
         {
             if (!string.IsNullOrEmpty(incotermId))
             {
