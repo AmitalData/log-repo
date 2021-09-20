@@ -101,13 +101,13 @@ h1 {
     /* box-sizing: border-box; */
     /* margin: 0 50px; */
     display: inline-block;
-    padding: 10px 0px;
+    padding: 15px 0px;
     /* float: left; */
 }
 
     .slider .cards {
         width: 3000px;
-        height: 120px;
+        height: 160px;
         transition: margin-left 1s;
         text-align: left;
     }
@@ -159,7 +159,7 @@ h1 {
     color: #444444;
     border-radius: 5px;
     margin: 0 10px;
-    padding: 10px;
+    padding: 15px;
     box-shadow: 0px 0px 8px 0px #00000030;
 }
 
@@ -315,9 +315,11 @@ h1 {
     }
 
     .slider-wrapper {
-        height: 110px;
+        /* height: 110px; */
         background: none;
-        margin: 0 -15px;
+        margin-right: -15px;
+        margin-top: 70px;
+        height: 130px;
     }
 
     .slider {
@@ -347,17 +349,22 @@ h1 {
         /* background: white;
             box-shadow: 0px 0px 8px 0px #00000025;
             border-radius: 8px; */
-    }
+        }
 
         .data-cards > div {
             width: calc(50% - 20px);
+            height: initial;
         }
 
     .PanelsNavigator {
         width: 100%;
-        margin: 15px 0 0 0;
+        margin: 0;
+        padding-top: 15px;
         overflow: auto;
-        height: 60px;
+        height: 50px;
+        position: fixed;
+        background-color: #F5F6FF;
+        z-index: 999;
     }
 
     .panels-wrapper {

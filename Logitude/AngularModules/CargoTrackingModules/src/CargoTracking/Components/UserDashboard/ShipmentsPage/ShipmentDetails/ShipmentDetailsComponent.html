@@ -126,13 +126,15 @@
 
     </div>
 
-    <!-- Milestones -->
-    <div class="shipment-header" style="vertical-align:middle;text-align:center">
-        <span *ngIf="NoMilstonesFound" class="title">No Milestones created for this Shipment</span>
-    </div>
 
-    <div *ngIf="!NoMilstonesFound" style="order: 2;" #SliderWrapper class="slider-wrapper"
+
+    <div style="order: 2;" #SliderWrapper class="slider-wrapper"
         (wheel)="onMousewheel($event)" (pan)="logPan($event)">
+
+        <!-- Milestones -->
+        <div *ngIf="NoMilstonesFound" class="shipment-header" style="vertical-align:middle;text-align:center">
+            <span *ngIf="NoMilstonesFound" class="title">No Milestones created for this Shipment</span>
+        </div>
 
         <div *ngIf="!NoMilstonesFound" class="pager hide-mobile" [class.dim]="sliderMarginLeft==0"
             (click)="MoveSlider('right')">

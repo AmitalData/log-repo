@@ -121,7 +121,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth - 25) * -1 : 0; // mobile: add
 
     }
 
