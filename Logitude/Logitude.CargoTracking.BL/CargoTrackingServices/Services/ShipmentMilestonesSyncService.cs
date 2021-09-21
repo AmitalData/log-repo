@@ -12,18 +12,36 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
     {
 		List<string> forwardingMilstonesFields = new List<string>();
         List<string> customsMilstonesFields = new List<string>();
+        List<string> orderMilstonesFields = new List<string>
+            {
+                "PickupDate",
+                "PickupDone",
+                "PickupEstimationDate"
+            };
 
-       
-		public void SyncShipmentMilstones(CargoTrackingArgs cargoArgs)
+
+
+        public void SyncShipmentMilstones(CargoTrackingArgs cargoArgs)
         {
             FillMilstonesFieldsList();
 
-            var sql = BuildScriptForUpdatingCustomsShipmentMilstones();
+            // move fields from order to forwarding
+            // & if fields of forwarding is empty, fill their values from order
+            var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
             ExcuteSqlScript(cargoArgs, sql);
 
-            sql = BuildScriptForUpdatingForwardingShipmentMilstones();
+            sql = BuildScriptForUpdatingOrderShipmentMilstones();
             ExcuteSqlScript(cargoArgs, sql);
 
+
+            // customs
+            sql = BuildScriptForUpdatingCustomsShipmentMilstones();
+            ExcuteSqlScript(cargoArgs, sql);
+
+            sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
+            ExcuteSqlScript(cargoArgs, sql);
+
+            // current
             sql = BuildScriptToSetCurrentMistones();
             ExcuteSqlScript(cargoArgs, sql);
         }
@@ -31,6 +49,30 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             FillForwardingMilstonesFieldsList();
             FillCustomsMilstonesFieldsList();
+        }
+        private string BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder()
+        { // order
+            string forwardingFields = BuildForwardingUpdatedFieldsFromOrder();
+
+            var sql = string.Concat(
+                        $"update ForwardingShipment ",
+                        $"set	{forwardingFields} ",
+                        $"from	 CargoTrackingShipments ForwardingShipment ",
+                        $"join CargoTrackingShipments OrderShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId",
+                        $" where  OrderShipment.EntityType = 'O'");
+            return sql;
+        }
+        private string BuildScriptForUpdatingOrderShipmentMilstones()
+        {
+            string shipmentOrderFields = BuildOrderUpdatedFields();
+
+            var sql = string.Concat(
+                        $"update OrderShipment ",
+                        $"set	{shipmentOrderFields} ",
+                        $"from	 CargoTrackingShipments ForwardingShipment ",
+                        $"join CargoTrackingShipments OrderShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId",
+                        $" where  OrderShipment.EntityType = 'O'");
+            return sql;
         }
         private string BuildScriptForUpdatingCustomsShipmentMilstones()
         {
@@ -43,9 +85,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         $"join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
             return sql;
         }
-        private string BuildScriptForUpdatingForwardingShipmentMilstones()
+        private string BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms()
         {
-            string fieldsSetScript = BuildForwardingUpdatedFields();
+            string fieldsSetScript = BuildForwardingUpdatedFieldsFromCustom();
 
             var sql = $"update ForwardingShipment " +
                         $"set	{fieldsSetScript} " +
@@ -59,6 +101,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var lastForwardingMilstoneOrderNumber = 5;
             var sql = string.Concat(
                 "update  ForwardingShipment    "
+                , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,OrderShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate ,OrderShipment.CurrentMilestoneDate)    "
+                , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments OrderShipment on ForwardingShipment.ForwardingShipmentHeaderId = OrderShipment.EntityId  "
+                , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null and OrderShipment.EntityType='O'  "
+                , Environment.NewLine
+                , " update  OrderShipment   "
+                , " set     OrderShipment.CurrentMilestoneCode = ForwardingShipment.CurrentMilestoneCode,  OrderShipment.CurrentMilestoneDate = ForwardingShipment.CurrentMilestoneDate    "
+                , " from	CargoTrackingShipments OrderShipment  join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = OrderShipment.EntityId  "
+                , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null  "
+                , Environment.NewLine
+                ,"update  ForwardingShipment    "
                 , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "
                 , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId  "
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and CustomShipment.CurrentMilestoneCode is not null  "
@@ -68,6 +120,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 , " from	CargoTrackingShipments CustomShipment  join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId  "
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and CustomShipment.CurrentMilestoneCode is not null  "
                 , Environment.NewLine
+                
+                // order
+                , "update  ForwardingShipment    "
+                , "set		ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode is not null, ForwardingShipment.CurrentMilestoneCode ,OrderShipment.CurrentMilestoneCode),    "
+                , "		ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode is not null, ForwardingShipment.CurrentMilestoneDate ,OrderShipment.CurrentMilestoneDate)    "
+                , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments OrderShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId  "
+                , " where	OrderShipment.EntityType='O' and (ForwardingShipment.CurrentMilestoneCode is null and OrderShipment.CurrentMilestoneCode is not null)  or (ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is null)   "
+                , Environment.NewLine
+                , " update  OrderShipment   "
+                , " set     OrderShipment.CurrentMilestoneCode = ForwardingShipment.CurrentMilestoneCode,  OrderShipment.CurrentMilestoneDate = ForwardingShipment.CurrentMilestoneDate    "
+                , " from	CargoTrackingShipments OrderShipment  join CargoTrackingShipments ForwardingShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId  "
+                , " where	OrderShipment.EntityType='O' and (ForwardingShipment.CurrentMilestoneCode is null and OrderShipment.CurrentMilestoneCode is not null)  or (ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is null)  "
+                , Environment.NewLine
+                
                 , "update  ForwardingShipment    "
                 , "set		ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode is not null, ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),    "
                 , "		ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode is not null, ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "
@@ -83,13 +149,26 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return sql;
         }
-        private string BuildForwardingUpdatedFields()
+        private string BuildForwardingUpdatedFieldsFromCustom()
         {
             List<string> fieldsAssignments = new List<string>();
 
-            AppendForwardingFieldAssignmentScript(fieldsAssignments);
+            AppendForwardingFieldAssignmentScriptFromCustom(fieldsAssignments);
 
             AppendForwardingAssignmentFromForwardingWhenCustomsIsEmpty(fieldsAssignments);
+
+            var fieldsSetScript = ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
+            return fieldsSetScript;
+        }
+
+        // order
+        private string BuildForwardingUpdatedFieldsFromOrder()
+        {
+            List<string> fieldsAssignments = new List<string>();
+
+            AppendForwardingFieldAssignmentScriptFromOrder(fieldsAssignments);
+
+            AppendForwardingAssignmentFromForwardingWhenOrderIsEmpty(fieldsAssignments);
 
             var fieldsSetScript = ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
             return fieldsSetScript;
@@ -99,8 +178,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             ServiceHelper.ExecuteSql(sql, cargoArgs.DestinationConnectionString);
         }
-     
-
 
         private void FillForwardingMilstonesFieldsList()
         {
@@ -172,9 +249,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
         }
 
+        private string BuildOrderUpdatedFields()
+        {
+            List<string> fieldsAssignments = new List<string>();
+
+            AppendOrderFieldsAssignmentScript(fieldsAssignments);
+
+            AppendOrderAssignmentFromForwardingWhenOrderIsEmpty(fieldsAssignments);
+
+            return ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
+        }
+
         private string ConvertListOfStringsToCommaSeperatedString(List<string> listOfStrings)
         {
             return string.Join(", ", listOfStrings);
+        }
+        private void AppendOrderAssignmentFromForwardingWhenOrderIsEmpty(List<string> fieldsAssignments)
+        {
+            foreach (var field in orderMilstonesFields)
+                fieldsAssignments.Add(BuildOrderAssignmentFromForwardingWhenCustomsIsEmpty(field));
         }
 
         private void AppendCustomsAssignmentFromForwardingWhenCustomsIsEmpty(List<string> fieldsAssignments)
@@ -183,6 +276,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 fieldsAssignments.Add(BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(field));
         }
 
+        private void AppendOrderFieldsAssignmentScript(List<string> fieldsAssignments)
+        {
+            foreach (var field in forwardingMilstonesFields.Where(d => !orderMilstonesFields.Contains(d)))
+                fieldsAssignments.Add(BuildOrderFieldAssignmentScript(field));
+        }
         private void AppendCustomsFieldAssignmentScript(List<string> fieldsAssignments)
         {
             foreach (var field in forwardingMilstonesFields)
@@ -193,13 +291,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             foreach (var field in forwardingMilstonesFields)
                 fieldsAssignments.Add(BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(field));
         }
-
-        private void AppendForwardingFieldAssignmentScript(List<string> fieldsAssignments)
+        private void AppendForwardingAssignmentFromForwardingWhenOrderIsEmpty(List<string> fieldsAssignments)
+        {
+            foreach (var field in forwardingMilstonesFields.Where(d=>!orderMilstonesFields.Contains(d)))
+                fieldsAssignments.Add(BuildForwardingAssignmentFromForwardingWhenOrderIsEmpty(field));
+        }
+        private void AppendForwardingFieldAssignmentScriptFromCustom(List<string> fieldsAssignments)
         {
             foreach (var field in customsMilstonesFields)
                 fieldsAssignments.Add(BuildForwardingFieldAssignmentScript(field));
         }
-
+        private void AppendForwardingFieldAssignmentScriptFromOrder(List<string> fieldsAssignments)
+        {
+            foreach (var field in orderMilstonesFields)
+                fieldsAssignments.Add(BuildForwardingFieldAssignmentScriptFromOrder(field));
+        }
 
         private string BuildForwardingFieldAssignmentScript(string fieldName)
         {
@@ -210,6 +316,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} {compareOperator}, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
+        private string BuildForwardingFieldAssignmentScriptFromOrder(string fieldName)
+        {
+            var compareOperator = "is not null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 1";
+
+            return $"ForwardingShipment.{fieldName} = iif(OrderShipment.{fieldName} {compareOperator}, OrderShipment.{fieldName}, ForwardingShipment.{fieldName})" + Environment.NewLine;
+        }
         private string BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
             var compareOperator = "is null";
@@ -219,6 +334,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator},CustomShipment.{fieldName},ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
+        private string BuildForwardingAssignmentFromForwardingWhenOrderIsEmpty(string fieldName)
+        {
+            var compareOperator = "is null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 0";
+
+            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator},OrderShipment.{fieldName},ForwardingShipment.{fieldName})" + Environment.NewLine;
+        }
+        private string BuildOrderAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
+        {
+            var compareOperator = "is null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 0";
+
+            return $"OrderShipment.{fieldName} = iif(OrderShipment.{fieldName} {compareOperator},ForwardingShipment.{fieldName},OrderShipment.{fieldName})" + Environment.NewLine;
+        }
+
         private string BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
             var compareOperator = "is null";
@@ -237,8 +371,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator}, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})" + Environment.NewLine;
 		}
+        private string BuildOrderFieldAssignmentScript(string fieldName)
+        {
+            var compareOperator = "is not null";
 
-        
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 1";
+
+            return $"OrderShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator}, ForwardingShipment.{fieldName}, OrderShipment.{fieldName})" + Environment.NewLine;
+        }
+
 
     }
 }
