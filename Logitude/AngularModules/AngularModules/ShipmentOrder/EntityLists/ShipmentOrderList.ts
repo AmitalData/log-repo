@@ -74,6 +74,8 @@ export class ShipmentOrderList {
 	Volume: number;
 	CustomerId: string;
 	CustomerName: string;
+	LastExceptionDescription: string;
+	LastExceptionDate: Date;
 	
 }
  

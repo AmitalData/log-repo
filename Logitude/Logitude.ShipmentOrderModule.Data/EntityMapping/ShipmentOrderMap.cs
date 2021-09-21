@@ -124,6 +124,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.Volume).HasColumnName("Volume");
 
             this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.LastExceptionDate).HasColumnName("LastExceptionDate");
         }
     }
 }
