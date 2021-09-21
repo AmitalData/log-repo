@@ -681,6 +681,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
             if(index >= 0)
                 this.appliedSelectedFilterMilestonesStatus.splice(index,1);
+                this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
                 RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
