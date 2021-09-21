@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VatTypeUpdateClass
    {  		
-		public const string HashString = "a791bddd7e0c5d69f71f28d90206426f";
+		public const string HashString = "4666fe3c5efa50f41a0a41f77807ac01";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "VatType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "VatTypes",
-			      				    OldDBTableName =  "VatTypes",
 			      				    ObjectTableSingular =  "VAT Type",
 			      				    ObjectTablePlural =  "VatTypes",
 			      				    DescriptionDefaultText =  "Maintain the types of VAT applied in your country. Update the VAT percents according to dates.",
@@ -151,7 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -214,13 +212,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -279,13 +276,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -344,13 +340,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -410,7 +405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -473,7 +467,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -538,7 +531,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalDescription",
-					  						OldFieldName =  "LocalDescription",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -604,7 +596,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalVATCard",
-					  						OldFieldName =  "ExternalVATCard",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -669,7 +660,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -733,13 +723,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -798,7 +787,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsMultiPercentage",
-					  						OldFieldName =  "IsMultiPercentage",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -861,7 +849,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NewEntityPercentage",
-					  						OldFieldName =  "NewEntityPercentage",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
@@ -924,7 +911,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NewEntityPercentageDate",
-					  						OldFieldName =  "NewEntityPercentageDate",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -987,7 +973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RecognizedPercentage",
-					  						OldFieldName =  "RecognizedPercentage",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1046,7 +1031,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayablesExternalId",
-					  						OldFieldName =  "PayablesExternalId",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1107,7 +1091,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivablesExternalId",
-					  						OldFieldName =  "ReceivablesExternalId",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1168,7 +1151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsRegionalTax",
-					  						OldFieldName =  "IsRegionalTax",
 					  						ObjectTableName =  "VatType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

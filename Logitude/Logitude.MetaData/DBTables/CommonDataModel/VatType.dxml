@@ -19,6 +19,20 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ExternalTAXItemId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="5">
@@ -36,25 +50,6 @@
     Name="LocalName"
     Type="nvarchar"
     Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AddedManually"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -80,25 +75,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="PayablesExternalId"
-    Type="varchar"
-    Size="25">
+    Name="AddedManually"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="ReceivablesExternalId"
-    Type="varchar"
-    Size="25">
+    Name="InActive"
+    Type="bit">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExternalTAXItemId"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsMultiPercentage"
@@ -113,11 +99,33 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="PayablesExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivablesExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsRegionalTax"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code" />
 </Table>

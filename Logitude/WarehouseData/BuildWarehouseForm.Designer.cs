@@ -128,6 +128,10 @@
             this.DWCheckBox = new System.Windows.Forms.CheckBox();
             this.DIMCheckBox = new System.Windows.Forms.CheckBox();
             this.FactCheckBox = new System.Windows.Forms.CheckBox();
+            this.DimVatTypesLabel = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.DWVatTypeslabel = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1339,11 +1343,63 @@
             this.FactCheckBox.Text = "Fact";
             this.FactCheckBox.UseVisualStyleBackColor = true;
             // 
+            // DimVatTypesLabel
+            // 
+            this.DimVatTypesLabel.AutoSize = true;
+            this.DimVatTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimVatTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimVatTypesLabel.Location = new System.Drawing.Point(1737, 391);
+            this.DimVatTypesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimVatTypesLabel.Name = "DimVatTypesLabel";
+            this.DimVatTypesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimVatTypesLabel.TabIndex = 206;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.BackColor = System.Drawing.SystemColors.Control;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label48.Location = new System.Drawing.Point(1453, 392);
+            this.label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(194, 25);
+            this.label48.TabIndex = 205;
+            this.label48.Text = "Dimension VatTypes";
+            // 
+            // DWVatTypeslabel
+            // 
+            this.DWVatTypeslabel.AutoSize = true;
+            this.DWVatTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWVatTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWVatTypeslabel.Location = new System.Drawing.Point(1736, 366);
+            this.DWVatTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWVatTypeslabel.Name = "DWVatTypeslabel";
+            this.DWVatTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWVatTypeslabel.TabIndex = 204;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.BackColor = System.Drawing.SystemColors.Control;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label50.Location = new System.Drawing.Point(1452, 367);
+            this.label50.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(141, 25);
+            this.label50.TabIndex = 203;
+            this.label50.Text = "DW  VatTypes";
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1789, 859);
+            this.Controls.Add(this.DimVatTypesLabel);
+            this.Controls.Add(this.label48);
+            this.Controls.Add(this.DWVatTypeslabel);
+            this.Controls.Add(this.label50);
             this.Controls.Add(this.FactCheckBox);
             this.Controls.Add(this.DIMCheckBox);
             this.Controls.Add(this.DWCheckBox);
@@ -1554,6 +1610,10 @@
         private System.Windows.Forms.CheckBox DWCheckBox;
         private System.Windows.Forms.CheckBox DIMCheckBox;
         private System.Windows.Forms.CheckBox FactCheckBox;
+        private System.Windows.Forms.Label DimVatTypesLabel;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label DWVatTypeslabel;
+        private System.Windows.Forms.Label label50;
     }
 }
 
