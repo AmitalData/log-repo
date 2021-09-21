@@ -23,6 +23,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(FullAccountingData.CustomerId), UserTenant.Token)?.Data;
             AssertConnectWithGLAccount(customer);
             FullAccountingData.CustomerGLAccountId = customer.Card.GLAccountId;
+            FullAccountingData.CustomerCardId = customer.Card.Id;
             FullAccountingData.CustomerMainAddressId = GetAddressID(customer);
         }
 

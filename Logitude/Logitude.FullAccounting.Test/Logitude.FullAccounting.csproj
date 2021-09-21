@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\AccountingIntegrityCheckPM.Generated.cs" />
+    <Compile Include="Models\AccountingNotePM.Generated.cs" />
     <Compile Include="Models\AccountingPaymentMethodPM.cs" />
     <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\APInvoicePM.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APInvoiceService .cs" />
     <Compile Include="Services\BankDepositService.cs" />
+    <Compile Include="Services\AccountingEntegrityCheckServices.cs" />
     <Compile Include="Services\PaymentChequesService.cs" />
     <Compile Include="Services\BankAccountService.cs" />
     <Compile Include="Services\APPaymentService.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Services\ARInvoiceService.cs" />
     <Compile Include="Services\JournalService.cs" />
     <Compile Include="Services\Preparation\AccountingPaymentMethodPreparation.cs" />
+    <Compile Include="Services\Preparation\AccountingNotes.cs" />
     <Compile Include="Services\Preparation\BankAccountPreparation.cs" />
     <Compile Include="Services\Preparation\BankCodePreparation.cs" />
     <Compile Include="Services\Preparation\APPaymentPreparation.cs" />
@@ -131,14 +135,22 @@
     <Compile Include="Steps\ARPayment\GetARPaymentSteps.cs" />
     <Compile Include="Steps\BankAccount\CreateBankAccountSteps.cs" />
     <Compile Include="Steps\BankAccount\GetBankAccountSteps.cs" />
+    <Compile Include="Steps\Security\DeleteGlAccountNoteSteps.cs" />
+    <Compile Include="Steps\Security\GetBankAccountsSummaryCheckSecuritySteps.cs" />
     <Compile Include="Steps\BankDeposit\CreateBankDepositSteps.cs" />
     <Compile Include="Steps\BankDeposit\GetBankDepositSteps.cs" />
+    <Compile Include="Steps\Security\GetBankDepositWithoutLinesCheckSecuritySteps.cs" />
     <Compile Include="Steps\Cashbook\CreateCashbooktSteps.cs" />
     <Compile Include="Steps\Cashbook\GetCashbooktSteps.cs" />
     <Compile Include="Steps\GLAccount\UpdateGlAccountSteps.cs" />
     <Compile Include="Steps\Journal\CreateApprovedJournalSteps.cs" />
     <Compile Include="Steps\PaymentCheques\CreatePaymentChequesSteps.cs" />
     <Compile Include="Steps\PaymentCheques\GetPaymentChequesSteps.cs" />
+    <Compile Include="Steps\Security\GetCardGLAccountConnectSteps.cs" />
+    <Compile Include="Steps\Security\GetGlAccountNotesByCardSteps.cs" />
+    <Compile Include="Steps\Security\GetSingleGLAccountByDisplayNumberAndTenantSteps.cs" />
+    <Compile Include="Steps\Security\GetSingleGLAccountByInternalNumberAndTenantSteps.cs" />
+    <Compile Include="Steps\Security\PostFixIntegrityCheckErrorInBatchSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -152,8 +164,16 @@
     <None Include="Features\ARPayment\GetARPayment.feature" />
     <None Include="Features\BankAccount\CreateBankAccount.feature" />
     <None Include="Features\BankAccount\GetBankAccount.feature" />
+    <None Include="Features\Security\GetGlAccountNotesByCard.feature" />
+    <None Include="Features\Security\DeleteGlAccountNote.feature" />
+    <None Include="Features\Security\PostFixIntegrityCheckErrorInBatch.feature" />
+    <None Include="Features\Security\GetSingleGLAccountByInternalNumberAndTenant.feature" />
+    <None Include="Features\Security\GetSingleGLAccountByDisplayNumberAndTenant.feature" />
+    <None Include="Features\Security\GetCardGLAccountConnect.feature" />
+    <None Include="Features\Security\GetBankAccountsSummary.feature" />
     <None Include="Features\BankDeposit\CreateBankDeposit.feature" />
     <None Include="Features\BankDeposit\GetBankDeposit.feature" />
+    <None Include="Features\Security\GetBankDepositWithoutLines.feature" />
     <None Include="Features\CashBook\CreateARPayment.feature" />
     <None Include="Features\CashBook\GetARPayment.feature" />
     <None Include="Features\GLAccount\UpdateGlAccount.feature" />

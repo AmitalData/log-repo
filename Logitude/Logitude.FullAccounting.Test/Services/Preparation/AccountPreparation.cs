@@ -21,6 +21,11 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             FullAccountingData.GLAccount1Id = Create();
             FullAccountingData.GLAccount2Id = Create();
         }
+        public void PrepareInternalNumber()
+        {
+            FullAccountingData.GLAccountInternalNumber = GetNewInternalNumberAccount();
+        }
+
         public void PrepareNewAccount()
         {
             FullAccountingData.GLAccountId = Create();
@@ -37,8 +42,14 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             var response = APICaller.CallPost<GLAccountPM>(gLAccount, Urls.GLAccountsController, UserTenant.Token);
             return response.Data?.Id;
         }
+        private string GetNewInternalNumberAccount(ChartOfAccountsTypeEnum ChartOfAccountsTypeCode = ChartOfAccountsTypeEnum.DebtorsAndCreditors)
+        {
+            var gLAccount = CreateInstance(ChartOfAccountsTypeCode);
+            var response = APICaller.CallPost<GLAccountPM>(gLAccount, Urls.GLAccountsController, UserTenant.Token);
+            return response.Data?.InternalNumber;
+        }
 
-        private string GetByNumber(string number)
+        public string GetByNumber(string number)
         {
             var id = GetIdByNumber(number);
             if (string.IsNullOrEmpty(id))

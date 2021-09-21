@@ -49,6 +49,7 @@ namespace Logitude.Test.Base.Hooks
                 Settings.ServerUrl = configurations.ServerSettings.Url;
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
+                Settings.UserEmptyTenantCredentials = GetUserEmptyTenantCredentialsFromConfigurations(configurations);
             }
         }
 
@@ -67,6 +68,7 @@ namespace Logitude.Test.Base.Hooks
         {
             SetupDefaultUserAuthentication();
             SetupOtherUserAuthentication();
+            SetupUserEmptyTenantAuthentication();
         }
 
         private static void SetupDefaultUserTenant()
@@ -125,6 +127,17 @@ namespace Logitude.Test.Base.Hooks
 
             return userCredentials;
         }
+        private static Credentials GetUserEmptyTenantCredentialsFromConfigurations(Configurations configurations)
+        {
+            ConfigurationsUser userConfiguration = configurations?.Users.Where(u => u.DefaultSpecified).FirstOrDefault();
+            Credentials userCredentials = new Credentials
+            {
+                Email = userConfiguration?.Email,
+                Password = userConfiguration?.Password
+            };
+
+            return userCredentials;
+        }
 
         private static void SetupDefaultUserAuthentication()
         {
@@ -142,6 +155,14 @@ namespace Logitude.Test.Base.Hooks
             UserOtherTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
             UserOtherTenant.UserId = userLogin?.UserId;
             UserOtherTenant.UserName = userLogin?.UserName;
+        }
+        private static void SetupUserEmptyTenantAuthentication()
+        {
+            UserLogin userLogin = GetUserLogin(Settings.UserEmptyTenantCredentials);
+            UserEmptyTenant.Token = userLogin?.Token;
+            UserEmptyTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
+            UserEmptyTenant.UserId = userLogin?.UserId;
+            UserEmptyTenant.UserName = userLogin?.UserName;
         }
 
         private static UserLogin GetUserLogin(Credentials userCredentials)

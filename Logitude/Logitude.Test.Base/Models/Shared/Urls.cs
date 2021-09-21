@@ -13,6 +13,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string GLAccountsController = "GLAccounts";
         public static string BankDepositsController = "bankdeposits";
         public static string BankAccountsController = "bankaccounts";
+        public static string AccountingNotesController = "accountingnotes";
         public static string PaymentChequesController = "PaymentCheques";
         public static string CashBooksController = "cashbooks";
         public static string BankCodesController = "BankCodes";
@@ -78,6 +79,9 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CommunicationLogViewsGetByFilters = "CommunicationLogViews/GetByFilters";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
         public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
+        public static string GetBankAccountsSummary = "BankAccountViews/GetBankAccountsSummary";
+
+        public static string PostFixEntegrityCheckErrorInBatch = "AccountingEntegrityCheck/PostFixEntegrityCheckErrorInBatch";
 
         //public static string QuotesGetSingle(string id)
         //{
@@ -164,6 +168,30 @@ namespace Logitude.Test.Base.Models.Shared
         public static string BankAccountsGetSingle(string id)
         {
             return "bankaccounts/GetSingle?id=" + id;
+        }
+        public static string GetBankDepositWithoutLines(string id, int tenant)
+        {
+            return $"BankDeposit/GetBankDepositWithoutLines?id={id}&tenant={tenant}";
+        }
+        public static string GetCardGLAccountConnect( int tenant)
+        {
+            return $"CardGLAccountConnect/GetCardGLAccountConnect?tenant={tenant}";
+        }
+        public static string GetSingleGLAccountByDispalyNumberAndTenant(string displayNumber, int tenant)
+        {
+            return $"GLAccounts/GetSingleByDispalyNumberAndTenant?displayNumber={displayNumber}&tenant={tenant}";
+        }
+        public static string GetSingleGLAccountByInternalNumberAndTenant(string internalNumber, int tenant)
+        {
+            return $"GLAccounts/GetSingleByInternalNumberAndTenant?internalNumber={internalNumber}&tenant={tenant}";
+        }
+        public static string DeleteGLAccountNote(string noteId)
+        {
+            return $"AccountingNotes/PostDeleteNote?noteId={noteId}";
+        }
+        public static string GetNotesByCard(string cardId)
+        {
+            return $"AccountingNoteViews/GetNotesByCard?cardId={cardId}";
         }
 
         public static string CustomersGetSingle(string id)

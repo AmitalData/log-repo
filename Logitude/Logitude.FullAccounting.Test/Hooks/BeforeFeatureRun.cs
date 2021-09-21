@@ -105,6 +105,22 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new BankAccountPreparation().Prepare();
             new BankDepositPreparation().Prepare();
         }
+        [BeforeFeature("Pre-Prepare-GetSingleGLAccountByDisplayNumberAndTenant")]
+        public static void PrePrepareGetSingleGLAccountByDisplayNumberAndTenant()
+        {
+            new AccountPreparation().GetByNumber("19216811");
+        }
+        [BeforeFeature("Pre-Prepare-GetSingleGLAccountByInternalNumberAndTenant")]
+        public static void PrePrepareGetSingleGLAccountByInternalNumberAndTenant()
+        {
+            new AccountPreparation().PrepareInternalNumber();
+        }
+        [BeforeFeature("Pre-Prepare-CreateNote")]
+        public static void PrePrepareCreateNote()
+        {
+            new CustomerPreparation().Prepare();
+            new AccountingNotes().Prepare();
+        }
 
 
 
