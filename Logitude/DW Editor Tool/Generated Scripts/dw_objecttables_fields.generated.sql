@@ -802,6 +802,38 @@ declare @DIM_UsersInActiveNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_UsersInActiveNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_UsersInActiveNewId,0,'DIM_Users','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_VatTypesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_VatTypesNewId,0,'','DIM_VatTypes','DIM_VatTypes','Dimension','false','[Name]','false','false',0)  
+--Fields --
+declare @DIM_VatTypesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesId_NumberNewId,0,'DIM_VatTypes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_VatTypesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesIdNewId,0,'DIM_VatTypes','[Id]','Id','Text','true',0,15,'false','false','true','false','false','false','false','false')  
+declare @DIM_VatTypesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesNameNewId,0,'DIM_VatTypes','[Name]','Name','Text','true',0,40,'false','false','true','[Code]','false','true','false','false','false')  
+declare @DIM_VatTypesLocalNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesLocalNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesLocalNameNewId,0,'DIM_VatTypes','[Local Name]','Local Name','Text','false',0,60,'false','false','true','false','true','false','false','false')  
+declare @DIM_VatTypesInActiveNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesInActiveNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesInActiveNewId,0,'DIM_VatTypes','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_VatTypesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesAutomaticLastUpdateDateNewId,0,'DIM_VatTypes','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_VatTypesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesSourceTenantNewId,0,'DIM_VatTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false','Tenant','false','false')  
+declare @DIM_VatTypesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesParentTenantNewId,0,'DIM_VatTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false','true','false')  
+declare @DIM_VatTypesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_VatTypesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_VatTypesCodeNewId,0,'DIM_VatTypes','[Code]','Code','Text','false',0,5,'false','false','true','[Name],[Local Name]','false','false','false','true','false')  
+------------------------------------------------------------------------------------
 declare @DIM_VesselsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_VesselsNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_VesselsNewId,0,'','DIM_Vessels','DIM_Vessels','Dimension','false','[English Name]','false')  

@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="VatTypes">
+
+	<Sql Version="1">
+		<![CDATA[
+    
+update  VatTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null and $LastCounterWhere$
+
+    ]]>
+	</Sql>
+</Script>
+

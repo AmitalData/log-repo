@@ -256,6 +256,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildVatTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -343,6 +344,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVatTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
