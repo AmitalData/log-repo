@@ -206,6 +206,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly QueryListToggleButton = "querylist .ToggleButton";
     public static readonly QueryListToggleButtonItem = "querylist .ToggleButton .ToggleButtonMenu li";
     public static readonly SearchTextboxInput = "searchtextbox input";
+    public static readonly QuickSearchDropDown = ".QuickSearchDropDown";
     public static readonly MenuButtons = "#MenuButtons";
     public static readonly ComboBox = ".ComboBox";
     public static readonly ToggleIconImage = "img[src='Images/ToggleIcon.png']";

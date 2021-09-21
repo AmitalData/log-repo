@@ -213,6 +213,13 @@ export class RequestAliases {
     public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
     public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
 
+    public static readonly PutCompanyAddressSettings = "PutCompanyAddressSettings"
+
+    public static readonly PostUser = "PostUser"
+    public static readonly PutUser = "PutUser"
+
+    public static readonly PutShipperConsignee = "PutShipperConsignee"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
