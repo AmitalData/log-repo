@@ -364,6 +364,16 @@ export class ShipmentOrderPM {
     public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
        
 	 
+    private lastExceptionDescription: string;
+    public get LastExceptionDescription() { return this.lastExceptionDescription; }
+    public set LastExceptionDescription(newValue: string) { if (this.lastExceptionDescription != newValue) { this.lastExceptionDescription = newValue; this.MarkAsDirty("LastExceptionDescription"); } }
+       
+	 
+    private lastExceptionDate: Date;
+    public get LastExceptionDate() { return this.lastExceptionDate; }
+    public set LastExceptionDate(newValue: Date) { if (this.lastExceptionDate != newValue) { this.lastExceptionDate = newValue; this.MarkAsDirty("LastExceptionDate"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

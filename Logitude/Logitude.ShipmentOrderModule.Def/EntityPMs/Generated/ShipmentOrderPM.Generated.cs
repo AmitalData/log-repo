@@ -1584,6 +1584,52 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private string lastExceptionDescription ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastExceptionDescription  
+	   {
+	    
+	     get
+		{
+		   return lastExceptionDescription;
+		 }
+		 set
+		 {
+		   if(lastExceptionDescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastExceptionDescription",OldValue=lastExceptionDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastExceptionDescription=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastExceptionDate ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastExceptionDate  
+	   {
+	    
+	     get
+		{
+		   return lastExceptionDate;
+		 }
+		 set
+		 {
+		   if(lastExceptionDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastExceptionDate",OldValue=lastExceptionDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastExceptionDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
