@@ -544,6 +544,9 @@ h1 {
     .route-direction{
         align-self: flex-end;
     }
+    .routes{
+        text-align: right;
+    }
     .routing-card {
         height: 60px;
     }
