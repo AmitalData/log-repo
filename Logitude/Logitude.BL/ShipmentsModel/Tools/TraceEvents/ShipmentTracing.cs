@@ -208,11 +208,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.CreateTraceEvent("UPIC", entityPM.EventNote);
                     }
 
-                    if (entityPM.IsUpdatedOceanInsightsAnalyzer)
+                    if (entityPM.IsUpdatedOceanInsightsAnalyzer && entityPM.IsUpdatedOceanInsightsMainCarriageDates)
                     {
                         string notes = this.BuildOceanInsightsEventNotes();
                         this.CreateTraceEvent("OISU", notes);
                     }
+
                     if (entityPM.PlannedCargoReadyDate != entityPoco.PlannedCargoReadyDate)
                     {
                         this.CreateTraceEvent("ECRD", entityPM.EventNote);

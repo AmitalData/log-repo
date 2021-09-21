@@ -904,7 +904,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get GrossWeight() { return this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
-            this.EntityPM.GrossWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight();
             //this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
         }
@@ -913,7 +913,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get Volume() { return this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 2);
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
             this.ComputeVolumetricWeight();
             //this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
         }
@@ -1006,7 +1006,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get PickupDeliveryChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.PickupDeliveryChargeableWeight) ? null : this.EntityPM.PickupDeliveryChargeableWeight; }
     set PickupDeliveryChargeableWeight(newValue: number) {
         if (this.EntityPM.PickupDeliveryChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
+            var result = AppTool.Round(newValue, 3);
             this.EntityPM.PickupDeliveryChargeableWeight = result;
 
             if (this.GrossWeight == null && this.EntityPM.PickupDeliveryVolumetricWeight == null) {
@@ -1020,7 +1020,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight) ? null : this.EntityPM.ChargeableWeight; }
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
+            var result = AppTool.Round(newValue, 3);
             this.EntityPM.ChargeableWeight = result;
 
             if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
