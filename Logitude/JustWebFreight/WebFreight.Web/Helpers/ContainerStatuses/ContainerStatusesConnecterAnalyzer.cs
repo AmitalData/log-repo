@@ -652,7 +652,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
-
                             this.CreateLogitudeOceanInsightsResponse();
                             if (IsUpdatingShipmentAndContainer())
                             {

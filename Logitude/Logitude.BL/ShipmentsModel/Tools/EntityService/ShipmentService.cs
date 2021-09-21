@@ -61,6 +61,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool calculateProfit;
         private bool calculatePayables;
         private bool calculateReceivables;
+        private bool isEntityStatusUpdated;
         public Shipment entityPoco { get; set; }
         private ShipmentPM entityPM;
         private ShipmentMasterData entityMasterData;
@@ -283,7 +284,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CalculateReceivables = calculateReceivables;
 
                 if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                {
+                {                   
                     shipmentTracing.BeginTracing();
                 }
                 this.ComputeIsAssemblyField();
@@ -375,6 +376,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     #region
                     string myOldCustomerId = "";
+                    string oldEntityStatusId = entityPoco.StatusId;
                     if (entityPM.CustomerId != entityPoco.CustomerId)
                     {
                         myOldCustomerId = entityPoco.CustomerId;
@@ -460,7 +462,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         shipmentTracing.BeginTracing();
+                        isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
                     }
+
+                    ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM,isEntityStatusUpdated, objectContext);
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
                     {
