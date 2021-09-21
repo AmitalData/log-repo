@@ -228,15 +228,20 @@
                     <div class="title">po number</div>
                     <div class="description">{{ShipmentOrder?.PONumber}}</div>
                 </div>
+                <div *ngIf="Shipment.ShipmentList.ForwardingMaster && Shipment.ShipmentList.EntityType != 'O'">
+                    <div class="title">Master</div>
+                    <div class="description">{{Shipment.ShipmentList?.ForwardingMaster}}</div>
+                </div>
+                <div *ngIf="Shipment.ShipmentList.ForwardingHouse  && Shipment.ShipmentList.EntityType != 'O'">
+                    <div class="title">House</div>
+                    <div class="description">{{Shipment.ShipmentList?.ForwardingHouse}}</div>
+                </div>
                 <div>
                     <div class="title">Incoterms</div>
                     <div class="description">{{ShipmentPM?.IncotermName}}</div>
                     <div class="description">{{ShipmentOrder? ShipmentOrder.IncotermName : ShipmentPM?.IncotermName}}</div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.ForwardingMaster && Shipment.ShipmentList.EntityType != 'O'">
-                    <div class="title">Master</div>
-                    <div class="description">{{Shipment.ShipmentList?.ForwardingMaster}}</div>
-                </div>
+
                 <div class="mobile-only">
                     <div class="title">Customer Ref.</div>
                     <div class="description">
@@ -253,10 +258,7 @@
                     <div class="title">{{TitleOfCustomsOrForwarder}}</div>
                     <div class="description">{{ValueOfCustomsOrForwarder}}</div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.ForwardingHouse  && Shipment.ShipmentList.EntityType != 'O'">
-                    <div class="title">House</div>
-                    <div class="description">{{Shipment.ShipmentList?.ForwardingHouse}}</div>
-                </div>
+
                 <!-- ETD/ATD -->
                 <!-- ETD/ATD -->
                 <div>
@@ -828,8 +830,7 @@ item.CreateDate | date:'d-MMM-yyyy,
                         <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
                             <!-- {{partnerCard.Address}} -->
                         </div>
-                        pa
-                        tn
+                       
                         <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
                         <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
                         <div class="partners-footer-buttons mobile-only">
