@@ -574,12 +574,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 break;
             }
         }
-        if(this.sortField && this.isSortDescending)
+        console.log(this.sortField  + ' - ' + this.isSortDescending)
+        if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
         {
             this.LoadScreenData();
         }
-        // var filter = this.sortByOptions.find(d => d.Code == event);
-        // this.SelectFilterWithoutLoadScreenData(filter);
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
