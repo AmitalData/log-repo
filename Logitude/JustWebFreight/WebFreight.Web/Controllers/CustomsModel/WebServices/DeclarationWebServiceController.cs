@@ -875,6 +875,64 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetGTBPTYPEItemList(string application, string search, int top, bool searchNULLVendor = true)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                if (search != null && (search.ToLower() == "undefined" || search.ToLower() == "null"))
+                {
+                    search = null;
+                }
+
+                if (application != null && (application.ToLower() == "undefined" || application.ToLower() == "null"))
+                {
+                    application = null;
+                }
+
+                #region get data from Unifri
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                {
+                    var TarifsRepo = new GTBPTYPERepository(GetAmitalContext(tenant));
+                    var q =
+                    from itm in TarifsRepo
+                        .GetAll().Where(rec => rec.APPLICATION == application).Select(o => new
+                        {
+                            Name=o.NAMEENG,
+                            PriceType=o.PRICETYPE,
+                            application = o.APPLICATION,
+                        })
+                    select new { itm };
+
+                    if (!string.IsNullOrWhiteSpace(search))
+                    {
+                        search = search.ToUpper();
+                        q = q.Where(rec => rec.itm.PriceType.Contains(search));
+                    }
+                    q = q.Distinct();
+                    q = q.Take(top);
+
+                    var TarifList = q.ToList();
+                    #endregion
+                   
+                    return Request.CreateResponse(HttpStatusCode.OK, TarifList);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetGITITEMPartnersItemListByItemCode(string vendorId, string customerCode, string itemCode, int top, bool searchNULLVendor = true)
         {
             try

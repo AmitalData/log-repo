@@ -427,6 +427,7 @@
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\ProductTypeModificationPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\QuoteGroupSectionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
@@ -434,6 +435,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\QuoteGroupSectionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\ProductTypeModificationPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.ts" />

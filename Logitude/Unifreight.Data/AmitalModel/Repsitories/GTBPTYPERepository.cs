@@ -46,7 +46,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return this.GetSingle(keys.APPLICATION, keys.APPLICATION);
         }
 
-       
+        public IQueryable<GTBPTYPE> GetAll()
+        {
+            return from a in context.GTBPTYPEs
+                   select a;
+        }
+
 
         public void Add(GTBPTYPE entity)
         {
