@@ -104,6 +104,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.StatusId != this.initializer.EntityMasterData.StatusId)
                 return true;
+            if (this.initializer.EntityPM.CustomsClearanceDate != this.initializer.EntityPOCO.CustomsClearanceDate)
+                return true;
+            if (this.initializer.EntityPM.FreightRelease != this.initializer.EntityPOCO.FreightRelease)
+                return true;
+
             return false;
         }
 
@@ -247,6 +252,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentOnCarriageFromId = this.initializer.EntityPM?.OnCarriageFromPortId;
             container.ShipmentOnCarriageToId = this.initializer.EntityPM?.OnCarriageToPortId;
             container.ShipmentStatusId = this.initializer.EntityPM?.StatusId;
+            container.CustomsReleaseDate = this.initializer.EntityPM?.CustomsClearanceDate;
+            container.CarrierReleaseDate = this.initializer.EntityPM?.FreightRelease;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
