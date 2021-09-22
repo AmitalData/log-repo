@@ -416,6 +416,7 @@ export class MainMenuComponent {
                         listArgs.QueryCode = "Customers";
                         listArgs.ObjectTableName = "Customer";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
+                        listArgs.NewButtonLabel = "New Customer";
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

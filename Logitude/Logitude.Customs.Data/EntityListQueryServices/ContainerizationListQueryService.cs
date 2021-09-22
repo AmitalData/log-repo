@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 	   });// new Declaration {ExportFile = newgroup.Key.ExportFile };
 
 
-			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("DeclarationStatusType")
+			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("ContainerizationHataraStatus")
 													  join d in declarations
 													  on a.Id equals d.ExportContainerizationID into EmpCont
 													  from ed in EmpCont.DefaultIfEmpty()
@@ -63,9 +63,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 														  OperationMode = a.OperationMode,
 
 														  ContainerizationStatusName = a.ContainerizationStatusCode != null ? a.ContainerizationStatusCode.Name :null,
-											              ExportFile = a.IsMultiExportFiles ? "List" : ed.dec.FirstOrDefault().ExportFile,
-														  HataraStatusName = a.DeclarationStatusType != null? a.DeclarationStatusType.LocalName:null,
-														  ImporterName = a.IsMultiCustomers ? "List" : ed.dec.FirstOrDefault().CustomerCard.LocalName,
+											              ExportFile = a.IsMultiExportFiles == true ? "List" : ed.dec.FirstOrDefault().ExportFile,
+														  HataraStatusName = a.ContainerizationHataraStatus != null? a.ContainerizationHataraStatus.Name:null,
+														  ImporterName = a.IsMultiCustomers == true ? "List" : ed.dec.FirstOrDefault().CustomerCard.LocalName,
 														  TransportModeForExport = ed.dec.FirstOrDefault().TransportModeId ,
 														  HataraStatusIsNull = a.HataraStatus != null ? false :true
 													  }); ;
