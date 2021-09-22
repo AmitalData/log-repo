@@ -1170,7 +1170,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             List<ShipmentList> listQuery = query2.ToList();
 
-            GetContainerNumbers(listQuery);
+            FillContainerNumbers(listQuery);
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
@@ -1179,7 +1179,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             //}
         }
 
-        private void GetContainerNumbers(List<ShipmentList> listQuery)
+        private void FillContainerNumbers(List<ShipmentList> listQuery)
         {
             listQuery.ForEach(shipment =>
             {
