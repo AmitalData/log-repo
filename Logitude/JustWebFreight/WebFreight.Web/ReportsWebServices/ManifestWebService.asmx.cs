@@ -840,7 +840,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Port onCarriageToPort = null;
                     Port onForwardingFromPort = null;
                     Port onForwardingToPort = null;
-                    Port preCarriage_FromPort = null;
+                    Port preForwarding_FromPort = null;
 
                     if (shipmentView.OnCarriageFromPortId != null)
                     {
@@ -862,16 +862,16 @@ namespace WebFreight.Web.ReportsWebServices
                         onForwardingToPort = (from a in commonContext.Ports where a.Id == shipmentView.OnForwardingToPortId select a).FirstOrDefault();
                     }
 
-                    if (shipmentView.PreCarriageFromPortId != null)
+                    if (shipmentView.PreForwardingFromPortId != null)
                     {
-                        preCarriage_FromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreCarriageFromPortId select a).FirstOrDefault();
+                        preForwarding_FromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreForwardingFromPortId select a).FirstOrDefault();
                     }
 
                     newDetail.OnCarriageFromPort = onCarriageFromPort == null ? null : onCarriageFromPort.EnglishName;
                     newDetail.OnCarriageToPort = onCarriageToPort == null ? null : onCarriageToPort.EnglishName;
                     newDetail.OnForwardingFromPort = onForwardingFromPort == null ? null : onForwardingFromPort.EnglishName;
                     newDetail.OnForwardingToPort = onForwardingToPort ==  null ? null : onForwardingToPort.EnglishName;
-                    newDetail.PreCarriageFromPort = preCarriage_FromPort == null ? null : preCarriage_FromPort.EnglishName;
+                    newDetail.PreForwardingFromPort = preForwarding_FromPort == null ? null : preForwarding_FromPort.EnglishName;
 
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
