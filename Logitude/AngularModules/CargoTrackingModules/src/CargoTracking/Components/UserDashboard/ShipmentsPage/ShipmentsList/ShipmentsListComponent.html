@@ -14,42 +14,39 @@
 
     <div class="toolbar">
 
-        <div class="search-bar hide-mobile">
-            <form [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
+        <div class="search-bar">
+            <form  class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
-                <div class="search-text ">
+                <div class="search-text">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
-                           formControlName="SearchText" name="SearchText " />
-                    <!-- [(ngModel)]="SearchText " -->
-
-                    <div class="icon ">
-                        <!-- <img src="./assets/search.png " alt=" " /> -->
-                        <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
-                        <img *ngIf="SearchText" (click)="Clear()" class="delete" src="./assets/images/icons/delete.svg "
-                             alt=" " />
-                    </div>
-
+                        formControlName="SearchText" name="SearchText " />
                 </div>
-
-                <button class="search-button" type="submit"
-                        (onsubmit)="LoadScreenData()">
-                    {{isLoading?'Loading...': 'Search'}}
+                
+                <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit" (onsubmit)="LoadScreenData()">
+                    <mat-icon>search</mat-icon>
                 </button>
             </form>
         </div>
 
-        <div class="filters hide-mobile">
+        <!--<div class="filters hide-mobile">
             <ul class="toolbar-filters">
                 <li *ngFor="let filter of ToggleFilters" (click)="SelectFilter(filter)">
                     {{filter.Name}}
                     ({{filter.Count | number}})
                 </li>
             </ul>
+        </div>-->
+    <div class="hide-mobile" style="margin-left: 20px;">
+        <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+        <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+        
+        <div class="has-exception-checkbox-filter">
+            <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasException"></CheckBox>
         </div>
-
+        <multiple-selection #sortByMultipleSelection class="multipe-select sort-by-multiple-selection" [MultipleSelectionList]="sortByOptions" [Title]="'Sort By'"  (SelectionChanged)="sortBySelectionChangedHandler($event)"> </multiple-selection>
         <div class="actions-buttons hide-mobile">
             <div (click)="OpenAdvancedFiltersSidebar()">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="24px" viewBox="0 0 20 24" version="1.1">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 20 24" version="1.1">
                     <title>1A845F15-4697-4185-B303-9C063716EB8A</title>
                     <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="White-label-2" transform="translate(-1764.000000, -130.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
@@ -60,28 +57,18 @@
                     </g>
                 </svg>
                 <!-- <img src="./assets/images/icons/filter.svg" alt=" " /> -->
-            </div>
-            <div (click)="SortClicked()">
-                <svg [class.FlipImgVert]="!isSortDescending" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="23px" viewBox="0 0 24 23" version="1.1">
-                    <title>EBE2AA67-439B-428C-ACB5-44210E8ED604</title>
-                    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g id="White-label-2" transform="translate(-1816.000000, -131.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
-                            <g id="menu/sort" transform="translate(1816.000000, 131.000000)">
-                                <path d="M18.5454545,1.94553368e-15 C19.1049118,1.94553368e-15 19.5660078,0.422805923 19.6290243,0.967510196 L19.6363636,1.0952381 L19.636,18.216 L21.5426436,16.0286118 L21.6391509,15.9308388 C22.0440226,15.5689238 22.6634618,15.5579019 23.082005,15.9255804 C23.5354268,16.3238989 23.5813732,17.0158294 23.1846291,17.4710504 L23.1846291,17.4710504 L19.3664473,21.8520028 L19.2683837,21.9512323 C18.8231526,22.3481502 18.1280473,22.3150737 17.7244618,21.8520028 L17.7244618,21.8520028 L13.90628,17.4710504 L13.822566,17.3620389 C13.5190157,16.9111159 13.5903609,16.293259 14.0089041,15.9255804 L14.0089041,15.9255804 L14.1174848,15.8415343 C14.5666255,15.5367794 15.1820402,15.6084077 15.5482655,16.0286118 L15.5482655,16.0286118 L17.454,18.216 L17.4545455,1.0952381 C17.4545455,0.490354798 17.9429621,1.94553368e-15 18.5454545,1.94553368e-15 Z M14.1818182,11.7509921 C14.7843106,11.7509921 15.2727273,12.2413469 15.2727273,12.8462302 C15.2727273,13.4079075 14.8515925,13.8708332 14.3090412,13.9340998 L14.1818182,13.9414683 L8.66098485,13.9414683 C8.05849239,13.9414683 7.57007576,13.4511135 7.57007576,12.8462302 C7.57007576,12.2845528 7.99121051,11.8216271 8.5337618,11.7583605 L8.66098485,11.7509921 L14.1818182,11.7509921 Z M14.1818182,5.87549603 C14.7843106,5.87549603 15.2727273,6.36585083 15.2727273,6.97073413 C15.2727273,7.53241147 14.8515925,7.99533721 14.3090412,8.05860375 L14.1818182,8.06597222 L4.78693182,8.06597222 C4.18443936,8.06597222 3.69602273,7.57561742 3.69602273,6.97073413 C3.69602273,6.40905678 4.11715748,5.94613105 4.65970877,5.8828645 L4.78693182,5.87549603 L14.1818182,5.87549603 Z M14.1818182,1.94553368e-15 C14.7843106,1.94553368e-15 15.2727273,0.490354798 15.2727273,1.0952381 C15.2727273,1.65691544 14.8515925,2.11984118 14.3090412,2.18310772 L14.1818182,2.19047619 L1.09090909,2.19047619 C0.488416637,2.19047619 4.53455455e-13,1.70012139 4.53455455e-13,1.0952381 C4.53455455e-13,0.533560748 0.421134753,0.0706350145 0.963686045,0.00736846764 L1.09090909,1.94553368e-15 L14.1818182,1.94553368e-15 Z" />
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-                <!-- <img src="./assets/images/icons/sort.svg" [class.FlipImgVert]="!isSortDescending" alt=" " /> -->
-            </div>
+                </div>
         </div>
+    </div>
+
+        
 
 
     </div>
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || appliedSelectedFilterMilestonesStatus.length > 0">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException || appliedSelectedFilterMilestonesStatus.length > 0">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
@@ -90,6 +77,9 @@
 
             <li *ngFor="let customer of SelectedInvitedCustomers" (click)="UnselectCustomer(customer)">
                 {{customer.Name}}
+                <span class="filter-close-btn">×</span>
+            </li>
+            <li *ngIf="hasException" (click)="OnHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
 
@@ -118,7 +108,7 @@
     </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0">
-        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Results' : 'Filtered search results'}}
+        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
@@ -221,21 +211,18 @@
                                                    alt="">
                                     </span>
                                 </div>
-                                <span class="mobile-only-inline-block">
-                                    {{ shipment.ShipmentNumber }}
-                                </span>
-                                <div class="truncateText mobile-inline-block" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
+                                <div class="truncateText" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i > 0}" *ngIf="i < 4">
                                         {{item}}
                                     </span>
-                                    <span class="more-mobile" *ngIf="i == 0">
-                                        <a (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+ {{references?.length}} More</u></a>
+
+                                    <span class="more-mobile" *ngIf="references?.length > 1 && i == 0">
+                                        <a (click)="OpenMessageWindow(references.slice(1, references.length + 1))"><u>+ {{references?.length - 1}} More</u></a>
                                     </span>
                                 </div>
-                                <span class="hide-mobile" (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()" *ngIf="references?.length > 4"
-                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
+                                <span class="hide-mobile" *ngIf="references?.length > 4" [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
-                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 3}} More</u>
+                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 4}} More</u>
                                 </span>
 
                             </div>
@@ -347,7 +334,7 @@
 
                                     <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
                                         <div tooltip-trigger>
-                                            <div (click)="$event.stopPropagation()" class="icon-danger">!</div>
+                                            <div class="icon-danger">!</div>
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">

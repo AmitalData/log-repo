@@ -8,7 +8,8 @@ export class CargoTrackingShipmentFilters
     public SelectedMilestonesStatus: any[] = [];
     public TransportModeCodes: string;
     public DirectionCodes: string;
-    public SortDescending: boolean = true;
+    public SortDescending: string;
     public SortFieldName: string;
     public SelectedInvitedCustomers: any[];
+    public HasException: boolean = false;
 }
