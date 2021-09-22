@@ -23,3 +23,16 @@ Feature: Agent Create, Search and Edit from Maintenance
             | Fax           | 888888      |
         When create agent
         Then the agent should create successfully
+
+    Scenario: Search for the agent
+        When search agent
+        Then the agent should appear successfully
+
+    Scenario: Open the agent
+        When open agent
+        Then the agent should open successfully
+
+    Scenario: Edit the agent
+        Given "Test edit agent" as agent notes
+        When update agent
+        Then the agent should update successfully

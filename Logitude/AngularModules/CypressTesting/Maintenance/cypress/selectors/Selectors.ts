@@ -232,8 +232,13 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CustomAgentBankName = "#CustomAgent_BankName"
    public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
    public static readonly CustomAgentSaveButton = "#CustomAgent-Save"
-
    //#endregion
+
+   //#region custom agent
+   public static readonly AgentNotes = "#Agent_Notes"
+   public static readonly AgentSaveButton = "#Agent-Save"
+   //#endregion
+
    //#region Trucker
    public static readonly TruckerNotes = "#Trucker_Remark"
    public static readonly TruckerGeneralTab = "#TruckerTHGeneral"

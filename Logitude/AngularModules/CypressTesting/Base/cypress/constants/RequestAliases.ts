@@ -179,6 +179,8 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
+    public static readonly PutAgent = "PutAgent";
+
     public static readonly PutTrucker = "PostTrucker"
     public static readonly PostTrucker = "PostTrucker"
 

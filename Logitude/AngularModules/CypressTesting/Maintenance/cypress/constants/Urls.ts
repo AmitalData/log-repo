@@ -98,6 +98,9 @@ export class Urls {
 
     public static readonly CustomAgents = "**/customagents"
     public static readonly CustomAgentsGetSingle = "**/customagents/getsingle?**"
+   
+    public static readonly Agents = "**/agents"
+    public static readonly AgentsGetSingle = "**/agents/getsingle?**"
 
     public static readonly Truckers = "**/truckers"
     public static readonly TruckersGetSingle = "**/truckers/getsingle?**"

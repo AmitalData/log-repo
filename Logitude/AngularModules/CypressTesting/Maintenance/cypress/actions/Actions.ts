@@ -1756,6 +1756,9 @@ export function OpenCard(CardType: string) {
     if (CardType == Constants.ShippingAgent) {
         DefineShippingAgentsGetSingleRequest();
     }
+    else if (CardType == Constants.Agent) {
+        cy.DefineRequestWait(RestAPI.GET, Urls.AgentsGetSingle, RequestAliases.GetSignle);
+    }
     else if (CardType == Constants.CustomAgent) {
         DefineCustomAgentsGetSingleRequest()
     }
@@ -2471,5 +2474,16 @@ export function UpdateCustomer() {
 
 export function AssertUpdateCustomer() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutShipperConsignee, 200)
+}
+//#endregion
+
+//#region Company Address Settings
+export function UpdateAgent() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Agents, RequestAliases.PutAgent);
+    cy.Click(MaintenanceSelectors.AgentSaveButton, null)
+}
+
+export function AssertUpdateAgent() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutAgent, 200);
 }
 //#endregion
