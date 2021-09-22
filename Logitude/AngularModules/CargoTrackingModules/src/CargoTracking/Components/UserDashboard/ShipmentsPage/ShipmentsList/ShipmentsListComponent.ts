@@ -555,8 +555,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         {
             this.LoadScreenData();
         }
-        // var filter = this.sortByOptions.find(d => d.Code == event);
-        // this.SelectFilterWithoutLoadScreenData(filter);
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
