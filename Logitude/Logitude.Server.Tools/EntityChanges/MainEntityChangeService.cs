@@ -35,6 +35,8 @@ namespace Logitude.Server.Tools.EntityChanges
         private AutomationObjectFieldService automationObjectFieldService { get; set; }
         private EntityChangeRepository entityChangeRepository { get; set; }
         public bool IsHaveAutomationDependencyOnLastEntityUpdate { get; set; }
+        public bool IsChild { get; set; }
+
         public MainEntityChangeService(EntityChangeArgs entityChangeArgs)
         {
             this.entityChangeArgs = entityChangeArgs;
@@ -222,6 +224,7 @@ namespace Logitude.Server.Tools.EntityChanges
 
         public bool CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()
         {
+            if (automationResultArgs == null) return false;
             foreach (IAutomationResultService automationResultService in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
             {
                 if(automationResultArgs.AutomationLists.Where(d=>d.ResultCode == automationResultService.ResultCode).Count() > 0)

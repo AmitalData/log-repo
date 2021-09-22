@@ -599,7 +599,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate())
                 {
-                    ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(mainEntityChangeService.entityChangeArgs.EntityId, tenant);
+                    var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
                     mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM);
                 }
             }
@@ -2453,7 +2453,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
                                 dateBefore = DateTime.Now;
                                 ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore , DontExecuteAutomationThatDependencyOnLastEntityUpdate = true});
+                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore , DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
+                                mainEntityChangeService.IsChild = true;
                                 mainEntityChangeServices.Add(mainEntityChangeService);
                             }
                         }
