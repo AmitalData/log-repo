@@ -150,6 +150,10 @@
     <Compile Include="Steps\Security\GetGlAccountNotesByCardSteps.cs" />
     <Compile Include="Steps\Security\GetSingleGLAccountByDisplayNumberAndTenantSteps.cs" />
     <Compile Include="Steps\Security\GetSingleGLAccountByInternalNumberAndTenantSteps.cs" />
+    <Compile Include="Steps\Security\GetSystem1000FlatFileSteps.cs" />
+    <Compile Include="Steps\Security\GetTestOperationSteps.cs" />
+    <Compile Include="Steps\Security\PostTestOperationSteps.cs" />
+    <Compile Include="Steps\Security\PutSystem1000File.cs" />
     <Compile Include="Steps\Security\PostFixIntegrityCheckErrorInBatchSteps.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +168,10 @@
     <None Include="Features\ARPayment\GetARPayment.feature" />
     <None Include="Features\BankAccount\CreateBankAccount.feature" />
     <None Include="Features\BankAccount\GetBankAccount.feature" />
+    <None Include="Features\Security\GetTestOperation.feature" />
+    <None Include="Features\Security\PostTestOperation.feature" />
+    <None Include="Features\Security\PutSystem1000File.feature" />
+    <None Include="Features\Security\GetSystem1000FlatFile.feature" />
     <None Include="Features\Security\GetGlAccountNotesByCard.feature" />
     <None Include="Features\Security\DeleteGlAccountNote.feature" />
     <None Include="Features\Security\PostFixIntegrityCheckErrorInBatch.feature" />

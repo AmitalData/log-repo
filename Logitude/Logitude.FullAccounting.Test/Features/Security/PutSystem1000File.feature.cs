@@ -19,21 +19,19 @@ namespace Logitude.FullAccounting.Test.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-CreateNote")]
-    public partial class DeleteGlAccountNoteFeature : object, Xunit.IClassFixture<DeleteGlAccountNoteFeature.FixtureData>, System.IDisposable
+    public partial class PutSystem1000FileFeature : object, Xunit.IClassFixture<PutSystem1000FileFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "Pre-Prepare-CreateNote"};
+        private string[] _featureTags = ((string[])(null));
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "DeleteGlAccountNote.feature"
+#line 1 "PutSystem1000File.feature"
 #line hidden
         
-        public DeleteGlAccountNoteFeature(DeleteGlAccountNoteFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public PutSystem1000FileFeature(PutSystem1000FileFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +40,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Delete GlAccount Note", "\twe want to post delete gl account note by user from another tenant.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-CreateNote"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Put System 1000 File", "\twe want to check this api security.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,15 +80,15 @@ namespace Logitude.FullAccounting.Test.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get post delete gl account note by user from another tenant.")]
-        [Xunit.TraitAttribute("FeatureTitle", "Delete GlAccount Note")]
-        [Xunit.TraitAttribute("Description", "Get post delete gl account note by user from another tenant.")]
-        public virtual void GetPostDeleteGlAccountNoteByUserFromAnotherTenant_()
+        [Xunit.SkippableFactAttribute(DisplayName="Put System 1000 File by not authentication user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Put System 1000 File")]
+        [Xunit.TraitAttribute("Description", "Put System 1000 File by not authentication user.")]
+        public virtual void PutSystem1000FileByNotAuthenticationUser_()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get post delete gl account note by user from another tenant.", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Put System 1000 File by not authentication user.", null, tagsOfScenario, argumentsOfScenario);
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,11 +108,49 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
- testRunner.When("get post delete gl account note", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 5
+ testRunner.When("put system file by not login user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+#line 6
+ testRunner.Then("the put system file api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Put System File by not authorize user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Put System 1000 File")]
+        [Xunit.TraitAttribute("Description", "Put System File by not authorize user.")]
+        public virtual void PutSystemFileByNotAuthorizeUser_()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Put System File by not authorize user.", null, tagsOfScenario, argumentsOfScenario);
 #line 7
- testRunner.Then("The post delete note API should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 8
+ testRunner.When("put system file by not authorize user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+ testRunner.Then("the put system file api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -128,12 +163,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                DeleteGlAccountNoteFeature.FeatureSetup();
+                PutSystem1000FileFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                DeleteGlAccountNoteFeature.FeatureTearDown();
+                PutSystem1000FileFeature.FeatureTearDown();
             }
         }
     }

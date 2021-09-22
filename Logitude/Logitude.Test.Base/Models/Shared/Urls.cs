@@ -119,6 +119,8 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
+        public static string PutSystem1000File = "AccountingOp/PutSystem1000File";
+        public static string PostTestOperation = "AccountingOp/PostTestOperation";
         public static string ChargesgroupviewsGetByFilters = "chargesgroupviews/getbyfilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
         public static string PaymentTermViewsGetByFilters = "PaymentTermViews/GetByFilters";
@@ -193,7 +195,15 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"AccountingNoteViews/GetNotesByCard?cardId={cardId}";
         }
-
+        public static string GetGenerate1000InAccountingOp(string email)
+        {
+            return $"AccountingOp/GetGenerate1000?email={email}";
+        }
+        public static string GetTestOperation(string operationId, string myparams)
+        {
+            return $"AccountingOp/GetTestOperation?operationId={operationId}&myparams={myparams}";
+        }
+        
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;

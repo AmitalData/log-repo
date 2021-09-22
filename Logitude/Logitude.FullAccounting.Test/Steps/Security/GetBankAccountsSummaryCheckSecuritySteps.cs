@@ -19,7 +19,7 @@ namespace Logitude.FullAccounting.Test.Steps.BankAccount.Security
         [When(@"get bank accounts summary")]
         public void WhenGetBankAccountsSummary()
         {
-            context.Action = () => APICaller.CallGet<object>(Urls.GetBankAccountsSummary, UserOtherTenant.Token);
+            context.Action = () => APICaller.CallGet<object>(Urls.GetBankAccountsSummary, UserEmptyTenant.Token);
         }
 
         [Then(@"The bank accounts summary API should return you have no permissions")]

@@ -21,7 +21,7 @@ namespace Logitude.FullAccounting.Test.Steps.BankDeposit.Security
         [When(@"get bank deposit without lines from unauthorizes tenant")]
         public void WhenGetBankDepositWithoutLinesFromUnauthorizesTenant()
         {
-            context.Action = () => APICaller.CallGet<object>(Urls.GetBankDepositWithoutLines("1",1), UserOtherTenant.Token);
+            context.Action = () => APICaller.CallGet<object>(Urls.GetBankDepositWithoutLines("1",UserTenant.Tenant), UserOtherTenant.Token);
         }
 
         [Then(@"The bank deposit without lines API should return you have no permissions")]
