@@ -523,7 +523,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     sortBySelectionChangedHandler(event) {
-        console.log(this.sortField + ' - ' + this.isSortDescending)
         const index = this.sortByOptions.findIndex(d => d.Code == event);
         var selectedCode = '';
         switch(index) {
@@ -552,9 +551,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 break;
             }
         }
-        this.LoadScreenData()
-        // var filter = this.sortByOptions.find(d => d.Code == event);
-        // this.SelectFilterWithoutLoadScreenData(filter);
+        if(this.sortField && this.isSortDescending)
+        {
+            this.LoadScreenData();
+        }
     }
 
     private SelectToggleFilters(toggleFilterCodes: string)
