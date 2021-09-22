@@ -610,7 +610,8 @@
 
         <div body>
             <div *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
-            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
+            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" 
+                (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
                 <table class="row-hover" style="width: 100%;">
