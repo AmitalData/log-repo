@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
 {
     public class CargoTrackingTableLogicService
-    { 
+    {
+        const int ShipmentOrderTableCondition = 3;
 
         public static void SetTableLogic(DataRow tableRow, string tableName,int conditionNumber)
         {
@@ -24,7 +25,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
                     }
                 case "CargoTrackingShipments":
                     {
-                        CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber);
+                        if(conditionNumber == ShipmentOrderTableCondition)
+                            CargoTrackingShipmentsOrderLogicService.SetTableLogic(tableRow);
+                        else
+                            CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber);
                         break;
                     }
                 case "CargoTrackingShipmentSearches":

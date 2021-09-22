@@ -61,6 +61,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool calculateProfit;
         private bool calculatePayables;
         private bool calculateReceivables;
+        private bool isEntityStatusUpdated;
         public Shipment entityPoco { get; set; }
         private ShipmentPM entityPM;
         private ShipmentMasterData entityMasterData;
@@ -283,7 +284,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CalculateReceivables = calculateReceivables;
 
                 if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                {
+                {                   
                     shipmentTracing.BeginTracing();
                 }
                 this.ComputeIsAssemblyField();
@@ -375,6 +376,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     #region
                     string myOldCustomerId = "";
+                    string oldEntityStatusId = entityPoco.StatusId;
                     if (entityPM.CustomerId != entityPoco.CustomerId)
                     {
                         myOldCustomerId = entityPoco.CustomerId;
@@ -460,7 +462,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         shipmentTracing.BeginTracing();
+                        isEntityStatusUpdated = oldEntityStatusId != entityPM.StatusId ? true : false;
                     }
+
+                    ShipmentContainersEntityBehaviour.UpdateConatinarStatus(this.entityPM,isEntityStatusUpdated, objectContext);
 
                     if (string.IsNullOrEmpty(entityPM.CustomFileId) && !string.IsNullOrEmpty(entityPoco.CustomFileId))
                     {
@@ -7048,21 +7053,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private void CreateOrUpdateForwarderShipmentPackage(ShipmentPM forwarderShipment)
         {
-            ShipmentPackagePM forwarderShipmentPackage = forwarderShipment.ShipmentPackages.Where(d => d.ContainerNumber == initializer.StandalonePackage.ContainerNumber).FirstOrDefault();
+            ShipmentPackagePM forwarderShipmentPackage = forwarderShipment.ShipmentPackages.Where(d => d.ContainerEntityId == initializer.StandalonePackage.ContainerEntityId).FirstOrDefault();
 
             if(forwarderShipmentPackage != null)
             {
-                if(string.IsNullOrEmpty(forwarderShipmentPackage.ContainerEntityId))
-                {
-                    forwarderShipmentPackage.ChangeSetOp = ChangeSetOperation.Update;
-                }
+                this.MapShipmentPackageFromStandAlonePackage(forwarderShipmentPackage, initializer.StandalonePackage);
             }
-
             else
             {
                 this.CreateForwarderShipmentPackage(forwarderShipment);
             }
         }
+
+        private void MapShipmentPackageFromStandAlonePackage(ShipmentPackagePM forwarderShipmentPackage, ShipmentPackagePM standAloneShipmentPackage)
+        {
+            forwarderShipmentPackage.ChangeSetOp = ChangeSetOperation.Update;
+            forwarderShipmentPackage.Description = initializer.StandalonePackage.Description;
+            forwarderShipmentPackage.PackageTypeId = initializer.StandalonePackage.PackageTypeId;
+            forwarderShipmentPackage.Quantity = initializer.StandalonePackage.Quantity;
+            forwarderShipmentPackage.Volume = initializer.StandalonePackage.Volume;
+            forwarderShipmentPackage.Weight = initializer.StandalonePackage.Weight;
+            forwarderShipmentPackage.ContainerNumber = initializer.StandalonePackage.ContainerNumber;
+        }
+
         private void CreateForwarderShipmentPackage(ShipmentPM forwarderShipment)
         {
             ShipmentPackagePM forwarderShipmentPackage = new ShipmentPackagePM()
@@ -7077,8 +7090,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ContainerNumber = initializer.StandalonePackage.ContainerNumber,
                 ShipmentId = forwarderShipment.Id,
             };
-
-            //this.CreateShipmentPackage(forwarderShipmentPackage, forwarderShipment.Id);
             forwarderShipment.ShipmentPackages.Add(forwarderShipmentPackage);
         }
         private ShipmentPM GetShipmentPM(string forwarderShipmentId)
@@ -7092,7 +7103,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             List<ShipmentPackage> shipmentPackages = this.shipmentPackageRepository.GetShipmentsPackagesByContainerIdAndTenant(itemPM.ShipmentId,itemPM.ContainerEntityId,tenant);
             if (shipmentPackages != null)
             {
-                foreach(ShipmentPackage shipmentPackage in shipmentPackages)
+                foreach (ShipmentPackage shipmentPackage in shipmentPackages)
                 {
                     if (shipmentPackage != null)
                         UpdateConnectedStanadAloneShipmentPackages(itemPM, shipmentPackage);
@@ -7144,6 +7155,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (this.IsConnectedForwaderShipmentPackageFieldsUpdated(shipmentPackagePM, shipmentPickUpDeliveryPackagePM))
             {
                 this.MapUpdatedConnectedForwaderShipmentPackage(shipmentPackagePM, shipmentPickUpDeliveryPackagePM);
+                ShipmentValidating.ValidateContainerNumbers(this.entityPM);
                 this.UpdateShipmentPackage(shipmentPackagePM);
             }
         }

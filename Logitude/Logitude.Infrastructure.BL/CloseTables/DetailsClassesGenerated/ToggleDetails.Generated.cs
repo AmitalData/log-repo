@@ -324,6 +324,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPD,Standalone Pickups/Deliveries Only ", 
                 Description = "Only Allow Pickups/Deliveries to be Created with a Standalone Shipment", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OIU", 
+                Name = "Ocean Insights Shipment Update", 
+                SearchFields = "OIU,Ocean Insights Shipment Update", 
+                Description = "Ocean Insights Shipment Update", 
+			});
 			
             return all;
        }
