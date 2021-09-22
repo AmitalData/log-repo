@@ -216,6 +216,7 @@ export class RequestAliases {
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
+    public static readonly GetQuickSearch = "GetQuickSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
@@ -250,5 +251,21 @@ export class RequestAliases {
     public static readonly PostOpportunities = "PostOpportunities"
     public static readonly PutOpportunities = "PutOpportunities"
     public static readonly GetQuotesByOpportunityId = "GetQuotesByOpportunityId"
+
+    //Full Accounting
+    public static readonly PostAPPayments = 'PostAPPayments';
+    public static readonly PutAPPayments = 'PutAPPayments';
+    public static readonly ARInvoiceView = 'APInvoiceView';
+    public static readonly ARPaymentView = 'ARPaymentView';
+
+    public static readonly PostGLAccounts = 'PostGLAccounts';
+    public static readonly PutGLAccounts = 'PutGLAccounts';
+
+    public static readonly PostBankAccounts = 'PostBankAccounts';
+
+    public static readonly PostCustomer = 'PostCustomer';
+
+    public static readonly PostChartOfAccount = 'PostChartOfAccount';
+    public static readonly PutChartOfAccount = 'PutChartOfAccount';
 
 }

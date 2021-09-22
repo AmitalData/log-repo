@@ -11,5 +11,7 @@ namespace Logitude.ShipmentTests.Models
         public ShipmentPM MasterShipment { get; set; }
         public ShipmentPM HouseShipment { get; set; }
         public ShipmentPM DirectShipment { get; set; }
+        public ShipmentContainerSimulator ShipmentContainerSimulator { get; set; }
+
     }
 }

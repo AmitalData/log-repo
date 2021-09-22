@@ -100402,6 +100402,22 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;CustomsClearanceDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;CustomsClearanceDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
