@@ -36,7 +36,6 @@ export class DocumentDownloadService {
             this.token = response.Result.DocumentDownloadToken;
             var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/SharedDownloadPage.aspx?id=" + SessionInfo.LoggedUserTenant + ":" + null + ":ship:" + entityId + ":CS:" + null + ":" + securityKey + ":securitykey";
             var win = window.open(link, '_blank');
-
             if (win) {
                 win.focus();
             }
