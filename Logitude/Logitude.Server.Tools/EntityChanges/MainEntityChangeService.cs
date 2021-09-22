@@ -25,8 +25,8 @@ namespace Logitude.Server.Tools.EntityChanges
         public bool IsDelayAutomation { get; set; }
         public List<c> Changefields = new List<c>();
         public bool IsChangeSLA { get; set; }
-        private List<IAutomationResultService> AutomationResultLists {get;set;}
-        private EntityChangeArgs entityChangeArgs { get; set; }
+        public List<IAutomationResultService> AutomationResultLists {get;set;}
+        public EntityChangeArgs entityChangeArgs { get; set; }
         private DateTime startDate {get;set;}
         private AutomationObjectTableClass automationObjectTable { get; set; }
         private AutomationObjectTableClass otherAutomationObjectTable { get; set; }
@@ -34,6 +34,7 @@ namespace Logitude.Server.Tools.EntityChanges
         private GeneralEntityChangeService generalEntityChangeService { get; set; }
         private AutomationObjectFieldService automationObjectFieldService { get; set; }
         private EntityChangeRepository entityChangeRepository { get; set; }
+        public bool IsHaveAutomationDependencyOnLastEntityUpdate { get; set; }
         public MainEntityChangeService(EntityChangeArgs entityChangeArgs)
         {
             this.entityChangeArgs = entityChangeArgs;
@@ -50,7 +51,7 @@ namespace Logitude.Server.Tools.EntityChanges
 
             AutomationResultLists = GetAutomationResultLists();
         }
-
+        private AutomationResultArgs automationResultArgs = null;
         public void AddEntityChangesAutomation(EntityChangeAutomation entityChangesAutomation)
         {
             if (entityChangesAutomation.IsConditionTrue) EntityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
@@ -91,8 +92,9 @@ namespace Logitude.Server.Tools.EntityChanges
                     AutomationConditionFields automationConditionFields = automationObjectFieldService.GetAutomationConditionFields(automationFieldLists, automationObjectTable, otherAutomationObjectTable);
                     entityChange.AutomationConditionFieldsXml = LogitudeXmlSerializer.SerializeObjectToXmlString(automationConditionFields);
 
-                    AutomationResultArgs automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this };
-                    foreach (IAutomationResultService service in AutomationResultLists)
+                     automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this };
+                    var automationResultLists = entityChangeArgs.DontExecuteAutomationThatDependencyOnLastEntityUpdate ? AutomationResultLists.Where(d=>d.DependencyOnLastEntityUpdate == false).ToList() : AutomationResultLists;
+                    foreach (IAutomationResultService service in automationResultLists)
                     {
                         service.Run(automationResultArgs);
                     }
@@ -209,6 +211,26 @@ namespace Logitude.Server.Tools.EntityChanges
             return entityChange;
         }
 
+        public void ExecuteAutomationThatDependencyOnLastEntityUpdate(object entity)
+        {
+            automationResultArgs.EntityPM = entity;
+            foreach (IAutomationResultService service in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
+            {
+                service.Run(automationResultArgs);
+            }
+        }
+
+        public bool CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()
+        {
+            foreach (IAutomationResultService automationResultService in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
+            {
+                if(automationResultArgs.AutomationLists.Where(d=>d.ResultCode == automationResultService.ResultCode).Count() > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
 
@@ -226,6 +248,8 @@ namespace Logitude.Server.Tools.EntityChanges
         public int Tenant { get; set; }
         public string OtherObjectTableName { get; set; }
         public Object ExternalEntity { get; set; }
+        public bool DontExecuteAutomationThatDependencyOnLastEntityUpdate { get; set; }
+
     }
 
 

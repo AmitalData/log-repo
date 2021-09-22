@@ -16,12 +16,14 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationSetValueResultService : GeneralAutomationResultService, IAutomationResultService
     {
 
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
+        public string ResultCode { get { return "FIELDSET"; } }
 
         AutomationResultArgs automationResultArgs { get; set; }
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
-            List<Automation> fieldSetAutomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "FIELDSET").ToList();
+            List<Automation> fieldSetAutomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (fieldSetAutomationsList.Count > 0)
             {
 
