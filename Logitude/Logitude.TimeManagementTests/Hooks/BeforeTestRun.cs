@@ -15,6 +15,5 @@ namespace Logitude.TimeManagementTests.Hooks
         {
             new TimeManagementDataPreparation().Prepar();
         }
-        
     }
 }

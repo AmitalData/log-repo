@@ -504,43 +504,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> SortShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortDescending == "ASC")
-                shipments = SortShipmentsAscending(shipmentFilters, shipments);
-            else
-                shipments = SortShipmentsDescending(shipmentFilters, shipments);
-            return shipments;
-        }
-
-        private static IQueryable<CargoTrackingShipmentList> SortShipmentsDescending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
-        {
-            if (shipmentFilters.SortFieldName == "ATA")
-            {
-                shipments = shipments.OrderByDescending(d => d.ArrivalDate);
-            }
-            else if (shipmentFilters.SortFieldName == "ATD")
-            {
-                shipments = shipments.OrderByDescending(d => d.DepartureDate);
-            }
-            else {
+            if (shipmentFilters.SortDescending == true)
                 shipments = shipments.OrderByDescending(d => d.CreateDate);
-            }
-            return shipments;
-        }
-
-        private static IQueryable<CargoTrackingShipmentList> SortShipmentsAscending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
-        {
-            if (shipmentFilters.SortFieldName == "ATA")
-            {
-                shipments = shipments.OrderBy(d => d.ArrivalDate);
-            }
-            else if (shipmentFilters.SortFieldName == "ATD")
-            {
-                shipments = shipments.OrderBy(d => d.DepartureDate);
-            }
             else
-            {
                 shipments = shipments.OrderBy(d => d.CreateDate);
-            }
             return shipments;
         }
 
@@ -576,7 +543,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterByCustomers(shipmentFilters, shipments);
             shipments = FilterTransportMode(shipmentFilters, shipments);
             shipments = FilterDirections(shipmentFilters, shipments);
-            shipments = FilterShipmentsWhichHaveExceptions(shipmentFilters, shipments);
 
             return shipments;
         }
@@ -605,13 +571,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.Where(d =>
                             shipmentFilters.CustomersIds.Contains(d.CustomerId)
                         );
-            return shipments;
-        }
-
-        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichHaveExceptions(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
-        {
-            if (shipmentFilters.HasException)
-                shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
             return shipments;
         }
 

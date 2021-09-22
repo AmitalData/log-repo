@@ -6,8 +6,7 @@ export class CargoTrackingShipmentFilters
     public CustomersIdsString: string;
     public TransportModeCodes: string;
     public DirectionCodes: string;
-    public SortDescending: string;
+    public SortDescending: boolean = true;
     public SortFieldName: string;
     public SelectedInvitedCustomers: any[];
-    public HasException: boolean = false;
 }

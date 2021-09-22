@@ -9,6 +9,5 @@ namespace Logitude.TimeManagementTests.Models
     public class TimeManagementContext
     {
         public TimeManagementAPIHelper DataEntry { get; set; }
-        public TimeManagementAPIHelper UpdatedDataEntry { get; set; }
     }
 }

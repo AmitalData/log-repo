@@ -1,8 +1,0 @@
-<mat-form-field appearance="fill" floatLabel="never">
-    <mat-label>{{Title}}</mat-label>
-    <mat-select #select multiple disableOptionCentering  panelClass="myPanelClass">
-        <mat-option class="{{selection.Name}}" matInput *ngFor="let selection of MultipleSelectionList" [value]="selection" (click)="SelectFilter(selection)">{{selection.Name}} <span *ngIf="selection.Count != null">({{selection.Count}})</span></mat-option>
-    </mat-select>
-</mat-form-field>
-
-
