@@ -4,6 +4,8 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { UserDetails } from "../../models/UserDetails";
 import { UsersSelectors } from "../../selectors/UsersSelectors";
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 
 //#region Create new User
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -57,5 +59,16 @@ When("save the User", () => {
 
 Then("the User should update successfully", () => {
     UserActions.AssertUpdateUser()
+});
+//#endregion
+
+//#region Inactivate the User
+Given("inactive the user", () => {
+    cy.ClickCheckBox(UsersSelectors.InActiveCheckBox)
+});
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    BaseActions.ValidateEventsTab(eventDetailsList, UsersSelectors.EventsTab);
 });
 //#endregion

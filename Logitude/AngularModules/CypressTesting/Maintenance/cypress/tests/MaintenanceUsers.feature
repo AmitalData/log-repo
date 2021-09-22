@@ -27,3 +27,10 @@ Feature: User Create, Search and Edit from Maintenance
         Given a "new note for test" as note
         When save the User
         Then the User should update successfully
+
+    Scenario: Inactivate the User
+        Given inactive the user
+        When save the User
+        Then the following event should appear in events tab
+            | Event        | Notes            |
+            | User Updated | User Inactivated |

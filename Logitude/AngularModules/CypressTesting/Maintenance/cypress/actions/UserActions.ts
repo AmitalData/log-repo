@@ -22,7 +22,7 @@ export function FillUserDetails(userDetails: UserDetails) {
     cy.FillLogLov(UsersSelectors.Depatment, userDetails.Department, true);
     cy.FillLogLov(UsersSelectors.Branch, userDetails.Branch, true);
     cy.FillLogTextBox(UsersSelectors.Notes, userDetails.Notes);
-    cy.ClickCheckBox(UsersSelectors.AdminstratorCheckBox)
+    cy.get(UsersSelectors.AdminstratorRow).find(BaseSelectors.CheckBox).click()
 }
 
 export function CreateUser() {
