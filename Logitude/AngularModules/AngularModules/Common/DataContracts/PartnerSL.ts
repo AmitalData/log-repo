@@ -9,5 +9,4 @@ export class PartnerSL {
   public StateCode: string;
   public CountryCode: string;
   public PropertyName: string;
-  public ZipCode: string;
 }

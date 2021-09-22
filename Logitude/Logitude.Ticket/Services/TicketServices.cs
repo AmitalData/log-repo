@@ -30,10 +30,10 @@ namespace Logitude.TicketTests.Services
                 .Build();
         }
 
-        public void UpdateInstance(Table ticketTable, TicketPM ticket)
+        public TicketPM UpdateInstance(Table ticketTable, TicketPM ticket)
         {
             dynamic dataTable = ticketTable.CreateDynamicInstance();
-            new TicketBuilder()
+            return new TicketBuilder()
                 .WithModel(ticket)
                 .EntityType(new ObjectTableService().GetIdByName((string)dataTable.EntityType))
                 .Subject((string)dataTable.Subject)

@@ -1,6 +1,4 @@
-﻿using System.Xml;
-
-namespace Logitude.ShipmentTests.Models
+﻿namespace Logitude.ShipmentTests.Models
 {
     public static class ShipmentData
     {
@@ -14,7 +12,5 @@ namespace Logitude.ShipmentTests.Models
         public static string MoveTypeTSMId { get; set; }
         public static string MoveTypeMTOId { get; set; }
         public static string ShipmentSubTypeTSSTId { get; set; }
-        public static ShipmentPM ShipmentPM { get; set; }
-        public static XmlDocument XMLData { get; internal set; }
     }
 }

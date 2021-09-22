@@ -4,6 +4,7 @@ export interface VatTypeDetails {
     LocalName: string,
     Percentage: string,
     PercentageDate: string,
+    IsRegionalTax: string,
     InActive: string,
     Description: string,
     LocalDescription: string,

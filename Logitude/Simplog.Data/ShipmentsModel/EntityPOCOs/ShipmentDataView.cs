@@ -740,7 +740,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         public string HandlerUserName { get; set; }
-
         public string InlandDomesticFromZipCode { get; set; }
         public string InlandDomesticToZipCode { get; set; }
         public string InlandDomesticFromCity { get; set; }
@@ -751,13 +750,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string InlandDomesticToTypeCode { get; set; }
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
-
-        public string ShipperNotExporterReference1 { get; set; }
-        public string ShipperNotExporterReference2 { get; set; }
-
-
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
-
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
     }
 }
