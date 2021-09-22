@@ -1123,8 +1123,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.documentDownloadService.DownloadPage(document);
     }
 
-    DownloadAllClick(entityId: string) {
-        this.documentDownloadService.DownloadAllPages(entityId);
+    DownloadAllClick(entityId: string, securityKey: string) {
+        this.documentDownloadService.DownloadAllPages(entityId, securityKey);
     }
 
     ShowMoreLinkClicked() {
