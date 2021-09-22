@@ -22,7 +22,19 @@ namespace Logitude.CargoTracking.Def.DataContracts
             }
         }
 
-public string TransportModeCodes { get; set; }
+        public string MilestonesStatus { get; set; }
+        public List<string> MilestonesCodes
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(MilestonesStatus))
+                    return MilestonesStatus.Split(',').ToList();
+                else
+                    return new List<string>();
+            }
+        }
+
+        public string TransportModeCodes { get; set; }
         public string DirectionCodes { get; set; }
         public bool SortDescending { get; set; }
         public string SortFieldName { get; set; }

@@ -224,6 +224,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
             this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
             this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
+            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
         }
     }
 
@@ -254,9 +255,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     appliedSelectedFilterMilestonesStatus: any[] = [];
     private GetInvitedCustomers()
     {
-
-        // this.AddDemoCustomersForTest();
-
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
@@ -421,6 +419,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         shipmentFilters.SortDescending = this.isSortDescending;
 
         this.SetCustomersFilter(shipmentFilters);
+        this.SetMilestonesFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
         this.SetDirectionFilters(shipmentFilters);
         return shipmentFilters;
@@ -434,10 +433,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
         }
-
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
         shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
+    }
+
+    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        if(this.appliedSelectedFilterMilestonesStatus.length > 0){
+            var str = this.appliedSelectedFilterMilestonesStatus.map(state => state.Code)?.join(',');
+            shipmentFilters.SelectedMilestonesStatus = this.appliedSelectedFilterMilestonesStatus;
+            shipmentFilters.MilestonesStatus = str;
+        }
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -616,16 +623,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
-
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
         this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
-        console.log('this.appliedSelectedFilterMilestonesStatus', this.appliedSelectedFilterMilestonesStatus)
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        this.selectedFilterMilestonesStatus = [];
+        this.MilestonesStatus.map((item, index) => {
+            this.MilestonesStatus[index].IsSelected = false; 
+        });
         this.appliedSelectedFilterMilestonesStatus= [];
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
@@ -681,7 +690,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
             if(index >= 0)
                 this.appliedSelectedFilterMilestonesStatus.splice(index,1);
-                this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
+                let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
+                state.IsSelected = false;
+                this.MilestonesStatus[itemIndex] = state;
                 RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
@@ -725,7 +736,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
                 this.selectedFilterMilestonesStatus.splice(index,1);
         }
-        console.log('aaaaa', this.MilestonesStatus);
     }
 
 }
