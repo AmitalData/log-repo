@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
-    public class GeneralAutomationResultService
+    public  class GeneralAutomationResultService
     {
         public ValidateAutomationResultClass ValidateAutomation(Automation automation, EntityChange entityChange, List<Field> automationConditionFields, string lastupdateautomation, string typeConditionValidate)
         {

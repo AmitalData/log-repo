@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
+using Logitude.BL.ExternalService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -542,7 +543,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     BuildActivityLog();
                     BuildImportersQueue();
                     UpdatePayablesLinesVatAmounts();
-                 
+                    RunAutomationThatDependencyOnLastEntityUpdate();
+
+
                     #endregion
                 }
 
@@ -593,6 +596,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 #endregion
             }
         }
+
+        private void RunAutomationThatDependencyOnLastEntityUpdate()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            foreach (MainEntityChangeService mainEntityChangeService in mainEntityChangeServices)
+            {
+                if (mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate())
+                {
+                    var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
+                    mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM);
+                }
+            }
+        }
+
         private void AddShipmentUpdateKafkaQueueMessage(string queueName)
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
@@ -2380,12 +2397,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return status;
         }
 
+
+        private List<MainEntityChangeService> mainEntityChangeServices = new List<MainEntityChangeService>();
         private void RunAutomation(string type, ShipmentChangeTracking shipmentChangeTracking = null)
         {
             if (entityPM != null)
             {
                 DateTime? dateBefore = DateTime.Now;
-
                 string tableName = entityPM.ShipmentLevelCode == "C" ? "Master" : entityPM.ShipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
                 string objectTableName = tableName;
                 string otherObjectTableName = "";
@@ -2406,6 +2424,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnCreate", ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName });
                         mainEntityChangeService.AddEntityChange();
+                        mainEntityChangeServices.Add(mainEntityChangeService);
                     }
                 }
 
@@ -2414,8 +2433,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(tableName, "OnUpdate", entityPM.Tenant);
                     if (isHaveAutomation)
                     {
-                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName });
+                        var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = externalEntity, EntityPM = entityPM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, OldEntityPM = shipmentChangeTracking.ChangeTrackingPM, ObjectTableName = objectTableName, EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = dateBefore, OtherObjectTableName = otherObjectTableName , DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
                         mainEntityChangeService.AddEntityChange();
+                        mainEntityChangeServices.Add(mainEntityChangeService);
+
                     }
 
                     #region Houses
@@ -2437,10 +2458,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 oldHousePM.StatusId = shipmentChangeTracking.ChangeTrackingPM.StatusId;
                                 dateBefore = DateTime.Now;
                                 ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore });
-
+                                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ExternalEntity = this.entityPM, EntityPM = shipmentPm, OldEntityPM = oldHousePM, ProcessType = "OnUpdate", EntityChangeFieldXml = shipmentChangeTracking.EntityChangeFieldXml, ObjectTableName = "Shipment", EntityId = shipmentPm.Id, Tenant = shipmentPm.Tenant, StartDate = dateBefore , DontExecuteAutomationThatDependencyOnLastEntityUpdate = true });
+                                mainEntityChangeService.IsChild = true;
+                                mainEntityChangeServices.Add(mainEntityChangeService);
                             }
-                            // }
                         }
                     }
                     #endregion
