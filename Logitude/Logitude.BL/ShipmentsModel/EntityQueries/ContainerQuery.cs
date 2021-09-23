@@ -177,6 +177,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = entityPoco.LastFreeDayDate,
                     ShipmentStatusId = entityPoco.ShipmentStatusId,
                     ShipmentStatusName = entityPoco.ShipmentEntityStatus?.Name,
+                    EmptyPickupLocationPortId = entityPoco.EmptyPickupLocationPortId,
+                    DeliveryLocationPortId = entityPoco.DeliveryLocationPortId,
+                    EmptyReturnLocationPortId = entityPoco.EmptyReturnLocationPortId,
+                    AvailabilityLocationPortId = entityPoco.AvailabilityLocationPortId,
+                    OriginLocationPortId = entityPoco.OriginLocationPortId,
+                    LIFLocationPortId = entityPoco.LIFLocationPortId,
+                    POLLocationPortId = entityPoco.POLLocationPortId,
+                    PODLocationPortId = entityPoco.PODLocationPortId,
+                    Transshipment1LocationPortId = entityPoco.Transshipment1LocationPortId,
+                    Transshipment2LocationPortId = entityPoco.Transshipment2LocationPortId,
+                    Transshipment3LocationPortId = entityPoco.Transshipment3LocationPortId,
+                    Transshipment4LocationPortId = entityPoco.Transshipment4LocationPortId,
                 };
             }
 
@@ -337,6 +349,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         LastFreeDayDate = a.LastFreeDayDate,
                         ShipmentStatusId = a.ShipmentStatusId,
                         ShipmentStatusName = a.ShipmentEntityStatus != null ? a.ShipmentEntityStatus.Name: null,
+                        EmptyPickupLocationPortId = a.EmptyPickupLocationPortId,
+                        DeliveryLocationPortId = a.DeliveryLocationPortId,
+                        EmptyReturnLocationPortId = a.EmptyReturnLocationPortId,
+                        AvailabilityLocationPortId = a.AvailabilityLocationPortId,
+                        OriginLocationPortId = a.OriginLocationPortId,
+                        LIFLocationPortId = a.LIFLocationPortId,
+                        POLLocationPortId = a.POLLocationPortId,
+                        PODLocationPortId = a.PODLocationPortId,
+                        Transshipment1LocationPortId = a.Transshipment1LocationPortId,
+                        Transshipment2LocationPortId = a.Transshipment2LocationPortId,
+                        Transshipment3LocationPortId = a.Transshipment3LocationPortId,
+                        Transshipment4LocationPortId = a.Transshipment4LocationPortId,
                     }).ToList();
         }
 
@@ -493,6 +517,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    LastFreeDayDate = entity.LastFreeDayDate,
                                                    ShipmentStatusId = entity.ShipmentStatusId,
                                                    ShipmentStatusName = entity.ShipmentEntityStatus != null ? entity.ShipmentEntityStatus.Name : null,
+                                                   EmptyPickupLocationPortId = entity.EmptyPickupLocationPortId,
+                                                   DeliveryLocationPortId = entity.DeliveryLocationPortId,
+                                                   EmptyReturnLocationPortId = entity.EmptyReturnLocationPortId,
+                                                   AvailabilityLocationPortId = entity.AvailabilityLocationPortId,
+                                                   OriginLocationPortId = entity.OriginLocationPortId,
+                                                   LIFLocationPortId = entity.LIFLocationPortId,
+                                                   POLLocationPortId = entity.POLLocationPortId,
+                                                   PODLocationPortId = entity.PODLocationPortId,
+                                                   Transshipment1LocationPortId = entity.Transshipment1LocationPortId,
+                                                   Transshipment2LocationPortId = entity.Transshipment2LocationPortId,
+                                                   Transshipment3LocationPortId = entity.Transshipment3LocationPortId,
+                                                   Transshipment4LocationPortId = entity.Transshipment4LocationPortId,
                                                };
             return result;
         }
@@ -648,6 +684,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = container.LastFreeDayDate,
                     ShipmentStatusId = container.ShipmentStatusId,
                     ShipmentStatusName = container.ShipmentEntityStatus != null ? container.ShipmentEntityStatus.Name : null,
+                    EmptyPickupLocationPortId = container.EmptyPickupLocationPortId,
+                    DeliveryLocationPortId = container.DeliveryLocationPortId,
+                    EmptyReturnLocationPortId = container.EmptyReturnLocationPortId,
+                    AvailabilityLocationPortId = container.AvailabilityLocationPortId,
+                    OriginLocationPortId = container.OriginLocationPortId,
+                    LIFLocationPortId = container.LIFLocationPortId,
+                    POLLocationPortId = container.POLLocationPortId,
+                    PODLocationPortId = container.PODLocationPortId,
+                    Transshipment1LocationPortId = container.Transshipment1LocationPortId,
+                    Transshipment2LocationPortId = container.Transshipment2LocationPortId,
+                    Transshipment3LocationPortId = container.Transshipment3LocationPortId,
+                    Transshipment4LocationPortId = container.Transshipment4LocationPortId,
                 };
             }
             return containerPM;
@@ -809,6 +857,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = entityPoco.LastFreeDayDate,
                     ShipmentStatusId = entityPoco.ShipmentStatusId,
                     ShipmentStatusName = entityPoco.ShipmentEntityStatus != null ? entityPoco.ShipmentEntityStatus.Name : null,
+                    EmptyPickupLocationPortId = entityPoco.EmptyPickupLocationPortId,
+                    DeliveryLocationPortId = entityPoco.DeliveryLocationPortId,
+                    EmptyReturnLocationPortId = entityPoco.EmptyReturnLocationPortId,
+                    AvailabilityLocationPortId = entityPoco.AvailabilityLocationPortId,
+                    OriginLocationPortId = entityPoco.OriginLocationPortId,
+                    LIFLocationPortId = entityPoco.LIFLocationPortId,
+                    POLLocationPortId = entityPoco.POLLocationPortId,
+                    PODLocationPortId = entityPoco.PODLocationPortId,
+                    Transshipment1LocationPortId = entityPoco.Transshipment1LocationPortId,
+                    Transshipment2LocationPortId = entityPoco.Transshipment2LocationPortId,
+                    Transshipment3LocationPortId = entityPoco.Transshipment3LocationPortId,
+                    Transshipment4LocationPortId = entityPoco.Transshipment4LocationPortId,
                 };
             }
 

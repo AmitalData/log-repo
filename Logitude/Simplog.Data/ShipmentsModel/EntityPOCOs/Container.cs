@@ -37,9 +37,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
-
-        public string ShipmentId { get; set; }
-        public string EmptyPickupLocation { get; set; }
+        public string ShipmentId { get; set; }        
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
         public string DepartureLocation { get; set; }
@@ -48,7 +46,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? CurrentStatusDate { get; set; }
         public string CurrentLocation { get; set; }
         public bool HasContainerException { get; set; }
-
         public string ShipmentFirstPickupFrom { get; set; }
         public string ShipmentFirstPickupTo { get; set; }
         public string ShipmentPreCarriageFromId { get; set; }
@@ -64,22 +61,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentOnCarriageFromId { get; set; }
         public string ShipmentOnCarriageToId { get; set; }
         public string ShipmentLastDeliveryFrom { get; set; }
-        public string ShipmentLastDeliveryTo { get; set; }
-
-        public string OriginLocation { get; set; }
+        public string ShipmentLastDeliveryTo { get; set; }        
         public DateTime? EstimatedOriginPickup { get; set; }
-        public DateTime? ActualOriginPickup { get; set; }
-
-        public string POLLocation { get; set; }
+        public DateTime? ActualOriginPickup { get; set; }        
         public DateTime? EstimatedPOLArrival { get; set; }
         public DateTime? ActualPOLArrival { get; set; }
         public DateTime? EstimatedPOLLoaded { get; set; }
         public DateTime? ActualPOLLoaded { get; set; }
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
-        public string TransshipmentCount { get; set; }
-
-        public string Transshipment1Location { get; set; }
+        public string TransshipmentCount { get; set; }        
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment1Discharge { get; set; }
@@ -88,8 +79,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ActualTransshipment1Loaded { get; set; }
         public DateTime? EstimatedTrans1VesselDeparture { get; set; }
         public DateTime? ActualTrans1VesselDeparture { get; set; }
-
-        public string Transshipment2Location { get; set; }
         public DateTime? EstimatedTrans2VesselArrival { get; set; }
         public DateTime? ActualTransshipment2VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment2Discharge { get; set; }
@@ -98,8 +87,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ActualTransshipment2Loaded { get; set; }
         public DateTime? EstimatedTrans2VesselDeparture { get; set; }
         public DateTime? ActualTrans2VesselDeparture { get; set; }
-
-        public string Transshipment3Location { get; set; }
         public DateTime? EstimatedTrans3VesselArrival { get; set; }
         public DateTime? ActualTransshipment3VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment3Discharge { get; set; }
@@ -107,9 +94,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? EstimatedTransshipment3Loaded { get; set; }
         public DateTime? ActualTransshipment3Loaded { get; set; }
         public DateTime? EstimatedTrans3VesselDeparture { get; set; }
-        public DateTime? ActualTrans3VesselDeparture { get; set; }
-
-        public string Transshipment4Location { get; set; }
+        public DateTime? ActualTrans3VesselDeparture { get; set; }        
         public DateTime? EstimatedTrans4VesselArrival { get; set; }
         public DateTime? ActualTransshipment4VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment4Discharge { get; set; }
@@ -118,7 +103,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ActualTransshipment4Loaded { get; set; }
         public DateTime? EstimatedTrans4VesselDeparture { get; set; }
         public DateTime? ActualTrans4VesselDeparture { get; set; }
-
         public string Leg1Vessel { get; set; }
         public string Leg1Voyage { get; set; }
         public string Leg2Vessel { get; set; }
@@ -128,36 +112,25 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Leg4Vessel { get; set; }
         public string Leg4Voyage { get; set; }
         public string Leg5Vessel { get; set; }
-        public string Leg5Voyage { get; set; }
-
-        public string PODLocation { get; set; }
+        public string Leg5Voyage { get; set; }        
         public DateTime? EstimatedPODVesselArrival { get; set; }
         public DateTime? ActualPODVesselArrival { get; set; }
         public DateTime? EstimatedPODDischarge { get; set; }
         public DateTime? ActualPODDischarge { get; set; }
         public DateTime? EstimatedPODDeparture { get; set; }
-        public DateTime? ActualPODDeparture { get; set; }
-
-        public string DeliveryLocation { get; set; }
+        public DateTime? ActualPODDeparture { get; set; }        
         public DateTime? EstimatedDelivery { get; set; }
-        public DateTime? ActualDelivery { get; set; }
-
-        public string LIFLocation { get; set; }
+        public DateTime? ActualDelivery { get; set; }        
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedLIFDeparture { get; set; }
         public DateTime? ActualLIFDeparture { get; set; }
-
         public DateTime? GateIn { get; set; }
-        public DateTime? GateOut { get; set; }
-
-        public string EmptyReturnLocation { get; set; }
+        public DateTime? GateOut { get; set; }        
         public DateTime? EstimatedEmptyReturn { get; set; }
         public DateTime? ActualEmptyReturn { get; set; }
-
         public string CustomsReleaseState { get; set; }
         public DateTime? CustomsReleaseDate { get; set; }
-
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
@@ -165,57 +138,94 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("ShipmentPreCarriageFromId")]
         public virtual Port ShipmentPreCarriageFromPort { get; set; }
 
-
         [ForeignKey("ShipmentPreCarriageToId")]
         public virtual Port ShipmentPreCarriageToPort { get; set; }
-
 
         [ForeignKey("ShipmentMainCarriageFromId")]
         public virtual Port ShipmentMainCarriageFromPort { get; set; }
 
-
         [ForeignKey("ShipmentMainCarriageToId")]
         public virtual Port ShipmentMainCarriageToPort { get; set; }
-
 
         [ForeignKey("ShipmentTransshipment1FromId")]
         public virtual Port ShipmentTransshipment1FromPort { get; set; }
 
-
         [ForeignKey("ShipmentTransshipment1ToId")]
         public virtual Port ShipmentTransshipment1ToPort { get; set; }
-
 
         [ForeignKey("ShipmentTransshipment2FromId")]
         public virtual Port ShipmentTransshipment2FromPort { get; set; }
 
-
         [ForeignKey("ShipmentTransshipment2ToId")]
         public virtual Port ShipmentTransshipment2ToPort { get; set; }
-
 
         [ForeignKey("ShipmentTransshipment3FromId")]
         public virtual Port ShipmentTransshipment3FromPort { get; set; }
 
-
         [ForeignKey("ShipmentTransshipment3ToId")]
         public virtual Port ShipmentTransshipment3ToPort { get; set; }
-
 
         [ForeignKey("ShipmentOnCarriageFromId")]
         public virtual Port ShipmentOnCarriageFromPort { get; set; }
 
-
         [ForeignKey("ShipmentOnCarriageToId")]
-        public virtual Port ShipmentOnCarriageToPort { get; set; }
-
-
-        public string AvailabilityLocation { get; set; }
+        public virtual Port ShipmentOnCarriageToPort { get; set; }        
         public DateTime? LastFreeDayDate { get; set; }
         public int? FreeDays { get; set; }
         public string ShipmentStatusId { get; set; }
         [ForeignKey("ShipmentStatusId")]
         public virtual EntityStatus ShipmentEntityStatus { get; set; }
+
+        public string EmptyPickupLocation { get; set; }
+        public string DeliveryLocation { get; set; }
+        public string EmptyReturnLocation { get; set; }
+        public string AvailabilityLocation { get; set; }
+        public string OriginLocation { get; set; }
+        public string LIFLocation { get; set; }
+        public string POLLocation { get; set; }
+        public string PODLocation { get; set; }
+        public string Transshipment1Location { get; set; }
+        public string Transshipment2Location { get; set; }
+        public string Transshipment3Location { get; set; }
+        public string Transshipment4Location { get; set; }
+
+        public string EmptyPickupLocationPortId { get; set; }
+        public string DeliveryLocationPortId { get; set; }
+        public string EmptyReturnLocationPortId { get; set; }
+        public string AvailabilityLocationPortId { get; set; }
+        public string OriginLocationPortId { get; set; }
+        public string LIFLocationPortId { get; set; }
+        public string POLLocationPortId { get; set; }
+        public string PODLocationPortId { get; set; }
+        public string Transshipment1LocationPortId { get; set; }
+        public string Transshipment2LocationPortId { get; set; }
+        public string Transshipment3LocationPortId { get; set; }
+        public string Transshipment4LocationPortId { get; set; }
+
+        [ForeignKey("EmptyPickupLocationPortId")]
+        public virtual Port EmptyPickupLocationPort { get; set; }
+        [ForeignKey("DeliveryLocationPortId")]
+        public virtual Port DeliveryLocationPort { get; set; }
+        [ForeignKey("EmptyReturnLocation")]
+        public virtual Port EmptyReturnLocationPort { get; set; }
+        [ForeignKey("AvailabilityLocationPortId")]
+        public virtual Port AvailabilityLocationPort { get; set; }
+        [ForeignKey("OriginLocationPortId")]
+        public virtual Port OriginLocationPort { get; set; }
+        [ForeignKey("LIFLocationPortId")]
+        public virtual Port LIFLocationPort { get; set; }
+        [ForeignKey("POLLocationPortId")]
+        public virtual Port POLLocationPort { get; set; }
+        [ForeignKey("PODLocationPortId")]
+        public virtual Port PODLocationPort { get; set; }
+        [ForeignKey("Transshipment1LocationPortId")]
+        public virtual Port Transshipment1LocationPort { get; set; }
+        [ForeignKey("Transshipment2LocationPortId")]
+        public virtual Port Transshipment2LocationPort { get; set; }
+        [ForeignKey("Transshipment3LocationPortId")]
+        public virtual Port Transshipment3LocationPort { get; set; }
+        [ForeignKey("Transshipment4LocationPortId")]
+        public virtual Port Transshipment4LocationPort { get; set; }
 
     }
 }

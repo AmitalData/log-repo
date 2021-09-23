@@ -146,6 +146,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.FreeDays = containerPM.FreeDays;
             container.LastFreeDayDate = containerPM.LastFreeDayDate;
             container.ShipmentStatusId = containerPM.ShipmentStatusId;
+            container.EmptyPickupLocationPortId = containerPM.EmptyPickupLocationPortId;
+            container.DeliveryLocationPortId = containerPM.DeliveryLocationPortId;
+            container.EmptyReturnLocationPortId = containerPM.EmptyReturnLocationPortId;
+            container.AvailabilityLocationPortId = containerPM.AvailabilityLocationPortId;
+            container.OriginLocationPortId = containerPM.OriginLocationPortId;
+            container.LIFLocationPortId = containerPM.LIFLocationPortId;
+            container.POLLocationPortId = containerPM.POLLocationPortId;
+            container.PODLocationPortId = containerPM.PODLocationPortId;
+            container.Transshipment1LocationPortId = containerPM.Transshipment1LocationPortId;
+            container.Transshipment2LocationPortId = containerPM.Transshipment2LocationPortId;
+            container.Transshipment3LocationPortId = containerPM.Transshipment3LocationPortId;
+            container.Transshipment4LocationPortId = containerPM.Transshipment4LocationPortId;
             BuildSearchField(containerPM, container);
         }
 
