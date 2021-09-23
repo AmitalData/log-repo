@@ -276,7 +276,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 this.initializer.HandleComposition();
-                this.initializer.HandleStandalone();                
+                this.initializer.HandleStandalone();
 
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
@@ -298,6 +298,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
+
+                MapPrivateLabelMainCarriageFields();
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
@@ -348,6 +350,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void MapPrivateLabelMainCarriageFields()
+        {
+            if (UpdatedShipmentComputedFields != null)
+            {
+                UpdatedShipmentComputedFields.PrivateLabelMainCarriageETA = entityPM.MainCarriageETA;
+                UpdatedShipmentComputedFields.PrivateLabelMainCarriageETD = entityPM.MainCarriageETD;
+                UpdatedShipmentComputedFields.PrivateLabelMainCarriageATA = entityPM.MainCarriageATA;
+                UpdatedShipmentComputedFields.PrivateLabelMainCarriageATD = entityPM.MainCarriageATD;
+            }
+        }
+
         private void AddVIRExternalTaskQueue()
         {
             if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
@@ -381,7 +394,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         CustomerChanged = "true";
                     }
                     this.OldCustomerId = myOldCustomerId;
-
+                  
                     this.initializer.HandleBehaviours();
 
                     this.entityMasterData = this.initializer.EntityMasterData;
@@ -537,7 +550,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     BuildActivityLog();
                     BuildImportersQueue();
                     UpdatePayablesLinesVatAmounts();
-                 
+
                     #endregion
                 }
 

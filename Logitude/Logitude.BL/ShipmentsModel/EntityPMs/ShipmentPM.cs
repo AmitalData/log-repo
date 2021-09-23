@@ -2737,7 +2737,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OperationalStatusId { get; set; }
         public string BillingStatusId { get; set; } 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AccountingClosedByUserId { get; set; } 
+        public string AccountingClosedByUserId { get; set; }
+        public DateTime? PrivateLabelMainCarriageETA { get; set; }
+        public DateTime? PrivateLabelMainCarriageETD { get; set; }
+        public DateTime? PrivateLabelMainCarriageATA { get; set; }
+        public DateTime? PrivateLabelMainCarriageATD { get; set; }
     }
 
     public class TransshipmentLeg
@@ -2754,5 +2758,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }        
+
+
     }
 }

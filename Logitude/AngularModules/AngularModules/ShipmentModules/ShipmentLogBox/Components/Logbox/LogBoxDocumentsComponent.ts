@@ -30,6 +30,7 @@ import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/Hy
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -229,11 +230,43 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.OnImporterShipmentsFilterChangedMethod(res);
         });
     }
-    SetMainCarriageDates() { 
-        this.SetMainCarriageArrivalDate(); 
-        this.SetMainCarriageDepartureDate(); 
+    SetMainCarriageDates() {
+
+        if (SystemEnvironmentService.IsLogBox()) { 
+            this.SetMainCarriageArrivalDate();
+            this.SetMainCarriageDepartureDate();
+
+        } else { 
+            this.SetPrivateLabelMainCarriageArrivalDate();
+            this.SetPrivateLabelMainCarriageDepartureDate();
+        } 
     }
+
     
+    SetPrivateLabelMainCarriageArrivalDate() {
+        if (this.ShipmentPM.PrivateLabelMainCarriageATA != null) {
+            this.MainCarriageTA = this.ShipmentPM.PrivateLabelMainCarriageATA;
+            this.MainCarriageTALabel = 'ATA:';
+        } else if (this.ShipmentPM.PrivateLabelMainCarriageETA != null) {
+            this.MainCarriageTA = this.ShipmentPM.PrivateLabelMainCarriageETA;
+            this.MainCarriageTALabel = 'ETA:';
+        } else {
+            this.MainCarriageTA = "";
+            this.MainCarriageTALabel = "";
+        }
+    }
+    SetPrivateLabelMainCarriageDepartureDate() {
+        if (this.ShipmentPM.PrivateLabelMainCarriageATD != null) {
+            this.MainCarriageTD = this.ShipmentPM.PrivateLabelMainCarriageATD;
+            this.MainCarriageTDLabel = 'ATD:';
+        } else if (this.ShipmentPM.PrivateLabelMainCarriageETD != null) {
+            this.MainCarriageTD = this.ShipmentPM.PrivateLabelMainCarriageETD;
+            this.MainCarriageTDLabel = 'ETD:';
+        } else {
+            this.MainCarriageTD = '';
+            this.MainCarriageTDLabel = '';
+        }
+    }
     private SetMainCarriageArrivalDate() {
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;

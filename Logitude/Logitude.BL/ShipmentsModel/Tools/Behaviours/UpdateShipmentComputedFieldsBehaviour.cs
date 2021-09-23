@@ -89,12 +89,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             MapMasterHouses();
             MapDocumentFields();
             MapAccountingClosed();
+            MapPrivateLabelMainCarriageDates();
 
             shipmentPM.IsShipmentComputedFieldChange = false;
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
             shipmentPM.IsRequestedDocuments = entity.IsRequestedDocuments;
             shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
             shipmentPM.CreatedFromDigital = entity.CreatedFromDigital;
+        }
+
+        private void MapPrivateLabelMainCarriageDates()
+        {
+            entity.PrivateLabelMainCarriageETA = shipmentPM.PrivateLabelMainCarriageETA;
+            entity.PrivateLabelMainCarriageETD = shipmentPM.PrivateLabelMainCarriageETD;
+            entity.PrivateLabelMainCarriageATA = shipmentPM.PrivateLabelMainCarriageATA;
+            entity.PrivateLabelMainCarriageATD = shipmentPM.PrivateLabelMainCarriageATD;
         }
 
         private void MapDocumentFields()

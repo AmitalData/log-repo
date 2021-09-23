@@ -644,6 +644,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 if (entityPM.MasterShipmentDataId != null && entityMasterData != null)
                 {
+                    MapPrivateLabelMainCarriageDates(entityPM, entityMasterData);
                     fromPort = PortQuery.GetSinglePort(entityMasterData.Tenant, entityMasterData.MainCarriageFromPortId, true);
                     if (entityMasterData.Transshipment3ToPortId != null)
                     {
@@ -766,6 +767,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.Routing = myRoutingField;
             entityPoco.Routing = myRoutingField;
         }
+
+        private static void MapPrivateLabelMainCarriageDates(ShipmentPM entityPM, ShipmentMasterData entityMasterData)
+        {
+            entityPM.PrivateLabelMainCarriageATA = entityMasterData.MainCarriageATA;
+            entityPM.PrivateLabelMainCarriageATD = entityMasterData.MainCarriageATD;
+            entityPM.PrivateLabelMainCarriageETA = entityMasterData.MainCarriageETA;
+            entityPM.PrivateLabelMainCarriageETD = entityMasterData.MainCarriageETD;
+        }
+
         private static void FixStringNullFields(ShipmentPM entityPM)
         {
             if (entityPM != null)
@@ -2958,7 +2968,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
                 shipmentPM.StatusId = masterShipment.StatusId;
                 shipmentPM.CutoffDate = masterShipment.CutoffDate;
-                shipmentPM.MasterShipmentDataId = masterShipment.Id;
+                shipmentPM.MasterShipmentDataId = masterShipment.Id; 
             }
 
 

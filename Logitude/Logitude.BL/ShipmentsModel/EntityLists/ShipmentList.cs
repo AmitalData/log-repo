@@ -576,5 +576,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string BillingStatusId { get; set; }
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
+
+
+        public DateTime? PrivateLabelMainCarriageETA { get; set; }
+        public DateTime? PrivateLabelMainCarriageETD { get; set; }
+        public DateTime? PrivateLabelMainCarriageATA { get; set; }
+        public DateTime? PrivateLabelMainCarriageATD { get; set; }
+
     }
 }

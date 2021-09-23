@@ -377,6 +377,30 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrivateLabelMainCarriageETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelMainCarriageETD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelMainCarriageATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelMainCarriageATD"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"

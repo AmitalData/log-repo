@@ -3973,7 +3973,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
-                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
+                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId; 
+                shipmentPM.PrivateLabelMainCarriageETA = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageETA: shipmentPM.MainCarriageETA;
+                shipmentPM.PrivateLabelMainCarriageETD = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageETD: shipmentPM.MainCarriageETD;
+                shipmentPM.PrivateLabelMainCarriageATA = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageATA: shipmentPM.MainCarriageATA;
+                shipmentPM.PrivateLabelMainCarriageATD = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageATD: shipmentPM.MainCarriageATD;
             }
         }
 
