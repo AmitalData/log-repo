@@ -201,21 +201,21 @@ export class QuoteDimensionsComponent {
     get PickupDeliveryVolumetricWeight() { return this.EntityPM.PickupDeliveryVolumetricWeight == null ? 0 : this.EntityPM.PickupDeliveryVolumetricWeight; }
     set PickupDeliveryVolumetricWeight(newValue: number) {
         if (this.EntityPM.PickupDeliveryVolumetricWeight != newValue) {
-            this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.PickupDeliveryVolumetricWeight = AppTool.Round(newValue, 3);
         }
     }
 
     get PickupDeliveryChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.PickupDeliveryChargeableWeight) ? null : this.EntityPM.PickupDeliveryChargeableWeight; }
     set PickupDeliveryChargeableWeight(newValue: number) {
         if (this.EntityPM.PickupDeliveryChargeableWeight != newValue) {
-            this.EntityPM.PickupDeliveryChargeableWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.PickupDeliveryChargeableWeight = AppTool.Round(newValue, 3);
         }
     }
 
     get Volume() { return AppTool.IsNullOrZero(this.EntityPM.Volume) ? 0 : this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 2);
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
             this.ComputeVolume_CBM();
         }
     }
@@ -246,14 +246,14 @@ export class QuoteDimensionsComponent {
     get VolumetricWeight() { return AppTool.IsNullOrZero(this.EntityPM.VolumetricWeight) ? 0 : this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
-            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
         }
     }
     
     get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight) ? 0 : this.EntityPM.ChargeableWeight; }
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
-            this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight_Kg();
         }
     }
@@ -538,7 +538,7 @@ export class DimensionsPackageItem extends BaseComponent {
     get Volume() { return this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 2);
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
             this.ComputeVolumetricWeight();
             this.SetUIProperties();
         }
@@ -547,14 +547,14 @@ export class DimensionsPackageItem extends BaseComponent {
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
-            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
             this.fatherComponent.ComputeTotals();
         }
     }
 
     get GrossWeight() { return this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
-        var myValue: number = AppTool.Round(newValue, 2);
+        var myValue: number = AppTool.Round(newValue, 3);
         if (this.EntityPM.GrossWeight != myValue) {
             this.EntityPM.GrossWeight = myValue
 
