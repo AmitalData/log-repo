@@ -285,48 +285,5 @@ namespace Logitude.ShipmentTests.Models.Builders
                     return null;
             }
         }
-        
-        public ShipmentBuilder Master(string Master)
-        {
-            _shipmentPM.Master = Master;
-            return this;
-        }
-        public ShipmentBuilder LongMaster(string LongMaster)
-        {
-            _shipmentPM.LongMaster = LongMaster;
-            return this;
-        }
-
-        
-        public ShipmentBuilder MainCarriageCarrierIdByCode(string MainCarriageCarrierIdCode)
-        {
-            _shipmentPM.MainCarriageCarrierId = CarrierCodeMapping(MainCarriageCarrierIdCode);
-            return this;
-        }
-        public ShipmentBuilder ShipmentTypeId(string ShipmentTypeId)
-        {
-            _shipmentPM.ShipmentTypeId = ShipmentTypeId;
-            return this;
-        }
-
-        public ShipmentBuilder MainCarriageCarrierCode(string MainCarriageCarrierCode)
-        {
-            _shipmentPM.MainCarriageCarrierCode = MainCarriageCarrierCode;
-            return this;
-        }
-        private string CarrierCodeMapping(string mainCarriageCarrierIdCode)
-        {
-            switch (mainCarriageCarrierIdCode)
-            {
-                case "MSCU":
-                    return PartnersData.ShippingLineMSCUId;
-                case "MAEU":
-                    return PartnersData.ShippingLineMAEUId;
-                case "YMLU":
-                    return PartnersData.ShippingLineYMLUId;
-                default:
-                    return null;
-            }
-        }
     }
 }

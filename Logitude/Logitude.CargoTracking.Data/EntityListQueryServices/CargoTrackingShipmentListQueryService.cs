@@ -76,7 +76,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
                                                                AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
                                                                AssignedCustomsAgentExcReason = shipment.AssignedCustomsAgentExcReason,
-                                                               AssignedCustomsAgentNotes= shipment.AssignedCustomsAgentNotes,
+                                                               AssignedCustomsAgentNotes = shipment.AssignedCustomsAgentNotes,
                                                                ShipmentLevelCode = shipment.ShipmentLevelCode,
                                                                AssignedTruckerDate = shipment.AssignedTruckerDate,
                                                                AssignedTruckerDone = shipment.AssignedTruckerDone,
@@ -134,14 +134,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                GatepassArrivedNotes = shipment.GatepassArrivedNotes,
 
                                                                ShipmentTypeCode = shipment.ShipmentTypeCode,
-                                                               CustomsPaymentDone = shipment.CustomsPaymentDone,                                                               
+                                                               CustomsPaymentDone = shipment.CustomsPaymentDone,
                                                            });
             return query;
         }
 
         private IQueryable<CargoTrackingPortList> GetPorts()
         {
-            return  (from p in context.CargoTrackingPorts
+            return (from p in context.CargoTrackingPorts
                     join c in context.CargoTrackingCountries on p.CountryId equals c.Id
                     select new CargoTrackingPortList()
                     {
@@ -254,7 +254,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                     ConsigneeName = poco.ConsigneeName,
 
-                    ContainersNumbers= poco.ContainersNumbers,
+                    ContainersNumbers = poco.ContainersNumbers,
 
                     PackagesQuantity = poco.PackagesQuantity,
 
@@ -262,7 +262,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     ShipmentLevelCode = poco.ShipmentLevelCode,
 
                     AssignedTruckerDate = poco.AssignedTruckerDate,
-                    AssignedTruckerDone  = poco.AssignedTruckerDone,
+                    AssignedTruckerDone = poco.AssignedTruckerDone,
                     AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
                     AssignedTruckerNotes = poco.AssignedTruckerNotes,
 
@@ -272,14 +272,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     AssignedCustomsAgentExcReason = poco.AssignedCustomsAgentExcReason,
                     AssignedCustomsAgentNotes = poco.AssignedCustomsAgentNotes,
 
-                    DirectionId =poco.DirectionId,
+                    DirectionId = poco.DirectionId,
                     DeliveryDone = poco.DeliveryDone,
 
                     DeliveryDate = poco.DeliveryDate,
 
-                    DeliveryEstimationDate= poco.DeliveryEstimationDate,
+                    DeliveryEstimationDate = poco.DeliveryEstimationDate,
 
-                    DeliveryNotes= poco.DeliveryNotes,
+                    DeliveryNotes = poco.DeliveryNotes,
 
                     DeliveryExceptionReason = poco.DeliveryExceptionReason,
 
@@ -301,9 +301,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     GatepassArrivedNotes = poco.GatepassArrivedNotes,
 
                 };
-            if(list != null)
+            if (list != null)
             {
-                list=   FillShipmentListExtraFileds(list);
+                list = FillShipmentListExtraFileds(list);
 
             }
             return list;
@@ -353,7 +353,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipmetsLists;
         }
 
-        public CargoTrackingShipmentList GetCargoTrackingShipmentByEntityId(string shipmentId,int tenant)
+        public CargoTrackingShipmentList GetCargoTrackingShipmentByEntityId(string shipmentId, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             CargoTrackingShipment shipment = repo.GetCargoTrackingShipmentByEntityId(shipmentId, tenant);
@@ -417,7 +417,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 GrossWeightUnitCode = shipment.GrossWeightUnitCode,
                 CustomsPaymentDate = shipment.CustomsPaymentDate,
                 DeliveryEstimationDate = shipment.DeliveryEstimationDate,
-                DeliveryDate =shipment.DeliveryDate,
+                DeliveryDate = shipment.DeliveryDate,
                 DeliveryNotes = shipment.DeliveryNotes,
                 AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
                 AssignedTruckerNotes = shipment.AssignedTruckerNotes,
@@ -521,7 +521,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 shipments = shipments.OrderByDescending(d => d.DepartureDate);
             }
-            else {
+            else
+            {
                 shipments = shipments.OrderByDescending(d => d.CreateDate);
             }
             return shipments;
@@ -564,8 +565,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 //if (shipment.CurrentMilestoneCode == null)
                 //{
-                    List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
-                    SetMilestonesStatus(shipment, shipmentMilestones);
+                List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
+                SetMilestonesStatus(shipment, shipmentMilestones);
                 //}
             }
             return shipmetsLists;
@@ -602,7 +603,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if(shipmentFilters.CustomersIds.Count > 0)
+            if (shipmentFilters.CustomersIds.Count > 0)
                 shipments = shipments.Where(d =>
                             shipmentFilters.CustomersIds.Contains(d.CustomerId)
                         );
@@ -627,7 +628,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private List<string> GetTransportModesToFilterBy(CargoTrackingShipmentFilters shipmentFilters)
         {
-            List<string> modes = new List<string>() { "A", "O", "I"};
+            List<string> modes = new List<string>() { "A", "O", "I" };
             if (!string.IsNullOrEmpty(shipmentFilters.TransportModeCodes))
                 modes = shipmentFilters.TransportModeCodes.Split(',').ToList();
             return modes;
@@ -681,7 +682,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             SetFutureMilstoneForShipment(shipment, shipmentMilestones);
         }
 
-        private void SetDoneMilstones(List<Milestone> shipmentMilestones )
+        private void SetDoneMilstones(List<Milestone> shipmentMilestones)
         {
             Milestone currentMilstone = shipmentMilestones.FirstOrDefault(d => d.IsCurrent == true);
             if (currentMilstone != null)
@@ -789,7 +790,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 Code = "AssignedToCustomsBroker",
                 Name = "Assigned To Customs Broker",
                 Date = shipment.AssignedCustomsAgentDate,
-                EstimationDate =shipment.AssignedCustomsAgentEstDate,
+                EstimationDate = shipment.AssignedCustomsAgentEstDate,
                 Done = shipment.AssignedCustomsAgentDone,
                 Notes = shipment.AssignedCustomsAgentNotes,
                 IsCurrent = false,
@@ -821,7 +822,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 IsCurrent = false,
                 IsEstimation = shipment.GoodsClassificationDate == null && shipment.GoodsClassificationEstDate != null
             });
-            
+
             milestones.Add(new Milestone()
             {
                 Id = 11,
@@ -926,9 +927,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
 
             milestones = milestones.OrderByDescending(d => d.Id).ToList();
-                            //.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
-                            //.ThenByDescending(s => s.Id)
-                            //.ToList();
+            //.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
+            //.ThenByDescending(s => s.Id)
+            //.ToList();
 
 
             return milestones;
@@ -1006,7 +1007,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     public class CargoTrackingShipmentWithMilestones
     {
         public List<Milestone> Milestones { get; set; }
-        public CargoTrackingShipmentList  ShipmentList { get; set; }
+        public CargoTrackingShipmentList ShipmentList { get; set; }
 
     }
 

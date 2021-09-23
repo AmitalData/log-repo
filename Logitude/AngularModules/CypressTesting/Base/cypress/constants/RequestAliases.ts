@@ -225,7 +225,6 @@ export class RequestAliases {
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
-    public static readonly GetQuickSearch = "GetQuickSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
@@ -286,4 +285,5 @@ export class RequestAliases {
     public static readonly PostChequeDeposit = "PostChequeDeposit"
     public static readonly PutChequeDeposit = "PutChequeDeposit"
     public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
+
 }

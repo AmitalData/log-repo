@@ -122,8 +122,6 @@
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\ChargeType.cs" />
-    <Compile Include="Models\CommunicationLogList.cs" />
-    <Compile Include="Models\ContainerPM.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Direct.cs" />
     <Compile Include="Models\Direction.cs" />
@@ -137,7 +135,6 @@
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\PreparationShortClass.cs" />
     <Compile Include="Models\QuoteStage.cs" />
-    <Compile Include="Models\ShipmentContainerSimulator.cs" />
     <Compile Include="Models\ShipmentReceivablePM.cs" />
     <Compile Include="Models\ShipmentContext.cs" />
     <Compile Include="Models\PackagePM.cs" />
@@ -153,11 +150,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataPreparation.cs" />
     <Compile Include="Services\DateHelper.cs" />
-    <Compile Include="Services\OceanInsight\AssertionService.cs" />
-    <Compile Include="Services\OceanInsight\ContainerDetilesService.cs" />
-    <Compile Include="Services\OceanInsight\OceanInsightService.cs" />
-    <Compile Include="Services\OceanInsight\ShipmentDataPreparation.cs" />
-    <Compile Include="Services\OceanInsight\XMLOceanInsightAnalyzer.cs" />
     <Compile Include="Steps\AccountingTests\AccountingSharedSteps.cs" />
     <Compile Include="Steps\AccountingTests\GETAPInvoiceSteps.cs" />
     <Compile Include="Steps\AccountingTests\GETARInvoiceSteps.cs" />
@@ -168,7 +160,6 @@
     <Compile Include="Steps\ExternalAPIDirectSteps.cs" />
     <Compile Include="Steps\CreateShipmentSteps.cs" />
     <Compile Include="Steps\GETShipmentDirectExportAirSteps.cs" />
-    <Compile Include="Steps\OceanInsight\GetContainerStatusesSteps.cs" />
     <Compile Include="Steps\POSTShipmentDirectExportAirSteps.cs" />
     <Compile Include="Steps\PUTShipmentDirectExportAirSteps.cs" />
     <Compile Include="Steps\SecurityTests\CreateAndUpdateShipmentSecurityAccessSteps.cs" />
@@ -190,12 +181,9 @@
     <None Include="Features\APIPUTShipmentDirectExportAir.feature" />
     <None Include="Features\ExternalAPIDirect.feature" />
     <None Include="Features\CreateShipments.feature" />
-    <None Include="Features\OceanInsight\GetContainerDetails.feature" />
-    <None Include="Features\OceanInsight\GetShipmentContainersStatuses.feature" />
     <None Include="Features\SecurityTests\CreateAndUpdateShipmentSecurityAccess.feature" />
     <None Include="Features\SecurityTests\GetShipmentSecurityAccess.feature" />
     <None Include="Features\UpdateShipments.feature" />
-    <None Include="MetaData\GetContainerStatusesFeatureData.xml.vsspell" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -207,14 +195,6 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MetaData\GetContainerStatusesFeatureData.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MetaData\GetShipmentContainersStatusesFeatureData.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
