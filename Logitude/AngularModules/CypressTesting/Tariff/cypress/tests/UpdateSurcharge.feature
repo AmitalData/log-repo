@@ -1,4 +1,4 @@
-@release @FeatureToggle @NewDev
+@devrelease @FeatureToggle @NewDev
 Feature: Update Surcharge Tariff
     The authenticated user will create new ocean FCL surcharge cost tariff.
     then Update it .
