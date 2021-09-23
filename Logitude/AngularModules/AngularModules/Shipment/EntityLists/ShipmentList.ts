@@ -478,14 +478,7 @@ export class ShipmentList {
 		BillingStatusId: string;
 		ShipperNotExporterReference1: string;
 		ShipperNotExporterReference2: string;
-
-		PrivateLabelMainCarriageETA: Date;
-		PrivateLabelMainCarriageETD: Date;
-		PrivateLabelMainCarriageATA: Date;
-		PrivateLabelMainCarriageATD: Date;
-
 		TruckContainerNumber: string;
 		ContainersNumbersandTypesArray: string;
-
 	
-}
+}

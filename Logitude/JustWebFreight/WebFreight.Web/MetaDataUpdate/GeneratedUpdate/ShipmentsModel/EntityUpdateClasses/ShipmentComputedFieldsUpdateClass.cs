@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentComputedFieldsUpdateClass
    {  		
-		public const string HashString = "5b2ab9a8fb1bc8ade291a2f98a5e3af5";
+		public const string HashString = "0d8652f99acc7554ba2566e2c290e7f4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ShipmentComputedField",
-			      				    Code =  "71ec",
+			      				    Code =  "1d6e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -3143,7 +3143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PrivateLabelMainCarriageETA",
+					 						FieldName =  "MainCarriageETA",
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3161,8 +3161,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PrivateLabelMainCarriageETA",
-					  						ListPropertyPath =  "PrivateLabelMainCarriageETA",
+					  						PMPropertyPath =  "MainCarriageETA",
+					  						ListPropertyPath =  "MainCarriageETA",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3179,10 +3180,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PrivateLabelMainCarriageETA",
-					  						DefaultText =  "PrivateLabelMainCarriageETA",
-					  						ListFieldLable =  "PrivateLabelMainCarriageETAListLable",
-					  						ListLableDefaultText =  "PrivateLabelMainCarriageETA",
+					  						FullFieldLable =  "MainCarriageETA",
+					  						DefaultText =  "MainCarriageETA",
+					  						ListFieldLable =  "MainCarriageETAListLable",
+					  						ListLableDefaultText =  "MainCarriageETA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3201,7 +3202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PrivateLabelMainCarriageETD",
+					 						FieldName =  "MainCarriageETD",
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3219,8 +3220,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PrivateLabelMainCarriageETD",
-					  						ListPropertyPath =  "PrivateLabelMainCarriageETD",
+					  						PMPropertyPath =  "MainCarriageETD",
+					  						ListPropertyPath =  "MainCarriageETD",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3237,10 +3239,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PrivateLabelMainCarriageETD",
-					  						DefaultText =  "PrivateLabelMainCarriageETD",
-					  						ListFieldLable =  "PrivateLabelMainCarriageETDListLable",
-					  						ListLableDefaultText =  "PrivateLabelMainCarriageETD",
+					  						FullFieldLable =  "MainCarriageETD",
+					  						DefaultText =  "MainCarriageETD",
+					  						ListFieldLable =  "MainCarriageETDListLable",
+					  						ListLableDefaultText =  "MainCarriageETD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3259,7 +3261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PrivateLabelMainCarriageATA",
+					 						FieldName =  "MainCarriageATA",
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3277,8 +3279,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PrivateLabelMainCarriageATA",
-					  						ListPropertyPath =  "PrivateLabelMainCarriageATA",
+					  						PMPropertyPath =  "MainCarriageATA",
+					  						ListPropertyPath =  "MainCarriageATA",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3295,10 +3298,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PrivateLabelMainCarriageATA",
-					  						DefaultText =  "PrivateLabelMainCarriageATA",
-					  						ListFieldLable =  "PrivateLabelMainCarriageATAListLable",
-					  						ListLableDefaultText =  "PrivateLabelMainCarriageATA",
+					  						FullFieldLable =  "MainCarriageATA",
+					  						DefaultText =  "MainCarriageATA",
+					  						ListFieldLable =  "MainCarriageATAListLable",
+					  						ListLableDefaultText =  "MainCarriageATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3317,7 +3320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PrivateLabelMainCarriageATD",
+					 						FieldName =  "MainCarriageATD",
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3335,8 +3338,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PrivateLabelMainCarriageATD",
-					  						ListPropertyPath =  "PrivateLabelMainCarriageATD",
+					  						PMPropertyPath =  "MainCarriageATD",
+					  						ListPropertyPath =  "MainCarriageATD",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3353,10 +3357,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PrivateLabelMainCarriageATD",
-					  						DefaultText =  "PrivateLabelMainCarriageATD",
-					  						ListFieldLable =  "PrivateLabelMainCarriageATDListLable",
-					  						ListLableDefaultText =  "PrivateLabelMainCarriageATD",
+					  						FullFieldLable =  "MainCarriageATD",
+					  						DefaultText =  "MainCarriageATD",
+					  						ListFieldLable =  "MainCarriageATDListLable",
+					  						ListLableDefaultText =  "MainCarriageATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

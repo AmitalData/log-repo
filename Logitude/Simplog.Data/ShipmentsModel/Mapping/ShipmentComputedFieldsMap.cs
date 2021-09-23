@@ -56,10 +56,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PODDate).IsOptional();
 
             this.Property(t => t.AccountingClosedByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PrivateLabelMainCarriageETA).IsOptional();
-            this.Property(t => t.PrivateLabelMainCarriageETD).IsOptional();
-            this.Property(t => t.PrivateLabelMainCarriageATA).IsOptional();
-            this.Property(t => t.PrivateLabelMainCarriageATD).IsOptional();
+            this.Property(t => t.MainCarriageETA).IsOptional();
+            this.Property(t => t.MainCarriageETD).IsOptional();
+            this.Property(t => t.MainCarriageATA).IsOptional();
+            this.Property(t => t.MainCarriageATD).IsOptional();
 
 
 
@@ -155,10 +155,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.PickupTrucker).WithMany().HasForeignKey(d => d.PickupTruckerId);
             this.HasOptional(t => t.AccountingClosedByUserUser).WithMany().HasForeignKey(d => d.AccountingClosedByUserId);
 
-            this.Property(t => t.PrivateLabelMainCarriageETA).HasColumnName("PrivateLabelMainCarriageETA");
-            this.Property(t => t.PrivateLabelMainCarriageETD).HasColumnName("PrivateLabelMainCarriageETD");
-            this.Property(t => t.PrivateLabelMainCarriageATA).HasColumnName("PrivateLabelMainCarriageATA");
-            this.Property(t => t.PrivateLabelMainCarriageATD).HasColumnName("PrivateLabelMainCarriageATD");
+            this.Property(t => t.MainCarriageETA).HasColumnName("MainCarriageETA");
+            this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
+            this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
+            this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
 
 
         }

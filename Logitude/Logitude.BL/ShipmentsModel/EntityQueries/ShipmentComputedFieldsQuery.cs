@@ -150,10 +150,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                                                                  T1Received = a.T1Received,
                                                                  AccountingClosedByUserId = a.AccountingClosedByUserId,
-                                                                 PrivateLabelMainCarriageATA = a.PrivateLabelMainCarriageATA,
-                                                                 PrivateLabelMainCarriageETD = a.PrivateLabelMainCarriageETD,
-                                                                 PrivateLabelMainCarriageETA = a.PrivateLabelMainCarriageETA,
-                                                                 PrivateLabelMainCarriageATD = a.PrivateLabelMainCarriageATD, 
+                                                                 MainCarriageATA = a.MainCarriageATA,
+                                                                 MainCarriageETD = a.MainCarriageETD,
+                                                                 MainCarriageETA = a.MainCarriageETA,
+                                                                 MainCarriageATD = a.MainCarriageATD, 
                                                              });
             return result;
         }

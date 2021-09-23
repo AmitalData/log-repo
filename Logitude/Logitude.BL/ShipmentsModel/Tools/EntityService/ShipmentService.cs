@@ -355,10 +355,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (UpdatedShipmentComputedFields != null)
             {
-                UpdatedShipmentComputedFields.PrivateLabelMainCarriageETA = entityPM.MainCarriageETA;
-                UpdatedShipmentComputedFields.PrivateLabelMainCarriageETD = entityPM.MainCarriageETD;
-                UpdatedShipmentComputedFields.PrivateLabelMainCarriageATA = entityPM.MainCarriageATA;
-                UpdatedShipmentComputedFields.PrivateLabelMainCarriageATD = entityPM.MainCarriageATD;
+                UpdatedShipmentComputedFields.MainCarriageETA = entityPM.MainCarriageETA;
+                UpdatedShipmentComputedFields.MainCarriageETD = entityPM.MainCarriageETD;
+                UpdatedShipmentComputedFields.MainCarriageATA = entityPM.MainCarriageATA;
+                UpdatedShipmentComputedFields.MainCarriageATD = entityPM.MainCarriageATD;
             }
         }
 

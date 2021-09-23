@@ -3973,11 +3973,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
-                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId; 
-                shipmentPM.PrivateLabelMainCarriageETA = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageETA: shipmentPM.MainCarriageETA;
-                shipmentPM.PrivateLabelMainCarriageETD = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageETD: shipmentPM.MainCarriageETD;
-                shipmentPM.PrivateLabelMainCarriageATA = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageATA: shipmentPM.MainCarriageATA;
-                shipmentPM.PrivateLabelMainCarriageATD = shipmentPM.ShipmentLevelCode == "H" ? entityComputedFields.PrivateLabelMainCarriageATD: shipmentPM.MainCarriageATD;
+                shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
+
+                MapMainCarriageFields(shipmentPM, entityComputedFields);
+            }
+        }
+
+        private static void MapMainCarriageFields(ShipmentPM shipmentPM, ShipmentComputedFields entityComputedFields)
+        {
+            if (shipmentPM.ShipmentLevelCode == "H")
+            {
+                shipmentPM.MainCarriageETA = shipmentPM.MainCarriageETA == null ? entityComputedFields.MainCarriageETA : shipmentPM.MainCarriageETA;
+                shipmentPM.MainCarriageETD = shipmentPM.MainCarriageETD == null ? entityComputedFields.MainCarriageETD : shipmentPM.MainCarriageETD;
+                shipmentPM.MainCarriageATA = shipmentPM.MainCarriageATA == null ? entityComputedFields.MainCarriageATA : shipmentPM.MainCarriageATA;
+                shipmentPM.MainCarriageATD = shipmentPM.MainCarriageATD == null ? entityComputedFields.MainCarriageATD : shipmentPM.MainCarriageATD;
+
             }
         }
 
@@ -12447,8 +12457,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
                                AccrualsApprovalDate = f.AccrualsApprovalDate,
                                IsAccrualsApproved = f.IsAccrualsApproved,
-                               TruckNumber =f.TruckNumber,
-                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
+                             
                            };
             return myResult;
         }

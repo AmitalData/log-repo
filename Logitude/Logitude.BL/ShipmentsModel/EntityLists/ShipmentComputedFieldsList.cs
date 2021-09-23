@@ -71,10 +71,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string AccountingClosedByUserId { get; set; }
 
-        public DateTime? PrivateLabelMainCarriageETA { get; set; }
-        public DateTime? PrivateLabelMainCarriageETD { get; set; }
-        public DateTime? PrivateLabelMainCarriageATA { get; set; }
-        public DateTime? PrivateLabelMainCarriageATD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
 
     }
 }

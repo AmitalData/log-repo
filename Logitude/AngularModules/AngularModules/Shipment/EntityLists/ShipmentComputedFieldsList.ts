@@ -64,9 +64,9 @@ export class ShipmentComputedFieldsList {
 		ArrivalNoticeSent: Date;
 		T1Received: Date;
 		AccountingClosedByUserId: string;
-		PrivateLabelMainCarriageETA: Date;
-		PrivateLabelMainCarriageETD: Date;
-		PrivateLabelMainCarriageATA: Date;
-		PrivateLabelMainCarriageATD: Date;
+		MainCarriageETA: Date;
+		MainCarriageETD: Date;
+		MainCarriageATA: Date;
+		MainCarriageATD: Date;
 	
 }

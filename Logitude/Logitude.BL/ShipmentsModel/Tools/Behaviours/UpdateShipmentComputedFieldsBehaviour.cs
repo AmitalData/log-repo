@@ -100,10 +100,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         private void MapPrivateLabelMainCarriageDates()
         {
-            entity.PrivateLabelMainCarriageETA = shipmentPM.PrivateLabelMainCarriageETA;
-            entity.PrivateLabelMainCarriageETD = shipmentPM.PrivateLabelMainCarriageETD;
-            entity.PrivateLabelMainCarriageATA = shipmentPM.PrivateLabelMainCarriageATA;
-            entity.PrivateLabelMainCarriageATD = shipmentPM.PrivateLabelMainCarriageATD;
+            entity.MainCarriageETA = shipmentPM.MainCarriageETA;
+            entity.MainCarriageETD = shipmentPM.MainCarriageETD;
+            entity.MainCarriageATA = shipmentPM.MainCarriageATA;
+            entity.MainCarriageATD = shipmentPM.MainCarriageATD;
         }
 
         private void MapDocumentFields()
