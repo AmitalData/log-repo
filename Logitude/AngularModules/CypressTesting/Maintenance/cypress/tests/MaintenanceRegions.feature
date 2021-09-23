@@ -1,4 +1,4 @@
-@release @stable @all 
+@release @stable @all
 Feature: Region Create, Edit and Inactivate in Maintenance Module
     The user creates a region, edits and inactivates it from the Maintenance Module.
 

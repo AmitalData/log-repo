@@ -85,6 +85,10 @@ Given("{string} as shipping agent notes", (notes) => {
     MaintenanceActions.FillShippingAgentGenaralTabNotes(notes)
 });
 
+Given("inactivate the shipping agent", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveShippingAgentCheckBox)
+});
+
 Given("fill the following shipping agent Billing details", (dataTable) => {
     shippingAgentBillingTabDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
     MaintenanceActions.FillShippingAgentBillingTab(shippingAgentBillingTabDetails)

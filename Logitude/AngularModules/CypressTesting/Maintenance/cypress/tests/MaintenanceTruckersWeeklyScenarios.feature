@@ -62,11 +62,12 @@ Feature: Trucker Create and Edit in Maintenance Module
 
     Scenario: Edit the trucker
         Given "Test edit trucker" as trucker notes
+        And inactivate the trucker
         And fill the following trucker Billing details
             | BankName | trucker Bank |
             | IBANNo   | zero Bank    |
         When update trucker
         Then the trucker should update successfully
         And the following event should appear in events tab
-            | Event           |
-            | Trucker Updated |
+            | Event           | Notes               |
+            | Trucker Updated | Trucker Inactivated |

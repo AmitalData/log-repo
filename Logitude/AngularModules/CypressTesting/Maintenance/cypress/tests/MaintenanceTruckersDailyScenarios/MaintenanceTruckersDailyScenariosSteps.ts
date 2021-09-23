@@ -96,6 +96,10 @@ Given("{string} as trucker notes", (notes) => {
     MaintenanceActions.FillTruckerGenaralTabNotes(notes)
 });
 
+Given("inactivate the trucker", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveTruckerCheckBox)
+});
+
 Given("fill the following trucker Billing details", (dataTable) => {
     truckerBillingTabDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
     MaintenanceActions.FillTruckerBillingTab(truckerBillingTabDetails)

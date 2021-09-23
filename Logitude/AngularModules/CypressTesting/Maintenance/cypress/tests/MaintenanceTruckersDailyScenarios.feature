@@ -48,6 +48,7 @@ Feature: Trucker fake Create and Edit in Maintenance Module
 
     Scenario: Edit the trucker
         Given "Test edit trucker" as trucker notes
+        And inactivate the trucker
         And fill the following trucker Billing details
             | BankName | Trucker Bank |
             | IBANNo   | zero Bank    |

@@ -12,7 +12,7 @@ import { Constants } from '../../constants/Constants'
 
 let shippingAgentDetails: CardDetails
 let contactDetails: ContactDetails
-let shippingAgentBillingTabDetails:CardBillingTabDetails
+let shippingAgentBillingTabDetails: CardBillingTabDetails
 
 //#region Add shipping agent city with lenght more than 25
 Given("the user logged in and navigate to {string} in maintenance menu", (maintenanceItemName) => {
@@ -94,16 +94,20 @@ Then("the shipping agent contact should have the following details", (dataTable)
 Given("{string} as shipping agent notes", (notes) => {
     MaintenanceActions.FillShippingAgentGenaralTabNotes(notes)
 });
- 
+
+Given("inactivate the shipping agent", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveShippingAgentCheckBox)
+});
+
 Given("fill the following shipping agent Billing details", (dataTable) => {
     shippingAgentBillingTabDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
     MaintenanceActions.FillShippingAgentBillingTab(shippingAgentBillingTabDetails)
 });
- 
+
 When("update shipping agent", () => {
     MaintenanceActions.UpdateShippingAgent()
 });
- 
+
 Then("the shipping agent should update successfully", () => {
     MaintenanceActions.AssertUpdateShippingAgent()
 });

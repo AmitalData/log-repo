@@ -1,4 +1,4 @@
-@release @all @stable @daily 
+@release @all @stable @daily
 Feature: Shipping Agent fake Create and Edit in Maintenance Module
     The user creates a shipping agent fake create and edit another one from the Maintenance Module.
 
@@ -43,6 +43,7 @@ Feature: Shipping Agent fake Create and Edit in Maintenance Module
 
     Scenario: Edit the shipping agent
         Given "Test edit shipping agent" as shipping agent notes
+        And inactivate the shipping agent
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
             | IBANNo   | zero Bank           |

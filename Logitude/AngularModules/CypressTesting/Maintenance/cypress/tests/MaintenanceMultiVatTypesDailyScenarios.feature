@@ -1,4 +1,4 @@
-@stable @daily @all
+@stable @daily @all @release
 Feature: Multi Vat Type fake Create, Search and Edit from Maintenance
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 

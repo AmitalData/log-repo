@@ -60,11 +60,12 @@ Feature: Custom Agent Create and Edit in Maintenance Module
 
     Scenario: Edit the custom agent
         Given "Test edit custom agent" as custom agent notes
+        And inactivate the custom agent
         And fill the following custom agent Billing details
             | BankName | Custom Agent Bank |
             | IBANNo   | zero Bank         |
         When update custom agent
         Then the custom agent should update successfully
         And the following event should appear in events tab
-            | Event                |
-            | Custom Agent Updated |
+            | Event                | Notes                    |
+            | Custom Agent Updated | Custom Agent Inactivated |
