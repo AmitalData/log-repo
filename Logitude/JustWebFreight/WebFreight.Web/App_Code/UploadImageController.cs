@@ -7,6 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -156,6 +157,9 @@ namespace WebFreight.Web.App_Code
 
                         documentsService.Create(extDocPM, null, null, true);
                         result.DocumentsFilingId = extDocPM.Id;
+
+                        AddConvertImagetoPDFQueue(extDocPM);
+
                     }
                     result.IsScceed = true;
                 }
@@ -183,6 +187,13 @@ namespace WebFreight.Web.App_Code
                 data.ExceptionMessage = message;
                 return data;
             }
+        }
+
+        private  void AddConvertImagetoPDFQueue(DocumentsFilingPM extDocPM)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ConvertImageToEvoPdfQueue", extDocPM.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "DocumentId", extDocPM.DocumentId }, { "NewType", "PDF" } ,  { "Tenant", extDocPM.Tenant.ToString() } }, extDocPM.Tenant, null, null, null, null);
         }
 
         private SuccessMobile AuthorizationVersion()
