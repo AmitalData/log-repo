@@ -146,6 +146,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.FreeDays = containerPM.FreeDays;
             container.LastFreeDayDate = containerPM.LastFreeDayDate;
             container.ShipmentStatusId = containerPM.ShipmentStatusId;
+            container.Field1 = containerPM.Field1 != null ? containerPM.Field1.Value : null;
+            container.Field2 = containerPM.Field2 != null ? containerPM.Field2.Value : null;
+            container.Field3 = containerPM.Field3 != null ? containerPM.Field3.Value : null;
+            container.Field4 = containerPM.Field4 != null ? containerPM.Field4.Value : null;
+            container.Field5 = containerPM.Field5 != null ? containerPM.Field5.Value : null;
+            container.Field6 = containerPM.Field6 != null ? containerPM.Field6.Value : null;
+            container.Field7 = containerPM.Field7 != null ? containerPM.Field7.Value : null;
+            container.Field8 = containerPM.Field8 != null ? containerPM.Field8.Value : null;
+            container.Field9 = containerPM.Field9 != null ? containerPM.Field9.Value : null;
+            container.Field10 = containerPM.Field10 != null ? containerPM.Field10.Value : null;
             BuildSearchField(containerPM, container);
         }
 
