@@ -14,15 +14,28 @@ namespace Logitude.CargoTracking.Def.DataContracts
 
         public List<string> CustomersIds
         {
-            get {
+            get
+            {
                 if (!string.IsNullOrWhiteSpace(CustomersIdsString))
                     return CustomersIdsString.Split(',').ToList();
-                else 
+                else
                     return new List<string>();
             }
         }
 
-public string TransportModeCodes { get; set; }
+        public string MilestonesStatus { get; set; }
+        public List<string> MilestonesCodes
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(MilestonesStatus))
+                    return MilestonesStatus.Split(',').ToList();
+                else
+                    return new List<string>();
+            }
+        }
+
+        public string TransportModeCodes { get; set; }
         public string DirectionCodes { get; set; }
         public string SortDescending { get; set; }
         public string SortFieldName { get; set; }
