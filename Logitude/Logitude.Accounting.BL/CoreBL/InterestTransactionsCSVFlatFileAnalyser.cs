@@ -587,7 +587,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 0)
             {
-                rec.GLAccount = values[0].TrimStart('G');
+                rec.GLAccount = values[0].TrimStart('H'); //.TrimStart('G');
             }
 
 
