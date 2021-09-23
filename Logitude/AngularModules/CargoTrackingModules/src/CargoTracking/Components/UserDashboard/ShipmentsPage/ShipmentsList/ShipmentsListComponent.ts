@@ -14,6 +14,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 
 @Component({
@@ -41,6 +42,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
+    isMilestonesStatusFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
@@ -77,7 +79,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         public dialog: MatDialog,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService)
     {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -86,6 +89,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ngOnInit(): void {
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+        this.GetMilstones();
     }
     ngAfterViewInit(): void
     {
@@ -225,6 +229,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
             this.setSortFilterValues();
+            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
             this.LoadScreenData();
         }
     }
@@ -307,11 +312,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     FiltersSelectedInvitedCustoms: any[] = [];
     SelectedInvitedCustomers: any[] = [];
+    selectedFilterMilestonesStatus: any[] = [];
+    appliedSelectedFilterMilestonesStatus: any[] = [];
     private GetInvitedCustomers()
     {
-
-        // this.AddDemoCustomersForTest();
-
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
@@ -324,10 +328,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
                     ...d }
                 ));
-
         this.LoadScreenData();
     }
 
+    
+
+    private GetMilstones(){
+        this.milestonesService.getAll(this.tenant)
+            .subscribe((milestones:any) => {
+                milestones.sort(function (a, b) {
+                    return Number(a.Code) - Number(b.Code);
+                  });
+                this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
+            });
+    }
 
 
     private AddDemoCustomersForTest()
@@ -474,6 +488,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         shipmentFilters.HasException = this.hasException;
 
         this.SetCustomersFilter(shipmentFilters);
+        this.SetMilestonesFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
         this.SetDirectionFilters(shipmentFilters);
         return shipmentFilters;
@@ -487,10 +502,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
         }
-
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
         shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
+    }
+
+    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        if(this.appliedSelectedFilterMilestonesStatus.length > 0){
+            var str = this.appliedSelectedFilterMilestonesStatus.map(state => state.Code)?.join(',');
+            shipmentFilters.SelectedMilestonesStatus = this.appliedSelectedFilterMilestonesStatus;
+            shipmentFilters.MilestonesStatus = str;
+        }
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -551,7 +574,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 break;
             }
         }
-        if(this.sortField && this.isSortDescending)
+        console.log(this.sortField  + ' - ' + this.isSortDescending)
+        if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
         {
             this.LoadScreenData();
         }
@@ -620,22 +644,32 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
-    OpenReferencesMessageWindow(references, isMobile: boolean) {
+    OpenMessageWindow(references) {
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
+
+                description: references.toString().split(',').join("\n"),
             }
         });
     }
 
-    OpenExceptionMessageWindow(messageDescription) {
-        this.dialog.open(MessageWindowComponent, {
-            data: {
-                title: 'Exception',
-                description: messageDescription,
-            }
-        });
+    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'References',	
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
+            }	
+        });	
+    }
+
+    OpenExceptionMessageWindow(messageDescription) {	
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'Exception',	
+                description: messageDescription,	
+            }	
+        });	
     }
 
     GetModeIcon(mode: string)
@@ -772,14 +806,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
-
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
+        this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        this.selectedFilterMilestonesStatus = [];
+        this.MilestonesStatus.map((item, index) => {
+            this.MilestonesStatus[index].IsSelected = false; 
+        });
+        this.appliedSelectedFilterMilestonesStatus= [];
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
@@ -827,6 +866,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.LoadScreenData();
 
     }
+
+    UnselectMiletone(state)
+    {
+        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
+            if(index >= 0)
+                this.appliedSelectedFilterMilestonesStatus.splice(index,1);
+                let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
+                state.IsSelected = false;
+                this.MilestonesStatus[itemIndex] = state;
+                RootContext.ShipmentsScrollPosition = 0;
+        this.LoadScreenData();
+
+    }
     FiltersInvitedCustomers: any[] = [];
     OpenAdvancedFiltersSidebar(){
         this.isFiltersSideBarOpened = true;
@@ -852,7 +904,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             if(index >= 0)
                 this.FiltersSelectedInvitedCustoms.splice(index,1);
         }
+    }
 
+    // Milestones filter
+    MilestonesStatus: any[] = [];
+    OnMilestonesStatusFilterChanged(value,state){
+        var index = this.selectedFilterMilestonesStatus.findIndex(d=>d==state);
+        if(value === true && index < 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = true;
+                this.selectedFilterMilestonesStatus.push(state);
+        }
+        else if(value === false && index >= 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
+                this.selectedFilterMilestonesStatus.splice(index,1);
+        }
     }
 
 }
@@ -920,4 +985,24 @@ export class CargoTrackingShipmentsCounter{
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
+}
+
+enum Milestones {
+    Booking = "1",
+    Pickup = "2",
+    FromWarehouse = "3",
+    Departure = "4",
+    Arrival = "5",
+    ToWarehouse = "6",
+    AssignedToCustomsBroker = "7",
+    CustomsProcess = "8",
+    GoodsClassification = "9",
+    DocumentInspection = "10",
+    CustomsPayment = "11",
+    Clearance = "12",
+    GatepassArrived = "13",
+    AssignedtoTrucker = "14",
+    DeliveryOut = "15",
+    Delivered = "16",
+    Invoiced = "17"
 }
