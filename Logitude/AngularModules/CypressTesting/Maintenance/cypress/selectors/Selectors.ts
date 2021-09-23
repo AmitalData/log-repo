@@ -5,6 +5,8 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly OthersMaintenanceTab = "#OTH";
    public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
    public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
+   public static readonly AgentMaintenanceItem = "#MaintenanceItemMTAG"
+   public static readonly CompanyAddressSettingsMaintenanceItem = "#MaintenanceItemCOAD"
    public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
    public static readonly LocalSettingsMaintenanceItem = "#MaintenanceItemLOSE"
    public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
@@ -26,6 +28,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemBankAccount = "#MaintenanceItemMTBL"
    public static readonly MaintenanceItemPackageType = "#MaintenanceItemMTPK"
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
+   public static readonly MaintenanceItemShipperAndConsignee = "#MaintenanceItemMTCL"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -229,8 +232,13 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CustomAgentBankName = "#CustomAgent_BankName"
    public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
    public static readonly CustomAgentSaveButton = "#CustomAgent-Save"
-
    //#endregion
+
+   //#region custom agent
+   public static readonly AgentNotes = "#Agent_Notes"
+   public static readonly AgentSaveButton = "#Agent-Save"
+   //#endregion
+
    //#region Trucker
    public static readonly TruckerNotes = "#Trucker_Remark"
    public static readonly TruckerGeneralTab = "#TruckerTHGeneral"
@@ -274,5 +282,16 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CreditCardTypeSaveButton = "#CreditCardType-Save"
    public static readonly CreditCardTypeEventTab = "#CreditCardTypeTHEvents"
    public static readonly InActiveCreditCardTypeCheckBox = "#CreditCardType_InActive"
+   //#endregion
+
+   //#region Company Address Settings
+   public static readonly CompanyAddressSettingsAddress2 = "#Address_Address2"
+   public static readonly CompanyAddressSettingsZipCode = "#Address_ZipCode"
+   //#endregion
+
+   //#region Customer
+   public static readonly CustomerLocalName = "#Customer_LocalName"
+   public static readonly CustomerGeneralTab = "#CustomerTHGeneral"
+   public static readonly CustomerSaveButton = "#Customer-Save"
    //#endregion
 }

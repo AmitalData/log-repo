@@ -179,6 +179,8 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
+    public static readonly PutAgent = "PutAgent";
+
     public static readonly PutTrucker = "PostTrucker"
     public static readonly PostTrucker = "PostTrucker"
 
@@ -212,6 +214,13 @@ export class RequestAliases {
 
     public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
     public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
+
+    public static readonly PutCompanyAddressSettings = "PutCompanyAddressSettings"
+
+    public static readonly PostUser = "PostUser"
+    public static readonly PutUser = "PutUser"
+
+    public static readonly PutShipperConsignee = "PutShipperConsignee"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
@@ -273,4 +282,8 @@ export class RequestAliases {
 
     public static readonly PostInterestBases = 'PostInterestBases';
     public static readonly PutInterestBases = 'PutInterestBases';
+
+    public static readonly PostChequeDeposit = "PostChequeDeposit"
+    public static readonly PutChequeDeposit = "PutChequeDeposit"
+    public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
 }

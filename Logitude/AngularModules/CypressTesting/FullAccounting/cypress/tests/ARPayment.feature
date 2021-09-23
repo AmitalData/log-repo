@@ -14,5 +14,5 @@ Feature: AR Payment
         Then the AR Payment should get successfully
 
     Scenario: Approve the AR Payment
-        When ARprove the AR Payment
+        When Approve the AR Payment
         Then the AR Payment should approve successfully

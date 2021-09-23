@@ -11,4 +11,10 @@ export class ARPaymentSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+
+    public static readonly ChequeValueDate = '#date_ARPayment_ValueDate';
+    public static readonly ChequeRef = '#ARPayment_ChequeOrPaymentRef';
+    public static readonly ChequeBank = '#ARPayment_Bank';
+    public static readonly ChequeBankBranch = '#ARPayment_BankBranch';
+    public static readonly ChequeAccount = '#ARPayment_Account';
 }

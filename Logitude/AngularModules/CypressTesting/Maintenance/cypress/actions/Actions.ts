@@ -904,7 +904,7 @@ export function SearchCustomer() {
         Selector: MaintenanceSelectors.CustomerSearchBar,
         Parent: MaintenanceSelectors.CustomerSearchParent,
         ParentClass: MaintenanceSelectors.CustomerSearchParentClass,
-        WaitURL: Urls.GetQuickSearch(CustomerDetails.Code),
+        WaitURL: Urls.GetCustomersQuickSearch(CustomerDetails.Code),
         Value: CustomerDetails.Code,
         RequestAliase: RequestAliases.GetCustomersQuickSearch
     } as QuickSearchDetails;
@@ -1702,6 +1702,12 @@ export function AssertPostCard(CardType: string) {
         else if (CardType == Constants.Vendor) {
             CardCode = responseBody.Vendor.Code;
         }
+        else if (CardType == Constants.Agent) {
+            CardCode = responseBody.Agent.Code;
+        }
+        else if (CardType == Constants.Customer) {
+            CardCode = responseBody.Customer.Code;
+        }
     });
 }
 
@@ -1750,6 +1756,9 @@ export function OpenCard(CardType: string) {
     if (CardType == Constants.ShippingAgent) {
         DefineShippingAgentsGetSingleRequest();
     }
+    else if (CardType == Constants.Agent) {
+        cy.DefineRequestWait(RestAPI.GET, Urls.AgentsGetSingle, RequestAliases.GetSignle);
+    }
     else if (CardType == Constants.CustomAgent) {
         DefineCustomAgentsGetSingleRequest()
     }
@@ -1758,6 +1767,9 @@ export function OpenCard(CardType: string) {
     }
     else if (CardType == Constants.Trucker) {
         DefineTruckersGetSingleRequest();
+    }
+    else if (CardType == Constants.Customer) {
+        cy.DefineRequestWait(RestAPI.GET, Urls.CustomerGetSingle, RequestAliases.GetSignle);
     }
     DefineGetMenuButtonGroupsRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();
@@ -2429,5 +2441,49 @@ function AssertPutCreditCardType() {
 export function CreditCardTypeConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     ConversionEventsMapping(eventDetailsList, inActiveCreditCardType)
     return eventDetailsList;
+}
+//#endregion
+
+
+//#region Company Address Settings
+export function FillCompanyAddressSettingsDetails(address2, zipCode) {
+    cy.FillLogTextBox(MaintenanceSelectors.CompanyAddressSettingsAddress2, address2)
+    cy.FillLogTextBox(MaintenanceSelectors.CompanyAddressSettingsZipCode, zipCode)
+}
+
+export function UpdateCompanyAddressSettings() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Addresses, RequestAliases.PutCompanyAddressSettings);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertUpdateCompanyAddressSettings() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutCompanyAddressSettings, 200)
+}
+//#endregion
+
+//#region Shipper-Consignee
+export function FillCustomerLocalName(localName) {
+    cy.Click(MaintenanceSelectors.CustomerGeneralTab, null)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerLocalName, localName)
+}
+
+export function UpdateCustomer() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Customers, RequestAliases.PutShipperConsignee);
+    cy.Click(MaintenanceSelectors.CustomerSaveButton, null);
+}
+
+export function AssertUpdateCustomer() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutShipperConsignee, 200)
+}
+//#endregion
+
+//#region Company Address Settings
+export function UpdateAgent() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Agents, RequestAliases.PutAgent);
+    cy.Click(MaintenanceSelectors.AgentSaveButton, null)
+}
+
+export function AssertUpdateAgent() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutAgent, 200);
 }
 //#endregion

@@ -78,7 +78,7 @@ export function CreateAddress() {
 }
 
 function DefinePostAddressRequest() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.BrancheAddress, RequestAliases.PostBranchAddress)
+    cy.DefineRequestWait(RestAPI.POST, Urls.Addresses, RequestAliases.PostBranchAddress)
 }
 
 export function AssertCreateAddress() {
@@ -95,7 +95,7 @@ export function UpdateAddress() {
 }
 
 function DefinePutAddressRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.BrancheAddress, RequestAliases.PutBranchAddress)
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Addresses, RequestAliases.PutBranchAddress)
 }
 
 export function AssertUpdateAddress() {
