@@ -575,6 +575,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private IQueryable<CargoTrackingShipmentList> FilterShipments(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
             shipments = FilterByCustomers(shipmentFilters, shipments);
+            shipments = FilterByMileStones(shipmentFilters, shipments);
             shipments = FilterTransportMode(shipmentFilters, shipments);
             shipments = FilterDirections(shipmentFilters, shipments);
             shipments = FilterShipmentsWhichHaveExceptions(shipmentFilters, shipments);
@@ -613,6 +614,15 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if (shipmentFilters.HasException)
                 shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
+            return shipments;
+        }
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByMileStones(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (shipmentFilters.MilestonesCodes.Count > 0)
+                shipments = shipments.Where(d =>
+                            shipmentFilters.MilestonesCodes.Contains(d.CurrentMilestoneCode)
+                        );
             return shipments;
         }
 
