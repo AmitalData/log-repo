@@ -1584,6 +1584,98 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+	  private string originPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortCode  
+	   {
+	    
+	     get
+		{
+		   return originPortCode;
+		 }
+		 set
+		 {
+		   if(originPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortCode",OldValue=originPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortCode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortCode;
+		 }
+		 set
+		 {
+		   if(destinationPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCode",OldValue=destinationPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string gatewayCode ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GatewayCode  
+	   {
+	    
+	     get
+		{
+		   return gatewayCode;
+		 }
+		 set
+		 {
+		   if(gatewayCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GatewayCode",OldValue=gatewayCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gatewayCode=value;
+		   }
+			
+		 }
+	   }
+	  private string incotermName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IncotermName  
+	   {
+	    
+	     get
+		{
+		   return incotermName;
+		 }
+		 set
+		 {
+		   if(incotermName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IncotermName",OldValue=incotermName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   incotermName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

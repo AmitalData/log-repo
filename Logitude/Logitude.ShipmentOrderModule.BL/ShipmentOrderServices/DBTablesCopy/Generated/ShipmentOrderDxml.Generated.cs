@@ -136,7 +136,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DirectionId' Type='char' Size='1'>"+
-"    <Constraints Nullable='true' />"+
+"    <Constraints Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='CarrierId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
