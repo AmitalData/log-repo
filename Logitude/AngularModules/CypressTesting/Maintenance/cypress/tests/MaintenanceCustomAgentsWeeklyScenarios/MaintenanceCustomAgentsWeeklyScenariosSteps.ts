@@ -95,6 +95,10 @@ Given("{string} as custom agent notes", (notes) => {
     MaintenanceActions.FillCustomAgentGeneralTabNotes(notes)
 });
 
+Given("inactivate the custom agent", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveCustomAgentCheckBox)
+});
+
 Given("fill the following custom agent Billing details", (dataTable) => {
     customAgentBillingTabDetails = Assists.CreateInstance<CardBillingTabDetails>(dataTable, true);
     MaintenanceActions.FillCustomAgentBillingTab(customAgentBillingTabDetails)

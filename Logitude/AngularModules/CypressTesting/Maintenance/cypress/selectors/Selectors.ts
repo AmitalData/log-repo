@@ -220,6 +220,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly ShippingAgentGeneralTab = "#ShippingAgentTHGeneral"
    public static readonly ShippingAgentEventsTab = "#ShippingAgentTHEvents"
    public static readonly ShippingAgentSaveButton = "#ShippingAgent-Save"
+   public static readonly InActiveCustomAgentCheckBox = "#CustomAgent_InActive"
 
    //#endregion
    //#region custom agent
@@ -232,6 +233,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CustomAgentBankName = "#CustomAgent_BankName"
    public static readonly CustomAgentIBANNumber = "#CustomAgent_IBANNumber"
    public static readonly CustomAgentSaveButton = "#CustomAgent-Save"
+   public static readonly InActiveShippingAgentCheckBox = "#ShippingAgent_InActive"
    //#endregion
 
    //#region custom agent
@@ -249,6 +251,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly TruckerBankName = "#Trucker_BankName"
    public static readonly TruckerIBANNumber = "#Trucker_IBANNumber"
    public static readonly TruckerSaveButton = "#Trucker-Save"
+   public static readonly InActiveTruckerCheckBox = "#Trucker_InActive"
 
    //#endregion
    //#region SpecialServicesType
@@ -258,8 +261,9 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly SpecialServicesTypeGeneralTab = "#SpecialServicesTypeTHGeneral"
    public static readonly SpecialServicesTypeEventsTab = "#SpecialServicesTypeTHEvents"
    public static readonly SpecialServicesTypeSaveButton = "#SpecialServicesType-Save"
+   public static readonly InActiveSpecialServicesTypeCheckBox = "#SpecialServicesType_InActive"
    //#endregion
-   //#region SpecialServicesType
+   //#region Move type
    public static readonly MoveTypeCode = "#MoveType_Code"
    public static readonly MoveTypeEnglishName = "#MoveType_MoveTypeEnglishName"
    public static readonly MoveTypeLocalName = "#MoveType_MoveTypeLocalName"
@@ -275,6 +279,8 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly ShipmentSubTypeSaveButton = "#ShipmentSubType-Save"
    public static readonly ShipmentSubTypeEventsTab = "#ShipmentSubTypeTHEvents"
    public static readonly ShipmentSubTypeCodeFilterCheckBox = '[data-cy="CheckBox_ShipmentSubType.F.Code"]'
+   public static readonly InActiveShipmentSubTypeCheckBox = "#ShipmentSubType_Inactive"
+
    //#endregion
    //#region credit card type 
    public static readonly CreditCardTypeCode = "#CreditCardType_Code"

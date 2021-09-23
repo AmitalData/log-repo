@@ -43,6 +43,7 @@ Feature: Custom Agent fake Create and Edit in Maintenance Module
 
     Scenario: Edit the custom agent
         Given "Test edit custom agent" as custom agent notes
+        And inactivate the custom agent
         And fill the following custom agent Billing details
             | BankName | Custom Agent Bank |
             | IBANNo   | zero Bank         |

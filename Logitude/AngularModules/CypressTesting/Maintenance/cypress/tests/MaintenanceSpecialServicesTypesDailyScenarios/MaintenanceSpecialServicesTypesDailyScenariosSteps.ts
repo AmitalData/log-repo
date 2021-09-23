@@ -65,6 +65,10 @@ Given("edit special services type local name", () => {
     MaintenanceActions.FillSpecialServicesTypeLocalName()
 });
 
+Given("the user inactivate the special services type", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveSpecialServicesTypeCheckBox)
+});
+
 When("update special services type", () => {
     MaintenanceActions.UpdateSpecialServicesType()
 });

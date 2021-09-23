@@ -29,8 +29,9 @@ Feature:Credit Card Type Create and Edit it in Maintenance Module
 
     Scenario: Edit the credit card type
         Given "Test edit Name credit card type" as credit card type name
+        And the user inactivate the credit card type
         When update credit card type
         Then the credit card type should update successfully
         And the following event should appear in events tab
-            | Event                    |
-            | Credit Card Type Updated |
+            | Event                    | Notes                        |
+            | Credit Card Type Updated | Credit Card Type Inactivated |

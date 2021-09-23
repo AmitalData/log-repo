@@ -80,6 +80,10 @@ Given("{string} as credit card type name", (name) => {
     MaintenanceActions.FilllCreditCardTypeName(name)
 });
 
+Given("the user inactivate the credit card type", () => {
+    MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveCreditCardTypeCheckBox)
+});
+
 When("update credit card type", () => {
     MaintenanceActions.UpdateCreditCardType()
 });
