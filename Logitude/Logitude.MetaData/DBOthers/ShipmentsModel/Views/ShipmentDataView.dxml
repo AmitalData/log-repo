@@ -262,6 +262,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ShipmentComputedFields.CreatedFromDigital as CreatedFromDigital,
 						 ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
 						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses, 
+						 ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray, 
 						 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData, 
 						 ShipmentAdditionalCloudDatas.IsImporterApprovalRequried as IsImporterApprovalRequried, 
 						 ShipmentAdditionalCloudDatas.ApprovedByUserName as ApprovedByUserName, 

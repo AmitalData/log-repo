@@ -10,6 +10,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
 import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { CargoTrackingShipmentOrderService } from '../../../../Services/Others/CargoTrackingShipmentOrderService';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 
@@ -24,7 +25,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
 
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
-
+ 
     public isLoading: boolean = true;
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
@@ -36,6 +37,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SearchText: string = "";
     CustomsBrokerReference: string;
     ShipmentPM: any;
+    ShipmentOrder: any;
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
@@ -51,6 +53,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ValueOfCustomsOrForwarder: string = "";
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
+    OrderEntityType: string = "O";
+    public OverviewPanelTitle: string;
+    public TypeTitle: string;
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
@@ -68,6 +73,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         private searchService: CargoTrackingSearchService,
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        private cargoTrackingShipmentOrderService: CargoTrackingShipmentOrderService,
         private documentDownloadService: DocumentDownloadService,
         public dialog: MatDialog,
         private datePipe: DatePipe)
@@ -80,7 +86,17 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.LoadShipment();
         this.CreatePartnerCardsFromShipmentPM();
+       
 
+    }
+    private SetOverviewPanelTitle() {
+        if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
+            this.OverviewPanelTitle = "Order Overview";
+
+        }
+        else {
+            this.OverviewPanelTitle = "Overview";
+        }
     }
     @HostListener('window:resize', ['$event'])
     onResize()
@@ -139,11 +155,20 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.HasReferences = this.SetHasReferences();
 
                 this.SetRoutingVariables();
-                this.GetShipmentPM();
-                this.GetShipmentCustomsData();
-                this.GetShipmentPackages();
-                this.GetDocumentsFilingsConnectedToShipment();
+
+                if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
+                    this.GetShipmentOrder();
+                }
+                else {
+                    this.GetShipmentPM();
+                    this.GetShipmentCustomsData();
+                    this.GetShipmentPackages();
+                    this.GetDocumentsFilingsConnectedToShipment();
+                }
+               
                 this.SetCustomsOrForwarderFields();
+                this.SetOverviewPanelTitle();
+                this.SetTypeTitle();
 
             }
 
@@ -155,7 +180,28 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }, 200);
         });
     }
+    GetShipmentOrder() {
+        this.cargoTrackingShipmentOrderService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.ShipmentOrder = result;
 
+                this.GetPartnersAddresses();
+                this.InitRoutes();
+            }
+        });
+    }
+    SetTypeTitle() {
+        if (this.Shipment.ShipmentList.TransportModeId == "A") {
+            this.TypeTitle = "PACKAGE TYPE";
+
+        }
+         if (this.Shipment.ShipmentList.TransportModeId != "A") {
+            this.TypeTitle = "CONTAINER TYPE";
+        }
+         if (this.Shipment.ShipmentList.EntityType == 'O') {
+            this.TypeTitle = "SHIPMENT TYPE";
+        }
+    }
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
     }
@@ -244,6 +290,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
             this.TitleOfCustomsOrForwarder = "Forwarder Reference";
         }
+        if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
+            this.TitleOfCustomsOrForwarder = "Order References";
+        }
     }
 
     SetValueOfCustomsOrForwarder() {
@@ -251,15 +300,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber;
         }
 
-        if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
+        if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType || this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
             var ForwardingShipmentNumber = this.Shipment.ShipmentList.ForwardingShipmentHeaderId != null ? this.Shipment.ShipmentList.ForwardingShipmentNumber != null ? "\n" + this.Shipment.ShipmentList.ForwardingShipmentNumber : "": "";
             this.ValueOfCustomsOrForwarder = this.Shipment.ShipmentList.ShipmentNumber + ForwardingShipmentNumber;
         }
+
     }
 
     PartnersAddresses: any[] = [];
     GetPartnersAddresses(){
-        var partnersIds = this.GetShipmentPMPartnersIds();
+        var partnersIds = this.GetShipmentPartnersIds();
         this.cargoTrackingShipmentService.GetPartnersAddresses(partnersIds).subscribe((result: any) =>
         {
             if (result) {
@@ -269,38 +319,52 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
-    private GetShipmentPMPartnersIds()
-    {
-        var partnersIds =  [
-            this.ShipmentPM.ShipperId,
-            this.ShipmentPM.ConsigneeId,
-            this.ShipmentPM.FreightForwarderId,
-            this.ShipmentPM.CustomerId,
-            this.ShipmentPM.AgentId,
-            this.ShipmentPM.IssuingCarrierAgentId,
-            this.ShipmentPM.CustomAgentExportId,
-            this.ShipmentPM.CustomAgentImportId,
-            this.ShipmentPM.Notify1Id,
-            this.ShipmentPM.Notify2Id,
-            this.ShipmentPM.ShipperNotExporterId,
-            this.ShipmentPM.ConsigneeNotImporterId,
-            this.ShipmentPM.CustomClearancePointId,
-            this.ShipmentPM.ColoaderId,
-            this.ShipmentPM.FreelancerId,
-            this.ShipmentPM.ConsolidatorId,
-            this.ShipmentPM.ReleasingAgentId,
-            this.ShipmentPM.MainCarriageCarrierId,
-            this.ShipmentPM.WarehouseLegWarehouseId,
+    private GetShipmentOrderPartnerIds() {
+       return [
+            this.ShipmentOrder.ShipperId,
+            this.ShipmentOrder.ConsigneeId,
+            this.ShipmentOrder.AgentId,
+            this.ShipmentOrder.CarrierId,
+
         ];
-
-        for (let routing  of this.ShipmentPM.ShipmentDeliveries) {
-            partnersIds.push(routing.CarrierId)
+    }
+    private GetShipmentPartnersIds()
+    {
+        if (this.Shipment.ShipmentList.EntityType == "O") {
+         var partnersIds=  this.GetShipmentOrderPartnerIds();
         }
+        else {
+            var partnersIds = [
+                this.ShipmentPM.ShipperId,
+                this.ShipmentPM.ConsigneeId,
+                this.ShipmentPM.FreightForwarderId,
+                this.ShipmentPM.CustomerId,
+                this.ShipmentPM.AgentId,
+                this.ShipmentPM.IssuingCarrierAgentId,
+                this.ShipmentPM.CustomAgentExportId,
+                this.ShipmentPM.CustomAgentImportId,
+                this.ShipmentPM.Notify1Id,
+                this.ShipmentPM.Notify2Id,
+                this.ShipmentPM.ShipperNotExporterId,
+                this.ShipmentPM.ConsigneeNotImporterId,
+                this.ShipmentPM.CustomClearancePointId,
+                this.ShipmentPM.ColoaderId,
+                this.ShipmentPM.FreelancerId,
+                this.ShipmentPM.ConsolidatorId,
+                this.ShipmentPM.ReleasingAgentId,
+                this.ShipmentPM.MainCarriageCarrierId,
+                this.ShipmentPM.WarehouseLegWarehouseId,
+                this.Shipment.ShipmentList.ShipperId
+            ];
 
-        for (let routing of this.ShipmentPM.ShipmentPickUps) {
-            partnersIds.push(routing.CarrierId)
+            for (let routing of this.ShipmentPM.ShipmentDeliveries) {
+                partnersIds.push(routing.CarrierId)
+            }
+
+            for (let routing of this.ShipmentPM.ShipmentPickUps) {
+                partnersIds.push(routing.CarrierId)
+            }
         }
-
         return partnersIds.filter(p=>p);
     }
 
@@ -326,12 +390,26 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.CustomsBrokerReference = this.ShipmentPM.CustomFileNumber;
     }
+    FillShipmentOrderPartnerAddresses() {
+        if (this.ShipmentOrder) {
+            if (this.ShipmentOrder.ShipperId)
+                this.PartnerCards.push(this.CreateShipperPartnerCard());
+            if (this.ShipmentOrder.ConsigneeId)
+                this.PartnerCards.push(this.CreateConsigneePartnerCard());
+            if (this.ShipmentOrder.AgentId)
+                this.PartnerCards.push(this.CreateAgentPartnerCard());
+            if (this.ShipmentOrder.CarrierId)
+                this.PartnerCards.push(this.CreateMainCarriageCarrierPartnerCard());
 
+        }
+    }
     CreatePartnerCardsFromShipmentPM()
     {
-        if (this.ShipmentPM) {
-
-            if (this.ShipmentPM.ShipperId)
+        if (this.Shipment.ShipmentList.EntityType == "O") {
+            this.FillShipmentOrderPartnerAddresses();
+        }
+       else if (this.ShipmentPM) {
+            if (this.Shipment.ShipmentList.ShipperId)
                 this.PartnerCards.push(this.CreateShipperPartnerCard());
 
             if (this.ShipmentPM.ConsigneeId)
@@ -568,11 +646,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     private CreateMainCarriageCarrierPartnerCard() {
         let mainCarriageCarrier = new PartnerCard();
-        mainCarriageCarrier.Name = this.ShipmentPM.MainCarriageCarrierName;
-        mainCarriageCarrier.Address = this.GetPartnerAddress(this.ShipmentPM.MainCarriageCarrierId);
-        mainCarriageCarrier.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
-        mainCarriageCarrier.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.MainCarriageCarrierId);
-        mainCarriageCarrier.Type = this.PartnerCardTypesOfShipmentTransportMode[this.ShipmentPM.TransportModeId];
+        mainCarriageCarrier.Type = "Carrier";
+        mainCarriageCarrier.Name = this.ShipmentOrder ? this.ShipmentOrder.CarrierName :  this.ShipmentPM.MainCarriageCarrierName;
+        mainCarriageCarrier.Address = this.GetPartnerAddress(this.ShipmentOrder ? this.ShipmentOrder.CarrierId: this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.CarrierId : this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.CarrierId : this.ShipmentPM.MainCarriageCarrierId);
+        mainCarriageCarrier.Type = this.PartnerCardTypesOfShipmentTransportMode[this.ShipmentOrder.TransportModeId];
         return mainCarriageCarrier;
     }
 
@@ -731,10 +810,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         let agent = new PartnerCard();
         agent.Type = "Agent";
-        agent.Name = this.ShipmentPM.AgentName;
-        agent.Address = this.GetPartnerAddress(this.ShipmentPM.AgentId);
-        agent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.AgentId);
-        agent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.AgentId);
+        agent.Name = this.ShipmentOrder ? this.ShipmentOrder.AgentName : this.ShipmentPM.AgentName;
+        agent.Address = this.GetPartnerAddress(this.ShipmentOrder ? this.ShipmentOrder.AgentId : this.ShipmentPM.AgentId);
+        agent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.AgentId : this.ShipmentPM.AgentId);
+        agent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.AgentId : this.ShipmentPM.AgentId);
         return agent;
     }
 
@@ -765,10 +844,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         var consignee = new PartnerCard();
         consignee.Type = "consignee";
-        consignee.Name = this.ShipmentPM.ConsigneeName;
-        consignee.Address = this.GetPartnerAddress(this.ShipmentPM.ConsigneeId);
-        consignee.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ConsigneeId);
-        consignee.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsigneeId);
+        consignee.Name = this.ShipmentOrder ? this.ShipmentOrder.ConsigneeName : this.ShipmentPM.ConsigneeName;
+        consignee.Address = this.GetPartnerAddress(this.ShipmentOrder ? this.ShipmentOrder.ConsigneeId: this.ShipmentPM.ConsigneeId);
+        consignee.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.ConsigneeId : this.ShipmentPM.ConsigneeId);
+        consignee.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.ConsigneeId : this.ShipmentPM.ConsigneeId);
         return consignee;
     }
 
@@ -776,10 +855,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         var shipper = new PartnerCard();
         shipper.Type = "shipper";
-        shipper.Name = this.ShipmentPM.ShipperName;
-        shipper.Address = this.GetPartnerAddress(this.ShipmentPM.ShipperId);
-        shipper.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ShipperId);
-        shipper.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsigneeId);
+        shipper.Name = this.ShipmentOrder ? this.ShipmentOrder.ShipperName: this.ShipmentPM.ShipperName;
+        shipper.Address = this.GetPartnerAddress(this.ShipmentOrder ? this.ShipmentOrder.ShipperId : this.ShipmentPM.ShipperId);
+        shipper.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.ShipperId : this.ShipmentPM.ShipperId);
+        shipper.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentOrder ? this.ShipmentOrder.ShipperId : this.ShipmentPM.ShipperId);
         return shipper;
     }
 
@@ -815,12 +894,32 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     InitRoutes()
     {
-        this.CreatePickupsRoutesFromShipmentPM();
-        this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
-        this.CreateMainCarriageLegsRoutesFromShipmentPM();
-        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+        if (this.ShipmentPM) {
+            this.CreatePickupsRoutesFromShipmentPM();
+            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+            this.CreateMainCarriageLegsRoutesFromShipmentPM();
+            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+        }
+        if (this.ShipmentOrder) {
+            if (this.ShipmentOrder.GatewayId) {
+                this.AddShipmentRouteStep(this.CreateShipmentOrderOriginRoute());
+                this.AddShipmentRouteStep(this.CreateShipmentOrderDestinationRoute());
+            }
+            else {
+                this.AddShipmentRouteStep(this.CreateShipmentOrderNoGatewayRoute());
+            }
+        }
     }
+    CreateShipmentOrderNoGatewayRoute() {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.ShipmentOrder.TransportModeId;
+        step.Description = "MainCarriageLeg";
+        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;
+        step.ToPortLabel = this.ShipmentOrder.DestinationPortCode;
 
+        step.Directions = this.BuildRouteDirections(this.ShipmentOrder);
+        return step;
+    }
     private CreatePickupsRoutesFromShipmentPM() {
         for (let i = 0; i < this.ShipmentPM.ShipmentPickUps.length; i++) {
             this.AddShipmentRouteStep(this.CreateSinglePickupsRoute(i));
@@ -853,7 +952,20 @@ export class ShipmentDetailsComponent implements AfterViewInit
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
         return step;
     }
-
+    private CreateShipmentOrderOriginRoute() {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.ShipmentOrder.TransportModeId;
+        step.Description ="MainCarriageLeg 1";
+        this.SetFromAndToLabelsForShipmentOrderRoutes( step);      
+        return step;
+    }
+    private CreateShipmentOrderDestinationRoute() {
+        var step = new RoutingStep();
+        step.TransportModeCode = this.ShipmentOrder.TransportModeId;
+        step.Description = "MainCarriageLeg 2";
+        this.SetFromAndToLabelsForShipmentOrderOriginRoutes(step);
+        return step;
+    }
     private CreateSingleWarehouseLegRoute() {
         var step = new RoutingStep();
         step.TransportModeCode = this.WarehouseTransportMode;
@@ -884,7 +996,15 @@ export class ShipmentDetailsComponent implements AfterViewInit
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);
         return step;
     }
-
+    private SetFromAndToLabelsForShipmentOrderRoutes(step: RoutingStep) {
+        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;      
+        step.ToPortLabel = this.ShipmentOrder.GatewayCode;
+    
+    }
+    private SetFromAndToLabelsForShipmentOrderOriginRoutes(step: RoutingStep) {
+        step.FromPortLabel = this.ShipmentOrder.GatewayCode;     
+        step.ToPortLabel = this.ShipmentOrder.DestinationPortCode;
+    }
     private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {
         step.FromPortLabel = this.GetFromPortLabel(shipmentRoute);
         step.ToolTipFromPortLabel = this.GetToolTipFromPortLabel(shipmentRoute);

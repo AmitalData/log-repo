@@ -4,6 +4,8 @@ export class CargoTrackingShipmentFilters
     public SearchText: string;
     public CustomersIds: string[] = [];
     public CustomersIdsString: string;
+    public MilestonesStatus: string;
+    public SelectedMilestonesStatus: any[] = [];
     public TransportModeCodes: string;
     public DirectionCodes: string;
     public SortDescending: string;
