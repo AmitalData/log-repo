@@ -299,8 +299,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
-
-                MapPrivateLabelMainCarriageFields();
+                 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
@@ -350,17 +349,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 scope.Complete();
             }
         }
-
-        private void MapPrivateLabelMainCarriageFields()
-        {
-            if (UpdatedShipmentComputedFields != null)
-            {
-                UpdatedShipmentComputedFields.MainCarriageETA = entityPM.MainCarriageETA;
-                UpdatedShipmentComputedFields.MainCarriageETD = entityPM.MainCarriageETD;
-                UpdatedShipmentComputedFields.MainCarriageATA = entityPM.MainCarriageATA;
-                UpdatedShipmentComputedFields.MainCarriageATD = entityPM.MainCarriageATD;
-            }
-        }
+         
 
         private void AddVIRExternalTaskQueue()
         {
