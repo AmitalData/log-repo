@@ -689,7 +689,7 @@ Line4
 
 
     ButtonLoadInterestTransactions_Click() {
-        let opr = "ButtonInterestTransactions_Click";
+        let opr = "ButtonLoadInterestTransactions_Click";
         let str: string =
             `Please insert page, you can add a header  //Tenant=1071
 Headers - this line will be deleted
