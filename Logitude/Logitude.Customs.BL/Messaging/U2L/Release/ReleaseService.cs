@@ -30,6 +30,8 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
+using Newtonsoft.Json;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Release
 {
@@ -480,6 +482,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
             declarationUpdateService.Update(this._MyDeclarationPM, true);
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            /// moran i advice u to change it to ... true
+            bool moranIfUdecide2updateCFIFILEM = false;
+            if (moranIfUdecide2updateCFIFILEM )
+            {
+                if (!string.IsNullOrWhiteSpace(_MyDeclarationPM.CustomFileNo) && !string.IsNullOrWhiteSpace(_MyDeclarationPM.Id))
+                {
+                    var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
+                    var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
+                    repo.SubmitChanges();
+                }
+            }
+            bool toLogDeclaration = DateTime.Now < new DateTime(2021, 12, 31);
+            if (toLogDeclaration)
+            {
+                string decJson = JsonConvert.SerializeObject(this._MyDeclarationPM);
+                AppendLogLine("DeclarationPM=" + decJson);
+            }
+
             // moran 3.3.16 - AMI-56069 - commented Send Declaration Request 
             string val = "";
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
@@ -522,6 +543,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             MyGenericResponseObj.Stage = "Done All ";
             MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.Id;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+            MyCommunicationsParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 
         }
@@ -742,14 +764,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             {
                 throw new BusinessErrorException("DataIn1 is missing");
             }
-            if (xmlLOGIBONDREL.Length > 1000)
+            bool leavePlace4Declaration = true;
+            if (!leavePlace4Declaration)
             {
-                AppendLogLine("XmlIn=" + xmlLOGIBONDREL.Substring(0, 1000));
-                AppendLogLine(".Substring(0, 1000)");
-            }
-            else
-            {
-                AppendLogLine("XmlIn=" + xmlLOGIBONDREL);
+                if (xmlLOGIBONDREL.Length > 1000)
+                {
+                    AppendLogLine("XmlIn=" + xmlLOGIBONDREL.Substring(0, 1000));
+                    AppendLogLine(".Substring(0, 1000)");
+                }
+                else
+                {
+                    AppendLogLine("XmlIn=" + xmlLOGIBONDREL);
+                }
             }
 
 
