@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;ShipmentComputedField&quot;"
-  Code="&quot;1d6e&quot;"
+  Code="&quot;28e3&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"

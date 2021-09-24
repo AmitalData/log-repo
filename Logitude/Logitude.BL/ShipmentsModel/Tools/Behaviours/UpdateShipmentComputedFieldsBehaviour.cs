@@ -100,6 +100,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
 
         private void MapMainCarriageDates()
         {
+            if (shipmentPM.ShipmentLevelCode == "H" && shipmentPM.IsConnectToMasterShipment) return;
             entity.MainCarriageETA = shipmentPM.MainCarriageETA;
             entity.MainCarriageETD = shipmentPM.MainCarriageETD;
             entity.MainCarriageATA = shipmentPM.MainCarriageATA;

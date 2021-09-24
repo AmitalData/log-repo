@@ -378,25 +378,29 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="PrivateLabelMainCarriageETA"
+    Name="MainCarriageETA"
+    OldNames="PrivateLabelMainCarriageETA"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="PrivateLabelMainCarriageETD"
+    Name="MainCarriageETD"
+    OldNames="PrivateLabelMainCarriageETD"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="PrivateLabelMainCarriageATA"
+    Name="MainCarriageATA"
+    OldNames="PrivateLabelMainCarriageATA"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="PrivateLabelMainCarriageATD"
+    Name="MainCarriageATD"
+    OldNames="PrivateLabelMainCarriageATD"
     Type="datetime">
     <Constraints
       Nullable="true" />
