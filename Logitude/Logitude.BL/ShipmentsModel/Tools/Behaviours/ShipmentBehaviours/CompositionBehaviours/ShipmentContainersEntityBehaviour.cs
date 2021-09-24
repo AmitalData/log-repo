@@ -192,7 +192,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
                 return false;
 
-            if (initializer.EntityPM.TransportModeId != "O" &&
+            if (initializer.EntityPM.TransportModeId != "O" ||
                (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" || initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld"))
                 return false;
 
