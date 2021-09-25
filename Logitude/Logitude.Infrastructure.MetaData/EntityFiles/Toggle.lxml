@@ -587,6 +587,11 @@
       Name="&quot;Ocean Insights Shipment Update&quot;"
       SearchFields="&quot;OIU,Ocean Insights Shipment Update&quot;"
       Description="&quot;Ocean Insights Shipment Update&quot;" />
+    <Record
+      Code="&quot;SFC&quot;"
+      Name="&quot;Show file name as computed&quot;"
+      SearchFields="&quot;Show file name as computed,SFC&quot;"
+      Description="&quot;Show file name as computed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

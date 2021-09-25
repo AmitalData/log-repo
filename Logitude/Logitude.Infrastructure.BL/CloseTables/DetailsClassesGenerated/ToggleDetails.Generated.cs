@@ -333,6 +333,15 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Shipment Update", 
 			});
 			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SFC", 
+                Name = "Show file name as computed", 
+                SearchFields = "Show file name as computed,SFC", 
+                Description = "Show file name as computed", 
+			});
+			
             return all;
        }
 

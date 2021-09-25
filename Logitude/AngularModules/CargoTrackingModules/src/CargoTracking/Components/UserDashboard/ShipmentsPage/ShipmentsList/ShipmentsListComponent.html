@@ -68,7 +68,7 @@
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException ">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException || appliedSelectedFilterMilestonesStatus.length > 0">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
@@ -80,6 +80,11 @@
                 <span class="filter-close-btn">×</span>
             </li>
             <li *ngIf="hasException" (click)="OnHasExceptionChanged(false)"> Exceptions Only
+                <span class="filter-close-btn">×</span>
+            </li>
+
+            <li *ngFor="let state of appliedSelectedFilterMilestonesStatus" (click)="UnselectMiletone(state)">
+                {{state.EnglishName}}
                 <span class="filter-close-btn">×</span>
             </li>
 
@@ -380,16 +385,6 @@
             <div class="close-btn hide-mobile" (click)="isFiltersSideBarOpened = false">×</div>
         </div>
         <ul>
-            <!-- <li [class.expanded]="isFilter1Expanded">
-                <div class="filter-title" (click)="isFilter1Expanded = !isFilter1Expanded">Filter 1</div>
-                <div class="expand-icon" (click)="isFilter1Expanded = !isFilter1Expanded"><img
-                        src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isFilter1Expanded" /></div>
-                <div class="expanded-list" [class.show]="isFilter1Expanded">
-                    Hi
-                    <br>
-                    <div class="chesjkd checked"></div>
-                </div>
-            </li> -->
             <li [class.expanded]="isFilter2Expanded">
                 <div class="filter-title" (click)="isFilter2Expanded = !isFilter2Expanded">Customers</div>
                 <div class="expand-icon" (click)="isFilter2Expanded = !isFilter2Expanded">
@@ -402,6 +397,22 @@
                         <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected" (ValueChanged)="OnCustomerValueChanged($event, customer)"
                                   [Text]="customer.Name" [DataContext]="customer"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
+                    </div>
+
+                </div>
+            </li>
+
+            <li [class.expanded]="isMilestonesStatusFilterExpanded">
+                <div class="filter-title" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">Status</div>
+                <div class="expand-icon" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isMilestonesStatusFilterExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isMilestonesStatusFilterExpanded">
+
+
+                    <div class="checkbox-filteritem" *ngFor="let state of MilestonesStatus">
+                        <CheckBox [Value]="state.IsSelected" [Text]="state.EnglishName"
+                        (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
                     </div>
 
                 </div>

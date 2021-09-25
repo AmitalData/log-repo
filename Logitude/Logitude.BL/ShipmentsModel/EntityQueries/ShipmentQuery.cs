@@ -12443,6 +12443,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
                                AccrualsApprovalDate = f.AccrualsApprovalDate,
                                IsAccrualsApproved = f.IsAccrualsApproved,
+                               TruckNumber =f.TruckNumber,
+                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                            };
             return myResult;
         }
