@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
@@ -11,6 +12,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
+        private static CardQuery cardQuery;
         public static void MapContainer(ContainerPM containerPM, Container container, bool isNewEntity)
         {
             if (isNewEntity)
@@ -146,6 +148,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.FreeDays = containerPM.FreeDays;
             container.LastFreeDayDate = containerPM.LastFreeDayDate;
             container.ShipmentStatusId = containerPM.ShipmentStatusId;
+            container.TerminalId = containerPM.TerminalId;
+
+            IntializeCardQuery(containerPM.Tenant);
+            container.TerminalAddress = GetTerminalAddress(containerPM.TerminalId, containerPM.Tenant);
+            container.TerminalPhone = GetTerminalPhone(containerPM.TerminalId, containerPM.Tenant);
+
             BuildSearchField(containerPM, container);
         }
 
@@ -161,5 +169,41 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             containerPM.SearchFields = mySearchFields;
             container.SearchFields = mySearchFields;
         }
+
+        private static string GetTerminalAddress(string terminalId, int tenant)
+        {
+            if (string.IsNullOrEmpty(terminalId))
+                return "";
+
+            var terminal = cardQuery != null ? cardQuery.GetSinglePM(terminalId, tenant) : null;
+            if (terminal != null)
+            {
+                string fullAddress = string.Join(",", new string[] { terminal.Address1, terminal.Address2
+                                                                    , terminal.CityName,  terminal.CountryName }
+                                           .Where(c => !string.IsNullOrEmpty(c)));
+                return fullAddress;
+            }
+            return "";
+        }
+
+
+        private static string GetTerminalPhone(string terminalId, int tenant)
+        {
+            if (string.IsNullOrEmpty(terminalId))
+                return "";
+
+            var terminal = cardQuery != null ? cardQuery.GetSinglePM(terminalId, tenant) : null;
+            if (terminal != null)
+            {
+                return terminal.Phone;
+            }
+            return "";
+        }
+
+        public static void IntializeCardQuery(int tenant)
+        {
+            cardQuery = new CardQuery(tenant);
+        }
+
     }
 }

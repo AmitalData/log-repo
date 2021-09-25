@@ -152,5 +152,9 @@ export class ContainerList {
 		FreeDays: number;
 		ShipmentStatusId: string;
 		ShipmentStatusName: string;
+		TerminalId: string;
+		TerminalAddress: string;
+		TerminalPhone: string;
+		TerminalName: string;
 	
 }

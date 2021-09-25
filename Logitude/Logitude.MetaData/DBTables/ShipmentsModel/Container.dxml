@@ -132,13 +132,13 @@
   </Column>
   <Column
     Name="EstimatedEmptyPickupDate"
-    Type="date">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ActualEmptyPickupDate"
-    Type="date">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -172,7 +172,7 @@
   </Column>
   <Column
     Name="CurrentStatusDate"
-    Type="date">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -854,6 +854,27 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TerminalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TerminalAddress"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TerminalPhone"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -932,6 +953,11 @@
   <Relation
     ForeignKeyColumn="ShipmentStatusId"
     ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TerminalId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

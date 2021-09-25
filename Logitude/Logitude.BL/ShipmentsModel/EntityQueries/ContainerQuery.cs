@@ -177,6 +177,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = entityPoco.LastFreeDayDate,
                     ShipmentStatusId = entityPoco.ShipmentStatusId,
                     ShipmentStatusName = entityPoco.ShipmentEntityStatus?.Name,
+                    TerminalId = entityPoco.TerminalId,
+                    TerminalAddress = entityPoco.TerminalAddress,
+                    TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
+                    TerminalPhone = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.Phone : "",
                 };
             }
 
@@ -188,7 +192,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return (from a in repository.context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -337,6 +341,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         LastFreeDayDate = a.LastFreeDayDate,
                         ShipmentStatusId = a.ShipmentStatusId,
                         ShipmentStatusName = a.ShipmentEntityStatus != null ? a.ShipmentEntityStatus.Name: null,
+                        TerminalId = a.TerminalId,
+                        TerminalAddress = a.TerminalAddress,
+                        TerminalName = a.TerminalCard != null ? a.TerminalCard.EnglishName : "",
+                        TerminalPhone = a.TerminalCard != null ? a.TerminalCard.Phone : "",
                     }).ToList();
         }
 
@@ -345,7 +353,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ContainerList> result = from entity in iQueryable.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
@@ -493,6 +501,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    LastFreeDayDate = entity.LastFreeDayDate,
                                                    ShipmentStatusId = entity.ShipmentStatusId,
                                                    ShipmentStatusName = entity.ShipmentEntityStatus != null ? entity.ShipmentEntityStatus.Name : null,
+                                                   TerminalId = entity.TerminalId,
+                                                   TerminalAddress = entity.TerminalAddress,
+                                                   TerminalName = entity.TerminalCard != null ? entity.TerminalCard.EnglishName : "",
+                                                   TerminalPhone = entity.TerminalCard != null ? entity.TerminalCard.Phone : "" ,
                                                };
             return result;
         }
@@ -648,6 +660,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = container.LastFreeDayDate,
                     ShipmentStatusId = container.ShipmentStatusId,
                     ShipmentStatusName = container.ShipmentEntityStatus != null ? container.ShipmentEntityStatus.Name : null,
+                    TerminalId = container.TerminalId,
+                    TerminalAddress = container.TerminalAddress,
+                    TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "",
+                    TerminalPhone = container.TerminalCard != null ? container.TerminalCard.Phone : "",
                 };
             }
             return containerPM;
@@ -809,6 +825,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastFreeDayDate = entityPoco.LastFreeDayDate,
                     ShipmentStatusId = entityPoco.ShipmentStatusId,
                     ShipmentStatusName = entityPoco.ShipmentEntityStatus != null ? entityPoco.ShipmentEntityStatus.Name : null,
+                    TerminalId = entityPoco.TerminalId,
+                    TerminalAddress = entityPoco.TerminalAddress,
+                    TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
+                    TerminalPhone = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.Phone : "",
                 };
             }
 

@@ -750,6 +750,26 @@ export class ContainerPM {
     public set ShipmentStatusName(newValue: string) { if (this.shipmentStatusName != newValue) { this.shipmentStatusName = newValue; this.MarkAsDirty("ShipmentStatusName"); } }
        
 	 
+    private terminalId: string;
+    public get TerminalId() { return this.terminalId; }
+    public set TerminalId(newValue: string) { if (this.terminalId != newValue) { this.terminalId = newValue; this.MarkAsDirty("TerminalId"); } }
+       
+	 
+    private terminalAddress: string;
+    public get TerminalAddress() { return this.terminalAddress; }
+    public set TerminalAddress(newValue: string) { if (this.terminalAddress != newValue) { this.terminalAddress = newValue; this.MarkAsDirty("TerminalAddress"); } }
+       
+	 
+    private terminalPhone: string;
+    public get TerminalPhone() { return this.terminalPhone; }
+    public set TerminalPhone(newValue: string) { if (this.terminalPhone != newValue) { this.terminalPhone = newValue; this.MarkAsDirty("TerminalPhone"); } }
+       
+	 
+    private terminalName: string;
+    public get TerminalName() { return this.terminalName; }
+    public set TerminalName(newValue: string) { if (this.terminalName != newValue) { this.terminalName = newValue; this.MarkAsDirty("TerminalName"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
