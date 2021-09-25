@@ -93454,6 +93454,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ContainersNumbersandTypesArray&quot;"
     ListPropertyPath="&quot;ContainersNumbersandTypesArray&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

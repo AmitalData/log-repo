@@ -40,8 +40,8 @@ on TraceEvents.Id =
     and Tenant = EventTypes.Tenant
     order by LogDateTime desc
 )
-    where #temp.IsAccountingClosed = 1 and (#temp.AccountingCloseDate is NULL and #temp.ShipmentLevelCode = 'H' and #temp.MasterShipmentDataId is not NULL) 
-	or (#temp.AccountingCloseDate is Not NULL)
+    where #temp.IsAccountingClosed = 1 and ((#temp.AccountingCloseDate is NULL and #temp.ShipmentLevelCode = 'H' and #temp.MasterShipmentDataId is not NULL) 
+	or (#temp.AccountingCloseDate is Not NULL))
     OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @Tenant , @AccountingClosingDate , @AccountingClosedByUserId    
     WHILE @@FETCH_STATUS = 0
         BEGIN

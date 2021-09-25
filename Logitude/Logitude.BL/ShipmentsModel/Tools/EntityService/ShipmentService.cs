@@ -278,7 +278,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 this.initializer.HandleComposition();
-                this.initializer.HandleStandalone();                
+                this.initializer.HandleStandalone();
 
                 entityPM.CalculateProfit = calculateProfit;
                 entityPM.CalculatePayables = calculatePayables;
@@ -298,8 +298,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
+
+                entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                 shipmentBehaviourFacade.Handle();
+                 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
@@ -349,6 +352,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 scope.Complete();
             }
         }
+         
 
         private void AddVIRExternalTaskQueue()
         {
@@ -384,7 +388,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         CustomerChanged = "true";
                     }
                     this.OldCustomerId = myOldCustomerId;
-
+                  
                     this.initializer.HandleBehaviours();
 
                     this.entityMasterData = this.initializer.EntityMasterData;
@@ -485,6 +489,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
 
+                    entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
                     shipmentBehaviourFacade.Handle();
 
@@ -543,7 +548,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     BuildActivityLog();
                     BuildImportersQueue();
                     UpdatePayablesLinesVatAmounts();
+
                     RunAutomationThatDependencyOnLastEntityUpdate();
+
 
 
                     #endregion
