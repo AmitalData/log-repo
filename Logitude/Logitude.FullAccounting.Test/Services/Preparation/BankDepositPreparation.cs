@@ -22,7 +22,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         }
         public void ChequePrepare()
         {
-            var cashBookId = new CashBookPreparation().GetNewCashNIS();
+            var cashBookId = FullAccountingData.CashBookCheques1;
             var chequeBankDepositLine = Getline(cashBookId);
             var chequeBankDeposiInstance = CraeteChequeInstance(cashBookId, new List<BankDepositLinePM>() { chequeBankDepositLine });
             var chequeBankDeposi = Create(chequeBankDeposiInstance);
@@ -68,7 +68,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         {
             return new BankDepositLinePM() 
             {
-                ARPaymentChequeId = line.ARPaymentId,
+                ARPaymentChequeId = line.ARPChequeId,
                 ARPaymentId = line.ARPaymentId,
                 ARPaymentNumber = line.ARPaymentNumber,
                 AccountNumber = line.AccountNumber,
@@ -118,7 +118,8 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 ForeignAmount = bankDepositLinePMs.Sum(e=>e.ForeignAmount),
                 LocalDepositAmount = bankDepositLinePMs.Sum(e => e.LocalAmount),
                 CashBookId = cashBookId,
-                BankDepositLines = bankDepositLinePMs
+                BankDepositLines = bankDepositLinePMs,
+                BankAccountNumber = new BankAccountPreparation().GetNewBankAccount(),
 
             };
         }
