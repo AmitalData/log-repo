@@ -127,6 +127,8 @@ export class CargoTrackingShipmentList {
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
 	
+	CreatedDone: boolean;
+	
 	
 }
  
