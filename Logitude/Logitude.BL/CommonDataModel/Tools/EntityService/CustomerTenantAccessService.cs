@@ -324,8 +324,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
+
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
+
                 CustomerService.Update();
+
             }
             else
             {

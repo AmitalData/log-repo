@@ -74,7 +74,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardService cardService;
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
-
+        CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM)
         {
             this.Initialization(objectContext, entityPM);
@@ -113,6 +113,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.hTSCodeRepository = new HTSCodeRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             cardService = new CardService(objectContext, tenant);
+            this.customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(objectContext);
         }
         private void GetLoggedContact()
         {
@@ -588,21 +589,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     CustomerPM mappedpm = CustomerHybridMapping.MapEntityToHybrid(entityPM);
                     string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm);
                     List<QueueTask> tasks = new List<QueueTask>();
-
-                    CustomerTenantAccessCardRepository customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(entityPM.Tenant);
-
-                    CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(entityPM.Tenant);
-                    CustomerTenantAccessCardPM customerTenantAccessCards = customerTenantAccessCardQuery.GetSingleCustomerTenantAccessCardPMById(entityPM.Id, entityPM.Tenant);
-
-
-                   //var x = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(customerTenantAccessCards.CustomerTenantAccessId, customerTenantAccessCards.CustomerId, entityPM.Tenant);
-
  
-                     
 
-                      
-
-
+                    CustomerTenantAccessCard customerTenantAccessCards =  customerTenantAccessCardRepository.GetByCustomerId(entityPM.Id, entityPM.Tenant);
+ 
 
                     if (entityPM.IsPrivateLabelCustomer == true || entityPOCO.IsPrivateLabelCustomer == true)
                     {
