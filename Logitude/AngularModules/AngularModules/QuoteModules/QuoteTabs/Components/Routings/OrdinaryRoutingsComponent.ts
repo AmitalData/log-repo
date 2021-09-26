@@ -387,6 +387,9 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             if (newValue == null) {
                 this.EntityPM.FromCountryId = null;
+                this.EntityPM.FromCountryCode = null;
+                this.EntityPM.FromPortCountry = null;
+                this.EntityPM.FromCountryName = null;
             }
 
             else {
@@ -396,6 +399,9 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                         var port: PortList = myResponse.Result;
                         if (port != null) {
                             this.EntityPM.FromCountryId = port.CountryId;
+                            this.EntityPM.FromCountryCode = port.CountryCode;
+                            this.EntityPM.FromPortCountry = port.CountryName;
+                            this.EntityPM.FromCountryName = port.CountryName;
                         }                        
                     }
                 });                
@@ -410,6 +416,9 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             if (newValue == null) {
                 this.EntityPM.ToCountryId = null;
+                this.EntityPM.ToCountryCode = null;
+                this.EntityPM.ToPortCountry = null;
+                this.EntityPM.ToCountryName = null;
             }
 
             else {
@@ -419,6 +428,9 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                         var port: PortList = myResponse.Result;
                         if (port != null) {
                             this.EntityPM.ToCountryId = port.CountryId;
+                            this.EntityPM.ToCountryCode = port.CountryCode;
+                            this.EntityPM.ToPortCountry = port.CountryName;
+                            this.EntityPM.ToCountryName = port.CountryName;
                         }
                     }
                 });

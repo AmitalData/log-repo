@@ -122,6 +122,8 @@ export class CargoTrackingShipmentList {
 	GatepassArrivedNotes: string;
 	GatepassArrivedDone: boolean;
 	ImportManifest: string;
+	ShipmentOrderGateway: string;
+	ShipmentOrderPONumber: string;
 	PrevForwardingShipmentId: string;
 	
 }

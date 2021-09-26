@@ -242,7 +242,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 summaryCostAmount = MethodHelper.Round(myCostAmountLocal, 2);
                 summarySaleAmount = MethodHelper.Round(mySaleAmountLocal, 2);
 
-                quoteComputedField.MarkupPercentage = MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2);
+                quoteComputedField.MarkupPercentage = summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2);
             }
         }
     }

@@ -53,6 +53,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
+        IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; }
         IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; }
         IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; }
         IDbSet<OtherParticipantId> OtherParticipantIds { get; }

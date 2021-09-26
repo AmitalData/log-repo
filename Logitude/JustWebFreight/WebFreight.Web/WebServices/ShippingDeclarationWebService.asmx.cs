@@ -128,7 +128,7 @@ namespace WebFreight.Web.WebServices
                 string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
                 string volumetricUnitCode = shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "";
                 myDataProvider.AMSBL = shipment.AMSBL;
-                myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
+                myDataProvider.CustomsDeclarationNumber = shipment.DeclarationNumber != null ? shipment.DeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
                 myDataProvider.Incoterm = shipment.IncotermName;
@@ -291,7 +291,6 @@ namespace WebFreight.Web.WebServices
                 }
                 #endregion
 
-                myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.Incoterm = shipment.IncotermName;
                 myDataProvider.Salesman = shipment.SalesmanUserName;            

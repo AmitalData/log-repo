@@ -540,6 +540,7 @@ namespace WebFreight.Web.ReportsWebServices
                     ManifestDetailsClass detail = new ManifestDetailsClass();
                     NewManifestDetailsClass newDetail = new NewManifestDetailsClass();
       
+
                     detail.FileNumber = newDetail.FileNumber = shipmentView.ShipmentNumber;
                     detail.Direction = newDetail.Direction = shipmentView.DirectionName;
                     detail.ENSNumber = newDetail.ENSNumber = shipmentView.ENSNumber;
@@ -839,6 +840,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Port onCarriageToPort = null;
                     Port onForwardingFromPort = null;
                     Port onForwardingToPort = null;
+                    Port preForwarding_FromPort = null;
 
                     if (shipmentView.OnCarriageFromPortId != null)
                     {
@@ -860,10 +862,16 @@ namespace WebFreight.Web.ReportsWebServices
                         onForwardingToPort = (from a in commonContext.Ports where a.Id == shipmentView.OnForwardingToPortId select a).FirstOrDefault();
                     }
 
+                    if (shipmentView.PreForwardingFromPortId != null)
+                    {
+                        preForwarding_FromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreForwardingFromPortId select a).FirstOrDefault();
+                    }
+
                     newDetail.OnCarriageFromPort = onCarriageFromPort == null ? null : onCarriageFromPort.EnglishName;
                     newDetail.OnCarriageToPort = onCarriageToPort == null ? null : onCarriageToPort.EnglishName;
                     newDetail.OnForwardingFromPort = onForwardingFromPort == null ? null : onForwardingFromPort.EnglishName;
                     newDetail.OnForwardingToPort = onForwardingToPort ==  null ? null : onForwardingToPort.EnglishName;
+                    newDetail.PreForwardingFromPort = preForwarding_FromPort == null ? null : preForwarding_FromPort.EnglishName;
 
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"

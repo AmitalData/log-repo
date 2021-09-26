@@ -56,6 +56,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ShipmentQuery shipmentQuery;
         private string objectTableName = "Container";
         private ShipmentPM shipmentPM;
+        private PortRepository portRepository;
         private string oceanInsightsId;
         private string container_number;
         private string shipmentPackagesId;
@@ -191,6 +192,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         string carrier_release_state = null;
         string availability_date = null;
         string availability_loc =  null;
+        string POLShipmentUpdateIndicator = null;
+        string PODShipmentUpdateIndicator = null;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -645,17 +648,16 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
                             this.shipmentRepository = new ShipmentRepository(shipmentContext);
                             this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+                            this.portRepository = new PortRepository(logitudeTenant.Value);
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
-
-                            if(IsUpdatingShipmentAndContainer())
-                            { 
-
+                            this.CreateLogitudeOceanInsightsResponse();
+                            if (IsUpdatingShipmentAndContainer())
+                            {
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
-                                this.UpdateShipment(item);
-
+                                this.UpdateShipment();
                             }
                         }
                     }
@@ -687,12 +689,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerId = container?.Id;
             shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
-
         private string GetContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
             string containerNumber = "";
 
-            if(!string.IsNullOrEmpty(oceanInsight.ContainerNumber))
+            if (!string.IsNullOrEmpty(oceanInsight.ContainerNumber))
             {
                 containerNumber = oceanInsight.ContainerNumber;
             }
@@ -814,6 +815,46 @@ namespace WebFreight.Web.Helpers.Analyzers
             byte[] documentXML = memoryStream.ToArray();
             return documentXML;
         }
+
+        private void CreateLogitudeOceanInsightsResponse()
+        {
+            if (container != null)
+            {
+                LogitudeOceanInsightsResponseRepository logitudeOceanInsightsResponseRepository = new LogitudeOceanInsightsResponseRepository(tenant);
+                LogitudeOceanInsightsResponse logitudeOceanInsightsResponse = logitudeOceanInsightsResponseRepository.GetLogitudeOceanInsightsResponseByContainerNumberAndScac(container_number, carrier_scac, tenant);
+                if (logitudeOceanInsightsResponse == null)
+                {
+                    logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
+                    {
+                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", tenant),
+                        FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        ContainerNumber = container_number,
+                        SCACCode = carrier_scac,
+                        Tenant = logitudeTenant != null ? logitudeTenant.Value: tenant,
+                        CarrierName = GetCarrierName()
+                    };
+                    logitudeOceanInsightsResponseRepository.Add(logitudeOceanInsightsResponse);
+                }
+                else
+                {
+                    logitudeOceanInsightsResponse.LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    logitudeOceanInsightsResponseRepository.Update(logitudeOceanInsightsResponse);
+                }
+
+                logitudeOceanInsightsResponseRepository.SubmitChanges();
+            }
+        }
+
+        private string GetCarrierName()
+        {
+            string carrierName = "";
+            CardRepository cardRepository = new CardRepository(tenant);
+            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, tenant);
+            carrierName = shippingLine?.EnglishName;
+            return carrierName;
+        }
+
         private void CreateShipmentContainerStatus(LogitudeOceanInsightsRequest oceanInsight)
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
@@ -1120,13 +1161,13 @@ namespace WebFreight.Web.Helpers.Analyzers
                 {
                     eventData = todatDate;
                 }
+
                 if (package.LastStatusDate == null)
                 {
                     package.LastStatusCode = container_status;
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
                 }
                 else if (eventData > package.LastStatusDate)
                 {
@@ -1134,7 +1175,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
                 }
             }
         }
@@ -1990,103 +2030,135 @@ namespace WebFreight.Web.Helpers.Analyzers
             return null;
         }
 
-        bool isSavingShipment = false;
-        private void UpdateShipment(LogitudeOceanInsightsRequest oceanInsight)
+        private void UpdateShipment()
         {
-            if (shipmentPM == null)
+            if (FeatureToggleHelper.HasFeatureToggle("OIU", this.logitudeTenant.Value))
             {
-                throw new Exception("Analyzing shipment faild, shipment not found");
-            }
-            else
-            {
-                isSavingShipment = false;
-                this.UpdatePackage();
-                List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
-                if (shipmentContainers.Count() == 1)
+                if (shipmentPM == null)
                 {
-                    shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                    this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
-                    isSavingShipment = true;
+                    throw new Exception("Analyzing shipment faild, shipment not found");
                 }
 
                 else
                 {
-                    List<Container> nullValuesContainers = shipmentContainers.Where(d => d.MainCarriageATA == null && d.MainCarriageATD == null
-                    && d.MainCarriageETA == null && d.MainCarriageETD == null
-                    && string.IsNullOrEmpty(d.DepartureLocation) && string.IsNullOrEmpty(d.DestinationLocation)).ToList();
+                    string POL_PortId = this.GetPortId(pol_loc_locode);
+                    string POD_PortId = this.GetPortId(pod_loc_locode);
 
-                    shipmentContainers = shipmentContainers.Except(nullValuesContainers).ToList();
+                    this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(POL_PortId);
+                    this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(POD_PortId);
 
-                    var shipmentContainers_grouped = (from s in shipmentContainers
-                                                      group s by new
-                                                      {
-                                                          s.DepartureLocation,
-                                                          s.DestinationLocation,
-                                                          s.MainCarriageETD,
-                                                          s.MainCarriageETA,
-                                                          s.MainCarriageATD,
-                                                          s.MainCarriageATA,
-                                                      } into m
-                                                      select new
-                                                      {
-                                                          MainCarriageETD = m.Key.MainCarriageETD,
-                                                          MainCarriageETA = m.Key.MainCarriageETA,
-                                                          MainCarriageATD = m.Key.MainCarriageATD,
-                                                          MainCarriageATA = m.Key.MainCarriageATA,
-                                                          GroupList = m.ToList(),
-                                                      }).ToList();
-
-                    if (shipmentContainers_grouped != null)
+                    if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
                     {
-                        if (shipmentContainers_grouped.Count() == 1)
-                        {
-                            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                            this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
-                            this.UpdateContainersException(shipmentContainers, true);
-                            isSavingShipment = true;
-                        }
-
-                        else
-                        {
-                            this.UpdateContainersException(shipmentContainers, false);
-                            containerRepository.SubmitChanges();
-                        }
+                        this.StartProcessingUpdateShipment();
                     }
-                }
-
-                if (isSavingShipment)
-                {
-                    this.SaveShipment(shipmentPM);
                 }
             }
         }
-        private void UpdateContainersException(List<Container> shipmentContainers, bool sameConatiner)
+        private string GetPortId(string portCode)
         {
-            foreach (Container item in shipmentContainers)
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, this.logitudeTenant.Value);
+            if (port != null)
             {
-                item.HasContainerException = false;
+                return port.Id;
+            }
 
-                if (!sameConatiner && item.ContainerNumber != container_number)
+            return null;
+        }
+        private string GetPOLShipmentUpdateIndicator(string portId)
+        {
+            string POLShipmentUpdateIndicator = null;
+
+            if (!string.IsNullOrEmpty(portId))
+            {
+                if (shipmentPM.PreCarriageFromPortId == portId)
                 {
-                    if (item.DepartureLocation != departureLocation || item.DestinationLocation != destinationLocation
-                        || item.MainCarriageATA != ComputeMainCarriageATA()
-                        || item.MainCarriageATD != ComputeMainCarriageATD()
-                        || item.MainCarriageETA != ComputeMainCarriageETA()
-                        || item.MainCarriageETD != ComputeMainCarriageETD())
-                    {
-                        item.HasContainerException = true;
-                    }
+                    POLShipmentUpdateIndicator = "Pre Carriage";
                 }
 
-                containerRepository.Update(item);
+                else if (shipmentPM.MainCarriageFromPortId == portId)
+                {
+                    POLShipmentUpdateIndicator = "Main Carriage";
+                }
+            }
+
+            return POLShipmentUpdateIndicator;
+        }
+        private string GetPODShipmentUpdateIndicator(string portId)
+        {
+            string PODShipmentUpdateIndicator = null;
+
+            if (!string.IsNullOrEmpty(portId))
+            {
+                if (shipmentPM.OnCarriageToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "On Carriage";
+                }
+
+                else if (shipmentPM.MainCarriageToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Main Carriage";
+                }
+            }
+
+            return PODShipmentUpdateIndicator;
+        }
+        private void StartProcessingUpdateShipment()
+        {
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            this.UpdatePackage();            
+            this.UpdateShipmentDates();
+            this.SaveShipment(shipmentPM);            
+        }
+        private void UpdateShipmentDates()
+        {
+            this.UpdatePOLDates();
+            this.UpdatePODDates();            
+        }
+        private void UpdatePOLDates()
+        {
+            if (POLShipmentUpdateIndicator == "Pre Carriage")
+            {
+                this.FillFieldsNewValues("PreCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.PreCarriageATD == null)
+                {
+                    this.FillFieldsNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
+            }
+
+            else if(POLShipmentUpdateIndicator == "Main Carriage")
+            {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                this.FillFieldsNewValues("MainCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.MainCarriageATD == null)
+                {
+                    this.FillFieldsNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
             }
         }
-        private void UpdateShipmentDates(Container container, ShipmentPM shipment)
+        private void UpdatePODDates()
         {
-            this.FillFieldsNewValues("MainCarriageETD", container.MainCarriageETD, shipment);
-            this.FillFieldsNewValues("MainCarriageETA", container.MainCarriageETA, shipment);
-            this.FillFieldsNewValues("MainCarriageATD", container.MainCarriageATD, shipment);
-            this.FillFieldsNewValues("MainCarriageATA", container.MainCarriageATA, shipment);
+            if (PODShipmentUpdateIndicator == "On Carriage")
+            {
+                this.FillFieldsNewValues("OnCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.OnCarriageATA == null)
+                {
+                    this.FillFieldsNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }                
+            }
+
+            else if (PODShipmentUpdateIndicator == "Main Carriage")
+            {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                this.FillFieldsNewValues("MainCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.MainCarriageATA == null)
+                {
+                    this.FillFieldsNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }
+            }
         }
         private void FillFieldsNewValues(string propertyName, object newValue, object entity)
         {
@@ -2319,5 +2391,14 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
         public string AvailabilityLocation { get; set; }
+    }
+
+    public class ContainerGroup
+    {
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public List<Container> GroupList { get; set; }
     }
 }

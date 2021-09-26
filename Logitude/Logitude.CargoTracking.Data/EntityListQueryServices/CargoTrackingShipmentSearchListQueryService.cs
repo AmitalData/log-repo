@@ -112,15 +112,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private void SortShipments(CargoTrackingShipmentFilters shipmentFilters, List<CargoTrackingShipmentList> shipments)
-        {
-            if (shipmentFilters.SortDescending)
-                shipments.OrderByDescending(d => d.CreateDate);
-            else
-                shipments.OrderBy(d => d.CreateDate);
-
-        }
-
         public List<CargoTrackingShipmentList> GetFilteredShipmentsByIds(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters, List<string> shipmentsIds)
         {
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
