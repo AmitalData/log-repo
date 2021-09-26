@@ -1045,6 +1045,7 @@
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\ListControllers\ShipmentOrderViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\PMControllers\ShipmentOrderController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ForwarderExportShipmentsController.cs" />

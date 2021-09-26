@@ -211,7 +211,9 @@ using Logitude.ShipmentOrderModule.Data;
 					   					   temp.Customer = CardService16.GetCardById(MyEntityPM.CustomerId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.LastExceptionDescription = MyEntityPM.LastExceptionDescription;
+				   temp.LastExceptionDate = MyEntityPM.LastExceptionDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -473,7 +475,9 @@ using Logitude.ShipmentOrderModule.Data;
 						 
 					}
 			
-										   
+					
+					temp.LastExceptionDescription = MyEntity.LastExceptionDescription;
+					temp.LastExceptionDate = MyEntity.LastExceptionDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

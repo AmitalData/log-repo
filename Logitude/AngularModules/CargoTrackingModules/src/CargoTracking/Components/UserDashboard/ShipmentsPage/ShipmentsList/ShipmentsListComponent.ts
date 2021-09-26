@@ -14,6 +14,8 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -40,6 +42,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
+    isMilestonesStatusFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
@@ -48,6 +51,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
+    @ViewChild('shipmentTypeMultipleSelection') shipmentTypeMultipleSelection: MultipleSelectionComponent;
+    @ViewChild('shipmentDirectionMultipleSelection') shipmentDirectionMultipleSelection: MultipleSelectionComponent;
+    @ViewChild('sortByMultipleSelection') sortByMultipleSelection: MultipleSelectionComponent;
     public MoreReferenceText: string;
     public ConsignmentNumber: string;
     public toPortCode: string;
@@ -73,7 +79,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         public dialog: MatDialog,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        private milestonesService: CargoTrackingMilestoneService)
     {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -82,10 +89,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ngOnInit(): void {
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+        this.GetMilstones();
     }
     ngAfterViewInit(): void
     {
-
         this.LoadScreenData();
         this.SetShipmentsScrollPosition();
     }
@@ -216,10 +223,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
-            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText:'';
-            this.SelectToggleFilters(SessionInfo.ShipmentsFilters.TransportModeCodes);
-            this.SelectToggleFilters(SessionInfo.ShipmentsFilters.DirectionCodes);
-            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
+            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
+            this.updateShipmentTypeAndDirectionSelectedFilters();
+            this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
+            this.GetInvitedCustomers();
+            this.updateShipmentTypeAndDirectionSelection();
+            this.setSortFilterValues();
+            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
+            this.LoadScreenData();
         }
     }
 
@@ -227,6 +238,61 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.InitForm();
         ''.substring(''.indexOf('('))
+    }
+
+    private updateShipmentTypeAndDirectionSelectedFilters(){
+        if(SessionInfo.ShipmentsFilters.TransportModeCodes){
+            var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
+            splitted.forEach(filterCode=>{
+                this.SelectFilterByCode(filterCode);
+            });
+        }
+        if(SessionInfo.ShipmentsFilters.DirectionCodes){
+            var splitted = SessionInfo.ShipmentsFilters.DirectionCodes.split(',');
+            splitted.forEach(filterCode=>{
+                this.SelectFilterByCode(filterCode);
+            });
+        }
+    }
+
+    private updateShipmentTypeAndDirectionSelection(){
+        this.SelectedFilters.map(x => {
+            if(x.FilterName == 'shipmentType')
+            {
+                this.shipmentTypeMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
+            } else if (x.FilterName == 'shipmentDirection')
+            {
+                this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
+            }
+        });
+    }
+
+    private setSortFilterValues()
+    {
+        this.sortField = '';
+        if(SessionInfo.ShipmentsFilters) {
+            this.sortField = SessionInfo.ShipmentsFilters.SortFieldName;
+            this.isSortDescending = SessionInfo.ShipmentsFilters.SortDescending;
+        }
+        var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
+        var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
+        var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
+        var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
+        
+        if(this.sortField == 'ATA') {
+            AtdSelectOption.deselect();
+            AtaSelectOption.select();
+        } else if(this.sortField == 'ATD'){
+            AtdSelectOption.select();
+            AtaSelectOption.deselect();
+        }
+        if(this.isSortDescending == 'DESC') {
+            AscSelectOption.deselect();
+            DescSelectOption.select();
+        } else if(this.isSortDescending == 'ASC'){
+            DescSelectOption.deselect();
+            AscSelectOption.select();
+        }
     }
 
     SetMoreReferenceText(reference: string) {
@@ -241,17 +307,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetCompanyLoginsFromCache()
     {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
         this.GetInvitedCustomers();
     }
 
     FiltersSelectedInvitedCustoms: any[] = [];
     SelectedInvitedCustomers: any[] = [];
+    selectedFilterMilestonesStatus: any[] = [];
+    appliedSelectedFilterMilestonesStatus: any[] = [];
     private GetInvitedCustomers()
     {
-
-        // this.AddDemoCustomersForTest();
-
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
@@ -264,13 +328,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
                     ...d }
                 ));
-
-
-
-        console.log("[Invited Customers]", this.InvitedCustomersIds);
-
+        this.LoadScreenData();
     }
 
+    
+
+    private GetMilstones(){
+        this.milestonesService.getAll(this.tenant)
+            .subscribe((milestones:any) => {
+                milestones.sort(function (a, b) {
+                    return Number(a.Code) - Number(b.Code);
+                  });
+                this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
+            });
+    }
 
 
     private AddDemoCustomersForTest()
@@ -361,7 +432,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
     references: string[];
-    isSortDescending: boolean = true;
+    sortField: string = '';
+    isSortDescending: string = '';
+    hasException: boolean = false;
     private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
     {
         if (this.ShipmentsDataSource)
@@ -377,12 +450,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) =>
         {
-            console.log("[GetUserShipmentsCounter]", counter);
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
             this.SetShipmentsScrollPosition();
         });
     }
+
 
     private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters)
     {
@@ -400,19 +473,22 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.virtualScroll.scrollToIndex(0);
     }
 
-    SortClicked(){
-        this.isSortDescending = !this.isSortDescending;
-        this.LoadScreenData();
-    }
+    // SortClicked(){
+    //     this.isSortDescending = !this.isSortDescending;
+    //     this.LoadScreenData();
+    // }
     private BuildShipmentFilters()
     {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
         shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
 
+        shipmentFilters.SortFieldName = this.sortField;
         shipmentFilters.SortDescending = this.isSortDescending;
+        shipmentFilters.HasException = this.hasException;
 
         this.SetCustomersFilter(shipmentFilters);
+        this.SetMilestonesFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
         this.SetDirectionFilters(shipmentFilters);
         return shipmentFilters;
@@ -426,10 +502,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
         }
-
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
         shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
+    }
+
+    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters)
+    {
+        if(this.appliedSelectedFilterMilestonesStatus.length > 0){
+            var str = this.appliedSelectedFilterMilestonesStatus.map(state => state.Code)?.join(',');
+            shipmentFilters.SelectedMilestonesStatus = this.appliedSelectedFilterMilestonesStatus;
+            shipmentFilters.MilestonesStatus = str;
+        }
     }
 
     private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
@@ -451,6 +535,52 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
         shipmentFilters.TransportModeCodes = transportMode;
     }
+
+    SelectionChangedHandler(toggleFilterCodes: string) {
+        this.SelectToggleFilters(toggleFilterCodes);
+    }
+    
+    OnHasExceptionChanged(event){
+        this.hasException = event;
+        this.LoadScreenData();
+    }
+
+    sortBySelectionChangedHandler(event) {
+        const index = this.sortByOptions.findIndex(d => d.Code == event);
+        var selectedCode = '';
+        switch(index) {
+            case 0: {
+                selectedCode = this.sortByOptions[1].Code;
+                this.sortField = this.sortField === event ? '' : event;
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                break;
+            }
+            case 1:{
+                selectedCode = this.sortByOptions[0].Code;
+                this.sortField = this.sortField === event ? '' : event;
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                break;
+            }
+            case 2:{
+                selectedCode = this.sortByOptions[3].Code;
+                this.isSortDescending = this.isSortDescending === event ? '' : event;
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                break;
+            }
+            case 3:{
+                selectedCode = this.sortByOptions[2].Code;
+                this.isSortDescending = this.isSortDescending === event ? '' : event;
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                break;
+            }
+        }
+        console.log(this.sortField  + ' - ' + this.isSortDescending)
+        if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
+        {
+            this.LoadScreenData();
+        }
+    }
+
     private SelectToggleFilters(toggleFilterCodes: string)
     {
         if(toggleFilterCodes){
@@ -458,6 +588,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             splitted.forEach(filterCode=>{
                 this.SelectFilterByCode(filterCode);
             });
+            this.LoadScreenData();
         }
     }
 
@@ -511,26 +642,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.TitleOfEstimationORActualDate = 'ATA'
             this.ValueOfEstimationORActualDate = null;
         }
-
-
-
-
     }
 
-    OpenReferencesMessageWindow(references, isMobile: boolean) {
+    OpenMessageWindow(references) {
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
-            }
-        });
-    }
 
-    OpenExceptionMessageWindow(messageDescription) {
-        this.dialog.open(MessageWindowComponent, {
-            data: {
-                title: 'Exception',
-                description: messageDescription,
+                description: references.toString().split(',').join("\n"),
             }
         });
     }
@@ -558,23 +677,62 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ToggleFilters: ToggleFilter[] = [
-        new ToggleFilter('IM', 'Import'),
-        new ToggleFilter('EX', 'Export'),
-        new ToggleFilter('A', 'Air'),
-        new ToggleFilter('I', 'Land'),
-        new ToggleFilter('O', 'Sea'),
+        // new ToggleFilter('AL', 'ALL', ''),
+        new ToggleFilter('IM', 'Import', 'shipmentDirection'),
+        new ToggleFilter('EX', 'Export', 'shipmentDirection'),
+        new ToggleFilter('A', 'Air', 'shipmentType'),
+        new ToggleFilter('I', 'Land', 'shipmentType'),
+        new ToggleFilter('O', 'Sea', 'shipmentType'),
+    ];
+
+    sortByOptions: ToggleFilter[] = [
+        // new ToggleFilter('AL', 'ALL', ''),
+        new ToggleFilter('ATA', 'ATA', '', null),
+        new ToggleFilter('ATD', 'ATD', '', null),
+        new ToggleFilter('ASC', 'ASC', '', null),
+        new ToggleFilter('DESC', 'DESC', '', null),
     ];
 
     BuildToggleFilters(){
-        this.ToggleFilters = [
-            new ToggleFilter('IM', 'Import',this.ShipmentsCounter.Import),
-            new ToggleFilter('EX', 'Export',this.ShipmentsCounter.Export),
-            new ToggleFilter('A', 'Air',this.ShipmentsCounter.Air),
-            new ToggleFilter('I', 'Land',this.ShipmentsCounter.Land),
-            new ToggleFilter('O', 'Sea',this.ShipmentsCounter.Sea),
-        ];
-
+        // this.ToggleFilters = [
+        //     new ToggleFilter('AL', 'ALL', '', this.ShipmentsCount),
+        //     new ToggleFilter('IM', 'Import', 'shipmentDirection',this.ShipmentsCounter.Import),
+        //     new ToggleFilter('EX', 'Export', 'shipmentDirection',this.ShipmentsCounter.Export),
+        //     new ToggleFilter('A', 'Air', 'shipmentType',this.ShipmentsCounter.Air),
+        //     new ToggleFilter('I', 'Land', 'shipmentType',this.ShipmentsCounter.Land),
+        //     new ToggleFilter('O', 'Sea', 'shipmentType',this.ShipmentsCounter.Sea),
+        // ];
+        this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
+            x.Count = this.setCounterForMultipleSelect(x);
+            return x;
+        });
+        this.shipmentDirectionMultipleSelection.MultipleSelectionList.map(x => {
+            x.Count = this.setCounterForMultipleSelect(x);
+            return x;
+        });
         this.changeDetector.detectChanges();
+    }
+
+    setCounterForMultipleSelect(toggleFilter: ToggleFilter) : number{
+        if(toggleFilter.Code == 'AL')
+        {
+            return this.ShipmentsCount;
+        } else if(toggleFilter.Code == 'IM')
+        {
+            return this.ShipmentsCounter.Import;
+        } else if(toggleFilter.Code == 'EX')
+        {
+            return this.ShipmentsCounter.Export;
+        } else if(toggleFilter.Code == 'A')
+        {
+            return this.ShipmentsCounter.Air;
+        } else if(toggleFilter.Code == 'I')
+        {
+            return this.ShipmentsCounter.Land;
+        } else if(toggleFilter.Code == 'O')
+        {
+            return this.ShipmentsCounter.Sea;
+        }
     }
 
     SelectedFilters: ToggleFilter[] = [];
@@ -589,8 +747,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
-        if (!item)
+        if (!item){
             this.SelectedFilters.push(filter);
+        } else {
+            var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
+            this.SelectedFilters.splice(index, 1);
+        }
     }
 
     SelectFilterByCode(filterCode: string)
@@ -602,6 +764,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
+        if(filter.FilterName == 'shipmentType')
+        {
+            this.shipmentTypeMultipleSelection.DeselectFilter(filter.Code);
+        } else if (filter.FilterName == 'shipmentDirection')
+        {
+            this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
+        }
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
@@ -610,27 +779,34 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.SelectedFilters = [];
         this.ClearAdvancedFilters();
+        this.shipmentTypeMultipleSelection.ClearFilters();
+        this.shipmentDirectionMultipleSelection.ClearFilters();
+        this.hasException =false;
         this.LoadScreenData();
     }
 
     ApplyFilterButtonClicked()
     {
         this.isFiltersSideBarOpened = false;
-
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
+        this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     ClearAdvancedFilters(){
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
+        this.selectedFilterMilestonesStatus = [];
+        this.MilestonesStatus.map((item, index) => {
+            this.MilestonesStatus[index].IsSelected = false; 
+        });
+        this.appliedSelectedFilterMilestonesStatus= [];
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
     {
-        this.isSortDescending = buttonCode == "desc";
-        this.LoadScreenData();
+        // this.LoadScreenData();
     }
 
     lastClickedShipment: any;
@@ -644,7 +820,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     ShipmentDetailsMenuClicked(buttonCode: string)
     {
-        console.log("shipment more details", buttonCode, this.lastClickedShipment);
 
         if (buttonCode == "set")
             this.lastClickedShipment.IsFavorite = true;
@@ -669,6 +844,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
             if(index >= 0)
                 this.SelectedInvitedCustomers.splice(index,1);
+                RootContext.ShipmentsScrollPosition = 0;
+        this.LoadScreenData();
+
+    }
+
+    UnselectMiletone(state)
+    {
+        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
+            if(index >= 0)
+                this.appliedSelectedFilterMilestonesStatus.splice(index,1);
+                let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
+                state.IsSelected = false;
+                this.MilestonesStatus[itemIndex] = state;
                 RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
@@ -698,18 +886,32 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             if(index >= 0)
                 this.FiltersSelectedInvitedCustoms.splice(index,1);
         }
+    }
 
+    // Milestones filter
+    MilestonesStatus: any[] = [];
+    OnMilestonesStatusFilterChanged(value,state){
+        var index = this.selectedFilterMilestonesStatus.findIndex(d=>d==state);
+        if(value === true && index < 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = true;
+                this.selectedFilterMilestonesStatus.push(state);
+        }
+        else if(value === false && index >= 0){
+            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
+                this.selectedFilterMilestonesStatus.splice(index,1);
+        }
     }
 
 }
 
 export class ToggleFilter
 {
-    constructor(code: string, name: string, count: number = 0)
+    constructor(code: string, name: string, filterName: string = '', count: number = 0)
     {
         this.Code = code;
         this.Name = name;
         this.Count = count;
+        this.FilterName = filterName;
     }
 
 
@@ -746,7 +948,15 @@ export class ToggleFilter
         this.code = v;
     }
 
-
+    private filterName: string;
+    public get FilterName(): string
+    {
+        return this.filterName;
+    }
+    public set FilterName(v: string)
+    {
+        this.filterName = v;
+    }
 
 }
 
@@ -757,4 +967,24 @@ export class CargoTrackingShipmentsCounter{
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
+}
+
+enum Milestones {
+    Booking = "1",
+    Pickup = "2",
+    FromWarehouse = "3",
+    Departure = "4",
+    Arrival = "5",
+    ToWarehouse = "6",
+    AssignedToCustomsBroker = "7",
+    CustomsProcess = "8",
+    GoodsClassification = "9",
+    DocumentInspection = "10",
+    CustomsPayment = "11",
+    Clearance = "12",
+    GatepassArrived = "13",
+    AssignedtoTrucker = "14",
+    DeliveryOut = "15",
+    Delivered = "16",
+    Invoiced = "17"
 }

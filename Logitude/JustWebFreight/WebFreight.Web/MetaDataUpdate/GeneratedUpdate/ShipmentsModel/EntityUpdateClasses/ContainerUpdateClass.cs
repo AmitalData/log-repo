@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "c8ae9158fe783256f5f63d5765c7f7b6";
+		public const string HashString = "d381b0dd440e11742998feee1f75c510";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -92,7 +92,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableSingular =  "Container",
 			      				    ObjectTablePlural =  "Containers",
 			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -114,10 +114,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  10,
 			      				    DefaultText =  "Container",
 			      				    Code =  "38cb",
 			      				    Name =  " Query Group",
@@ -8784,7 +8784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ContainerGeneralFeature_TH0.Id,FeatureUniqeCode = ContainerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerGeneralTextCode_TH0.Id, TabNameTextCodeCode = ContainerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COGE",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentContainers/Components/EditTabs/GeneralTabComponent", FeatureId = ContainerGeneralFeature_TH0.Id,FeatureUniqeCode = ContainerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerGeneralTextCode_TH0.Id, TabNameTextCodeCode = ContainerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COST",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentContainers/Components/EditTabs/StatusesTabComponent", FeatureId = ContainerStatusesFeature_TH1.Id,FeatureUniqeCode = ContainerStatusesFeature_TH1.FeatureUniqeCode, ControlPath = "./ShipmentModules/ShipmentContainers/Components/EditTabs/StatusesTabComponent", ObjectTableId = ContainerObjectTable.Id, TabNameTextCodeId = ContainerStatusesTextCode_TH1.Id, TabNameTextCodeCode = ContainerStatusesTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
