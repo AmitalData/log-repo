@@ -31,7 +31,7 @@ namespace Logitude.FullAccounting.Test.Services
                 CurrencyId = BillingData.CurrencyNISId,
                 ChequeNumber = DateTime.Now.Ticks.ToString().Substring(3),
                 ValueDate = DateTime.Now,
-                BankAccountId = new BankAccountPreparation().Create(),
+                BankAccountId = new BankAccountPreparation().GetNewBankAccount(),
                 LocalAmount = (decimal)paymentChequeTable.LocalAmount,
                 PayToGLAccountId = new AccountPreparation().Create(),
                 PayToName = paymentChequeTable.PayToName.ToString(),

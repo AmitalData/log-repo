@@ -22,7 +22,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         }
         public void ChequePrepare()
         {
-            var cashBookId = new CashBookPreparation().Create();
+            var cashBookId = new CashBookPreparation().GetNewCashNIS();
             var chequeBankDepositLine = Getline(cashBookId);
             var chequeBankDeposiInstance = CraeteChequeInstance(cashBookId, new List<BankDepositLinePM>() { chequeBankDepositLine });
             var chequeBankDeposi = Create(chequeBankDeposiInstance);
@@ -53,7 +53,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 IsCashDeposit = true,
                 ForeignAmount = 100,
                 LocalDepositAmount = 100,
-                CashBookId = new CashBookPreparation().Create(),
+                CashBookId = new CashBookPreparation().GetNewCashNIS(),
 
             };
         }

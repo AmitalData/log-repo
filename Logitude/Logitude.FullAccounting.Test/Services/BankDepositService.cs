@@ -36,7 +36,7 @@ namespace Logitude.FullAccounting.Test.Services
                 IsCashDeposit = true,
                 ForeignAmount = (decimal)bankDepositTable.ForeignAmount,
                 LocalDepositAmount = (decimal)bankDepositTable.LocalDepositAmount,
-                CashBookId = new CashBookPreparation().Create(),
+                CashBookId = new CashBookPreparation().GetNewCashNIS(),
                 Tenant = UserTenant.Tenant
             };
 
