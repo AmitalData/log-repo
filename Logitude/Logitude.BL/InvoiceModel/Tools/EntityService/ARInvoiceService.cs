@@ -300,7 +300,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , OldEntityPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant , EntityId = entityPM.Id});
             entityAutomationService.RunAutomation();
 
-            this.ComputeInvoiceAmounts();
+            if (!entityPM.IsConsolidationInvoice)
+            {
+                this.ComputeInvoiceAmounts();
+            }
+
             SetPrintNotesForInterestInvoice(entityPM);
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
