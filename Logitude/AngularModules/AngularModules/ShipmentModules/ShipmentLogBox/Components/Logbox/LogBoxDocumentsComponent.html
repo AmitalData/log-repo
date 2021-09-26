@@ -313,7 +313,7 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}} </span>
 
-                            <span *ngIf="hasExportShipmentToggle">
+                            <span *ngIf="SelectedShipment && hasExportShipmentToggle">
                                 <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
                                     {{MainCarriageTDLabel}}{{MainCarriageTD | DateTimePipe: 'SMD'}}
                                 </span>
@@ -321,7 +321,7 @@
                                     {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
                                 </span> 
                             </span>
-                            <span *ngIf="!hasExportShipmentToggle">
+                            <span *ngIf="SelectedShipment && !hasExportShipmentToggle">
                                 <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
                                 <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageETA && !SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:darkorange;margin-left: 10px;">ETA : {{SelectedShipment.MainCarriageETA | DateTimePipe: 'SMD'}}</span>
                             </span></td> 
