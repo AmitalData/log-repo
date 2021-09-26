@@ -1584,6 +1584,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private string originPortCode ;
 	  	  
        
@@ -1676,6 +1677,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private string lastExceptionDescription ;
 	  	  
        
@@ -1722,6 +1724,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+
    }
    
 }

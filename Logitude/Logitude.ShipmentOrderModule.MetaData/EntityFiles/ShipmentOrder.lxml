@@ -5033,6 +5033,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;38acf544-761f-4242-b4d0-7dc6e85a3ccb&quot;"
     FieldName="&quot;OriginPortCode&quot;"
@@ -5308,6 +5309,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;571e7c21-cee0-4a7d-ae5e-a7fd82ea9a8b&quot;"
     FieldName="&quot;LastExceptionDescription&quot;"
@@ -5453,6 +5455,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Query
     Code="&quot;ALSO&quot;"
     TextCode="&quot;All Shipment Orders&quot;"
