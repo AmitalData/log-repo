@@ -1,4 +1,4 @@
-@release @all @dev
+@release @all @dev @devsmoke
 Feature: Edit Company Address Settings from Maintenance
     The user edits the Company Address Settings from Maintenance Module
 

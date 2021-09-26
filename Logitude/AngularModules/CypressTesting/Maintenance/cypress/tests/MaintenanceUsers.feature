@@ -1,4 +1,4 @@
-@all @dev
+@all @dev @devsmoke
 Feature: User Create, Search and Edit from Maintenance
     The user creates a User, searches for and edits it from the Maintenance Module.
 
