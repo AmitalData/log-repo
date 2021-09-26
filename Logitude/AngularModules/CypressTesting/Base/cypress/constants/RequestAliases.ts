@@ -39,6 +39,10 @@ export class RequestAliases {
     public static readonly GetAll = 'GetAll';
     public static readonly EntityResourceAccountingPeriod = "EntityResource"
     public static readonly ContainerFollowUpViewsGetbyfilters = 'ContainerFollowUpViewsGetbyfilters';
+
+    public static readonly PostQuery = "PostQuery"
+    public static readonly PutQuery = "PutQuery"
+    public static readonly DeleteQuery = "DeleteQuery"
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
