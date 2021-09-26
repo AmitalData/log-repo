@@ -644,7 +644,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
-    OpenMessageWindow(references) {
+    OpenMessageWindow(references) {	
+        references = references.map(x => x.trim());
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
@@ -652,6 +653,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 description: references.toString().split(',').join("\n"),
             }
         });
+    }
+
+    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+        references = references.map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'References',	
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
+            }	
+        });	
+    }
+
+    OpenExceptionMessageWindow(messageDescription) {	
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'Exception',	
+                description: messageDescription,	
+            }	
+        });	
     }
 
     GetModeIcon(mode: string)

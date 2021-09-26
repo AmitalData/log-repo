@@ -86,8 +86,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.LoadShipment();
         this.CreatePartnerCardsFromShipmentPM();
-       
-
     }
     private SetOverviewPanelTitle() {
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
@@ -123,7 +121,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     InitSlider()
     {
-
+        console.log('sliderMarginCardCount:' + ' '+ this.sliderMarginCardCount + ' '+ 'sliderVisibleCardsCount:' + this.sliderVisibleCardsCount+ ' ' +
+        'SliderCards:' + this.SliderCards.length)
         var PAGERS_WIDTH = 200; // 100 * 2 pager
         var screenwidth = window.innerWidth;
 
@@ -133,11 +132,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
 
-        this.sliderVisibleCardsCount = count;
+        this.sliderVisibleCardsCount = count == undefined ? 1: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
 
     }
 
@@ -260,12 +259,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
     GetDocumentsFilingsConnectedToShipment() {
         this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
-                this.DocumentsFilings = result.map(d => (
+                this.DocumentsFilings = [result.map(d => (
                     {
                         ShowDetailsMenu: false,
                         ...d }
-                    ));;
-                console.log("DocumentsFilings", this.DocumentsFilings);
+                    ))];
                 this.isLoading = false;
 
             }
@@ -473,7 +471,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             for (let routing of this.ShipmentPM.ShipmentPickUps) {
                 this.AddTruckerPartnerCardIfCarrierIdExist(routing);
             }
-
         }
     }
    
@@ -1139,6 +1136,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 title: 'Exception',
                 date: messageDate,
                 description: messageDescription,
+            }
+        });
+    }
+
+    OpenReferencesWindow(references) {
+        references = references.map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.join("\n"),
             }
         });
     }

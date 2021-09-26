@@ -36,7 +36,7 @@
                 </li>
             </ul>
         </div>-->
-    <div class="hide-mobile" style="margin-left: 20px;">
+    <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
         <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
         <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
         
@@ -108,7 +108,7 @@
     </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0">
-        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
+        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Results' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
@@ -188,6 +188,7 @@
                                             </g>
                                         </g>
                                     </svg>
+                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
                                 </div>
 
                                 <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
@@ -202,7 +203,7 @@
                             </div>
                         </div>
                         <!-- References -->
-                        <div class="column col-md-2 reference" style="width: 5%;">
+                        <div class="column col-md-2 reference" style="width: 11%;">
                             <div>
                                 <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
                                     Reference NO.
@@ -211,18 +212,21 @@
                                                    alt="">
                                     </span>
                                 </div>
-                                <div class="truncateText" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i > 0}" *ngIf="i < 4">
+                                <span class="mobile-only-inline-block">
+                                    {{ shipment.ShipmentNumber }}
+                                </span>
+                                <div class="truncateText mobile-inline-block" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
                                         {{item}}
                                     </span>
-
-                                    <span class="more-mobile" *ngIf="references?.length > 1 && i == 0">
-                                        <a (click)="OpenMessageWindow(references.slice(1, references.length + 1))"><u>+ {{references?.length - 1}} More</u></a>
+                                    <span class="more-mobile" *ngIf="i == 0">
+                                        <a (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+ {{references?.length}} More</u></a>
                                     </span>
                                 </div>
-                                <span class="hide-mobile" *ngIf="references?.length > 4" [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
+                                <span class="hide-mobile" (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()" *ngIf="references?.length > 4"
+                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
-                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 4}} More</u>
+                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 3}} More</u>
                                 </span>
 
                             </div>
@@ -231,7 +235,7 @@
                         <!-- Shipment Number -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">Shipment Number</div>
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}</div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
                                 <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
@@ -334,7 +338,7 @@
 
                                     <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
                                         <div tooltip-trigger>
-                                            <div class="icon-danger">!</div>
+                                            <div (click)="$event.stopPropagation()" class="icon-danger">!</div>
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">

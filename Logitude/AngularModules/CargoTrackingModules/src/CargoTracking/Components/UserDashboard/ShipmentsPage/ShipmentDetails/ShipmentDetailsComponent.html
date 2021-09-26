@@ -6,10 +6,10 @@
 <div *ngIf="isLoading"> <br> Loading...</div>
 
 <div *ngIf="!isLoading" class="shipment-details-container">
-    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
+
+    <div class="back-to-shipments" style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
         <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
     </div>
-
     <!-- Shipment Header -->
     <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
 
@@ -86,34 +86,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </g>
                 </svg>
 
@@ -151,15 +123,17 @@
 
     </div>
 
-    <!-- Milestones -->
-    <div class="shipment-header" style="vertical-align:middle;text-align:center">
-        <span *ngIf="NoMilstonesFound" class="title">No Milestones created for this Shipment</span>
-    </div>
 
-    <div *ngIf="!NoMilstonesFound" style="order: 2;" #SliderWrapper class="slider-wrapper"
+
+    <div style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
          (wheel)="onMousewheel($event)" (pan)="logPan($event)">
 
-        <div *ngIf="!NoMilstonesFound" class="pager hide-mobile" [class.dim]="sliderMarginLeft==0"
+        <!-- Milestones -->
+        <div *ngIf="NoMilstonesFound" class="shipment-header" style="vertical-align:middle;text-align:center">
+            <span class="no-data-available" *ngIf="NoMilstonesFound" class="title">No Milestones created for this Shipment</span>
+        </div>
+
+        <div *ngIf="!NoMilstonesFound" class="pager left-arrow" [class.dim]="sliderMarginLeft==0"
              (click)="MoveSlider('right')">
             <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
         </div>
@@ -176,7 +150,7 @@
                     <app-tooltip *ngIf="card.HasWarning" [ShowHeader]="true" [Title]="'Exception'"
                                  style=" position: absolute; top: -12px; right: -12px;">
                         <div tooltip-trigger>
-                            <div (click)="OpenMessageWindow(card.WarningMessage,card.WarningDate)" class="warning-icon">
+                            <div class="warning-icon">
                                 !
                             </div>
                         </div>
@@ -210,7 +184,7 @@
             </div>
         </div>
 
-        <div *ngIf="!NoMilstonesFound" class="pager hide-mobile" (click)="MoveSlider('left')"
+        <div *ngIf="!NoMilstonesFound" class="pager right-arrow" (click)="MoveSlider('left')"
              [class.dim]="((sliderMarginCardCount+sliderVisibleCardsCount)>=SliderCards.length) || (sliderVisibleCardsCount >= SliderCards.length)">
             <img src="./assets/images/icons/right-arrow@2x.png" alt="" />
         </div>
@@ -225,21 +199,20 @@
             </button>
             <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
-                Info
             </button>
             <button *ngIf="Shipment.ShipmentList.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
                     (click)="PanelsNavigatorClicked('CustomsDataPanel')">
-                Customs Data
+                Customs
             </button>
-            <button [class.active]="selectedNavButton=='Routing'"
+            <button [class.active]="selectedNavButton=='RoutingPanel'"
                     (click)="PanelsNavigatorClicked('RoutingPanel')">
                 Routing
             </button>
-            <button *ngIf="Shipment.ShipmentList.EntityType != 'O'" [class.active]="selectedNavButton=='Documents'"
+            <button *ngIf="Shipment.ShipmentList.EntityType != 'O'" [class.active]="selectedNavButton=='DocumentsPanel'"
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
-            <button [class.active]="selectedNavButton=='Partners'"
+            <button [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
             </button>
@@ -247,7 +220,7 @@
     </div>
 
 
-    <panel style="order: 3;" [Title]="OverviewPanelTitle" [ShowGrayPanelOnMobile]="true" [Name]="'Overview'">
+    <panel style="order: 3;" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
@@ -255,18 +228,38 @@
                     <div class="title">po number</div>
                     <div class="description">{{ShipmentOrder?.PONumber}}</div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.ForwardingMaster">
+                <div *ngIf="Shipment.ShipmentList.ForwardingMaster && Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">Master</div>
                     <div class="description">{{Shipment.ShipmentList?.ForwardingMaster}}</div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.ForwardingHouse">
+                <div *ngIf="Shipment.ShipmentList.ForwardingHouse  && Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">House</div>
                     <div class="description">{{Shipment.ShipmentList?.ForwardingHouse}}</div>
                 </div>
                 <div>
                     <div class="title">Incoterms</div>
+                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
                     <div class="description">{{ShipmentOrder? ShipmentOrder.IncotermName : ShipmentPM?.IncotermName}}</div>
                 </div>
+
+                <div class="mobile-only">
+                    <div class="title">Customer Ref.</div>
+                    <div class="description">
+                        <span *ngFor="let item of ShipmentReferences, let i = index">
+                            <span *ngIf="i == 0">{{item}} </span>
+                        </span>
+                        <a *ngIf="HasReferences"
+                           (click)="OpenReferencesWindow(ShipmentReferences)"
+                           style="cursor: pointer;text-decoration: underline;">See all</a>
+                    </div>
+                </div>
+
+                <div class="mobile-only">
+                    <div class="title">{{TitleOfCustomsOrForwarder}}</div>
+                    <div class="description">{{ValueOfCustomsOrForwarder}}</div>
+                </div>
+
+                <!-- ETD/ATD -->
                 <!-- ETD/ATD -->
                 <div>
                     <div class="title">
@@ -310,6 +303,8 @@ Shipment.ShipmentList.ArrivalDate |
                 </div>
 
 
+
+
                 <div>
                     <div class="title">customer</div>
                     <div class="description">{{Shipment.ShipmentList.CustomerEnglishName}}</div>
@@ -319,7 +314,10 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="description">{{Shipment.ShipmentList.ShipperName}}</div>
                 </div>
 
-
+                <!--<div>
+        <div class="title">Incoterms</div>
+        <div class="description">{{ShipmentPM?.IncotermName}}</div>
+    </div>-->
                 <div>
                     <div class="title">quantity</div>
                     <div *ngIf="ShipmentOrder == null" class="description">{{ ShipmentPM?.NumberOfPackages || 0}} units</div>
@@ -351,32 +349,31 @@ Shipment.ShipmentList.ArrivalDate |
     </panel>
 
 
-    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="Shipment.ShipmentList.EntityType != 'O'"
+    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" Shipment.ShipmentList.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
            [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
            [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-                <div *ngIf=" ShipmentOrder == null">
-                    <!--<div class="title">{{TypeTitle}}</div>-->
-
+                <div  *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="hide-mobile">
+                  
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="description">
-                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
+                        <div *ngFor="let package of ShipmentPackages?.slice(0,1), let i = index">
                             {{package.PackageTypeName}}
-                            <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
+                            <a *ngIf="ShipmentPackages.length > 1 && i == 0" (click)="ShowMoreLinkClicked()"
                                style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
                                 {{ShowDetailsSection?'Show less':'Show more'}}
                             </a>
                         </div>
                     </div>
                 </div>
-                <div *ngIf=" ShipmentOrder == null">
+                <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">fcl / lcl</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">Shipment Type</div>
-                    <div *ngIf="ShipmentOrder != null" class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
+                    <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
                 </div>
                 <div>
                     <div class="title">quantity</div>
@@ -394,14 +391,13 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="title">volume</div>
                     <div class="description">{{Shipment.ShipmentList.Volume }}</div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
-
+                <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">storage site</div>
                     <div class="description">
                         {{ShipmentPM?.WarehouseLegEnglishName}}
                     </div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.TransportModeId != 'A' && Shipment.ShipmentList.EntityType != 'O'">
+                <div class="hide-mobile" *ngIf="Shipment.ShipmentList.TransportModeId != 'A' && Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">containers</div>
                     <div class="description">
                         <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
@@ -412,7 +408,7 @@ Shipment.ShipmentList.ArrivalDate |
                     </div>
                 </div>
 
-                <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
+                <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">Import Manifest</div>
                     <div class="description">
                         {{ShipmentPM?.ImportManifest}}
@@ -448,7 +444,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                     </tr>
                 </table>
 
-                <table *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
+                <table class="package-list-table" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
                     <tr>
                         <th style="width: 400px;">Package Type</th>
                         <th style="width: 250px;">Quantity</th>
@@ -470,12 +466,12 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
+    <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
            [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
             <div *ngIf="loadingCustomsData">Loading customs data ...</div>
-            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
+            <div class="no-data-available" *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
             <div *ngIf="!loadingCustomsData && ShipmentCustomsData" class="data-cards">
                 <div>
                     <div class="title">Declaration #</div>
@@ -549,10 +545,10 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'">
+    <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="ShipmentRouteSteps?.length === 0">
 
         <div body>
-            <div *ngIf="ShipmentRouteSteps?.length == 0" style="margin-top:10px">No Routing defined for this shipment </div>
+            <div  class="no-data-available" *ngIf="ShipmentRouteSteps?.length == 0" style="margin-top:10px">No Routing defined for this shipment </div>
             <div *ngIf="ShipmentRouteSteps?.length > 0" style="margin-top:20px" class="routing-timeline">
                 <div class="routing-step" [class.active]="step.IsActive" *ngFor="let step of ShipmentRouteSteps">
                     <div class="routing-banner">
@@ -659,6 +655,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                 </div>
                             </div>
                             <div class="route-description TextTrimming">{{step.Description}}</div>
+                            <div class="routes">
                             <div *ngFor="let direction of step.Directions" class="route-direction">
 
                                 <svg style="transform: rotate(45deg);"
@@ -689,6 +686,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                 {{direction.Label}} {{direction.Date | date:'dd/MM/yyyy'}}
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -697,12 +695,12 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
 
-    <panel *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="false">
+    <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="DocumentsFilings?.length === 0">
 
         <div body>
-            <div *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
-            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)"
-               (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
+            <div  class="no-data-available" *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
+            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" 
+                (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
                 <table class="row-hover" style="width: 100%;">
@@ -761,11 +759,14 @@ package.ShipperSeal == null ? package.CarrierSeal :
                     <div class="details-section">
                         <div class="row" style="margin-bottom: 5px;">
                             <div class="col-50 card-title">type</div>
-                            <div class="col-40 card-title">customs ref</div>
-                            <div class="col-10 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
+                            <div class="col-35 card-title">customs ref</div>
+                            <div class="col-15 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
                                 <a href="javascript:;" style="padding: 10px 3px 0px 13px;">
                                     <img src="./assets/images/icons/more.png" alt="">
                                 </a>
+
+                                <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
+
                             </div>
                         </div>
                         <div class="row">
@@ -797,10 +798,10 @@ item.CreateDate | date:'d-MMM-yyyy,
 
     </panel>
 
-    <panel style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true">
+    <panel style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="PartnerCards?.length === 0">
 
         <div body>
-
+            <div  class="no-data-available" *ngIf="PartnerCards?.length == 0 " style="margin-top:10px">No Partners defined for this shipment</div>
             <div class="partners-cards-wrapper">
                 <div class="card partner-card" *ngFor="let partnerCard of PartnerCards">
                     <div class="header">
@@ -830,12 +831,14 @@ item.CreateDate | date:'d-MMM-yyyy,
                         <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
                             <!-- {{partnerCard.Address}} -->
                         </div>
-                        pa
+                       
                         <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
                         <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
-                        "p
                         <div class="partners-footer-buttons mobile-only">
+                            
                             <div class="circle-icon-x2">
+                               
+                                
                                 <a [href]="'tel:'+partnerCard.PhoneNumber">
                                     <img src="./assets/images/icons/call-white.svg" alt="">
                                 </a>
