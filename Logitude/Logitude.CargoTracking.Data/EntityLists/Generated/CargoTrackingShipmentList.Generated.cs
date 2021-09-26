@@ -242,6 +242,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool? GatepassArrivedDone  { get; set; }
        [DataMember]
        public string ImportManifest  { get; set; }
+       [DataMember]
+       public string PrevForwardingShipmentId  { get; set; }
    }
 
 }

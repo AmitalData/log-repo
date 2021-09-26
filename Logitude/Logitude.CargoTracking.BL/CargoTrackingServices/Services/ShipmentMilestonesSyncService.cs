@@ -2,6 +2,8 @@
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +46,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             // current
             sql = BuildScriptToSetCurrentMistones();
             ExcuteSqlScript(cargoArgs, sql);
+
+
+            sql = DisconnectShipments(cargoArgs);
+            ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
         private void FillMilstonesFieldsList()
         {
@@ -149,6 +155,44 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return sql;
         }
+        private string DisconnectShipments(CargoTrackingArgs cargoArgs)
+        {
+            string disconnectedShipmentsIds = GetDisconnectedShipmentsIds(cargoArgs);
+
+            if (disconnectedShipmentsIds.Length == 0)
+                return null;
+
+            string script = 
+                $"update shipments  " +
+                $"set LastUpdateDate = GETDATE() " +
+                $"where id in ({disconnectedShipmentsIds}) ";
+
+            return script;
+        }
+
+        private static string GetDisconnectedShipmentsIds(CargoTrackingArgs cargoArgs)
+        {
+            var dataTable = new DataTable();
+            string query = "IF OBJECT_ID(N'dbo.OldCargoShipments', N'U') IS NOT NULL " + Environment.NewLine +
+                "select	old.ForwardingShipmentHeaderId " +
+                            "from CargoTrackingShipments shipment join OldCargoShipments old on shipment.EntityId = old.EntityId " +
+                            "where shipment.ForwardingShipmentHeaderId is null and old.ForwardingShipmentHeaderId is not null " +
+                            "and shipment.EntityType = 'O'";
+            SqlConnection conn = new SqlConnection(cargoArgs.DestinationConnectionString);
+            SqlCommand cmd = new SqlCommand(query, conn);
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dataTable);
+            conn.Close();
+            da.Dispose();
+
+
+            var disconnectedShipments = dataTable.AsEnumerable().Select(d => "'" + d.ItemArray[0] + "'").ToList();
+
+            var disconnectedShipmentsIds = string.Join(",", disconnectedShipments);
+            return disconnectedShipmentsIds;
+        }
+
         private string BuildForwardingUpdatedFieldsFromCustom()
         {
             List<string> fieldsAssignments = new List<string>();
@@ -177,6 +221,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private void ExcuteSqlScript(CargoTrackingArgs cargoArgs, string sql)
         {
             ServiceHelper.ExecuteSql(sql, cargoArgs.DestinationConnectionString);
+        }
+        private void ExcuteSqlScriptForSourceDatabase(CargoTrackingArgs cargoArgs, string sql)
+        {
+            if (string.IsNullOrWhiteSpace(sql))
+                return;
+
+            ServiceHelper.ExecuteSql(sql, cargoArgs.SourceConnectionString);
         }
 
         private void FillForwardingMilstonesFieldsList()

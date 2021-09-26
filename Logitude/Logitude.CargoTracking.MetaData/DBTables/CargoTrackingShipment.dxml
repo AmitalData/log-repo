@@ -604,6 +604,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrevForwardingShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

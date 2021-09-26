@@ -211,6 +211,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool? GatepassArrivedDone { get; set; }
         [Column("ImportManifest")]
 	    public string ImportManifest { get; set; }
+        [Column("PrevForwardingShipmentId")]
+	    public string PrevForwardingShipmentId { get; set; }
     }
 }
 	 
