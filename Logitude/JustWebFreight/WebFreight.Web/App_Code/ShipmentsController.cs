@@ -448,7 +448,7 @@ namespace WebFreight.Web
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
                                                      House = entity.House,
                                                      LongMaster = entity.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
-                                                   
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
                                                  };
             return shipments;
         }
