@@ -358,4 +358,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion
   public static readonly ComponentBusyIndicator = "#EditComponentBusyIndicator_0"
+
+
+    //#region Shipment view
+    public static readonly ShipmentList = "#Shipments-O-Q";
+    public static readonly ShipmentViewQueryList = "#QueryList_0_0";
+    public static readonly AddNewShipmentViewHyperLink = "#NewViewTabchoose";
+    public static readonly ShipmentViewName = "#ViewNameId";
+    public static readonly ViewSearchField = "#NewViewSearchFields_0_0";
+    public static readonly ListBoxItem = ".ListBoxItem";
+    public static readonly ViewAddButton = "#NewButtonViewAdd";
+    public static readonly EditViewButton = "#ViewFiltersButton";
+    public static readonly ViewDeleteButton = "#DeleteButton";
+    //#endregion
 }
