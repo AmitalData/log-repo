@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Models
 		public string DepositBankAccountId { get; set; }
 		public string CashBookId { get; set; }
 		public DateTime AccountingDate { get; set; }
-		
-       public string CashBookGLAccountId { get; set; }
+		public virtual List<BankDepositLinePM> BankDepositLines { get; set; }
+		public string CashBookGLAccountId { get; set; }
 		public bool IsCashDeposit { get; set; }
 		public string DeferredGLAccountId { get; set; }
 		public string CashGLAccountId { get; set; }

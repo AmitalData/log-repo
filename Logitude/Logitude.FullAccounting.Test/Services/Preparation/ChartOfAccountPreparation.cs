@@ -8,32 +8,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.FullAccounting.Test.Models.Codes;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
 
     public class ChartOfAccountPreparation
     {
-        const string DebtorsAndCreditorsChartCode = "DCCHR";
-        const string CustomerChartCode = "CCCHR";
-        const string VendorChartCode = "VNCHR";
-        const string BankChartCode = "BNCHR";
+        
         public void Prepare()
         {
-            FullAccountingData.DebtorsAndCreditorsChartOfAccountId = GetByCode(DebtorsAndCreditorsChartCode);
-            FullAccountingData.CustomerChartOfAccountId = GetByCode(CustomerChartCode);
-            FullAccountingData.VendorChartOfAccountId = GetByCode(VendorChartCode);
-            FullAccountingData.BankChartOfAccountId = GetByCode(BankChartCode);
+            FullAccountingData.DebtorsAndCreditorsChartOfAccountId = GetDebtorsAndCreditors();
+            FullAccountingData.CustomerChartOfAccountId = GetCustomer();
+            FullAccountingData.VendorChartOfAccountId = GetVendor();
+            FullAccountingData.BankChartOfAccountId = GetBank();
         }
-        private string GetByCode(string code)
+
+        private string GetDebtorsAndCreditors()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(ChartOfAccountCodes.DebtorsAndCreditorsChart) ?? Create(CreateDebtorsAndCreditorsInstance());
         }
+
+        private string GetCustomer()
+        {
+            return GetIdByCode(ChartOfAccountCodes.CustomerChart) ?? Create(CreateCustomersChartInstance());
+        }
+
+        private string GetVendor()
+        {
+            return GetIdByCode(ChartOfAccountCodes.VendorChart) ?? Create(CreateVendorChartInstance());
+        }
+
+        private string GetBank()
+        {
+            return GetIdByCode(ChartOfAccountCodes.BankChart) ?? Create(CreateBankChartInstance());
+        }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
@@ -48,77 +58,60 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Filter1Value(code)
                 .Build();
         }
-        private string Create(string code)
+        private string Create(ChartOfAccountPM chartOfAccountPM)
         {
-            var ChartOfAccountPM = CreateInstance(code);
-            var response = APICaller.CallPost<ChartOfAccountPM>(ChartOfAccountPM, Urls.ChartOfAccountsController, UserTenant.Token);
+            var response = APICaller.CallPost<ChartOfAccountPM>(chartOfAccountPM, Urls.ChartOfAccountsController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private ChartOfAccountPM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case DebtorsAndCreditorsChartCode:
-                    return CreateRCHARInstance(code);
-                case CustomerChartCode:
-                    return CreateCustomersChartCodeInstance(code);
-                case VendorChartCode:
-                    return CreateVendorChartCodeInstance(code);
-                case BankChartCode:
-                    return CreateBankChartCodeInstance(code);
-
-                default:
-                    return null;
-            }
-        }
-        private ChartOfAccountPM CreateRCHARInstance(string code)
+        
+        private ChartOfAccountPM CreateDebtorsAndCreditorsInstance()
         {
             return new ChartOfAccountPM()
             {
-                Code = code,
+                Code = ChartOfAccountCodes.DebtorsAndCreditorsChart,
                 EnglishName = "Debtors And Creditors Chart",
                 LocalName = "Debtors And Creditors Chart",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Debtors And Creditors Chart",
+                SearchFields = $"{ChartOfAccountCodes.DebtorsAndCreditorsChart},Debtors And Creditors Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.DebtorsAndCreditors + ""
 
             };
         }
-        private ChartOfAccountPM CreateCustomersChartCodeInstance(string code)
+        private ChartOfAccountPM CreateCustomersChartInstance()
         {
             return new ChartOfAccountPM()
             {
-                Code = code,
+                Code = ChartOfAccountCodes.CustomerChart,
                 EnglishName = "Customer Chart",
                 LocalName = "Customer Chart",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Customer Chart",
+                SearchFields = $"{ChartOfAccountCodes.CustomerChart},Customer Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Customers + ""
 
             };
         }
-        private ChartOfAccountPM CreateVendorChartCodeInstance(string code)
+        private ChartOfAccountPM CreateVendorChartInstance()
         {
             return new ChartOfAccountPM()
             {
-                Code = code,
+                Code = ChartOfAccountCodes.VendorChart,
                 EnglishName = "Vendors Chart",
                 LocalName = "Vendors Chart",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Vendors Chart",
+                SearchFields = $"{ChartOfAccountCodes.VendorChart},Vendors Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Vendors + ""
 
             };
         }
-        private ChartOfAccountPM CreateBankChartCodeInstance(string code)
+        private ChartOfAccountPM CreateBankChartInstance()
         {
             return new ChartOfAccountPM()
             {
-                Code = code,
+                Code = ChartOfAccountCodes.BankChart,
                 EnglishName = "Banks Chart",
                 LocalName = "Banks Chart",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Banks Chart",
+                SearchFields = $"{ChartOfAccountCodes.BankChart},Banks Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Banks + ""
 
             };

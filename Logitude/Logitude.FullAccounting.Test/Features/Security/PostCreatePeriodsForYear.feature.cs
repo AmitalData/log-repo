@@ -19,21 +19,19 @@ namespace Logitude.FullAccounting.Test.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-GetSingleGLAccountByDisplayNumberAndTenantCheckSecurity")]
-    public partial class GetSingleGLAccountByDisplayNumberAndTenantFeature : object, Xunit.IClassFixture<GetSingleGLAccountByDisplayNumberAndTenantFeature.FixtureData>, System.IDisposable
+    public partial class PostCreatePeriodsForYearFeature : object, Xunit.IClassFixture<PostCreatePeriodsForYearFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "Pre-Prepare-GetSingleGLAccountByDisplayNumberAndTenantCheckSecurity"};
+        private string[] _featureTags = ((string[])(null));
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetSingleGLAccountByDisplayNumberAndTenantCheckSecurity.feature"
+#line 1 "PostCreatePeriodsForYear.feature"
 #line hidden
         
-        public GetSingleGLAccountByDisplayNumberAndTenantFeature(GetSingleGLAccountByDisplayNumberAndTenantFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public PostCreatePeriodsForYearFeature(PostCreatePeriodsForYearFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,9 +40,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get Single GLAccount By Display Number And Tenant", "\tWe want to get bank single gl account by display number And tenant from unauthor" +
-                    "izes tenant.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-GetSingleGLAccountByDisplayNumberAndTenantCheckSecurity"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Post Create Periods For Year", "\twe want to check this api security.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,15 +80,15 @@ namespace Logitude.FullAccounting.Test.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get single gl account by display number And tenant from unauthorizes tenant.")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Single GLAccount By Display Number And Tenant")]
-        [Xunit.TraitAttribute("Description", "Get single gl account by display number And tenant from unauthorizes tenant.")]
-        public virtual void GetSingleGlAccountByDisplayNumberAndTenantFromUnauthorizesTenant_()
+        [Xunit.SkippableFactAttribute(DisplayName="Post create periods for year by not authentication user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Post Create Periods For Year")]
+        [Xunit.TraitAttribute("Description", "Post create periods for year by not authentication user.")]
+        public virtual void PostCreatePeriodsForYearByNotAuthenticationUser_()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get single gl account by display number And tenant from unauthorizes tenant.", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Post create periods for year by not authentication user.", null, tagsOfScenario, argumentsOfScenario);
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -112,12 +108,49 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
- testRunner.When("get  single gl account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 5
+ testRunner.When("post create periods for year by not login user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+#line 6
+ testRunner.Then("the post create periods for year api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Post create periods for year by not authorize user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Post Create Periods For Year")]
+        [Xunit.TraitAttribute("Description", "Post create periods for year by not authorize user.")]
+        public virtual void PostCreatePeriodsForYearByNotAuthorizeUser_()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Post create periods for year by not authorize user.", null, tagsOfScenario, argumentsOfScenario);
 #line 7
- testRunner.Then("The get  single gl account by display number And tenant API should return you hav" +
-                        "e no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 8
+ testRunner.When("post create periods for year by not authorize user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+ testRunner.Then("the post create periods for year api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -130,12 +163,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetSingleGLAccountByDisplayNumberAndTenantFeature.FeatureSetup();
+                PostCreatePeriodsForYearFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetSingleGLAccountByDisplayNumberAndTenantFeature.FeatureTearDown();
+                PostCreatePeriodsForYearFeature.FeatureTearDown();
             }
         }
     }

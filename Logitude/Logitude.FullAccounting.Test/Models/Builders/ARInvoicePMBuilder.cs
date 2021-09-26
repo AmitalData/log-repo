@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
@@ -226,9 +227,9 @@ namespace Logitude.FullAccounting.Test.Models.Builders
         {
             switch (invoiceCurrencyCode)
             {
-                case "NIS":
+                case CurrencyCodes.NIS:
                     return BillingData.CurrencyNISId;
-                case "EUR":
+                case CurrencyCodes.EUR:
                     return BillingData.CurrencyEURId;
                 default:
                     return null;
@@ -238,9 +239,9 @@ namespace Logitude.FullAccounting.Test.Models.Builders
         {
             switch (branchCode)
             {
-                case "BerzeitU":
+                case BranchCodes.BerzeitU:
                     return FullAccountingData.BZUBranchID;
-                case "RMLAH":
+                case BranchCodes.Ramallah:
                     return FullAccountingData.RamallahBranchID;
                 default:
                     return null;

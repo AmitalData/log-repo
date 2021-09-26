@@ -1,6 +1,7 @@
 ﻿
 using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -32,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Services
                 .PartnerId(FullAccountingData.CustomerId)
                 .IsFullAccounting(true)
                 .AccountingPaymentMethodId(FullAccountingData.CashPaymentMethodId)
-                .AccountingPaymentMethodCode("CA")
+                .AccountingPaymentMethodCode(AccountingPaymentMethodCodes.Cash)
                 .BillToId(FullAccountingData.CustomerId)
                 .AmountInPaymentCurrency((double)arPaymentTable.AmountInPaymentCurrency)
                 .OpenAmount((double)arPaymentTable.AmountInPaymentCurrency)

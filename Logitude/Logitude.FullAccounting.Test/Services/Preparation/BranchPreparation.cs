@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -13,22 +14,26 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 {
     public class BranchPreparation
     {
-        const string BZU = "BerzeitU";
-        const string Ramallah = "RMLAH";
         public void Prepare()
         {
-            FullAccountingData.BZUBranchID = GetByCode(BZU);
-            FullAccountingData.RamallahBranchID = GetByCode(Ramallah);
+            FullAccountingData.BZUBranchID = GetBerzeitU();
+            FullAccountingData.RamallahBranchID = GetRamallah();
         }
-        private string GetByCode(string code)
+        public string GetNewBranch()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return Create(CreateAny());
         }
+
+        private string GetRamallah()
+        {
+            return GetIdByCode(BranchCodes.BerzeitU) ?? Create(CreateBZUInstance());
+        }
+
+        private string GetBerzeitU()
+        {
+            return GetIdByCode(BranchCodes.BerzeitU) ?? Create(CreateRamallahInstance());
+        }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
@@ -45,48 +50,33 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        public string Create(string code = null)
+        public string Create(BranchPM branchPM)
         {
-            var branchPM = CreateInstance(code);
             var response = APICaller.CallPost<BranchPM>(branchPM, Urls.BranchesController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private BranchPM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case BZU:
-                    return CreateBZUInstance(code);
-                case Ramallah:
-                    return CreateRamallahInstance(Ramallah);
-                default:
-                    return CreateAny();
-            }
-        }
 
-        
-
-        private BranchPM CreateBZUInstance(string code)
+        private BranchPM CreateBZUInstance()
         {
             return new BranchPM()
             { 
-                Code = code,
+                Code = BranchCodes.BerzeitU,
                 EnglishName = "BerzeitU",
                 LocalName = "BerzeitU",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},BerzeitU"
+                SearchFields = $"{BranchCodes.BerzeitU},BerzeitU"
 
             };
         }
-        private BranchPM CreateRamallahInstance(string code)
+        private BranchPM CreateRamallahInstance()
         {
             return new BranchPM()
             { 
-                Code = code,
+                Code = BranchCodes.Ramallah,
                 EnglishName = "RMLAH",
                 LocalName = "RMLAH",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},RMLAH"
+                SearchFields = $"{BranchCodes.Ramallah},RMLAH"
 
             };
         }

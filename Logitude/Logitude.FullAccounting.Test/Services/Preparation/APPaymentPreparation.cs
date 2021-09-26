@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -32,9 +33,9 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private APPaymentPM CreateInstance()
         {
             return new APPaymentPMBuilder().WithDefualtValues()
-                .BranchIdByCode("BerzeitU")
+                .BranchIdByCode(BranchCodes.BerzeitU)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
-                .PaymentCurrencyIdByCode("NIS")
+                .PaymentCurrencyIdByCode(CurrencyCodes.NIS)
                 .PaymentCurrencyExchangeRate(1)
                 .AccountingPaymentMethodId(FullAccountingData.CashPaymentMethodId)
                 .AmountInPaymentCurrency(1)

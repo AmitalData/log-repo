@@ -19,7 +19,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class PostTestOperationFeature : object, Xunit.IClassFixture<PostTestOperationFeature.FixtureData>, System.IDisposable
+    public partial class GetTestOperationFeature : object, Xunit.IClassFixture<GetTestOperationFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
 #line 1 "GetTestOperation.feature"
 #line hidden
         
-        public PostTestOperationFeature(PostTestOperationFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetTestOperationFeature(GetTestOperationFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "PostTestOperation", "\twe want to check this api security.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get Test Operation", "\twe want to check this api security.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Get test operation by not authentication user.")]
-        [Xunit.TraitAttribute("FeatureTitle", "PostTestOperation")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Test Operation")]
         [Xunit.TraitAttribute("Description", "Get test operation by not authentication user.")]
         public virtual void GetTestOperationByNotAuthenticationUser_()
         {
@@ -119,7 +119,7 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Get test operation by not authorize user.")]
-        [Xunit.TraitAttribute("FeatureTitle", "PostTestOperation")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Test Operation")]
         [Xunit.TraitAttribute("Description", "Get test operation by not authorize user.")]
         public virtual void GetTestOperationByNotAuthorizeUser_()
         {
@@ -163,12 +163,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                PostTestOperationFeature.FeatureSetup();
+                GetTestOperationFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                PostTestOperationFeature.FeatureTearDown();
+                GetTestOperationFeature.FeatureTearDown();
             }
         }
     }

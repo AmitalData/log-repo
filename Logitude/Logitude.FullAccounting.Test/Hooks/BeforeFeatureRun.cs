@@ -121,6 +121,14 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new CustomerPreparation().Prepare();
             new AccountingNotes().Prepare();
         }
+        [BeforeFeature("Pre-Prepare-ReturnChequeFromBankDeposit")]
+        public static void PrePrepareReturnChequeFromBankDeposit()
+        {
+            new CustomerPreparation().Prepare();
+            new ARPaymentPreparation().ChequePrepare();
+            new BankDepositPreparation().ChequePrepare();
+        }
+
 
 
 

@@ -51,6 +51,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
         public static string PortViewsGetByFilters = "PortViews/GetByFilters";
         public static string PortViewsGetTenantImportByFilters = "PortViews/GetTenantImportByFilters";
+        public static string CashBookLineViewsByFilters = "CashBookLineViews/getbyfilters";
         public static string CountryViewsGetByFilters = "CountryViews/GetByFilters";
         public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
@@ -171,9 +172,9 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "bankaccounts/GetSingle?id=" + id;
         }
-        public static string GetBankDepositWithoutLines(string id, int tenant)
+        public static string GetBankDepositWithoutLines(string id)
         {
-            return $"BankDeposit/GetBankDepositWithoutLines?id={id}&tenant={tenant}";
+            return $"BankDeposit/GetSingleWithoutLines?id={id}";
         }
         public static string GetCardGLAccountConnect( int tenant)
         {
@@ -203,7 +204,18 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"AccountingOp/GetTestOperation?operationId={operationId}&myparams={myparams}";
         }
-        
+        public static string PostCreatePeriodsForYear(string year)
+        {
+            return $"AccountingPeriods/PostCreatePeriodsForYear?year={year}";
+        }
+        public static string GetAccountingPeriodByYear(int year, string typeCode)
+        {
+            return $"AccountingPeriodViews/GetByYear?year={year}&typeCode={typeCode}";
+        }
+        public static string GetRunAllPayablePostDatedARPaymentCheques(int tenant)
+        {
+            return $"ARPaymentChequeOp/GetRunAllPayablePostDatedARPaymentCheques?tenant={tenant}";
+        }
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;
@@ -229,6 +241,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ContainerGetSingle(string id)
         {
             return "Containers/GetSingle?id=" + id;
+        }
+        public static string PostReturnCheque(PostReturnChequeArgs postReturnChequeArgs)
+        {
+            return $"BankDeposit/PostReturnCheque?bankDepositId={postReturnChequeArgs.BankDepositId}&arpChequeId={postReturnChequeArgs.ARPChequeId}&returnType={postReturnChequeArgs.ReturnType}&notes={postReturnChequeArgs.Notes}";
         }
 
         public static string FTPDetailsGetSingle(string id)

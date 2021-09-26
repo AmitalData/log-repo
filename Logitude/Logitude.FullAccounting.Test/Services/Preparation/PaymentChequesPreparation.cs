@@ -39,7 +39,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CurrencyId = BillingData.CurrencyNISId,
                 ChequeNumber = DateTime.Now.Ticks.ToString().Substring(3),
                 ValueDate = DateTime.Now,
-                BankAccountId = new BankAccountPreparation().Create(),
+                BankAccountId = new BankAccountPreparation().GetNewBankAccount(),
                 LocalAmount = 100,
                 PayToGLAccountId = new AccountPreparation().Create(),
                 PayToName = "SPC F Test ",

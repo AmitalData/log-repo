@@ -19,7 +19,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class GetBankDepositWithoutLinesCheckSecurityFeature : object, Xunit.IClassFixture<GetBankDepositWithoutLinesCheckSecurityFeature.FixtureData>, System.IDisposable
+    public partial class GetAccountingPeriodByYearFeature : object, Xunit.IClassFixture<GetAccountingPeriodByYearFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.FullAccounting.Test.Features.Security
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetBankDepositWithoutLinesCheckSecurity.feature"
+#line 1 "GetAccountingPeriodByYear.feature"
 #line hidden
         
-        public GetBankDepositWithoutLinesCheckSecurityFeature(GetBankDepositWithoutLinesCheckSecurityFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetAccountingPeriodByYearFeature(GetAccountingPeriodByYearFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get Bank Deposit Without Lines Check Security", "\tWe want to get bank deposit without lines from unauthorizes tenant.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get Accounting Period By Year", "\twe want to check this api security.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Logitude.FullAccounting.Test.Features.Security
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get bank deposit without lines from unauthorizes tenant.")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Bank Deposit Without Lines Check Security")]
-        [Xunit.TraitAttribute("Description", "Get bank deposit without lines from unauthorizes tenant.")]
-        public virtual void GetBankDepositWithoutLinesFromUnauthorizesTenant_()
+        [Xunit.SkippableFactAttribute(DisplayName="Get accounting period by year by not authentication user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Accounting Period By Year")]
+        [Xunit.TraitAttribute("Description", "Get accounting period by year by not authentication user.")]
+        public virtual void GetAccountingPeriodByYearByNotAuthenticationUser_()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get bank deposit without lines from unauthorizes tenant.", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get accounting period by year by not authentication user.", null, tagsOfScenario, argumentsOfScenario);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -109,10 +109,48 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
- testRunner.When("get bank deposit without lines from unauthorizes tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("get accounting period by year by not login user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.Then("The bank deposit without lines API should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the get accounting period by year api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Get accounting period by year by not authorize user.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Accounting Period By Year")]
+        [Xunit.TraitAttribute("Description", "Get accounting period by year by not authorize user.")]
+        public virtual void GetAccountingPeriodByYearByNotAuthorizeUser_()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get accounting period by year by not authorize user.", null, tagsOfScenario, argumentsOfScenario);
+#line 8
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 9
+ testRunner.When("get accounting period by year by not authorize user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 10
+ testRunner.Then("the get accounting period by year api should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -125,12 +163,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetBankDepositWithoutLinesCheckSecurityFeature.FeatureSetup();
+                GetAccountingPeriodByYearFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetBankDepositWithoutLinesCheckSecurityFeature.FeatureTearDown();
+                GetAccountingPeriodByYearFeature.FeatureTearDown();
             }
         }
     }

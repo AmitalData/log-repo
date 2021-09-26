@@ -1,4 +1,4 @@
-﻿Feature: PostTestOperation
+﻿Feature: Get Test Operation
 	we want to check this api security.
 
 Scenario: Get test operation by not authentication user.

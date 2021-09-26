@@ -24,7 +24,7 @@ namespace Logitude.TimeManagementTests.Steps.DataEntry
         [Given(@"a data entry")]
         public void GivenADataEntry()
         {
-            string path = Urls.GetDataEntryTimeSheetList(UserTenant.UserId, "A", DateTime.Now, DateTime.Now);
+            string path = Urls.GetDataEntryTimeSheetList(UserTenant.UserId, LocationType.All, DateTime.Now, DateTime.Now);
             timeManagementContext.DataEntry = APICaller.CallGet<TimeManagementAPIHelper>(path, UserTenant.Token).Data;
         }
 

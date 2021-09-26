@@ -16,8 +16,8 @@ namespace Logitude.FullAccounting.Test.Steps.Security
         {
             this.context = context;
         }
-        [When(@"post test operation by not login user")]
-        public void WhenPostTestOperationByNotLoginUser()
+        [When(@"post test operation by not authentication user")]
+        public void WhenPostTestOperationByNotAuthenticationUser()
         {
             context.Action = () => APICaller.CallPost<object>(null, Urls.PostTestOperation, "0");
         }

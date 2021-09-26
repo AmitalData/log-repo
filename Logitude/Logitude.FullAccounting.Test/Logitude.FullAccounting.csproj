@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
-    <Compile Include="Models\AccountingIntegrityCheckPM.Generated.cs" />
+    <Compile Include="Models\AccountingIntegrityCheckPM.cs" />
     <Compile Include="Models\AccountingNotePM.Generated.cs" />
     <Compile Include="Models\AccountingPaymentMethodPM.cs" />
     <Compile Include="Models\AddressPM.cs" />
@@ -54,9 +54,11 @@
     <Compile Include="Models\ARPaymentPM.cs" />
     <Compile Include="Models\BankAccountPM.cs" />
     <Compile Include="Models\BankCodePM.cs" />
+    <Compile Include="Models\BankDepositLinePM.cs" />
     <Compile Include="Models\BankDepositPM.cs" />
     <Compile Include="Models\Builders\APPaymentPMBuilder.cs" />
     <Compile Include="Models\Builders\ARPaymentPMBuilder.cs" />
+    <Compile Include="Models\CashBookLineList.cs" />
     <Compile Include="Models\CashBookTypeCodeEnum.cs" />
     <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
     <Compile Include="Models\Builders\APInvoiceLineBuilder.cs" />
@@ -77,6 +79,16 @@
     <Compile Include="Models\ChargesTypePM.cs" />
     <Compile Include="Models\ChartOfAccountPM.cs" />
     <Compile Include="Models\AutomaticReconcileEnum.cs" />
+    <Compile Include="Models\Codes\AccountingActionCodes.cs" />
+    <Compile Include="Models\Codes\AccountingPaymentMethodCodes.cs" />
+    <Compile Include="Models\Codes\AutomaticReconcileMethodCodes.cs" />
+    <Compile Include="Models\Codes\BankDepositReturnTypeCodes.cs" />
+    <Compile Include="Models\Codes\ChargeTypeCodes.cs" />
+    <Compile Include="Models\Codes\ChartOfAccountCodes.cs" />
+    <Compile Include="Models\Codes\CurrencyCodes.cs" />
+    <Compile Include="Models\Codes\BranchCodes.cs" />
+    <Compile Include="Models\Codes\CashBookCodes.cs" />
+    <Compile Include="Models\Codes\PartnerTypeCodes.cs" />
     <Compile Include="Models\CustomerPM.cs" />
     <Compile Include="Models\JournalTypeEnum.cs" />
     <Compile Include="Models\ChartOfAccountsTypeEnum.cs" />
@@ -136,10 +148,11 @@
     <Compile Include="Steps\BankAccount\CreateBankAccountSteps.cs" />
     <Compile Include="Steps\BankAccount\GetBankAccountSteps.cs" />
     <Compile Include="Steps\Security\DeleteGlAccountNoteSteps.cs" />
-    <Compile Include="Steps\Security\GetBankAccountsSummaryCheckSecuritySteps.cs" />
+    <Compile Include="Steps\Security\GetAccountingPeriodByYearSteps.cs" />
+    <Compile Include="Steps\Security\GetBankAccountsSummarySteps.cs" />
     <Compile Include="Steps\BankDeposit\CreateBankDepositSteps.cs" />
     <Compile Include="Steps\BankDeposit\GetBankDepositSteps.cs" />
-    <Compile Include="Steps\Security\GetBankDepositWithoutLinesCheckSecuritySteps.cs" />
+    <Compile Include="Steps\Security\GetBankDepositWithoutLinesSteps.cs" />
     <Compile Include="Steps\Cashbook\CreateCashbooktSteps.cs" />
     <Compile Include="Steps\Cashbook\GetCashbooktSteps.cs" />
     <Compile Include="Steps\GLAccount\UpdateGlAccountSteps.cs" />
@@ -148,13 +161,16 @@
     <Compile Include="Steps\PaymentCheques\GetPaymentChequesSteps.cs" />
     <Compile Include="Steps\Security\GetCardGLAccountConnectSteps.cs" />
     <Compile Include="Steps\Security\GetGlAccountNotesByCardSteps.cs" />
+    <Compile Include="Steps\Security\GetRunAllPayablePostDatedARPaymentChequesSteps.cs" />
     <Compile Include="Steps\Security\GetSingleGLAccountByDisplayNumberAndTenantSteps.cs" />
     <Compile Include="Steps\Security\GetSingleGLAccountByInternalNumberAndTenantSteps.cs" />
     <Compile Include="Steps\Security\GetSystem1000FlatFileSteps.cs" />
     <Compile Include="Steps\Security\GetTestOperationSteps.cs" />
+    <Compile Include="Steps\Security\PostCreatePeriodsForYearSteps.cs" />
     <Compile Include="Steps\Security\PostTestOperationSteps.cs" />
     <Compile Include="Steps\Security\PutSystem1000File.cs" />
     <Compile Include="Steps\Security\PostFixIntegrityCheckErrorInBatchSteps.cs" />
+    <Compile Include="Steps\Security\ReturnChequeFromBankDepositSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -170,6 +186,10 @@
     <None Include="Features\BankAccount\GetBankAccount.feature" />
     <None Include="Features\Security\GetTestOperation.feature" />
     <None Include="Features\Security\PostTestOperation.feature" />
+    <None Include="Features\Security\PostCreatePeriodsForYear.feature" />
+    <None Include="Features\Security\GetAccountingPeriodByYear.feature" />
+    <None Include="Features\Security\GetRunAllPayablePostDatedARPaymentCheques.feature" />
+    <None Include="Features\Security\PostReturnChequeBankDeposit.feature" />
     <None Include="Features\Security\PutSystem1000File.feature" />
     <None Include="Features\Security\GetSystem1000FlatFile.feature" />
     <None Include="Features\Security\GetGlAccountNotesByCard.feature" />

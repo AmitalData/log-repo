@@ -76,7 +76,7 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request, apiQueryFilters);
         }
 
-        
+
         private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, int retries = 0)// needs refactoring
         {
             var pauseBetweenFailures = TimeSpan.FromSeconds(2);
@@ -104,7 +104,7 @@ namespace Logitude.Test.Base.Services
                 {
                     restResponse = restClient.Execute<T>(restRequest);
                     response.StatusCode = restResponse.StatusCode;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted)
                     {
                         response.Data = restResponse.Data;
                         break;
@@ -112,8 +112,17 @@ namespace Logitude.Test.Base.Services
                     else
                     {
                         JObject jObject = JObject.Parse(restResponse.Content);
-                        response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
-                        throw new Exception(response.ErrorMessage);
+                        if(jObject["ErrorMessage"] != null)
+                        {
+                            response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                            throw new Exception(response.ErrorMessage);
+                        }
+                        else
+                        {
+                            response.ErrorMessage = "Response Status Code: " + response.StatusCode.ToString();
+                            throw new Exception(response.ErrorMessage);
+                        }
+                        
                     }
                 }
                 catch (Exception ex)

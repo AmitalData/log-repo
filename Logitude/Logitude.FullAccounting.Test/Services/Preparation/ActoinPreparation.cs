@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -13,21 +14,21 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 {
     public class ActoinPreparation
     {
-        const string CreditActoinCode = "1";
-        const string DebitActoinCode = "2";
+        
         public void Prepare()
         {
-            FullAccountingData.CreditActoinId = GetByCode(CreditActoinCode);
-            FullAccountingData.DebitActoinId = GetByCode(DebitActoinCode);
+            FullAccountingData.CreditActoinId = GetCredit();
+            FullAccountingData.DebitActoinId = GetDebit();
         }
-        private string GetByCode(string code)
+
+        private string GetDebit()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(AccountingActionCodes.Credit) ?? Create(CreateDebitInstance());
+        }
+
+        private string GetCredit()
+        {
+            return GetIdByCode(AccountingActionCodes.Credit) ?? Create(CreateCreditInstance());
         }
         private string GetIdByCode(string code)
         {
@@ -45,46 +46,34 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        private string Create(string code)
+        private string Create(JournalActionType journalActionType)
         {
-            var journalActionType = CreateInstance(code);
             var response = APICaller.CallPost<JournalActionType>(journalActionType, Urls.JournalActionTypesController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private JournalActionType CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case CreditActoinCode:
-                    return CreateCreditInstance(code);
-                case DebitActoinCode:
-                    return CreateDebitInstance(code);
-                default:
-                    return null;
-            }
-        }
+       
 
-        private JournalActionType CreateCreditInstance(string code)
+        private JournalActionType CreateCreditInstance()
         {
             return new JournalActionType()
             { 
-                Code = code,
+                Code = AccountingActionCodes.Credit,
                 EnglishName = "Credit",
                 LocalName = "Credit",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Credit"
+                SearchFields = $"{AccountingActionCodes.Credit},Credit"
 
             };
         }
-        private JournalActionType CreateDebitInstance(string code)
+        private JournalActionType CreateDebitInstance()
         {
             return new JournalActionType()
             {
-                Code = code,
+                Code = AccountingActionCodes.Debit,
                 EnglishName = "Debit",
                 LocalName = "Debit",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Debit"
+                SearchFields = $"{AccountingActionCodes.Debit},Debit"
 
             };
         }

@@ -1,4 +1,5 @@
-﻿Feature: Get Bank Deposit Without Lines 
+﻿@Pre-Prepare-GetBankDeposit
+Feature: Get Bank Deposit Without Lines 
 	We want to get bank deposit without lines from unauthorizes tenant.
 
 Scenario: Get bank deposit without lines from unauthorizes tenant.
