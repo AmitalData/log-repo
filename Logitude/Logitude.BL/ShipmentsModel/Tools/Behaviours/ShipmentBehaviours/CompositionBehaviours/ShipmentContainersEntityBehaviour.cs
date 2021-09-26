@@ -156,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 {
                     switch (itemPM.ChangeSetOp)
                     {
+                        case ChangeSetOperation.None:
                         case ChangeSetOperation.Insert:
                             {
                                 this.CreateContainer(itemPM);
@@ -203,10 +204,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
-            ContainerPM containerPM = new ContainerPM();
-            MapContainerPMFields(containerPM, shipmentPackage, true);
-            containerService.Create(containerPM);
-            UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);            
+            if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
+            {
+                ContainerPM containerPM = new ContainerPM();
+                MapContainerPMFields(containerPM, shipmentPackage, true);
+                containerService.Create(containerPM);
+                UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
+            }
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
