@@ -46,7 +46,7 @@ namespace WebFreight.Web.Helpers
             string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);           
 
             if (LogitudeSettings.DeploymentStage != null && 
-                (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "logboxpre")
                 && !IsCargoTrackingDomain())
             {
                 privatelabel = GetPrivateLabelByLoggedDomain();
@@ -285,7 +285,7 @@ namespace WebFreight.Web.Helpers
 
         private static bool IsLogboxEnvironment()
         {
-            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
+            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "logboxpre");
         }
 
         private bool IsCargoTrackingDomain()
