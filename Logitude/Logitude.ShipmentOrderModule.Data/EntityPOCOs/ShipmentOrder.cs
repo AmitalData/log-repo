@@ -181,6 +181,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string CustomerId { get; set; }
 	      
         public virtual Card Customer { get; set; }
+        [Column("LastExceptionDescription")]
+	    public string LastExceptionDescription { get; set; }
+        [Column("LastExceptionDate")]
+	    public DateTime? LastExceptionDate { get; set; }
     }
 }
 	 

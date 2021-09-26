@@ -382,6 +382,15 @@ export class ShipmentOrderPM {
     private incotermName: string;
     public get IncotermName() { return this.incotermName; }
     public set IncotermName(newValue: string) { if (this.incotermName != newValue) { this.incotermName = newValue; this.MarkAsDirty("IncotermName"); } }
+
+    private lastExceptionDescription: string;
+    public get LastExceptionDescription() { return this.lastExceptionDescription; }
+    public set LastExceptionDescription(newValue: string) { if (this.lastExceptionDescription != newValue) { this.lastExceptionDescription = newValue; this.MarkAsDirty("LastExceptionDescription"); } }
+       
+	 
+    private lastExceptionDate: Date;
+    public get LastExceptionDate() { return this.lastExceptionDate; }
+    public set LastExceptionDate(newValue: Date) { if (this.lastExceptionDate != newValue) { this.lastExceptionDate = newValue; this.MarkAsDirty("LastExceptionDate"); } }
        
 	 
 
@@ -412,4 +421,4 @@ export class ShipmentOrderPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

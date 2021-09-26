@@ -9,6 +9,8 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -182,9 +184,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
                     TerminalPhone = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.Phone : "",
                 };
+
+                MapCustomFields(result, entityPoco);
             }
 
             return result;
+        }
+
+        private static void MapCustomFields(ContainerPM result, Container entityPoco)
+        {
+            result.Field1 = new CustomFieldClass("Field1", "Container", entityPoco.Field1);
+            result.Field2 = new CustomFieldClass("Field2", "Container", entityPoco.Field2);
+            result.Field3 = new CustomFieldClass("Field3", "Container", entityPoco.Field3);
+            result.Field4 = new CustomFieldClass("Field4", "Container", entityPoco.Field4);
+            result.Field5 = new CustomFieldClass("Field5", "Container", entityPoco.Field5);
+            result.Field6 = new CustomFieldClass("Field6", "Container", entityPoco.Field6);
+            result.Field7 = new CustomFieldClass("Field7", "Container", entityPoco.Field7);
+            result.Field8 = new CustomFieldClass("Field8", "Container", entityPoco.Field8);
+            result.Field9 = new CustomFieldClass("Field9", "Container", entityPoco.Field9);
+            result.Field10 = new CustomFieldClass("Field10", "Container", entityPoco.Field10);
         }
 
         public List<ContainerPM> GetContainers(string id , int tenant)
@@ -505,6 +523,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    TerminalAddress = entity.TerminalAddress,
                                                    TerminalName = entity.TerminalCard != null ? entity.TerminalCard.EnglishName : "",
                                                    TerminalPhone = entity.TerminalCard != null ? entity.TerminalCard.Phone : "" ,
+                                                   Field1 = entity.Field1,
+                                                   Field2 = entity.Field2,
+                                                   Field3 = entity.Field3,
+                                                   Field4 = entity.Field4,
+                                                   Field5 = entity.Field5,
+                                                   Field6 = entity.Field6,
+                                                   Field7 = entity.Field7,
+                                                   Field8 = entity.Field8,
+                                                   Field9 = entity.Field9,
+                                                   Field10 = entity.Field10,
                                                };
             return result;
         }
@@ -665,6 +693,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "",
                     TerminalPhone = container.TerminalCard != null ? container.TerminalCard.Phone : "",
                 };
+                MapCustomFields(containerPM, container);
             }
             return containerPM;
         }

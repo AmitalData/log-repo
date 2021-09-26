@@ -146,6 +146,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string CustomerId  { get; set; }
        [DataMember]
        public string CustomerName  { get; set; }
+       [DataMember]
+       public string LastExceptionDescription  { get; set; }
+       [DataMember]
+       public DateTime? LastExceptionDate  { get; set; }
    }
 
 }

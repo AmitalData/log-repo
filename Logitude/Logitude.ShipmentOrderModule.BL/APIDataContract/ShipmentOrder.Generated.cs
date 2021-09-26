@@ -111,5 +111,9 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public double? Volume { get; set; }
     
     public Card Customer { get; set; }
+    
+    public string LastExceptionDescription { get; set; }
+    
+    public DateTime? LastExceptionDate { get; set; }
     }
 } 
