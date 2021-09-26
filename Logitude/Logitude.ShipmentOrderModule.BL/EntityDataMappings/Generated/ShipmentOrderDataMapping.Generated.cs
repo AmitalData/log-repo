@@ -72,7 +72,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         Quantity, 
 	         GrossWeight, 
 	         Volume, 
-	         CustomerId,
+	         CustomerId, 
+	         LastExceptionDescription, 
+	         LastExceptionDate,
 	      }
 
 
@@ -151,6 +153,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         DestinationPortCode, 
 	         GatewayCode, 
 	         IncotermName,
+	         LastExceptionDescription, 
+	         LastExceptionDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -407,6 +411,16 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
             {
 				entityPOCO.CustomerId = entityPM.CustomerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDescription))
+            {
+				entityPOCO.LastExceptionDescription = entityPM.LastExceptionDescription;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDate))
+            {
+				entityPOCO.LastExceptionDate = entityPM.LastExceptionDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -670,6 +684,16 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.CustomerId = entityPOCO.CustomerId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastExceptionDescription))
+            {
+					entityPM.LastExceptionDescription = entityPOCO.LastExceptionDescription;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastExceptionDate))
+            {
+					entityPM.LastExceptionDate = entityPOCO.LastExceptionDate;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -926,6 +950,16 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 oldEntityPM.CustomerId = entityPM.CustomerId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDescription))
+            {
+                oldEntityPM.LastExceptionDescription = entityPM.LastExceptionDescription;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDate))
+            {
+                oldEntityPM.LastExceptionDate = entityPM.LastExceptionDate;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ShipmentOrderPM entityPM)
@@ -942,6 +976,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.DescriptionOfGoods)) //T4 find type == nText 
             {
                 entityPM.DescriptionOfGoods = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DescriptionOfGoods));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastExceptionDescription)) //T4 find type == nText 
+            {
+                entityPM.LastExceptionDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastExceptionDescription));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
