@@ -11,7 +11,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationEmailResultService : GeneralAutomationResultService, IAutomationResultService
     {
-
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
+        public string ResultCode { get { return "EMAIL"; } }
 
         public AutomationEmailResultService()
         {
@@ -19,7 +20,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
-            var automationsEmail = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "EMAIL").ToList();
+            var automationsEmail = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (automationsEmail.Count > 0)
             {
                 foreach (Automation automation in automationsEmail)

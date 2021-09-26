@@ -179,7 +179,7 @@
   declare @VolumeUnitCode as  varchar(3)
   declare @OrderGrossWeightWithUnitCode as  varchar(40)
     declare @OrderVolumeWithUnitCode as  varchar(40)
-    declare @OrderNumberOfPackagesWithUnitCode as  varchar(15)
+
 
 	declare @ConsigneeNotImporter as   varchar(15)
     declare @IssuingCarrierAgent  as   varchar(15)
@@ -616,7 +616,7 @@
 	 ----------------------------------------------------
 	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
 		SET @OrderVolumeWithUnitCode =  CAST(CAST(@BookingVolume AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @VolumeUnitCode +')';
-	    SET @OrderNumberOfPackagesWithUnitCode= CAST(@BookingNumberOfPackages AS VARCHAR(11)) +  +' ('+ @GrossWeightUnitCode +')'
+	    --SET @OrderNumberOfPackagesWithUnitCode= CAST(@BookingNumberOfPackages AS VARCHAR(11)) +  +' ('+ @GrossWeightUnitCode +')'
 
      -----------------------HandlerByUserId--------------------- 
 
@@ -651,7 +651,7 @@
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
-	  @Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate ,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @OrderNumberOfPackagesWithUnitCode ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency , 
+	  @Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate ,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency , 
 
 	  @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,
 	   @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,

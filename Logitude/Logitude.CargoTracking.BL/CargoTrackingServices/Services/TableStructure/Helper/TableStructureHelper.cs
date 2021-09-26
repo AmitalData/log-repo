@@ -135,6 +135,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private  void SetPrimartKeyCoulmn(object coulmnnPrimarykey,string columnName)
         {
             bool? isPrimartKey = false;
+            var isNull = coulmnnPrimarykey.GetType().Name == "DBNull";
             try { isPrimartKey = bool.Parse((string)coulmnnPrimarykey); }
             catch (Exception e) { isPrimartKey = false; }
             if (isPrimartKey == true) { PrimarykeyColumn = columnName; }

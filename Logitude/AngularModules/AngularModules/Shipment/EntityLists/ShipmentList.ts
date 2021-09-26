@@ -478,5 +478,7 @@ export class ShipmentList {
 		BillingStatusId: string;
 		ShipperNotExporterReference1: string;
 		ShipperNotExporterReference2: string;
+		TruckContainerNumber: string;
+		ContainersNumbersandTypesArray: string;
 	
 }

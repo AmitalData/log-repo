@@ -372,6 +372,7 @@
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
+    Ignore="true"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

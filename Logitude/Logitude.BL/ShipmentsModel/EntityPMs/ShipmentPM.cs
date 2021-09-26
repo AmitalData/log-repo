@@ -1435,6 +1435,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment1ToPortStateCode { get; set; }
 
         public string StandaloneShipmentId { get; set; }
+        public bool IsConnectToMasterShipment { get; set; }
+
 
         private List<ShipmentFollowUpPM> followUps;
         [Include]
@@ -2072,6 +2074,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedByGLSHKAnalyzer { get; set; }
         public bool IsUpdatedByINTTRAAnalyzer { get; set; }
         public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
+        public bool IsUpdatedOceanInsightsMainCarriageDates { get; set; }
 
         public bool IsCreatedFromCustomerOverview { get; set; }
 
@@ -2754,5 +2757,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }        
+
+
     }
 }

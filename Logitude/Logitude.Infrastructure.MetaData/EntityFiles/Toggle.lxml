@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7324&quot;"
+  Code="&quot;6ec5&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -582,6 +582,16 @@
       Name="&quot;Standalone Pickups/Deliveries Only &quot;"
       SearchFields="&quot;OPD,Standalone Pickups/Deliveries Only &quot;"
       Description="&quot;Only Allow Pickups/Deliveries to be Created with a Standalone Shipment&quot;" />
+    <Record
+      Code="&quot;OIU&quot;"
+      Name="&quot;Ocean Insights Shipment Update&quot;"
+      SearchFields="&quot;OIU,Ocean Insights Shipment Update&quot;"
+      Description="&quot;Ocean Insights Shipment Update&quot;" />
+    <Record
+      Code="&quot;SFC&quot;"
+      Name="&quot;Show file name as computed&quot;"
+      SearchFields="&quot;Show file name as computed,SFC&quot;"
+      Description="&quot;Show file name as computed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

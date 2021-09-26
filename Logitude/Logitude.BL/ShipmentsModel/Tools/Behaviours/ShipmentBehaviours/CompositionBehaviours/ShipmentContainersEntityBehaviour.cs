@@ -104,8 +104,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.StatusId != this.initializer.EntityMasterData.StatusId)
                 return true;
-
-            return false; 
+            return false;
         }
 
         private void HandelShipmentPickUpsChangeSets()
@@ -157,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 {
                     switch (itemPM.ChangeSetOp)
                     {
+                        case ChangeSetOperation.None:
                         case ChangeSetOperation.Insert:
                             {
                                 this.CreateContainer(itemPM);
@@ -193,8 +193,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
                 return false;
 
-            if (initializer.EntityPM.TransportModeId != "O" &&
-               (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" || initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld"))
+            if (initializer.EntityPM.TransportModeId != "O")
+                return false;
+
+            if (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
                 return false;
 
             return true;
@@ -202,10 +204,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
-            ContainerPM containerPM = new ContainerPM();
-            MapContainerPMFields(containerPM, shipmentPackage, true);
-            containerService.Create(containerPM);
-            UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);            
+            if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
+            {
+                ContainerPM containerPM = new ContainerPM();
+                MapContainerPMFields(containerPM, shipmentPackage, true);
+                containerService.Create(containerPM);
+                UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
+            }
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
@@ -703,6 +708,47 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 containerPM.ShipmentLastDeliveryTo = null;
                 containerService.Update(containerPM);
             }
+        }
+
+        public static void UpdateConatinarStatus(ShipmentPM shipmentPM,bool isEntityStatusUpdated ,IShipmentsContext shipmentContext)
+        {
+            if (shipmentPM == null)
+                return;
+
+            if (!isEntityStatusUpdated)
+                return;
+
+            List<ContainerPM> containers = GetShipmentContainers(shipmentPM);
+            ContainerService containerService = GetContainerService(shipmentContext, shipmentPM.Tenant);
+
+            foreach (ContainerPM containerPM in containers)
+            {
+                containerPM.ShipmentStatusId = shipmentPM.StatusId;
+                containerService.Update(containerPM);
+            }
+        }
+
+        private static List<ContainerPM> GetShipmentContainers(ShipmentPM shipmentPM)
+        {
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            if (shipmentPM == null)
+            {
+                return containerPMs;
+            }
+            ContainerQuery containerQuery = new ContainerQuery(shipmentPM.Tenant);
+            foreach (ShipmentPackagePM shipmentPackagePM in shipmentPM.ShipmentPackages)
+            {
+                if (!string.IsNullOrEmpty(shipmentPackagePM.ContainerEntityId))
+                {
+                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPackagePM.ContainerEntityId, shipmentPM.Tenant));
+                }
+            }
+            return containerPMs;
+        }
+
+        private static ContainerService GetContainerService(IShipmentsContext shipmentContext, int tenant)
+        {
+            return new ContainerService(shipmentContext, tenant);
         }
     }
 }

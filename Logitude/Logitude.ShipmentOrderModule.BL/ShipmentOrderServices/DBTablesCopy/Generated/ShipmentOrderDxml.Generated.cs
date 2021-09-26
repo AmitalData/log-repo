@@ -136,7 +136,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DirectionId' Type='char' Size='1'>"+
-"    <Constraints Nullable='true' />"+
+"    <Constraints Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='CarrierId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
@@ -160,6 +160,12 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CustomerId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='LastExceptionDescription' Type='nvarchar' Size='2000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='LastExceptionDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+

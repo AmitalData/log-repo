@@ -107,7 +107,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
 
             this.Property(t => t.BookingConfirmationNumber).HasColumnName("BookingConfirmationNumber").HasMaxLength(25).IsUnicode(false);
 
-            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsFixedLength();
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.CarrierId).HasColumnName("CarrierId").HasMaxLength(15).IsUnicode(false);
 
@@ -124,6 +124,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.Volume).HasColumnName("Volume");
 
             this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.LastExceptionDate).HasColumnName("LastExceptionDate");
         }
     }
 }

@@ -244,9 +244,12 @@ export class AddEditOceanPackageComponent {
     }
 
     GetContainerEntityReferenceVisiblity() {
+        this.IsContainerEntityReferenceVisible = false;
         var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
         if (featureToggle && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
-            this.IsContainerEntityReferenceVisible = true;
+            if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld")) {
+                this.IsContainerEntityReferenceVisible = true;
+            }
         }
     }
 

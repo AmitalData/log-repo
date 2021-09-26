@@ -295,6 +295,7 @@ namespace WebFreight.Web.DataProviders
 
     public class NewManifestDetailsClass
     {
+        public string PreForwardingFromPort { get; set; }
         public string OnForwardingToPort { get; set; }
         public string OnForwardingFromPort { get; set; }
         public string OnCarriageToPort { get; set; }

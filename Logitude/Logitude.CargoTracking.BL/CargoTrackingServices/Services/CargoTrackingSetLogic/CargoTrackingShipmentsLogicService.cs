@@ -50,7 +50,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetMilestonesFields(DataRow tableRow)
         {
-
+            SetCreatedMilstones(tableRow);
             SetPickupMilestones(tableRow);
             SetFromWarehouseMilestones(tableRow);
             SetToWarehouseMilestones(tableRow);
@@ -66,6 +66,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetGoodsClassificationMilestone(tableRow);
             SetDocumentInspectionMilestone(tableRow);
             SetGatepassDocumentsReadyMilestone(tableRow);
+        }
+        private static void SetCreatedMilstones(DataRow tableRow)
+        {
+            tableRow.SetField("CreateDate", tableRow["CreateDate"]);
+            tableRow.SetField("CreatedDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
         }
         private static void SetCustomAgentFields(DataRow tableRow)
         {
@@ -237,6 +242,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "CreatedDone") && !tableRow["CreatedDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
 
             }
 
