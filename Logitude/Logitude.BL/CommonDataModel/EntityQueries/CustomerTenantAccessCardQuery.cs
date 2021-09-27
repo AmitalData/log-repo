@@ -25,11 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = new CustomerTenantAccessCardRepository(tenant);
         }
-
-        public CustomerTenantAccessCardQuery(ICommonDataContext context)
-        { 
-            repository = new CustomerTenantAccessCardRepository(context);
-        }
+         
         public CustomerTenantAccessCardQuery(CustomerTenantAccessCardRepository CustomerTenantAccessCardRepository)
         {
             repository = CustomerTenantAccessCardRepository;

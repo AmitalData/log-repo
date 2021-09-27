@@ -588,29 +588,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     CustomerPM mappedpm = CustomerHybridMapping.MapEntityToHybrid(entityPM);
                     string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm);
-                    List<QueueTask> tasks = new List<QueueTask>();
- 
-
-                    CustomerTenantAccessCard customerTenantAccessCards =  customerTenantAccessCardRepository.GetByCustomerId(entityPM.Id, entityPM.Tenant);
- 
+                    List<QueueTask> tasks = new List<QueueTask>(); 
 
                     if (entityPM.IsPrivateLabelCustomer == true || entityPOCO.IsPrivateLabelCustomer == true)
                     {
-                        tasks.Add(new QueueTask() { Action = "Customer.PrivateLabel", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 3, Value = entityPM.IsPrivateLabelCustomer.ToString() }, new Parameter { Order = 4, Value = entityPM.CustomerTenant.ToString() },
-                         new Parameter { Order = 5, Value = customerTenantAccessCards.IsExportActivated.ToString() } } });
+                        tasks.Add(new QueueTask() { Action = "Customer.PrivateLabel", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 3, Value = entityPM.IsPrivateLabelCustomer.ToString() }, new Parameter { Order = 4, Value = entityPM.CustomerTenant.ToString() }, } });
                     }
                     else
                     {
-                        tasks.Add(new QueueTask() { Action = "Customer.LogBoxActivated", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 2, Value = entityPM.LogBoxActivated.ToString() },
-                         new Parameter { Order = 5, Value = customerTenantAccessCards.IsExportActivated.ToString() } }  });
+                        tasks.Add(new QueueTask() { Action = "Customer.LogBoxActivated", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 2, Value = entityPM.LogBoxActivated.ToString() }, } });
                     }
-
+                    AddCustomerTenantAccessCardTags(tasks);
 
                     logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
                     Communications.AddCommunicationLog(logParams);
 
                     scope.Complete();
                 }
+            }
+        }
+
+        private void AddCustomerTenantAccessCardTags(List<QueueTask> tasks)
+        {
+            CustomerTenantAccessCard customerTenantAccessCards = customerTenantAccessCardRepository.GetByCustomerId(entityPM.Id, entityPM.Tenant);
+            if (customerTenantAccessCards != null)
+            {
+
+                tasks[0].Parameters.Add(new Parameter { Order = 5, Value = customerTenantAccessCards.IsExportActivated.ToString() });
+                tasks[0].Parameters.Add(new Parameter { Order = 6, Value = customerTenantAccessCards.IsImportActivated.ToString() }); 
             }
         }
 
