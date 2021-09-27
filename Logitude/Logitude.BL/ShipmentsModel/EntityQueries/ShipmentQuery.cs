@@ -2556,7 +2556,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
 
 
-            MapShipmentComputedFields(shipmentPM);
+            MapShipmentComputedFields(shipmentPM , masterData);
 
 
             this.MapAnalyzerConcurrencyFields(shipmentPM);
@@ -3941,13 +3941,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
             #region ShipmentComputedFields
-            MapShipmentComputedFields(shipmentPM);
+            MapShipmentComputedFields(shipmentPM , masterData);
             #endregion
 
             return null;
         }
 
-        private static void MapShipmentComputedFields(ShipmentPM shipmentPM)
+        private static void MapShipmentComputedFields(ShipmentPM shipmentPM , ShipmentMasterData shipmentMasterData)
         {
             ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentPM.Tenant);
             ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentPM.Id, shipmentPM.Tenant);
@@ -3974,6 +3974,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
                 shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
+
+                MapMainCarriageDateFields(shipmentPM, entityComputedFields , shipmentMasterData);
+            }
+        }
+
+        private static void MapMainCarriageDateFields(ShipmentPM shipmentPM, ShipmentComputedFields entityComputedFields , ShipmentMasterData shipmentMasterData)
+        {
+            if (shipmentPM.ShipmentLevelCode == "H" && shipmentMasterData == null)
+            {
+                shipmentPM.MainCarriageETA = entityComputedFields.MainCarriageETA;
+                shipmentPM.MainCarriageETD = entityComputedFields.MainCarriageETD;
+                shipmentPM.MainCarriageATA = entityComputedFields.MainCarriageATA;
+                shipmentPM.MainCarriageATD = entityComputedFields.MainCarriageATD;
             }
         }
 
@@ -4182,7 +4195,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
  
 
 
-                    MapShipmentComputedFields(returnShipment);
+                    MapShipmentComputedFields(returnShipment , masterData);
 
 
                     return returnShipment;
@@ -12443,7 +12456,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
                                AccrualsApprovalDate = f.AccrualsApprovalDate,
                                IsAccrualsApproved = f.IsAccrualsApproved,
-                               TruckNumber =f.TruckNumber,
+                               TruckNumber = f.TruckNumber,
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                            };
             return myResult;

@@ -19,6 +19,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         private object entityPM;
         private MainEntityChangeService mainEntityChangeService { get; set; }
         private List<Automation> createTaskAutomations = new List<Automation>();
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
+        public string ResultCode { get { return "CREATETASK"; } }
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
@@ -27,7 +29,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             this.entityPM = automationResultArgs.EntityPM;
             this.tenant = this.entityChange.Tenant;
             mainEntityChangeService = automationResultArgs.MainEntityChangeService;
-            createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "CREATETASK").ToList();
+            createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (createTaskAutomations.Count > 0)
             {
                 ApplyCreateTaskAutomations();

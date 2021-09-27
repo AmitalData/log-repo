@@ -252,6 +252,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string BookingNotes  { get; set; }
        [DataMember]
        public string BookingExceptionReason  { get; set; }
+       [DataMember]
+       public bool? CreatedDone  { get; set; }
    }
 
 }

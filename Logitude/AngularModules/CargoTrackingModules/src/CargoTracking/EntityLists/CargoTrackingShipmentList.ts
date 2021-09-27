@@ -128,5 +128,8 @@ export class CargoTrackingShipmentList {
 	BookingNotes: string;
 	BookingExceptionReason: string;
 	
+	CreatedDone: boolean;
+	
+	
 }
  

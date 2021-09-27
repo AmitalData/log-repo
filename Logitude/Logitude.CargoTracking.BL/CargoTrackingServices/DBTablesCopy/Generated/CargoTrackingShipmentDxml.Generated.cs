@@ -288,6 +288,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ImportManifest' Type='varchar' Size='50'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='CreatedDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='BookingDone' Type='bit'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+

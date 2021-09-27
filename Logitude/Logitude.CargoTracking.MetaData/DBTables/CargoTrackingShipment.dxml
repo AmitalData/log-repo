@@ -605,6 +605,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CreatedDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="BookingDone"
     Type="bit">
     <Constraints

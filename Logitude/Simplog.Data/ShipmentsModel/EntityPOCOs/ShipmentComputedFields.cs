@@ -94,5 +94,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public virtual User AccountingClosedByUserUser { get; set; }
 
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+
+
+
     }
 }

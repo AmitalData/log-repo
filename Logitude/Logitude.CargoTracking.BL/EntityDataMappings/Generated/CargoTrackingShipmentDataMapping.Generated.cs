@@ -120,7 +120,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         BookingEstimationDate, 
 	         BookingNotes, 
 	         BookingExceptionReason,
-	      }
+			CreatedDone,
+		}
 
 
 	      public enum PMPropertyNames
@@ -235,7 +236,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         BookingEstimationDate, 
 	         BookingNotes, 
 	         BookingExceptionReason,
-	      }
+			CreatedDone,
+		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -701,6 +703,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDate))
             {
 				entityPOCO.BookingDate = entityPM.BookingDate;
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+				entityPOCO.ImportManifest = entityPM.ImportManifest;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingEstimationDate))
@@ -716,6 +722,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingExceptionReason))
             {
 				entityPOCO.BookingExceptionReason = entityPM.BookingExceptionReason;
+			}
+			}
+
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
+            {
+				entityPOCO.CreatedDone = entityPM.CreatedDone;
 			}
 			}
 
@@ -1175,6 +1188,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
             {
 					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedDone))
+            {
+					entityPM.CreatedDone = entityPOCO.CreatedDone;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingDone))
@@ -1682,7 +1700,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.BookingExceptionReason = entityPM.BookingExceptionReason;
             }
-			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
+			{
+				oldEntityPM.CreatedDone = entityPM.CreatedDone;
+			}
+
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)

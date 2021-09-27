@@ -4,6 +4,9 @@
 CREATE VIEW [dbo].[ShipmentDataView]
 
 AS
+  
+
+ 
 SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
                          dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, dbo.shipments.SLAC,
                          dbo.Shipments.FirstARInvoiceApprovalDate,
@@ -282,8 +285,8 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.Code IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.Code)) = 0))) THEN MainCarriageFinalDestinationPorts.Code ELSE ToPorts.Code END AS ToPort, 
 						CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.EnglishName IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.EnglishName)) = 0))) THEN MainCarriageFinalDestinationPorts.EnglishName ELSE ToPorts.EnglishName END AS ToPortName, 
 						CASE WHEN ('A' = dbo.Shipments.TransportModeId) THEN CASE WHEN (MainCarriageCarrierCards.Code IS NULL) THEN N'' ELSE MainCarriageCarrierCards.Code END + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('O' = dbo.Shipments.TransportModeId) THEN CASE WHEN (dbo.Vessels.EnglishName IS NULL) THEN N'' ELSE dbo.Vessels.EnglishName END + N'/' + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('I' = dbo.Shipments.TransportModeId) THEN MainCarriageCarrierNumber END AS CarrierNumber, 
-						CASE WHEN (MainCarriageATA IS NOT NULL) THEN MainCarriageATA ELSE MainCarriageETA END AS MainCarriageExpectedOrActual, 
-						CASE WHEN (MainCarriageATA IS NOT NULL) THEN N'ATA' ELSE N'ETA' END AS MainCarriageETAOrATA, 
+						CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual, 
+						CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN N'ATA' ELSE N'ETA' END AS MainCarriageETAOrATA, 
 						CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END AS StatusId, 
             dbo.Shipments.ComputedStatusDate as StatusDate,
 

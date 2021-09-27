@@ -544,6 +544,11 @@ export class CargoTrackingShipmentPM {
     public set ImportManifest(newValue: string) { if (this.importManifest != newValue) { this.importManifest = newValue; this.MarkAsDirty("ImportManifest"); } }
        
 	 
+    private createdDone: boolean;
+    public get CreatedDone() { return this.createdDone; }
+    public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
+       
+	 
     private bookingDone: boolean;
     public get BookingDone() { return this.bookingDone; }
     public set BookingDone(newValue: boolean) { if (this.bookingDone != newValue) { this.bookingDone = newValue; this.MarkAsDirty("BookingDone"); } }
@@ -597,4 +602,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
