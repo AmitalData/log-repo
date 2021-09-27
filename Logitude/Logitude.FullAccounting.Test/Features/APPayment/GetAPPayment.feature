@@ -4,4 +4,4 @@ Feature: Get AP Payment
 
 Scenario: Get ap payment
 	When get ap payment with APPaymentId
-	Then ap payment should be avaliable
+	Then ap payment should be 

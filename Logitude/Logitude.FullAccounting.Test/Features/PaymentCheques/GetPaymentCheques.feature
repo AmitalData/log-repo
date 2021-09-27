@@ -4,4 +4,4 @@ Feature: Get Payment cheques
 
 Scenario: Get payment cheques
 	When get payment cheques with paymentChequesId
-	Then payment cheques should be avaliable
+	Then payment cheques should be 

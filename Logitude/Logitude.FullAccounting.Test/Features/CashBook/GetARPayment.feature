@@ -3,4 +3,4 @@
 
 Scenario: Get cashbookt
 	When get cashbookt with cashbooktId
-	Then cashbookt should be avaliable
+	Then cashbookt should be Available

@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Steps.APPayment
             context.APPaymentPM = APICaller.CallGet<APPaymentPM>(Urls.APPaymentsGetSingle(FullAccountingData.APPaymenId), UserTenant.Token).Data;
         }
 
-        [Then(@"ap payment should be avaliable")]
-        public void ThenApPaymentShouldBeAvaliable()
+        [Then(@"ap payment should be available")]
+        public void ThenApPaymentShouldBeAvailable()
         {
             context.APPaymentPM.Should().NotBeNull();
         }

@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Steps.BankDeposit
             context.BankDeposit = APICaller.CallGet<BankDepositPM>(Urls.BankDepositsSingle(FullAccountingData.BankDeposit1), UserTenant.Token).Data;
         }
 
-        [Then(@"bank deposit should be avaliable")]
-        public void ThenBankDepositShouldBeAvaliable()
+        [Then(@"bank deposit should be available")]
+        public void ThenBankDepositShouldBeAvailable()
         {
             context.BankDeposit.Should().NotBeNull();
         }

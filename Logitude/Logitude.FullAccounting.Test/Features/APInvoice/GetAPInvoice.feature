@@ -4,4 +4,4 @@ Feature: Get AP Invoice
 
 Scenario: Get ap invoice
 	When get ap invoice with ARInvoiceId
-	Then ap invoice should be avaliable
+	Then ap invoice should be available

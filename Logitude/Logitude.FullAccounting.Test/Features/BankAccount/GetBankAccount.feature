@@ -4,4 +4,4 @@ Feature: Get Bank Account
 
 Scenario: Get bank account
 	When get bank account with bankAccountId
-	Then bank account should be avaliable
+	Then bank account should be Available
