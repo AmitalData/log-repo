@@ -9,6 +9,8 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -189,10 +191,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Transshipment2LocationPortId = entityPoco.Transshipment2LocationPortId,
                     Transshipment3LocationPortId = entityPoco.Transshipment3LocationPortId,
                     Transshipment4LocationPortId = entityPoco.Transshipment4LocationPortId,
+                    TerminalId = entityPoco.TerminalId,
+                    TerminalAddress = entityPoco.TerminalAddress,
+                    TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
+                    TerminalPhone = entityPoco.TerminalPhone,
+                    TerminalAddressId = entityPoco.TerminalAddressId,
                 };
+
+                MapCustomFields(result, entityPoco);
             }
 
             return result;
+        }
+
+        private static void MapCustomFields(ContainerPM result, Container entityPoco)
+        {
+            result.Field1 = new CustomFieldClass("Field1", "Container", entityPoco.Field1);
+            result.Field2 = new CustomFieldClass("Field2", "Container", entityPoco.Field2);
+            result.Field3 = new CustomFieldClass("Field3", "Container", entityPoco.Field3);
+            result.Field4 = new CustomFieldClass("Field4", "Container", entityPoco.Field4);
+            result.Field5 = new CustomFieldClass("Field5", "Container", entityPoco.Field5);
+            result.Field6 = new CustomFieldClass("Field6", "Container", entityPoco.Field6);
+            result.Field7 = new CustomFieldClass("Field7", "Container", entityPoco.Field7);
+            result.Field8 = new CustomFieldClass("Field8", "Container", entityPoco.Field8);
+            result.Field9 = new CustomFieldClass("Field9", "Container", entityPoco.Field9);
+            result.Field10 = new CustomFieldClass("Field10", "Container", entityPoco.Field10);
         }
 
         public List<ContainerPM> GetContainers(string id , int tenant)
@@ -200,7 +223,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return (from a in repository.context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -361,6 +384,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Transshipment2LocationPortId = a.Transshipment2LocationPortId,
                         Transshipment3LocationPortId = a.Transshipment3LocationPortId,
                         Transshipment4LocationPortId = a.Transshipment4LocationPortId,
+                        TerminalId = a.TerminalId,
+                        TerminalAddress = a.TerminalAddress,
+                        TerminalName = a.TerminalCard != null ? a.TerminalCard.EnglishName : "",
+                        TerminalPhone = a.TerminalPhone,
+                        TerminalAddressId = a.TerminalAddressId,
+
                     }).ToList();
         }
 
@@ -369,7 +398,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ContainerList> result = from entity in iQueryable.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
@@ -529,6 +558,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    Transshipment2LocationPortId = entity.Transshipment2LocationPortId,
                                                    Transshipment3LocationPortId = entity.Transshipment3LocationPortId,
                                                    Transshipment4LocationPortId = entity.Transshipment4LocationPortId,
+                                                   TerminalId = entity.TerminalId,
+                                                   TerminalAddress = entity.TerminalAddress,
+                                                   TerminalName = entity.TerminalCard != null ? entity.TerminalCard.EnglishName : "",
+                                                   TerminalPhone = entity.TerminalPhone,
+                                                   TerminalAddressId = entity.TerminalAddressId,
+                                                   Field1 = entity.Field1,
+                                                   Field2 = entity.Field2,
+                                                   Field3 = entity.Field3,
+                                                   Field4 = entity.Field4,
+                                                   Field5 = entity.Field5,
+                                                   Field6 = entity.Field6,
+                                                   Field7 = entity.Field7,
+                                                   Field8 = entity.Field8,
+                                                   Field9 = entity.Field9,
+                                                   Field10 = entity.Field10,
                                                };
             return result;
         }
@@ -696,7 +740,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Transshipment2LocationPortId = container.Transshipment2LocationPortId,
                     Transshipment3LocationPortId = container.Transshipment3LocationPortId,
                     Transshipment4LocationPortId = container.Transshipment4LocationPortId,
+                    TerminalId = container.TerminalId,
+                    TerminalAddress = container.TerminalAddress,
+                    TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "",
+                    TerminalPhone = container.TerminalPhone,
+                    TerminalAddressId = container.TerminalAddressId,
                 };
+                MapCustomFields(containerPM, container);
             }
             return containerPM;
         }
@@ -869,6 +919,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Transshipment2LocationPortId = entityPoco.Transshipment2LocationPortId,
                     Transshipment3LocationPortId = entityPoco.Transshipment3LocationPortId,
                     Transshipment4LocationPortId = entityPoco.Transshipment4LocationPortId,
+                    TerminalId = entityPoco.TerminalId,
+                    TerminalAddress = entityPoco.TerminalAddress,
+                    TerminalAddressId = entityPoco.TerminalAddressId,
+                    TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
+                    TerminalPhone = entityPoco.TerminalPhone,
                 };
             }
 

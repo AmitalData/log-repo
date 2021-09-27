@@ -79,7 +79,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 Quantity = shipmentOrder.Quantity,
                 Volume = shipmentOrder.Volume,
                 GrossWeight = shipmentOrder.GrossWeight,
-                CustomerId = shipmentOrder.CustomerId
+                CustomerId = shipmentOrder.CustomerId,
+                LastExceptionDate = shipmentOrder.LastExceptionDate,
+                LastExceptionDescription = shipmentOrder.LastExceptionDescription,
             };
         }
 

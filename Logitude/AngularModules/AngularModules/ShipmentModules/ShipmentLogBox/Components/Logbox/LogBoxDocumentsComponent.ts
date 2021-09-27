@@ -30,6 +30,7 @@ import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/Hy
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -229,11 +230,15 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.OnImporterShipmentsFilterChangedMethod(res);
         });
     }
-    SetMainCarriageDates() { 
-        this.SetMainCarriageArrivalDate(); 
-        this.SetMainCarriageDepartureDate(); 
+    SetMainCarriageDates() {
+         
+            this.SetMainCarriageArrivalDate();
+            this.SetMainCarriageDepartureDate();
+
+         
     }
-    
+
+  
     private SetMainCarriageArrivalDate() {
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;

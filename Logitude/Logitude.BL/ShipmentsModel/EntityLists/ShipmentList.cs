@@ -576,5 +576,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string BillingStatusId { get; set; }
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
+
+         
+
+
+        public string TruckContainerNumber { get; set; }
+        public string ContainersNumbersandTypesArray { get; set; }
+
     }
 }

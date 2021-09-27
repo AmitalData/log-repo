@@ -963,7 +963,6 @@
     <None Include="DBTables\InvoiceModel\SATInvoiceStatus.dxml" />
     <None Include="DBTables\InvoiceModel\SATPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\SATTransferStatus.dxml" />
-    <None Include="DBTables\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBTables\QuoteModel\BorderType.dxml" />
     <None Include="DBTables\QuoteModel\MarkUpType.dxml" />
     <None Include="DBTables\QuoteModel\Quote.dxml" />

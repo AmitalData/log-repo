@@ -381,13 +381,23 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
             CreateCreditLines(ref counter);
             CreateDebitLines(counter);
-
-            CreateAutomaticReconcileForJournal();
+            CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
+          
 
             SubmitJournal();
             return journal;
         }
-
+        private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
+        {
+            if (paymentPM.ARPaymentChequeReplicas.Count() > 0 && paymentPM.PaymentInvoices.Count() > 0)
+            {
+                throw new Exception("Can't Perform ARPayment Reconciliation  in multiple Cheques case");
+            }
+            else
+            {
+                CreateAutomaticReconcileForJournal();
+            }
+        }
         private JournalPM GetPaymentJournal()
         {
             IJournalQueryServiceExt journalQueryService = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;

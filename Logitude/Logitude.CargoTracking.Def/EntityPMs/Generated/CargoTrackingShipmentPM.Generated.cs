@@ -2412,6 +2412,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? createdDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? CreatedDone  
+	   {
+	    
+	     get
+		{
+		   return createdDone;
+		 }
+		 set
+		 {
+		   if(createdDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedDone",OldValue=createdDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   createdDone=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1401,11 +1401,12 @@ namespace WebFreight.Web.WebServices
 
                 if (document != null)
                 {
-                    if (string.IsNullOrEmpty(document.CalculatedFileName) || documentFiling.DirectionCode == "I")
+                    document.CalculatedFileName =!string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+
+                    if (documentFiling.DirectionCode == "I" && !FeatureToggleHelper.HasFeatureToggle("SFC", documentFiling.Tenant))
                     {
                         document.CalculatedFileName = document.FileName;
                     }
-
                     return document;
                 }
                 else return null;

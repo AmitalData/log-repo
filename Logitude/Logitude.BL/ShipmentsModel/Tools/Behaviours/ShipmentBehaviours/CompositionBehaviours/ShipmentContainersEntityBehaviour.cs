@@ -156,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 {
                     switch (itemPM.ChangeSetOp)
                     {
+                        case ChangeSetOperation.None:
                         case ChangeSetOperation.Insert:
                             {
                                 this.CreateContainer(itemPM);
@@ -192,8 +193,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
                 return false;
 
-            if (initializer.EntityPM.TransportModeId != "O" &&
-               (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" || initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld"))
+            if (initializer.EntityPM.TransportModeId != "O")
+                return false;
+
+            if (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
                 return false;
 
             return true;
@@ -201,10 +204,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
-            ContainerPM containerPM = new ContainerPM();
-            MapContainerPMFields(containerPM, shipmentPackage, true);
-            containerService.Create(containerPM);
-            UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);            
+            if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
+            {
+                ContainerPM containerPM = new ContainerPM();
+                MapContainerPMFields(containerPM, shipmentPackage, true);
+                containerService.Create(containerPM);
+                UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
+            }
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)

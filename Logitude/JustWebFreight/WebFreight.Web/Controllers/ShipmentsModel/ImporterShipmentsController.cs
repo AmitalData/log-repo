@@ -868,8 +868,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             //        return Responce;
             //    }
             //}
-
-
+             
             entityPM.MainCarriageETA = entityAM.MainCarriageETA;
             entityPM.MainCarriageATA = entityAM.MainCarriageATA;
             entityPM.MainCarriageATD = entityAM.MainCarriageATD;
