@@ -305,7 +305,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             customerTenantAccessCardRepository.SubmitChanges();
 
             InitializeCustomerTenantAccessQueue(itemPM);
-
+             
             if (itemPM.StatusTypeCode == "A")
             {
                 CustomerQuery CustomerQuery = new CustomerQuery(itemPM.Tenant);
@@ -324,11 +324,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
-
+                TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
 
                 CustomerService.Update();
-
+                TempCustomer.AddLogboxCustomerQueue = false;
             }
             else
             {
@@ -340,8 +340,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
+                TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
                 CustomerService.Update();
+                TempCustomer.AddLogboxCustomerQueue = false;
             }
             string key = itemPM.CustomerId + "_" + tenant + "_info";
             if (CacheManager.CacheWrapper != null)
