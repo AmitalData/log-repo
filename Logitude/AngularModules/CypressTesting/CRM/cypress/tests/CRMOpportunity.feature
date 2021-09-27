@@ -1,4 +1,4 @@
-@stable @all @devsmoke
+@stable @all @smoke
 Feature: Opportunity Create, Search, and Edit from CRM
     The user creates an Opportunity, searches for and edits it from the CRM Module.
 
