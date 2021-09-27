@@ -58,6 +58,17 @@ export class RelatedCustomerComponent extends BaseComponent{
     private IsCustomerTenantShareExportFile: boolean = true;
 
 
+    private CanImportActivated: boolean = true;
+    private CanExportctivated: boolean = true;
+
+    public IsImportActivated: boolean = true;
+    public IsExportActivated: boolean = true;
+
+     
+
+    public CanSelect: boolean = false;
+
+
     public set SelectedLogItem(value: BatchQueriesData) {
         if (this.selectedLogItem != value)
             this.selectedLogItem = value;
@@ -69,9 +80,10 @@ export class RelatedCustomerComponent extends BaseComponent{
         this.UpdateCustomerTenantAccess();
     }
  
-    CheckIsImportActivated(item: CustomerTenantAccessCardPM) {
-        if (!item.IsImportActivated && !item.IsExportActivated) {
-            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['You Should Mark At Least One Option'];
+    CheckIsImportActivated(item: CustomerTenantAccessCardPM) { 
+        if (!item.IsImportActivated == false && item.IsExportActivated == false) {
+            this.IsCustomerTenantShareExportFile = false;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['You should select at least one option either Import of Export. '];
         } else{ 
             this.SetIsImportField(item)
 
@@ -275,10 +287,32 @@ export class RelatedCustomerComponent extends BaseComponent{
             this.BuildData();
             this.FillQueriesList();   
         });
-     
+
+
+        this.SetCustomerTenantAccessCardOptions();
+
     }
 
     private isAddEnabled: boolean = true;
+
+    private SetCustomerTenantAccessCardOptions() {
+        let tenantPMService: TenantPMService = new TenantPMService();
+        tenantPMService.get(this.EntityPM.Tenant).subscribe((response: any) => {
+
+            if (!response.HasError) {
+                var tenantPM = response.Result;
+
+                if (tenantPM.IsCustomerTenantShare) {
+                    if (tenantPM.CustomerTenantShareExportFile) {
+                        this.CanSelect = true;
+                    } else {
+                        this.IsExportActivated = false;
+                        this.IsImportActivated = true;
+                    }
+                }
+            }
+        });
+    }
 
     private InitializeCustomerTenantAccessCard(customerTenantAccessCardPM: CustomerTenantAccessCardPM) {
         customerTenantAccessCardPM.CustomerTenantAccessId = this.RealCustomerTenantAccessPM.Id;
@@ -302,7 +336,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                 if (tenantPM.IsCustomerTenantShare) {
                     customerTenantAccessCardPM.IsImportActivated = true
                     if (!tenantPM.CustomerTenantShareExportFile) {
-                       this.IsCustomerTenantShareExportFile = false;
+                       this.IsCustomerTenantShareExportFile = true;
                         // need to dim the check box 
                         //customerTenantAccessCardPM.IsExportActivated = true
                     }
@@ -462,6 +496,7 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
     public CardObsList: Array<CardListDataViewModel>=[];
     public isNew: boolean = false;
     public Parent: RelatedCustomerComponent;
+
     @Output() DataLoaded = new EventEmitter();
     public DataContext: AddEditCustomerTenantAccessCardViewModel = this;
     constructor(customertenantAccessPM: CustomerTenantAccessPM, entityPM: CustomerTenantAccessCardPM, isNew: boolean, Parent: RelatedCustomerComponent) {
@@ -471,9 +506,15 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
         this.isNew = isNew;
         this.Parent = Parent;
         this.setCreatedByName();
+        //this.CanSelect = Parent.CanSelect;
+        
         if (isNew) {
             this.LoadCardList();
         }
+ 
+
+
+
     }    
 
     public setCreatedByName() {
@@ -615,8 +656,12 @@ export class CardListDataViewModel {
     public set VatNumber(value: string) { if (this.entityList.VatNumber != value) this.entityList.VatNumber = value; }
 
 
+
     public get Code() { return this.entityList.Code; }
     private isSelected: boolean = false;
+    private isImport: boolean = false;
+    private isExport: boolean = false;
+
     public get IsSelected() {
         if (this.AccessCardsPms != null || !this.IsCustomerCanChecked) {
             return true;
@@ -631,6 +676,18 @@ export class CardListDataViewModel {
         }
 
     }
+
+    public get IsImportActivated() { return this.isImport; }
+    public set IsImportActivated(value: boolean) {
+        this.isImport = value; 
+
+    }
+    public get IsExportActivated() { return this.isExport; }
+    public set IsExportActivated(value: boolean) {
+        this.isExport = value; 
+
+    }
+
 
     UnckechOthers() {
         this.Parent.CardObsList.forEach(item => {

@@ -95,10 +95,11 @@
 
                                         <div class="CheckBox">
                                             <input [disabled]="!IsCustomerTenantShareExportFile" class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsExportActivated" />
-                                            <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label>
+                                            <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label> 
+                                            <HelpIcon *ngIf="!IsExportActivated" [IconSize]="14" [Header]="''" [Text]="'Export option is not activated'"></HelpIcon>
+
                                         </div>
-
-
+                                         
                                     </td>
 
 

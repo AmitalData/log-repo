@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -15,7 +15,9 @@
                                 <td style="width: 30px; min-width: 30px;max-width:30px"></td>
                                 <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
                                 <td style="width: 200px; min-width: 200px;max-width:200px">Card Code</td>
-                                <td style="width: 200px; min-width: 200px;max-width:200px">VAT #</td>
+                                <td style="width: 180px; min-width: 180px;max-width:180px">VAT #</td>
+                                <td style="width: 50px; min-width: 50px;max-width:50px">Import</td>
+                                <td style="width: 50px; min-width: 50px;max-width:50px">Export</td>
                                 <td class="LastChild"></td>
 
                             </tr>
@@ -24,9 +26,9 @@
 
                     <div class="SimpleGridViewBody" style="overflow-y:auto" *ngIf="DataLoaded" >
                         <table>
-                            <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem"  *ngFor="let item of viewModel.CardObsList">
+                            <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" *ngFor="let item of viewModel.CardObsList">
                                 <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
-                                    <div><CheckBox  (Checked)="item.IsSelected = $event" [IsEnabled]="item.IsCustomerCanChecked" [IsChecked]="item.IsSelected"></CheckBox></div>
+                                    <div><CheckBox (Checked)="item.IsSelected = $event" [IsEnabled]="item.IsCustomerCanChecked" [IsChecked]="item.IsSelected"></CheckBox></div>
                                 </td>
                                 <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
                                     <div>{{item.EnglishName}}</div>
@@ -35,9 +37,17 @@
                                 <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
                                     <span class="Value">{{item.Code}}</span>
                                 </td>
-                                <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+                                <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
                                     <span class="Value">{{item.VatNumber}}</span>
-                                </td>                               
+                                </td>
+
+                                <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
+                                    <div><CheckBox (Checked)="item.IsImportActivated = $event" [IsEnabled]="IsImportActivated" [IsChecked]="!CanSelect"></CheckBox></div>
+                                </td>
+                                <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
+                                    <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsEnabled]="IsExportActivated"></CheckBox></div>
+                                </td>
+
                                 <td class="LastChild"></td>
 
                             </tr>

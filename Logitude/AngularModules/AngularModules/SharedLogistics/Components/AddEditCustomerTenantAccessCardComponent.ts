@@ -39,12 +39,20 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     public ValidationErrorsList: Array<string> = [];
     public DataLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsImportActivated: boolean = false;
+    public IsExportActivated: boolean = false;
+    public CanSelect: boolean = false;
+
     constructor() {
         super();
     }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    CheckIsImportActivated(item: CustomerTenantAccessCardPM) {
+
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -54,7 +62,12 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         if (checkIfCustomerSelected == null) {
             this.ValidationErrorsList.push("Please Select Customer");
         }
-        else {
+
+        if (checkIfCustomerSelected && (checkIfCustomerSelected.IsImportActivated == false && checkIfCustomerSelected.IsExportActivated == false)) {
+            this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Import option.");
+        }
+
+        else if (checkIfCustomerSelected != null){
             this.viewModel.EntityPM.CustomerId = checkIfCustomerSelected.Id;
             this.viewModel.EntityPM.CustomerCode = checkIfCustomerSelected.Code;
             this.viewModel.EntityPM.CustomerName = checkIfCustomerSelected.EnglishName;
@@ -161,7 +174,11 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
 
     SetWindowArgs(args: AddEditCustomerTenantAccessCardViewModel) {
         if (args != null) {
-            this.viewModel = args;      
+            this.viewModel = args;
+            this.IsImportActivated = args.Parent.IsImportActivated;
+            this.IsExportActivated = args.Parent.IsExportActivated;
+            this.CanSelect = args.Parent.CanSelect;
+
             this.DataLoaded = true;   
         }
     }
