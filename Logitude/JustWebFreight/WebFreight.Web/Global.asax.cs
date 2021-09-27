@@ -151,7 +151,7 @@ namespace WebFreight.Web
             CustomsRegistrations.Register();
             
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
-            if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
+            if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "logboxpre")
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
             }
