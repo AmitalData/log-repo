@@ -1,4 +1,4 @@
-@not-stable @devsmoke
+@not-stable
 Feature:  Full Shipment Scenario
     this file will create a direct shipment,fill general,order,package tab
     create AP/AR invoices,Payment,and docs in, docs out, close operationally/Accountly
