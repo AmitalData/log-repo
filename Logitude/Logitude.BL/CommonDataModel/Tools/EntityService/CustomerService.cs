@@ -469,7 +469,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            if ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer))
+            if (entityPM.AddLogboxCustomerQueue || ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer)))
             {
                 AddLogboxCustomerToQueue();
             }
