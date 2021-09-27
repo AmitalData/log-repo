@@ -91,9 +91,9 @@ Feature: Create multiple shipment AP Invoice
       | InvoiceAmount       | 50          |
       | InvoiceCurrency     | EUR         |
       | InvoiceExchangeRate | 4           |
-      | InvoiceDate         | Today       |
+      | InvoiceDate         | 27/9/2021   |
       | PaymentTerms        | Cash        |
-      | DueDate             | Today       |
+      | DueDate             | 27/9/2021   |
       | VatNo               | 5           |
       | VATType             | Zero        |
       | Branch              | Main Office |
