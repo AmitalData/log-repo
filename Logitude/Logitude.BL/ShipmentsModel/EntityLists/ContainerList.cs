@@ -174,7 +174,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TerminalAddress { get; set; }
         public string TerminalPhone { get; set; }
         public string TerminalName { get; set; }
-
+        public string TerminalAddressId { get; set; }
 
         public string Field1 { get; set; }
         public string Field2 { get; set; }

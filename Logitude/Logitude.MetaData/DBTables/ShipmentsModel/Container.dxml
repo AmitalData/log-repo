@@ -945,6 +945,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TerminalAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -1028,6 +1035,11 @@
   <Relation
     ForeignKeyColumn="TerminalId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TerminalAddressId"
+    ReferencedTable="Addresses"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

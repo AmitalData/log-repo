@@ -159,10 +159,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Field9 = containerPM.Field9 != null ? containerPM.Field9.Value : null;
             container.Field10 = containerPM.Field10 != null ? containerPM.Field10.Value : null;
             container.TerminalId = containerPM.TerminalId;
-
-            IntializeCardQuery(containerPM.Tenant);
-            container.TerminalAddress = GetTerminalAddress(containerPM.TerminalId, containerPM.Tenant);
-            container.TerminalPhone = GetTerminalPhone(containerPM.TerminalId, containerPM.Tenant);
+            container.TerminalAddress = containerPM.TerminalAddress; 
+            container.TerminalPhone = containerPM.TerminalPhone;
+            container.TerminalAddressId = containerPM.TerminalAddressId;
 
             BuildSearchField(containerPM, container);
         }
@@ -179,41 +178,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             containerPM.SearchFields = mySearchFields;
             container.SearchFields = mySearchFields;
         }
-
-        private static string GetTerminalAddress(string terminalId, int tenant)
-        {
-            if (string.IsNullOrEmpty(terminalId))
-                return "";
-
-            var terminal = cardQuery != null ? cardQuery.GetSinglePM(terminalId, tenant) : null;
-            if (terminal != null)
-            {
-                string fullAddress = string.Join(",", new string[] { terminal.Address1, terminal.Address2
-                                                                    , terminal.CityName,  terminal.CountryName }
-                                           .Where(c => !string.IsNullOrEmpty(c)));
-                return fullAddress;
-            }
-            return "";
-        }
-
-
-        private static string GetTerminalPhone(string terminalId, int tenant)
-        {
-            if (string.IsNullOrEmpty(terminalId))
-                return "";
-
-            var terminal = cardQuery != null ? cardQuery.GetSinglePM(terminalId, tenant) : null;
-            if (terminal != null)
-            {
-                return terminal.Phone;
-            }
-            return "";
-        }
-
-        public static void IntializeCardQuery(int tenant)
-        {
-            cardQuery = new CardQuery(tenant);
-        }
-
     }
 }

@@ -182,7 +182,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     TerminalId = entityPoco.TerminalId,
                     TerminalAddress = entityPoco.TerminalAddress,
                     TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
-                    TerminalPhone = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.Phone : "",
+                    TerminalPhone = entityPoco.TerminalPhone,
+                    TerminalAddressId = entityPoco.TerminalAddressId,
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -210,7 +211,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return (from a in repository.context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -362,7 +363,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         TerminalId = a.TerminalId,
                         TerminalAddress = a.TerminalAddress,
                         TerminalName = a.TerminalCard != null ? a.TerminalCard.EnglishName : "",
-                        TerminalPhone = a.TerminalCard != null ? a.TerminalCard.Phone : "",
+                        TerminalPhone = a.TerminalPhone,
+                        TerminalAddressId = a.TerminalAddressId,
+
                     }).ToList();
         }
 
@@ -522,7 +525,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    TerminalId = entity.TerminalId,
                                                    TerminalAddress = entity.TerminalAddress,
                                                    TerminalName = entity.TerminalCard != null ? entity.TerminalCard.EnglishName : "",
-                                                   TerminalPhone = entity.TerminalCard != null ? entity.TerminalCard.Phone : "" ,
+                                                   TerminalPhone = entity.TerminalPhone,
+                                                   TerminalAddressId = entity.TerminalAddressId,
                                                    Field1 = entity.Field1,
                                                    Field2 = entity.Field2,
                                                    Field3 = entity.Field3,
@@ -691,7 +695,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     TerminalId = container.TerminalId,
                     TerminalAddress = container.TerminalAddress,
                     TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "",
-                    TerminalPhone = container.TerminalCard != null ? container.TerminalCard.Phone : "",
+                    TerminalPhone = container.TerminalPhone,
+                    TerminalAddressId = container.TerminalAddressId,
+
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -856,8 +862,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentStatusName = entityPoco.ShipmentEntityStatus != null ? entityPoco.ShipmentEntityStatus.Name : null,
                     TerminalId = entityPoco.TerminalId,
                     TerminalAddress = entityPoco.TerminalAddress,
+                    TerminalAddressId = entityPoco.TerminalAddressId,
                     TerminalName = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.EnglishName : "",
-                    TerminalPhone = entityPoco.TerminalCard != null ? entityPoco.TerminalCard.Phone : "",
+                    TerminalPhone = entityPoco.TerminalPhone,
                 };
             }
 

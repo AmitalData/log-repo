@@ -217,12 +217,15 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("ShipmentStatusId")]
         public virtual EntityStatus ShipmentEntityStatus { get; set; }
 
-
         public string TerminalId { get; set; }
         [ForeignKey("TerminalId")]
         public virtual Card TerminalCard { get; set; }
         public string TerminalAddress { get; set; }
         public string TerminalPhone { get; set; }
+        public string TerminalAddressId { get; set; }
+        [ForeignKey("TerminalAddressId")]
+        public virtual Address TerminalCardAddress { get; set; }
+
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }

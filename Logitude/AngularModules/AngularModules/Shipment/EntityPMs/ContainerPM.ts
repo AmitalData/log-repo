@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {ContainerPMCustomCode} from '../EntityPMCustomCode/ContainerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -770,6 +771,11 @@ export class ContainerPM {
     public set TerminalName(newValue: string) { if (this.terminalName != newValue) { this.terminalName = newValue; this.MarkAsDirty("TerminalName"); } }
        
 	 
+    private terminalAddressId: string;
+    public get TerminalAddressId() { return this.terminalAddressId; }
+    public set TerminalAddressId(newValue: string) { if (this.terminalAddressId != newValue) { this.terminalAddressId = newValue; this.MarkAsDirty("TerminalAddressId"); } }
+       
+	 
     private field1: CustomFieldClass;
     public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "Container");} return this.field1; }
     public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
@@ -832,6 +838,7 @@ export class ContainerPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ContainerPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Container");
            
         }

@@ -175,7 +175,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TerminalAddress { get; set; }
         public string TerminalPhone { get; set; }
         public string TerminalName { get; set; }
-
+        public string TerminalAddressId { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
