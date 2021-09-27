@@ -457,7 +457,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = this.isPrivateLabel ? 6 : 5;
+            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
 
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
@@ -548,6 +548,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
+            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({
