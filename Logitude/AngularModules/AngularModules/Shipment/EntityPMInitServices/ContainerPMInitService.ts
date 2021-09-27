@@ -17,7 +17,8 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("MainCarriageATA", "Container", false);
             entityPM.UIProperties.SetEnabled("MainCarriageATD", "Container", false);
             entityPM.UIProperties.SetEnabled("Master", "Container", false);
-
+            entityPM.UIProperties.SetEnabled("TerminalAddress", "Container", false);
+            entityPM.UIProperties.SetEnabled("TerminalPhone", "Container", false);
         }
 
     }
