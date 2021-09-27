@@ -2325,6 +2325,10 @@ export class ShipmentTool {
             shipmentPM.MainCarriageETA = delivery.ETA;
             shipmentPM.MainCarriageATD = delivery.ATD;
             shipmentPM.MainCarriageATA = delivery.ATA;
+            shipmentPM.ConsigneeId = shipment.ConsigneeId;
+            shipmentPM.ConsigneeAddressId = shipment.ConsigneeAddressId;
+            shipmentPM.CustomerId = shipment.ConsigneeId;
+            shipmentPM.ShipmentCustomerTypeCode = "CON";
             shipmentPM.InlandDomesticFromTypeCode = delivery.PickUpDeliveryFromTypeCode;
             shipmentPM.InlandDomesticToTypeCode = delivery.PickUpDeliveryToTypeCode;
             shipmentPM.MainCarriageFromPortId = delivery.FromPortId;
@@ -2351,6 +2355,10 @@ export class ShipmentTool {
             shipmentPM.Driver = pickup.Driver;
             shipmentPM.TruckNumber = pickup.TruckNumber;
             shipmentPM.TrailerNumber = pickup.TrailerNumber;
+            shipmentPM.ShipperId = shipment.ShipperId;
+            shipmentPM.ShipperAddressId = shipment.ShipperAddressId;
+            shipmentPM.CustomerId = shipment.ShipperId;
+            shipmentPM.ShipmentCustomerTypeCode = "SHI";
             shipmentPM.MainCarriageETD = pickup.ETD;
             shipmentPM.MainCarriageETA = pickup.ETA;
             shipmentPM.MainCarriageATD = pickup.ATD;

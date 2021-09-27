@@ -964,7 +964,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     SetUIProperties_Shipper() {
         var isFieldRequired: boolean = false;
 
-        if (this.IsInlandDomestic) {
+        if (this.IsInlandDomestic && this.EntityPM.ForwarderPickUpDeliveryType !=  "Delivery") {
             if (AppTool.IsNullOrEmpty(this.ShipperId)) {
                 isFieldRequired = true;
             }
@@ -975,7 +975,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     SetUIProperties_Consignee() {
         var isFieldRequired: boolean = false;
 
-        if (this.IsInlandDomestic) {
+        if (this.IsInlandDomestic && this.EntityPM.ForwarderPickUpDeliveryType != "Pickup" ) {
             if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
                 isFieldRequired = true;
             }
@@ -1267,7 +1267,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.MainCarriageFromPartnerId = null;
                 this.MainCarriageFromAddressId = null;
             }
-        }   
+        }
 
         if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
             this.myCardListService.getSingle(this.ShipperId).subscribe((myResponse: ServiceResponse) => {
