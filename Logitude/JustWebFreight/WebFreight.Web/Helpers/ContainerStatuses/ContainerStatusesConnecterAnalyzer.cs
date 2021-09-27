@@ -2081,9 +2081,17 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return null;
         }
-        private string GetTranslatedPortCode(string portCode)
+        private string GetTranslatedPortCode(string XMLportCode)
         {
-            return this.computingPartnerTranslator.GetLogitudeCodeTranslation(portCode, computingPartnerCode, "Port");
+            string portCode = XMLportCode;
+
+            string translatedPortCode = this.computingPartnerTranslator.GetLogitudeCodeTranslation(XMLportCode, computingPartnerCode, "Port");
+            if (!string.IsNullOrEmpty(translatedPortCode))
+            {
+                portCode = translatedPortCode;
+            }
+
+            return portCode;
         }
         private string GetPOLShipmentUpdateIndicator(string portId)
         {
