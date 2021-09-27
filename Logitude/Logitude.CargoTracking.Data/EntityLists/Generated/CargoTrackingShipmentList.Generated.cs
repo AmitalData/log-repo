@@ -242,6 +242,16 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool? GatepassArrivedDone  { get; set; }
        [DataMember]
        public string ImportManifest  { get; set; }
+       [DataMember]
+       public bool? BookingDone  { get; set; }
+       [DataMember]
+       public DateTime? BookingDate  { get; set; }
+       [DataMember]
+       public DateTime? BookingEstimationDate  { get; set; }
+       [DataMember]
+       public string BookingNotes  { get; set; }
+       [DataMember]
+       public string BookingExceptionReason  { get; set; }
    }
 
 }

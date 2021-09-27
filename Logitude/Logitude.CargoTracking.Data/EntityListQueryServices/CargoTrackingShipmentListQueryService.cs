@@ -128,6 +128,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DocumentInspectionDone = shipment.DocumentInspectionDone,
                                                                DocumentInspectionNotes = shipment.DocumentInspectionNotes,
 
+                                                               BookingDate = shipment.BookingDate,
+                                                               BookingEstimationDate = shipment.BookingEstimationDate,
+                                                               BookingDone = shipment.BookingDone,
+                                                               BookingExceptionReason = shipment.BookingExceptionReason,
+                                                               BookingNotes = shipment.BookingNotes,
+
                                                                GatepassArrivedDate = shipment.GatepassArrivedDate,
                                                                GatepassArrivedDone = shipment.GatepassArrivedDone,
                                                                GatepassArrivedEstDate = shipment.GatepassArrivedEstDate,
@@ -261,6 +267,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     CustomerReference = poco.CustomerReference,
                     ShipmentLevelCode = poco.ShipmentLevelCode,
 
+                    BookingDate = poco.BookingDate,
+                    BookingEstimationDate = poco.BookingEstimationDate,
+                    BookingDone = poco.BookingDone,
+                    BookingExceptionReason = poco.BookingExceptionReason,
+                    BookingNotes = poco.BookingNotes,
+
                     AssignedTruckerDate = poco.AssignedTruckerDate,
                     AssignedTruckerDone = poco.AssignedTruckerDone,
                     AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
@@ -349,6 +361,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetFilteredShipmentsByIds(ShipmentIds, tenant);
+            var xxxxx = shipments.ToList();
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
             return shipmetsLists;
         }
@@ -431,6 +444,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 DocumentInspectionEstDate = shipment.DocumentInspectionEstDate,
                 DocumentInspectionDone = shipment.DocumentInspectionDone,
                 DocumentInspectionNotes = shipment.DocumentInspectionNotes,
+
+                BookingDate = shipment.BookingDate,
+                BookingEstimationDate = shipment.BookingEstimationDate,
+                BookingDone = shipment.BookingDone,
+                BookingExceptionReason = shipment.BookingExceptionReason,
+                BookingNotes = shipment.BookingNotes,
 
                 GatepassArrivedDate = shipment.GatepassArrivedDate,
                 GatepassArrivedDone = shipment.GatepassArrivedDone,
@@ -711,7 +730,18 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             List<Milestone> milestones = new List<Milestone>();
 
-
+            milestones.Add(new Milestone()
+            {
+                Id = 1,
+                Code = "Booking",
+                Name = "Booking",
+                Date = shipment.BookingDate,
+                EstimationDate = shipment.BookingEstimationDate,
+                Done = shipment.BookingDone,
+                Notes = null,
+                IsCurrent = false,
+                IsEstimation = shipment.BookingDate == null && shipment.BookingEstimationDate != null
+            });
             milestones.Add(new Milestone()
             {
                 Id = 2,

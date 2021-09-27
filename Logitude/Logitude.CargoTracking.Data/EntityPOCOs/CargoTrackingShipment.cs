@@ -211,6 +211,16 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool? GatepassArrivedDone { get; set; }
         [Column("ImportManifest")]
 	    public string ImportManifest { get; set; }
+        [Column("BookingDone")]
+	    public bool? BookingDone { get; set; }
+        [Column("BookingDate")]
+	    public DateTime? BookingDate { get; set; }
+        [Column("BookingEstimationDate")]
+	    public DateTime? BookingEstimationDate { get; set; }
+        [Column("BookingNotes")]
+	    public string BookingNotes { get; set; }
+        [Column("BookingExceptionReason")]
+	    public string BookingExceptionReason { get; set; }
     }
 }
 	 
