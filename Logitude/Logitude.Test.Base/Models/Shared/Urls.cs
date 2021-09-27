@@ -13,10 +13,12 @@ namespace Logitude.Test.Base.Models.Shared
         public static string GLAccountsController = "GLAccounts";
         public static string BankDepositsController = "bankdeposits";
         public static string BankAccountsController = "bankaccounts";
+        public static string DocumentsFilingsController = "DocumentsFilings";
         public static string PaymentChequesController = "PaymentCheques";
         public static string CashBooksController = "cashbooks";
         public static string BankCodesController = "BankCodes";
         public static string JournalsController = "journals";
+        public static string DocumentTypesController = "DocumentTypes";
         public static string JournalActionTypesController = "JournalActionTypes";
 
         public static string APPaymentsGetSingle(object aPPaymenId)
@@ -46,6 +48,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string FTPDetailViewsGetByFilters = "FTPDetailViews/GetByFilters";
         public static string APInvoiceViewsGetByFilters = "APInvoiceViews/GetByFilters";
         public static string APPaymentViewsGetByFilters = "APPaymentViews/GetByFilters";
+        public static string DocumentTypeViewsGetByFilters = "documenttypeviews/getbyfilters";
         public static string ARInvoiceViewsGetByFilters = "ARInvoiceViews/GetByFilters";
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
         public static string PortViewsGetByFilters = "PortViews/GetByFilters";
@@ -303,6 +306,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
+        }
+        public static string GetCreateDocumentsFiling()
+        {
+            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={documentTypeId}&entityId={entityId}&childEntityId=&childReference=&objectTableId={objectTableId}&directionCode={directionCode}&tenant={tenant}";
         }
         
 

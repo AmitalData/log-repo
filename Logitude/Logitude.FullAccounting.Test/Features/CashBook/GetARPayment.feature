@@ -3,4 +3,4 @@
 
 Scenario: Get cashbookt
 	When get cashbookt with cashbooktId
-	Then cashbookt should be Available
+	Then cashbookt should be available

@@ -4,4 +4,4 @@ Feature: Get AR Invoice
 
 Scenario: Get ar invoice
 	When get ar invoice with ARInvoiceId
-	Then ar invoice should be Available
+	Then ar invoice should be available

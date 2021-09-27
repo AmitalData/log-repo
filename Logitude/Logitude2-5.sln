@@ -328,7 +328,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.ShipmentOrder", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.FullAccounting", "Logitude.FullAccounting.Test\Logitude.FullAccounting.csproj", "{5F5B0456-70AC-4D6C-A7A5-FF7A74956501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.DocumentTests", "Logitude.DocumentTests\Logitude.DocumentTests.csproj", "{64AA08CF-F15F-468B-B2FF-CC9461E11B4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Document", "Logitude.DocumentTests\Logitude.Document.csproj", "{64AA08CF-F15F-468B-B2FF-CC9461E11B4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,4 +4,4 @@ Feature: Get Bank Deposit
 
 Scenario: Get bank deposit
 	When get bank deposit with bankDepositId
-	Then bank deposit should be Available
+	Then bank deposit should be available
