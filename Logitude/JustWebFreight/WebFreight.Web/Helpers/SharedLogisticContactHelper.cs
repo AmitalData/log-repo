@@ -293,13 +293,8 @@ namespace WebFreight.Web.Helpers
 
                 if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
                 {
-                    string from = LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
-                    string systemUrl = GetSystemURL(sharedLogisticsContact.Tenant);
-                    if (!string.IsNullOrEmpty(systemUrl))
-                    {
-                        from = "no-reply@" + systemUrl;
-                    }
-                          
+                    string from = GetEmailFrom(sharedLogisticsContact.Tenant);
+
                     if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
                     {
 
@@ -352,6 +347,15 @@ namespace WebFreight.Web.Helpers
             }
 
             objectContext.SaveChanges();
+        }
+
+        private static string GetEmailFrom(int tenant)
+        {
+            string systemUrl = GetSystemURL(tenant);
+            if (!string.IsNullOrEmpty(systemUrl))
+                return "no-reply@" + systemUrl;
+
+            return LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
         }
 
         private static string GetSystemURL(int tenant)
