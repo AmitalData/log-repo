@@ -30,7 +30,7 @@ namespace Simplog.Server.Infrastructure.LogitudeCacheManager
 
         public string GetFromCache(string key)
         {
-           return this.cache.Get(key).ToString();
+           return this.cache.Get(key)?.ToString();
         }
 
         public object RemoveFromCache(string key)
