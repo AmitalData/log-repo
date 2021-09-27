@@ -7033,6 +7033,7 @@ namespace WebFreight.Web.Helpers
                         ObjectTableId = objectTableId, 
                         Tenant = tenant , 
                         DocumentTemplateId = template.Id ,
+                        IsSendMail =true
 
                     };
 
