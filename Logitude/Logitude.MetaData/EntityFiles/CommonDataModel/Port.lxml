@@ -56,7 +56,7 @@
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="true"
   HasApiHelper="false"
-  AllowedForComputingPartners="false"
+  AllowedForComputingPartners="true"
   IsBusinessUnitEnabled="false"
   Code1="&quot;b1ac&quot;"
   Name1="&quot; Query Group&quot;"
