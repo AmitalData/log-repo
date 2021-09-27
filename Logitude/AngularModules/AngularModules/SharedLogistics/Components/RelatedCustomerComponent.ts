@@ -27,6 +27,7 @@ import {APILogsListService} from '../../Infrastructure/Services/StandardLists/AP
 import {UserListService} from '../../Common/Services/StandardLists/UserListService';
 import {UserList} from '../../Common/EntityLists/UserList';
 import { CustomerTenantAccessPMService } from '../../Common/Services/StandardPMs/CustomerTenantAccessPMService';
+import { TenantPMService } from '../../Common/Services/StandardPMs/TenantPMService';
 declare var window;
 @Component({
 
@@ -53,6 +54,9 @@ export class RelatedCustomerComponent extends BaseComponent{
     private selectedLogItem: BatchQueriesData;
     public IsShowTipIcon: boolean = false;
     public get SelectedLogItem() { return this.selectedLogItem; } 
+    public ValidationErrorsList: string[] = [];
+    private IsCustomerTenantShareExportFile: boolean = true;
+
 
     public set SelectedLogItem(value: BatchQueriesData) {
         if (this.selectedLogItem != value)
@@ -66,9 +70,13 @@ export class RelatedCustomerComponent extends BaseComponent{
     }
  
     CheckIsImportActivated(item: CustomerTenantAccessCardPM) {
-        this.SetIsImportField(item) 
+        if (!item.IsImportActivated && !item.IsExportActivated) {
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['You Should Mark At Least One Option'];
+        } else{ 
+            this.SetIsImportField(item)
 
-       this.UpdateCustomerTenantAccess();
+            this.UpdateCustomerTenantAccess();
+        } 
     }
 
 
@@ -91,6 +99,7 @@ export class RelatedCustomerComponent extends BaseComponent{
             this.CurrentSession.CloseCurrentWindowEmit("OK");
 
         });
+
     }
     
 
@@ -276,7 +285,39 @@ export class RelatedCustomerComponent extends BaseComponent{
         customerTenantAccessCardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         customerTenantAccessCardPM.UpdateDateTime = DateTool.GetCurrentDateTimeAsUtc();
         customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;
-        customerTenantAccessCardPM.IsImportActivated = true;
+
+        // check TenantPM.isCustomerTenantShare, TenantPM.CustomerTenantShareExportFile?
+        // if TenantPM.isCustomerTenantShare false, dim both IsExport and IsImport?
+        // if TenantPM.isCustomerTenantShare true and CustomerTenantShareExportFile false, mark IsImport, dim isExport
+        // if CustomerTenantShareExportFile true and isExport true, can select at least one, IsExport or IsImport
+
+        let tenantPMService: TenantPMService = new TenantPMService();
+        tenantPMService.get(this.EntityPM.Tenant).subscribe((res: any) => {
+
+            // if TenantPM.isCustomerTenantShare is false, don't check any one
+            // if TenantPM.isCustomerTenantShare is true check IsImport, and if ixecport is false dim!
+
+            if (!res.HasError) {
+                var tenantPM = res.Result;
+                if (tenantPM.IsCustomerTenantShare) {
+                    customerTenantAccessCardPM.IsImportActivated = true
+                    if (!tenantPM.CustomerTenantShareExportFile) {
+                       this.IsCustomerTenantShareExportFile = false;
+                        // need to dim the check box 
+                        //customerTenantAccessCardPM.IsExportActivated = true
+                    }
+                } else {
+                    // do nothing
+                }
+            }
+
+           // this.CurrentSession.StopBusyIndicator();
+           // this.CurrentSession.CloseCurrentWindowEmit("OK");
+
+        });
+         
+
+        //customerTenantAccessCardPM.IsImportActivated = true;
     }
 
     public get IsAddEnabled() { return this.isAddEnabled; }

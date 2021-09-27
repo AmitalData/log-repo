@@ -1,10 +1,16 @@
 <style>
-    .Tips:hover{
-        cursor:pointer;
+    .Tips:hover {
+        cursor: pointer;
     }
 </style>
 
-<div class="TabHolder" >
+<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <td colspan="4">
+        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+    </td>
+</tr>
+
+<div class="TabHolder">
     <table>
         <tr style="height:35px" *ngIf="IsShowTipArea">
             <td style="width: 30px; vertical-align: top;">
@@ -12,12 +18,12 @@
             </td>
         </tr>
         <tr *ngIf="IsShowTipArea && IsTipsOpened" style="height:90px">
-            <td>               
-             
-                          <div style="height:100%;width:100%">
-                             <TipsComponent [ObjectTableName]="'CustomerTenantAccessCard'" [Code]="'NCDT'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged()"></TipsComponent>
-                          </div>
-                                    </td>
+            <td>
+
+                <div style="height:100%;width:100%">
+                    <TipsComponent [ObjectTableName]="'CustomerTenantAccessCard'" [Code]="'NCDT'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged()"></TipsComponent>
+                </div>
+            </td>
         </tr>
         <tr style="height:22px">
             <td>
@@ -26,7 +32,7 @@
                         <td></td>
                         <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshRelatedCustomers()"> </IconButton></td>
                         <td style="width:10px;min-width:10px"></td>
-                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Add'" [IsEnabled]="IsAddEnabled"  (click)="AddRelatedCustomer()"> </IconButton></td>
+                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Add'" [IsEnabled]="IsAddEnabled" (click)="AddRelatedCustomer()"> </IconButton></td>
                     </tr>
                 </table>
             </td>
@@ -79,7 +85,7 @@
 
                                         <div class="CheckBox">
                                             <input class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsImportActivated" />
-                                            <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label> 
+                                            <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label>
                                         </div>
 
 
@@ -88,312 +94,312 @@
                                     <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
 
                                         <div class="CheckBox">
-                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsExportActivated" />
-                                            <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label> 
-                                      </div>
+                                            <input [disabled]="!IsCustomerTenantShareExportFile" class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsExportActivated" />
+                                            <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label>
+                                        </div>
 
 
-                                  </td>
+                                    </td>
 
 
-                                  <td class="LastChild"><IconButton [Name]="'Edit'" (click)="EditRelatedCustomer(item)"> </IconButton></td>
+                                    <td class="LastChild"><IconButton [Name]="'Edit'" (click)="EditRelatedCustomer(item)"> </IconButton></td>
 
-                              </tr>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-          </td>
-      </tr>
-    <tr *ngIf="!BatchVisibility">
-        <td></td>
-    </tr>
-      <tr *ngIf="BatchVisibility" style="height:70%">
-          <td>
+            </td>
+        </tr>
+        <tr *ngIf="!BatchVisibility">
+            <td></td>
+        </tr>
+        <tr *ngIf="BatchVisibility" style="height:70%">
+            <td>
 
-              <table>
-                  <tr style="height:30px;border-top:1px solid gray">
-                      <td class="BlueTitle" style="font-size:large">
-                      {{BatchTitle}}
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="TabControl">
-                              <div class="TabControlHead">
-                                  <ul style="margin-left: 2px;">
-                                      <li [class.Selected]="SelectedTabCode == 'B'" (click)="SelectedTabCode = 'B'" style="width:100px">
-                                          <div class="InnerChild">
-                                              Batch
-                                          </div>
-                                      </li>
+                <table>
+                    <tr style="height:30px;border-top:1px solid gray">
+                        <td class="BlueTitle" style="font-size:large">
+                            {{BatchTitle}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="TabControl">
+                                <div class="TabControlHead">
+                                    <ul style="margin-left: 2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'B'" (click)="SelectedTabCode = 'B'" style="width:100px">
+                                            <div class="InnerChild">
+                                                Batch
+                                            </div>
+                                        </li>
 
-                                      <li [class.Selected]="SelectedTabCode == 'Q'" (click)="SelectedTabCode = 'Q'" style="width:100px">
-                                          <div class="InnerChild">
-                                              Queue
-                                              <div class="TabSquareIcon"></div>
-                                          </div>
-                                      </li>
+                                        <li [class.Selected]="SelectedTabCode == 'Q'" (click)="SelectedTabCode = 'Q'" style="width:100px">
+                                            <div class="InnerChild">
+                                                Queue
+                                                <div class="TabSquareIcon"></div>
+                                            </div>
+                                        </li>
 
-                                      <li [class.Selected]="SelectedTabCode == 'L'" (click)="SelectedTabCode = 'L'" style="width:100px">
-                                          <div class="InnerChild">
-                                              Logs
-                                              <div class="TabSquareIcon"></div>
-                                          </div>
-                                      </li>
-                                  </ul>
-                              </div>
+                                        <li [class.Selected]="SelectedTabCode == 'L'" (click)="SelectedTabCode = 'L'" style="width:100px">
+                                            <div class="InnerChild">
+                                                Logs
+                                                <div class="TabSquareIcon"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                              <div class="TabControlBody">
+                                <div class="TabControlBody">
 
-                                  <!-- Batch -->
-                                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'B'">
-                                                <div class="TableHolder">
-                                                    <table>
-                                                        <tr style="height:30px">
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshBatch()"> </IconButton></td>
-                                                                        <td style="width:10px;min-width:10px"></td>
-                                                                        <td style="width:22px;min-width:22px"><IconButton [Title]="'Add New Batch'" [Name]="'Add'" (click)="AddBatch()"> </IconButton></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <div class="SimpleGridView">
-                                                                        <div class="SimpleGridViewHeader">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td style="width: 120px; min-width: 120px;max-width:120px">Batch Number</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">From Date</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">To Date</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">Done Date</td>
-                                                                                    <td style="width: 120px; min-width: 120px;max-width:120px">Status</td>
-                                                                                    <td style="width: 100px; min-width: 100px;max-width:100px">Total Shipment</td>
-                                                                                    <td style="width: 100px; min-width: 100px;max-width:100px">Total succeeded</td>
-                                                                                    <td style="width: 100px; min-width: 100px;max-width:100px">Total Failed</td>
+                                    <!-- Batch -->
+                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'B'">
+                                        <div class="TableHolder">
+                                            <table>
+                                                <tr style="height:30px">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshBatch()"> </IconButton></td>
+                                                                <td style="width:10px;min-width:10px"></td>
+                                                                <td style="width:22px;min-width:22px"><IconButton [Title]="'Add New Batch'" [Name]="'Add'" (click)="AddBatch()"> </IconButton></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 120px; min-width: 120px;max-width:120px">Batch Number</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">From Date</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">To Date</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Done Date</td>
+                                                                            <td style="width: 120px; min-width: 120px;max-width:120px">Status</td>
+                                                                            <td style="width: 100px; min-width: 100px;max-width:100px">Total Shipment</td>
+                                                                            <td style="width: 100px; min-width: 100px;max-width:100px">Total succeeded</td>
+                                                                            <td style="width: 100px; min-width: 100px;max-width:100px">Total Failed</td>
 
-                                                                                    <td class="LastChild"></td>
+                                                                            <td class="LastChild"></td>
 
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-
-                                                                        <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                                                            <table>
-                                                                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of BatchObsList">
-                                                                                    <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
-                                                                                        <div>{{item.BatchNumber}}</div>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width:180px; min-width: 180px;max-width:180px">
-                                                                                        <div>{{item.CreateDateTime  | DateTimePipe:'DT'}}</div>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <span class="Value">{{item.FromDatetime  | DateTimePipe:'DT'}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <span class="Value">{{item.ToDatetime | DateTimePipe:'DT'}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <span class="Value">{{item.DoneDate | DateTimePipe:'DT'}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width:120px">
-                                                                                        <span class="Value">{{item.Status}}</span>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                                                                        <span class="Value" style="font-weight:bold;color:black">{{item.TotalShipment}}</span>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                                                                        <span class="Value" style="font-weight:bold;color:green">{{item.Totalsucceeded}}</span>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                                                                        <span class="Value" style="font-weight:bold;color:red">{{item.TotalFailed }}</span>
-                                                                                    </td>
-
-                                                                                    <td class="LastChild"></td>
-
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
+                                                                        </tr>
+                                                                    </table>
                                                                 </div>
 
-                                                            </td>
+                                                                <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of BatchObsList">
+                                                                            <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
+                                                                                <div>{{item.BatchNumber}}</div>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width:180px; min-width: 180px;max-width:180px">
+                                                                                <div>{{item.CreateDateTime  | DateTimePipe:'DT'}}</div>
+                                                                            </td>
 
-                                                        </tr>
-                                                    </table>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <span class="Value">{{item.FromDatetime  | DateTimePipe:'DT'}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <span class="Value">{{item.ToDatetime | DateTimePipe:'DT'}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <span class="Value">{{item.DoneDate | DateTimePipe:'DT'}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width:120px">
+                                                                                <span class="Value">{{item.Status}}</span>
+                                                                            </td>
 
-                                                </div>
-                                            </div>
+                                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                                                                <span class="Value" style="font-weight:bold;color:black">{{item.TotalShipment}}</span>
+                                                                            </td>
 
-                                            <!-- Queue -->
-                                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Q'">
-                                                <div class="TableHolder">
-                                                    <table>
-                                                        <tr style="height:30px">
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:50px" class="Label">Period</td>
-                                                                        <td style="width:200px"><ComboBox style="width:150px;" [ItemsSource]="QueriesList" (SelectedItemChanged)="QueriesSelectedChange($event)" [SelectedItem]="SelectedQueryItem" [Binding]="'Name'"></ComboBox></td>
-                                                                        <td></td>
-                                                                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshQueues()"> </IconButton></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <div class="SimpleGridView">
-                                                                        <div class="SimpleGridViewHeader">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td style="width: 120px; min-width: 120px;max-width:120px">Batch Number</td>
-                                                                                    <td style="width: 100px; min-width: 100px;max-width:100px">Status</td>
-                                                                                    <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
-                                                                                    <td style="width: 80px; min-width: 80px;max-width:80px">Retries</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
-                                                                                    <td class="LastChild"></td>
+                                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                                                                <span class="Value" style="font-weight:bold;color:green">{{item.Totalsucceeded}}</span>
+                                                                            </td>
 
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
+                                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                                                                <span class="Value" style="font-weight:bold;color:red">{{item.TotalFailed }}</span>
+                                                                            </td>
 
-                                                                        <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                                                            <table>
-                                                                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of QueryObsList">
-                                                                                    <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
-                                                                                        <div>{{item.Field2}}</div>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width:100px; min-width: 100px;max-width:100px">
-                                                                                        <div>{{item.StatusName}}</div>
-                                                                                    </td>
+                                                                            <td class="LastChild"></td>
 
-                                                                                    <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                                                                        <span class="Value">{{item.QueueDefinitionCode}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px">
-                                                                                        <span class="Value">{{item.RetryNumber}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <div>{{item.CreateDateTime  | DateTimePipe:'DT'}}</div>
-                                                                                    </td>
-                                                                                    <td class="LastChild"></td>
-
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
+                                                                        </tr>
+                                                                    </table>
                                                                 </div>
+                                                            </div>
+                                                        </div>
 
-                                                            </td>
+                                                    </td>
 
-                                                        </tr>
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
-
-                                            <!-- Logs -->
-                                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'L'">
-                                                <div class="TableHolder">
-                                                    <table>
-                                                        <tr style="height:30px">
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:50px" class="Label">Period</td>
-                                                                        <td style="width:200px"><ComboBox style="width:150px;" [ItemsSource]="QueriesList" (SelectedItemChanged)="LogsSelectedChange($event)" [SelectedItem]="SelectedLogItem" [Binding]="'Name'"></ComboBox></td>
-                                                                        <td></td>
-                                                                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshLogs()"> </IconButton></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <div class="SimpleGridView">
-                                                                        <div class="SimpleGridViewHeader">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td style="width: 600px; min-width: 600px;max-width:600px">Subject</td>
-                                                                                    <td style="width: 120px; min-width: 120px;max-width:120px">Status</td>
-                                                                                    <td style="width: 250px; min-width: 250px;max-width:250px">Last Exception Message</td>
-                                                                                    <td style="width: 80px; min-width: 80px;max-width:80px">Retries</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
-                                                                                    <td style="width: 180px; min-width: 180px;max-width:180px">Last Update Date</td>
-                                                                                    <td style="width: 90px; min-width: 90px;max-width:90px"></td>
-                                                                                    <td style="width: 90px; min-width: 90px;max-width:90px"></td>
-                                                                                    <td class="LastChild"></td>
-
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-
-                                                                        <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                                                            <table>
-                                                                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of APILogsObsList">
-                                                                                    <td class="GridViewCell" style="width:600px; min-width: 600px;max-width:600px">
-                                                                                        <div>{{item.Subject}}</div>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
-                                                                                        <div>{{item.StatusName}}</div>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 250px; min-width: 250px;max-width:250px">
-                                                                                        <span class="Value">{{item.LastExceptionMessage}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px">
-                                                                                        <span class="Value">{{item.NumberOfRetries}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <span class="Value">{{item.CreateDate  | DateTimePipe:'DT'}}</span>
-                                                                                    </td>
-                                                                                    <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
-                                                                                        <span class="Value">{{item.LastUpdateDate  | DateTimePipe:'DT'}}</span>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
-                                                                                        <button class="Button" (click)="ViewLog(item)">View</button>
-                                                                                    </td>
-
-                                                                                    <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
-                                                                                        <button class="Button" (click)="ViewLog(item)">View</button>
-                                                                                    </td>
-
-
-                                                                                    <td class="LastChild"></td>
-
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </td>
-
-                                                        </tr>
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
+                                                </tr>
+                                            </table>
 
                                         </div>
+                                    </div>
+
+                                    <!-- Queue -->
+                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Q'">
+                                        <div class="TableHolder">
+                                            <table>
+                                                <tr style="height:30px">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:50px" class="Label">Period</td>
+                                                                <td style="width:200px"><ComboBox style="width:150px;" [ItemsSource]="QueriesList" (SelectedItemChanged)="QueriesSelectedChange($event)" [SelectedItem]="SelectedQueryItem" [Binding]="'Name'"></ComboBox></td>
+                                                                <td></td>
+                                                                <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshQueues()"> </IconButton></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 120px; min-width: 120px;max-width:120px">Batch Number</td>
+                                                                            <td style="width: 100px; min-width: 100px;max-width:100px">Status</td>
+                                                                            <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
+                                                                            <td style="width: 80px; min-width: 80px;max-width:80px">Retries</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
+                                                                            <td class="LastChild"></td>
+
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of QueryObsList">
+                                                                            <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
+                                                                                <div>{{item.Field2}}</div>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width:100px; min-width: 100px;max-width:100px">
+                                                                                <div>{{item.StatusName}}</div>
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+                                                                                <span class="Value">{{item.QueueDefinitionCode}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px">
+                                                                                <span class="Value">{{item.RetryNumber}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <div>{{item.CreateDateTime  | DateTimePipe:'DT'}}</div>
+                                                                            </td>
+                                                                            <td class="LastChild"></td>
+
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Logs -->
+                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'L'">
+                                        <div class="TableHolder">
+                                            <table>
+                                                <tr style="height:30px">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:50px" class="Label">Period</td>
+                                                                <td style="width:200px"><ComboBox style="width:150px;" [ItemsSource]="QueriesList" (SelectedItemChanged)="LogsSelectedChange($event)" [SelectedItem]="SelectedLogItem" [Binding]="'Name'"></ComboBox></td>
+                                                                <td></td>
+                                                                <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshLogs()"> </IconButton></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 600px; min-width: 600px;max-width:600px">Subject</td>
+                                                                            <td style="width: 120px; min-width: 120px;max-width:120px">Status</td>
+                                                                            <td style="width: 250px; min-width: 250px;max-width:250px">Last Exception Message</td>
+                                                                            <td style="width: 80px; min-width: 80px;max-width:80px">Retries</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Last Update Date</td>
+                                                                            <td style="width: 90px; min-width: 90px;max-width:90px"></td>
+                                                                            <td style="width: 90px; min-width: 90px;max-width:90px"></td>
+                                                                            <td class="LastChild"></td>
+
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItemBatch = item" [class.RowSelected]="item === SelectedItemBatch" *ngFor="let item of APILogsObsList">
+                                                                            <td class="GridViewCell" style="width:600px; min-width: 600px;max-width:600px">
+                                                                                <div>{{item.Subject}}</div>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width:120px; min-width: 120px;max-width:120px">
+                                                                                <div>{{item.StatusName}}</div>
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 250px; min-width: 250px;max-width:250px">
+                                                                                <span class="Value">{{item.LastExceptionMessage}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px">
+                                                                                <span class="Value">{{item.NumberOfRetries}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <span class="Value">{{item.CreateDate  | DateTimePipe:'DT'}}</span>
+                                                                            </td>
+                                                                            <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
+                                                                                <span class="Value">{{item.LastUpdateDate  | DateTimePipe:'DT'}}</span>
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
+                                                                                <button class="Button" (click)="ViewLog(item)">View</button>
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
+                                                                                <button class="Button" (click)="ViewLog(item)">View</button>
+                                                                            </td>
+
+
+                                                                            <td class="LastChild"></td>
+
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
                             </div>
 
                         </td>

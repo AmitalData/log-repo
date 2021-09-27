@@ -75,11 +75,12 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM, bool isImportActivated)
+        private bool IsImportShipmentsAllowedForLogBox(ShipmentPM entityPM, bool isImportActivated)
         {
-            if (loggedTenant.CustomerTenantShareImportFile == true)
+            // onlu check is ImportActivated on the customerTenantAccessCard
+            if (isImportActivated == true)
             {
-                return (entityPM.DirectionId.ToUpper() == "I" && isImportActivated == true);
+                return (entityPM.DirectionId.ToUpper() == "I");
             }
             else
             {
@@ -293,7 +294,7 @@ namespace CommunicationWorkerRole
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsImportActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated)))
+                                                        if ((Shipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(Shipment, customerTenantAccessCard.IsImportActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated)))
                                                             IdsList.Add(item);
                                                         else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
                                                             ImportIdsList.Add(item);
