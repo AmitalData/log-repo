@@ -40,6 +40,10 @@ Given("the user add order package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillOrdersTab(packagesDetails)
 });
+
+Given("the user delete the first order package", () => {
+    Actions.DeleteOrderPackage()
+});
 //#endregion
 
 //#region Update partners tab given step
@@ -47,12 +51,21 @@ Given("the user add partners with following details", (dataTable) => {
     const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
     Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
 });
+
+Given("the user delete the below partners", (dataTable) => {
+    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
+    Actions.DeletePartnersInPartnersTab(partnersDetails)
+});
 //#endregion
 
 //#region Update packages tab given step
 Given("the user add package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
+});
+
+Given("the user delete the package in the packages tabs", () => {
+    Actions.DeleteShipmentPackages()
 });
 //#endregion
 
@@ -67,9 +80,15 @@ Given("the user fill receivables with the following details", (dataTable) => {
 Given("the user add new pickup", () => {
     Actions.FillPickupRouting()
 });
+
+Given("add transshipments with {string} as via port and {string} as airline", (viaPort, airline) => {
+    Actions.AddTransshipments(viaPort, airline)
+});
+
 Given("add delivery with {string} as a partner routing", (partner) => {
     Actions.FillDeliveryRouting(partner)
 });
+
 Given("add pre carriage and on carriage from port {string} to port {string}", (fromPort, toPort) => {
     Actions.FillPreCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
     Actions.FillOnCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
