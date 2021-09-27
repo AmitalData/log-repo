@@ -68,90 +68,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
-            if (!IsFieldNullOrEmpty(tableRow, "DeliveredDone") && !tableRow["DeliveredDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Delivered);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveredDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "DeliveryDone") && !tableRow["DeliveryDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DeliveryOut);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveryDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "AssignedTruckerDone") && !tableRow["AssignedTruckerDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToTrucker);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedTruckerDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "GatepassArrivedDone") && !tableRow["GatepassArrivedDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GatepassArrived);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["GatepassArrivedDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "ClearanceDone") && !tableRow["ClearanceDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Clearance);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["ClearanceDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "CustomsPaymentDone") && !tableRow["CustomsPaymentDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.CustomsPayment);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["CustomsPaymentDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "DocumentInspectionDone") && !tableRow["DocumentInspectionDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DocumentInspection);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["DocumentInspectionDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "GoodsClassificationDone") && !tableRow["GoodsClassificationDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.GoodsClassification);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["GoodsClassificationDate"]);
-            }
-
-            //CustomsProcess
-            //AssignedToCustomsBroker
-            else if (!IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDone") && !tableRow["AssignedCustomsAgentDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsBroker);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.ToWarehouse);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["ToWarehouseDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Arrival);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["ArrivalDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Departure);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["DepartureDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.FromWarehouse);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["FromWarehouseDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
+             if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Booking);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["BookingDate"]);
+
+            }
+
+            else if (!IsFieldNullOrEmpty(tableRow, "CreateDone") && !tableRow["CreateDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
 
             }
 

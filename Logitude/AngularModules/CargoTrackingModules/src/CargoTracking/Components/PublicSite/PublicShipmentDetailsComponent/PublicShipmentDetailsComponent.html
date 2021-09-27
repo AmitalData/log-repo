@@ -113,7 +113,7 @@
                         </div>
                         <div class="middle" *ngIf="InProgressShipment || Delivered">
                             <!--<img class="path " [attr.src]="GetModeIcon()" alt=" " />-->
-                            <svg *ngIf="Shipment.CurrentMilestoneCode != 1" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
+                            <svg *ngIf="Shipment.CurrentMilestoneCode != '2'" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -129,7 +129,7 @@
                                     </g>
                                 </g>
                             </svg>
-                            <svg *ngIf="Shipment.CurrentMilestoneCode == 1"
+                            <svg *ngIf="Shipment.CurrentMilestoneCode == '2'"
                                  width="40px" height="30px"   viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg"  fill="var(--secondaryColor)">
                             <path d="m313.585938 137.730469h-18.75v-18.75h18.75zm-31.25 0h-18.75v-18.75h18.75zm0 0"/>
                             <path d="m560.097656 621.25h-543.015625v-408.40625h-18.75v427.15625h580.515625v-427.15625h-18.75zm0 0"/>
