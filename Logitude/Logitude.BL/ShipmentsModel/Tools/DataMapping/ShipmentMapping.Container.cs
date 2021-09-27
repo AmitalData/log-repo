@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
@@ -11,6 +12,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
+        private static CardQuery cardQuery;
         public static void MapContainer(ContainerPM containerPM, Container container, bool isNewEntity)
         {
             if (isNewEntity)
@@ -156,6 +158,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Field8 = containerPM.Field8 != null ? containerPM.Field8.Value : null;
             container.Field9 = containerPM.Field9 != null ? containerPM.Field9.Value : null;
             container.Field10 = containerPM.Field10 != null ? containerPM.Field10.Value : null;
+            container.TerminalId = containerPM.TerminalId;
+            container.TerminalAddress = containerPM.TerminalAddress; 
+            container.TerminalPhone = containerPM.TerminalPhone;
+            container.TerminalAddressId = containerPM.TerminalAddressId;
+
             BuildSearchField(containerPM, container);
         }
 

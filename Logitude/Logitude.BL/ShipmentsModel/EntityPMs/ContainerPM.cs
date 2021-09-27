@@ -171,6 +171,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int? FreeDays { get; set; }
         public string ShipmentStatusId { get; set; }
         public string ShipmentStatusName { get; set; }
+        public string TerminalId { get; set; }
+        public string TerminalAddress { get; set; }
+        public string TerminalPhone { get; set; }
+        public string TerminalName { get; set; }
+        public string TerminalAddressId { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
