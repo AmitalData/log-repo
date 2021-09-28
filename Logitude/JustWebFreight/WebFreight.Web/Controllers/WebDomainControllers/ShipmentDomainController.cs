@@ -2917,8 +2917,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                        bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA)
+                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
                         {
                             isValid = false;
                         }
@@ -2998,6 +2999,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
+
                         });
                     }
                 }
@@ -3020,6 +3023,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             CountryId = iCountry.Id,
                             CountryIsEC = iCountry.EC,
                             CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
                         });
                     }
                 }
@@ -3041,6 +3045,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             CountryId = iPort.CountryId,
                             CountryIsEC = iPort.CountryEC,
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
                         });
                     }
                 }

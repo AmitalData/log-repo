@@ -61,6 +61,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                             HasCitiesList = a.HasCitiesList,
                                             IsNorthAmerica = a.IsNorthAmerica,
+                                            IsGreaterChina = a.IsGreaterChina,
                                         };
 
                         if (tenant == 0)
@@ -104,6 +105,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                              HasCitiesList = a.HasCitiesList,
                                              IsNorthAmerica = a.IsNorthAmerica,
+                                             IsGreaterChina = a.IsGreaterChina,
                                          }).FirstOrDefault();
                     entity = country;
                 }
@@ -137,6 +139,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                               HasCitiesList = a.HasCitiesList,
                                               IsNorthAmerica = a.IsNorthAmerica,
+                                              IsGreaterChina = a.IsGreaterChina,
                                           };
             return query;
         }
@@ -177,6 +180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                             HasCitiesList = a.HasCitiesList,
                             IsNorthAmerica = a.IsNorthAmerica,
+                            IsGreaterChina = a.IsGreaterChina,
                         };
 
             IQueryable<CountryPM> query2 = null;
@@ -227,6 +231,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SearchFields = f.SearchFields,
                                                  HasCitiesList = f.HasCitiesList,
                                                  IsNorthAmerica = f.IsNorthAmerica,
+                                                 IsGreaterChina = f.IsGreaterChina,
                                              };
             return result;
         }
@@ -253,6 +258,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                      HasCitiesList = a.HasCitiesList,
                                      IsNorthAmerica = a.IsNorthAmerica,
+                                     IsGreaterChina = a.IsGreaterChina,
                                  }).FirstOrDefault();
 
             return country;

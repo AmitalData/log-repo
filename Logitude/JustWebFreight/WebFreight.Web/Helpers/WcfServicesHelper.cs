@@ -168,6 +168,7 @@ namespace WebFreight.Web.Helpers
                         LocalName = oldCountry.LocalName,
                         SearchFields = oldCountry.SearchFields,
                         IsNorthAmerica = oldCountry.IsNorthAmerica,
+                        IsGreaterChina = oldCountry.IsGreaterChina,
                         HasCitiesList = oldCountry.HasCitiesList,
                     };
 
