@@ -265,3 +265,15 @@ export function DeletePartner() {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 //#endregion
+
+//#region add pickup and delivery
+export function AddPickUp() {
+    cy.ClickRadio(QuoteSelectors.IncludePickUpCheckBox)
+}
+
+export function AddDelivery(city, country) {
+    cy.ClickRadio(QuoteSelectors.IncludeDelivery)
+    cy.FillLogTextBox(QuoteSelectors.ToAddressCity, city)
+    cy.FillLogLov(QuoteSelectors.ToAddressCountryId, country, true)
+}
+//#endregion
