@@ -450,7 +450,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         <th style="width: 250px;">Quantity</th>
                         <th style="width: 250px;">Weight</th>
                         <th style="width: 250px;">Volume</th>
-                        <th style="width: 200px;" class="dimentions"><span>DIMENSIONS</span> <span>(L-W-H) (CM)</span></th>
+                        <th style="width: 200px;"><span class="hide-mobile">DIMENSIONS (L-W-H) (CM)</span> <span class="mobile-only">(L-W-H) (CM)</span></th>
                     </tr>
 
                     <tr *ngFor="let package of ShipmentPackages">
@@ -698,7 +698,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="DocumentsFilings?.length === 0">
 
         <div body>
-            <div  class="no-data-available" *ngIf="DocumentsFilings?.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
+            <div  class="no-data-available" *ngIf="DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
             <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" 
                 (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
