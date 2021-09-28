@@ -33,18 +33,14 @@ Then("the quote should create successfully", () => {
 });
 //#endregion 
 
-//#region Update and delete partners tab given step
+//#region Delete all charges
 Given("the user open the quote", () => {
   QuotesActions.OpenQuote(quoteDetails.QuoteNumber);
 });
 
-Given("the user add pickup", () => {
-  cy.Click(QuoteSelectors.QuoteRoutingsTab, null)
-  QuotesActions.AddPickUp()
-});
-
-Given("the user add delivery with {string} as city and {string} as country", (city, country) => {
-  QuotesActions.AddDelivery(city, country)
+Given("the user delete all charges", () => {
+  cy.Click(QuoteSelectors.QuoteCharges, null)
+  QuotesActions.DeleteAllCharges()
 });
 
 When("update quote", () => {
@@ -53,5 +49,21 @@ When("update quote", () => {
 
 Then("the quote should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.Quotes, 200);
+});
+//#endregion
+
+//#region Add charge with fixed sale currency mode
+Given("the user add charge with {string} as charge type", (chargeType) => {
+  QuotesActions.AddCharge(chargeType)
+});
+
+Then("sale currency should have {string} value", (currencyValue) => {
+  QuotesActions.AssertSaleCurrencyValue(currencyValue);
+});
+//#endregion
+
+//#region Change currency mode to same as cost 
+Given("the user change currency mode to same as cost currency", () => {
+  QuotesActions.ChangeSaleCurrencyModeValueToSameAsCost()
 });
 //#endregion

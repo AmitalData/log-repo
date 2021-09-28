@@ -277,3 +277,26 @@ export function AddDelivery(city, country) {
     cy.FillLogLov(QuoteSelectors.ToAddressCountryId, country, true)
 }
 //#endregion
+
+//#region charges
+export function DeleteAllCharges() {
+    cy.Click(QuoteSelectors.DeleteAllChargesButton, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AddCharge(chargeType) {
+    cy.Click(QuoteSelectors.AddChargesButton, null)
+    cy.FillLogLov(QuoteSelectors.ChargesType, chargeType, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertSaleCurrencyValue(currencyValue) {
+    cy.Click(BaseSelectors.StartsWithEditButton + BaseSelectors.FirstElement, null)
+    BaseAssertion.AssertElementHaveValue("#QuoteCharge_SaleCurrencyId", currencyValue)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function ChangeSaleCurrencyModeValueToSameAsCost() {
+    cy.Click("#ComboBoxItem_200", null, true)
+}
+//#endregion

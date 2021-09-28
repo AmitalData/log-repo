@@ -62,6 +62,9 @@ export class QuoteSelectors {
      public static readonly QuoteChargeCostExchangeRate = "#QuoteCharge_CostExchangeRate";
      public static readonly QuoteCancelAddCharges = "#CancelAddCharges";
      public static readonly ContaintsQuote = "Quotes";
+     public static readonly DeleteAllChargesButton = "#DeleteAll";
+     public static readonly AddChargesButton = "#AddCharges";
+     public static readonly ChargesType = "#QuoteCharge_ChargesTypeId";
 
      //#endregion
 
