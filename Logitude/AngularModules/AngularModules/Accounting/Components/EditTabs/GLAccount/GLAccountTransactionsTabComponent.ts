@@ -1,6 +1,6 @@
 import { DateTool } from './../../../../Infrastructure/Tools';
-import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -28,6 +28,10 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxReportExtendedPMService'
+import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
 
 @Component({
 
@@ -41,7 +45,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public ObjectTableName = "GLAccount";
     public DataContext = this;
     public filterAgrs: ApiQueryFilters;
- 
+    private fullAccountingSetting: FullAccountingSettingList;
     // Services
     private _entityListService: EntityListService;
     public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
@@ -52,17 +56,18 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     // Filters
     dateFilter: FilterItem;
     currencyFilter: FilterItem;
     searchFieldFilter: FilterItem;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
-
+    private TenatTaxReports: TaxReportPM[];
     public ItemsSource: LedgerTransactionList[];
     ratesTable: RatesTableList[];
     public LTBSummery: LTBResponse = new LTBResponse();
     public OpenReconciliationMessage: string = "There are no Open Transactions";
-
+    public TaxReportLists: CodeNameClass[] =[];
     LocalSums: number[];
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
@@ -70,6 +75,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public UsingLogGridV2:boolean= false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public UseTaxreportFilter: boolean = false;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -114,8 +120,45 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
 
         this.GetTransactionsCurrencies();
+        this.GetFullAccountingSettings();
+        
     }
+    GetFullAccountingSettings() {
+        this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
 
+                    var res = myResponse.Result;
+                    this.fullAccountingSetting = res;
+                    if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
+                        this.UseTaxreportFilter = true;
+                        this.GetTransmittedTaxReports();
+                    }
+                    else this.UseTaxreportFilter = false;
+                }
+            })
+        });
+    }
+    GetTransmittedTaxReports() {
+        this.taxReportExtendedPMService.GetTenantTransmittedTaxReports().subscribe((response: any) => {
+            this.TenatTaxReports = response.Result;
+            this.CurrentSession.StopBusyIndicator();
+            if (this.TenatTaxReports != null) {
+                this.TenatTaxReports.forEach(p => {                   
+                    this.TaxReportLists.push(new CodeNameClass(p.Id,this.FormatTaxReportDate(p.TaxReportMonth)));                   
+                });
+            }
+
+
+        });
+    }
+    FormatTaxReportDate(date: Date) {
+      var newDate=  new Date(date);
+        var month: number = newDate.getMonth()+1;
+        var year: number = newDate.getFullYear();
+        return month + "." + year;
+    }
     ngOnInit() {
         this.BuildColumns();
     }
@@ -162,6 +205,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     set OpenAmountHint(value: string) {
         if (this.openAmountHint != value) {
             this.openAmountHint = value;
+        }
+    }
+
+    private selectedTaxReport: CodeNameClass;
+    get SelectedTaxReport() { return this.selectedTaxReport; }
+    set SelectedTaxReport(value: CodeNameClass) {
+        if (this.selectedTaxReport != value) {
+            this.selectedTaxReport = value;
+            this.LoadAllScreenData();
         }
     }
 
@@ -260,6 +312,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
 
+    private notIncludedInAnyTaxReport: boolean = false;
+    get NotIncludedInAnyTaxReport() { return this.notIncludedInAnyTaxReport; }
+    set NotIncludedInAnyTaxReport(value: boolean) {
+        if (this.notIncludedInAnyTaxReport != value) {
+            this.notIncludedInAnyTaxReport = value;
+            this.SelectedTaxReport = null;
+            this.RefreshButtonClicked();
+        }
+    }
 
     //#endregion
 
@@ -490,10 +551,16 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.filterAgrs.SortDirection = sortingDir;
         }
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
- 
+        if (this.SelectedTaxReport) {
+            
+            this.filterAgrs.addAdditionalFilter("TaxReportId", this.SelectedTaxReport.Code, null, null, "Equals", true, false, false, "string");
+
+        }
         this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
 
+        
         return this._entityListService.getExtendedByFilters("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
@@ -816,6 +883,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
 
     LoadAllScreenData() {
+        if (this._dateTypeCode !="4")
         this.GetLTB();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetNonReconciledTransactionsCount();
@@ -1042,13 +1110,27 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             case 'filter_reference':
                 this._dateTypeCode = '3';
                 break;
+            case 'filter_Tax':
+                this._dateTypeCode = '4';
+                this.ResetLTBFields();
+                break;
             default:
                 break;
         }
-
+        if (this._dateTypeCode!='4')
         this.RefreshButtonClicked();
 
 
+    }
+    ResetLTBFields() {
+        if (this.LTBSummery) {
+            this.LTBSummery.StartBalanceLocal = 0;
+            this.LTBSummery.StartBalanceForeignList = null;
+            this.LTBSummery.EndBalanceLocal = 0;
+            this.LTBSummery.EndBalanceForeignList = null;
+            this.LTBSummery.StartBalanceForeign = 0;
+            this.LTBSummery.EndBalanceForeign = 0;
+        }
     }
     //#endregion
 

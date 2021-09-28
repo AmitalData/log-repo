@@ -35,7 +35,7 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
                 var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
                 var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                 var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
-                string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
+                string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault()?.FieldValue.ToString();
 
                 var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
                 if (currencyIdFilter != null)

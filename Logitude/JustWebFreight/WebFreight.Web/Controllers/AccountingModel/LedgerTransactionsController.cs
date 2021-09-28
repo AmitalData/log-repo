@@ -4,7 +4,9 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -42,18 +44,45 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(filters, tenant);
                 var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-                ledgerTransactionBalanceService.Run();
+                List<LedgerTransactionList> ledgerTransactions = new List<LedgerTransactionList>();
+                LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+                LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
 
+                if (LTBFilter.TaxreportId != null)
+                {
+                    ledgerTransactions = ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter.TaxreportId, tenant,LTBFilter.GLAccountId);
+                 
+                          ledgerTransactions.ForEach(rec =>
+                          {
+                              ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
+                          });
+                }
+
+                else if (LTBFilter.NotIncludedInAnyTaxReport)
+                {
+                    ledgerTransactions = ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(null, tenant, LTBFilter.GLAccountId);
+                    ledgerTransactions.ForEach(rec =>
+                    {
+                        ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
+                    });
+                }
+                else
+                {
+                    ledgerTransactionBalanceService.Run();
+                }
+                 
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = ledgerTransactionBalanceService.Response.TotalRowCount.Value;
-                    response.Count = count;
+                    response.Count = LTBFilter.DateTypeCode == "4"? ledgerTransactions.Count() : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
-
-                response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
-                response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
+                if(LTBFilter.CurrencyId != null && ledgerTransactions.Count>0)
+                {
+                    ledgerTransactions = ledgerTransactions.Where(d => d.CurrencyId == LTBFilter.CurrencyId).ToList();
+                }
+                response.Result = LTBFilter.DateTypeCode == "4" ? ledgerTransactions : ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
+                response.TookMS = LTBFilter.DateTypeCode != "4" ? ledgerTransactionBalanceService.Response.TookMS: 0;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -65,6 +94,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+       
         public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
         {
             try

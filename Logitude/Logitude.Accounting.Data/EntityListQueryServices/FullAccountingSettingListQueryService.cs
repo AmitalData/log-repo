@@ -64,10 +64,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                ExternalReconciliationDefault = a.ExternalReconciliationDefault,
                                                                DefaultDifferencesGLAccountId = a.DefaultDifferencesGLAccountId,
-                                                               DefaultExternalDiffGLAccountId= a.DefaultExternalDiffGLAccountId,
+                                                               DefaultExternalDiffGLAccountId = a.DefaultExternalDiffGLAccountId,
                                                                DefaultTaxWithholdPercentage = a.DefaultTaxWithholdPercentage,
                                                                GLAccounterCounterLength = a.GLAccounterCounterLength,
                                                                IsSecurityLevelActivated = a.IsSecurityLevelActivated,
+                                                               VATOutputGLAccountId = a.VATOutputGLAccountId,
                                                            });
             return query;
         }

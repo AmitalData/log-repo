@@ -83,13 +83,52 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return query;
         }
 
+        public List<LedgerTransactionList> GetReportLinesLedgerTransactions(string taxreportid, int tenant, string accountId)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
+            IQueryable<LedgerTransaction> transactions;
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            TaxReportListQueryService taxReportListQueryService = new TaxReportListQueryService(accountingContext);
+            TaxReportList taxReport = taxReportListQueryService.GetSingle(taxreportid);
+
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+
+            if (taxreportid != null)
+            {
+
+                List<string> outputTaxReportsJournalsIds = (from a in context.TaxReportLines
+                                                            where a.TaxReportId == taxreportid && a.Tenant == tenant && a.OutputOrInput == "O"
+                                                            select a.JournalId).ToList();
+
+                List<string> inputTaxReportsJournalsIds = (from a in context.TaxReportLines
+                                                           where a.TaxReportId == taxreportid && a.Tenant == tenant && a.OutputOrInput == "I"
+                                                           select a.JournalId).ToList();
+                IQueryable<LedgerTransaction> outputTransactions = ledgerTransactionRepository.GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, tenant, taxReport.TaxReportMonth, accountId);
+                IQueryable<LedgerTransaction> inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsByTaxReportJournalIds(taxReport.TaxReportMonth, tenant, inputTaxReportsJournalsIds, accountId);
+                transactions = outputTransactions.Concat(inputTransactions);
+
+            }
+            else
+            {
+                transactions= ledgerTransactionRepository.GetLedgerTransactionsNotIncludedInTaxReports(tenant,  accountId);
+            }
+
+
+
+            return GetIqueryableList(transactions).ToList();
+           
+
+
+        }
+
         private IQueryable<LedgerTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<LedgerTransaction> iQueryable, int tenant)
         {
             LedgerTransactionListCustomFilter customFilter = new LedgerTransactionListCustomFilter(tenant);
             QueryOperations customizedQueryOperation = new QueryOperations();
             customizedQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.IsCustom == true).ToList();
             // iQueryable = customFilter.GetFilteredQuery<LedgerTransaction>(customizedQueryOperation, iQueryable);
-            iQueryable = customFilter.GetFilteredQuery(customizedQueryOperation, iQueryable);
+            iQueryable = customFilter.GetFilteredQuery(customizedQueryOperation, iQueryable,tenant);
             return iQueryable;
         }
 
@@ -301,7 +340,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 this.Tenant = tenant;
             }
 
-            public IQueryable<LedgerTransaction> GetFilteredQuery(QueryOperations operations, IQueryable<LedgerTransaction> queryableData)
+            public IQueryable<LedgerTransaction> GetFilteredQuery(QueryOperations operations, IQueryable<LedgerTransaction> queryableData, int tenant)
             {
                 List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -331,6 +370,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         }
 
                     }
+                    
                 }
                 return queryableData;
             }
@@ -1442,8 +1482,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string CurrencyId { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-
-
+        public bool NotIncludedInAnyTaxReport { get; set; }
+        public string TaxreportId { get; set; }
         public int PageSize { get; set; }
         public int PageStartAtRecordIndex { get; set; }
 

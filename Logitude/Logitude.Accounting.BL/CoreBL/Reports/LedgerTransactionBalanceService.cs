@@ -188,7 +188,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
 
-        private void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerater)
+        public void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerater)
         {
 
             rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);

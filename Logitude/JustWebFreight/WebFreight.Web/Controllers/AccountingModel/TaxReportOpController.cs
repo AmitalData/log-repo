@@ -348,6 +348,29 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage GetTenantTransmittedTaxReports()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+                List<TaxReportPM> reportPMs= taxReportQueryService.GetTransmittedTaxReports(tenant);
+              
+
+                return Request.CreateResponse(HttpStatusCode.OK, reportPMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
         public HttpResponseMessage PostCreateTaxReportLines(ImageParameter fileUploadParamerter)
         {

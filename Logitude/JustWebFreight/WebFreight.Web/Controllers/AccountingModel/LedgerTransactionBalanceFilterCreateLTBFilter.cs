@@ -28,7 +28,8 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
             var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
             var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
             string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
-
+            LTBFilter.TaxreportId = filters_list.Where(d => d.FieldName == "TaxReportId").FirstOrDefault()?.FieldValue.ToString();
+            LTBFilter.NotIncludedInAnyTaxReport = Convert.ToBoolean(filters_list.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault().FieldValue);
             // dates
             var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
             if (createDateFilter != null)
@@ -60,7 +61,7 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
                 var searchFields = searchFieldsf.FieldValue.ToString();
                 LTBFilter.SearchFields = searchFields;
             }
-
+           
             LTBFilter.GLAccountId = glAccountId;
             LTBFilter.DateTypeCode = _dateTypeCode;
             //LTBFilter.From = Convert.ToDateTime(from);
