@@ -35,6 +35,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.HasCitiesList).HasColumnName("HasCitiesList");
             this.Property(t => t.IsNorthAmerica).HasColumnName("IsNorthAmerica");
+            this.Property(t => t.IsGreaterChina).HasColumnName("IsGreaterChina");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships

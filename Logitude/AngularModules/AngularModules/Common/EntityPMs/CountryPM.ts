@@ -115,6 +115,11 @@ export class CountryPM {
     public set IsNorthAmerica(newValue: boolean) { if (this.isNorthAmerica != newValue) { this.isNorthAmerica = newValue; this.MarkAsDirty("IsNorthAmerica"); } }
        
 	 
+    private isGreaterChina: boolean;
+    public get IsGreaterChina() { return this.isGreaterChina; }
+    public set IsGreaterChina(newValue: boolean) { if (this.isGreaterChina != newValue) { this.isGreaterChina = newValue; this.MarkAsDirty("IsGreaterChina"); } }
+       
+	 
 
     public OldEntityPM: CountryPM;
 		
