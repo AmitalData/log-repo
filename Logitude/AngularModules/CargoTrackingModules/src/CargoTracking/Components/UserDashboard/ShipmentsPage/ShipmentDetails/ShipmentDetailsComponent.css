@@ -553,7 +553,6 @@ h1 {
         left: 0;
         right: unset !important;
     }
-
 }
 @media screen and (max-width: 479px){
     .mobile-font-18{
@@ -685,6 +684,19 @@ h1 {
     .no-data-available {
         padding: 13px;
     }
+    .route-description{
+        max-height: 44px;
+        white-space: normal   
+    }
+    .package-list-table tr th{
+        line-height: 10px;
+    }
+    .package-list-table .dimentions span:nth-child(1){
+        display: block;
+    }
+    .package-list-table .dimentions span:nth-child(2){
+        font-size: 8px;
+    }
 }
 
 .document-card{
@@ -748,7 +760,6 @@ h1 {
 .package-list-table tr td{
     font-size: 12px;
 }
-
 .no-milestones{
     height: 50px;
 }

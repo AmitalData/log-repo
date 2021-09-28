@@ -133,7 +133,7 @@
             <span class="no-data-available" *ngIf="NoMilstonesFound" class="title">No Milestones created for this Shipment</span>
         </div>
 
-        <div *ngIf="!NoMilstonesFound" class="pager left-arrow" [class.dim]="sliderMarginLeft==0"
+        <div *ngIf="!NoMilstonesFound" class="pager left-arrow" [class.dim]="sliderMarginLeft==0 || sliderMarginCardCount==0"
              (click)="MoveSlider('right')">
             <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
         </div>
@@ -220,7 +220,7 @@
     </div>
 
 
-    <panel style="order: 3;" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
+    <panel style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
@@ -446,11 +446,11 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
                 <table class="package-list-table" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
                     <tr>
-                        <th style="width: 400px;">Package Type</th>
+                        <th style="width: 400px;">Type</th>
                         <th style="width: 250px;">Quantity</th>
                         <th style="width: 250px;">Weight</th>
                         <th style="width: 250px;">Volume</th>
-                        <th style="width: 200px;">DIMENSIONS (L-W-H) (CM)</th>
+                        <th style="width: 200px;" class="dimentions"><span>DIMENSIONS</span> <span>(L-W-H) (CM)</span></th>
                     </tr>
 
                     <tr *ngFor="let package of ShipmentPackages">
@@ -761,12 +761,12 @@ package.ShipperSeal == null ? package.CarrierSeal :
                             <div class="col-50 card-title">type</div>
                             <div class="col-35 card-title">customs ref</div>
                             <div class="col-15 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
-                                <a href="javascript:;" style="padding: 10px 3px 0px 13px;">
-                                    <img src="./assets/images/icons/more.png" alt="">
-                                </a>
+                                
 
                                 <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
-
+                                <a href="javascript:;" style="padding: 10px 3px 0px 5px;">
+                                    <img src="./assets/images/icons/more.png" alt="">
+                                </a>
                             </div>
                         </div>
                         <div class="row">

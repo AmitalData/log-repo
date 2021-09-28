@@ -121,9 +121,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     InitSlider()
     {
-        console.log('sliderMarginCardCount:' + ' '+ this.sliderMarginCardCount + ' '+ 'sliderVisibleCardsCount:' + this.sliderVisibleCardsCount+ ' ' +
-        'SliderCards:' + this.SliderCards.length)
         var PAGERS_WIDTH = 200; // 100 * 2 pager
+        var MOBILE_PAGERS_WIDTH = 30; // 100 * 2 pager
         var screenwidth = window.innerWidth;
 
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
@@ -131,8 +130,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         if (screenwidth > 470)
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
-
-        this.sliderVisibleCardsCount = count == undefined ? 1: count;
+        if (screenwidth <= 470)
+        var mobileCount = Math.floor((sliderWrapperWidth - MOBILE_PAGERS_WIDTH) / this.sliderMobileCardWidth);
+        this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
@@ -488,6 +488,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
     sliderCardWidth: number = 200;
+    sliderMobileCardWidth: number = 145;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
@@ -554,7 +555,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             return;
 
         var margin = this.sliderMarginLeft;
-
         // inc\dec
         if (dir == 'left') {
             margin -= this.sliderCardWidth;
