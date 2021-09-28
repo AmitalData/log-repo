@@ -691,12 +691,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.CreatedDone = entityPM.CreatedDone;
 			}
-			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrevForwardingShipmentId))
             {
 				entityPOCO.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
 			}
-			}
+		}
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
         {
