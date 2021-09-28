@@ -65,6 +65,14 @@ export class QuoteSelectors {
 
      //#endregion
 
+     //#region Routing 
+     public static readonly QuoteRoutingsTab = "#QuoteTHRoutings"
+     public static readonly IncludePickUpCheckBox = "#Quote_IncludePickUp"
+     public static readonly IncludeDelivery = "#Quote_IncludeDelivery"
+     public static readonly ToAddressCity = "#Quote_ToAddressCity"
+     public static readonly ToAddressCountryId = "#Quote_ToAddressCountryId"
+     //#endregion
+
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
           return lineNumber > 0 ? Selector + '_' + lineNumber : Selector;
