@@ -126,6 +126,7 @@ export class CargoTrackingShipmentList {
 	
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
+	PrevForwardingShipmentId: string;
 	
 	
 	

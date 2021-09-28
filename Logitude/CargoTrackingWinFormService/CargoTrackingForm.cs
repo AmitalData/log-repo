@@ -95,7 +95,7 @@ namespace CargoTrackingWinFormService.Forms
             this.numericUpDown2.Value = 1;
             this.numericUpDown2.Enabled = false;
             this.checkBox3.Checked = true;
-            this.checkBox3.Enabled = false;
+            this.checkBox3.Enabled = true;
             CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
             string [] DBTabkeNames = CargoTableLists.Select(s=>s.DBTableName).ToArray();
             this.comboBox2.Items.AddRange(DBTabkeNames);
