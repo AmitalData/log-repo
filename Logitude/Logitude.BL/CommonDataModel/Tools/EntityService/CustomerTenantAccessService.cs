@@ -136,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Update(CustomerTenantAccessPM paramentityPM = null,bool temp = false)
         {
+            ValidateCustomerTenantAccessCards(paramentityPM);
             if (paramentityPM != null)
             {
                 this.entityPM = paramentityPM;
@@ -155,6 +156,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CustomerTenantAccess", 0, true);
             //ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", entityPM.UpdatedByUserId);
+        }
+
+        private static void ValidateCustomerTenantAccessCards(CustomerTenantAccessPM paramentityPM)
+        {
+            var InValidCustomerTenantAccessCards = paramentityPM.CustomerTenantAccessCards.Find(a => a.IsImportActivated == false && a.IsExportActivated == false);
+            if (InValidCustomerTenantAccessCards != null)
+            {
+                throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+            }
         }
 
         private void CustomerTenantAccessCardsCollection()
