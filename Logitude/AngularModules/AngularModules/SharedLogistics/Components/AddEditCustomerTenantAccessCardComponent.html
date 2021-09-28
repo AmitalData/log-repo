@@ -41,10 +41,10 @@
                                     <span class="Value">{{item.VatNumber}}</span>
                                 </td>
 
-                                <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
-                                    <div><CheckBox (Checked)="item.IsImportActivated = $event" [IsEnabled]="IsImportActivated" [IsChecked]="!CanSelect"></CheckBox></div>
+                                <td class="GridViewCell" style="width:50px; min-width: 50px;max-width:50px">
+                                    <div><CheckBox (Checked)="item.IsImportActivated = $event" [IsChecked]="!CanSelectOpption"></CheckBox></div>
                                 </td>
-                                <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
+                                <td class="GridViewCell" style="width:50px; min-width: 50px;max-width:50px">
                                     <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsEnabled]="IsExportActivated"></CheckBox></div>
                                 </td>
 
