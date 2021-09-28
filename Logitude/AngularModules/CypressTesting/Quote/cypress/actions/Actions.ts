@@ -31,6 +31,13 @@ export function OpenQuote(QuoteNumber: string) {
 }
 //#endregion
 
+//#region Edit details
+export function EditDetailsTab(transitTime) {
+    cy.Click(QuoteSelectors.DetailsTab, null);
+    cy.FillLogTextBox(QuoteSelectors.TransitTime, transitTime)
+}
+//#endregion
+
 //#region Create Quote
 export function FillQuoteFields(quoteDetails: QuoteDetails) {
     cy.Click(QuoteSelectors.NewQuote, null);
@@ -72,11 +79,11 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
 function FillCustomerType(direction: string) {
     if (Conditions.IsImport(direction)) {
         //cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
-        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Consignee")
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType, "Consignee")
 
     } else {
-       // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
-       cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Shipper")
+        // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType, "Shipper")
 
     }
 }
@@ -146,18 +153,18 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-export function OpenQuoteAction(action:string, note:string){
+export function OpenQuoteAction(action: string, note: string) {
     cy.Click(BaseSelectors.MenuButtons, null, true);
-    cy.Click(QuoteSelectors.QuotationActionsButton(action), null,true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
     FillActionNote(note)
 }
 
-function FillActionNote(note:string){
+function FillActionNote(note: string) {
     cy.FillLogTextBox(QuoteSelectors.QuoteEventNote, note)
     UpdateQuote(BaseSelectors.ConfrimApproved)
 }
 
-export function UpdateQuote(selector:string) {
+export function UpdateQuote(selector: string) {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
     cy.Click(selector, null);
 }
@@ -207,12 +214,12 @@ function FillCustomerEmail(email: string) {
 
 function SentToCustomer() {
     cy.DefineRequestWait(RestAPI.POST, BaseURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
-    cy.Click(QuoteSelectors.SendMessageButton, null,true)
+    cy.Click(QuoteSelectors.SendMessageButton, null, true)
 }
 //#endregion
 
 //#region Copy quote
-export function CopyQuote(action:string){
+export function CopyQuote(action: string) {
     cy.DefineRequestWait(RestAPI.GET, QuoteURLs.GetQuoteSettings, RequestAliases.GetQuoteSettings);
     cy.Click(BaseSelectors.MenuButtons, null, true);
     cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
@@ -220,23 +227,41 @@ export function CopyQuote(action:string){
     CreateQuote()
 }
 
-export function QuoteConversionEventsMapping(eventDetailsList: EventTypeDetails[] ,QuoteNumber :string): EventTypeDetails[]{
+export function QuoteConversionEventsMapping(eventDetailsList: EventTypeDetails[], QuoteNumber: string): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
         eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldQuoteNumber\"/gi, QuoteNumber);
     }
     return eventDetailsList;
 }
 
-export function ValidatePackageCells(expectedOrderDetails:PackagesDetails[]){
-    for(let i = 0 ; i<expectedOrderDetails.length;i++){
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("1",i.toString()),expectedOrderDetails[i].Quantity.toString())
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("2",i.toString()),Dimensions_L_W_H(expectedOrderDetails[i]))
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("4",i.toString()),expectedOrderDetails[i].GrossWeight.toString())
+export function ValidatePackageCells(expectedOrderDetails: PackagesDetails[]) {
+    for (let i = 0; i < expectedOrderDetails.length; i++) {
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("1", i.toString()), expectedOrderDetails[i].Quantity.toString())
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("2", i.toString()), Dimensions_L_W_H(expectedOrderDetails[i]))
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("4", i.toString()), expectedOrderDetails[i].GrossWeight.toString())
     }
 }
 
-function Dimensions_L_W_H(expectedOrderDetails:PackagesDetails){
-    return expectedOrderDetails.Length+"-"+expectedOrderDetails.Width+"-"+expectedOrderDetails.Height
+function Dimensions_L_W_H(expectedOrderDetails: PackagesDetails) {
+    return expectedOrderDetails.Length + "-" + expectedOrderDetails.Width + "-" + expectedOrderDetails.Height
+}
+//#endregion
+
+//#region add delete partners
+export function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
+    cy.Click("label", "Add Partners")
+    cy.get(partnerTypeId).then((btn) => {
+        if (!btn.is('[disabled]')) {
+            cy.Click(partnerTypeId, null)
+            let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId.replace("#", "") + "']"
+            cy.FillLogLov(partnerFieldSelector, partner, false)
+            cy.Click(ShipmentSelectors.PartnerOKButton, null)
+        }
+    })
 }
 
+export function DeletePartner() {
+    cy.Click(BaseSelectors.DeleteButton, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
 //#endregion

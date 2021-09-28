@@ -9,7 +9,11 @@ export class QuoteSelectors {
      public static readonly QuoteToPort = '#Quote_ToPortId';
      public static readonly QuoteCustomerType = '#Quote_QuoteCustomerTypeCode';
      public static readonly QuoteAddCharges = '#AddCharges';
-     public static readonly LogLovQuoteCustomerType="#LogLov_Quote_QuoteCustomerTypeCode"
+     public static readonly LogLovQuoteCustomerType = "#LogLov_Quote_QuoteCustomerTypeCode"
+     public static readonly RoutingRadioButton = "#RoutingRadio0"
+     public static readonly TransitTime = "#Quote_TransitTime"
+     public static readonly DetailsTab = "#QuoteTHDetails"
+     public static readonly QuotePartnersTab = "#QuoteTHPartners"
      //#endregion
      //#region Quick Search
      public static readonly QuoteSearch = '#Quote_Search';
