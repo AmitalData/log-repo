@@ -206,6 +206,11 @@ export class PortPM {
     public set CountryIsNorthAmerica(newValue: boolean) { if (this.countryIsNorthAmerica != newValue) { this.countryIsNorthAmerica = newValue; this.MarkAsDirty("CountryIsNorthAmerica"); } }
        
 	 
+    private countryIsGreaterChinese: boolean;
+    public get CountryIsGreaterChinese() { return this.countryIsGreaterChinese; }
+    public set CountryIsGreaterChinese(newValue: boolean) { if (this.countryIsGreaterChinese != newValue) { this.countryIsGreaterChinese = newValue; this.MarkAsDirty("CountryIsGreaterChinese"); } }
+       
+	 
 
     public OldEntityPM: PortPM;
 		
