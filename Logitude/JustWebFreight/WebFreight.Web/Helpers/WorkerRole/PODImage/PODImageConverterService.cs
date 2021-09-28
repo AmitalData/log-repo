@@ -29,15 +29,15 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
 
         public void Convert(IPODImageConverter podImageConverter)
         {
-            if (IsAllowConvert(podImageConverter))
+
+            if (!IsAllowConvert(podImageConverter)) return;
+            byte[] convertedFileData = podImageConverter.Convert(ReadFileFromStorage());
+            if (convertedFileData != null)
             {
-                byte[] convertedFileData = podImageConverter.Convert(ReadFileFromStorage());
-                if (convertedFileData != null)
-                {
-                    UpdateDocument(convertedFileData, podImageConverter.Extention);
-                    UpdateFileOnStorage(convertedFileData);
-                }
+                UpdateDocument(convertedFileData, podImageConverter.Extention);
+                UpdateFileOnStorage(convertedFileData);
             }
+            
         }
 
 
