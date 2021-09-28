@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.Helpers;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -24,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = new CustomerTenantAccessCardRepository(tenant);
         }
-
+         
         public CustomerTenantAccessCardQuery(CustomerTenantAccessCardRepository CustomerTenantAccessCardRepository)
         {
             repository = CustomerTenantAccessCardRepository;
