@@ -108,7 +108,7 @@
     </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0">
-        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Orders' : 'Filtered search results'}}
+        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Results' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
@@ -212,18 +212,22 @@
                                                    alt="">
                                     </span>
                                 </div>
-                                <div class="truncateText" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i > 0}" *ngIf="i < 4">
+
+                                <span class="mobile-only-inline-block">
+                                    {{ shipment.ShipmentNumber }}
+                                </span>
+                                <div class="truncateText mobile-inline-block" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
                                         {{item}}
                                     </span>
-
-                                    <span class="more-mobile" *ngIf="references?.length > 1 && i == 0">
-                                        <a onclick="event.stopPropagation();" (click)="OpenMessageWindow(shipment.CustomerReference);"><u>+ {{references?.length - 1}} More</u></a>
+                                    <span class="more-mobile" *ngIf="i == 0">
+                                        <a (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+ {{references?.length}} More</u></a>
                                     </span>
                                 </div>
-
-                                <span class="hide-mobile" *ngIf="references?.length > 4">
-                                    <a onclick="event.stopPropagation();" (click)="OpenMessageWindow(shipment.CustomerReference);"><u>+ {{references?.length - 4}} More</u></a>
+                                <span class="hide-mobile" (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()" *ngIf="references?.length > 4"
+                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
+                                    <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
+                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 3}} More</u>
                                 </span>
 
                             </div>
@@ -335,7 +339,7 @@
 
                                     <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
                                         <div tooltip-trigger>
-                                            <div class="icon-danger">!</div>
+                                            <div (click)="$event.stopPropagation()" class="icon-danger">!</div>
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">
