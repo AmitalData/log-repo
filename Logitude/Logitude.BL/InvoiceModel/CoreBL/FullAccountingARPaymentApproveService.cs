@@ -389,7 +389,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         }
         private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
         {
-            if (paymentPM.ARPaymentChequeReplicas.Count() > 0 && paymentPM.PaymentInvoices.Count() > 0)
+            if (paymentPM.ARPaymentChequeReplicas.Count() > 1 && paymentPM.PaymentInvoices.Count() > 0)
             {
                 throw new Exception("Can't Perform ARPayment Reconciliation  in multiple Cheques case");
             }
