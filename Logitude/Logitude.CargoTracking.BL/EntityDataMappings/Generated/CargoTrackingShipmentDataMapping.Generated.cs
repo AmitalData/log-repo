@@ -116,6 +116,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedDone, 
 	         ImportManifest, 
 	         CreatedDone,
+	         PrevForwardingShipmentId,
 	      }
 
 
@@ -227,6 +228,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedDone, 
 	         ImportManifest, 
 	         CreatedDone,
+	         PrevForwardingShipmentId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -689,7 +691,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.CreatedDone = entityPM.CreatedDone;
 			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrevForwardingShipmentId))
+            {
+				entityPOCO.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
 			}
+		}
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
         {
@@ -1154,6 +1160,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.CreatedDone = entityPOCO.CreatedDone;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
+            {
+					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrevForwardingShipmentId))
+            {
+					entityPM.PrevForwardingShipmentId = entityPOCO.PrevForwardingShipmentId;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1613,6 +1629,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
             {
                 oldEntityPM.CreatedDone = entityPM.CreatedDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+                oldEntityPM.ImportManifest = entityPM.ImportManifest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrevForwardingShipmentId))
+            {
+                oldEntityPM.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
             }
 			
 		}

@@ -48,6 +48,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetMilestonesDoneFields(tableRow);
             SetShipmentTypeCode(tableRow);
             SetMainEntity(tableRow);
+            SetPreviousForwardingShipmentHeader(tableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -62,6 +63,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetMainEntity(DataRow tableRow)
         {
             tableRow.SetField("IsMainRecord", IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"));
+        }
+        private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
+        {
+            if(!IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"))
+                tableRow.SetField("PrevForwardingShipmentId", tableRow["ForwardingShipmentHeaderId"]);
         }
         private static void SetShipmentTypeCode(DataRow tableRow)
         {
