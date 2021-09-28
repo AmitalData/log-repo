@@ -403,6 +403,9 @@ h1 {
             box-shadow: 6px 4px 10px 0px #00000020;
             font-weight: bold;
         }
+        .package-list-table tr th{
+            font-size: 9px !important;
+        }
 }
 
 
@@ -690,12 +693,6 @@ h1 {
     }
     .package-list-table tr th{
         line-height: 10px;
-    }
-    .package-list-table .dimentions span:nth-child(1){
-        display: block;
-    }
-    .package-list-table .dimentions span:nth-child(2){
-        font-size: 8px;
     }
 }
 

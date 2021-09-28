@@ -447,18 +447,18 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <table class="package-list-table" *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
                     <tr>
                         <th style="width: 400px;">Type</th>
-                        <th style="width: 250px;">Quantity</th>
-                        <th style="width: 250px;">Weight</th>
-                        <th style="width: 250px;">Volume</th>
-                        <th style="width: 200px;"><span class="hide-mobile">DIMENSIONS (L-W-H) (CM)</span> <span class="mobile-only">(L-W-H) (CM)</span></th>
+                        <th style="width: 200px;">Quantity</th>
+                        <th style="width: 200px;">Weight</th>
+                        <th style="width: 200px;">Volume</th>
+                        <th style="width: 250px;"><span class="hide-mobile">DIMENSIONS (L-W-H) (CM)</span> <span class="mobile-only">L-W-H (CM)</span></th>
                     </tr>
 
                     <tr *ngFor="let package of ShipmentPackages">
                         <td style="width: 400px;">{{package.PackageTypeName}}</td>
-                        <td style="width: 250px;">{{package.Quantity}}</td>
-                        <td style="width: 250px;">{{package.Weight}}</td>
-                        <td style="width: 250px;">{{package.Volume}}</td>
-                        <td style="width: 200px;" *ngIf="package.Height != null">{{package.Length}} - {{package.Width}} - {{package.Height}}</td>
+                        <td style="width: 200px;">{{package.Quantity}}</td>
+                        <td style="width: 200px;">{{package.Weight}}</td>
+                        <td style="width: 200px;">{{package.Volume}}</td>
+                        <td style="width: 250px;" *ngIf="package.Height != null">{{package.Length}} - {{package.Width}} - {{package.Height}}</td>
                     </tr>
                 </table>
             </div>
