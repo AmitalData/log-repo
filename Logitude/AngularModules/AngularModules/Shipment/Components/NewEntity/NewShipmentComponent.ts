@@ -256,33 +256,41 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (args.IsNew == null) {
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
-            this.EntityPM.ForwarderStandaloneShipmentId = args.ForwarderStandaloneShipmentId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ForwarderStandaloneShipmentId : args.ForwarderStandaloneShipmentId) : args.ForwarderStandaloneShipmentId;
-            this.EntityPM.ParentShipmentDirectionId = args.ParentShipmentDirectionId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentDirectionId : args.ParentShipmentDirectionId) : args.ParentShipmentDirectionId;;
-            this.EntityPM.ParentShipmentNumber = args.ParentShipmentNumber == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentNumber : args.ParentShipmentNumber) : args.ParentShipmentNumber;;
-            this.EntityPM.ParentShipmentType = args.ParentShipmentType == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentType : args.ParentShipmentType) : args.ParentShipmentType;;
-            this.EntityPM.ForwarderPickUpDeliveryType = args.ForwarderShipmentPickUpDeliveryTypeCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
-            this.IsStandalone = args.IsStandalone;
-            this.IsNewStandAlonePickupDelivery = args.IsNewStandAlonePickupDelivery;
-            if (this.IsNewStandAlonePickupDelivery) {
-                this.SourceEntityPM.ShipmentCustomerTypeCode = args.ParentShipmentCustomerType;
-                this.SourceEntityPM.CustomerId = args.ParentShipmentCustomerId;
-                if (args.IsNewStandAlonePickupDelivery == "Pickup") {
-                    this.SourceEntityPM.ShipperId = args.ParentShipmentCustomerId;
-                    this.SourceEntityPM.ShipperAddressId = args.ParentShipmentCustomerAddressId;
-                } else if (args.IsNewStandAlonePickupDelivery == "Deilvery"){
-                    this.SourceEntityPM.ConsigneeId = args.ParentShipmentCustomerId;
-                    this.SourceEntityPM.ConsigneeAddressId = args.ParentShipmentCustomerAddressId;
-                }
-            }
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsCreatedFromMasterHouses = args.IsCreatedFromMasterHouses;
             this.IsCreatedFromCustomerOverview = args.IsCreatedFromCustomerOverview;
+            this.SetStandAloneShipmentWindowArgs(args);
             this.ShowShipmentLevels = false;
             this.BuildFiltersLists();
             this.SetUIProperties();
             this.CopyEntityData();
+        }
+    }
+
+    SetStandAloneShipmentWindowArgs(args: any) {
+        this.EntityPM.ForwarderStandaloneShipmentId = args.ForwarderStandaloneShipmentId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ForwarderStandaloneShipmentId : args.ForwarderStandaloneShipmentId) : args.ForwarderStandaloneShipmentId;
+        this.EntityPM.ParentShipmentDirectionId = args.ParentShipmentDirectionId == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentDirectionId : args.ParentShipmentDirectionId) : args.ParentShipmentDirectionId;;
+        this.EntityPM.ParentShipmentNumber = args.ParentShipmentNumber == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentNumber : args.ParentShipmentNumber) : args.ParentShipmentNumber;;
+        this.EntityPM.ParentShipmentType = args.ParentShipmentType == null ? (this.SourceEntityPM != null ? this.SourceEntityPM.ParentShipmentType : args.ParentShipmentType) : args.ParentShipmentType;;
+        this.EntityPM.ForwarderPickUpDeliveryType = args.ForwarderShipmentPickUpDeliveryTypeCode;
+        this.IsStandalone = args.IsStandalone;
+        this.IsNewStandAlonePickupDelivery = args.IsNewStandAlonePickupDelivery;
+        if (this.IsNewStandAlonePickupDelivery) {
+            this.SetStandAloneShipmentWindowArgsFromRoutingTab(args);
+        }
+    }
+
+    SetStandAloneShipmentWindowArgsFromRoutingTab(args: any) {
+        this.SourceEntityPM.ShipmentCustomerTypeCode = args.ParentShipmentCustomerType;
+        this.SourceEntityPM.CustomerId = args.ParentShipmentCustomerId;
+        if (args.IsNewStandAlonePickupDelivery == "Pickup") {
+            this.SourceEntityPM.ShipperId = args.ParentShipmentCustomerId;
+            this.SourceEntityPM.ShipperAddressId = args.ParentShipmentCustomerAddressId;
+        } else if (args.IsNewStandAlonePickupDelivery == "Deilvery") {
+            this.SourceEntityPM.ConsigneeId = args.ParentShipmentCustomerId;
+            this.SourceEntityPM.ConsigneeAddressId = args.ParentShipmentCustomerAddressId;
         }
     }
 
