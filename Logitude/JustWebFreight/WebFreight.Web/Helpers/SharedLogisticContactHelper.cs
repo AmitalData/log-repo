@@ -376,16 +376,8 @@ namespace WebFreight.Web.Helpers
 
         private string GetOnlyDomainNameFromSystemUrl(string systemUrl)
         {
-            if(string.IsNullOrEmpty(systemUrl))
-            {
-                return systemUrl;
-            }
-            string[] test = systemUrl.Split('/');
-            if (test != null && test.Length != 0)
-            {
-                return test[0];
-            }
-            return systemUrl;
+            if(string.IsNullOrEmpty(systemUrl)) return null;
+            return systemUrl.Split('/')[0];
         }
 
         private static string ResolveInvitationvariable(string htmlTemplate, Contact contact, string password)
