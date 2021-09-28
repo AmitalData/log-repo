@@ -542,6 +542,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         args.IsNewStandAlonePickupDelivery = true;
         args.ForwarderStandaloneShipmentId = this.EntityPM.Id;
         args.ForwarderShipmentPickUpDeliveryTypeCode = typeCode;
+        args.ParentShipmentCustomerId = typeCode == "Pickup" ? this.EntityPM.ShipperId : this.EntityPM.ConsigneeId;
+        args.ParentShipmentCustomerAddressId = typeCode == "Pickup" ? this.EntityPM.ShipperAddressId : this.EntityPM.ConsigneeAddressId;
+        args.ParentShipmentCustomerType = typeCode == "Pickup" ? "SHI" : "CON";
         args.ParentShipmentDirectionId = this.EntityPM.DirectionId;
         args.ParentShipmentNumber = this.EntityPM.ShipmentNumber;
         args.ParentShipmentType = this.EntityPM.ShipmentType;
