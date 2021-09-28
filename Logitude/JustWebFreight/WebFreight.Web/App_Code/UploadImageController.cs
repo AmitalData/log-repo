@@ -158,7 +158,10 @@ namespace WebFreight.Web.App_Code
                         documentsService.Create(extDocPM, null, null, true);
                         result.DocumentsFilingId = extDocPM.Id;
 
-                        AddConvertImagetoPDFQueue(extDocPM);
+                        if (FeatureToggleHelper.HasFeatureToggle("POD", extDocPM.Tenant))
+                        {
+                            AddConvertImagetoPDFQueue(extDocPM);
+                        }
 
                     }
                     result.IsScceed = true;
@@ -192,7 +195,7 @@ namespace WebFreight.Web.App_Code
         private  void AddConvertImagetoPDFQueue(DocumentsFilingPM extDocPM)
         {
             IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ConvertImageToEvoPdfQueue", extDocPM.Tenant);
+            queueservice.InitializeQueue("PODImageConverterQueue", extDocPM.Tenant);
             queueservice.Send(new Dictionary<string, string>() { { "DocumentId", extDocPM.DocumentId }, { "NewType", "PDF" } ,  { "Tenant", extDocPM.Tenant.ToString() } }, extDocPM.Tenant, null, null, null, null);
         }
 

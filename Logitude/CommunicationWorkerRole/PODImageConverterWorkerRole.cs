@@ -52,17 +52,22 @@ using System.Threading.Tasks;
 using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRole.PODImage;
 using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
 namespace CommunicationWorkerRole
 {
-    class ConvertImageToEvoPdfWorkerRole : WorkerEntryPoint
+
+    class PODImageConverterWorkerRole : WorkerEntryPoint
     {
         private DbQueueService queueService;
+        private int? tenant;
+        private string documentId = string.Empty;
+        private QueueResponse queueResponse;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "ConvertImageToEvoPdfWorkerRole";
+            BatchServiceCode = "PODImageConverterWorkerRole";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
             return base.OnStart();
@@ -81,43 +86,68 @@ namespace CommunicationWorkerRole
                     }
                     catch (Exception exception)
                     {
-                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "ConvertImageToEvoPdfWorkerRole queue worker role start", null, null);
-                        Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                        HandleException(exception);
                     }
                 }
-                else Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                else Thread.Sleep(new TimeSpan(0, 0, 1));
             }
         }
 
+        private void HandleException(Exception exception)
+        {
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "PODImageConverterWorkerRole queue worker role start", null, null);
+            if (queueResponse == null || queueResponse.RetryNumber >= 2)
+            {
+                queueService.CompleteAsFailed();
+                return;
+            }
 
+            if (queueResponse.RetryNumber <= 1)
+            {
+                queueService.Delay(new TimeSpan(0, 0, 0, 5));
+            }
+
+
+
+        }
 
         private void ExecuteQueue()
         {
-            queueService = new DbQueueService("ConvertImageToEvoPdfQueue", 0);
-            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 0, 250));
+            queueService = new DbQueueService("PODImageConverterQueue", 0);
+            queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
+
             if (queueResponse != null && queueResponse.MessageId != null)
             {
-                //new ConvertDocumentFileService(queueService, queueResponse).ExecuteDocumentsExecutionQueue();
-      
+                ConvertPODImageService();
                 queueService.Complete();
                 LogDoneItemInMemory();
 
-            }
+            } else Thread.Sleep(new TimeSpan(0, 0, 1));
         }
 
-
+        private void ConvertPODImageService()
+        {
+            documentId = queueResponse.MessageValues.Keys.Contains("DocumentId") ? queueResponse.MessageValues["DocumentId"].ToString() : "";
+            tenant = queueResponse.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(queueResponse.MessageValues["Tenant"].ToString()) ? (int?)int.Parse(queueResponse.MessageValues["Tenant"].ToString()) : null;
+            if (string.IsNullOrEmpty(documentId) || tenant == null)
+            {
+                return;
+            }
+            new PODImageConverterService(documentId, (int)tenant).Convert(new PODImagePdfConverter());
+        }
 
         private void ConnectClient()
         {
             try
             {
                 queueService = new DbQueueService();
-                queueService.InitializeQueue("ConvertImageToEvoPdfQueue", 0);
+                queueService.InitializeQueue("PODImageConverterQueue", 0);
 
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "ConvertImageToEvoPdf worker role start", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "PODImageConverterWorkerRole worker role start", null, null);
+                Thread.Sleep(new TimeSpan(0, 0, 1));
             }
         }
     }

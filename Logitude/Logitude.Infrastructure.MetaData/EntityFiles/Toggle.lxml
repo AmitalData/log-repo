@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;6ec5&quot;"
+  Code="&quot;a5cb&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -592,6 +592,11 @@
       Name="&quot;Show file name as computed&quot;"
       SearchFields="&quot;Show file name as computed,SFC&quot;"
       Description="&quot;Show file name as computed&quot;" />
+    <Record
+      Code="&quot;POD&quot;"
+      Name="&quot;Convert POD Image to Pdf File&quot;"
+      SearchFields="&quot;POD,Convert POD Image to Pdf File&quot;"
+      Description="&quot;Convert POD Image to Pdf File&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
