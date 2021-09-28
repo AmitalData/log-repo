@@ -259,11 +259,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
     GetDocumentsFilingsConnectedToShipment() {
         this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
-                this.DocumentsFilings = [result.map(d => (
+                this.DocumentsFilings = result.map(d => (
                     {
                         ShowDetailsMenu: false,
                         ...d }
-                    ))];
+                    ));
                 this.isLoading = false;
 
             }
