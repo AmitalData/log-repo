@@ -205,8 +205,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.tenant = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
-                this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(this.tenant);
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);                
                 this.computingPartnerCode = "G-OCI";
             }
         }
@@ -645,14 +644,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                         this.logitudeTenant = item.Tenant;
                         if (this.logitudeTenant != null)
                         {
-                            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
-                            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
-                            this.containerRepository = new ContainerRepository(shipmentContext);
-                            this.containerQuery = new ContainerQuery(containerRepository);
-                            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
-                            this.shipmentRepository = new ShipmentRepository(shipmentContext);
-                            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
-                            this.portRepository = new PortRepository(logitudeTenant.Value);
+                            this.Initialize();                            
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
@@ -669,7 +661,18 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
+        private void Initialize()
+        {
+            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
+            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
+            this.containerRepository = new ContainerRepository(shipmentContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
+            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
+            this.shipmentRepository = new ShipmentRepository(shipmentContext);
+            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+            this.portRepository = new PortRepository(logitudeTenant.Value);
+            this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
+        }
         private bool IsUpdatingShipmentAndContainer()
         {
             if (this.eventCode != null && this.eventCode != "20" &&
