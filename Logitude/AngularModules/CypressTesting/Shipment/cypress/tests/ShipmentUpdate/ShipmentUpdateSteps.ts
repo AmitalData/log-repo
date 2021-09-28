@@ -46,7 +46,7 @@ Given("the user delete the first order package", () => {
 });
 //#endregion
 
-//#region Update partners tab given step
+//#region Update and delete partners tab given step
 Given("the user add partners with following details", (dataTable) => {
     const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
     Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
