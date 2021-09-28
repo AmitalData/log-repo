@@ -36,6 +36,7 @@ using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Security;
 using WebFreight.Web.WcfApi;
 using ContainerOISimulator;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.WebServices
 {

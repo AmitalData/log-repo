@@ -8,11 +8,13 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Web;
 
-namespace WebFreight.Web.Helpers
+namespace Logitude.BL.Helpers
 {
     public class ContainerStatusesHelper
     {
@@ -34,8 +36,8 @@ namespace WebFreight.Web.Helpers
         private string communicationLogAdditionalFields;
         private string scacCode;
         private string entityReference;
-        private string communicationLogId; 
-
+        private string communicationLogId;
+        private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
         {
             this.tenant = tenant;
@@ -43,6 +45,7 @@ namespace WebFreight.Web.Helpers
             this.containerId = containerId;
             this.isContainer = isContainer;
             this.commonContext = CommonDataContext.GetContext(this.tenant);
+            this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
             if (!isContainer)
                 this.GetSingleShipmentById();
             else
@@ -104,7 +107,7 @@ namespace WebFreight.Web.Helpers
             {
                 oceanInsightType = "c_id"; // Container
             }
-            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + (container != null? container.ContainerNumber:null);
+            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + (container != null ? container.ContainerNumber : null);
         }
 
         public void SendContainerStatusRequest()
@@ -112,7 +115,7 @@ namespace WebFreight.Web.Helpers
             this.BuildCommunicationLog();
             this.SendDBQueueForContainerStatuses();
         }
-       
+
         private void BuildCommunicationLog()
         {
             communicationLogParams = new CommunicationsParams()
@@ -165,6 +168,29 @@ namespace WebFreight.Web.Helpers
                 isValid = false;
             }
             return isValid;
+        }
+
+        public bool IsLogitudeOceanInsightsRequestExistForShipment()
+        {
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByOBLNumberAndScac(shipment?.Master, scacCode, shipmentId);
+
+            if (logitudeOceanInsightsRequest == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public bool IsLogitudeOceanInsightsRequestExistForConatiner()
+        {
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByContainerAndScac(container?.ContainerNumber, scacCode, shipmentId);
+
+            if (logitudeOceanInsightsRequest == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
