@@ -210,6 +210,22 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ImportManifest).HasColumnName("ImportManifest").HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.CreatedDone).HasColumnName("CreatedDone");
+
+            this.Property(t => t.PaymentRequiredDone).HasColumnName("PaymentRequiredDone");
+
+            this.Property(t => t.PaymentRequiredEstimationDate).HasColumnName("PaymentRequiredEstimationDate");
+
+            this.Property(t => t.PaymentRequiredDate).HasColumnName("PaymentRequiredDate");
+
+            this.Property(t => t.PaymentRequiredNotes).HasColumnName("PaymentRequiredNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.PaymentReceivedDone).HasColumnName("PaymentReceivedDone");
+
+            this.Property(t => t.PaymentReceivedEstomationDate).HasColumnName("PaymentReceivedEstomationDate");
+
+            this.Property(t => t.PaymentReceivedDate).HasColumnName("PaymentReceivedDate");
+
+            this.Property(t => t.PaymentReceivedNotes).HasColumnName("PaymentReceivedNotes").HasMaxLength(32).IsUnicode(true);
         }
     }
 }

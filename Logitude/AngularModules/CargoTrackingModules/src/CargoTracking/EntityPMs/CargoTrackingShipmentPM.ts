@@ -549,6 +549,46 @@ export class CargoTrackingShipmentPM {
     public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
        
 	 
+    private paymentRequiredDone: boolean;
+    public get PaymentRequiredDone() { return this.paymentRequiredDone; }
+    public set PaymentRequiredDone(newValue: boolean) { if (this.paymentRequiredDone != newValue) { this.paymentRequiredDone = newValue; this.MarkAsDirty("PaymentRequiredDone"); } }
+       
+	 
+    private paymentRequiredEstimationDate: Date;
+    public get PaymentRequiredEstimationDate() { return this.paymentRequiredEstimationDate; }
+    public set PaymentRequiredEstimationDate(newValue: Date) { if (this.paymentRequiredEstimationDate != newValue) { this.paymentRequiredEstimationDate = newValue; this.MarkAsDirty("PaymentRequiredEstimationDate"); } }
+       
+	 
+    private paymentRequiredDate: Date;
+    public get PaymentRequiredDate() { return this.paymentRequiredDate; }
+    public set PaymentRequiredDate(newValue: Date) { if (this.paymentRequiredDate != newValue) { this.paymentRequiredDate = newValue; this.MarkAsDirty("PaymentRequiredDate"); } }
+       
+	 
+    private paymentRequiredNotes: string;
+    public get PaymentRequiredNotes() { return this.paymentRequiredNotes; }
+    public set PaymentRequiredNotes(newValue: string) { if (this.paymentRequiredNotes != newValue) { this.paymentRequiredNotes = newValue; this.MarkAsDirty("PaymentRequiredNotes"); } }
+       
+	 
+    private paymentReceivedDone: boolean;
+    public get PaymentReceivedDone() { return this.paymentReceivedDone; }
+    public set PaymentReceivedDone(newValue: boolean) { if (this.paymentReceivedDone != newValue) { this.paymentReceivedDone = newValue; this.MarkAsDirty("PaymentReceivedDone"); } }
+       
+	 
+    private paymentReceivedEstomationDate: Date;
+    public get PaymentReceivedEstomationDate() { return this.paymentReceivedEstomationDate; }
+    public set PaymentReceivedEstomationDate(newValue: Date) { if (this.paymentReceivedEstomationDate != newValue) { this.paymentReceivedEstomationDate = newValue; this.MarkAsDirty("PaymentReceivedEstomationDate"); } }
+       
+	 
+    private paymentReceivedDate: Date;
+    public get PaymentReceivedDate() { return this.paymentReceivedDate; }
+    public set PaymentReceivedDate(newValue: Date) { if (this.paymentReceivedDate != newValue) { this.paymentReceivedDate = newValue; this.MarkAsDirty("PaymentReceivedDate"); } }
+       
+	 
+    private paymentReceivedNotes: string;
+    public get PaymentReceivedNotes() { return this.paymentReceivedNotes; }
+    public set PaymentReceivedNotes(newValue: string) { if (this.paymentReceivedNotes != newValue) { this.paymentReceivedNotes = newValue; this.MarkAsDirty("PaymentReceivedNotes"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
