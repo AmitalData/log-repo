@@ -36,8 +36,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentReferences: string[] = [];
     SearchText: string = "";
     CustomsBrokerReference: string;
-    ShipmentPM: any;
-    ShipmentOrder: any;
+    ShipmentPM: any ;
+    ShipmentOrder: any ;
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
@@ -237,7 +237,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (result) {
                 this.ShipmentPM = result;
                 console.log("ShipmentPM", this.ShipmentPM);
-
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
                 this.SetContainersNumbers(result);
@@ -1146,6 +1145,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
             data: {
                 title: 'References',
                 description: references.join("\n"),
+            }
+        });
+    }
+
+    ShowMoreWindow(text) {
+        console.log(text)
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: '',
+                description: text,
             }
         });
     }

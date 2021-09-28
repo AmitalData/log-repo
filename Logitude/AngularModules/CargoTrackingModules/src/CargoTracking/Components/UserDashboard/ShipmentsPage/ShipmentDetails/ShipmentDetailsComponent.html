@@ -238,8 +238,21 @@
                 </div>
                 <div>
                     <div class="title">Incoterms</div>
-                    <div class="description TextTrimming">{{ShipmentPM?.IncotermName}}</div>
-                    <div class="description TextTrimming">{{ShipmentOrder? ShipmentOrder.IncotermName : ShipmentPM?.IncotermName}}</div>
+                    <div class="description TextTrimming">
+                        <span *ngIf="ShipmentOrder && ShipmentOrder.IncotermName">
+                            {{ShipmentOrder.IncotermName}}
+                            <a *ngIf="ShipmentOrder.IncotermName.length > 18" 
+                               (click)="ShowMoreWindow(ShipmentOrder.IncotermName)"
+                               style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                        </span>
+
+                        <span *ngIf="ShipmentPM && ShipmentPM.IncotermName">
+                            {{ShipmentPM.IncotermName}}
+                            <a *ngIf="(ShipmentPM?.IncotermName.length) > 18" 
+                               (click)="ShowMoreWindow(ShipmentPM.IncotermName)"
+                               style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="mobile-only">
@@ -393,8 +406,11 @@ Shipment.ShipmentList.ArrivalDate |
                 </div>
                 <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">storage site</div>
-                    <div class="description">
+                    <div class="description TextTrimming">
                         {{ShipmentPM?.WarehouseLegEnglishName}}
+                        <a *ngIf="ShipmentPM && ShipmentPM.WarehouseLegEnglishName && ShipmentPM.WarehouseLegEnglishName.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentPM.WarehouseLegEnglishName)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
                 </div>
                 <div class="hide-mobile" *ngIf="Shipment.ShipmentList.TransportModeId != 'A' && Shipment.ShipmentList.EntityType != 'O'">
@@ -479,7 +495,11 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 </div>
                 <div>
                     <div class="title">Declaration Status</div>
-                    <div class="description">{{ShipmentCustomsData.DeclarationStatus}}</div>
+                    <div class="description TextTrimming">{{ShipmentCustomsData.DeclarationStatus}}
+                        <a *ngIf="ShipmentCustomsData.DeclarationStatus && ShipmentCustomsData.DeclarationStatus.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentCustomsData.DeclarationStatus)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                    </div>
                 </div>
                 <div>
                     <div class="title">IMPORTER VAT</div>
@@ -487,19 +507,35 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 </div>
                 <div>
                     <div class="title">Cargo Identifier 1</div>
-                    <div class="description">{{ShipmentCustomsData.CargoIdentifier1 }}</div>
+                    <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier1 }}
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier1 && ShipmentCustomsData.CargoIdentifier1.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier1)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                    </div>
                 </div>
                 <div>
                     <div class="title">Cargo Identifier 2</div>
-                    <div class="description">{{ShipmentCustomsData.CargoIdentifier2 }}</div>
+                    <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier2 }}
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier2 && ShipmentCustomsData.CargoIdentifier2.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier2)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                    </div>
                 </div>
                 <div>
                     <div class="title">Cargo Identifier 3</div>
-                    <div class="description">{{ShipmentCustomsData.CargoIdentifier3 }}</div>
+                    <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier3 }}
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier3 && ShipmentCustomsData.CargoIdentifier3.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier3)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                    </div>
                 </div>
                 <div>
                     <div class="title">goods description</div>
-                    <div class="description">{{ShipmentCustomsData.GoodsDescription }}</div>
+                    <div class="description TextTrimming">{{ShipmentCustomsData.GoodsDescription }}
+                        <a *ngIf="ShipmentCustomsData.GoodsDescription && ShipmentCustomsData.GoodsDescription.length > 18" 
+                            (click)="ShowMoreWindow(ShipmentCustomsData.GoodsDescription)"
+                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                    </div>
                 </div>
                 <div>
                     <div class="title">total taxes</div>
@@ -698,7 +734,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     <panel  *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="DocumentsFilings?.length === 0">
 
         <div body>
-            <div  class="no-data-available" *ngIf="DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
+            <div  class="no-data-available" *ngIf="DocumentsFilings && DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
             <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" 
                 (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
