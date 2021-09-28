@@ -76,8 +76,7 @@ namespace CommunicationWorkerRole
         }
         string Token;
         private bool IsImportShipmentsAllowedForLogBox(ShipmentPM entityPM, bool isImportActivated)
-        {
-            // onlu check is ImportActivated on the customerTenantAccessCard
+        { 
             if (isImportActivated == true)
             {
                 return (entityPM.DirectionId.ToUpper() == "I");
