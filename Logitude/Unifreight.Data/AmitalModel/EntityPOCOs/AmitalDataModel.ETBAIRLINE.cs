@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Unifreight.Data.AmitalModel
+namespace Unifreight.Data.AmitalModel.EntityPOCOs
 {
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
     public partial class ETBAIRLINE : INotifyPropertyChanged

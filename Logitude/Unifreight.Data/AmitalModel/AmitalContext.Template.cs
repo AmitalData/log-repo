@@ -8678,6 +8678,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GAQTEAMUSR> GAQTEAMUSRs { get; set; }
 
         public virtual DbSet<GTBPTYPE> GTBPTYPEs { get; set; }
+        public virtual DbSet<ETBPAYTR> ETBPAYTRs { get; set; }
         public virtual DbSet<ETBPORT> ETBPORTs { get; set; }
         public virtual DbSet<ETBAIRLINE> ETBAIRLINEs { get; set; }
         public virtual DbSet<ITBPORT> ITBPORTs { get; set; }
