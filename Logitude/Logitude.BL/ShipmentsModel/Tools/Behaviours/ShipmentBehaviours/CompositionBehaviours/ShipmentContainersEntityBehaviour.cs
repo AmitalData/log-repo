@@ -281,29 +281,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool IsSendAutomaticallyOceanOnsightsRequestByShipment()
         {
-            var isContainerUpdated = initializer.ShipmentPackagesChangeSet
-                .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
-                .Any(a => a.ContainerNumber != null);
             if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && this.initializer.EntityPM.Master != this.initializer.EntityMasterData.Master)
             {
                 return true;
             }
 
-            if(isContainerUpdated && !string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+            if (initializer.ShipmentPackagesChangeSet == null)
+            {
+                return false;
+            }
+
+            var isContainerUpdated = initializer.ShipmentPackagesChangeSet
+               .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
+               .Any(a => a.ContainerNumber != null);
+            
+            if (isContainerUpdated && !string.IsNullOrEmpty(this.initializer.EntityPM.Master))
             {
                 return true;
             }
-            
             return false;
         }
         private bool IsSendAutomaticallyOceanOnsightsRequestByContainer()
         {
-            var isContainerUpdated = initializer.ShipmentPackagesChangeSet
-                   .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
-                   .Any(a => a.ContainerNumber != null);
-            if (string.IsNullOrEmpty(this.initializer.EntityPM.Master) && isContainerUpdated)
+            if (initializer.ShipmentPackagesChangeSet != null)
             {
-                return true;
+                var isContainerUpdated = initializer.ShipmentPackagesChangeSet
+                      .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
+                      .Any(a => a.ContainerNumber != null);
+                if (string.IsNullOrEmpty(this.initializer.EntityPM.Master) && isContainerUpdated)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -344,6 +352,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.UpdateStandaloneShipmentPackage(containerId);
                     this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
+                    initializer.ShipmentPackagesChangeSet.Where(a=>a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
                 }                
