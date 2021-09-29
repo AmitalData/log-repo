@@ -122,24 +122,27 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InitSlider()
     {
         var PAGERS_WIDTH = 200; // 100 * 2 pager
-        var MOBILE_PAGERS_WIDTH = 30; // 100 * 2 pager
+        var mobilePagersWidth = 30; // 100 * 2 pager
         var screenwidth = window.innerWidth;
 
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-
-        if (screenwidth > 470)
+        const maxWidthForMobileScreen = 470;
+        if (screenwidth > maxWidthForMobileScreen)
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
-        if (screenwidth <= 470)
-        var mobileCount = Math.floor((sliderWrapperWidth - MOBILE_PAGERS_WIDTH) / this.sliderMobileCardWidth);
+        if (screenwidth <= maxWidthForMobileScreen)
+        var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth);
         this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = screenwidth < maxWidthForMobileScreen ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
 
     }
 
+    private CalculateVisibleSliderCardsCount(sliderWrapperWidth: number, mobilePagersWidth: number ) {
+        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / this.sliderMobileCardWidth);
+    }
     LoadShipment()
     {
         //this.isLoading = true;

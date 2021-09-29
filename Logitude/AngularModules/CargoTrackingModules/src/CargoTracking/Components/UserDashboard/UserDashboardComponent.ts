@@ -203,6 +203,9 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
     }
     ngOnInit(): void {
         this.currentRoute = this.router.url;
+        this.SubscribeRoutingEvents();
+    }
+    private SubscribeRoutingEvents() {
         this.router.events.pipe(
             filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
          ).subscribe((e: NavigationEnd) => {
