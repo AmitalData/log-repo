@@ -200,6 +200,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CombinedCode = a.CombinedCode,
                                           StateName = a.StateName,
                                           CountryIsNorthAmerica = a.Country.IsNorthAmerica,
+                                          CountryIsGreaterChinese = a.Country.IsGreaterChina,
                                       }).FirstOrDefault();
                             
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -259,6 +260,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CombinedCode = a.CombinedCode,
                                   StateName = a.StateName,
                                   CountryIsNorthAmerica = a.Country.IsNorthAmerica,
+                                  CountryIsGreaterChinese = a.Country.IsGreaterChina,
                               }).FirstOrDefault();
                 }
 

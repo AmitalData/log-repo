@@ -23,6 +23,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsStateRequired { get; set; }
         public bool HasCitiesList { get; set; }
         public bool IsNorthAmerica { get; set; }
+        public bool IsGreaterChina { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public string GlobalZoneId { get; set; }
         [ForeignKey("GlobalZoneId")]

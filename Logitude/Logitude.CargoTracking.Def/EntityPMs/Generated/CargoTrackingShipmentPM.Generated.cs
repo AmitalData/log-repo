@@ -2435,6 +2435,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string prevForwardingShipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrevForwardingShipmentId  
+	   {
+	    
+	     get
+		{
+		   return prevForwardingShipmentId;
+		 }
+		 set
+		 {
+		   if(prevForwardingShipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrevForwardingShipmentId",OldValue=prevForwardingShipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   prevForwardingShipmentId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
