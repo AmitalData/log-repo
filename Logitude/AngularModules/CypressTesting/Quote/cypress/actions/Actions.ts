@@ -292,11 +292,27 @@ export function AddCharge(chargeType) {
 
 export function AssertSaleCurrencyValue(currencyValue) {
     cy.Click(BaseSelectors.StartsWithEditButton + BaseSelectors.FirstElement, null)
-    BaseAssertion.AssertElementHaveValue("#QuoteCharge_SaleCurrencyId", currencyValue)
+    BaseAssertion.AssertElementHaveValue(QuoteSelectors.ChargeSaleCurrency, currencyValue)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function ChangeSaleCurrencyModeValueToSameAsCost() {
-    cy.Click("#ComboBoxItem_200", null, true)
+    cy.Click(QuoteSelectors.SameAsCostCurrencyComboBox, null, true)
+}
+//#endregion
+
+//#region build shipment
+export function BuildShipmentFromQuote() {
+    cy.Click(QuoteSelectors.BuildShipmentButton, null)
+    cy.ClickRadio(QuoteSelectors.ShipmentLevelDirectRadio)
+}
+
+export function CreateShipment() {
+    cy.DefineRequestWait(RestAPI.POST, QuoteURLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertCreateShipment() {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 }
 //#endregion

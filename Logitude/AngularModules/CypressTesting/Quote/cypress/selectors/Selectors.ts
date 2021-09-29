@@ -65,6 +65,8 @@ export class QuoteSelectors {
      public static readonly DeleteAllChargesButton = "#DeleteAll";
      public static readonly AddChargesButton = "#AddCharges";
      public static readonly ChargesType = "#QuoteCharge_ChargesTypeId";
+     public static readonly ChargeSaleCurrency = "#QuoteCharge_SaleCurrencyId";
+     public static readonly SameAsCostCurrencyComboBox = "#ComboBoxItem_200";
 
      //#endregion
 
@@ -75,6 +77,8 @@ export class QuoteSelectors {
      public static readonly ToAddressCity = "#Quote_ToAddressCity"
      public static readonly ToAddressCountryId = "#Quote_ToAddressCountryId"
      //#endregion
+     public static readonly BuildShipmentButton = "#QuoteBBuildShipment"
+     public static readonly ShipmentLevelDirectRadio = "#ShipmentLevelRadio_0D"
 
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
