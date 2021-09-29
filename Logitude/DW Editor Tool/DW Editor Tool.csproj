@@ -167,6 +167,7 @@
     <None Include="Files\DIM_Types.dwml" />
     <None Include="Files\DIM_Users.dwml" />
     <None Include="Files\DIM_VatTypes.dwml" />
+    <None Include="Files\Fact_ARInvoices.dwml" />
     <None Include="Files\Fact_Charges.dwml" />
     <None Include="Files\Fact_Invoices.dwml" />
     <None Include="Files\Fact_MasterCharges.dwml" />

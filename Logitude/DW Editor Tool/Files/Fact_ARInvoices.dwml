@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;c385e8bb-b1b8-497d-8a8c-47bca477c1a2&quot;" Code="&quot;Fact_ARInvoices&quot;" Name="&quot;Fact_ARInvoices&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factARInvoices&quot;" HasPivotColumn="false" RecordType="&quot;ARInvoices&quot;" DisplayName="&quot;ARInvoices&quot;" ObjectTableName="&quot;ARInvoice&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0">
+  <fields />
+</entity>
