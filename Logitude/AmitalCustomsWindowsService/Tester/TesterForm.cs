@@ -30,7 +30,7 @@ using Logitude.CustomsMessaging.U2L.CommDec;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Logitude.CustomsMessaging.ResponseServices;
-using System.Text.Json;
+//using System.Text.Json;
 using Logitude.CustomsMessaging.MessagingServices;
 //using System.Windows.Interactivity;
 using Newtonsoft.Json;
