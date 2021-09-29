@@ -355,20 +355,24 @@ namespace CommunicationWorkerRole
         private static void UpdatePrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
         {
 
-            TenantManagmentPrivateLabelsPM privateLabel = GetPrivateLabel(tenant);
+            IQueryable<TenantManagmentPrivateLabelsPM> privateLabels = GetPrivateLabel(tenant);
 
-            if (privateLabel != null)
-            { 
-                privateLabel.IsExportActivated = IsExportActivated;
-                privateLabel.IsImportActivated = IsImportActivated;
+            if(privateLabels != null)
+            {
                 IGlobalContext context = GlobalContext.GetContext();
                 TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(context);
-                service.Update(privateLabel);
+
+                foreach (var privateLabel in privateLabels)
+                {
+                    privateLabel.IsExportActivated = IsExportActivated;
+                    privateLabel.IsImportActivated = IsImportActivated; 
+                    service.Update(privateLabel);
+                }
             }
-             
+           
         }
 
-        private static TenantManagmentPrivateLabelsPM GetPrivateLabel(int tenant)
+        private static IQueryable<TenantManagmentPrivateLabelsPM> GetPrivateLabel(int tenant)
         {
             TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
             HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
@@ -377,7 +381,7 @@ namespace CommunicationWorkerRole
 
             if (hybridPartnerPM != null)
             {
-               return tenantManagmentPrivateLabelsQuery.GetSinglePM(hybridPartnerPM.Id);
+               return tenantManagmentPrivateLabelsQuery.GetByHybridPartnerId(hybridPartnerPM.Id);
               
             }
             return null;
