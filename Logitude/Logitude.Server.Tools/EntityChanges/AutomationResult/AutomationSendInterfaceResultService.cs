@@ -19,6 +19,11 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationSendInterfaceResultService : GeneralAutomationResultService, IAutomationResultService
     {
         private AutomationResultArgs automationResultArgs { get; set; }
+
+        public bool DependencyOnLastEntityUpdate { get { return true; } }
+        public string ResultCode { get { return "SENDINTERFACE"; } }
+
+
         private int tenant;
         private EntityChange entityChange;
 
@@ -30,7 +35,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             this.entityChange = automationResultArgs.EntityChange;
             this.tenant = this.entityChange.Tenant;
 
-            this.sendInterfaceAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "SENDINTERFACE").ToList();
+            this.sendInterfaceAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (sendInterfaceAutomations.Count > 0)
             {
                 WriteEntityPMOnStorage(automationResultArgs);

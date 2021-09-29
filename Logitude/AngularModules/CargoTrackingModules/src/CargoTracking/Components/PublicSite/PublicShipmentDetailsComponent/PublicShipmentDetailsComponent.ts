@@ -210,7 +210,7 @@ export class PublicShipmentDetailsComponent implements OnInit
                     this.AssignedTruckerDone = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }
-                else if (this.Shipment.CurrentMilestoneCode) {
+                else if (this.Shipment.CurrentMilestoneCode && this.Shipment.CurrentMilestoneCode != CargoTrackingMilestones.Created) {
                     this.Delivered = false;
                     this.InProgressShipment = true;
                     this.DileveredIconColor = "#B5B5B5";

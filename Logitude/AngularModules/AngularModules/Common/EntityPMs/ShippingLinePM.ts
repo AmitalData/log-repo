@@ -398,6 +398,16 @@ export class ShippingLinePM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private isSendingByContainer: boolean;
+    public get IsSendingByContainer() { return this.isSendingByContainer; }
+    public set IsSendingByContainer(newValue: boolean) { if (this.isSendingByContainer != newValue) { this.isSendingByContainer = newValue; this.MarkAsDirty("IsSendingByContainer"); } }
+       
+	 
+    private isSendingByBillOfLading: boolean;
+    public get IsSendingByBillOfLading() { return this.isSendingByBillOfLading; }
+    public set IsSendingByBillOfLading(newValue: boolean) { if (this.isSendingByBillOfLading != newValue) { this.isSendingByBillOfLading = newValue; this.MarkAsDirty("IsSendingByBillOfLading"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		

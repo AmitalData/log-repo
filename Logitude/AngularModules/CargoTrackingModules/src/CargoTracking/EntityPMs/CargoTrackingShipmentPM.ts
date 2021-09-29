@@ -537,10 +537,16 @@ export class CargoTrackingShipmentPM {
     private gatepassArrivedDone: boolean;
     public get GatepassArrivedDone() { return this.gatepassArrivedDone; }
     public set GatepassArrivedDone(newValue: boolean) { if (this.gatepassArrivedDone != newValue) { this.gatepassArrivedDone = newValue; this.MarkAsDirty("GatepassArrivedDone"); } }
-  
+       
+	 
     private importManifest: string;
     public get ImportManifest() { return this.importManifest; }
     public set ImportManifest(newValue: string) { if (this.importManifest != newValue) { this.importManifest = newValue; this.MarkAsDirty("ImportManifest"); } }
+       
+	 
+    private createdDone: boolean;
+    public get CreatedDone() { return this.createdDone; }
+    public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
        
 	 
 
@@ -571,4 +577,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
