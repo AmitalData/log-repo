@@ -313,6 +313,7 @@
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
@@ -371,11 +372,13 @@
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
@@ -1811,6 +1814,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
