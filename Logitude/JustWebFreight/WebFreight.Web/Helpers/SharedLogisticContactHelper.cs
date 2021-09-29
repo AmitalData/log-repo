@@ -349,7 +349,7 @@ namespace WebFreight.Web.Helpers
             objectContext.SaveChanges();
         }
 
-        private static string GetEmailFrom(int tenant)
+        private string GetEmailFrom(int tenant)
         {
             string systemUrl = GetSystemURL(tenant);
             if (!string.IsNullOrEmpty(systemUrl))
@@ -358,7 +358,7 @@ namespace WebFreight.Web.Helpers
             return LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
         }
 
-        private static string GetSystemURL(int tenant)
+        private string GetSystemURL(int tenant)
         {
             string systemUrl = "";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -371,7 +371,13 @@ namespace WebFreight.Web.Helpers
                 }
                 scope.Complete();
             }
-            return systemUrl;
+            return GetOnlyDomainNameFromSystemUrl(systemUrl);
+        }
+
+        private string GetOnlyDomainNameFromSystemUrl(string systemUrl)
+        {
+            if(string.IsNullOrEmpty(systemUrl)) return null;
+            return systemUrl.Split('/')[0];
         }
 
         private static string ResolveInvitationvariable(string htmlTemplate, Contact contact, string password)
