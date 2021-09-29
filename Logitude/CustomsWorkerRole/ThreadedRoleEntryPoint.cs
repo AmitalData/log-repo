@@ -1,12 +1,16 @@
 ﻿using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -15,10 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using WebFreight.Web;
 
 namespace CustomsWorkerRole
@@ -85,6 +91,46 @@ namespace CustomsWorkerRole
 
             foreach (WorkerEntryPoint worker in workers)
                 worker.OnStart();
+
+            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "connectToTicket",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
+                {
+                    var body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+
+                    UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
+                    DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
+                    using (TextReader reader = new StringReader(message))
+                    {
+                        result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(reader);
+                    }
+
+
+                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
+
+                    Console.WriteLine(" [x] Received {0}", message);
+                };
+
+                channel.BasicConsume(queue: "connectToTicket",
+                                     autoAck: true,
+                                     consumer: consumer);
+
+                // Console.WriteLine(" Press [enter] to exit.");
+                // Console.ReadLine();
+            }
+
 
             return base.OnStart();
 
@@ -220,7 +266,7 @@ namespace CustomsWorkerRole
                 
             }
 
-             CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
+            // CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
 
  
             if (LogitudeSettings.IsCostomsDeploy)
