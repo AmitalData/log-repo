@@ -299,8 +299,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                 }
                 else {
                     this.IsExportActivated = false;
-                    this.IsImportActivated = false;
-                    this.CanSelectOpption = true;
+                    this.IsImportActivated = true;
                 }
             }
         });
