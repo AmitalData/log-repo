@@ -39,5 +39,7 @@ export class AccountingPartnerList {
 		PrimaryContactPhone: string;
 		GLAccountNumber: string;
 		CollectorId: string;
+		CreditLimit: number;
+		InsuredCreditlimit: number;
 	
 }
