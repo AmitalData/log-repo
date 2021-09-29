@@ -295,6 +295,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             }
                         }
                     }
+                    else
+                    {
+                        entityLists = entityLists.OrderByDescending(d => d.Code);
+                    }
                 }
                 else
                 {
