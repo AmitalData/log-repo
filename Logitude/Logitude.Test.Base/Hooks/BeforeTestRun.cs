@@ -132,7 +132,7 @@ namespace Logitude.Test.Base.Hooks
             UserTenant.Token = userLogin?.Token;
             UserTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
             UserTenant.UserId = userLogin?.UserId;
-            UserTenant.UserName = userLogin?.UserName;
+            UserTenant.DocumentDownloadToken = userLogin?.DocumentDownloadToken;
         }
 
         private static void SetupOtherUserAuthentication()

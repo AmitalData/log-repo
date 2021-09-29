@@ -8,11 +8,11 @@ namespace Logitude.Test.Base.Models.Shared
 {
     public class GetCreateDocumentsFilingArgs
     {
-        public string documentTypeId;
-        public string entityId;
-        public string objectTableId;
-        public string directionCode;
-        public int tenant;
+        public string DocumentTypeId;
+        public string EntityId;
+        public string ObjectTableId;
+        public string DirectionCode;
+        public int Tenant;
 
     }
 }

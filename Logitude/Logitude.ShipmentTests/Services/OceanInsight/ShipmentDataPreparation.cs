@@ -45,7 +45,6 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
         public PackagePM GetValidPackagePM()
         {
             return new PackageBuilder().WithDefualtValues()
-                .ChangeSetOp("Insert")
                 .ContainerNumber("AMER1234568")
                 .FlashPointTemperatureUnitCode("CEL")
                 .PackageTypeByCode("PC1")

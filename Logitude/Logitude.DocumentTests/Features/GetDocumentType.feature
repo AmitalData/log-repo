@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-GetDocumentType
+﻿@Pre-Prepare-DocumentType
 Feature: Get Document Type
 	We want to get document type.
 Scenario: Get document type

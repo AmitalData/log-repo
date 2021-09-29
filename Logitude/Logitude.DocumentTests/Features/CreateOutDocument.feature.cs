@@ -20,7 +20,7 @@ namespace Logitude.DocumentTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Xunit.TraitAttribute("Category", "Pre-Prepare-DocumentType")]
-    public partial class GetDocumentTypeFeature : object, Xunit.IClassFixture<GetDocumentTypeFeature.FixtureData>, System.IDisposable
+    public partial class CreateOutDocumentFeature : object, Xunit.IClassFixture<CreateOutDocumentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,10 +30,10 @@ namespace Logitude.DocumentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetDocumentType.feature"
+#line 1 "CreateOutDocument.feature"
 #line hidden
         
-        public GetDocumentTypeFeature(GetDocumentTypeFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateOutDocumentFeature(CreateOutDocumentFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,7 +42,7 @@ namespace Logitude.DocumentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Get Document Type", "\tWe want to get document type.", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Out Document", "\twe want to create out document ", ProgrammingLanguage.CSharp, new string[] {
                         "Pre-Prepare-DocumentType"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -83,15 +83,15 @@ namespace Logitude.DocumentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get document type")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Document Type")]
-        [Xunit.TraitAttribute("Description", "Get document type")]
-        public virtual void GetDocumentType()
+        [Xunit.SkippableFactAttribute(DisplayName="Create out document")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Out Document")]
+        [Xunit.TraitAttribute("Description", "Create out document")]
+        public virtual void CreateOutDocument()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get document type", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create out document", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,11 +111,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.When("get document types", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
 #line 6
- testRunner.Then("document types should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.When("create Air Manifest out document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 7
+testRunner.Then("the Air Manifest out document should be created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 8
+testRunner.When("get Air Manifest out document copy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+testRunner.Then("the Air Manifest out document copy should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 10
+testRunner.When("update Air Manifest out document properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 11
+testRunner.Then("Air Manifest out document should be update", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -128,12 +140,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetDocumentTypeFeature.FeatureSetup();
+                CreateOutDocumentFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetDocumentTypeFeature.FeatureTearDown();
+                CreateOutDocumentFeature.FeatureTearDown();
             }
         }
     }

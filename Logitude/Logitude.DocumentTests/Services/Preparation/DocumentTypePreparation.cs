@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Logitude.DocumentTests.Services.Preparation
 {
-    public class DocumentTypepPreparation
+    public class DocumentTypePreparation
     {
         public void Prepare()
         {
-            DocumentData.DocumentTypeAirManifestID = GetAirManifest();
-            DocumentData.DocumentTypeCustomsID = GetCustoms();
-            DocumentData.DocumentTypeGeneralMessageID = GetGeneralMessage();
+            DocumentData.DocumentTypeAirManifestId = GetAirManifest();
+            DocumentData.DocumentTypeCustomsId = GetCustoms();
+            DocumentData.DocumentTypeGeneralMessageId = GetGeneralMessage();
         }
 
 
@@ -61,7 +61,7 @@ namespace Logitude.DocumentTests.Services.Preparation
                 IsDocIn = true,
                 IsDocOut = true,
                 DocumentTypeCategoryCode = DocumentTypeCategoryCodes.Others,
-                ObjectTableId = new ObjectTableService().GetIdByName("Shipment"),
+                ObjectTableId = DocumentData.ShipmentObjectTableId,
                 TemplateFormatCode = TemplateFormatCodes.Print
             };
         }

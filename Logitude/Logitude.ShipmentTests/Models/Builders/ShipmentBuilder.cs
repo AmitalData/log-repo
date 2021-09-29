@@ -129,7 +129,16 @@ namespace Logitude.ShipmentTests.Models.Builders
             _shipmentPM.MainCarriageToPortId = PortCodeMapping(mainCarriageToPortCode);
             return this;
         }
-
+        public ShipmentBuilder MainCarriageCarrierIdByCode(string MainCarriageCarrierIdCode)
+        {
+            _shipmentPM.MainCarriageCarrierId = CarrierCodeMapping(MainCarriageCarrierIdCode);
+            return this;
+        }
+        public ShipmentBuilder ShipmentTypeId(string ShipmentTypeId)
+        {
+            _shipmentPM.ShipmentTypeId = ShipmentTypeId;
+            return this;
+        }
         public ShipmentBuilder MainCarriageFromPortId(string mainCarriageFromPortId)
         {
             _shipmentPM.MainCarriageFromPortId = mainCarriageFromPortId;
@@ -221,6 +230,16 @@ namespace Logitude.ShipmentTests.Models.Builders
             _shipmentPM.ShipmentReceivableStatusName = ShipmentReceivableStatusName;
             return this;
         }
+        public ShipmentBuilder Master(string Master)
+        {
+            _shipmentPM.Master = Master;
+            return this;
+        }
+        public ShipmentBuilder LongMaster(string LongMaster)
+        {
+            _shipmentPM.LongMaster = LongMaster;
+            return this;
+        }
         public ShipmentBuilder GrossWeight(double? grossWeight)
         {
             _shipmentPM.GrossWeight = grossWeight;
@@ -281,6 +300,20 @@ namespace Logitude.ShipmentTests.Models.Builders
                     return LocationsData.PortLONId;
                 case "MAN":
                     return LocationsData.PortMANId;
+                default:
+                    return null;
+            }
+        }
+        private string CarrierCodeMapping(string mainCarriageCarrierIdCode)
+        {
+            switch (mainCarriageCarrierIdCode)
+            {
+                case "MSCU":
+                    return PartnersData.ShippingLineMSCUId;
+                case "MAEU":
+                    return PartnersData.ShippingLineMAEUId;
+                case "YMLU":
+                    return PartnersData.ShippingLineYMLUId;
                 default:
                     return null;
             }

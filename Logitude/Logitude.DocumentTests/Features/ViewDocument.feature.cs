@@ -20,7 +20,7 @@ namespace Logitude.DocumentTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Xunit.TraitAttribute("Category", "Pre-Prepare-DocumentType")]
-    public partial class GetDocumentTypeFeature : object, Xunit.IClassFixture<GetDocumentTypeFeature.FixtureData>, System.IDisposable
+    public partial class ViewDocumentFeature : object, Xunit.IClassFixture<ViewDocumentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,10 +30,10 @@ namespace Logitude.DocumentTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetDocumentType.feature"
+#line 1 "ViewDocument.feature"
 #line hidden
         
-        public GetDocumentTypeFeature(GetDocumentTypeFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public ViewDocumentFeature(ViewDocumentFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,7 +42,7 @@ namespace Logitude.DocumentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Get Document Type", "\tWe want to get document type.", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "View Document", "\twe want to get document", ProgrammingLanguage.CSharp, new string[] {
                         "Pre-Prepare-DocumentType"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -83,15 +83,15 @@ namespace Logitude.DocumentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get document type")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Document Type")]
-        [Xunit.TraitAttribute("Description", "Get document type")]
-        public virtual void GetDocumentType()
+        [Xunit.SkippableFactAttribute(DisplayName="View document")]
+        [Xunit.TraitAttribute("FeatureTitle", "View Document")]
+        [Xunit.TraitAttribute("Description", "View document")]
+        public virtual void ViewDocument()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get document type", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View document", null, tagsOfScenario, argumentsOfScenario);
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,11 +111,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.When("get document types", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 7
+ testRunner.Given("a document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
- testRunner.Then("document types should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 8
+ testRunner.When("get document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+ testRunner.Then("the document should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -128,12 +131,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetDocumentTypeFeature.FeatureSetup();
+                ViewDocumentFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetDocumentTypeFeature.FeatureTearDown();
+                ViewDocumentFeature.FeatureTearDown();
             }
         }
     }

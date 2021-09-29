@@ -45,24 +45,40 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\Codes\DirectionCodes.cs" />
     <Compile Include="Models\Codes\DocumentTypeCategoryCodes.cs" />
+    <Compile Include="Models\Codes\DocumentTypeTemplateCodes.cs" />
     <Compile Include="Models\Codes\DocumentTypeCodes.cs" />
     <Compile Include="Models\Codes\TemplateFormatCodes.cs" />
+    <Compile Include="Models\Codes\UploadModes.cs" />
     <Compile Include="Models\DocumentContext.cs" />
     <Compile Include="Models\DocumentData.cs" />
     <Compile Include="Models\DocumentsFilingPM.cs" />
+    <Compile Include="Models\DocumentTypeCopyPM.cs" />
     <Compile Include="Models\DocumentTypeList.cs" />
     <Compile Include="Models\DocumentTypePM.cs" />
+    <Compile Include="Models\DocumentTypeTemplatePM.cs" />
+    <Compile Include="Models\ImageParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DocumentFileService.cs" />
     <Compile Include="Services\DocumentService.cs" />
-    <Compile Include="Services\Preparation\DocumentTypepPreparation.cs" />
+    <Compile Include="Services\Preparation\DocumentPreparation.cs" />
+    <Compile Include="Services\Preparation\DocumentTypeTemplatePreparation.cs" />
+    <Compile Include="Services\Preparation\DocumentTypePreparation.cs" />
+    <Compile Include="Services\ViewDocumentService.cs" />
+    <Compile Include="Steps\CreateOutDocumentSteps.cs" />
     <Compile Include="Steps\GetDocumentTypeSteps.cs" />
     <Compile Include="Steps\UpdateDocumentSteps.cs" />
+    <Compile Include="Steps\UploadFilewithChunksSteps.cs" />
+    <Compile Include="Steps\ViewDocumentSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Features\CreateOutDocument.feature" />
     <None Include="Features\GetDocumentType.feature" />
     <None Include="Features\UpdateDocument.feature" />
+    <None Include="Features\UploadFilewithChunks.feature" />
+    <None Include="Features\ViewDocument.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +100,17 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Chunk3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Chunk2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Chunk1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>

@@ -105,8 +105,9 @@ namespace Logitude.DocumentTests.Models
           
         public string CountryCode { get; set; }
 
+        public virtual List<DocumentTypeCopyPM> DocumentTypeCopies { get; set; }
 
-        
+
         public bool IsDocumentOneTimePrintLimited { get; set; }
         
         public string LimitedPrintCopyId { get; set; }

@@ -19,21 +19,21 @@ namespace Logitude.DocumentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-DocumentType")]
-    public partial class GetDocumentTypeFeature : object, Xunit.IClassFixture<GetDocumentTypeFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-UpdateDocument")]
+    public partial class UpdateDocumentFeature : object, Xunit.IClassFixture<UpdateDocumentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-DocumentType"};
+                "Pre-Prepare-UpdateDocument"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetDocumentType.feature"
+#line 1 "UpdateDocument.feature"
 #line hidden
         
-        public GetDocumentTypeFeature(GetDocumentTypeFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public UpdateDocumentFeature(UpdateDocumentFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +42,8 @@ namespace Logitude.DocumentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Get Document Type", "\tWe want to get document type.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-DocumentType"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Update Document", "\tWe want to update a document", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-UpdateDocument"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,15 +83,15 @@ namespace Logitude.DocumentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get document type")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Document Type")]
-        [Xunit.TraitAttribute("Description", "Get document type")]
-        public virtual void GetDocumentType()
+        [Xunit.SkippableFactAttribute(DisplayName="Update document")]
+        [Xunit.TraitAttribute("FeatureTitle", "Update Document")]
+        [Xunit.TraitAttribute("Description", "Update document")]
+        public virtual void UpdateDocument()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get document type", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update document", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,11 +111,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.When("get document types", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
 #line 6
- testRunner.Then("document types should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "property",
+                            "Value"});
+                table1.AddRow(new string[] {
+                            "Received",
+                            "true"});
+                table1.AddRow(new string[] {
+                            "ReceivedDate",
+                            "now"});
+#line 7
+ testRunner.And("following new document properties", ((string)(null)), table1, "And ");
+#line hidden
+#line 11
+ testRunner.When("update document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 12
+ testRunner.Then("the document should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -128,12 +143,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetDocumentTypeFeature.FeatureSetup();
+                UpdateDocumentFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetDocumentTypeFeature.FeatureTearDown();
+                UpdateDocumentFeature.FeatureTearDown();
             }
         }
     }

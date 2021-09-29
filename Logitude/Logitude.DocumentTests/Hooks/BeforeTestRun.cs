@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Logitude.DocumentTests.Models;
+using Logitude.Test.Base.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,7 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         [BeforeTestRun]
         public static void SetupTimeManagementPreparation()
         {
-
+            DocumentData.ShipmentObjectTableId = new ObjectTableService().GetIdByName("Shipment");
         }
 
     }

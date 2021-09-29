@@ -11,10 +11,16 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
     [Binding]
     public class BeforeFeatureRun
     {
-        [BeforeFeature("Pre-Prepare-GetDocumentType")]
-        public static void PreprepareGetDocumentType()
+        [BeforeFeature("Pre-Prepare-DocumentType")]
+        public static void PreprepareDocumentType()
         {
-            new DocumentTypepPreparation().Prepare();
+            new DocumentTypePreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-UpdateDocument")]
+        public static void PrePrepareUpdateDocument()
+        {
+            new DocumentTypePreparation().Prepare();
+            new DocumentTypeTemplatePreparation().Prepare();
         }
 
     }

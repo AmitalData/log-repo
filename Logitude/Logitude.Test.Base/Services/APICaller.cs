@@ -40,13 +40,14 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request, retries);
         }
 
-        public static ApiResponse<T> CallGet<T>(string url, string token, int retries = 0)
+        public static ApiResponse<T> CallGet<T>(string url, string token, int retries = 0, bool isApi = true)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
                 Method = Method.GET,
                 Token = token,
-                Url = url
+                Url = url,
+                IsApi = isApi
             };
 
             return CallAPIProcess<T>(request, retries);
@@ -81,7 +82,7 @@ namespace Logitude.Test.Base.Services
         {
             var pauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-            string restClientUrl = GetRequestUrl(requestParameters.Url);
+            string restClientUrl = GetRequestUrl(requestParameters.Url, requestParameters.IsApi);
             RestClient restClient = new RestClient(restClientUrl);
             RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
             var response = new ApiResponse<T>();
@@ -135,7 +136,7 @@ namespace Logitude.Test.Base.Services
 
         private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, ApiQueryFilters apiQueryFilters)
         {
-            string restClientUrl = GetRequestUrl(requestParameters.Url);
+            string restClientUrl = GetRequestUrl(requestParameters.Url, requestParameters.IsApi);
             restClientUrl += GetQueryStringFromApiQueryFilters(apiQueryFilters);
 
             RestClient restClient = new RestClient(restClientUrl);
@@ -170,10 +171,13 @@ namespace Logitude.Test.Base.Services
             return response;
         }
 
-        private static string GetRequestUrl(string url)
+        private static string GetRequestUrl(string url, bool isApi)
         {
             string apiUrl = Settings.ServerUrl;
-
+            if (!isApi)
+            {
+                apiUrl = apiUrl.Replace("/api", "");
+            }
             if (String.IsNullOrEmpty(url))
             {
                 return null;

@@ -27,6 +27,7 @@ namespace Logitude.Test.Base.Models.Shared
         }
 
         public static string AccountingPaymentMethodsController = "accountingpaymentmethods";
+        public static string PostUploadFile = "ImageLibrary/PostUploadFile";
         public static string BranchesController = "branches";
         public static string AutomaticReconcileMethods = "AutomaticReconcileMethods";
 
@@ -47,6 +48,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ShipmentViewsGetByFilters = "ShipmentViews/GetByFilters";
         public static string FTPDetailViewsGetByFilters = "FTPDetailViews/GetByFilters";
         public static string APInvoiceViewsGetByFilters = "APInvoiceViews/GetByFilters";
+        public static string CommunicationLogViewsGetByFilters = "CommunicationLogViews/GetByFilters";
         public static string APPaymentViewsGetByFilters = "APPaymentViews/GetByFilters";
         public static string DocumentTypeViewsGetByFilters = "documenttypeviews/getbyfilters";
         public static string ARInvoiceViewsGetByFilters = "ARInvoiceViews/GetByFilters";
@@ -193,7 +195,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "FTPDetails/GetSingle?id=" + id;
         }
-
+        public static string ContainerGetSingle(string id)
+        {
+            return "Containers/GetSingle?id=" + id;
+        }
         public static string APInvoicesGetSingle(string id)
         {
             return "APInvoices/GetSingle?id=" + id;
@@ -301,15 +306,31 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "ShipmentOrder?orderNumber=" + orderNumber;
         }
+        public static string GetFileSizeFormat(int size)
+        {
+            return $"DocumentsFilingExtended?fileBytes={size}";
+        }
+        public static string DownloadPage(string securityId,string tempId)
+        {
+            return $"WebPages/DownloadPage.aspx?securityId={securityId}&tempId={tempId}";
+        }
 
         public static string GetDataEntryTimeSheetList(string employeeUserId, string locationCode, DateTime startDate, DateTime endDate)
         {
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
-        public static string GetCreateDocumentsFiling()
+        public static string GetCreateDocumentsFiling(GetCreateDocumentsFilingArgs arguments)
         {
-            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={documentTypeId}&entityId={entityId}&childEntityId=&childReference=&objectTableId={objectTableId}&directionCode={directionCode}&tenant={tenant}";
+            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
+        }
+        public static string GetDocumentType(string id, string documentOutId, int tenant)
+        {
+            return $"DocumentTypeExtended/getsingledocumenttype/?id={id}&documentOutId={documentOutId}&tenant={tenant}";
+        }
+        public static string GetDocumentCopy(GetDocumentCopyArgs getDocumentCopy)
+        {
+            return $"ExportDocument?documentTypeId={getDocumentCopy.DocumentTypeId}&entityId={getDocumentCopy.EntityId}&entityObjectTableId={getDocumentCopy.EntityObjectTableId}&childEntityId=&childObjectTableId=&documentOutId={getDocumentCopy.DocumentOutId}&tenant={getDocumentCopy.Tenant}&documentTypeCopyId={getDocumentCopy.DocumentTypeCopyId}&userId={getDocumentCopy.UserId}";
         }
         
 
