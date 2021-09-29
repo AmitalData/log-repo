@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.WebServices;
@@ -310,9 +311,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     List<ShipmentsJoinPayablesList> myResult = (from myShipment in iQueryable_shipments
                                                                 join myPayable in iQueryable_payables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
+                                                                join shipmentComputed in shipmentsContext.ShipmentComputedFields
+                                                                on new { Id = myShipment.Id }
+                                                                equals new { Id = shipmentComputed.Id }
                                                                 from myItem in myShipmentPayable.DefaultIfEmpty()
                                                                 select new ShipmentsJoinPayablesList()
                                                                 {
+                                                                    MainCarriageCarrierNumber = myShipment.MainCarriageCarrierNumber,
                                                                     ShipmentId = myShipment.Id,
                                                                     CreateDateTime = myShipment.CreateDateTime,
                                                                     FirstOpCloseDate = myShipment.FirstOperationalCloseDate,
@@ -342,8 +347,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     Payables_OPEN = IsLocalCurrency ? myItem.OpenAmountInLocalCurrency : myItem.OpenAmountInProfitCurrency,
                                                                     Payables_ACCT = IsLocalCurrency ? myItem.AccountedAmountInLocalCurrency : myItem.AccountedAmountInProfitCurrency,
                                                                     FinalArrivalDate = myShipment.ActualFinalArrivalDate,
+                                                                    TransportModeId = myShipment.TransportModeId,
+                                                                    ContainersNumbersAndTypesArray = shipmentComputed.ContainersNumbersAndTypesArray,
+                                                                    TruckNumber = myShipment.TruckNumber,
+                                                                    DirectionId = myShipment.DirectionId,
                                                                 }).ToList();
-
                     if (myResult.Count > 0)
                     {
                         foreach (ShipmentsJoinPayablesList item in myResult)
@@ -363,7 +371,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ChargesTypeId = item.ChargeTypeId;
                             myRecord.ChargesType = item.ChargeTypeName;
                             myRecord.FinalArrivalDate = item.FinalArrivalDate;
-
+                            myRecord.TruckContainerNumber = this.GetContainerNumbers(item);
                             if (IncludeAccountedOnly)
                             {
                                 myRecord.OpenAmount = null;
@@ -398,6 +406,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return myDataProvider;
         }
 
+        private string GetContainerNumbers(ShipmentsJoinPayablesList item)
+        {
+            var containerNumbers = "";
+            bool isInlandDomesticShipment = (item.DirectionId == "D" && item.TransportModeId == "I");
+            containerNumbers = item.TransportModeId == "O" ? Regex.Replace(item.ContainersNumbersAndTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? item.TruckNumber : item.MainCarriageCarrierNumber;
+
+            return containerNumbers;
+        }
+
         private void ComputeToLocationProperties(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
         {
             ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
@@ -408,7 +425,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 PickUpDeliveryPlaceData myLastDeliveryResult = webServiceHelper.GetPickUpDeliveryPlaceData(myLastDelivery, "Delivery");
 
-                if(myLastDeliveryResult != null)
+                if (myLastDeliveryResult != null)
                 {
                     myRecord.To = myLastDeliveryResult.City;
                     myRecord.ToState = myLastDeliveryResult.StateName;
@@ -418,9 +435,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             else
             {
-                string toLocationPortId =  this.GetToLocationPortId(item);
+                string toLocationPortId = this.GetToLocationPortId(item);
 
-                if(!string.IsNullOrEmpty(toLocationPortId))
+                if (!string.IsNullOrEmpty(toLocationPortId))
                 {
                     Port myPort = portRepository.GetSinglePort(tenant, toLocationPortId);
                     if (myPort != null)
@@ -437,7 +454,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         {
             if (item.OnForwardingToPortId != null)
             {
-                return item.OnForwardingToPortId;                
+                return item.OnForwardingToPortId;
             }
 
             else if (item.OnCarriageToPortId != null)
@@ -519,9 +536,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             }
         }
     }
-    
+
     public class ShipmentsJoinPayablesList
     {
+        public string MainCarriageCarrierNumber { get; set; }
+        public string DirectionId { get; set; }
+        public string TruckNumber { get; set; }
+        public string ContainersNumbersAndTypesArray { get; set; }
+        public string TransportModeId { get; set; }
+        public string TruckContainerNumber { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentNumber { get; set; }
         public string CustomerName { get; set; }
@@ -529,7 +552,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public DateTime? FirstOpCloseDate { get; set; }
         public string OpenedBy { get; set; }
         public string Level { get; set; }
-        public string ShipmentType { get; set; }        
+        public string ShipmentType { get; set; }
         public string SpecialServices { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? ChargeableWeight { get; set; }

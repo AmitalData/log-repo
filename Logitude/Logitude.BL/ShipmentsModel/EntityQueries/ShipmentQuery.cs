@@ -13436,6 +13436,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      where s.Tenant == tenant
                                                      select new ShipmentList()
                                                      {
+                                                         TruckNumber = m.TruckNumber,
                                                          BookingConfirmationNumber =m.BookingConfirmationNumber,
                                                          ProfitExchangeRate = s.ProfitExchangeRate,
                                                          OpenPayablesInLocalCurrency = s.OpenPayablesInLocalCurrency,
@@ -13634,6 +13635,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentNumber = s.ParentShipmentNumber,
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
+
                                                      };
 
             return shipmentsList;
