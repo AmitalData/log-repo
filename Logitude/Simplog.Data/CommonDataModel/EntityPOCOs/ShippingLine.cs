@@ -26,5 +26,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string CBSA { get; set; }
         public string CAAT { get; set; }
+        public bool IsSendingByContainer { get; set; } 
+        public bool IsSendingByBillOfLading { get; set; }
     }
 }

@@ -48,8 +48,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CBSA { get; set; }
         public string CAAT { get; set; }
         public string StateName { get; set; }
-
         public string GLAccountNumber { get; set; }
-
+        public bool IsSendingByContainer { get; set; }
+        public bool IsSendingByBillOfLading { get; set; }
     }
 }
