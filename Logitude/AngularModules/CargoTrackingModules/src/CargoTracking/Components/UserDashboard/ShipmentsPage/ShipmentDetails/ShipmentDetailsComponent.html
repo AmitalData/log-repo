@@ -195,7 +195,8 @@
         <div class="panels-wrapper">
             <button [class.active]="selectedNavButton=='Overview'"
                     (click)="PanelsNavigatorClicked('Overview')">
-                {{OverviewPanelTitle }}
+                <span class="hide-mobile">{{OverviewPanelTitle }}</span>
+                <span class="mobile-only">Overview</span>
             </button>
             <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
