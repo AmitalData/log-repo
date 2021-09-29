@@ -31,42 +31,6 @@ Feature: Shipment Update
     When update shipment
     Then the direct should update successfully
 
-  Scenario: Update partners tab
-    Given the user add partners with following details
-      | Consignee            | TestConsigneeExport |
-      | Agent                | TestAgent           |
-      | CustomsAgentExport   | TestCustomAgent     |
-      | CustomsAgentImport   | TestCustomAgent     |
-      | Notify1              | TestAgent           |
-      | Notify2              | TestAgent           |
-      | ShipperNotExporter   | TestShipperExport   |
-      | ConsigneeNotImporter | TestConsigneeExport |
-      | FreightForwarder     | TestAgent           |
-      | Coloader             | TestAgent           |
-      | CustomClearancePoint | TestWarehouse       |
-      | Consolidator         | TestAgent           |
-      | ReleasingAgent       | TestAgent           |
-    When update shipment
-    Then the direct should update successfully
-
-  Scenario: Delete partners tab
-    Given the user delete the below partners
-      | Consignee            | Consignee            |
-      | Agent                | Agent                |
-      | CustomsAgentExport   | CustomAgentExport    |
-      | CustomsAgentImport   | CustomAgentImport    |
-      | Notify1              | Notify1              |
-      | Notify2              | Notify2              |
-      | ShipperNotExporter   | ShipperNotExporter   |
-      | ConsigneeNotImporter | ConsigneeNotImporter |
-      | FreightForwarder     | FreightForwarder     |
-      | Coloader             | Coloader             |
-      | CustomClearancePoint | CustomClearancePoint |
-      | Consolidator         | Consolidator         |
-      | ReleasingAgent       | ReleasingAgent       |
-    When update shipment
-    Then the direct should update successfully
-
   Scenario: Update packages tab
     Given the user add package with the following details
       | Quantity | Length | Width | Height | GrossWeight |
@@ -87,8 +51,8 @@ Feature: Shipment Update
     Then the direct should update successfully
 
   Scenario: Update routing tab
-    Given the user add new pickup
-    And add transshipments with "EZE" as via port and "AA" as airline
+    Given add transshipments with "EZE" as via port and "AA" as airline
+    And the user add new pickup
     And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
     When update shipment
