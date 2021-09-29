@@ -5,6 +5,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -38,6 +39,8 @@ namespace Logitude.BL.Helpers
         private string entityReference;
         private string communicationLogId;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
+        private ShippingLine tenantZeroShippingLine;
+
         public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
         {
             this.tenant = tenant;
@@ -55,6 +58,7 @@ namespace Logitude.BL.Helpers
             this.GetCommuniactionLogObjectTableId();
             this.GetLoggedContactId();
             this.GetShipmentScacCode();
+            this.GetTenantZeroShippingLine();
             this.GetentityReference();
             this.BuildCommunicationLogAdditionalFields();
         }
@@ -92,8 +96,17 @@ namespace Logitude.BL.Helpers
             string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
             ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
             var shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrierId, tenant);
-            this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+            if (shippingLine != null)
+                this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
         }
+        private void GetTenantZeroShippingLine()
+        {
+            int tenantZero = 0;
+            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenantZero);
+            if (!string.IsNullOrEmpty(this.scacCode))
+                tenantZeroShippingLine = shippingLineRepository.GetSingleShippingLineByCode(this.scacCode, tenantZero);
+        }
+
         private void GetentityReference()
         {
             this.entityReference = this.isContainer ? container?.ContainerNumber : shipment?.Master;
@@ -163,11 +176,28 @@ namespace Logitude.BL.Helpers
         public bool Validate()
         {
             bool isValid = true;
-            if (string.IsNullOrEmpty(this.scacCode) || string.IsNullOrEmpty(this.entityReference))
+            if (string.IsNullOrEmpty(this.scacCode) || string.IsNullOrEmpty(this.entityReference) || !this.IsValidShippingLine())
             {
                 isValid = false;
             }
             return isValid;
+        }
+
+        private bool IsValidShippingLine()
+        {
+            if (this.tenantZeroShippingLine == null)
+            {
+                return false;
+            }
+            if (this.isContainer && !this.tenantZeroShippingLine.IsSendingByContainer)
+            {
+                return false;
+            }
+            if (!this.isContainer && !this.tenantZeroShippingLine.IsSendingByBillOfLading)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool IsLogitudeOceanInsightsRequestExistForShipment()
