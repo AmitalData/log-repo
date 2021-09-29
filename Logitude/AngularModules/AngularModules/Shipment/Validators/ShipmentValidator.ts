@@ -15,6 +15,7 @@ export class ShipmentValidator implements IShipmentValidator {
     private Errors: string[] = [];
     private entityPM: ShipmentPM;
     private IsInlandDomestic: boolean = false;
+    private IsStandAloneShipment: boolean = false;
     private IsLCLEntity: boolean = false;
     private IsFCLEntity: boolean = false;
     private message: string;
@@ -29,6 +30,7 @@ export class ShipmentValidator implements IShipmentValidator {
 
         if (entityPM && !SessionLocator.TenantPM.IsDocumentsArchive) {
             this.IsInlandDomestic = this.entityPM.TransportModeId == "I" && this.entityPM.DirectionId == "D" ? true : false;
+            this.IsStandAloneShipment = this.entityPM.IsStandalonePickupDelivery;
             this.IsLCLEntity = AppTool.IsLCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
 
@@ -93,7 +95,7 @@ export class ShipmentValidator implements IShipmentValidator {
             //        this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.ShipperId")));
             //    }
 
-            if (this.IsInlandDomestic) {
+            if (this.IsInlandDomestic && !this.IsStandAloneShipment) {
                 if (AppTool.IsNullOrEmpty(this.entityPM.ConsigneeId)) {
                     this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.ConsigneeId")));
                 }

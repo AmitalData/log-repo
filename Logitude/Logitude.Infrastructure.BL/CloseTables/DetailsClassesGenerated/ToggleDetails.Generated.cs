@@ -332,7 +332,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OIU,Ocean Insights Shipment Update", 
                 Description = "Ocean Insights Shipment Update", 
 			});
-			
 			 
             all.Add(new ToggleDetails()
             {    
@@ -340,6 +339,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Show file name as computed", 
                 SearchFields = "Show file name as computed,SFC", 
                 Description = "Show file name as computed", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "POD", 
+                Name = "Convert POD Image to Pdf File", 
+                SearchFields = "POD,Convert POD Image to Pdf File", 
+                Description = "Convert POD Image to Pdf File", 
 			});
 			
             return all;

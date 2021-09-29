@@ -174,6 +174,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private void AfterFinishUpdateCargoTracking(BulkDataPreperation bulkDataPreperation, bool isUpadteWaterMark)
 
         {
+
             if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments != null)
             {
                 BuildAllIndexesWithConstraient(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
@@ -186,6 +187,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
 
             SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+        }
+
+        private static void SaveOldShipments(BulkDataPreperation bulkDataPreperation)
+        {
+            var tableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName;
+            if (tableName == "CargoTrackingShipments")
+            {
+                ShipmentOldValuesService oldValuesService = new ShipmentOldValuesService();
+                oldValuesService.CreateOldDataDBTable(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+            }
         }
 
         private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
@@ -243,8 +254,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 cargoTrackingDataBaseArgs.DataTableSchema = DataTableSchema;
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
+
+                SaveOldShipments(bulkDataPreperation);
+
                 UpdateCargoTracking(bulkDataPreperation,dataColumnListCols);
                 AfterFinishUpdateCargoTracking(bulkDataPreperation, isUpadteWaterMark);
+
+
+                if (bulkDataPreperation.NumberOfMainCoulmnsUpdated > 0 && bulkDataPreperation.CargoTrackingTable.CurrentCondition != 2)
+                 {
+                    var sql =  $"IF OBJECT_ID(N'dbo.OldCargoShipments', N'U') IS NOT NULL drop table OldCargoShipments;" +
+                        $"select  * into OldCargoShipments from PreOldCargoShipments;" +
+                        $"IF OBJECT_ID(N'dbo.PreOldCargoShipments', N'U') IS NOT NULL drop table PreOldCargoShipments;";
+                    ServiceHelper.ExecuteSql(sql, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                }
+
                 sourceConnection.Close();
             }
             recordUpdated.NumberOfRecordUpdated = bulkDataPreperation.NumberOfMainCoulmnsUpdated;

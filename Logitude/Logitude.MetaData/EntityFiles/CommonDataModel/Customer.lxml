@@ -17099,7 +17099,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  
   <field
     Id="&quot;68b6c16c-973d-4d50-b245-0d455badfb44&quot;"
     FieldName="&quot;InsuredcreditLimit&quot;"
@@ -17175,7 +17174,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  
   <Query
     Code="&quot;By Last Shipment&quot;"
     TextCode="&quot;By Last Shipment&quot;"
@@ -18128,7 +18126,7 @@
     FeatureTextCodeCode="&quot;Customer.Features.Overview&quot;"
     FeatureDefaultText="&quot;Overview&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />  
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Sales&quot;"
     ObjectTableName="&quot;Customer&quot;"

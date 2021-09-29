@@ -33,6 +33,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private int tenant;
         private string serviceContextUser;
         public CustomerTenantAccess Poco { get; set; }
+        public CustomerTenantAccessCardPM customerTenantAccessCardPM;
         public ICommonDataContext ObjectContext
         {
             get { return objectContext; }
@@ -253,14 +254,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             try
             {
-                IQueueService queueservice = new DbQueueService();
+                
                 CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
                 bool ishascard = customerTenantAccessCardQuery.IsCustomerTenantAccessHasCards(entityPM.Id);
                 if (!ishascard)
                 {
-                    //IQueueService queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+                    InitializeCustomerTenantAccessQueue(itemPM);
 
                 }
 
@@ -308,16 +307,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             bool BuildBatch = itemPM.BuildBatch;
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);
             CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant);
+            this.customerTenantAccessCardPM = itemPM;
 
-            //IQueueService queueservice = new DbQueueService();
-            //queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-            //queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
 
             customerTenantAccessCardRepository.Update(itemPoco);
             customerTenantAccessCardRepository.SubmitChanges();
-           
 
+            InitializeCustomerTenantAccessQueue(itemPM);
+             
             if (itemPM.StatusTypeCode == "A")
             {
                 CustomerQuery CustomerQuery = new CustomerQuery(itemPM.Tenant);
@@ -336,8 +334,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
+                TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
+
                 CustomerService.Update();
+                TempCustomer.AddLogboxCustomerQueue = false;
             }
             else
             {
@@ -349,8 +350,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
+                TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
                 CustomerService.Update();
+                TempCustomer.AddLogboxCustomerQueue = false;
             }
             string key = itemPM.CustomerId + "_" + tenant + "_info";
             if (CacheManager.CacheWrapper != null)
@@ -385,6 +388,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //}
 
         }
+
+        private void InitializeCustomerTenantAccessQueue(CustomerTenantAccessCardPM itemPM)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "IsImportActivated", itemPM.IsImportActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+        }
+
         private void DeleteCustomerTenantAccessCard(CustomerTenantAccessCardPM itemPM)
         {
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);

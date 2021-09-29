@@ -2628,6 +2628,7 @@ namespace WebFreight.Web.InfrastructureModel
                     HasStates = c.HasStates,
                     IsStateRequired = c.IsStateRequired,
                     IsNorthAmerica = c.IsNorthAmerica,
+                    IsGreaterChina = c.IsGreaterChina,
                 };
                 countryRepository.Add(country);
             }
