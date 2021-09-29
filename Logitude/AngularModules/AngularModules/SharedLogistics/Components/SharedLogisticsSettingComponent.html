@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td>
-                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Shared Logistics</div>
+                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : 'Shared Logistics'}}</div>
                     </td>
                 </tr>
 
@@ -87,7 +87,7 @@
                                     </tr>
 
 
-                                    <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton " style="height:50px">
+                                    <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton && SharedTitleType != 'CargoTracking'" style="height:50px">
                                         <td></td>
                                     </tr>
 
