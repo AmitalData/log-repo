@@ -65,6 +65,10 @@ When("{string} action with {string} note", (action, note) => {
   QuotesActions.OpenQuoteAction(action, note);
 });
 
+When("{string} main action with {string} note", (action, note) => {
+  QuotesActions.MainQuoteAction(action, note);
+});
+
 Then("quote stage status should be {string}", (stageStatus) => {
   BaseAssertion.AssertStatusCode(RequestAliases.Quotes, 200);
   BaseAssertion.AssertElementContain(BaseSelectors.HeaderScreen, stageStatus);

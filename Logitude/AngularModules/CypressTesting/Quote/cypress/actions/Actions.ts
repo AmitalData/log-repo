@@ -168,6 +168,11 @@ export function UpdateQuote(selector: string) {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
     cy.Click(selector, null);
 }
+
+export function MainQuoteAction(action: string, note: string) {
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+    FillActionNote(note)
+}
 //#endregion
 
 //#region Quotation open, update, print and send
