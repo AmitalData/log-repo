@@ -280,7 +280,7 @@ h1 {
         box-shadow: 0px 0px 8px 0px #00000025;
         color: rgb(66, 66, 66);
         background: var(--MainColor);
-        color: black;
+        color: white;
         border: none;
         cursor: pointer;
         margin-right: 20px;
@@ -320,8 +320,25 @@ h1 {
         margin-right: -15px;
         margin-top: 70px;
         height: 130px;
+        position: relative;
+    }
+    .pager{
+        position: absolute;
+        z-index: 1;
+        width: 30px;
+        background: #F5F6FF;
+        height: 150px;
+    }
+    .left-arrow{
+    }
+    .right-arrow{
+        right: 0px;
     }
 
+    .slider .card:hover {
+        box-shadow: initial;
+    }
+    
     .slider {
         width: 100% !important;
     }
@@ -377,6 +394,7 @@ h1 {
         border: 1px solid gray;
         padding: 4px 14px;
         margin-right: 10px;
+        color: black;
     }
 
         .PanelsNavigator button.active {
@@ -384,6 +402,9 @@ h1 {
             background: #e9f2ff;
             box-shadow: 6px 4px 10px 0px #00000020;
             font-weight: bold;
+        }
+        .package-list-table tr th{
+            font-size: 9px !important;
         }
 }
 
@@ -535,7 +556,6 @@ h1 {
         left: 0;
         right: unset !important;
     }
-
 }
 @media screen and (max-width: 479px){
     .mobile-font-18{
@@ -546,9 +566,14 @@ h1 {
     }
     .routes{
         text-align: right;
+        min-height: 45px;
     }
     .routing-card {
-        height: 60px;
+        height: 84px;
+    }
+
+    .description a{
+        display: block;
     }
 }
 
@@ -658,8 +683,18 @@ h1 {
         justify-content: space-between;
         align-items: center;
     }
-}
 
+    .no-data-available {
+        padding: 13px;
+    }
+    .route-description{
+        max-height: 44px;
+        white-space: normal   
+    }
+    .package-list-table tr th{
+        line-height: 10px;
+    }
+}
 
 .document-card{
     width: 100%;
@@ -721,4 +756,7 @@ h1 {
 
 .package-list-table tr td{
     font-size: 12px;
+}
+.no-milestones{
+    height: 50px;
 }

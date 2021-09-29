@@ -565,3 +565,15 @@ li a {
         padding-top: 50px;
     }
 }
+
+
+.order-icon{
+    position: absolute;
+    top:60px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
+}
