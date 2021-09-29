@@ -106,7 +106,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         this.viewModel.EntityPM.IsExportActivated = checkIfCustomerSelected.IsExportActivated;
     }
 
-    private ValidateCustomerTenantOptions(checkIfCustomerSelected: CardListDataViewModel) {
+    private ValidateCustomerTenantOptions(checkIfCustomerSelected: CardListDataViewModel) { 
         return checkIfCustomerSelected?.IsImportActivated == false && checkIfCustomerSelected.IsExportActivated == false;
     }
 
@@ -187,8 +187,16 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
             this.viewModel = args;
             this.IsImportActivated = args.Parent.IsImportActivated;
             this.IsExportActivated = args.Parent.IsExportActivated;
-            this.CanSelectOpption = args.Parent.CanSelectOpption; 
+            this.CanSelectOpption = args.Parent.CanSelectOpption;
+            this.SetCustomerTenantAccessCardOptions();
             this.DataLoaded = true;   
+        }
+    }
+    SetCustomerTenantAccessCardOptions() {
+        if (this.viewModel.CardObsList != null) {
+            if (!this.CanSelectOpption)
+            this.viewModel.CardObsList.forEach(
+                card => card.IsImportActivated = this.IsImportActivated);
         }
     }
 
