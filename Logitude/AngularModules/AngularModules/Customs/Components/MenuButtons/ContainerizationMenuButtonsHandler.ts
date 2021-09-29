@@ -318,6 +318,9 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
                 messageWindow.Title = "שליחת המכלה";
+                messageWindow.YesButtonText = "אישור";
+                messageWindow.ShowCancelButton = true;
+                messageWindow.ShowNoButton = false;
             //messageWindow.RTL = true;
             //messageWindow.ShowErrorIcon = true;
                 messageWindow.Show("המכלה לא קיימת במכס, האם לשחרר תיקים?");
