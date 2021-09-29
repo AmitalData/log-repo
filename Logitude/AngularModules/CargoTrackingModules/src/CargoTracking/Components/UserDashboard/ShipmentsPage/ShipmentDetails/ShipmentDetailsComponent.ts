@@ -36,8 +36,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ShipmentReferences: string[] = [];
     SearchText: string = "";
     CustomsBrokerReference: string;
-    ShipmentPM: any;
-    ShipmentOrder: any;
+    ShipmentPM: any ;
+    ShipmentOrder: any ;
     ShipmentPackages: any[];
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
@@ -86,8 +86,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.LoadShipment();
         this.CreatePartnerCardsFromShipmentPM();
-       
-
     }
     private SetOverviewPanelTitle() {
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
@@ -123,24 +121,28 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     InitSlider()
     {
-
         var PAGERS_WIDTH = 200; // 100 * 2 pager
+        var mobilePagersWidth = 30; // 100 * 2 pager
         var screenwidth = window.innerWidth;
 
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-
-        if (screenwidth > 470)
+        const maxWidthForMobileScreen = 470;
+        if (screenwidth > maxWidthForMobileScreen)
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
-
-        this.sliderVisibleCardsCount = count;
+        if (screenwidth <= maxWidthForMobileScreen)
+        var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth);
+        this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = screenwidth < maxWidthForMobileScreen ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
 
     }
 
+    private CalculateVisibleSliderCardsCount(sliderWrapperWidth: number, mobilePagersWidth: number ) {
+        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / this.sliderMobileCardWidth);
+    }
     LoadShipment()
     {
         //this.isLoading = true;
@@ -238,7 +240,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             if (result) {
                 this.ShipmentPM = result;
                 console.log("ShipmentPM", this.ShipmentPM);
-
                 this.GetPartnersAddresses();
                 this.FillCustomsBrokerReferenceFromShipmentPM();
                 this.SetContainersNumbers(result);
@@ -264,8 +265,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                     {
                         ShowDetailsMenu: false,
                         ...d }
-                    ));;
-                console.log("DocumentsFilings", this.DocumentsFilings);
+                    ));
                 this.isLoading = false;
 
             }
@@ -473,7 +473,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             for (let routing of this.ShipmentPM.ShipmentPickUps) {
                 this.AddTruckerPartnerCardIfCarrierIdExist(routing);
             }
-
         }
     }
    
@@ -491,6 +490,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
     sliderCardWidth: number = 200;
+    sliderMobileCardWidth: number = 145;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
@@ -557,7 +557,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
             return;
 
         var margin = this.sliderMarginLeft;
-
         // inc\dec
         if (dir == 'left') {
             margin -= this.sliderCardWidth;
@@ -1139,6 +1138,26 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 title: 'Exception',
                 date: messageDate,
                 description: messageDescription,
+            }
+        });
+    }
+
+    OpenReferencesWindow(references) {
+        references = references.map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.join("\n"),
+            }
+        });
+    }
+
+    ShowMoreWindow(text) {
+        console.log(text)
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: '',
+                description: text,
             }
         });
     }
