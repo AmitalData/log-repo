@@ -19,14 +19,14 @@ namespace Logitude.DocumentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-DocumentType")]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-CreateOutDocument")]
     public partial class CreateOutDocumentFeature : object, Xunit.IClassFixture<CreateOutDocumentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-DocumentType"};
+                "Pre-Prepare-CreateOutDocument"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -43,7 +43,7 @@ namespace Logitude.DocumentTests.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create Out Document", "\twe want to create out document ", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-DocumentType"});
+                        "Pre-Prepare-CreateOutDocument"});
             testRunner.OnFeatureStart(featureInfo);
         }
         

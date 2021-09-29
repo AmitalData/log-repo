@@ -22,6 +22,13 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new DocumentTypePreparation().Prepare();
             new DocumentTypeTemplatePreparation().Prepare();
         }
+        [BeforeFeature("Pre-Prepare-CreateOutDocument")]
+        public static void PrePrepareCreateOutDocument()
+        {
+            new ShipmentDataPreparation().Prepare();
+            new DocumentTypePreparation().Prepare();
+            new DocumentTypeTemplatePreparation().Prepare();
+        }
 
     }
 }

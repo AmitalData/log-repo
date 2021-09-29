@@ -1,5 +1,6 @@
 ﻿using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Services;
+using Logitude.ShipmentTests.Services.OceanInsight;
 using TechTalk.SpecFlow;
 
 namespace Logitude.ShipmentTests.Hooks
@@ -26,6 +27,11 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.MoveTypeTSMId = shipmentVariables.MoveTypeTSMId;
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
             ShipmentData.ShipmentSubTypeTSSTId = shipmentVariables.ShipmentSubTypeTSSTId;
+        }
+        [BeforeFeature("Pre-Prepare-OceanInsight")]
+        public static void SetUpPrepareDataBeforeFeatureRun()
+        {
+            new ShipmentDataPreparation().Prepar();
         }
     }
 }

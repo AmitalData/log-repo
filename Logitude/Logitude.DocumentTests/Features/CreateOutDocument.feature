@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-DocumentType
+﻿@Pre-Prepare-CreateOutDocument
 Feature: Create Out Document
 	we want to create out document 
 

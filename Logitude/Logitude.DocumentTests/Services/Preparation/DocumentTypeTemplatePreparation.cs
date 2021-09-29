@@ -23,23 +23,18 @@ namespace Logitude.DocumentTests.Services.Preparation
 
         private string GetAirManifestTemplate()
         {
-            return GetIdByCode(DocumentTypeTemplateCodes.AirManifest) ?? Create(GetAirManifestTemplateInstance());
+            return GetIdByDocumentTypeId(DocumentData.DocumentTypeAirManifestId) ?? Create(GetAirManifestTemplateInstance());
         }
         
 
-        private string GetIdByCode(string code)
+        private string GetIdByDocumentTypeId(string documentTypeAirManifestId)
         {
-            var filter = new ApiQueryFilters() { 
-                GetAll = true,
-                Filter1Name = "Code",
-                Filter1Value = code
-            };
-            return APICaller.CallGetByFilters<List<DocumentTypeList>>(Urls.DocumentTypeViewsGetByFilters, UserTenant.Token, filter)?.Data?.FirstOrDefault()?.Id;
+            return APICaller.CallGet<List<DocumentTypeList>>(Urls.GetDocumentTypeTemplate(documentTypeAirManifestId, UserTenant.Tenant), UserTenant.Token)?.Data?.FirstOrDefault()?.Id;
         }
 
         private string Create(DocumentTypeTemplatePM documentTypeTemplatePM)
         {
-            return APICaller.CallPost<DocumentTypeTemplatePM>(documentTypeTemplatePM, Urls.DocumentTypesController, UserTenant.Token).Data.Id;
+            return APICaller.CallPost<DocumentTypeTemplatePM>(documentTypeTemplatePM, Urls.DocumentTypeTemplatesController, UserTenant.Token).Data.Id;
         }
 
         private DocumentTypeTemplatePM GetAirManifestTemplateInstance()
@@ -50,6 +45,8 @@ namespace Logitude.DocumentTests.Services.Preparation
                 DocumentTypeCode = DocumentTypeTemplateCodes.AirManifest,
                 DocumentTypeId = DocumentData.DocumentTypeAirManifestId,
                 ObjectTableId = DocumentData.ShipmentObjectTableId,
+                Description = "Description",
+                TemplateType = TemplateFormatCodes.Message
             };
         }
 

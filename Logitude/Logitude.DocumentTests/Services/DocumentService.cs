@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
+using Logitude.DocumentTests.Services.Preparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
@@ -14,7 +15,6 @@ namespace Logitude.DocumentTests.Services
 {
     public class DocumentService
     {
-        string FakeEntityId = "0-0";
         public DocumentsFilingPM CreateDocument(string directionCode)
         {
             var arguments = GetCreateDocumentsFilingArgs(directionCode);
@@ -25,7 +25,7 @@ namespace Logitude.DocumentTests.Services
             return new GetCreateDocumentsFilingArgs()
             {
                 DocumentTypeId = DocumentData.DocumentTypeAirManifestId,
-                EntityId = FakeEntityId,
+                EntityId = DocumentData.ShipmentId,
                 ObjectTableId = DocumentData.ShipmentObjectTableId,
                 DirectionCode = directionCode,
                 Tenant = UserTenant.Tenant
@@ -47,7 +47,7 @@ namespace Logitude.DocumentTests.Services
             var args = new GetDocumentCopyArgs()
             {
                 DocumentTypeId = documentTypeId,
-                EntityId = FakeEntityId,
+                EntityId = DocumentData.ShipmentId,
                 EntityObjectTableId = DocumentData.ShipmentObjectTableId,
                 DocumentOutId = documentId,
                 Tenant = tenant,

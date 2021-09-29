@@ -59,12 +59,15 @@
     <Compile Include="Models\DocumentTypePM.cs" />
     <Compile Include="Models\DocumentTypeTemplatePM.cs" />
     <Compile Include="Models\ImageParameter.cs" />
+    <Compile Include="Models\ShipmentBuilder.cs" />
+    <Compile Include="Models\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocumentFileService.cs" />
     <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\Preparation\DocumentPreparation.cs" />
     <Compile Include="Services\Preparation\DocumentTypeTemplatePreparation.cs" />
     <Compile Include="Services\Preparation\DocumentTypePreparation.cs" />
+    <Compile Include="Services\Preparation\ShipmentDataPreparation.cs" />
     <Compile Include="Services\ViewDocumentService.cs" />
     <Compile Include="Steps\CreateOutDocumentSteps.cs" />
     <Compile Include="Steps\GetDocumentTypeSteps.cs" />

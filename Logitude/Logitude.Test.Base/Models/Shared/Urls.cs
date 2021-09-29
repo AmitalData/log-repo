@@ -19,6 +19,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string BankCodesController = "BankCodes";
         public static string JournalsController = "journals";
         public static string DocumentTypesController = "DocumentTypes";
+        public static string DocumentTypeTemplatesController = "DocumentTypeTemplates";
         public static string JournalActionTypesController = "JournalActionTypes";
 
         public static string APPaymentsGetSingle(object aPPaymenId)
@@ -38,6 +39,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string BranchviewsByFilters = "branchviews/getbyfilters";
         public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
         public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
+        public static string ShipmentContainersWebServiceController = "ShipmentContainersWebService";
         public static string ChartOfAccountsController = "ChartOfAccounts";
         public static string ChargesGroupsController = "ChargesGroups";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
@@ -328,6 +330,11 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"DocumentTypeExtended/getsingledocumenttype/?id={id}&documentOutId={documentOutId}&tenant={tenant}";
         }
+        public static string GetDocumentTypeTemplate(string documentOutId, int tenant)
+        {
+            return $"DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype?documentTypeId={documentOutId}&tenant={tenant}";
+        }
+
         public static string GetDocumentCopy(GetDocumentCopyArgs getDocumentCopy)
         {
             return $"ExportDocument?documentTypeId={getDocumentCopy.DocumentTypeId}&entityId={getDocumentCopy.EntityId}&entityObjectTableId={getDocumentCopy.EntityObjectTableId}&childEntityId=&childObjectTableId=&documentOutId={getDocumentCopy.DocumentOutId}&tenant={getDocumentCopy.Tenant}&documentTypeCopyId={getDocumentCopy.DocumentTypeCopyId}&userId={getDocumentCopy.UserId}";
