@@ -43,6 +43,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
     isMilestonesStatusFilterExpanded: boolean = false;
+    isShipmentTypeFilterExpanded: boolean = false;
+    isShipmentDirectionFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
@@ -537,6 +539,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     SelectionChangedHandler(toggleFilterCodes: string) {
+        console.log(toggleFilterCodes)
         this.SelectToggleFilters(toggleFilterCodes);
     }
     
