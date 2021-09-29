@@ -4742,6 +4742,12 @@ User/Pass",
         {
             UpdateModule(0, "customs", UpdateCustomslbl);
         }
+
+        private void MapUnifreightTables_Click(object sender, EventArgs e)
+        {
+            MappUnifreightTables mappUnifreightTables = new MappUnifreightTables();
+            mappUnifreightTables.ShowDialog(this);
+        }
     }
 
     public class TenantMailBox
