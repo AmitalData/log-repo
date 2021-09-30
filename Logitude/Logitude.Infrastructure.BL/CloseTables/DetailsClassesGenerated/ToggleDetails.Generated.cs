@@ -348,6 +348,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "POD,Convert POD Image to Pdf File", 
                 Description = "Convert POD Image to Pdf File", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BAF", 
+                Name = "ARInvoices DWH", 
+                SearchFields = "BAF,ARInvoices DWH,Allow Tenants to Show ARInvoices Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show ARInvoice Fact on the BI Report Screen", 
+			});
 			
             return all;
        }

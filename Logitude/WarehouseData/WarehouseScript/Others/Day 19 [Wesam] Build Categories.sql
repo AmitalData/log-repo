@@ -91,6 +91,15 @@ ELSE      Begin
 		  End
 
 
+		  		  --Routings
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'InvoiceLines')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('InvoiceLines','Invoice Lines',90)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 90 WHERE [dbo].[DWCategories].[Code] = 'InvoiceLines'	  
+		  End
 
 		  --KPI
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
