@@ -49,5 +49,7 @@ export class ShippingLineList {
 		CAAT: string;
 		StateName: string;
 		GLAccountNumber: string;
+		IsSendingByContainer: boolean;
+		IsSendingByBillOfLading: boolean;
 	
 }

@@ -343,13 +343,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
                 RunAutomation("OnCreate");
-
+                SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
                     AddShipmentUpdateKafkaQueueMessage("CToolShipmentsCreate");
                 }
 
                 scope.Complete();
+
             }
         }
          
@@ -547,6 +548,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    SendAutomaticallyOceanOnsightsRequest();
                     UpdatePayablesLinesVatAmounts();
                     RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -2470,6 +2472,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                     #endregion
+                }
+            }
+        }
+
+        private void SendAutomaticallyOceanOnsightsRequest()
+        {
+            if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+            {
+                // Shipment
+                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant);
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
+                {
+                    myHelper.SendContainerStatusRequest();
                 }
             }
         }
