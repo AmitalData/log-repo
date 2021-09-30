@@ -296,6 +296,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     SetMoreReferenceText(reference: string) {
+        console.log('aaaa', reference)
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
@@ -645,13 +646,35 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     OpenMessageWindow(references) {
+        let referencesArray = references != null ? references.split(',') : null;
+        referencesArray = referencesArray.slice(1, referencesArray.length + 1);
+        referencesArray = referencesArray.map(x => x.trim());
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
 
-                description: references.toString().split(',').join("\n"),
+                description: referencesArray.toString().split(',').join("\n"),
             }
         });
+    }
+
+    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+        references = references.map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'References',	
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
+            }	
+        });	
+    }
+
+    OpenExceptionMessageWindow(messageDescription) {	
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'Exception',	
+                description: messageDescription,	
+            }	
+        });	
     }
 
     GetModeIcon(mode: string)

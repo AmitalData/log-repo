@@ -1,14 +1,13 @@
 import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
-import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -17,7 +16,7 @@ import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/Login
     templateUrl: './UserDashboardComponent.html',
     styleUrls: ['./UserDashboardComponent.css']
 })
-export class UserDashboardComponent implements AfterViewInit
+export class UserDashboardComponent implements AfterViewInit, OnInit
 {
 
     @ViewChild('input') input: ElementRef;
@@ -30,6 +29,7 @@ export class UserDashboardComponent implements AfterViewInit
     ConnectedCustomers: string[] = [];
     IsBrandingDataLoaded: boolean = false;
     UserNameFirstLetters: string;
+    currentRoute: string;
     baseURL;
 
     get tenant()
@@ -201,10 +201,19 @@ export class UserDashboardComponent implements AfterViewInit
 
         });
     }
-
+    ngOnInit(): void {
+        this.currentRoute = this.router.url;
+        this.SubscribeRoutingEvents();
+    }
+    private SubscribeRoutingEvents() {
+        this.router.events.pipe(
+            filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
+         ).subscribe((e: NavigationEnd) => {
+             this.currentRoute = e.url;
+         });
+    }
     ngAfterViewInit()
     {
-
     }
     get ComapnyLogo()
     {
