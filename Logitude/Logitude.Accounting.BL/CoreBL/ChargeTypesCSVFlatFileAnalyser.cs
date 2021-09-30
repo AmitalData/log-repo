@@ -190,7 +190,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 IsAutoDisplayInConsolidation = false,
                                 Description = "",
                                 AWBPrintDescription = true,
-                                DueTypeCode = "",
+                                DueTypeCode = "NO",
+                                
                                 IsAutoDisplayInQuote = false,
                                 MeasurementId = measurementId,
                                 ContainerMeasurementCode = "",
