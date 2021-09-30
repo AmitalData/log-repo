@@ -18,6 +18,7 @@
 	From dw_Addresses
 	INNER JOIN dw_DWHSettings ON dw_Addresses.Tenant = dw_DWHSettings.Tenant
     INNER JOIN dw_Countries ON dw_Addresses.CountryId = dw_Countries.Id
+	where dw_Addresses.Id !='-1'
 	OPEN AddressesCursor FETCH NEXT FROM AddressesCursor INTO @Id , @Name, @Address1, @Address2, @ZipCode, @City, @Country, @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN

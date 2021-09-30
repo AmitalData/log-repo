@@ -41,5 +41,5 @@
 	CLOSE ContactsCursor
 	DEALLOCATE ContactsCursor
 	
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'User'
+	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Contact'
 End
