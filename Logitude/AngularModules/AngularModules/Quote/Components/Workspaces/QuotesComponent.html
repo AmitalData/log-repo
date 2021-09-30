@@ -189,7 +189,7 @@
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('EXP')">{{'Quote.Q.ExpiredQuotes' | TextCodeTranslationPipe}} ({{Quotes_Expired}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('AllF')">{{'Quote.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{Quotes_AllFollowups}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('MYF')">{{'Quote.Q.MyFollowUps' | TextCodeTranslationPipe}} ({{Quotes_MyFollowups}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('ALL')">{{'Quote.Q.AllQuotes' | TextCodeTranslationPipe}} ({{Quotes_All}})</p>
+                                                <p [attr.data-cy]="'AllQuoteQuery'"class="QueryLink" (click)="ViewQuoteQuery('ALL')">{{'Quote.Q.AllQuotes' | TextCodeTranslationPipe}} ({{Quotes_All}})</p>
                                             </div>
                                         </div>
 

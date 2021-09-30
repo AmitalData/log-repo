@@ -52,13 +52,6 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
             | Event            | Notes                |
             | Reactivate Quote | Reactivate the quote |
 
-    Scenario: Decline quote
-        When "Decline" action with "Decline the quote" note
-        Then quote stage status should be "Declined"
-        And following event should appear in events tab
-            | Event          |
-            | Quote Declined |
-
     Scenario: Copy quote
         When Copy the quote
         Then quote stage status should be "Created"

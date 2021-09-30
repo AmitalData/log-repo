@@ -82,6 +82,7 @@ export class QuoteSelectors {
 
      public static readonly CancelQuery = "[data-cy='CancelQuery']"
      public static readonly AcceptQuery = "[data-cy='AcceptQuery']"
+     public static readonly AllQuoteQuery = "[data-cy='AllQuoteQuery']"
 
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
