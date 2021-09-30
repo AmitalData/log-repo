@@ -103,7 +103,7 @@ namespace Logitude.BL.Helpers
             string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
             if (!string.IsNullOrEmpty(mainCarriageCarrierId))
             {
-                shippingLine = shippingLineQuery.GetSinglePM(mainCarriageCarrierId, tenant);
+                shippingLine = shippingLineQuery.GetSinglePMByIdAndTenant(mainCarriageCarrierId, tenant);
                 if (shippingLine != null)
                     this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
             }

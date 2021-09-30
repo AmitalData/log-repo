@@ -271,7 +271,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
             {
-                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert && a.ContainerNumber != null);
+                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => (a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert) && a.ContainerNumber != null);
                 foreach (var container in allUpdatedContainers)
                 {
                     this.SendAutomaticallyOceanOnsightsRequestByContainer(container.ContainerEntityId);
