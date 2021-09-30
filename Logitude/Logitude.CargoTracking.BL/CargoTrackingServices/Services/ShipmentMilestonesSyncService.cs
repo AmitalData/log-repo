@@ -18,7 +18,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 "PickupDate",
                 "PickupDone",
-                "PickupEstimationDate"
+                "PickupEstimationDate",
+                "BookingDate",
+                "CreateDate",
+
             };
 
 
