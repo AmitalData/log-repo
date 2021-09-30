@@ -174,11 +174,11 @@
                                             </div>
                                             <div>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('CRT')" id="{{'CreatedQuote' | IdGeneratorPipe}}" >{{'Quote.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('DRF')">{{'Quote.Q.DraftQuotes' | TextCodeTranslationPipe}} ({{Quotes_Draft}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('SNT')">{{'Quote.Q.SentQuotes' | TextCodeTranslationPipe}} ({{Quotes_Sent}})</p>
+                                                <p [attr.data-cy]="'DraftQuery'" class="QueryLink" (click)="ViewQuoteQuery('DRF')">{{'Quote.Q.DraftQuotes' | TextCodeTranslationPipe}} ({{Quotes_Draft}})</p>
+                                                <p [attr.data-cy]="'SentQuery'" class="QueryLink" (click)="ViewQuoteQuery('SNT')">{{'Quote.Q.SentQuotes' | TextCodeTranslationPipe}} ({{Quotes_Sent}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('ACW')">{{'Quote.Q.AcceptedWithoutShipmentsQuotes' | TextCodeTranslationPipe}} ({{Quotes_AcceptedNOShip}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('ACP')">{{'Quote.Q.AcceptedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Accepted}})</p>
-                                                <p class="QueryLink" (click)="ViewQuoteQuery('CNC')">{{'Quote.Q.CancelledQuotes' | TextCodeTranslationPipe}} ({{Quotes_Cancelled}})</p>
+                                                <p [attr.data-cy]="'AcceptQuery'" class="QueryLink" (click)="ViewQuoteQuery('ACP')">{{'Quote.Q.AcceptedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Accepted}})</p>
+                                                <p [attr.data-cy]="'CancelQuery'" class="QueryLink" (click)="ViewQuoteQuery('CNC')">{{'Quote.Q.CancelledQuotes' | TextCodeTranslationPipe}} ({{Quotes_Cancelled}})</p>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('MY')">{{'Quote.Q.MyQuotes' | TextCodeTranslationPipe}} ({{Quotes_My}})</p>
                                             </div>
                                         </div>

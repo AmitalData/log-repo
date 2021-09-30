@@ -80,6 +80,9 @@ export class QuoteSelectors {
      public static readonly BuildShipmentButton = "#QuoteBBuildShipment"
      public static readonly ShipmentLevelDirectRadio = "#ShipmentLevelRadio_0D"
 
+     public static readonly CancelQuery = "[data-cy='CancelQuery']"
+     public static readonly AcceptQuery = "[data-cy='AcceptQuery']"
+
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
           return lineNumber > 0 ? Selector + '_' + lineNumber : Selector;

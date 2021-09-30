@@ -316,3 +316,12 @@ export function AssertCreateShipment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 }
 //#endregion
+
+export function AssertQuoteExistInCorrectList(queryLink: string, searchFieldValue: string) {
+    cy.get(BaseSelectors.Backbutton).click()
+    cy.get(queryLink).click()
+    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetFilterSearch(searchFieldValue), RequestAliases.GetFilterSearch);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, searchFieldValue);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+    cy.get(BaseSelectors.Backbutton).click()
+}
