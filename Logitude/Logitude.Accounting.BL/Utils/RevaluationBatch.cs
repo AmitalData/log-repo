@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.Utils
 //                              string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
                                 string revError = TranslateTextsClassTranslate("Revaluations.Q.RevaluationError", 0, useLocal);
                                 string rateNotFound = TranslateTextsClassTranslate("GLAccounts.Q.RateNotFound", 0, useLocal);
-                                LogMessagingUtil.Instance.AppendLine(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString(), true, "REV");
+                                LogMessagingUtil.Instance.AppendLine(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString());
                                 throw new Exception(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString());
                             }
                         }
