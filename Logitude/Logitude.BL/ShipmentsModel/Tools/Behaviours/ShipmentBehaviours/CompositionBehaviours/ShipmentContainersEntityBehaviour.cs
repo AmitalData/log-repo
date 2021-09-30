@@ -259,16 +259,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void SendAutomaticallyOceanOnsightsRequest()
         {
-            if (IsSendAutomaticallyOceanOnsightsRequestByShipment())
-            {
-                // Shipment
-                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant);
-                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
-                {
-                    myHelper.SendContainerStatusRequest();
-                }
-            }
-
             if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
             {
                 var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => (a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert) && a.ContainerNumber != null);

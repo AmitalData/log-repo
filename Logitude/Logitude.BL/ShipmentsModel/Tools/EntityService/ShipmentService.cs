@@ -548,6 +548,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GetForeignFields();
                     BuildActivityLog();
                     BuildImportersQueue();
+                    SendAutomaticallyOceanOnsightsRequest();
                     UpdatePayablesLinesVatAmounts();
                     RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -2477,11 +2478,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void SendAutomaticallyOceanOnsightsRequest()
         {
-            if (this.initializer.IsNewEntity && !string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+            if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
             {
                 // Shipment
                 ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant);
-                if (myHelper.Validate())
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
                 {
                     myHelper.SendContainerStatusRequest();
                 }
