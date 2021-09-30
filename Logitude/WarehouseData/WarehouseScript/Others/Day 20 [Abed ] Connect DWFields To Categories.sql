@@ -12,7 +12,7 @@ declare @FactCode varchar(50)
 	FOR	
 	SELECT Code,Category1,Category2,DWObjectTableCode
  
-	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments' or DWObjectTableCode = 'Fact_Charges' or DWObjectTableCode = 'Fact_Quotes' or DWObjectTableCode = 'Fact_Invoices'
+	FROM DWObjectFields	where DWObjectTableCode = 'Fact_Shipments' or DWObjectTableCode = 'Fact_Charges' or DWObjectTableCode = 'Fact_Quotes' or DWObjectTableCode = 'Fact_Invoices' or DWObjectTableCode = 'Fact_ARInvoices'
 	OPEN DWObjectFieldsCursor FETCH NEXT FROM DWObjectFieldsCursor INTO @Id,@Cat1Code,@Cat2Code,@FactCode
 	WHILE @@FETCH_STATUS = 0
 	BEGIN

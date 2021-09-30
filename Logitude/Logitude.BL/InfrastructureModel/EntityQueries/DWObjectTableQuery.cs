@@ -17,7 +17,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         private readonly Dictionary<string, string> FactTablesFeatureToggle = new Dictionary<string, string>
         {
             {"BIF","Invoices"},
-            {"BQF", "Quotes"}
+            {"BQF", "Quotes"},
+            {"BAF", "ARInvoices"}
         };
 
         public DWObjectTableQuery()
