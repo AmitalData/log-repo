@@ -315,6 +315,10 @@
    declare @HandlerUser as int
    declare @AccountingClosedByUser as  int
 
+   declare @ShipperContact as  int
+   declare @ShipperAddress as  int
+
+
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
 	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  DIM_Directions.Name, DIM_TransportModes.Name ,DIM_Levels.Name,  DIM_Types.Name, DIM_OBLTypes.Name, DIM_Departments.Id_Number ,DIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
@@ -354,10 +358,10 @@
  
 	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name,
 	  fromPort.Id_Number, toPort.Id_Number, dw_ShipmentMasterDatas.OnCarriageATA, dw_ShipmentMasterDatas.OnCarriageATD, dw_ShipmentMasterDatas.OnCarriageETD, dw_ShipmentMasterDatas.OnCarriageETA,
-	   dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number
+	   dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number,
  
 
-	  
+	  	 ShipperContact.Id_Number,ShipperAddress.Id_Number
 	 
 
 
@@ -452,6 +456,9 @@
    inner JOIN DIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
    inner JOIN DIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId  = AccountingClosedByUser.Id
 
+   inner JOIN NewDIM_Addresses ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
+   inner JOIN NewDIM_Users ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id
+
 	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and dw_Shipments.IsStandalonePickupDelivery = 0 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type, @OBLType,@Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages ,@DangerousGoods , @NumberOfContainers , @Salesman ,@AccountManager ,@TotalProfitInLocalCurrency , 
@@ -479,7 +486,8 @@
 	@ShipmentLevelCode, @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD, @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort,
  
 	@PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort,  @MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA,
-   @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2, @HandlerUser, @AccountingClosedByUser
+   @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2, @HandlerUser, @AccountingClosedByUser,
+     @ShipperAddress,@ShipperContact
  
 
 
@@ -657,7 +665,7 @@
        [Transshipment 2 ETA], [Transshipment 3 ETA], [Transshipment 2 ATD],
        [Transshipment 3 ATD], [Transshipment 2 ETD], [Transshipment 3 ETD],
        [Transshipment 2 Master], [Transshipment 3 Master], [Transshipment 2 Carrier],[Transshipment 3 Carrier], [Connected Quote],  [Main Carriage Leg 1 From Port],  [Main Carriage Leg 1 To Port],
-	   [Planned Cargo Ready Date],[Approved Cargo Ready Date], [Notify 1 Ref2],[Handler], [Accounting Closed By]
+	   [Planned Cargo Ready Date],[Approved Cargo Ready Date], [Notify 1 Ref2],[Handler], [Accounting Closed By], [Shipper Address], [Shipper Contact]
 	  )  
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared  , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , @MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServicesType ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 	   ,@Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency, @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,@NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
@@ -669,7 +677,8 @@
 	  @Transshipment3ToPort, @PreCarriageCarrier,  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD, @PreCarriageATA, @OnCarriageETD,  @OnCarriageETA,
 	  @OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
       @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL,
-	  @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber, @MainCarriageFromPort,  @MainCarriageToPortId, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser)
+	  @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber, @MainCarriageFromPort,  @MainCarriageToPortId, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser,
+	    @ShipperAddress,@ShipperContact)
 
 	   	END TRY 
 BEGIN CATCH  
@@ -719,7 +728,8 @@ END CATCH
 	@Transshipment3ETD,@Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,
 	 @ShipmentLevelCode, @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD,
  
-	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort, @MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser
+	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort, @MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser,
+	   @ShipperAddress,@ShipperContact
  
 
 

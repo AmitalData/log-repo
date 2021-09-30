@@ -168,6 +168,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildAddressDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -258,6 +261,9 @@
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildVatTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateAddressDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
