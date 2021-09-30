@@ -127,6 +127,12 @@ export class CargoTrackingShipmentList {
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
 	PrevForwardingShipmentId: string;
+	BookingDone: boolean;
+	BookingDate: Date;
+	BookingEstimationDate: Date;
+	BookingNotes: string;
+	BookingExceptionReason: string;
+	
 	
 	
 	
