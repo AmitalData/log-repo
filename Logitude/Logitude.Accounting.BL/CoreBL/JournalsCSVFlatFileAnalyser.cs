@@ -702,41 +702,123 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 3)
             {
-                txtDateTime = values[3].Substring(0, 8);
-                rec.AccountingDateString = txtDateTime;
-                if (rec.AccountingDateString != _EmptyDate)
+                //txtDateTime = values[3].Substring(0, 8);
+                //rec.AccountingDateString = txtDateTime;
+                //if (rec.AccountingDateString != _EmptyDate)
+                //{
+                //    fieldname = "AccountingDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    rec.AccountingDate = date;
+                //}
+                txtDateTime = values[3].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "AccountingDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.AccountingDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.AccountingDateString = txtDateTime;
+                    if (rec.AccountingDateString != _EmptyDate)
+                    {
+                        fieldname = "AccountingDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        rec.AccountingDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.AccountingDateString = txtDateTime;
+                    if (rec.AccountingDateString != _EmptyDate)
+                    {
+                        fieldname = "AccountingDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        rec.AccountingDate = date;
+                    }
+                }
+
             }
 
             if (count > 4)
             {
-                txtDateTime = values[4].Substring(0, 8);
-                rec.DocumentDateString = txtDateTime;
-                if (rec.DocumentDateString != _EmptyDate)
+                //txtDateTime = values[4].Substring(0, 8);
+                //rec.DocumentDateString = txtDateTime;
+                //if (rec.DocumentDateString != _EmptyDate)
+                //{
+                //    fieldname = "DocumentDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    rec.DocumentDate = date;
+                //}
+                txtDateTime = values[4].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "DocumentDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.DocumentDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.DocumentDateString = txtDateTime;
+                    if (rec.DocumentDateString != _EmptyDate)
+                    {
+                        fieldname = "DocumentDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        rec.DocumentDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.DocumentDateString = txtDateTime;
+                    if (rec.DocumentDateString != _EmptyDate)
+                    {
+                        fieldname = "DocumentDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        rec.DocumentDate = date;
+                    }
+                }
+
             }
 
             if (count > 5)
             {
-                txtDateTime = values[5].Substring(0, 8);
-                rec.DueDateString = txtDateTime;
-                if (rec.DueDateString != _EmptyDate)
+                //txtDateTime = values[5].Substring(0, 8);
+                //rec.DueDateString = txtDateTime;
+                //if (rec.DueDateString != _EmptyDate)
+                //{
+                //    fieldname = "DueDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                //    rec.DueDate = date;
+                //}
+
+                txtDateTime = values[5].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "DueDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.DueDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.DueDateString = txtDateTime;
+                    if (rec.DueDateString != _EmptyDate)
+                    {
+                        fieldname = "DueDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        rec.DueDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.DueDateString = txtDateTime;
+                    if (rec.DueDateString != _EmptyDate)
+                    {
+                        fieldname = "DueDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        rec.DueDate = date;
+                    }
+                }
+
+
+
+
             }
 
             if (count > 6)
