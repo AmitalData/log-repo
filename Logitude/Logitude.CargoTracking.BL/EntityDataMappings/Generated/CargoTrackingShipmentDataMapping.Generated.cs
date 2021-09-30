@@ -123,7 +123,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			CreatedDone,
 	         PrevForwardingShipmentId,
 	      }
-		}
 
 
 	      public enum PMPropertyNames
@@ -241,7 +240,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			CreatedDone,
 	         PrevForwardingShipmentId,
 	      }
-		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -703,10 +701,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.BookingDone = entityPM.BookingDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDate))
-            {
+			{
 				entityPOCO.BookingDate = entityPM.BookingDate;
+			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
             {
@@ -726,7 +725,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingExceptionReason))
             {
 				entityPOCO.BookingExceptionReason = entityPM.BookingExceptionReason;
-			}
 			}
 
 			
@@ -1221,8 +1219,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.PrevForwardingShipmentId = entityPOCO.PrevForwardingShipmentId;
             }
-
-		}
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingNotes))
