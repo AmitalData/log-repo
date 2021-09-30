@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-Accounting
 Feature: CreateApprovedJournal
 	We want to create an approved journal
-
+@Smoke
 Scenario: Create approved journal
 	Given I have the following Journal lines:
 		| Line | Action | AccountingDate | DocumentDate | DueDate    | CreditAccountNumber | DebitAccountNumber | LocalAmount | CurrencyId | ExchangeRate |

@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.ARInvoice
         [Xunit.SkippableFactAttribute(DisplayName="Get ar invoice")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AR Invoice")]
         [Xunit.TraitAttribute("Description", "Get ar invoice")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetArInvoice()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ar invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get ar invoice with ARInvoiceId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("ar invoice should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("ar invoice should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

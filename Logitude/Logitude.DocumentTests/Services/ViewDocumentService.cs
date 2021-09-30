@@ -12,9 +12,9 @@ namespace Logitude.DocumentTests.Services
     {
         public string GetDocumentWithfileSecurityId()
         {
-            var documentService = new DocumentService();
+            var documentService = new DocumentInService();
             var documentFileService = new DocumentFileService();
-            var document = documentService.CreateDocument(DirectionCodes.In);
+            var document = documentService.CreateDocument();
             documentFileService.Uploadfile(document);
             return document.SecurityId;
 

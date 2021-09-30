@@ -14,8 +14,8 @@ namespace Logitude.DocumentTests.Steps
     public class CreateOutDocumentSteps
     {
         private readonly DocumentContext context;
-        private readonly DocumentService service;
-        public CreateOutDocumentSteps(DocumentContext context, DocumentService service)
+        private readonly DocumentOutService service;
+        public CreateOutDocumentSteps(DocumentContext context, DocumentOutService service)
         {
             this.context = context;
             this.service = service;
@@ -23,38 +23,39 @@ namespace Logitude.DocumentTests.Steps
         [When(@"create Air Manifest out document")]
         public void WhenCreateAirManifestOutDocument()
         {
-            context.Document = service.CreateDocument(DirectionCodes.Out);
+            context.DocumentOut = service.CreateDocumentOut();
         }
         [Then(@"the Air Manifest out document should be created successfully")]
         public void ThenTheAirManifestOutDocumentShouldBeCreatedSuccessfully()
         {
-            context.Document.Should().NotBeNull();
+            context.DocumentOut.Should().NotBeNull();
         }
         [When(@"get Air Manifest out document copy")]
         public void WhenGetAirManifestOutDocumentCopy()
         {
-            context.DocumentCopy = service.GetDocumentCopyId(DocumentData.DocumentTypeAirManifestId, context.Document.Id, UserTenant.Tenant);
+            context.DocumentOutCopyId = service.GetDocumentOutCopyId(DocumentData.DocumentTypeAirManifestId, context.DocumentOut.Id, UserTenant.Tenant);
         }
 
         [Then(@"the Air Manifest out document copy should be available")]
         public void ThenTheAirManifestOutDocumentCopyShouldBeAvailable()
         {
-            context.DocumentCopy.Should().NotBeNull();
+            context.DocumentOutCopyId.Should().NotBeNull();
         }
 
 
         [When(@"update Air Manifest out document properties")]
         public void WhenUpdateAirManifestOutDocumentProperties()
         {
-            ScenarioContext.Current.Pending();
+            context.DocumentOut = service.UpdateOutDocument(context.DocumentOut, context.DocumentOutCopyId);
         }
-        
-        
-        
+
+
+
         [Then(@"Air Manifest out document should be update")]
         public void ThenAirManifestOutDocumentShouldBeUpdate()
         {
-            ScenarioContext.Current.Pending();
+            context.DocumentOut.Should().NotBeNull();
+            context.DocumentOut.DocumentOutCopies.Should().NotBeEmpty();
         }
     }
 }

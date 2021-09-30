@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.ARInvoice
         [Xunit.SkippableFactAttribute(DisplayName="Create AR invoice")]
         [Xunit.TraitAttribute("FeatureTitle", "Create AR Invoice")]
         [Xunit.TraitAttribute("Description", "Create AR invoice")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateARInvoice()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create AR invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5

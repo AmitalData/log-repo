@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.BankDeposit
         [Xunit.SkippableFactAttribute(DisplayName="Create bank deposit")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Bank Deposit")]
         [Xunit.TraitAttribute("Description", "Create bank deposit")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateBankDeposit()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create bank deposit", null, tagsOfScenario, argumentsOfScenario);
 #line 5

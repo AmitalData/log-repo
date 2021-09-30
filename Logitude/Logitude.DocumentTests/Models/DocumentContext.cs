@@ -17,5 +17,9 @@ namespace Logitude.DocumentTests.Models
         public string DocumentSecurityId { get; internal set; }
         public HttpStatusCode? StatusCode { get; internal set; }
         public DocumentsFilingPM DocumentCopy { get; internal set; }
+        public DocumentOutPM DocumentOut { get; internal set; }
+        public string DocumentOutCopyId { get; internal set; }
+        public string DocumentOutSecurityId { get; internal set; }
+        public string SendDocumentOutResult { get; internal set; }
     }
 }

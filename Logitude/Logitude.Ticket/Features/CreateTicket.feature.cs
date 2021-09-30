@@ -83,12 +83,16 @@ namespace Logitude.TicketTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Create ticket")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Ticket")]
         [Xunit.TraitAttribute("Description", "Create ticket")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
         public virtual void CreateTicket()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create ticket", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -123,13 +127,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Description",
                             "specflow desc"});
-#line 5
+#line 6
  testRunner.Given("a ticket with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 11
+#line 12
  testRunner.When("create ticket", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
+#line 13
  testRunner.Then("the ticket should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

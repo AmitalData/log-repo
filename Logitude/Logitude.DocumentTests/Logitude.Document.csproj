@@ -53,35 +53,44 @@
     <Compile Include="Models\Codes\UploadModes.cs" />
     <Compile Include="Models\DocumentContext.cs" />
     <Compile Include="Models\DocumentData.cs" />
+    <Compile Include="Models\DocumentOutCopyPM.cs" />
+    <Compile Include="Models\DocumentOutPM.cs" />
     <Compile Include="Models\DocumentsFilingPM.cs" />
     <Compile Include="Models\DocumentTypeCopyPM.cs" />
     <Compile Include="Models\DocumentTypeList.cs" />
     <Compile Include="Models\DocumentTypePM.cs" />
     <Compile Include="Models\DocumentTypeTemplatePM.cs" />
     <Compile Include="Models\ImageParameter.cs" />
+    <Compile Include="Models\SendHtmlFilter.cs" />
     <Compile Include="Models\ShipmentBuilder.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocumentFileService.cs" />
+    <Compile Include="Services\DocumentOutService.cs" />
+    <Compile Include="Services\DocumentInService.cs" />
     <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\Preparation\DocumentPreparation.cs" />
     <Compile Include="Services\Preparation\DocumentTypeTemplatePreparation.cs" />
     <Compile Include="Services\Preparation\DocumentTypePreparation.cs" />
     <Compile Include="Services\Preparation\ShipmentDataPreparation.cs" />
     <Compile Include="Services\ViewDocumentService.cs" />
-    <Compile Include="Steps\CreateOutDocumentSteps.cs" />
+    <Compile Include="Steps\Out\CreateOutDocumentSteps.cs" />
     <Compile Include="Steps\GetDocumentTypeSteps.cs" />
-    <Compile Include="Steps\UpdateDocumentSteps.cs" />
-    <Compile Include="Steps\UploadFilewithChunksSteps.cs" />
-    <Compile Include="Steps\ViewDocumentSteps.cs" />
+    <Compile Include="Steps\Out\PrintDocumentOutSteps.cs" />
+    <Compile Include="Steps\Out\SendDocumentOutSteps.cs" />
+    <Compile Include="Steps\In\CreateReceivedDocument.cs" />
+    <Compile Include="Steps\In\UploadFilewithChunksSteps.cs" />
+    <Compile Include="Steps\In\ViewDocumentSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\CreateOutDocument.feature" />
+    <None Include="Features\Out\CreateOutDocument.feature" />
     <None Include="Features\GetDocumentType.feature" />
-    <None Include="Features\UpdateDocument.feature" />
-    <None Include="Features\UploadFilewithChunks.feature" />
-    <None Include="Features\ViewDocument.feature" />
+    <None Include="Features\Out\SendDocumentOut.feature" />
+    <None Include="Features\Out\PrintDocumentOut.feature" />
+    <None Include="Features\In\CreateReceivedDocument.feature" />
+    <None Include="Features\In\UploadFilewithChunks.feature" />
+    <None Include="Features\In\ViewDocument.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

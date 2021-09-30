@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.APInvoice
         [Xunit.SkippableFactAttribute(DisplayName="Get ap invoice")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Invoice")]
         [Xunit.TraitAttribute("Description", "Get ap invoice")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetApInvoice()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ap invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get ap invoice with ARInvoiceId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("ap invoice should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("ap invoice should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

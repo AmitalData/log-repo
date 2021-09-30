@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.Journal
         [Xunit.SkippableFactAttribute(DisplayName="Create approved journal")]
         [Xunit.TraitAttribute("FeatureTitle", "CreateApprovedJournal")]
         [Xunit.TraitAttribute("Description", "Create approved journal")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateApprovedJournal()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create approved journal", null, tagsOfScenario, argumentsOfScenario);
 #line 5

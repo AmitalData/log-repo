@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
         [Xunit.SkippableFactAttribute(DisplayName="Get ar payment")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AR Payment")]
         [Xunit.TraitAttribute("Description", "Get ar payment")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetArPayment()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ar payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get ar payment with ARPaymentId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("ar payment should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("ar payment should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

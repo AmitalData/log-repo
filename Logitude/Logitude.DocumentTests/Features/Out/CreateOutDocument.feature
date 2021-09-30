@@ -1,7 +1,8 @@
 ﻿@Pre-Prepare-CreateOutDocument
 Feature: Create Out Document
 	we want to create out document 
-
+@Smoke
+@Release 
 Scenario: Create out document
 When create Air Manifest out document
 Then the Air Manifest out document should be created successfully

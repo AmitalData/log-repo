@@ -83,9 +83,11 @@ namespace Logitude.FullAccounting.Test.Features.CashBook
         [Xunit.SkippableFactAttribute(DisplayName="Create cashbook")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Cashbook")]
         [Xunit.TraitAttribute("Description", "Create cashbook")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateCashbook()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create cashbook", null, tagsOfScenario, argumentsOfScenario);
 #line 4

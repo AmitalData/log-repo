@@ -1,7 +1,8 @@
 ﻿@Pre-Prepare-DocumentType
 Feature: UploadFilewithChunks
 	we want to upload File with 3 chunks
-
+@Smoke
+@Release 
 Scenario: Upload File with chunks
 Given Document Filing
 Given file size 267607 bytes

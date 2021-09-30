@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
         [Xunit.SkippableFactAttribute(DisplayName="Get bank account")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Bank Account")]
         [Xunit.TraitAttribute("Description", "Get bank account")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetBankAccount()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get bank account", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get bank account with bankAccountId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("bank account should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("bank account should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

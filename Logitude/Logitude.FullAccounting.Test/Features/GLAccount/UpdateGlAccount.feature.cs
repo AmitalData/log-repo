@@ -89,9 +89,11 @@ namespace Logitude.FullAccounting.Test.Features.GLAccount
         [Xunit.SkippableFactAttribute(DisplayName="Update glAccount")]
         [Xunit.TraitAttribute("FeatureTitle", "Update GlAccount")]
         [Xunit.TraitAttribute("Description", "Update glAccount")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void UpdateGlAccount()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update glAccount", null, tagsOfScenario, argumentsOfScenario);
 #line 6

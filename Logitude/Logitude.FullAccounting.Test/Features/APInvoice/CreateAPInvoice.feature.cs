@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.APInvoice
         [Xunit.SkippableFactAttribute(DisplayName="Create AP Invoice")]
         [Xunit.TraitAttribute("FeatureTitle", "Create AP Invoice")]
         [Xunit.TraitAttribute("Description", "Create AP Invoice")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateAPInvoice()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create AP Invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5

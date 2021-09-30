@@ -83,12 +83,16 @@ namespace Logitude.ShipmentTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="POST Shipment Direct Export Air")]
         [Xunit.TraitAttribute("FeatureTitle", "POST Shipment Direct Export Air")]
         [Xunit.TraitAttribute("Description", "POST Shipment Direct Export Air")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
         public virtual void POSTShipmentDirectExportAir()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("POST Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -132,13 +136,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table15.AddRow(new string[] {
                             "MainCarriageFromPort",
                             "MIA"});
-#line 5
+#line 6
  testRunner.Given("a direct shipment with the following properties", ((string)(null)), table15, "Given ");
 #line hidden
-#line 14
+#line 15
  testRunner.When("create direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 16
  testRunner.Then("the direct should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

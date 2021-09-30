@@ -83,9 +83,11 @@ namespace Logitude.FullAccounting.Test.Features.CashBook
         [Xunit.SkippableFactAttribute(DisplayName="Get cashbookt")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Cashbookt")]
         [Xunit.TraitAttribute("Description", "Get cashbookt")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetCashbookt()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get cashbookt", null, tagsOfScenario, argumentsOfScenario);
 #line 4
@@ -112,7 +114,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get cashbookt with cashbooktId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.Then("cashbookt should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("cashbookt should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

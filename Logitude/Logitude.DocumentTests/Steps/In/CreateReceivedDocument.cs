@@ -11,19 +11,25 @@ using TechTalk.SpecFlow;
 namespace Logitude.DocumentTests.Steps
 {
     [Binding]
-    public class UpdateDocumentSteps
+    public class CreateReceivedDocument
     {
         private readonly DocumentContext context;
-        private readonly DocumentService service;
-        public UpdateDocumentSteps(DocumentContext context, DocumentService service)
+        private readonly DocumentInService service;
+        public CreateReceivedDocument(DocumentContext context, DocumentInService service)
         {
             this.context = context;
             this.service = service;
         }
-        [Given(@"document")]
-        public void GivenDocument()
+        [When(@"create document")]
+        public void WhenCreateDocument()
         {
-            context.Document = service.CreateDocument(DirectionCodes.In);
+            context.Document = service.CreateDocument();
+        }
+
+        [Then(@"document should be available")]
+        public void ThenDocumentShouldBeAvailable()
+        {
+            context.Document.Should().NotBeNull();
         }
 
         [Given(@"following new document properties")]

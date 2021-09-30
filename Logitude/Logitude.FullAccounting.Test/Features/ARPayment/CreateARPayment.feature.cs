@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
         [Xunit.SkippableFactAttribute(DisplayName="Create ar payment")]
         [Xunit.TraitAttribute("FeatureTitle", "Create AR Payment")]
         [Xunit.TraitAttribute("Description", "Create ar payment")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateArPayment()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create ar payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5

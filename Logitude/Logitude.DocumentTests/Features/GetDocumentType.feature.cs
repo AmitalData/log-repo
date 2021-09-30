@@ -86,12 +86,16 @@ namespace Logitude.DocumentTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get document type")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Document Type")]
         [Xunit.TraitAttribute("Description", "Get document type")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
         public virtual void GetDocumentType()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get document type", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -111,10 +115,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
+#line 7
  testRunner.When("get document types", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 6
+#line 8
  testRunner.Then("document types should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

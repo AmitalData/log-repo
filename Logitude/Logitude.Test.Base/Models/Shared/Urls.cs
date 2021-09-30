@@ -21,6 +21,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string DocumentTypesController = "DocumentTypes";
         public static string DocumentTypeTemplatesController = "DocumentTypeTemplates";
         public static string JournalActionTypesController = "JournalActionTypes";
+        public static string PutDocumentOut = "DocumentOutExtended/PutDocumentOut";
 
         public static string APPaymentsGetSingle(object aPPaymenId)
         {
@@ -77,6 +78,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CrossDockController = "warehouseentries";
         public static string CrossReleaseGetController = "warehousereleases";
         public static string CrossReleaseController = "WarehouseReleaseExtended/postwarehousereleasepm";
+        public static string PostSendHtmlDocument = "HtmlEditor/postsendhtmldocument";
         public static string ActivitiesController = "Activities";
         public static string TicketsController = "tickets";
         public static string OpportunitiesController = "Opportunities";
@@ -322,9 +324,13 @@ namespace Logitude.Test.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
+        public static string GetCreateDocumentsOut(GetCreateDocumentsFilingArgs arguments)
+        {
+            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&tenant={arguments.Tenant}";
+        }
         public static string GetCreateDocumentsFiling(GetCreateDocumentsFilingArgs arguments)
         {
-            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
+            return $"DocumentOutExtended/getcreatedocumentout?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
         }
         public static string GetDocumentType(string id, string documentOutId, int tenant)
         {
@@ -334,7 +340,6 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype?documentTypeId={documentOutId}&tenant={tenant}";
         }
-
         public static string GetDocumentCopy(GetDocumentCopyArgs getDocumentCopy)
         {
             return $"ExportDocument?documentTypeId={getDocumentCopy.DocumentTypeId}&entityId={getDocumentCopy.EntityId}&entityObjectTableId={getDocumentCopy.EntityObjectTableId}&childEntityId=&childObjectTableId=&documentOutId={getDocumentCopy.DocumentOutId}&tenant={getDocumentCopy.Tenant}&documentTypeCopyId={getDocumentCopy.DocumentTypeCopyId}&userId={getDocumentCopy.UserId}";

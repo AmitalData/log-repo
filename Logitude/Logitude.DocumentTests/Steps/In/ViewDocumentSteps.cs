@@ -15,8 +15,8 @@ namespace Logitude.DocumentTests.Steps
     {
         private readonly DocumentContext context;
         private readonly ViewDocumentService service;
-        private readonly DocumentService documentService;
-        public ViewDocumentSteps(DocumentContext context, ViewDocumentService service, DocumentService documentService)
+        private readonly DocumentInService documentService;
+        public ViewDocumentSteps(DocumentContext context, ViewDocumentService service, DocumentInService documentService)
         {
             this.context = context;
             this.service = service;

@@ -15,8 +15,8 @@ namespace Logitude.DocumentTests.Steps
     {
         private readonly DocumentContext context;
         private readonly DocumentFileService service;
-        private readonly DocumentService documentService;
-        public UploadFilewithChunksSteps(DocumentContext context, DocumentFileService service, DocumentService documentService)
+        private readonly DocumentInService documentService;
+        public UploadFilewithChunksSteps(DocumentContext context, DocumentFileService service, DocumentInService documentService)
         {
             this.context = context;
             this.service = service;
@@ -25,7 +25,7 @@ namespace Logitude.DocumentTests.Steps
         [Given(@"Document Filing")]
         public void GivenDocumentFiling()
         {
-            context.Document = documentService.CreateDocument(DirectionCodes.In);
+            context.Document = documentService.CreateDocument();
         }
 
         [Given(@"file size (.*) bytes")]

@@ -83,9 +83,11 @@ namespace Logitude.FullAccounting.Test.Features.PaymentCheques
         [Xunit.SkippableFactAttribute(DisplayName="Create payment cheques")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Payment Cheques")]
         [Xunit.TraitAttribute("Description", "Create payment cheques")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreatePaymentCheques()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create payment cheques", null, tagsOfScenario, argumentsOfScenario);
 #line 4

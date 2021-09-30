@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-CreateBankAccount
 Feature: Create Bank Account
 	We want to create bank account.
-
+@Smoke
 Scenario: Create bank account
 	Given a bank account with the following properties
 		| property             | Value        |
