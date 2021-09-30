@@ -122,8 +122,6 @@ export class CargoTrackingShipmentList {
 	GatepassArrivedNotes: string;
 	GatepassArrivedDone: boolean;
 	ImportManifest: string;
-	CreatedDone: boolean;
-	
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
 	PrevForwardingShipmentId: string;
@@ -133,8 +131,8 @@ export class CargoTrackingShipmentList {
 	BookingNotes: string;
 	BookingExceptionReason: string;
 	
-	
-	
+	CreatedDone: boolean;
 	
 	
 }
+ 
