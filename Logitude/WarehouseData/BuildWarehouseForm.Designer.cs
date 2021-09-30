@@ -132,6 +132,8 @@
             this.label48 = new System.Windows.Forms.Label();
             this.DWAddressesLabel = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
+            this.DimContactsLabel = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1220,7 +1222,7 @@
             // 
             this.DWCheckBox.AutoSize = true;
             this.DWCheckBox.Location = new System.Drawing.Point(774, 9);
-            this.DWCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DWCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.DWCheckBox.Name = "DWCheckBox";
             this.DWCheckBox.Size = new System.Drawing.Size(40, 17);
             this.DWCheckBox.TabIndex = 200;
@@ -1231,7 +1233,7 @@
             // 
             this.DIMCheckBox.AutoSize = true;
             this.DIMCheckBox.Location = new System.Drawing.Point(834, 11);
-            this.DIMCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DIMCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.DIMCheckBox.Name = "DIMCheckBox";
             this.DIMCheckBox.Size = new System.Drawing.Size(43, 17);
             this.DIMCheckBox.TabIndex = 201;
@@ -1242,7 +1244,7 @@
             // 
             this.FactCheckBox.AutoSize = true;
             this.FactCheckBox.Location = new System.Drawing.Point(896, 9);
-            this.FactCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FactCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.FactCheckBox.Name = "FactCheckBox";
             this.FactCheckBox.Size = new System.Drawing.Size(47, 17);
             this.FactCheckBox.TabIndex = 202;
@@ -1293,11 +1295,35 @@
             this.label50.TabIndex = 203;
             this.label50.Text = "DW  Addresses";
             // 
+            // DimContactsLabel
+            // 
+            this.DimContactsLabel.AutoSize = true;
+            this.DimContactsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimContactsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimContactsLabel.Location = new System.Drawing.Point(1303, 355);
+            this.DimContactsLabel.Name = "DimContactsLabel";
+            this.DimContactsLabel.Size = new System.Drawing.Size(0, 20);
+            this.DimContactsLabel.TabIndex = 210;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.BackColor = System.Drawing.SystemColors.Control;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label49.Location = new System.Drawing.Point(1091, 355);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(152, 20);
+            this.label49.TabIndex = 209;
+            this.label49.Text = "Dimension Contacts";
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1342, 698);
+            this.Controls.Add(this.DimContactsLabel);
+            this.Controls.Add(this.label49);
             this.Controls.Add(this.DimAddressesLabel);
             this.Controls.Add(this.label48);
             this.Controls.Add(this.DWAddressesLabel);
@@ -1515,6 +1541,8 @@
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.Label DWAddressesLabel;
         private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label DimContactsLabel;
+        private System.Windows.Forms.Label label49;
     }
 }
 
