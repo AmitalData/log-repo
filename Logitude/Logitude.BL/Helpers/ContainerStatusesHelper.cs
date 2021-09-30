@@ -101,9 +101,12 @@ namespace Logitude.BL.Helpers
         private void GetShipmentScacCode()
         {
             string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
-            shippingLine = shippingLineQuery.GetSinglePM(mainCarriageCarrierId, tenant);
-            if (shippingLine != null)
-                this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+            if (!string.IsNullOrEmpty(mainCarriageCarrierId))
+            {
+                shippingLine = shippingLineQuery.GetSinglePM(mainCarriageCarrierId, tenant);
+                if (shippingLine != null)
+                    this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+            }
         }
         private void GetTenantZeroShippingLine()
         {
