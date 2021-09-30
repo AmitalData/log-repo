@@ -1,4 +1,4 @@
-@release @all @stable
+@release @all @stable @devsmoke
 Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
 
     The user creates a quote, sets it as Sent to Customer, returns it to draft,
@@ -51,20 +51,6 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
         And following event should appear in events tab
             | Event            | Notes                |
             | Reactivate Quote | Reactivate the quote |
-
-    Scenario: Accept quote
-        When "Accept" action with "Accept the quote" note
-        Then quote stage status should be "Accepted"
-        And following event should appear in events tab
-            | Event          | Notes            |
-            | Quote Accepted | Accept the quote |
-
-    Scenario: Return quote to draft
-        When "Return To Draft" action with "Testing The return quote to draft" note
-        Then quote stage status should be "Draft"
-        And following event should appear in events tab
-            | Event           | Notes                             |
-            | Return To Draft | Testing The return quote to draft |
 
     Scenario: Decline quote
         When "Decline" action with "Decline the quote" note
