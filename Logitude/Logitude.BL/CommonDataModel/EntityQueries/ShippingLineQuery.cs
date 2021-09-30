@@ -83,6 +83,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                     ImageDetailId = a.Card.ImageDetailId,
+                                    IsSendingByContainer = a.IsSendingByContainer,
+                                    IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -179,6 +181,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     CAAT = a.CAAT,
                                     CBSA = a.CBSA,
                                     ImageDetailId = a.Card.ImageDetailId,
+                                    IsSendingByContainer = a.IsSendingByContainer,
+                                    IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -241,6 +245,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            CBSA = a.CBSA,
                                                            ImageDetailId = a.Card.ImageDetailId,
                                                            BillToId = a.Card.BillToId,
+                                                           IsSendingByContainer = a.IsSendingByContainer,
+                                                           IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                        };
             return shippingLines;
         }
@@ -300,6 +306,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CBSA = a.CBSA,
                              ImageDetailId = a.Card.ImageDetailId,
                              BillToId = a.Card.BillToId,
+                             IsSendingByContainer = a.IsSendingByContainer,
+                             IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;
@@ -375,7 +383,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CAAT = a.CAAT,
                                                        CBSA = a.CBSA,
                                                        StateName = a.Card.StateName,
-                                                       GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                       GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                       IsSendingByContainer = a.IsSendingByContainer,
+                                                       IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                    });
 
 
