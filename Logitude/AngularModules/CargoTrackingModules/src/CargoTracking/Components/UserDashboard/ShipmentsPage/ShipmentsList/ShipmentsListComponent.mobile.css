@@ -173,7 +173,31 @@
             display: inline;
             margin-left: 10px
         }
+        .filters-sidebar ul {
+            overflow-y: scroll;
+        }
+    }
 
+    @media screen and (max-height: 823px) {
+        .filters-sidebar ul {
+            height: 610px;
+        }
+    }
+
+    @media screen and (max-height: 731px) {
+        .filters-sidebar ul {
+            height: 520px;
+        }
+    }
+
+    @media screen and (max-height: 640px) {
+        .filters-sidebar ul {
+            height: 420px;
+        }
     }
 
 
+
+
+
+    
