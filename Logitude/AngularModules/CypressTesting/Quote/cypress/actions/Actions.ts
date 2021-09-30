@@ -320,8 +320,15 @@ export function AssertCreateShipment() {
 export function AssertQuoteExistInCorrectList(queryLink: string, searchFieldValue: string) {
     cy.get(BaseSelectors.Backbutton).click()
     cy.get(queryLink).click()
-    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetFilterSearch(searchFieldValue), RequestAliases.GetFilterSearch);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, searchFieldValue);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
-    cy.get(BaseSelectors.Backbutton).click()
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(searchFieldValue);
+    });
+}
+
+export function AssertQuoteSatgeHaveDeclineValue() {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain("Declined");
+    });
 }
