@@ -11,10 +11,10 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    class ShipmentUpdateWR : WorkerEntryPoint
+    public class ContainerUpdateWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
-        string queueName = "CToolShipmentsUpdate";
+        string queueName = "CToolContainerUpdate";
 
         public override void Run()
         {
@@ -29,11 +29,11 @@ namespace CommunicationWorkerRole
 
                         if (response.MessageId != null)
                         {
-                            ShipmentPM entityPM = GetShipmentById(response);
+                            ContainerPM containerPM = GetContainerById(response);
 
-                            var ShipmentUpdateMessageProducer = new Producer();
-                            var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, serializedShipmentUpdateMessage);
+                            var producer = new Producer();
+                            var JsonContainerPM = JsonConvert.SerializeObject(containerPM, Formatting.Indented);
+                            var result = producer.Produce(KafkaTopics.ContainerUpdateTopic, KakaMessageTypes.ContainerUpdate, JsonContainerPM);
 
                             queueservice.Complete();
                         }
@@ -42,7 +42,7 @@ namespace CommunicationWorkerRole
                     {
                         queueservice.CompleteAsFailed();
                         ConnectClient();
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolShipmentsUpdate worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CToolContainerUpdate worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -61,7 +61,7 @@ namespace CommunicationWorkerRole
             ServicePointManager.DefaultConnectionLimit = 12;
 
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "CToolShipmentsUpdate";
+            BatchServiceCode = "CToolContainerUpdate";
 
             return base.OnStart();
         }
@@ -78,18 +78,14 @@ namespace CommunicationWorkerRole
             }
         }
 
-
-
-        #region Private Methods
-        private ShipmentPM GetShipmentById(QueueResponse response)
+        private ContainerPM GetContainerById(QueueResponse response)
         {
             int Tenant = int.Parse(response.MessageValues["Tenant"].ToString());
-            string ShipmentId = response.MessageValues["ShipmentId"].ToString();
+            string ContainerId = response.MessageValues["ContainerId"].ToString();
 
-            ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(ShipmentId, Tenant);
-            return shipmentPM;
+            ContainerQuery containerQuery = new ContainerQuery(Tenant);
+            ContainerPM containerPM = containerQuery.GetSinglePM(ContainerId, Tenant);
+            return containerPM;
         }
-        #endregion
     }
 }
