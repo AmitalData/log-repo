@@ -361,6 +361,8 @@ import { SupplierInvioceItemCertificatsService } from './Services/WebServices/Su
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
 import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
+import { NewQuoteOPWebService } from './Services/WebServices/NewQuoteOPWebService';
+
 
 //#endregion
 
@@ -826,6 +828,8 @@ export class ModuleProviders {
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+            case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
+
 
             //#endregion
 
