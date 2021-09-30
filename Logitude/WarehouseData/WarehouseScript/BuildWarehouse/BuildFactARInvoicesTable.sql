@@ -51,8 +51,8 @@
 	declare @House as varchar(20)
 	declare @MasterShipmentNumber as varchar(20)
 
-    declare @DirectionId as varchar(1)
-    declare @TransportModeId as varchar(1)
+    declare @Direction as varchar(40)
+    declare @TransportMode as varchar(13)
 	declare @Type as varchar(40)
 	declare @ShipmentSubTypeId as varchar(15)
 	declare @Department as int
@@ -71,7 +71,7 @@
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, NewDIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoiceLines.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
-	dw_Shipments.DirectionId ,dw_Shipments.TransportModeId, NewDIM_Types.Name, dw_Shipments.ShipmentSubTypeId, NewDIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, NewDIM_Branches.Id_Number
+	NewDIM_Directions.Name,TransportModes.Name, NewDIM_Types.Name, dw_Shipments.ShipmentSubTypeId, NewDIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, NewDIM_Branches.Id_Number
 
 	 
     From dw_ARInvoices
@@ -112,7 +112,7 @@
 	 @Salesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber,
-	 @DirectionId,@TransportModeId, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch
+	 @Direction,@TransportMode, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -134,7 +134,7 @@
 	  @ApprovedBy, @CreatedBy, @PrintedBy, @Salesman, @Status, @PrintNotes,  @PaymentTerm, @LocalCurrency, @InvoiceCurrency,@VATNumber, @BillTo,
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
-	  @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @DirectionId,@TransportModeId,
+	  @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
 	  @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch)
 
 
@@ -157,7 +157,7 @@ END CATCH
 	@InvoiceDate, @CreateDate, @ApprovedDate, @DueDate, @PrintDate,@PaidDate, @ApprovedBy, @CreatedBy, @PrintedBy,
 	@Salesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
-	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @DirectionId,@TransportModeId,
+	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
 	@Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch
 
 		End
