@@ -56,6 +56,8 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsSchedularWR");
+            _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
+
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -254,6 +256,12 @@ namespace AmitalCustomsWindowsService.Tester
                     { ServiceStarted = true, };
                     break;
                 case "FTPToAnalyzeQueueWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<FTPToAnalyzeQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+
+                case "RabbitMQReceiveWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<FTPToAnalyzeQueueWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
