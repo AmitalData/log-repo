@@ -1,4 +1,6 @@
-﻿using Logitude.BL.Security;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -39,7 +41,10 @@ namespace Logitude.BL.Helpers
         private string entityReference;
         private string communicationLogId;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
-        private ShippingLine tenantZeroShippingLine;
+        private ShippingLinePM tenantZeroShippingLine;
+        private ShippingLinePM shippingLine;
+        ShippingLineRepository shippingLineRepository;
+        ShippingLineQuery shippingLineQuery;
 
         public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
         {
@@ -49,6 +54,8 @@ namespace Logitude.BL.Helpers
             this.isContainer = isContainer;
             this.commonContext = CommonDataContext.GetContext(this.tenant);
             this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
+            this.shippingLineRepository = new ShippingLineRepository(tenant);
+            this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
             if (!isContainer)
                 this.GetSingleShipmentById();
             else
@@ -94,17 +101,15 @@ namespace Logitude.BL.Helpers
         private void GetShipmentScacCode()
         {
             string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
-            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
-            var shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrierId, tenant);
+            shippingLine = shippingLineQuery.GetSinglePM(mainCarriageCarrierId, tenant);
             if (shippingLine != null)
                 this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
         }
         private void GetTenantZeroShippingLine()
         {
             int tenantZero = 0;
-            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenantZero);
-            if (!string.IsNullOrEmpty(this.scacCode))
-                tenantZeroShippingLine = shippingLineRepository.GetSingleShippingLineByCode(this.scacCode, tenantZero);
+            if (this.shippingLine != null)
+                tenantZeroShippingLine = shippingLineQuery.GetSinglePMByCode(this.shippingLine.Code, tenantZero);
         }
 
         private void GetentityReference()
