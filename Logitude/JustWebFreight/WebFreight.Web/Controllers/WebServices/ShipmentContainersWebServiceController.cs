@@ -184,7 +184,14 @@ namespace WebFreight.Web.Controllers.WebServices
                     }
                     else
                     {
-                        throw new ApplicationException("The SCAC Code of the Shipping Line or the Container Number is empty, please make sure they are filled.");
+                        if (!myHelper.IsValidShippingLine())
+                        {
+                            throw new ApplicationException("The Shipping Line is not supported by Ocean Insights.");
+                        }
+                        else
+                        {
+                            throw new ApplicationException("The SCAC Code of the Shipping Line or the Container Number is empty, please make sure they are filled.");
+                        }
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");

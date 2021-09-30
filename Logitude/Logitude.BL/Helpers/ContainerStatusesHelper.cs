@@ -191,7 +191,7 @@ namespace Logitude.BL.Helpers
             return isValid;
         }
 
-        private bool IsValidShippingLine()
+        public bool IsValidShippingLine()
         {
             if (this.tenantZeroShippingLine == null)
             {
