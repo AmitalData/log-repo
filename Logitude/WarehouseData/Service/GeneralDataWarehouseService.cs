@@ -384,7 +384,7 @@ namespace WarehouseData.Helper
 
         }
 
-        
+       
         public List<IndexItem> GetDWObjectFieldIndexes(string xml)
         {
             List<IndexItem> result = DeserializeObject<List<IndexItem>>(xml);
