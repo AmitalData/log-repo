@@ -548,6 +548,31 @@ export class CargoTrackingShipmentPM {
     public get CreatedDone() { return this.createdDone; }
     public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
   
+	 
+    private bookingDone: boolean;
+    public get BookingDone() { return this.bookingDone; }
+    public set BookingDone(newValue: boolean) { if (this.bookingDone != newValue) { this.bookingDone = newValue; this.MarkAsDirty("BookingDone"); } }
+       
+	 
+    private bookingDate: Date;
+    public get BookingDate() { return this.bookingDate; }
+    public set BookingDate(newValue: Date) { if (this.bookingDate != newValue) { this.bookingDate = newValue; this.MarkAsDirty("BookingDate"); } }
+       
+	 
+    private bookingEstimationDate: Date;
+    public get BookingEstimationDate() { return this.bookingEstimationDate; }
+    public set BookingEstimationDate(newValue: Date) { if (this.bookingEstimationDate != newValue) { this.bookingEstimationDate = newValue; this.MarkAsDirty("BookingEstimationDate"); } }
+       
+	 
+    private bookingNotes: string;
+    public get BookingNotes() { return this.bookingNotes; }
+    public set BookingNotes(newValue: string) { if (this.bookingNotes != newValue) { this.bookingNotes = newValue; this.MarkAsDirty("BookingNotes"); } }
+       
+	 
+    private bookingExceptionReason: string;
+    public get BookingExceptionReason() { return this.bookingExceptionReason; }
+    public set BookingExceptionReason(newValue: string) { if (this.bookingExceptionReason != newValue) { this.bookingExceptionReason = newValue; this.MarkAsDirty("BookingExceptionReason"); } }
+    
     private prevForwardingShipmentId: string;
     public get PrevForwardingShipmentId() { return this.prevForwardingShipmentId; }
     public set PrevForwardingShipmentId(newValue: string) { if (this.prevForwardingShipmentId != newValue) { this.prevForwardingShipmentId = newValue; this.MarkAsDirty("PrevForwardingShipmentId"); } }
