@@ -38,6 +38,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("DirectionId", "DirectionId"),
             new FieldMap("ShipmentLevelCode", "ShipmentLevelCode"),
             new FieldMap("PickupDate", "PickupActualDateTime"),
+            new FieldMap("BookingDate", "BookingConfirmationDate"),
             new FieldMap("PickupEstimationDate", "PickupEstimatedDateTime"),
             
         };
@@ -48,7 +49,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetMilestonesDoneFields(tableRow);
             SetShipmentTypeCode(tableRow);
             SetMainEntity(tableRow);
-            SetPreviousForwardingShipmentHeader(tableRow);
+            SetCurrentMilestone(tableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -59,10 +60,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetMilestonesDoneFields(DataRow tableRow)
         {
             tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
+            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
         }
         private static void SetMainEntity(DataRow tableRow)
         {
             tableRow.SetField("IsMainRecord", IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"));
+        }
+        private static void SetCurrentMilestone(DataRow tableRow)
+        {
+             if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Booking);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["BookingDate"]);
+
+            }
+
+            else if (!IsFieldNullOrEmpty(tableRow, "CreateDone") && !tableRow["CreateDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
+
+            }
+
         }
         private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
         {

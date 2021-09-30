@@ -291,6 +291,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='CreatedDone' Type='bit'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='BookingDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingNotes' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='BookingExceptionReason' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='PrevForwardingShipmentId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+

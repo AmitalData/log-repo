@@ -115,6 +115,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedNotes, 
 	         GatepassArrivedDone, 
 	         ImportManifest, 
+	         BookingDone, 
+	         BookingDate, 
+	         BookingEstimationDate, 
+	         BookingNotes, 
+	         BookingExceptionReason,
 	         CreatedDone,
 	         PrevForwardingShipmentId,
 	      }
@@ -227,7 +232,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         GatepassArrivedNotes, 
 	         GatepassArrivedDone, 
 	         ImportManifest, 
-	         CreatedDone,
+	         BookingDone, 
+	         BookingDate, 
+	         BookingEstimationDate, 
+	         BookingNotes, 
+	         BookingExceptionReason,
+			 CreatedDone,
 	         PrevForwardingShipmentId,
 	      }
 
@@ -686,6 +696,37 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.ImportManifest = entityPM.ImportManifest;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDone))
+            {
+				entityPOCO.BookingDone = entityPM.BookingDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDate))
+            {
+				entityPOCO.BookingDate = entityPM.BookingDate;
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+				entityPOCO.ImportManifest = entityPM.ImportManifest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingEstimationDate))
+            {
+				entityPOCO.BookingEstimationDate = entityPM.BookingEstimationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingNotes))
+            {
+				entityPOCO.BookingNotes = entityPM.BookingNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingExceptionReason))
+            {
+				entityPOCO.BookingExceptionReason = entityPM.BookingExceptionReason;
+			}
+			}
+
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
             {
@@ -1160,6 +1201,15 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.CreatedDone = entityPOCO.CreatedDone;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingDone))
+            {
+					entityPM.BookingDone = entityPOCO.BookingDone;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingDate))
+            {
+					entityPM.BookingDate = entityPOCO.BookingDate;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
             {
 					entityPM.ImportManifest = entityPOCO.ImportManifest;
@@ -1168,6 +1218,21 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrevForwardingShipmentId))
             {
 					entityPM.PrevForwardingShipmentId = entityPOCO.PrevForwardingShipmentId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingEstimationDate))
+            {
+					entityPM.BookingEstimationDate = entityPOCO.BookingEstimationDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingNotes))
+            {
+					entityPM.BookingNotes = entityPOCO.BookingNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingExceptionReason))
+            {
+					entityPM.BookingExceptionReason = entityPOCO.BookingExceptionReason;
             }
 
 		}
@@ -1626,6 +1691,31 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.ImportManifest = entityPM.ImportManifest;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDone))
+            {
+                oldEntityPM.BookingDone = entityPM.BookingDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDate))
+            {
+                oldEntityPM.BookingDate = entityPM.BookingDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingEstimationDate))
+            {
+                oldEntityPM.BookingEstimationDate = entityPM.BookingEstimationDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingNotes))
+            {
+                oldEntityPM.BookingNotes = entityPM.BookingNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingExceptionReason))
+            {
+                oldEntityPM.BookingExceptionReason = entityPM.BookingExceptionReason;
+            }
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
             {
                 oldEntityPM.CreatedDone = entityPM.CreatedDone;
@@ -1640,7 +1730,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
             }
-			
+		
+
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -1701,6 +1792,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.GatepassArrivedNotes)) //T4 find type == nText 
             {
                 entityPM.GatepassArrivedNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.GatepassArrivedNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BookingNotes)) //T4 find type == nText 
+            {
+                entityPM.BookingNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BookingNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BookingExceptionReason)) //T4 find type == nText 
+            {
+                entityPM.BookingExceptionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BookingExceptionReason));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
