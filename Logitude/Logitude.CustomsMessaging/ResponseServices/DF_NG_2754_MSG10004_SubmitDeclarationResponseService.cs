@@ -216,24 +216,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
 
-                    if (customResponse.Response != null && customResponse.Response.Error != null  && customResponse.Response.Error.Count()>0 )
+                    if (customResponse.Response != null && customResponse.Response.Error != null  && customResponse.Response.Error.Count()>0)
                     {
-                        var MyUnifreightEventParam = new UnifreightEventParam()
-                        {
-                            Code = "APAYF",
-                            Mode = UnifreightEventMode.@new,
-                            EventDateTime = DateTime.Now,
-                            Entname = "CFIFILEM",
-                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                            EventRemarks = customResponse.Response.Error[0].ValidationCode.Value,
-                        };
-                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                        var myOpenUnifreighTask = new UnifreightEventTaskService();
-                        myOpenUnifreighTask.UpsertEventLE2U(
-                            _MyDeclarationPM.Tenant,
-                           requestParams.LoggingUserId,
-                            MyUnifreightEventParam);
-
+                        foreach (var item in customResponse.Response.Error) {
+                            if (item.ValidationCode.listVersionID == "1") // שגאיה
+                            {
+                                var MyUnifreightEventParam = new UnifreightEventParam()
+                                {
+                                    Code = "APAYF",
+                                    Mode = UnifreightEventMode.@new,
+                                    EventDateTime = DateTime.Now,
+                                    Entname = "CFIFILEM",
+                                    PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                                    EventRemarks = item.ValidationCode.name,
+                                };
+                                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                                myOpenUnifreighTask.UpsertEventLE2U(
+                                    _MyDeclarationPM.Tenant,
+                                   requestParams.LoggingUserId,
+                                    MyUnifreightEventParam);
+                            }
+                        }
                     }
                     else {
 
