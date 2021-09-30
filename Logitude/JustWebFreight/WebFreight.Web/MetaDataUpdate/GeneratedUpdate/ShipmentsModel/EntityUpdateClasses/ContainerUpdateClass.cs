@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "b7a4b3adaa0367b3056180e8264e7441";
+		public const string HashString = "266c44b70f2b82869db23462e7f3c4f9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8978,7 +8978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_0.Id, NameTextCodeCode = ContainerTextCode_0.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_0.Id,FeatureUniqeCode= ContainerFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 

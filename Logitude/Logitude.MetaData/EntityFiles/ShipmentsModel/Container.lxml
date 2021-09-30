@@ -11726,7 +11726,6 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;CreateDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
