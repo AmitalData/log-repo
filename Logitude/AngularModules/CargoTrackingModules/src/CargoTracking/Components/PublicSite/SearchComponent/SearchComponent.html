@@ -261,6 +261,7 @@
                                         </g>
                                     </g>
                                 </svg>
+                                <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
 
                             </div>
                         </div>
@@ -316,7 +317,7 @@
                         <!-- Shipment Id -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">Shipment ID</div>
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order ID' : 'Shipment ID'}}</div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
                             </div>
