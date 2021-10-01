@@ -36,6 +36,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
     selector: 'LogLov',
@@ -2381,7 +2382,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             messageWindow.Show("You have no permission to edit an entity of this type.");
             return;
         }
-
+        
         if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
@@ -2404,29 +2405,22 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (objectTableName == "Card" || objectTableName == "Carrier") {
                     objectTableName = this.GetObjectTableNameForDependency(this.SelectedItem["PartnerTypeId"], objectTableName);
                 }
-                //if (objectTableName == "Card" || objectTableName == "Carrier") {
-                //    objectTableName = this.GetObjectTableName(objectTableName);
 
-                //}
-
-                if (!AppTool.IsNullOrEmpty(currentEntity.Id)) {
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
-                    logWindow.ShowEditComponent(currentEntity.Id, objectTableName);
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        //if ($event)
-                        this.OnEditCompleted();
+                if (objectTableName == "GLAccount") {
+                    GLAccountSecurityLevelService.CheckLevel(currentEntity.Id)
+                    .then(hasAccess=> {
+                        if(hasAccess){
+                            this.configureEditWindow(objectTableName, currentEntity); 
+                        }
+                        else
+                        {
+                            GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                            return;
+                        }
                     });
+                } else {
+                    this.configureEditWindow(objectTableName, currentEntity);
                 }
-                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                //    .then(cmpRef => {
-                //        cmpRef.instance.ComponentRef = cmpRef;
-                //        cmpRef.instance.Run({ EntityId: currentEntity.Id, ObjectTableName: objectTableName });
-                //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                //            if ($event)
-                //                this.OnEditCompleted();
-                //        });
-                //    });
             }
         }
 
@@ -2437,6 +2431,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.ToggleOpenDropDown();
         }
 
+    }
+    private configureEditWindow(objectTableName: string, currentEntity: any){
+        if (!AppTool.IsNullOrEmpty(currentEntity.Id)) {
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
+            logWindow.ShowEditComponent(currentEntity.Id, objectTableName);
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                //if ($event)
+                this.OnEditCompleted();
+            });
+        }
     }
     OnEditCompleted() {
         var value = this.DataContext[this.ObjectFieldName];
