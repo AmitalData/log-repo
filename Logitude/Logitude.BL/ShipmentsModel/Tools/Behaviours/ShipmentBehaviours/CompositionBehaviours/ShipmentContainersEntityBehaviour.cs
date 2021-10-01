@@ -309,7 +309,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
             // Container 
-            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant);
+            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
             if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
             {
                 myHelper.SendContainerStatusRequest();
