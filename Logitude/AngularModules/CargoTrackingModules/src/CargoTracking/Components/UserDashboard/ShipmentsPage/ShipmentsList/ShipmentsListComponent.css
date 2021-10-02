@@ -650,7 +650,7 @@ h1{
                 padding-top: 10px;
                 padding-right: 20px;
                 min-height: 30px;
-                max-height: 170px;
+                max-height: 250px;
                 overflow: auto;
             }
         .checkbox-filteritem{
@@ -872,4 +872,15 @@ h1{
 
 .shipment-references{
     display: inline-block;
+}
+
+.order-icon{
+    position: absolute;
+    top:73px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
 }

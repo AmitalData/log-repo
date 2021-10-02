@@ -1,7 +1,6 @@
 import * as Actions from "../../actions/Actions"
 import { ShipmentSelectors } from "../../selectors/Selectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
@@ -46,18 +45,6 @@ Given("the user delete the first order package", () => {
 });
 //#endregion
 
-//#region Update and delete partners tab given step
-Given("the user add partners with following details", (dataTable) => {
-    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
-    Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
-});
-
-Given("the user delete the below partners", (dataTable) => {
-    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
-    Actions.DeletePartnersInPartnersTab(partnersDetails)
-});
-//#endregion
-
 //#region Update packages tab given step
 Given("the user add package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
@@ -77,12 +64,12 @@ Given("the user fill receivables with the following details", (dataTable) => {
 //#endregion
 
 //#region Update routing tab given steps
-Given("the user add new pickup", () => {
-    Actions.FillPickupRouting()
-});
-
 Given("add transshipments with {string} as via port and {string} as airline", (viaPort, airline) => {
     Actions.AddTransshipments(viaPort, airline)
+});
+
+Given("the user add new pickup", () => {
+    Actions.FillPickupRouting()
 });
 
 Given("add delivery with {string} as a partner routing", (partner) => {

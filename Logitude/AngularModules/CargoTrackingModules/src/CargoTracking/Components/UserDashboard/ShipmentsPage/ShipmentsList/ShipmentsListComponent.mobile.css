@@ -52,8 +52,9 @@
             display: block;
         }
         .search-bar, .search-text{
-            width: 100% !important;
+            display: none !important;
         }
+        
         .no-result-div .title {
             font-size: 22px;
         }
@@ -173,7 +174,22 @@
             display: inline;
             margin-left: 10px
         }
-
+        .record-row .column .value {
+            overflow: visible;
+        }
+        
+        .order-icon{
+            position: absolute;
+            top:40px;
+            display: block;
+            background: #000;
+            color: #FFF;
+            width: 50px;
+            border-radius: 14px;
+            text-align: center;
+            left: -5px;
+            line-height: 14px;
+        }
     }
 
 

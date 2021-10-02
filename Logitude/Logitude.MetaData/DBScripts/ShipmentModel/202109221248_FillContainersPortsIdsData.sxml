@@ -1,0 +1,90 @@
+﻿<Script DBType="Main" Module="Shipment" >
+	<Sql Version="2">
+		<![CDATA[
+    
+declare @ContainerId as varchar(15)
+declare @Tenant as int
+
+declare @EmptyPickupLocationPortCode as varchar(100)
+declare @DeliveryLocationPortCode as varchar(100)
+declare @EmptyReturnLocationPortCode as varchar(100)
+declare @AvailabilityLocationPortCode as varchar(100)
+declare @OriginLocationPortCode as varchar(100)
+declare @LIFLocationPortCode as varchar(100)
+declare @POLLocationPortCode as varchar(100)
+declare @PODLocationPortCode as varchar(100)
+declare @Transshipment1LocationPortCode as varchar(100)
+declare @Transshipment2LocationPortCode as varchar(100)
+declare @Transshipment3LocationPortCode as varchar(100)
+declare @Transshipment4LocationPortCode as varchar(100)
+
+declare @EmptyPickupLocationPortId as varchar(15)
+declare @DeliveryLocationPortId as varchar(15)
+declare @EmptyReturnLocationPortId as varchar(15)
+declare @AvailabilityLocationPortId as varchar(15)
+declare @OriginLocationPortId as varchar(15)
+declare @LIFLocationPortId as varchar(15)
+declare @POLLocationPortId as varchar(15)
+declare @PODLocationPortId as varchar(15)
+declare @Transshipment1LocationPortId as varchar(15)
+declare @Transshipment2LocationPortId as varchar(15)
+declare @Transshipment3LocationPortId as varchar(15)
+declare @Transshipment4LocationPortId as varchar(15)
+
+BEGIN
+    DECLARE ContainersCursor CURSOR READ_ONLY
+    FOR
+    SELECT Id, Tenant, EmptyPickupLocation, DeliveryLocation, EmptyReturnLocation, AvailabilityLocation, OriginLocation, LIFLocation, POLLocation, PODLocation, Transshipment1Location, Transshipment2Location, Transshipment3Location, Transshipment4Location
+    from Containers    
+    OPEN ContainersCursor FETCH NEXT FROM ContainersCursor INTO @ContainerId, @Tenant, @EmptyPickupLocationPortCode, @DeliveryLocationPortCode, @EmptyReturnLocationPortCode, @AvailabilityLocationPortCode, @OriginLocationPortCode, @LIFLocationPortCode, @POLLocationPortCode, @PODLocationPortCode, @Transshipment1LocationPortCode, @Transshipment2LocationPortCode, @Transshipment3LocationPortCode, @Transshipment4LocationPortCode   
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+	    set @EmptyPickupLocationPortId = NULL
+        set @DeliveryLocationPortId = NULL
+        set @EmptyReturnLocationPortId = NULL
+        set @AvailabilityLocationPortId = NULL
+        set @OriginLocationPortId = NULL
+        set @LIFLocationPortId = NULL
+        set @POLLocationPortId = NULL
+        set @PODLocationPortId = NULL
+        set @Transshipment1LocationPortId = NULL
+        set @Transshipment2LocationPortId = NULL
+        set @Transshipment3LocationPortId = NULL
+        set @Transshipment4LocationPortId = NULL
+
+	    Set @EmptyPickupLocationPortId = (Select Id from Ports where CombinedCode = @EmptyPickupLocationPortCode and Tenant = @Tenant)
+        Set @DeliveryLocationPortId = (Select Id from Ports where CombinedCode = @DeliveryLocationPortCode and Tenant = @Tenant)
+        Set @EmptyReturnLocationPortId = (Select Id from Ports where CombinedCode = @EmptyReturnLocationPortCode and Tenant = @Tenant)
+        Set @AvailabilityLocationPortId = (Select Id from Ports where CombinedCode = @AvailabilityLocationPortCode and Tenant = @Tenant)
+        Set @OriginLocationPortId = (Select Id from Ports where CombinedCode = @OriginLocationPortCode and Tenant = @Tenant)
+        Set @LIFLocationPortId = (Select Id from Ports where CombinedCode = @LIFLocationPortCode and Tenant = @Tenant)
+        Set @POLLocationPortId = (Select Id from Ports where CombinedCode = @POLLocationPortCode and Tenant = @Tenant)
+        Set @PODLocationPortId = (Select Id from Ports where CombinedCode = @PODLocationPortCode and Tenant = @Tenant)
+        Set @Transshipment1LocationPortId = (Select Id from Ports where CombinedCode = @Transshipment1LocationPortCode and Tenant = @Tenant)
+        Set @Transshipment2LocationPortId = (Select Id from Ports where CombinedCode = @Transshipment2LocationPortCode and Tenant = @Tenant)
+        Set @Transshipment3LocationPortId = (Select Id from Ports where CombinedCode = @Transshipment3LocationPortCode and Tenant = @Tenant)
+        Set @Transshipment4LocationPortId = (Select Id from Ports where CombinedCode = @Transshipment4LocationPortCode and Tenant = @Tenant)
+	    
+        Update Containers set 
+        EmptyPickupLocationPortId = @EmptyPickupLocationPortId,
+        DeliveryLocationPortId = @DeliveryLocationPortId,
+        EmptyReturnLocationPortId = @EmptyReturnLocationPortId,
+        AvailabilityLocationPortId = @AvailabilityLocationPortId,
+        OriginLocationPortId = @OriginLocationPortId,
+        LIFLocationPortId = @LIFLocationPortId,
+        POLLocationPortId = @POLLocationPortId,
+        PODLocationPortId = @PODLocationPortId,
+        Transshipment1LocationPortId = @Transshipment1LocationPortId,
+        Transshipment2LocationPortId = @Transshipment2LocationPortId,
+        Transshipment3LocationPortId = @Transshipment3LocationPortId,
+        Transshipment4LocationPortId = @Transshipment4LocationPortId
+        where Id = @ContainerId and Tenant = @Tenant
+
+        FETCH NEXT FROM ContainersCursor INTO  @ContainerId, @Tenant, @EmptyPickupLocationPortCode, @DeliveryLocationPortCode, @EmptyReturnLocationPortCode, @AvailabilityLocationPortCode, @OriginLocationPortCode, @LIFLocationPortCode, @POLLocationPortCode, @PODLocationPortCode, @Transshipment1LocationPortCode, @Transshipment2LocationPortCode, @Transshipment3LocationPortCode, @Transshipment4LocationPortCode            
+        END
+    CLOSE ContainersCursor
+    DEALLOCATE ContainersCursor
+END
+    ]]>
+	</Sql>
+</Script>

@@ -141,7 +141,10 @@ namespace WarehouseData.Service
                 }
 
                 cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[IsDangerous],[ComputedStatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[FreightForwarderId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId] " +
-                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreForwardingETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId] , [ConsigneeNotImporterId] , [IssuingCarrierAgentId], [OnForwardingTransportModeId],[FirstARInvoiceApprovalDate])";
+                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreForwardingETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId] , [ConsigneeNotImporterId] , [IssuingCarrierAgentId], [OnForwardingTransportModeId],[FirstARInvoiceApprovalDate],[ShipperAddressId],[ShipperContactId],[ShipperNotExporterAddressId],[ShipperNotExporterContactId],[FreelancerAddressId],[FreelancerContactId],[ReleasingAgentAddressId],[ReleasingAgentContactId],[CustomerAddressId],[CustomerContactId],[ConsigneeAddressId],[ConsigneeContactId],[AgentAddressId],[AgentContactId],[CustomAgentExportAddressId],[CustomAgentExportContactId] " +
+                     ", [CustomAgentImportAddressId] , [CustomAgentImportContactId] , [Notify1AddressId] ,[Notify1ContactId] , [Notify2AddressId] , [Notify2ContactId],[FreightForwarderAddressId],[FreightForwarderContactId],[ConsigneeNotImporterAddressId],[ConsigneeNotImporterContactId],[CustomClearancePointAddressId],[CustomClearancePointContactId],[ColoaderAddressId],[ColoaderContactId],[ConsolidatorAddressId],[ConsolidatorContactId])";
+           
+               
             }
             generalDataWarehouseService.ExecuteSql(cmd, connectionString);
         }
@@ -244,6 +247,43 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreForwardingCarrierId DEFAULT '-1' FOR PreForwardingCarrierId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "HandlerUserId DEFAULT '-1' FOR HandlerUserId;"
 
+
+
+
+                       
+
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperAddressId DEFAULT '-1' FOR ShipperAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperContactId DEFAULT '-1' FOR ShipperContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterAddressId DEFAULT '-1' FOR ShipperNotExporterAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterContactId DEFAULT '-1' FOR ShipperNotExporterContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FreelancerAddressId DEFAULT '-1' FOR FreelancerAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FreelancerContactId DEFAULT '-1' FOR FreelancerContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentAddressId DEFAULT '-1' FOR ReleasingAgentAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentContactId DEFAULT '-1' FOR ReleasingAgentContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerAddressId DEFAULT '-1' FOR CustomerAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerContactId DEFAULT '-1' FOR CustomerContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeAddressId DEFAULT '-1' FOR ConsigneeAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeContactId DEFAULT '-1' FOR ConsigneeContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentAddressId DEFAULT '-1' FOR AgentAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentContactId DEFAULT '-1' FOR AgentContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentExportAddressId DEFAULT '-1' FOR CustomAgentExportAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentExportContactId DEFAULT '-1' FOR CustomAgentExportContactId;"
+                        +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentImportAddressId DEFAULT '-1' FOR CustomAgentImportAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomAgentImportContactId DEFAULT '-1' FOR CustomAgentImportContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify1AddressId DEFAULT '-1' FOR Notify1AddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify1ContactId DEFAULT '-1' FOR Notify1ContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify2AddressId DEFAULT '-1' FOR Notify2AddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify2ContactId DEFAULT '-1' FOR Notify2ContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FreightForwarderAddressId DEFAULT '-1' FOR FreightForwarderAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FreightForwarderContactId DEFAULT '-1' FOR FreightForwarderContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterAddressId DEFAULT '-1' FOR ConsigneeNotImporterAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeNotImporterContactId DEFAULT '-1' FOR ConsigneeNotImporterContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomClearancePointAddressId DEFAULT '-1' FOR CustomClearancePointAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomClearancePointContactId DEFAULT '-1' FOR CustomClearancePointContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ColoaderAddressId DEFAULT '-1' FOR ColoaderAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ColoaderContactId DEFAULT '-1' FOR ColoaderContactId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsolidatorAddressId DEFAULT '-1' FOR ConsolidatorAddressId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsolidatorContactId DEFAULT '-1' FOR ConsolidatorContactId;"
                         ;
 
                     break;

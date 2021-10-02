@@ -88,6 +88,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             if (AuthenticationUtil.AuthenticatedUserEmail != null)
             { // user set and passed from from WR
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+                loggedUser = loggedUser == null && tenant != 0 ? userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0) : loggedUser;
             }
             else
             {

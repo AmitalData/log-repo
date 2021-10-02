@@ -290,12 +290,16 @@ export class RelatedCustomerComponent extends BaseComponent{
                 var tenantPM = response.Result;  
                 if (tenantPM.IsCustomerTenantShare) {
                     if (tenantPM.CustomerTenantShareExportFile) {
-                        this.CanSelectOpption = true; 
+                        this.CanSelectOpption = true;
                         this.IsExportActivated = true;
                     } else {
                         this.IsExportActivated = false;
                         this.IsImportActivated = true;
                     }
+                }
+                else {
+                    this.IsExportActivated = false;
+                    this.IsImportActivated = true;
                 }
             }
         });

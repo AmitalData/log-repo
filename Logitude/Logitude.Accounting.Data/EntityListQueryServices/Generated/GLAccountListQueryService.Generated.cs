@@ -46,11 +46,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable);
-            
             User loggedUser = GetLoggedUser(tenant);
 
-            query2 = MapListFields(query2, loggedUser);
+            IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable, loggedUser);
+            
+            //query2 = MapListFields(query2, loggedUser);
 
             FullAccountingSettingListQueryService fullAccountingSettingListQueryService = new FullAccountingSettingListQueryService(AccountingContext.GetContext(tenant));
             var settings = fullAccountingSettingListQueryService.GetSingle(tenant.ToString());
@@ -145,8 +145,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        where a.Id == id
                                                        select a);
 
-             
-            IQueryable<GLAccountList> GLAccountListQuery = GetIqueryableList( GLAccountQuery);
+            var tempGlAccountData = GLAccountQuery.FirstOrDefault();
+            if (tempGlAccountData == null)
+            {
+                return null;
+            }
+            IQueryable<GLAccountList> GLAccountListQuery = GetIqueryableList(GLAccountQuery,GetLoggedUser(tempGlAccountData.Tenant));
             GLAccountList GLAccountList = GLAccountListQuery.FirstOrDefault();
             return GLAccountList;
            
@@ -159,7 +163,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                     select a);
 
 
-            IQueryable<GLAccountList> GLAccountListQuery = GetIqueryableList(GLAccountQuery);
+            IQueryable<GLAccountList> GLAccountListQuery = GetIqueryableList(GLAccountQuery,GetLoggedUser(tenant));
 
 
             User loggedUser = GetLoggedUser(tenant);
@@ -189,11 +193,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             iQueryable = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, iQueryable);
 
-            IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable);
-            
             User loggedUser = GetLoggedUser(tenant);
 
-            query2 = MapListFields(query2, loggedUser);
+            IQueryable<GLAccountList> query2 = GetIqueryableList(iQueryable, loggedUser);
+            
+            
+           //query2 = MapListFields(query2, loggedUser);
 
             query2 = filter.GetFilteredQuery<GLAccountList>(listQueryOperation, query2);
             int count = query2.Count();
