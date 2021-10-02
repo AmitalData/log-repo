@@ -56,8 +56,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ReportNumber = entityPM.ReportNumber;
                 entityPOCO.InterestReportStatusCode = entityPM.InterestReportStatusCode;
                 entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-
-            }
+                SetInterestReportGLAccountFields(entityPM);  
+                             
+             }
             if (entityPM.CustomerId != null)
             {
                 CustomerQuery customerQuery = new CustomerQuery(entityPM.Tenant);
@@ -66,10 +67,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.CustomerLocalName = customerPM.LocalName;
 
             }
-
+           
             FillSearchFields(entityPM);
 
-
+        }
+        private void SetInterestReportGLAccountFields(InterestReportPM interestReport)
+        {
+            if (interestReport.GLAccountId != null)
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(interestReport.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(interestReport.GLAccountId, interestReport.Tenant);
+                interestReport.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+                interestReport.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
+                interestReport.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+            }
         }
 
         public void CustomPOCOToPM(InterestReportPM entityPM, InterestReport entityPOCO)
@@ -123,14 +134,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             }
 
-            if (entityPOCO.GLAccountId != null)
-            {
-                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
-                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
-                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
-                entityPM.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
-
-            }
+           
 
  
             if (entityPM.InterestReportStatusCode=="1")
@@ -150,8 +154,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.CanRecalculate = true;
             }
-            
- 
+            if (entityPOCO.GLAccountId != null )
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+                //if (!entityPM.CanRecalculate)
+                //{
+                //    entityPM.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
+                //    entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+                //}
+
+            }
+
+
 
         }
 

@@ -25,11 +25,14 @@ using Simplog.Data.InvoiceModel;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class InterestReportUpdateService
     {
+        string oldLabel = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0);
+        string newLabel = TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0);
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
             if (!entityPM.IsCreatedFromBatch)
@@ -83,11 +86,38 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
+               
 
             }
-
+       CreateEventForRecalculatingData(entityPM);
+            
         }
 
+       private void CreateEventForRecalculatingData(InterestReportPM interestReport)
+        {
+            if (interestReport.IsUpdatedFromBatch && interestReport.InterestReportStatusCode== InterestReportStatuseValues.Draft)
+            {
+                if((interestReport.GLAccountInterestCreditLimit != EntityPOCO.GLAccountInterestCreditLimit) || (interestReport.CreditAllotmentPercentage != EntityPOCO.CreditAllotmentPercentage))
+                {
+                    string eventNotes = null;
+                    if (interestReport.GLAccountInterestCreditLimit != EntityPOCO.GLAccountInterestCreditLimit)
+                    {
+                       
+                        string FieldLabel = TextCodesTranslator.TranslateText("InterestReport.F.GLAccountInterestCreditLimit", interestReport.Tenant);
+                        eventNotes = FieldLabel +": " + oldLabel + EntityPOCO.GLAccountInterestCreditLimit+newLabel+interestReport.GLAccountInterestCreditLimit + Environment.NewLine;                                          
+                    }
+                    if (interestReport.CreditAllotmentPercentage != EntityPOCO.CreditAllotmentPercentage)
+                    {
+                       
+                        string FieldLabel = TextCodesTranslator.TranslateText("InterestReport.F.CreditAllotmentPercentage", interestReport.Tenant);
+                        eventNotes = eventNotes+ FieldLabel + ": " + oldLabel  + EntityPOCO.CreditAllotmentPercentage +  newLabel+ interestReport.CreditAllotmentPercentage + Environment.NewLine;
+                    }
+
+                    CreateEvent("IREC", interestReport, eventNotes);
+                }
+
+            }
+        }
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
