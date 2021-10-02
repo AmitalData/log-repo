@@ -199,7 +199,6 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	DEALLOCATE InvoicesCursor
 
 
-	update dw_WaterMarks set LastUpdateDate = @ARInvoicesAutomaticLastUpdateDate where TableName = 'ARInvoice'
 	update dw_WaterMarks set LastUpdateDate = @APInvoicesAutomaticLastUpdateDate where TableName = 'APInvoice'
 
 End
