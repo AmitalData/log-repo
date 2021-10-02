@@ -2480,15 +2480,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void SendAutomaticallyOceanOnsightsRequest()
         {
-            if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+            if (IsAutomaticallyOceanOnsightsRequest())
             {
-                // Shipment
-                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant);
-                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
+                if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
                 {
-                    myHelper.SendContainerStatusRequest();
+                    // Shipment
+                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant, objectContext);
+                    if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
+                    {
+                        myHelper.SendContainerStatusRequest();
+                    }
                 }
             }
+        }
+
+        private bool IsAutomaticallyOceanOnsightsRequest()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+                return false;
+
+            if (initializer.EntityPM.TransportModeId != "O")
+                return false;
+
+            if (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
+                return false;
+
+            return true;
         }
 
         private void MapMainCarriageLegsForAutomation()

@@ -4,6 +4,7 @@ using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
@@ -11,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
@@ -45,8 +47,9 @@ namespace Logitude.BL.Helpers
         private ShippingLinePM shippingLine;
         ShippingLineRepository shippingLineRepository;
         ShippingLineQuery shippingLineQuery;
+        IShipmentsContext shipmentsContext;
 
-        public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
+        public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant, IShipmentsContext shipmentsContext = null)
         {
             this.tenant = tenant;
             this.shipmentId = shipmentId;
@@ -56,6 +59,7 @@ namespace Logitude.BL.Helpers
             this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
             this.shippingLineRepository = new ShippingLineRepository(tenant);
             this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
+            this.shipmentsContext = shipmentsContext != null? shipmentsContext : ShipmentsContext.GetContext(this.tenant);
             if (!isContainer)
                 this.GetSingleShipmentById();
             else
@@ -71,12 +75,14 @@ namespace Logitude.BL.Helpers
         }
         private void GetSingleShipmentById()
         {
-            this.shipmentQuery = new ShipmentQuery(tenant);
+            var shipmentRepository = new ShipmentRepository(this.shipmentsContext);
+            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
             this.shipment = shipmentQuery.GetSingleShipmentPM(shipmentId, tenant);
         }
         private void GetSingleContainerById()
         {
-            this.containerQuery = new ContainerQuery(tenant);
+            var containerRepository = new ContainerRepository(this.shipmentsContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
             this.container = containerQuery.GetSinglePM(containerId, tenant);
         }
         private void GetCommuniactionLogObjectTableId()
@@ -95,7 +101,12 @@ namespace Logitude.BL.Helpers
         private void GetLoggedContactId()
         {
             ContactRepository contactRepository = new ContactRepository(this.commonContext);
-            var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            string email = "system@tenant" + tenant + ".com";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            var loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             this.loggedContactId = loggedContact.Id;
         }
         private void GetShipmentScacCode()
