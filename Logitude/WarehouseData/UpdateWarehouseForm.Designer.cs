@@ -128,6 +128,8 @@
             this.label46 = new System.Windows.Forms.Label();
             this.DWVatTypeslabel = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
+            this.FactARInvoicesLabel = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -1347,11 +1349,37 @@
             this.label49.TabIndex = 258;
             this.label49.Text = "DW  VatTypes";
             // 
+            // FactARInvoicesLabel
+            // 
+            this.FactARInvoicesLabel.AutoSize = true;
+            this.FactARInvoicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactARInvoicesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactARInvoicesLabel.Location = new System.Drawing.Point(1031, 734);
+            this.FactARInvoicesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactARInvoicesLabel.Name = "FactARInvoicesLabel";
+            this.FactARInvoicesLabel.Size = new System.Drawing.Size(0, 25);
+            this.FactARInvoicesLabel.TabIndex = 263;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.BackColor = System.Drawing.SystemColors.Control;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label51.Location = new System.Drawing.Point(745, 736);
+            this.label51.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(144, 25);
+            this.label51.TabIndex = 262;
+            this.label51.Text = "Fact ARInvoice";
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.Controls.Add(this.FactARInvoicesLabel);
+            this.Controls.Add(this.label51);
             this.Controls.Add(this.DimVatTypesLabel);
             this.Controls.Add(this.label46);
             this.Controls.Add(this.DWVatTypeslabel);
@@ -1562,5 +1590,7 @@
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label DWVatTypeslabel;
         private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label FactARInvoicesLabel;
+        private System.Windows.Forms.Label label51;
     }
 }
