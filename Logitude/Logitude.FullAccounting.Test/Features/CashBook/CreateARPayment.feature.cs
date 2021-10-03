@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.CashBook
+namespace Logitude.FullAccountingTests.Features.CashBook
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace Logitude.FullAccounting.Test.Features.CashBook
 #line 1 "CreateARPayment.feature"
 #line hidden
         
-        public CreateCashbookFeature(CreateCashbookFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateCashbookFeature(CreateCashbookFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -83,9 +83,11 @@ namespace Logitude.FullAccounting.Test.Features.CashBook
         [Xunit.SkippableFactAttribute(DisplayName="Create cashbook")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Cashbook")]
         [Xunit.TraitAttribute("Description", "Create cashbook")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateCashbook()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create cashbook", null, tagsOfScenario, argumentsOfScenario);
 #line 4

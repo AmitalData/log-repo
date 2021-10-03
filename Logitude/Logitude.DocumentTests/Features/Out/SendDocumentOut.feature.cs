@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.BankAccount
+namespace Logitude.DocumentTests.Features.Out
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,19 +19,21 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class GetBankAccountFeature : object, Xunit.IClassFixture<GetBankAccountFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-SendDocumentOut")]
+    public partial class SendDocumentOutFeature : object, Xunit.IClassFixture<SendDocumentOutFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Pre-Prepare-SendDocumentOut"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "GetARPayment.feature"
+#line 1 "SendDocumentOut.feature"
 #line hidden
         
-        public GetBankAccountFeature(GetBankAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public SendDocumentOutFeature(SendDocumentOutFeature.FixtureData fixtureData, Logitude_DocumentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +42,8 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/BankAccount", "Get Bank Account", "\tWe want to get Bank Account.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Out", "Send Document Out", "\twe want to send document out", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-SendDocumentOut"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,15 +83,19 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get bank account")]
-        [Xunit.TraitAttribute("FeatureTitle", "Get Bank Account")]
-        [Xunit.TraitAttribute("Description", "Get bank account")]
-        public virtual void GetBankAccount()
+        [Xunit.SkippableFactAttribute(DisplayName="Send document out")]
+        [Xunit.TraitAttribute("FeatureTitle", "Send Document Out")]
+        [Xunit.TraitAttribute("Description", "Send document out")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
+        public virtual void SendDocumentOut()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get bank account", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Send document out", null, tagsOfScenario, argumentsOfScenario);
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,11 +115,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.When("get bank account with bankAccountId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 7
+ testRunner.Given("a document out for send", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
- testRunner.Then("bank account should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 8
+ testRunner.When("send document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+ testRunner.Then("the document should be send successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -125,12 +135,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                GetBankAccountFeature.FeatureSetup();
+                SendDocumentOutFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GetBankAccountFeature.FeatureTearDown();
+                SendDocumentOutFeature.FeatureTearDown();
             }
         }
     }

@@ -1,7 +1,8 @@
 ﻿Feature: PUT Shipment Direct Export Air
 	The API updates a Direct Export Air shipment details, adds packages, 
 	payables, receivables and creates a new agent as a partner.
-
+@Smoke
+@Release 
 Scenario: PUT Shipment Direct Export Air
 	Given a direct package with the following properties
 		| property | Value |

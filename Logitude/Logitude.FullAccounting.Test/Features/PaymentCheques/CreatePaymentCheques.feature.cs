@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.PaymentCheques
+namespace Logitude.FullAccountingTests.Features.PaymentCheques
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace Logitude.FullAccounting.Test.Features.PaymentCheques
 #line 1 "CreatePaymentCheques.feature"
 #line hidden
         
-        public CreatePaymentChequesFeature(CreatePaymentChequesFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreatePaymentChequesFeature(CreatePaymentChequesFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -83,9 +83,11 @@ namespace Logitude.FullAccounting.Test.Features.PaymentCheques
         [Xunit.SkippableFactAttribute(DisplayName="Create payment cheques")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Payment Cheques")]
         [Xunit.TraitAttribute("Description", "Create payment cheques")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreatePaymentCheques()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create payment cheques", null, tagsOfScenario, argumentsOfScenario);
 #line 4

@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Steps.PaymentCheques
             context.PaymentCheque = APICaller.CallGet<PaymentChequePM>(Urls.PaymentChequesGetSingle(FullAccountingData.PaymentCheque1), UserTenant.Token).Data;
         }
 
-        [Then(@"payment cheques should be avaliable")]
-        public void ThenPaymentChequesShouldBeAvaliable()
+        [Then(@"payment cheques should be available")]
+        public void ThenPaymentChequesShouldBeAvailable()
         {
             context.PaymentCheque.Should().NotBeNull();
         }

@@ -1,6 +1,6 @@
 ﻿Feature: Create Payment Cheques
 	We want to payment cheques.
-
+@Smoke
 Scenario: Create payment cheques
 	Given a payment cheques with the following properties
 		| property     | Value        |

@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-CrateARPayment
 Feature: Create AR Payment
 	We want to create ar payment.
-
+@Smoke
 Scenario: Create ar payment
 	Given a ar payment with the following properties
 		| property                    | Value            |

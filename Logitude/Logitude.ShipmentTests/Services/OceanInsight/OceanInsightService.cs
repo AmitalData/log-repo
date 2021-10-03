@@ -18,13 +18,12 @@ namespace Logitude.ShipmentTests.Services.OceanInsight
     {
         public string ReadFilebyName(string fileName)
         {
-            var path = "./MetaData/" + fileName;
+            var path = "./Data/" + fileName;
             return File.ReadAllText(path);
         }
         public ApiQueryFilters CreateCommunicationLogFilter(string objectTableId, string EntityId)
         {
-            return new ApiQueryFiltersBuilder()
-                .PageIndex(0)
+            return new ApiQueryFiltersBuilder().WithDefualtValues()
                 .PageSize(10)
                 .Filter1Name("EntityId")
                 .Filter1Value(EntityId)

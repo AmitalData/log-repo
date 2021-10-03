@@ -51,6 +51,21 @@ namespace Logitude.Test.Base.Models.Api
             _apiQueryFilters.Filter2Operator = Filter2Operator;
             return this;
         }
+        public ApiQueryFiltersBuilder PageSize(int pageSize)
+        {
+            _apiQueryFilters.PageSize = pageSize;
+            return this;
+        }
+        public ApiQueryFiltersBuilder SortBy(string sortBy)
+        {
+            _apiQueryFilters.SortBy = sortBy;
+            return this;
+        }
+        public ApiQueryFiltersBuilder SortDirection(string sortDirection)
+        {
+            _apiQueryFilters.SortDirection = sortDirection;
+            return this;
+        }
 
         public ApiQueryFilters Build()
         {

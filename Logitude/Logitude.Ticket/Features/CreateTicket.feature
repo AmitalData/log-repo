@@ -1,6 +1,7 @@
 ﻿Feature: Create Ticket
 	We want to create ticket.
-
+@Smoke
+@Release 
 Scenario: Create ticket
 	Given a ticket with the following properties
 		| property    | Value            |

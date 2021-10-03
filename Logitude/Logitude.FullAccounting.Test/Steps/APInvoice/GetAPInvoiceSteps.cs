@@ -25,8 +25,8 @@ namespace Logitude.FullAccounting.Test.Steps.APInvoice
             context.APInvoicePM = APICaller.CallGet<APInvoicePM>(Urls.APInvoicesGetSingle(FullAccountingData.APInvoiceId), UserTenant.Token).Data;
         }
 
-        [Then(@"ap invoice should be avaliable")]
-        public void ThenApInvoiceShouldBeAvaliable()
+        [Then(@"ap invoice should be available")]
+        public void ThenApInvoiceShouldBeAvailable()
         {
             context.APInvoicePM.Should().NotBeNull();
         }

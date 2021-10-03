@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-CreateBankDeposit
 Feature: Create Bank Deposit
 	We want to bank deposit.
-
+@Smoke
 Scenario: Create bank deposit
 	Given a bank deposit with the following properties
 		| property            | Value         |

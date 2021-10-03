@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.ARPayment
+namespace Logitude.FullAccountingTests.Features.ARPayment
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
 #line 1 "CreateARPayment.feature"
 #line hidden
         
-        public CreateARPaymentFeature(CreateARPaymentFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateARPaymentFeature(CreateARPaymentFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.ARPayment
         [Xunit.SkippableFactAttribute(DisplayName="Create ar payment")]
         [Xunit.TraitAttribute("FeatureTitle", "Create AR Payment")]
         [Xunit.TraitAttribute("Description", "Create ar payment")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateArPayment()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create ar payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5
