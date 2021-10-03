@@ -137,18 +137,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
 
                                 //DisplayNumber
-                                if (!string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
-                                {
-                                    gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
-                                }
-                                else if(!string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
-                                {
-                                    gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
-                                }
-                                else
-                                {
-                                    gLAccountEntity.DisplayNumber = card.Code;
-                                }
+                                SetDisplayNumber(entity, card, gLAccountEntity);
 
                                 //EnglishName
                                 if (string.IsNullOrEmpty(entity.GLAccount.EnglishName))
@@ -279,6 +268,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        private static void SetDisplayNumber(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, Simplog.Data.CommonDataModel.EntityPOCOs.Card card, GLAccountPM gLAccountEntity)
+        {
+            if (!string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
+            {
+                gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
+            }
+            else if (!string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
+            {
+                gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
+            }
+            else
+            {
+                gLAccountEntity.DisplayNumber = card.Code;
             }
         }
 

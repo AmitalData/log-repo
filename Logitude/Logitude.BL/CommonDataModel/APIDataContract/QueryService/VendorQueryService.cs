@@ -114,32 +114,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                 if (MyEntity.BillingAddress != null)
                 {
-                    AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress , Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
-                    {
-                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-                    }
-
-                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
-                    {
-                        address.City = MyEntity.MainAddress.City;
-                    }
-
-                    address.AddressTypeId = "B";
-                    address.Description = "Billing Address";
-                    address.Tenant = Tenant;
-
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Name))
-                    {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
-                    }
-
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address1))
-                    {
-                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
-                    }
-                    temp.Addresses.Add(address);
+                    SetBillingAddress(MyEntity, ComputingPartnerName, temp);
                 }
 
                 return temp;
@@ -151,6 +126,35 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-     
+        private static void SetBillingAddress(Vendor MyEntity, string ComputingPartnerName, VendorPM temp)
+        {
+            AddressQueryService AddressQueryService = new AddressQueryService(temp.Tenant);
+            AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, temp.Tenant);
+            if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
+            {
+                address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, temp.Tenant, ComputingPartnerName);
+            }
+
+            else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
+            {
+                address.City = MyEntity.MainAddress.City;
+            }
+
+            address.AddressTypeId = "B";
+            address.Description = "Billing Address";
+            address.Tenant = temp.Tenant;
+
+            if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Name))
+            {
+                address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
+            }
+
+            if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address1))
+            {
+                address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
+            }
+            temp.Addresses.Add(address);
+        }
+
     }
 }
