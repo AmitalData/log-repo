@@ -548,6 +548,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     
     OnHasExceptionChanged(event){
         this.hasException = event;
+        this.hasExceptionAdvancedFilter = event;
         this.LoadScreenData();
     }
 
@@ -798,9 +799,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         if(filter.FilterName == 'shipmentType')
         {
             this.shipmentTypeMultipleSelection.DeselectFilter(filter.Code);
+            var index = this.selectedShipmentTypesFilter.findIndex(d=>d.Code==filter.Code);
+            if(index >= 0){
+                    this.selectedShipmentTypesFilter.splice(index,1);
+            };
         } else if (filter.FilterName == 'shipmentDirection')
         {
             this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
+            var index = this.selectedShipmentDirectionsFilter.findIndex(d=>d.Code==filter.Code);
+            if(index >= 0){
+                    this.selectedShipmentDirectionsFilter.splice(index,1);
+            };
         }
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
@@ -827,9 +836,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     private toggleMobileAdvancedFilters(){
-        if(this.selectedShipmentTypesFilter.length || this.selectedShipmentDirectionsFilter.length) {
-            this.SelectedFilters = this.SelectedFilters.filter(item => !this.ToggleFilters.includes(item));
-        }
+        this.SelectedFilters = this.SelectedFilters.filter(item => !this.ToggleFilters.includes(item));
         if(this.selectedShipmentTypesFilter.length) {
             this.SelectToggleFilters(this.selectedShipmentTypesFilter.map(x => x.Code).join(','));
         }
@@ -840,7 +847,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ClearAdvancedFilters(){
-        this.isFiltersSideBarOpened = false;
+        // this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
@@ -850,8 +857,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.selectedShipmentDirectionsFilter = [];
         this.hasExceptionAdvancedFilter = false;
         this.appliedSelectedFilterMilestonesStatus= [];
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
+        // RootContext.ShipmentsScrollPosition = 0;
+        // this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
     {
