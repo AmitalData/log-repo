@@ -33,6 +33,7 @@ namespace WarehouseData
         public string RefreshIds { get; set; }
         public string ParentKeyName { get; set; }
         public string ObjectTableName { get; set; }
+         
 
         public string AdditionalIndexes { get; set; }
         

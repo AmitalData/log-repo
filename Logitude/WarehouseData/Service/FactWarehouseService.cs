@@ -11,13 +11,13 @@ namespace WarehouseData.Helper
 
     public class FactWarehouseService
     {
-    
+
 
 
         private GeneralDataWarehouseService generalDataWarehouseService;
         public FactWarehouseService(string appName, string mode)
         {
-            generalDataWarehouseService = new GeneralDataWarehouseService(appName, mode); 
+            generalDataWarehouseService = new GeneralDataWarehouseService(appName, mode);
         }
 
 
@@ -51,7 +51,7 @@ namespace WarehouseData.Helper
             if (table.HasCustomFields)
             {
                 CustomFieldWarehouseService customFieldWarehouseService = new CustomFieldWarehouseService();
-                updateFactSqlString = customFieldWarehouseService.BuildCustomFields(updateFactSqlString,table);
+                updateFactSqlString = customFieldWarehouseService.BuildCustomFields(updateFactSqlString, table);
             }
             generalDataWarehouseService.ExecuteSql(updateFactSqlString, connectionString);
         }
