@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-DocumentType
+﻿@Pre-Prepare-UploadFilewithChunks
 Feature: UploadFilewithChunks
 	we want to upload File with 3 chunks
 @Smoke

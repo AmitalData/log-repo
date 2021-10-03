@@ -17,6 +17,7 @@ namespace Logitude.DocumentTests.Steps
         private readonly DocumentInService service;
         public CreateReceivedDocument(DocumentContext context, DocumentInService service)
         {
+
             this.context = context;
             this.service = service;
         }
@@ -24,6 +25,9 @@ namespace Logitude.DocumentTests.Steps
         public void WhenCreateDocument()
         {
             context.Document = service.CreateDocument();
+            string envParam = Environment.GetEnvironmentVariable("URL");
+
+            throw new Exception("URL : " + envParam + " ");
         }
 
         [Then(@"document should be available")]

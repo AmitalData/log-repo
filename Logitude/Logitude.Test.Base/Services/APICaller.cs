@@ -110,6 +110,9 @@ namespace Logitude.Test.Base.Services
                         response.Data = restResponse.Data;
                         break;
                     }
+                    else if(response.StatusCode == HttpStatusCode.NotFound){
+                        throw new Exception("URL NotFound");
+                    }
                     else
                     {
                         JObject jObject = JObject.Parse(restResponse.Content);

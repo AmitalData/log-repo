@@ -16,6 +16,20 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         {
             new DocumentTypePreparation().Prepare();
         }
+        [BeforeFeature("Pre-Prepare-UploadFilewithChunks")]
+        public static void PrePrepareUploadFilewithChunks()
+        {
+            new ShipmentDataPreparation().Prepare();
+            new DocumentTypePreparation().Prepare();
+            new DocumentTypeTemplatePreparation().Prepare();
+        }
+        [BeforeFeature("Pre-Prepare-ViewDocument")]
+        public static void PrePrepareViewDocument()
+        {
+            new ShipmentDataPreparation().Prepare();
+            new DocumentTypePreparation().Prepare();
+            new DocumentTypeTemplatePreparation().Prepare();
+        }
         [BeforeFeature("Pre-Prepare-CreateReceivedDocument")]
         public static void PrePrepareCreateReceivedDocument()
         {

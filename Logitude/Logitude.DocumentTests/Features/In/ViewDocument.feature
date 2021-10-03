@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-DocumentType
+﻿@Pre-Prepare-ViewDocument
 Feature: View Document
 	we want to get document
 

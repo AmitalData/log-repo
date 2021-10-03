@@ -324,11 +324,11 @@ namespace Logitude.Test.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
-        public static string GetCreateDocumentsOut(GetCreateDocumentsFilingArgs arguments)
-        {
-            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&tenant={arguments.Tenant}";
-        }
         public static string GetCreateDocumentsFiling(GetCreateDocumentsFilingArgs arguments)
+        {
+            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
+        }
+        public static string GetCreateDocumentsOut(GetCreateDocumentsFilingArgs arguments)
         {
             return $"DocumentOutExtended/getcreatedocumentout?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
         }

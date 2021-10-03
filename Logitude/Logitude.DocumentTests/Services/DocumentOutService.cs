@@ -51,7 +51,7 @@ namespace Logitude.DocumentTests.Services
         public DocumentOutPM CreateDocumentOut()
         {
             var arguments = GetCreateDocumentsFilingArgs(DirectionCodes.Out);
-            return APICaller.CallGet<DocumentOutPM>(Urls.GetCreateDocumentsFiling(arguments), UserTenant.Token)?.Data;
+            return APICaller.CallGet<DocumentOutPM>(Urls.GetCreateDocumentsOut(arguments), UserTenant.Token)?.Data;
         }
         
         public string GetDocumentOutCopyId(string documentTypeId, string documentId, int tenant)

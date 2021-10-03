@@ -86,16 +86,18 @@ namespace Logitude.DocumentTests.Features.In
         [Xunit.SkippableFactAttribute(DisplayName="Create received document")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Received Document")]
         [Xunit.TraitAttribute("Description", "Create received document")]
+        [Xunit.TraitAttribute("Category", "amer")]
         [Xunit.TraitAttribute("Category", "Smoke")]
         [Xunit.TraitAttribute("Category", "Release")]
         public virtual void CreateReceivedDocument()
         {
             string[] tagsOfScenario = new string[] {
+                    "amer",
                     "Smoke",
                     "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create received document", null, tagsOfScenario, argumentsOfScenario);
-#line 6
+#line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -115,10 +117,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
+#line 8
  testRunner.When("create document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
+#line 9
  testRunner.Then("document should be available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -130,13 +132,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "ReceivedDate",
                             "now"});
-#line 9
+#line 10
  testRunner.Given("following new document properties", ((string)(null)), table1, "Given ");
 #line hidden
-#line 13
+#line 14
  testRunner.When("update document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 15
  testRunner.Then("the document should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
