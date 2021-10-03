@@ -84,7 +84,7 @@
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, DIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoiceLines.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
-	DIM_Directions.Name,TransportModes.Name, DIM_Types.Name, dw_Shipments.ShipmentSubTypeId, DIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Branches.Id_Number
+	DIM_Directions.Name,TransportModes.Name, DIM_Types.Name, dw_Shipments.ShipmentSubTypeId, DIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber
 
 	 
     From dw_ARInvoices
@@ -101,7 +101,8 @@
 	inner JOIN DIM_Currencies LocalCurrency ON dw_ARInvoices.LocalCurrencyId = LocalCurrency.Id
 	inner JOIN DIM_Currencies InvoiceCurrency ON dw_ARInvoices.InvoiceCurrencyId = InvoiceCurrency.Id
 	inner JOIN DIM_Partners BillTo ON dw_ARInvoices.BillToId = BillTo.Id 
-	 inner JOIN dw_ARInvoiceLines  ON dw_ARInvoices.Id = dw_ARInvoiceLines.ARInvoiceId
+	inner JOIN NewDIM_Branches ON dw_ARInvoices.BranchId =NewDIM_Branches.Id
+	inner JOIN dw_ARInvoiceLines  ON dw_ARInvoices.Id = dw_ARInvoiceLines.ARInvoiceId
 	 
     inner JOIN DIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id
 	-- join shipment
@@ -114,8 +115,7 @@
 	inner JOIN DIM_Types ON dw_Shipments.ShipmentTypeId = DIM_Types.Code
 	inner JOIN DIM_Departments ON dw_Shipments.DepartmentId = DIM_Departments.Id
 	inner JOIN DIM_Partners shipperPartners ON dw_Shipments.ShipperId = shipperPartners.Id
-	inner JOIN DIM_Partners consigneePartners ON dw_Shipments.ConsigneeId = consigneePartners.Id
-	inner JOIN DIM_Branches ON dw_Shipments.BranchId =DIM_Branches.Id
+	inner JOIN DIM_Partners consigneePartners ON dw_Shipments.ConsigneeId = consigneePartners.Id 
 	inner JOIN DIM_Users ShipmentSalesmanUser ON dw_Shipments.SalesmanUserId = ShipmentSalesmanUser.Id
 
    inner JOIN DIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = DIM_VatTypes.Id
