@@ -189,13 +189,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
         }
 
-        private static void SaveOldShipments(BulkDataPreperation bulkDataPreperation)
+        private static void CreatePreOldShipmentsTable(BulkDataPreperation bulkDataPreperation)
         {
             var tableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName;
             if (tableName == "CargoTrackingShipments")
             {
                 ShipmentOldValuesService oldValuesService = new ShipmentOldValuesService();
-                oldValuesService.CreateOldDataDBTable(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+                oldValuesService.CreatePreOldDataDBTable(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
             }
         }
 
@@ -255,25 +255,27 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
 
-                SaveOldShipments(bulkDataPreperation);
+                CreatePreOldShipmentsTable(bulkDataPreperation);
 
                 UpdateCargoTracking(bulkDataPreperation,dataColumnListCols);
                 AfterFinishUpdateCargoTracking(bulkDataPreperation, isUpadteWaterMark);
 
-
-                if (bulkDataPreperation.NumberOfMainCoulmnsUpdated > 0 && bulkDataPreperation.CargoTrackingTable.CurrentCondition != 2)
-                 {
-                    var sql =  $"IF OBJECT_ID(N'dbo.OldCargoShipments', N'U') IS NOT NULL drop table OldCargoShipments;" +
-                        $"select  * into OldCargoShipments from PreOldCargoShipments;" +
-                        $"IF OBJECT_ID(N'dbo.PreOldCargoShipments', N'U') IS NOT NULL drop table PreOldCargoShipments;";
-                    ServiceHelper.ExecuteSql(sql, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
-                }
+                SwapPreOldShipmentsWithOldShipmentsTable(bulkDataPreperation);
 
                 sourceConnection.Close();
             }
             recordUpdated.NumberOfRecordUpdated = bulkDataPreperation.NumberOfMainCoulmnsUpdated;
             recordUpdated.NumberOfRecordUpdated2 = bulkDataPreperation.NumberOfInnerCoulmnsUpdated;
             return recordUpdated;
+        }
+
+        private static void SwapPreOldShipmentsWithOldShipmentsTable(BulkDataPreperation bulkDataPreperation)
+        {
+            if (bulkDataPreperation.NumberOfMainCoulmnsUpdated > 0 && bulkDataPreperation.CargoTrackingTable.CurrentCondition != ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
+            {
+                ShipmentOldValuesService oldValuesService = new ShipmentOldValuesService();
+                oldValuesService.CreateOldCargoShipmentsFromPreOldCargoShipments(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+            }
         }
 
         private void AddDummyCoulmnsToDatatTable(BulkDataPreperation bulkDataPreperation)
