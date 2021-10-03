@@ -27,7 +27,12 @@ using CommunicationWorkerRole;
  using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.CustomWebServices;
 using Logitude.CustomsMessaging.U2L.CommDec;
- //using System.Windows.Interactivity;
+using Logitude.CustomsMessaging.ResponseServices;
+using System.Xml.Serialization;
+using Logitude.CustomsMessaging.MessagingServices;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+//using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
 {
@@ -49,6 +54,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsSchedularWR");
+            _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -239,6 +245,13 @@ namespace AmitalCustomsWindowsService.Tester
                     break;
                 case "FTPToAnalyzeQueueWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<FTPToAnalyzeQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
+                    break;
+
+
+                case "RabbitMQReceiveWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<RabbitMQReceiveWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
                     break;
@@ -971,6 +984,89 @@ namespace AmitalCustomsWindowsService.Tester
                 {
                     //throw;
                 }
+            }
+        }
+
+        private void sendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+
+                //var factory = new ConnectionFactory() { HostName = "localhost" };
+                //using (var connection = factory.CreateConnection())
+                //using (var channel = connection.CreateModel())
+                //{
+                channel.QueueDeclare(queue: "connectToTicket",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                string message = @"<DCAInUCBUD2LTWithResponseContentHeader xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://amital.com/customs/Prod/DCAInUCBUD2LTWithResponseContentHeader'>
+<ResponseContentHeader>
+<ApplicationID>0</ApplicationID>
+<TransmitionDateTime>2021-09-12T18:31:55.5180688+03:00</TransmitionDateTime>
+</ResponseContentHeader>
+<tenant>3</tenant>
+<LoggingUserId>1-7</LoggingUserId>
+<DeclarationId>1-1479599</DeclarationId>
+<MyMoreParams/>
+<DocumentsFilingCode>E526108</DocumentsFilingCode>
+<DocumentsFilingId>PATLCHNAXUSVBJPZLLS+8A00000000</DocumentsFilingId>
+<DocumentTypeCode>CWB</DocumentTypeCode>
+</DCAInUCBUD2LTWithResponseContentHeader>"; ;
+                var body = Encoding.UTF8.GetBytes(message);
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "connectToTicket",
+                                     basicProperties: null,
+                                     body: body);
+                Console.WriteLine(" [x] Sent {0}", message);
+            }
+
+        }
+
+        private void recivedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "connectToTicket",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
+                {
+                    var body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+
+                    UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
+                    DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
+                    using (TextReader reader = new StringReader(message))
+                    {
+                        result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(reader);
+                    }
+
+
+                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
+
+                    Console.WriteLine(" [x] Received {0}", message);
+                };
+
+                channel.BasicConsume(queue: "connectToTicket",
+                                     autoAck: true,
+                                     consumer: consumer);
+
+                // Console.WriteLine(" Press [enter] to exit.");
+                // Console.ReadLine();
             }
         }
     }

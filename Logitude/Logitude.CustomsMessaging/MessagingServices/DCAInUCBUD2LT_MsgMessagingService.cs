@@ -14,6 +14,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using RabbitMQ.Client;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -175,15 +176,35 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                    //ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                    //{
+                    //    SelectedFileDownload = fileName,
+                    //    TimStamp = transmitionDateTime
+
+                    //}, xmlESBResponseXmlClass);
+
+                    var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                    using (var connection = factory.CreateConnection())
+                    using (var channel = connection.CreateModel())
                     {
-                        SelectedFileDownload = fileName,
-                        TimStamp = transmitionDateTime
+                        channel.QueueDeclare(queue: "connectToTicket",
+                                             durable: false,
+                                             exclusive: false,
+                                             autoDelete: false,
+                                             arguments: null);
 
-                    }, xmlESBResponseXmlClass);
+                        string message = xmlESBResponseXmlClass;
+                        var body2 = Encoding.UTF8.GetBytes(message);
 
+                        channel.BasicPublish(exchange: "",
+                                             routingKey: "connectToTicket",
+                                             basicProperties: null,
+                                             body: body2);
 
+                        Console.WriteLine(" [x] Sent {0}", message);
+                    }
 
+                 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
