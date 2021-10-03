@@ -313,6 +313,7 @@
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelsTermsOfUseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\TenantManagementTermsofUseTabComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
@@ -1812,6 +1813,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\OceanInsightsSetting\OceanInsightsSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
