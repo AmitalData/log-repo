@@ -1234,11 +1234,6 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-    SetCurrencyForSingleAccount() {
-        if (!this.CreditAccount.IsMultiCurrency) {
-
-        }
-    }
     creditAccount: GLAccountPM;
     get CreditAccount() { return this.creditAccount; }
     set CreditAccount(value: GLAccountPM) {
@@ -1249,20 +1244,8 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
 
-
-            if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
-            else if (this.ActionCode == "3" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
-            else {
-                //this.CurrencyId = null;
-                //this.CurrencyCode = null;
-                //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            }
+            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());
+            
 
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
@@ -1284,20 +1267,8 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DebitAccountName = value.LocalName;
-
-            if (this.ActionCode == "2" && !this.debitAccount.IsMultiCurrency) {
-                this.CurrencyId = this.debitAccount.CurrencyId;
-                this.CurrencyCode = this.debitAccount.CurrencyCode;
-            }
-            else if (this.ActionCode == "3" && !this.debitAccount.IsMultiCurrency) {
-                this.CurrencyId = this.debitAccount.CurrencyId;
-                this.CurrencyCode = this.debitAccount.CurrencyCode;
-            }
-            else {
-                //this.CurrencyId = null;
-                //this.CurrencyCode = null;
-              //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            }
+            this.SetCurrencyForSingleAccount(value, ActionCode.Debit.toString(), ActionCode.DebitAndCredit.toString());
+            
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1306,7 +1277,19 @@ class JournalLineModel extends BaseComponent {
             this.DebitAccountId = null;
         }
     }
+    SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
+        if (!account.IsMultiCurrency) {
+            if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+                this.CurrencyId = account.CurrencyId;
+                this.CurrencyCode = account.CurrencyCode;
+            }
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
+        } else {
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+
+        }
+    }
 
     accDay: number;
     get AccDay() {
@@ -1612,4 +1595,9 @@ class JournalLineModel extends BaseComponent {
 
 
     //#endregion
+}
+enum ActionCode {
+    Debit = 2,
+    Credit = 1,
+    DebitAndCredit=3
 }

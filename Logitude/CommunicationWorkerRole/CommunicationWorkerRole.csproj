@@ -378,12 +378,15 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CollaborationToolContainerUpdateWR.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
+    <Compile Include="ContainerCreateWR.cs" />
     <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
+    <Compile Include="ContainerUpdateWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

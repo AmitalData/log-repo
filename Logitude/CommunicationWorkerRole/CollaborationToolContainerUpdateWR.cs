@@ -16,36 +16,35 @@ using System.Threading;
 
 namespace CommunicationWorkerRole
 {
-    public class CollaborationToolShipmentUpdateWR : WorkerEntryPoint
+    public class CollaborationToolContainerUpdateWR : WorkerEntryPoint
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment,
-                    new List<string> { KafkaTopics.TasksDoneTopic, KafkaTopics.ShipmentSetValues }, null);
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateContainer,
+                new List<string> { KafkaTopics.ContainerSetValues }, null);
 
             while (IsRunning)
             {
-                 
                 if (!General.IsUpdating() && !Debugger.IsAttached)
                 {
                     try
-                    {  
+                    {
                         var msg = LogitudeConsumer.Consume();
                         if (msg != null)
                         {
-                            UpdateShipmentPM(msg.Message.Value);
+                            UpdateContainerPM(msg.Message.Value);
                         }
                     }
                     catch (ConsumeException e)
                     {
                         Console.WriteLine($"Consume error: {e.Error.Reason}");
-                        ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "CollaborationToolShipmentUpdate worker role start", null, null);
+                        ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "CollaborationToolContainerUpdate worker role start", null, null);
                         //throw e;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CollaborationToolShipmentUpdate worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CollaborationToolContainerUpdate worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -56,27 +55,15 @@ namespace CommunicationWorkerRole
             }
         }
 
-        public override bool OnStart()
-        {
-            // Set the maximum number of concurrent connections 
-            ServicePointManager.DefaultConnectionLimit = 12;
-
-            ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "CollaborationToolShipmentUpdate";
-
-            return base.OnStart();
-        }
-
-        #region Private methods
-        private void UpdateShipmentPM(string jsonLogitudeUpdateMessage)
+        private void UpdateContainerPM(string jsonLogitudeUpdateMessage)
         {
             try
             {
                 LogitudeUpdateMessage LogitudeUpdateMessage = JsonConvert.DeserializeObject<LogitudeUpdateMessage>(jsonLogitudeUpdateMessage);
 
-                ShipmentRepository shipmentRepository = new ShipmentRepository(LogitudeUpdateMessage.Tenant);
-                ShipmentQuery myQuery = new ShipmentQuery(shipmentRepository);
-                ShipmentPM shipment = myQuery.GetSinglePMByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
+                ContainerRepository containerRepository = new ContainerRepository(LogitudeUpdateMessage.Tenant);
+                ContainerQuery containerQuery = new ContainerQuery(containerRepository);
+                ContainerPM container = containerQuery.GetSinglePM(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
 
                 if (LogitudeUpdateMessage.EntryFields == null || LogitudeUpdateMessage.EntityNumber == null)
                 {
@@ -86,28 +73,30 @@ namespace CommunicationWorkerRole
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
                 {
-                    PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
+                    PropertyInfo propertyInfo = container.GetType().GetProperty(entry.Key);
                     Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
                     object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
-                    propertyInfo.SetValue(shipment, safeValue, null);
+                    propertyInfo.SetValue(container, safeValue, null);
                 }
 
-                ShipmentService myService = new ShipmentService(shipmentRepository.context, shipment, "system@tenant" + shipment.Tenant + ".com");
-                myService.Update();
+                ContainerService containerService = new ContainerService(containerRepository.context, container.Tenant);
+                containerService.Update(container);
 
             }
             catch (Exception e)
             {
-                ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "Shipment Update Error", null, null);
+                ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "Container Update Error", null, null);
             }
         }
-        #endregion
-    }
 
-    public class LogitudeUpdateMessage
-    {
-        public int Tenant { get; set; }
-        public string EntityNumber { get; set; }
-        public string EntryFields { get; set; }
+        public override bool OnStart()
+        {
+            ServicePointManager.DefaultConnectionLimit = 12;
+
+            ThreadId = Guid.NewGuid().ToString();
+            BatchServiceCode = "CollaborationToolContainerUpdate";
+
+            return base.OnStart();
+        }
     }
 }

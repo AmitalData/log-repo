@@ -1,13 +1,13 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
-using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
-using Logitude.BL.InfrastructureModel.Tools.Validating;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -37,6 +37,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
+
+            AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
         }
 
         public void Update(ContainerPM entityPM)
@@ -48,6 +50,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
+
+            AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+        }
+
+        private void AddShipmentUpdateKafkaQueueMessage(string queueName)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", containerPm.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage(queueName);
+        }
+
+        private void AddKafkaQueueMessage(string queueName)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue(queueName, 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "ContainerId", containerPm.Id },
+                { "Tenant", tenant.ToString()}};
+
+            queueservice.Send(queueMessage, tenant);
         }
 
         public void Delete(ContainerPM entityPM)

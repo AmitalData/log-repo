@@ -2458,6 +2458,121 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? bookingDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? BookingDone  
+	   {
+	    
+	     get
+		{
+		   return bookingDone;
+		 }
+		 set
+		 {
+		   if(bookingDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingDone",OldValue=bookingDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   bookingDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? bookingDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? BookingDate  
+	   {
+	    
+	     get
+		{
+		   return bookingDate;
+		 }
+		 set
+		 {
+		   if(bookingDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingDate",OldValue=bookingDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   bookingDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? bookingEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? BookingEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return bookingEstimationDate;
+		 }
+		 set
+		 {
+		   if(bookingEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingEstimationDate",OldValue=bookingEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   bookingEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingNotes  
+	   {
+	    
+	     get
+		{
+		   return bookingNotes;
+		 }
+		 set
+		 {
+		   if(bookingNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingNotes",OldValue=bookingNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingExceptionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingExceptionReason  
+	   {
+	    
+	     get
+		{
+		   return bookingExceptionReason;
+		 }
+		 set
+		 {
+		   if(bookingExceptionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingExceptionReason",OldValue=bookingExceptionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingExceptionReason=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

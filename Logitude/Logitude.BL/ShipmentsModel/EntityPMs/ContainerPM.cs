@@ -33,7 +33,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
         public string ShipmentId { get; set; }
-        public string EmptyPickupLocation { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
         public string DepartureLocation { get; set; }
@@ -71,11 +70,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentOnCarriageTo { get; set; }
         public string ShipmentLastDeliveryFrom { get; set; }
         public string ShipmentLastDeliveryTo { get; set; }
-        public string OriginLocation { get; set; }
         public DateTime? EstimatedOriginPickup { get; set; }
         public DateTime? ActualOriginPickup { get; set; }
-
-        public string POLLocation { get; set; }
         public DateTime? EstimatedPOLArrival { get; set; }
         public DateTime? ActualPOLArrival { get; set; }
         public DateTime? EstimatedPOLLoaded { get; set; }
@@ -83,8 +79,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? EstimatedPOLVesselDeparture { get; set; }
         public DateTime? ActualPOLVesselDeparture { get; set; }
         public string TransshipmentCount { get; set; }
-
-        public string Transshipment1Location { get; set; }
         public DateTime? EstimatedTrans1VesselArrival { get; set; }
         public DateTime? ActualTransshipment1VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment1Discharge { get; set; }
@@ -93,8 +87,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ActualTransshipment1Loaded { get; set; }
         public DateTime? EstimatedTrans1VesselDeparture { get; set; }
         public DateTime? ActualTrans1VesselDeparture { get; set; }
-
-        public string Transshipment2Location { get; set; }
         public DateTime? EstimatedTrans2VesselArrival { get; set; }
         public DateTime? ActualTransshipment2VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment2Discharge { get; set; }
@@ -103,8 +95,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ActualTransshipment2Loaded { get; set; }
         public DateTime? EstimatedTrans2VesselDeparture { get; set; }
         public DateTime? ActualTrans2VesselDeparture { get; set; }
-
-        public string Transshipment3Location { get; set; }
         public DateTime? EstimatedTrans3VesselArrival { get; set; }
         public DateTime? ActualTransshipment3VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment3Discharge { get; set; }
@@ -113,8 +103,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ActualTransshipment3Loaded { get; set; }
         public DateTime? EstimatedTrans3VesselDeparture { get; set; }
         public DateTime? ActualTrans3VesselDeparture { get; set; }
-
-        public string Transshipment4Location { get; set; }
         public DateTime? EstimatedTrans4VesselArrival { get; set; }
         public DateTime? ActualTransshipment4VesselArrival { get; set; }
         public DateTime? EstimatedTransshipment4Discharge { get; set; }
@@ -134,43 +122,55 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Leg4Voyage { get; set; }
         public string Leg5Vessel { get; set; }
         public string Leg5Voyage { get; set; }
-
-        public string PODLocation { get; set; }
         public DateTime? EstimatedPODVesselArrival { get; set; }
         public DateTime? ActualPODVesselArrival { get; set; }
         public DateTime? EstimatedPODDischarge { get; set; }
         public DateTime? ActualPODDischarge { get; set; }
         public DateTime? EstimatedPODDeparture { get; set; }
         public DateTime? ActualPODDeparture { get; set; }
-
-        public string DeliveryLocation { get; set; }
         public DateTime? EstimatedDelivery { get; set; }
         public DateTime? ActualDelivery { get; set; }
-
-        public string LIFLocation { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedLIFDeparture { get; set; }
         public DateTime? ActualLIFDeparture { get; set; }
-
         public DateTime? GateIn { get; set; }
         public DateTime? GateOut { get; set; }
-
-        public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
         public DateTime? ActualEmptyReturn { get; set; }
-
         public string CustomsReleaseState { get; set; }
         public DateTime? CustomsReleaseDate { get; set; }
-
         public string CarrierReleaseState { get; set; }
         public DateTime? CarrierReleaseDate { get; set; }
         public DateTime? AvailablityDate { get; set; }
-        public string AvailabilityLocation { get; set; }
         public DateTime? LastFreeDayDate { get; set; }
         public int? FreeDays { get; set; }
         public string ShipmentStatusId { get; set; }
         public string ShipmentStatusName { get; set; }
+        public string EmptyPickupLocation { get; set; }
+        public string DeliveryLocation { get; set; }
+        public string EmptyReturnLocation { get; set; }
+        public string AvailabilityLocation { get; set; }
+        public string OriginLocation { get; set; }
+        public string LIFLocation { get; set; }
+        public string POLLocation { get; set; }
+        public string PODLocation { get; set; }
+        public string Transshipment1Location { get; set; }
+        public string Transshipment2Location { get; set; }
+        public string Transshipment3Location { get; set; }
+        public string Transshipment4Location { get; set; }
+        public string EmptyPickupLocationPortId { get; set; }
+        public string DeliveryLocationPortId { get; set; }
+        public string EmptyReturnLocationPortId { get; set; }
+        public string AvailabilityLocationPortId { get; set; }
+        public string OriginLocationPortId { get; set; }
+        public string LIFLocationPortId { get; set; }
+        public string POLLocationPortId { get; set; }
+        public string PODLocationPortId { get; set; }
+        public string Transshipment1LocationPortId { get; set; }
+        public string Transshipment2LocationPortId { get; set; }
+        public string Transshipment3LocationPortId { get; set; }
+        public string Transshipment4LocationPortId { get; set; }
         public string TerminalId { get; set; }
         public string TerminalAddress { get; set; }
         public string TerminalPhone { get; set; }
