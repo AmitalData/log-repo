@@ -316,6 +316,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsPotentialConsignee { get; set; }
         public string IncotermCode { get; set; }
         public string IncotermName { get; set; }
+        public string Routing { get; set; }
         public string FromCountryCode { get; set; }
         public string FromCountryName { get; set; }
         public string ToCountryCode { get; set; }
@@ -732,5 +733,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string InlandDomesticToTypeCode { get; set; }
         public string MainCarriageFromPortAddress { get; set; }
         public string MainCarriageToPortAddress { get; set; }
+        public string FromCity { get; set; }
+        public string ToCity { get; set; }
     }
 }
