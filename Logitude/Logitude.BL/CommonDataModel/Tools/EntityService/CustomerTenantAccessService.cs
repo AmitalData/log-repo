@@ -136,9 +136,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Update(CustomerTenantAccessPM paramentityPM = null,bool temp = false)
         {
-            ValidateCustomerTenantAccessCards(paramentityPM);
             if (paramentityPM != null)
             {
+                ValidateCustomerTenantAccessCards(paramentityPM);
                 this.entityPM = paramentityPM;
             }
             this.isNewEntity = false;
@@ -160,6 +160,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private static void ValidateCustomerTenantAccessCards(CustomerTenantAccessPM paramentityPM)
         {
+            if (paramentityPM.CustomerTenantAccessCards == null)
+                return;
             var InValidCustomerTenantAccessCards = paramentityPM.CustomerTenantAccessCards.Find(a => a.IsImportActivated == false && a.IsExportActivated == false);
             if (InValidCustomerTenantAccessCards != null)
             {
