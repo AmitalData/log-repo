@@ -142,40 +142,50 @@ namespace CustomsWorkerRole
 
                         XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
                         DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
-                     
+
+                        Logger.LogMe("read xml", false, "TESTELISH");
+
+                        using (TextReader reader = new StringReader(message))
+                        {
                             Logger.LogMe("read xml", false, "TESTELISH");
 
                             XmlDocument doc = new XmlDocument();
-                        doc.Load(reader);
+                            doc.Load(reader);
 
-                        //Display all the book titles.
-                        XmlNodeList elemList = doc.GetElementsByTagName("Body");
+                            //Display all the book titles.
+                            XmlNodeList elemList = doc.GetElementsByTagName("Body");
 
 
                             result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
 
+                            //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
+                            //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
+                        }
+
+
                         //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
                         //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
-                         }
- 
+                        //}
+
                         Logger.LogMe("update", false, "TESTELISH");
- 
+
                         uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
 
                         Console.WriteLine(" [x] Received {0}", message);
                     };
- 
+
                     Logger.LogMe("BasicConsume", false, "TESTELISH");
 
-                     channel.BasicConsume(queue: "connectToTicket",
-                                         autoAck: true,
-                                         consumer: consumer);
+                    channel.BasicConsume(queue: "connectToTicket",
+                                        autoAck: true,
+                                        consumer: consumer);
 
 
                     Logger.LogMe("end BasicConsume", false, "TESTELISH");
 
                 }
-                
+            }
+
 
             catch (Exception ex)
             {

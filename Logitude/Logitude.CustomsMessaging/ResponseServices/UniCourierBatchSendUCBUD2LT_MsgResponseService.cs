@@ -92,55 +92,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = (unifreightGenericService.MyGenericResponseObj.StatusType == AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success);
         }
 
-        public void RealUpdate2(DCAInUCBUD2LTWithResponseContentHeader customResponse)
-        {
-            var mess = new StringBuilder();
-            var context = CustomContext.GetContext(customResponse.tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
-            this.MyResponseData = new INF_MSG_GenericResponseData();
-            var xml = XmlGenericUtil<LOGIDOCS>.SerializeObject(
-                new LOGIDOCS()
-                {
-                    LogitudeDocs = new LogitudeDocs[] {
-                     new LogitudeDocs(){
-                         COM_ID =customResponse.DocumentsFilingId,
-                         DOC_ID =customResponse.DocumentTypeCode,
-                         Id =customResponse.DeclarationId , Tenant= customResponse.tenant.ToString()
-                     }
-                 }
-                }
-            );
-
-
-            var unifreightGenericService = new DeclarationDocumentsService();
-            string moreParams =
-@"<?xml version=""1.0"" encoding=""utf-8"" ?>
-<ArrayOfEntry xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
- <Entry>
-  <Key>MODE</Key>
-  <Value></Value>
- </Entry>
- <Entry>
-  <Key>TENANT</Key>
-  <Value>@TENANT@</Value>
- </Entry>
- <Entry>
-  <Key>UNIFREIGHT_USER_ID</Key>
-  <Value>@UNIFREIGHT_USER_ID@</Value>
- </Entry>
-</ArrayOfEntry>";
-            moreParams = moreParams.Replace("@TENANT@", customResponse.tenant.ToString());
-            moreParams = moreParams.Replace("@UNIFREIGHT_USER_ID@", "AMITAL");
-            string messageOut = "";
-            unifreightGenericService.ProccessGenericRequest(xml, ref moreParams, out messageOut);
-            LogMessagingUtil.Instance.AppendLine(unifreightGenericService.GetLog());
-            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
-            this.MyRequestSheetParam.RequestDescription = "קישור מסמך לטיקט";
-            this.MyResponseData.UserMessage = mess.ToString();
-            this.MyResponseData.Succeeded = (unifreightGenericService.MyGenericResponseObj.StatusType == AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success);
-        }
-
+ 
         private void RealUpdate(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
