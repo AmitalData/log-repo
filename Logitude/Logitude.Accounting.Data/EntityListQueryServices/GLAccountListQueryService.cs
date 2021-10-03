@@ -232,7 +232,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                                                    FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
-                                                   InsuredCreditLimit = CardsDatas.InsuredcreditLimit,
+                                                   InsuredCreditLimit = CardsDatas != null ? CardsDatas.InsuredcreditLimit : null,
                                                    ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
 
                                                    IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
