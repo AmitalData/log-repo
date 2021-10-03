@@ -2,6 +2,7 @@
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Services;
 using System;
+using System.Net;
 using TechTalk.SpecFlow;
 
 namespace Logitude.DocumentTests.Steps.Out
@@ -31,7 +32,8 @@ namespace Logitude.DocumentTests.Steps.Out
         [Then(@"the document should be send successfully")]
         public void ThenTheDocumentShouldBeSendSuccessfully()
         {
-            context.SendDocumentOutResult.Should().NotBeNullOrEmpty().And.Contain("context.SendDocumentOutResult");
+            context.SendDocumentOutResult.StatusCode.Should().Be(HttpStatusCode.OK);
+            context.SendDocumentOutResult.Data.Should().NotBeNullOrEmpty();
         }
     }
 }

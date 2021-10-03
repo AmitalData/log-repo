@@ -154,9 +154,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Chunk1.txt" />
-    <Content Include="Data\Chunk2.txt" />
-    <Content Include="Data\Chunk3.txt" />
+    <Content Include="Data\Chunk1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Chunk2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Chunk3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">

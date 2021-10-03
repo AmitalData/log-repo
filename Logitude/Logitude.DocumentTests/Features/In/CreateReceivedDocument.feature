@@ -1,4 +1,4 @@
-﻿@Pre-Prepare-UpdateDocument
+﻿@Pre-Prepare-CreateReceivedDocument
 Feature: Create Received Document
 	We want to create received document
 @Smoke

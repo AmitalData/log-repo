@@ -19,14 +19,14 @@ namespace Logitude.DocumentTests.Features.In
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-UpdateDocument")]
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-CreateReceivedDocument")]
     public partial class CreateReceivedDocumentFeature : object, Xunit.IClassFixture<CreateReceivedDocumentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-UpdateDocument"};
+                "Pre-Prepare-CreateReceivedDocument"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -43,7 +43,7 @@ namespace Logitude.DocumentTests.Features.In
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/In", "Create Received Document", "\tWe want to create received document", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-UpdateDocument"});
+                        "Pre-Prepare-CreateReceivedDocument"});
             testRunner.OnFeatureStart(featureInfo);
         }
         

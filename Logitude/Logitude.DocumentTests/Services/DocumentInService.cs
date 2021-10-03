@@ -26,6 +26,13 @@ namespace Logitude.DocumentTests.Services
             document.ReceivedByUserId = UserTenant.UserId;
             document.ReceivedDate = DateTime.Now;
             document.UpdateDate = DateTime.Now;
+            document.DirectionCode = DirectionCodes.In;
+            document.CreatedByUserId = UserTenant.UserId;
+            document.OwnerId = UserTenant.UserId;
+            document.CreateDate = DateTime.Now;
+            document.UpdatedByUserId = UserTenant.UserId;
+
+            
 
         }
 

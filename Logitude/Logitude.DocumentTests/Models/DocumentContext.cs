@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Test.Base.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -20,6 +21,6 @@ namespace Logitude.DocumentTests.Models
         public DocumentOutPM DocumentOut { get; internal set; }
         public string DocumentOutCopyId { get; internal set; }
         public string DocumentOutSecurityId { get; internal set; }
-        public string SendDocumentOutResult { get; internal set; }
+        public ApiResponse<string> SendDocumentOutResult { get; internal set; }
     }
 }

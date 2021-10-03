@@ -16,9 +16,10 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
         {
             new DocumentTypePreparation().Prepare();
         }
-        [BeforeFeature("Pre-Prepare-UpdateDocument")]
-        public static void PrePrepareUpdateDocument()
+        [BeforeFeature("Pre-Prepare-CreateReceivedDocument")]
+        public static void PrePrepareCreateReceivedDocument()
         {
+            new ShipmentDataPreparation().Prepare();
             new DocumentTypePreparation().Prepare();
             new DocumentTypeTemplatePreparation().Prepare();
         }

@@ -2,6 +2,7 @@
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
 using Logitude.DocumentTests.Services.Preparation;
+using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
@@ -28,7 +29,7 @@ namespace Logitude.DocumentTests.Services
             return documentOut;
         }
 
-        public string SendDocumentOut(DocumentOutPM documentOut)
+        public ApiResponse<string> SendDocumentOut(DocumentOutPM documentOut)
         {
             var htmlFilter = new SendHtmlFilter()
             {
@@ -43,7 +44,7 @@ namespace Logitude.DocumentTests.Services
                 Attachments = documentOut.DocumentOutCopies[0].Id,
                 ObjectTableName= "Shipment",
             };
-            return APICaller.CallPost<string>(htmlFilter,Urls.PostSendHtmlDocument, UserTenant.Token)?.Data;
+            return APICaller.CallPost<string>(htmlFilter,Urls.PostSendHtmlDocument, UserTenant.Token);
 
         }
 
