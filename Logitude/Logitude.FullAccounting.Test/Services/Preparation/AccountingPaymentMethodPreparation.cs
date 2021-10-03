@@ -1,4 +1,6 @@
-﻿using Logitude.FullAccounting.Test.Models;
+﻿using FluentAssertions;
+using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -13,24 +15,29 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 {
     public class AccountingPaymentMethodPreparation
     {
-        const string CashPaymentMethod = "CA";
         public void Prepare()
         {
-            FullAccountingData.CashPaymentMethodId = GetByCode(CashPaymentMethod);
+            FullAccountingData.CashPaymentMethodId = GetCash();
+            FullAccountingData.ChequePaymentMethodId = GetCheque();
         }
-        private string GetByCode(string code)
+
+        private string GetCheque()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(AccountingPaymentMethodCodes.Cheque) ?? Create(CreateCashInstance());
         }
+
+        private string GetCash()
+        {
+            return GetIdByCode(AccountingPaymentMethodCodes.Cash) ?? Create(CreateChequeInstance());
+        }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
             var response = APICaller.CallGetByFilters<List<AccountingPaymentMethodPM>>(Urls.AccountingPaymentMethodViewsByFilters, UserTenant.Token, filter);
+            var method = response.Data?.FirstOrDefault();
+            method.Should().NotBeNull();
+            CheckActivate(method);
             return response.Data?.FirstOrDefault()?.Id;
         }
 
@@ -43,36 +50,45 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        private string Create(string code)
+        private string Create(AccountingPaymentMethodPM accountingPaymentMethodPM)
         {
-            var accountingPaymentMethodPM = CreateInstance(code);
             var response = APICaller.CallPost<AccountingPaymentMethodPM>(accountingPaymentMethodPM, Urls.AccountingPaymentMethodsController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private AccountingPaymentMethodPM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case CashPaymentMethod:
-                    return CreateCashInstance(code);
-                
-                default:
-                    return null;
-            }
-        }
+       
 
-        private AccountingPaymentMethodPM CreateCashInstance(string code)
+        private AccountingPaymentMethodPM CreateCashInstance()
         {
             return new AccountingPaymentMethodPM()
             { 
-                Code = code,
+                Code = AccountingPaymentMethodCodes.Cash,
                 LocalName = "Cash",
                 Name = "Cash",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Cash"
+                SearchFields = $"{AccountingPaymentMethodCodes.Cash},Cash"
 
             };
         }
-       
+       private AccountingPaymentMethodPM CreateChequeInstance()
+        {
+            return new AccountingPaymentMethodPM()
+            { 
+                Code = AccountingPaymentMethodCodes.Cheque,
+                LocalName = "Cheque",
+                Name = "Cheque",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{AccountingPaymentMethodCodes.Cheque},Cheque"
+
+            };
+        }
+        private void CheckActivate(AccountingPaymentMethodPM method)
+        {
+            if (method.Inactive)
+            {
+                method.Inactive = false;
+                APICaller.CallPut<AccountingPaymentMethodPM>(method, Urls.AccountingPaymentMethodsController, UserTenant.Token);
+            }
+        }
+
     }
 }

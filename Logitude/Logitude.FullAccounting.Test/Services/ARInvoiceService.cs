@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
@@ -65,7 +66,7 @@ namespace Logitude.FullAccounting.Test.Services
                 .PaymentTermId(BillingData.PaymentTermCashId)
                 .ProfitCurrencyIdByCode((string)arInvoice.ProfitCurrency)
                 .BillToId(FullAccountingData.CustomerId)
-                .BillToPartnerTypeId("CS")
+                .BillToPartnerTypeId(PartnerTypeCodes.Customer)
                 .ProfitCurrencyExchangeRate((double)arInvoice.ProfitCurrencyExchangeRate)
                 .SetApproved(true)
                 .DueDate(DateTime.Now.AddDays(1))

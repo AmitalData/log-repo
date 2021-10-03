@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Services
                 AccountId = new AccountPreparation().Create(),
                 CashBookTypeCode = (int)CashBookTypeCodeEnum.Cash + "",
                 EnglishName = cashBookTable.Name,
-                BranchId = new BranchPreparation().Create(),
+                BranchId = new BranchPreparation().GetNewBranch(),
                 TotalAmount = 0,
                 LocalName = cashBookTable.Name,
                 Tenant = UserTenant.Tenant,

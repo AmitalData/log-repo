@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -36,14 +37,14 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CreateLine()
             };
             return new APInvoiceBuilder().WithDefualtValues()
-                .BranchIdByCode("BerzeitU")
+                .BranchIdByCode(BranchCodes.BerzeitU)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .IsGeneralInvoice(true)
                 .AccountingDate(DateTime.Now)
-                .InvoiceCurrencyIdByCode("NIS")
+                .InvoiceCurrencyIdByCode(CurrencyCodes.NIS)
                 .InvoiceCurrencyExchangeRate(1)
                 .PaymentTermId(BillingData.PaymentTermCashId)
-                .ProfitCurrencyIdByCode("NIS")
+                .ProfitCurrencyIdByCode(CurrencyCodes.NIS)
                 .ProfitCurrencyExchangeRate(1)
                 .VATNumber("1")
                 .SetApproved(true)
@@ -62,7 +63,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .VatTypeId(BillingData.VATTypeZeroId)
                 .VatPercentage(0)
                 .InvoiceCurrencyAmount(1)
-                .ForiegnCurrencyIdByCode("NIS")
+                .ForiegnCurrencyIdByCode(CurrencyCodes.NIS)
                 .ForiegnExchangeRate(1)
                 .VendorId(FullAccountingData.VendorId)
                 .ProfitCurrencyAmount(1)

@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
@@ -128,7 +129,7 @@ namespace Logitude.FullAccounting.Test.Models.Builders
         {
             switch (code)
             {
-                case "NIS":
+                case CurrencyCodes.NIS:
                     return BillingData.CurrencyNISId;
                 default:
                     return null;

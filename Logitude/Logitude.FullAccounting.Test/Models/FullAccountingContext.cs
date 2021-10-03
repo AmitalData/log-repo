@@ -34,5 +34,6 @@ namespace Logitude.FullAccounting.Test.Models
         public PaymentChequePM PaymentCheque { get; internal set; }
         public BankDepositPM BankDeposit { get; internal set; }
         public BankDepositPM AddedBankDeposit { get; internal set; }
+        public Action Action { get; internal set; }
     }
 }

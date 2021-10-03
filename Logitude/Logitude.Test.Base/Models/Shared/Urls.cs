@@ -14,6 +14,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string BankDepositsController = "bankdeposits";
         public static string BankAccountsController = "bankaccounts";
         public static string DocumentsFilingsController = "DocumentsFilings";
+        public static string AccountingNotesController = "accountingnotes";
         public static string PaymentChequesController = "PaymentCheques";
         public static string CashBooksController = "cashbooks";
         public static string BankCodesController = "BankCodes";
@@ -58,6 +59,7 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ARPaymentViewsGetByFilters = "ARPaymentViews/GetByFilters";
         public static string PortViewsGetByFilters = "PortViews/GetByFilters";
         public static string PortViewsGetTenantImportByFilters = "PortViews/GetTenantImportByFilters";
+        public static string CashBookLineViewsByFilters = "CashBookLineViews/getbyfilters";
         public static string CountryViewsGetByFilters = "CountryViews/GetByFilters";
         public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
@@ -85,6 +87,9 @@ namespace Logitude.Test.Base.Models.Shared
         public static string TariffsController = "Tariffs";
         public static string CRMDomainControllerInserNewTicket = "CRMDomain/InserNewTicket";
         public static string GetTenantTariffSetting = "TariffDomain/GetTenantTariffSetting";
+        public static string GetBankAccountsSummary = "BankAccountViews/GetBankAccountsSummary";
+
+        public static string PostFixEntegrityCheckErrorInBatch = "AccountingEntegrityCheck/PostFixEntegrityCheckErrorInBatch";
 
         //public static string QuotesGetSingle(string id)
         //{
@@ -122,6 +127,8 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CreditCardTypeViewsGetByFilters = "CreditCardTypeViews/GetByFilters";
         public static string MeasurementViewsGetByFilters = "MeasurementViews/GetByFilters";
         public static string ChargeTypeViewsGetByFilters = "ChargesTypeViews/GetByFilters";
+        public static string PutSystem1000File = "AccountingOp/PutSystem1000File";
+        public static string PostTestOperation = "AccountingOp/PostTestOperation";
         public static string ChargesgroupviewsGetByFilters = "chargesgroupviews/getbyfilters";
         public static string PackageTypeViewsGetByFilters = "PackageTypeViews/GetByFilters";
         public static string PaymentTermViewsGetByFilters = "PaymentTermViews/GetByFilters";
@@ -171,7 +178,50 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "bankaccounts/GetSingle?id=" + id;
         }
-
+        public static string GetBankDepositWithoutLines(string id)
+        {
+            return $"BankDeposit/GetSingleWithoutLines?id={id}";
+        }
+        public static string GetCardGLAccountConnect( int tenant)
+        {
+            return $"CardGLAccountConnect/GetCardGLAccountConnect?tenant={tenant}";
+        }
+        public static string GetSingleGLAccountByDispalyNumberAndTenant(string displayNumber, int tenant)
+        {
+            return $"GLAccounts/GetSingleByDispalyNumberAndTenant?displayNumber={displayNumber}&tenant={tenant}";
+        }
+        public static string GetSingleGLAccountByInternalNumberAndTenant(string internalNumber, int tenant)
+        {
+            return $"GLAccounts/GetSingleByInternalNumberAndTenant?internalNumber={internalNumber}&tenant={tenant}";
+        }
+        public static string DeleteGLAccountNote(string noteId)
+        {
+            return $"AccountingNotes/PostDeleteNote?noteId={noteId}";
+        }
+        public static string GetNotesByCard(string cardId)
+        {
+            return $"AccountingNoteViews/GetNotesByCard?cardId={cardId}";
+        }
+        public static string GetGenerate1000InAccountingOp(string email)
+        {
+            return $"AccountingOp/GetGenerate1000?email={email}";
+        }
+        public static string GetTestOperation(string operationId, string myparams)
+        {
+            return $"AccountingOp/GetTestOperation?operationId={operationId}&myparams={myparams}";
+        }
+        public static string PostCreatePeriodsForYear(string year)
+        {
+            return $"AccountingPeriods/PostCreatePeriodsForYear?year={year}";
+        }
+        public static string GetAccountingPeriodByYear(int year, string typeCode)
+        {
+            return $"AccountingPeriodViews/GetByYear?year={year}&typeCode={typeCode}";
+        }
+        public static string GetRunAllPayablePostDatedARPaymentCheques(int tenant)
+        {
+            return $"ARPaymentChequeOp/GetRunAllPayablePostDatedARPaymentCheques?tenant={tenant}";
+        }
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;
@@ -194,15 +244,20 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Shipment/GetSingle?id=" + id;
         }
+        public static string ContainerGetSingle(string id)
+        {
+            return "Containers/GetSingle?id=" + id;
+        }
+        public static string PostReturnCheque(PostReturnChequeArgs postReturnChequeArgs)
+        {
+            return $"BankDeposit/PostReturnCheque?bankDepositId={postReturnChequeArgs.BankDepositId}&arpChequeId={postReturnChequeArgs.ARPChequeId}&returnType={postReturnChequeArgs.ReturnType}&notes={postReturnChequeArgs.Notes}";
+        }
 
         public static string FTPDetailsGetSingle(string id)
         {
             return "FTPDetails/GetSingle?id=" + id;
         }
-        public static string ContainerGetSingle(string id)
-        {
-            return "Containers/GetSingle?id=" + id;
-        }
+
         public static string APInvoicesGetSingle(string id)
         {
             return "APInvoices/GetSingle?id=" + id;

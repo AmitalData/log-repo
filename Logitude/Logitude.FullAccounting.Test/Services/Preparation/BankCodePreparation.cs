@@ -16,17 +16,18 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         const string BankCode1 = "Bank1";
         public void Prepare()
         {
-            FullAccountingData.BankCodeId = GetByCode(BankCode1);
+            FullAccountingData.BankCodeId = GetBankCode1();
         }
-        private string GetByCode(string code)
+
+        private string GetBankCode1()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(BankCode1) ?? Create(CreateBankCode1Instance());
         }
+        public string GetNewBankCode()
+        {
+            return  Create(CreateAny());
+        }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
@@ -43,32 +44,22 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        public string Create(string code = null)
+        private string Create(BankCodePM bankCode)
         {
-            var bankCode = CreateInstance(code);
             var response = APICaller.CallPost<BankCodePM>(bankCode, Urls.BankCodesController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private BankCodePM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case BankCode1:
-                    return CreateBankCode1Instance(code);
-                default:
-                    return CreateAny();
-            }
-        }
+        
 
-        private BankCodePM CreateBankCode1Instance(string code)
+        private BankCodePM CreateBankCode1Instance()
         {
             return new BankCodePM()
             { 
-                Code = code,
-                EnglishName = code,
-                LocalName = code,
+                Code = BankCode1,
+                EnglishName = BankCode1,
+                LocalName = BankCode1,
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code}"
+                SearchFields = $"{BankCode1}"
 
             };
         }

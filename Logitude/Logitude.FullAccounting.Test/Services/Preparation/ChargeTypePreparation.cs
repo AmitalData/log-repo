@@ -9,26 +9,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.FullAccounting.Test.Models.Codes;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation
 {
 
     public class ChargeTypePreparation
     {
-        const string Items = "ITMS";
         public void Prepare()
         {
-            FullAccountingData.ItemsChargeTypeId = GetByCode(Items);
+            FullAccountingData.ItemsChargeTypeId = GetItems();
         }
-        private string GetByCode(string code)
+
+        private string GetItems()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(ChargeTypeCodes.Items) ?? Create(CreateITMSInstance());
         }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
@@ -43,32 +40,22 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Filter1Value(code)
                 .Build();
         }
-        private string Create(string code)
+        private string Create(ChargesTypePM chargesTypePM)
         {
-            var chargesTypePM = CreateInstance(code);
             var response = APICaller.CallPost<ChargesTypePM>(chargesTypePM, Urls.ChargesTypes, UserTenant.Token);
             return response.Data?.Id;
         }
-        private ChargesTypePM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case Items:
-                    return CreateITMSInstance(code);
-                default:
-                    return null;
-            }
-        }
-        private ChargesTypePM CreateITMSInstance(string code)
+
+        private ChargesTypePM CreateITMSInstance()
         {
             new AccountPreparation().PrepareAccounts();
             return new ChargesTypePM()
             {
-                Code = code,
+                Code = ChargeTypeCodes.Items,
                 EnglishName = "Items Charge",
                 LocalName = "Items Charge",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Items Charge",
+                SearchFields = $"{ChargeTypeCodes.Items},Items Charge",
                 ChargesGroupId = FullAccountingData.ChargesGroup1ID,
                 ChargesGroupCode = "G1",
                 MeasurementCode = "GRWT",
@@ -77,7 +64,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 PayableDebitGLAcountId = FullAccountingData.GLAccountExpensesId
             };
         }
-        
+
 
     }
 }

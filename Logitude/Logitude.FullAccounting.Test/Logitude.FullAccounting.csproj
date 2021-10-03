@@ -105,6 +105,8 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
+    <Compile Include="Models\AccountingIntegrityCheckPM.cs" />
+    <Compile Include="Models\AccountingNotePM.Generated.cs" />
     <Compile Include="Models\AccountingPaymentMethodPM.cs" />
     <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\APInvoiceLinePM.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Models\AutomaticReconcileMethodPM.cs" />
     <Compile Include="Models\BankAccountPM.cs" />
     <Compile Include="Models\BankCodePM.cs" />
+    <Compile Include="Models\BankDepositLinePM.cs" />
     <Compile Include="Models\BankDepositPM.cs" />
     <Compile Include="Models\BranchPM.cs" />
     <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
@@ -130,12 +133,23 @@
     <Compile Include="Models\Builders\JournalLinePMBuilder.cs" />
     <Compile Include="Models\Builders\JournalPMBuilder.cs" />
     <Compile Include="Models\CardPM.cs" />
+    <Compile Include="Models\CashBookLineList.cs" />
     <Compile Include="Models\CashBookPM.cs" />
     <Compile Include="Models\CashBookTypeCodeEnum.cs" />
     <Compile Include="Models\ChargesGroupPM.cs" />
     <Compile Include="Models\ChargesTypePM.cs" />
     <Compile Include="Models\ChartOfAccountPM.cs" />
     <Compile Include="Models\ChartOfAccountsTypeEnum.cs" />
+    <Compile Include="Models\Codes\AccountingActionCodes.cs" />
+    <Compile Include="Models\Codes\AccountingPaymentMethodCodes.cs" />
+    <Compile Include="Models\Codes\AutomaticReconcileMethodCodes.cs" />
+    <Compile Include="Models\Codes\BankDepositReturnTypeCodes.cs" />
+    <Compile Include="Models\Codes\BranchCodes.cs" />
+    <Compile Include="Models\Codes\CashBookCodes.cs" />
+    <Compile Include="Models\Codes\ChargeTypeCodes.cs" />
+    <Compile Include="Models\Codes\ChartOfAccountCodes.cs" />
+    <Compile Include="Models\Codes\CurrencyCodes.cs" />
+    <Compile Include="Models\Codes\PartnerTypeCodes.cs" />
     <Compile Include="Models\CustomerPM.cs" />
     <Compile Include="Models\FullAccountingContext.cs" />
     <Compile Include="Models\FullAccountingData.cs" />
@@ -152,6 +166,7 @@
     <Compile Include="Models\StatusCodeEnum.cs" />
     <Compile Include="Models\VendorPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AccountingEntegrityCheckServices.cs" />
     <Compile Include="Services\APInvoiceService .cs" />
     <Compile Include="Services\APPaymentService.cs" />
     <Compile Include="Services\ARInvoiceService.cs" />
@@ -162,6 +177,7 @@
     <Compile Include="Services\GlAccountService.cs" />
     <Compile Include="Services\JournalService.cs" />
     <Compile Include="Services\PaymentChequesService.cs" />
+    <Compile Include="Services\Preparation\AccountingNotes.cs" />
     <Compile Include="Services\Preparation\AccountingPaymentMethodPreparation.cs" />
     <Compile Include="Services\Preparation\AccountPreparation.cs" />
     <Compile Include="Services\Preparation\ActoinPreparation.cs" />
@@ -199,6 +215,22 @@
     <Compile Include="Steps\Journal\CreateApprovedJournalSteps.cs" />
     <Compile Include="Steps\PaymentCheques\CreatePaymentChequesSteps.cs" />
     <Compile Include="Steps\PaymentCheques\GetPaymentChequesSteps.cs" />
+    <Compile Include="Steps\Security\DeleteGlAccountNoteSteps.cs" />
+    <Compile Include="Steps\Security\GetAccountingPeriodByYearSteps.cs" />
+    <Compile Include="Steps\Security\GetBankAccountsSummarySteps.cs" />
+    <Compile Include="Steps\Security\GetBankDepositWithoutLinesSteps.cs" />
+    <Compile Include="Steps\Security\GetCardGLAccountConnectSteps.cs" />
+    <Compile Include="Steps\Security\GetGlAccountNotesByCardSteps.cs" />
+    <Compile Include="Steps\Security\GetRunAllPayablePostDatedARPaymentChequesSteps.cs" />
+    <Compile Include="Steps\Security\GetSingleGLAccountByDisplayNumberAndTenantSteps.cs" />
+    <Compile Include="Steps\Security\GetSingleGLAccountByInternalNumberAndTenantSteps.cs" />
+    <Compile Include="Steps\Security\GetSystem1000FlatFileSteps.cs" />
+    <Compile Include="Steps\Security\GetTestOperationSteps.cs" />
+    <Compile Include="Steps\Security\PostCreatePeriodsForYearSteps.cs" />
+    <Compile Include="Steps\Security\PostFixIntegrityCheckErrorInBatchSteps.cs" />
+    <Compile Include="Steps\Security\PostTestOperationSteps.cs" />
+    <Compile Include="Steps\Security\PutSystem1000File.cs" />
+    <Compile Include="Steps\Security\ReturnChequeFromBankDepositSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -220,12 +252,25 @@
     <None Include="Features\Journal\CreateApprovedJournal.feature" />
     <None Include="Features\PaymentCheques\CreatePaymentCheques.feature" />
     <None Include="Features\PaymentCheques\GetPaymentCheques.feature" />
+    <None Include="Features\Security\DeleteGlAccountNote.feature" />
+    <None Include="Features\Security\GetAccountingPeriodByYear.feature" />
+    <None Include="Features\Security\GetBankAccountsSummary.feature" />
+    <None Include="Features\Security\GetBankDepositWithoutLines.feature" />
+    <None Include="Features\Security\GetCardGLAccountConnect.feature" />
+    <None Include="Features\Security\GetGlAccountNotesByCard.feature" />
+    <None Include="Features\Security\GetRunAllPayablePostDatedARPaymentCheques.feature" />
+    <None Include="Features\Security\GetSingleGLAccountByDisplayNumberAndTenant.feature" />
+    <None Include="Features\Security\GetSingleGLAccountByInternalNumberAndTenant.feature" />
+    <None Include="Features\Security\GetSystem1000FlatFile.feature" />
+    <None Include="Features\Security\GetTestOperation.feature" />
+    <None Include="Features\Security\PostCreatePeriodsForYear.feature" />
+    <None Include="Features\Security\PostFixIntegrityCheckErrorInBatch.feature" />
+    <None Include="Features\Security\PostReturnChequeBankDeposit.feature" />
+    <None Include="Features\Security\PostTestOperation.feature" />
+    <None Include="Features\Security\PutSystem1000File.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features\APInvoice\Security\" />
-    <Folder Include="Steps\APInvoice\Security\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>

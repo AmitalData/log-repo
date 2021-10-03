@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -36,17 +37,17 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CreateLine()
             };
             return new ARInvoicePMBuilder().WithDefualtValues()
-                .BranchIdByCode("BerzeitU")
+                .BranchIdByCode(BranchCodes.BerzeitU)
                 .LocalCurrencyId(UserTenant.LocalCurrencyId)
                 .ARInvoiceTypeCode("IN")
                 .IsFullAccounting(true)
                 .IsGeneralInvoice(true)
-                .InvoiceCurrencyIdByCode("NIS")
+                .InvoiceCurrencyIdByCode(CurrencyCodes.NIS)
                 .InvoiceCurrencyExchangeRate(1)
                 .PaymentTermId(BillingData.PaymentTermCashId)
-                .ProfitCurrencyIdByCode("NIS")
+                .ProfitCurrencyIdByCode(CurrencyCodes.NIS)
                 .BillToId(FullAccountingData.CustomerId)
-                .BillToPartnerTypeId("CS")
+                .BillToPartnerTypeId(PartnerTypeCodes.Customer)
                 .ProfitCurrencyExchangeRate(1)
                 .SetApproved(true)
                 .DueDate(DateTime.Now.AddDays(1))
@@ -58,12 +59,12 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private ARInvoiceLinePM CreateLine()
         {
             return new ARInvoiceLinePMBuilder().WithDefualtValues()
-                .ForiegnCurrencyIdByCode("NIS")
-                .ForiegnCurrencyCode("NIS")
+                .ForiegnCurrencyIdByCode(CurrencyCodes.NIS)
+                .ForiegnCurrencyCode(CurrencyCodes.NIS)
                 .ForiegnExchangeRate(1)
                 .LineActionCode(ARInvoiceLineActionsEnum.Revenue)
-                .InvoiceCurrencyCode("NIS")
-                .InvoiceLocalCurrencyCode("NIS")
+                .InvoiceCurrencyCode(CurrencyCodes.NIS)
+                .InvoiceLocalCurrencyCode(CurrencyCodes.NIS)
                 .ChargesTypeIdByCode("ITMS")
                 .Description("SpecFlowTest")
                 .LocalDescription("SpecFlowTest")

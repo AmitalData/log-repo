@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
@@ -23,6 +24,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             var customer = APICaller.CallGet<CustomerPM>(Urls.CustomersGetSingle(FullAccountingData.CustomerId), UserTenant.Token)?.Data;
             AssertConnectWithGLAccount(customer);
             FullAccountingData.CustomerGLAccountId = customer.Card.GLAccountId;
+            FullAccountingData.CustomerCardId = customer.Card.Id;
             FullAccountingData.CustomerMainAddressId = GetAddressID(customer);
         }
 
@@ -39,7 +41,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 Code = "FACSpecFlowTest",
                 IsCustomer = true,
                 Name = "FAC SpecFlowTest",
-                TypeCode = "CS"
+                TypeCode = PartnerTypeCodes.Customer
             };
         }
         private void AssertConnectWithGLAccount(CustomerPM customer)

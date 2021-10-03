@@ -7,6 +7,7 @@
 	<Users>
 		<User Default="true" Email="specflowtest@logitudeworld.com" Password="Spec_Flow21" />
 		<User Email="protractor@test.com" Password="!P123t456" />
+		<User DefaultSpecified="true" Email="empty@test.co" Password="123qweasdZXC" />
 		<!--<User Email="specflowtest_customercare@logitudeworld.com" Password="Spec_Flow_CC21" />-->
 
 	</Users>

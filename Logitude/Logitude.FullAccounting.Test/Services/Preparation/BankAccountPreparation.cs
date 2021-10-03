@@ -17,17 +17,18 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         const string BankAccount1 = "BankAccountGeneratedSP";
         public void Prepare()
         {
-            FullAccountingData.BankAccountId = GetByName(BankAccount1);
+            FullAccountingData.BankAccountId = GetBankAccount1();
         }
-        private string GetByName(string name)
+
+        private string GetBankAccount1()
         {
-            var id = GetIdByName(name);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(name);
-            }
-            return id;
+            return GetIdByName(BankAccount1) ?? Create(CreateBankAccount1Instance());
         }
+        public string GetNewBankAccount()
+        {
+            return  Create(CreateAny());
+        }
+
         private string GetIdByName(string name)
         {
             var filter = GetFilterByName(name);
@@ -44,24 +45,14 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        public string Create(string name = null)
+        private string Create(BankAccountPM bankAccount)
         {
-            var bankCode = CreateInstance(name);
-            var response = APICaller.CallPost<BankCodePM>(bankCode, Urls.BankAccountsController, UserTenant.Token);
+            var response = APICaller.CallPost<BankAccountPM>(bankAccount, Urls.BankAccountsController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private BankAccountPM CreateInstance(string name)
-        {
-            switch (name)
-            {
-                case BankAccount1:
-                    return CreateBankAccount1Instance(name);
-                default:
-                    return CreateAny();
-            }
-        }
 
-        private BankAccountPM CreateBankAccount1Instance(string name)
+
+        private BankAccountPM CreateBankAccount1Instance()
         {
             return new BankAccountPM()
             {
@@ -71,14 +62,16 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 BranchNumber = DateTime.Now.Ticks.ToString().Substring(6),
                 AccountNumber = DateTime.Now.Ticks.ToString().Substring(3),
                 CurrencyId = BillingData.CurrencyNISId,
+                ChequeCounter = 1,
                 GLAccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
                 TransferGLAcccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
                 DeferredGLAccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
-                EnglishName = name
+                EnglishName = BankAccount1,
+                LocalName = BankAccount1
 
             };
         }
-        
+
         private BankAccountPM CreateAny()
         {
             string name = "BA" + DateTime.Now.Ticks;
@@ -90,10 +83,12 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 BranchNumber = DateTime.Now.Ticks.ToString().Substring(6),
                 AccountNumber = DateTime.Now.Ticks.ToString().Substring(3),
                 CurrencyId = BillingData.CurrencyNISId,
+                ChequeCounter = 1,
                 GLAccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
                 TransferGLAcccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
                 DeferredGLAccountId = new AccountPreparation().Create(ChartOfAccountsTypeEnum.Banks),
-                EnglishName = name
+                EnglishName = name,
+                LocalName = name
 
             };
         }

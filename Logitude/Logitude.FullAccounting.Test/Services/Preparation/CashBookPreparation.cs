@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -14,22 +15,28 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
 {
     public class CashBookPreparation
     {
-        const string CashNIS = "CashNIS1";
-        const string ChequesNIS = "CashBook1";
+
         public void Prepare()
         {
-            FullAccountingData.CashBookCash1 = GetByCode(CashNIS);
-            FullAccountingData.CashBookCheques1 = GetByCode(ChequesNIS);
+            FullAccountingData.CashBookCash1 = GetCashNIS();
+            FullAccountingData.CashBookCheques1 = GetChequesNIS();
         }
-        private string GetByCode(string code)
+
+        private string GetCashNIS()
         {
-            var id = GetIdByLocalName(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByLocalName(CashBookCodes.CashNIS) ?? Create(CreateCashNISInstance());
         }
+
+        private string GetChequesNIS()
+        {
+            return GetIdByLocalName(CashBookCodes.ChequesNIS) ?? Create(CreateChequesNISInstance());
+        }
+        public string GetNewCashNIS()
+        {
+            return  Create(CreateAnyCashNIS());
+        }
+
+
         private string GetIdByLocalName(string name)
         {
             var filter = GetFilterByLocalName(name);
@@ -46,28 +53,12 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Build();
         }
 
-        public string Create(string name = null)
+        public string Create(CashBookPM cashBook)
         {
-            var cashBook = CreateInstance(name);
             var response = APICaller.CallPost<CashBookPM>(cashBook, Urls.CashBooksController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private CashBookPM CreateInstance(string name)
-        {
-            switch (name)
-            {
-                case CashNIS:
-                    return CreateCashNISInstance(name);
-                case ChequesNIS:
-                    return CreateChequesNISInstance(name);
-                default:
-                    return CreateAny();
-            }
-        }
-
-        
-
-        private CashBookPM CreateCashNISInstance(string name)
+        private CashBookPM CreateCashNISInstance()
         {
             return new CashBookPM()
             {
@@ -78,16 +69,16 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CurrencyId = BillingData.CurrencyNISId,
                 AccountId = new AccountPreparation().Create(),
                 CashBookTypeCode = (int)CashBookTypeCodeEnum.Cash + "",
-                EnglishName = name,
+                EnglishName = CashBookCodes.CashNIS,
                 BranchId = FullAccountingData.BZUBranchID,
                 TotalAmount = 0,
-                LocalName = name,
+                LocalName = CashBookCodes.CashNIS,
                 Tenant = UserTenant.Tenant,
-                SearchFields = name
+                SearchFields = CashBookCodes.CashNIS
 
             };
         }
-        private CashBookPM CreateChequesNISInstance(string name)
+        private CashBookPM CreateChequesNISInstance()
         {
             return new CashBookPM()
             {
@@ -98,16 +89,16 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 CurrencyId = BillingData.CurrencyNISId,
                 AccountId = new AccountPreparation().Create(),
                 CashBookTypeCode = (int)CashBookTypeCodeEnum.Cheques + "",
-                EnglishName = name,
+                EnglishName = CashBookCodes.ChequesNIS,
                 BranchId = FullAccountingData.BZUBranchID,
-                LocalName = name,
+                LocalName = CashBookCodes.ChequesNIS,
                 TotalAmount = 0,
                 Tenant = UserTenant.Tenant,
-                SearchFields = name
+                SearchFields = CashBookCodes.ChequesNIS
 
             };
         }
-        private CashBookPM CreateAny()
+        private CashBookPM CreateAnyCashNIS()
         {
             var name = "CB" + DateTime.Now.Ticks;
             return new CashBookPM()
@@ -120,7 +111,7 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 AccountId = new AccountPreparation().Create(),
                 CashBookTypeCode = (int)CashBookTypeCodeEnum.Cash + "",
                 EnglishName = name,
-                BranchId = new BranchPreparation().Create(),
+                BranchId = new BranchPreparation().GetNewBranch(),
                 LocalName = name,
                 TotalAmount = 500,
                 Tenant = UserTenant.Tenant,

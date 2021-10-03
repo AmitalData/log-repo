@@ -17,17 +17,14 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         const string Group = "G1";
         public void Prepare()
         {
-            FullAccountingData.ChargesGroup1ID = GetByCode(Group);
+            FullAccountingData.ChargesGroup1ID = GetTestGroup();
         }
-        private string GetByCode(string code)
+
+        private string GetTestGroup()
         {
-            var id = GetIdByCode(code);
-            if (string.IsNullOrEmpty(id))
-            {
-                return Create(code);
-            }
-            return id;
+            return GetIdByCode(Group) ?? Create(CreateTestGroupInstance());
         }
+
         private string GetIdByCode(string code)
         {
             var filter = GetFilterByCode(code);
@@ -42,31 +39,21 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 .Filter1Value(code)
                 .Build();
         }
-        private string Create(string code)
+        private string Create(ChargesGroupPM chargesGroupPM)
         {
-            var ChargesGroupPM = CreateInstance(code);
-            var response = APICaller.CallPost<ChargesGroupPM>(ChargesGroupPM, Urls.ChargesGroupsController, UserTenant.Token);
+            var response = APICaller.CallPost<ChargesGroupPM>(chargesGroupPM, Urls.ChargesGroupsController, UserTenant.Token);
             return response.Data?.Id;
         }
-        private ChargesGroupPM CreateInstance(string code)
-        {
-            switch (code)
-            {
-                case Group:
-                    return CreateTestGroupInstance(code);
-                default:
-                    return null;
-            }
-        }
-        private ChargesGroupPM CreateTestGroupInstance(string code)
+        
+        private ChargesGroupPM CreateTestGroupInstance()
         {
             return new ChargesGroupPM()
             {
-                Code = code,
+                Code = Group,
                 LocalName = "Test Group",
                 Name = "Test Group",
                 Tenant = UserTenant.Tenant,
-                SearchFields = $"{code},Test Group",
+                SearchFields = $"{Group},Test Group",
                 
             };
         }
