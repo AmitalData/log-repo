@@ -1,6 +1,6 @@
 
 import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -90,6 +91,21 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
         this.GetMilstones();
+        this.getPreviousScroll();
+        
+    }
+    private getPreviousScroll(){
+        this.router.events.pipe(
+            filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
+         ).subscribe((e: NavigationEnd) => {
+             if(e.url === '/cargo-tracking/shipments'){
+                const shipmentCardsContainer = document.getElementById("scrollArea");
+                if(shipmentCardsContainer && RootContext.ShipmentsScrollPosition > 0) {
+                    shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+                }
+             }
+             
+         });
     }
     ngAfterViewInit(): void
     {
@@ -98,6 +114,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     private SetShipmentsScrollPosition() {
+        console.log('ayed', RootContext.ShipmentsScrollPosition)
         const shipmentCardsContainer = document.getElementById("scrollArea");
         shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
     }
@@ -298,7 +315,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     SetMoreReferenceText(reference: string) {
-        console.log('aaaa', reference)
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
@@ -540,10 +556,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     SelectionChangedHandler(toggleFilterCodes: string) {
+        RootContext.ShipmentsScrollPosition = 0;
         this.SelectToggleFilters(toggleFilterCodes);
     }
     
     OnHasExceptionChanged(event){
+        RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
         this.LoadScreenData();
     }
@@ -577,9 +595,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 break;
             }
         }
-        console.log(this.sortField  + ' - ' + this.isSortDescending)
+
         if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
         {
+            RootContext.ShipmentsScrollPosition = 0;
             this.LoadScreenData();
         }
     }
