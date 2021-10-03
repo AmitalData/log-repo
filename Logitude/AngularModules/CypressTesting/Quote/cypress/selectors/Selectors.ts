@@ -37,6 +37,12 @@ export class QuoteSelectors {
      public static readonly OkAddPackage = '#OkAddPackage';
      public static readonly DeletePackage = "Button[id^='Delete']";
      //#endregion
+
+     //#region 
+     public static readonly ContainerType = '#Quote_PackageType1Id';
+     public static readonly ContainerQuantity = '#Quote_PackageType1Quantity';
+     //#endregion
+
      //#region Quotation
      public static readonly Quotation = '#QuoteBQuotation';
      public static readonly QuoteEventsTab = '#QuoteTHEvents';

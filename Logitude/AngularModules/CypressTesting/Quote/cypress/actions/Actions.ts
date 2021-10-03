@@ -115,6 +115,18 @@ export function CreateQuote() {
 //#endregion
 
 //#region Update Quote
+export function AddContainer(packagesDetails: PackagesDetails) {
+    cy.Click(QuoteSelectors.PackagesTab, null)
+    cy.FillLogTextBox(QuoteSelectors.ContainerQuantity, packagesDetails.Quantity.toString())
+    cy.FillLogLov(QuoteSelectors.ContainerType, packagesDetails.PackageType, true)
+}
+
+export function DeleteContainer() {
+    cy.Click(QuoteSelectors.PackagesTab, null)
+    cy.get(QuoteSelectors.ContainerType).clear()
+    cy.get(QuoteSelectors.ContainerQuantity).clear()
+}
+
 export function FillPackageTab(packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(QuoteSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
@@ -167,6 +179,23 @@ function FillActionNote(note: string) {
 export function UpdateQuote(selector: string) {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
     cy.Click(selector, null);
+}
+
+export function ConvertQuote() {
+    cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function OpenConvertQuoteWizerd(action) {
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+}
+
+export function ConvertQuoteToOceanFCL(quoteDetails: QuoteDetails) {
+    FillTransportMode(quoteDetails.TransportMode);
+    FillShipmentType(quoteDetails.ShipmentType, quoteDetails.TransportMode);
+    FillMainCarriagePorts(quoteDetails)
 }
 //#endregion
 
