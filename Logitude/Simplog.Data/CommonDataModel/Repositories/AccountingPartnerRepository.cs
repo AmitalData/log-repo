@@ -46,6 +46,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.AccountingPartners.Include("Card") where record.Card.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
+        public List<AccountingPartner> GetAccountingPartnersByIds(List<string> ids, int tenant)
+        {
+            return (from record in context.AccountingPartners where ids.Contains(record.Id) && record.Tenant == tenant select record).ToList();
+        }
         public void Add(AccountingPartner entity)
         {
             context.AccountingPartners.Add(entity);
