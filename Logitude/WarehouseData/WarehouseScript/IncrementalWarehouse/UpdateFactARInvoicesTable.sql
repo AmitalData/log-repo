@@ -101,7 +101,7 @@
 	inner JOIN DIM_Currencies LocalCurrency ON dw_ARInvoices.LocalCurrencyId = LocalCurrency.Id
 	inner JOIN DIM_Currencies InvoiceCurrency ON dw_ARInvoices.InvoiceCurrencyId = InvoiceCurrency.Id
 	inner JOIN DIM_Partners BillTo ON dw_ARInvoices.BillToId = BillTo.Id 
-	inner JOIN NewDIM_Branches ON dw_ARInvoices.BranchId =NewDIM_Branches.Id
+	inner JOIN DIM_Branches ON dw_ARInvoices.BranchId =DIM_Branches.Id
 	inner JOIN dw_ARInvoiceLines  ON dw_ARInvoices.Id = dw_ARInvoiceLines.ARInvoiceId
 	 
     inner JOIN DIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id
