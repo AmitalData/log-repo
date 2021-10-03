@@ -30,7 +30,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPOCO.Id = entityPM.Id;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
-
+            if(entityPM.HAWB != null)
+            {
+                entityPOCO.ShortHAWB = entityPM.HAWB;
+            }
      
         }
 
