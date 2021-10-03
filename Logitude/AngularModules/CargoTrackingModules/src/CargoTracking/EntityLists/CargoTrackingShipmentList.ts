@@ -132,7 +132,14 @@ export class CargoTrackingShipmentList {
 	BookingExceptionReason: string;
 	
 	CreatedDone: boolean;
-	
+	PaymentRequiredDone: boolean;
+	PaymentRequiredEstimationDate: Date;
+	PaymentRequiredDate: Date;
+	PaymentRequiredNotes: string;
+	PaymentReceivedDone: boolean;
+	PaymentReceivedEstomationDate: Date;
+	PaymentReceivedDate: Date;
+	PaymentReceivedNotes: string;
 	
 }
  

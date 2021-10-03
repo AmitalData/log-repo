@@ -65,6 +65,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
             SetGoodsClassificationMilestone(tableRow);
             SetDocumentInspectionMilestone(tableRow);
+
+            SetPaymentRequestedMilestone(tableRow);
+            SetPaymentReceivedMilestone(tableRow);
+
             SetGatepassDocumentsReadyMilestone(tableRow);
         }
         private static void SetCreatedMilstones(DataRow tableRow)
@@ -195,6 +199,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.CustomsPayment);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CustomsPaymentDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "PaymentReceivedDone") && !tableRow["PaymentReceivedDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.PaymentReceived);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["PaymentReceivedDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "PaymentRequiredDone") && !tableRow["PaymentRequiredDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.PaymentRequested);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["PaymentRequiredDate"]);
             }
             else if (!IsFieldNullOrEmpty(tableRow, "DocumentInspectionDone") && !tableRow["DocumentInspectionDone"].Equals("False"))
             {
@@ -544,6 +558,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("DocumentInspectionDate", tableRow["DocumentInspection"]);
             tableRow.SetField("DocumentInspectionDone", !IsFieldNullOrEmpty(tableRow, "DocumentInspection"));
+        }
+        private static void SetPaymentRequestedMilestone(DataRow tableRow)
+        {
+            var isPaymentRequiredDateFilled = IsFieldNullOrEmpty(tableRow, "PaymentDateTime") && tableRow["IsPaymentRequired"].Equals(true);
+            tableRow.SetField("PaymentRequiredDate", isPaymentRequiredDateFilled ? tableRow["PaymentRequestDateTime"]: null);
+            tableRow.SetField("PaymentRequiredDone", isPaymentRequiredDateFilled ? !IsFieldNullOrEmpty(tableRow, "PaymentRequestDateTime") : false);
+        }
+
+        private static void SetPaymentReceivedMilestone(DataRow tableRow)
+        {
+            tableRow.SetField("PaymentReceivedDate", tableRow["PaymentDateTime"]);
+            tableRow.SetField("PaymentReceivedDone", !IsFieldNullOrEmpty(tableRow, "PaymentDateTime"));
         }
         private static void SetGatepassDocumentsReadyMilestone(DataRow tableRow)
         {
