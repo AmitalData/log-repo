@@ -34,8 +34,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 //using System.Windows.Interactivity;
 //using System.Windows.Interactivity;
-using Newtonsoft.Json;
-using System.Xml.Serialization;
+
 
 namespace AmitalCustomsWindowsService.Tester
 {
@@ -1070,9 +1069,9 @@ namespace AmitalCustomsWindowsService.Tester
                         result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(reader);
                     }
 
-            }
 
-                     uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
+
+                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
 
                     Console.WriteLine(" [x] Received {0}", message);
                 };
@@ -1084,7 +1083,7 @@ namespace AmitalCustomsWindowsService.Tester
                 // Console.WriteLine(" Press [enter] to exit.");
                 // Console.ReadLine();
             }
-
+        }
         private void rabbitMqToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
