@@ -50,6 +50,8 @@ using RabbitMQ.Client;
 using Logitude.CustomsMessaging.ResponseServices;
 using System.Xml.Serialization;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.AmitalMessaging.Utils;
+using System.Xml;
 
 namespace CustomsWorkerRole
 {
@@ -105,18 +107,22 @@ namespace CustomsWorkerRole
         {
             try
             {
-                if (_OnStartDone) return true;
-                _OnStartDone = true;
-                DoneItemsInRange = new Dictionary<DateTime, int>();
 
-                if (WorkerRoleServiceLocator.PleaseShutDown) return true;
-            
+
+                //if (_OnStartDone) return true;
+                //_OnStartDone = true;
+                //DoneItemsInRange = new Dictionary<DateTime, int>();
+                //if (WorkerRoleServiceLocator.PleaseShutDown) return true;
+
 
 
                 var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
+
+                    Logger.LogMe("create---", false, "TESTELISH");
+
                     channel.QueueDeclare(queue: "connectToTicket",
                                          durable: false,
                                          exclusive: false,
@@ -126,6 +132,9 @@ namespace CustomsWorkerRole
                     var consumer = new EventingBasicConsumer(channel);
                     consumer.Received += (model, ea) =>
                     {
+
+                        Logger.LogMe("recievd", false, "TESTELISH");
+
                         var body = ea.Body.ToArray();
                         var message = Encoding.UTF8.GetString(body);
 
@@ -133,23 +142,41 @@ namespace CustomsWorkerRole
 
                         XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
                         DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
-                        using (TextReader reader = new StringReader(message))
-                        {
-                            result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(reader);
-                        }
+                     
+                            Logger.LogMe("read xml", false, "TESTELISH");
+
+                            XmlDocument doc = new XmlDocument();
+                        doc.Load(reader);
+
+                        //Display all the book titles.
+                        XmlNodeList elemList = doc.GetElementsByTagName("Body");
 
 
+                            result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
+
+                        //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
+                        //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
+                         }
+ 
+                        Logger.LogMe("update", false, "TESTELISH");
+ 
                         uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
 
                         Console.WriteLine(" [x] Received {0}", message);
                     };
+ 
+                    Logger.LogMe("BasicConsume", false, "TESTELISH");
 
-                    channel.BasicConsume(queue: "connectToTicket",
+                     channel.BasicConsume(queue: "connectToTicket",
                                          autoAck: true,
                                          consumer: consumer);
-                }
+
+
+                    Logger.LogMe("end BasicConsume", false, "TESTELISH");
 
                 }
+                
+
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
@@ -223,8 +250,7 @@ namespace CustomsWorkerRole
             try
             {
                 OnStart();
-
-              //  WorkUntilQEmpty_Db();
+ 
 
 
             }

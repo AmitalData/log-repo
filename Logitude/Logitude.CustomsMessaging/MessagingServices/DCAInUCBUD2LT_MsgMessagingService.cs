@@ -187,6 +187,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     using (var connection = factory.CreateConnection())
                     using (var channel = connection.CreateModel())
                     {
+
                         channel.QueueDeclare(queue: "connectToTicket",
                                              durable: false,
                                              exclusive: false,
@@ -197,15 +198,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         var body2 = Encoding.UTF8.GetBytes(message);
 
                         channel.BasicPublish(exchange: "",
-                                             routingKey: "connectToTicket" ,
+                                             routingKey: "connectToTicket",
                                              basicProperties: null,
                                              body: body2);
 
                         Console.WriteLine(" [x] Sent {0}", message);
                     }
-
-                    Console.WriteLine(" Press [enter] to exit.");
-                    Console.ReadLine();
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";

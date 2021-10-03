@@ -101,9 +101,9 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.rabbitMqToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sendConnectToTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recivedConnectToTicletToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -117,7 +117,7 @@
             this.toolStripMenuItem1,
             this.debugToolStripMenuItem,
             this.adHockToolStripMenuItem,
-            this.rabbitMqToolStripMenuItem});
+            this.rabbitMQToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(638, 24);
@@ -732,29 +732,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // rabbitMqToolStripMenuItem
+
+            // rabbitMQToolStripMenuItem
             // 
-            this.rabbitMqToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendConnectToTicketToolStripMenuItem,
-            this.recivedConnectToTicletToolStripMenuItem});
-            this.rabbitMqToolStripMenuItem.Name = "rabbitMqToolStripMenuItem";
-            this.rabbitMqToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.rabbitMqToolStripMenuItem.Text = "RabbitMq";
-            this.rabbitMqToolStripMenuItem.Click += new System.EventHandler(this.rabbitMqToolStripMenuItem_Click);
+            this.rabbitMQToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendToolStripMenuItem,
+            this.recivedToolStripMenuItem});
+            this.rabbitMQToolStripMenuItem.Name = "rabbitMQToolStripMenuItem";
+            this.rabbitMQToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.rabbitMQToolStripMenuItem.Text = "RabbitMQ";
             // 
-            // sendConnectToTicketToolStripMenuItem
+            // sendToolStripMenuItem
             // 
-            this.sendConnectToTicketToolStripMenuItem.Name = "sendConnectToTicketToolStripMenuItem";
-            this.sendConnectToTicketToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.sendConnectToTicketToolStripMenuItem.Text = "SendConnectToTicket";
-            this.sendConnectToTicketToolStripMenuItem.Click += new System.EventHandler(this.sendConnectToTicketToolStripMenuItem_Click);
+            this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sendToolStripMenuItem.Text = "Send";
+            this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
             // 
-            // recivedConnectToTicletToolStripMenuItem
+            // recivedToolStripMenuItem
             // 
-            this.recivedConnectToTicletToolStripMenuItem.Name = "recivedConnectToTicletToolStripMenuItem";
-            this.recivedConnectToTicletToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.recivedConnectToTicletToolStripMenuItem.Text = "RecivedConnectToTiclet";
-            this.recivedConnectToTicletToolStripMenuItem.Click += new System.EventHandler(this.recivedConnectToTicletToolStripMenuItem_Click);
+
+            this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recivedToolStripMenuItem.Text = "Recived";
+            this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -856,8 +857,9 @@
         private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem commDecServiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rabbitMqToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sendConnectToTicketToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem recivedConnectToTicletToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rabbitMQToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
+
     }
 }
