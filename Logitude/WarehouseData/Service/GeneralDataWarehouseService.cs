@@ -139,7 +139,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", FieldsDBName = "ARInvoiceId,ReceivableId", DispayInScreen = true, AdditionalIndexes = "ReceivableId", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices" } });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" } });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" }, HasNotSpecifiedValue =true});
             
             tableNameLists.Add(new TableClass() { TableName = "Quote", KeyName = "Id", DBTableName = "Quotes", Dw_TableName = "dw_Quotes", HasConstraint = true, DispayInScreen = true ,RelatedFactTables = new List<string> { "Fact_Quotes" } });
             tableNameLists.Add(new TableClass() { TableName = "QuoteComputedField", DBTableName = "QuoteComputedFields", Dw_TableName = "dw_QuoteComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
@@ -186,7 +186,10 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id,DirectHouse", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "Quote", DWObjectTableCode = "Fact_Quotes", Dw_TableName = "dw_Quotes", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactQuotesTable", IncrementalScriptName = "UpdateFactQuoteTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
             tableNameLists.Add(new TableClass() { HasMultipleDWTables = true, FieldIndexes = "Main Entity Id",  MultipleDW_TablesNames = new List<string> { "dw_ARInvoices", "dw_APInvoices" }, MultipleTablesNames = new List<string> { "ARInvoice", "APInvoice" }, TableName = "Invoice", DWObjectTableCode = "Fact_Invoices", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactInvoicesTable", IncrementalScriptName = "UpdateFactInvoicesTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Invoices" } });
-            // tableNameLists.Add(new TableClass() { TableName = "ARInvoice", FieldIndexes = "Source Tenant,Parent Tenant,Id", DWObjectTableCode = "Fact_Invoices", Dw_TableName = "dw_Invoices", KeyName = "[d]", DWTableKeyName = "Id", HasFactTable = true });
+ 
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoice", DWObjectTableCode = "Fact_ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactARInvoicesTable", IncrementalScriptName = "UpdateFactARInvoicesTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_ARInvoices" } });
+
+      
 
             //WaterMark
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate", RelatedFactTables = GetAllFactTableLists() });
@@ -209,7 +212,7 @@ namespace WarehouseData.Helper
 
         private List<string> GetAllFactTableLists()
         {
-            List<string> factTables = new List<string>() { "Fact_Shipments", "Fact_Charges", "Fact_Quotes", "Fact_Invoices" };
+            List<string> factTables = new List<string>() { "Fact_Shipments", "Fact_Charges", "Fact_Quotes", "Fact_Invoices", "Fact_ARInvoices" };
             return factTables;
         }
 
@@ -348,7 +351,9 @@ namespace WarehouseData.Helper
             }
             else if (dataTypeCode.Contains("DateTime"))
             {
-                fieldValue = field.FieldName == "[AutomaticLastUpdateDate]" ? " GETDATE()" : "null";
+               
+                    fieldValue = field.FieldName == "[AutomaticLastUpdateDate]" || field.IsRequired ? " GETDATE()" : "null";
+          
             }
 
             return fieldValue;
@@ -376,12 +381,12 @@ namespace WarehouseData.Helper
 
         public List<TableClass> GetEnvironmentFactDataWarehouseTables(List<TableClass> dataWarehouseTables,string connectionString)
         {
-            List<string> environmentFactTableCodes = GetEnvironmentFactTables(connectionString);
+            List<string> environmentFactTableCodes = GetEnvironmentFactTables(connectionString);   
             return  dataWarehouseTables.Where(dwTable => environmentFactTableCodes.Any(environmentFactCode => dwTable.RelatedFactTables.Any(factCode => factCode == environmentFactCode))).ToList();
 
         }
 
-
+       
         public List<IndexItem> GetDWObjectFieldIndexes(string xml)
         {
             List<IndexItem> result = DeserializeObject<List<IndexItem>>(xml);
