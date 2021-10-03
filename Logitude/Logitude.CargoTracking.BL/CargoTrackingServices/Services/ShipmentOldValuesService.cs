@@ -17,7 +17,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         public void CreateOldCargoShipmentsFromPreOldCargoShipments(CargoTrackingArgs cargoArgs)
         {
-            var sql = BuildScriptForCreatePreOldCargoShipment();
+            var sql = BuildScriptForCreateOldCargoShipmentsFromPreOldCargoShipments();
             ExcuteSqlScript(cargoArgs, sql);
         }
         private string BuildScriptForCreatePreOldCargoShipment()
