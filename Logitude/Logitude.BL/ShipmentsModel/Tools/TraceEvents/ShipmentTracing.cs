@@ -346,13 +346,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
                 }
-
                 else if (entityPM.DirectionId == "E")
                 {
                     this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
                 }
             }
 
+            else if (entityPoco.CustomsClearanceDate != null && entityPM.CustomsClearanceDate == null)
+            {
+                if (entityPM.DirectionId == "I" || entityPM.DirectionId == "R")
+                {
+                    this.DeleteTraceEvent("ICCL");
+                }
+                else if (entityPM.DirectionId == "E")
+                {
+                    this.DeleteTraceEvent("ECCL");
+                }
+
+            }
         }
         private void TraceOtherData()
         {

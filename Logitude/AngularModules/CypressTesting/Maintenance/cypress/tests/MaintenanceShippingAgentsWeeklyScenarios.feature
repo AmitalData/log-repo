@@ -57,11 +57,12 @@ Feature: Shipping Agent Create and Edit it in Maintenance Module
 
     Scenario: Edit the shipping agent
         Given "Test edit shipping agent" as shipping agent notes
+        And inactivate the shipping agent
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
             | IBANNo   | zero Bank           |
         When update shipping agent
         Then the shipping agent should update successfully
         And the following event should appear in events tab
-            | Event                  |
-            | Shipping Agent Updated |
+            | Event                  | Notes                      |
+            | Shipping Agent Updated | Shipping Agent Inactivated |

@@ -1,6 +1,6 @@
 ﻿Feature: Create Cashbook
 	We want to create cashbook.
-
+@Smoke
 Scenario: Create cashbook
 	Given a cashbook with the following properties
 		| property     | Value        |

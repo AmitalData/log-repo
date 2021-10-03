@@ -1,4 +1,4 @@
-@release @FeatureToggle @NewDev
+@devrelease @FeatureToggle @NewDev
 Feature: Upload Excel Tariff test
     The authenticated user will create new Air freight cost tariff.
     then upload excel file from PC .

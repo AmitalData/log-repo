@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Steps.Cashbook
             context.Cashbook = APICaller.CallGet<CashBookPM>(Urls.CashbooksSingle(FullAccountingData.CashBookCash1), UserTenant.Token).Data;
         }
 
-        [Then(@"cashbookt should be avaliable")]
-        public void ThenCashbooktShouldBeAvaliable()
+        [Then(@"cashbookt should be available")]
+        public void ThenCashbooktShouldBeAvailable()
         {
             context.Cashbook.Should().NotBeNull();
         }

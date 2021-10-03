@@ -1,5 +1,4 @@
-export class URLs
-{
+export class URLs {
     public static readonly GetShipmentConnectedEntities = '**/GetShipmentConnectedEntities?**';
     public static readonly Shipment = '**/shipment';
     public static readonly SplitShipment = '**/SplitShipment';
@@ -12,6 +11,8 @@ export class URLs
     public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
     public static readonly ContainerFollowUpViewsGetbyfilters = "**/ContainerFollowUpViews/getbyfilters?**"
     public static readonly GetMenuButtonGrouppms = "**/getmenubuttongrouppms?**"
+    public static readonly Queries = '**/queries';
+    public static readonly DeleteQuery = '**/queries?**';
 
     //INTTRA
     public static readonly FTPDetails = "**/ftpdetails";
@@ -22,9 +23,9 @@ export class URLs
     public static readonly INTTRAWebServiceSendEBooking = "**/INTRAWebService/GetSendEBooking?**";
     public static readonly INTRAWebServiceGetMessageResult = "**/INTRAWebService/GetMessageResult?**";
     public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**";
-    public static readonly ShipmentGetSingle="**/shipment/GetSingle?**"
+    public static readonly ShipmentGetSingle = "**/shipment/GetSingle?**"
 
-    public static ShipmentviewsGetbyfilters(ShipmentNumber: string): string{
+    public static ShipmentviewsGetbyfilters(ShipmentNumber: string): string {
         return "**/shipmentviews/getbyfilters?**" + ShipmentNumber + "**";
     }
     public static readonly GetAll = "**/getall"

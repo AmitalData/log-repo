@@ -26,7 +26,7 @@ export class TranslationComponent extends BaseComponent  {
         this.LoadTextCodeTypes();
     }
     
-    public Count: number = 0;
+    public Count: number;
 
     private LoadTextCodeTypes() {
         this.myService.GetTextCodeTypes().subscribe((myResult: ServiceResponse) => {
@@ -77,7 +77,6 @@ export class TranslationComponent extends BaseComponent  {
     }
 
     public ItemsSource: ObservableCollection;
-    public TranslationsCount: number = 0;
     private loadedTranslations: FieldsTranslations[];
     private isLoading: boolean = false;
     private LoadTranslations() {
@@ -97,7 +96,6 @@ export class TranslationComponent extends BaseComponent  {
                     //this.isLoading = false;
 
                     if (this.loadedTranslations != null) {
-                        this.TranslationsCount = this.loadedTranslations.length;
                         this.BuildItemsSource();
                     }
                 }
@@ -109,20 +107,18 @@ export class TranslationComponent extends BaseComponent  {
         this.ItemsSource.Clear();
 
         var list: TranslationItem[] = [];
-        let first40Translations = this.loadedTranslations.slice(0, 40);
+
         if (AppTool.IsNullOrEmpty(this.SearchText)) {
-            first40Translations.forEach((item) => {
+            this.loadedTranslations.forEach((item) => {
                 list.push(new TranslationItem(item, this));
             })
         }
 
         else {
-
-            const filteredTranslations = this.loadedTranslations.filter(d => !AppTool.IsNullOrEmpty(d.DefaultText) && d.DefaultText.toUpperCase().startsWith(this.SearchText.toUpperCase())
+            this.loadedTranslations.filter(d => !AppTool.IsNullOrEmpty(d.DefaultText) && d.DefaultText.toUpperCase().startsWith(this.SearchText.toUpperCase())
                 || !AppTool.IsNullOrEmpty(d.TranslatedText) && d.TranslatedText.toUpperCase().startsWith(this.SearchText.toUpperCase())
-                || !AppTool.IsNullOrEmpty(d.TranslatedTextPlural) && d.TranslatedTextPlural.toUpperCase().startsWith(this.SearchText.toUpperCase()));
-            first40Translations = filteredTranslations.slice(0, 40);
-            first40Translations.forEach((item) => {
+                || !AppTool.IsNullOrEmpty(d.TranslatedTextPlural) && d.TranslatedTextPlural.toUpperCase().startsWith(this.SearchText.toUpperCase()))
+                .forEach((item) => {
                     list.push(new TranslationItem(item, this));
                 });
         }

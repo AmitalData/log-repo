@@ -22,6 +22,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         private int tenant;
         private EntityChange entityChange;
         private List<Automation> sendDocumentAutomations = new List<Automation>();
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
+        public string ResultCode { get { return "SENDDOCUMENT"; } }
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
@@ -29,7 +31,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             this.entityChange = automationResultArgs.EntityChange;
             this.tenant = this.entityChange.Tenant;
 
-            this.sendDocumentAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "SENDDOCUMENT").ToList();
+            this.sendDocumentAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (sendDocumentAutomations.Count > 0)
             {
                 ExecuteSendDocumentAutomations();

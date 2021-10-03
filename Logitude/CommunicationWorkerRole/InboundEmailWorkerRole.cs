@@ -412,7 +412,11 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Recepient;
-                    replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
+                    if (!replayTo.Split('@')[0].Contains("+"))
+                    {
+                        replayTo = newInboundEmailLine.Recepient.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Recepient.Split('@')[1];
+                    }
+                    replayToList = replayTo.Split('@')[0] +  "-in" + "@" + replayTo.Split('@')[1];
                 }
 
                 else
@@ -427,6 +431,10 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Sender;
+                    if (!replayTo.Split('@')[0].Contains("+"))
+                    {
+                        replayTo = newInboundEmailLine.Sender.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Sender.Split('@')[1];
+                    }
                     replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
                 }
 
@@ -496,14 +504,6 @@ namespace CommunicationWorkerRole
 
             try
             {
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-                //Dictionary<string, string> message = new Dictionary<string, string>() 
-                //    {
-                //        { "CommunicationLogId", myCommunicationLogId}, 
-                //        { "Tenant", Tenant.ToString() }, 
-                //    };
-
-                //queueservice.Send(message);
 
                 DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
@@ -581,7 +581,6 @@ namespace CommunicationWorkerRole
 
                 else
                 {
-                    //replayToList = newInboundEmailLine.Sender;
                     replayToList = replayTo.Split('@')[0] + "-ex" + "@" + replayTo.Split('@')[1];
                 }
             }

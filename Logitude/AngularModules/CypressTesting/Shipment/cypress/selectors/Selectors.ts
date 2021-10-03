@@ -120,6 +120,7 @@ export class ShipmentSelectors extends RegexSelectors {
 
   //#region Package tab fields
   public static readonly AddPackage = '#AddPackage';
+  public static readonly DeletePackages = '#DeletePackages';
   public static readonly AddInsidePackage = '#AddInsidePackage';
   public static readonly PackageQuantity = '#ShipmentPackage_Quantity';
   public static readonly InsidePackageQuantity = '#InsideShipmentPackage_Quantity';
@@ -182,6 +183,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MainCarriageCarrierPrefix = '#Shipment_MainCarriageCarrierPrefix';
   public static readonly MainCarriageFinalDestinationPortId = '#Shipment_MainCarriageFinalDestinationPortId';
   public static readonly MainCarriagePort1Id = '#Shipment_Transshipment1FromPortId';
+  public static readonly Transshipment1CarrierId = '#Shipment_Transshipment1CarrierId';
   public static readonly MainCarriagePort2Id = '#Shipment_Transshipment2FromPortId';
   public static readonly MainCarriagePort3Id = '#Shipment_Transshipment3FromPortId';
 
@@ -358,4 +360,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion
   public static readonly ComponentBusyIndicator = "#EditComponentBusyIndicator_0"
+
+
+  //#region Shipment view
+  public static readonly ShipmentList = "#Shipments-O-Q";
+  public static readonly ShipmentViewQueryList = "#QueryList_0_0";
+  public static readonly AddNewShipmentViewHyperLink = "#NewViewTabchoose";
+  public static readonly ShipmentViewName = "#ViewNameId";
+  public static readonly ViewSearchField = "#NewViewSearchFields_0_0";
+  public static readonly ListBoxItem = ".ListBoxItem";
+  public static readonly ViewAddButton = "#NewButtonViewAdd";
+  public static readonly EditViewButton = "#ViewFiltersButton";
+  public static readonly ViewDeleteButton = "#DeleteButton";
+  //#endregion
 }

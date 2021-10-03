@@ -130,6 +130,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DIM_QuoteStatges.dwml" />
+    <None Include="Files\DIM_Addresses.dwml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Files\DIM_Countries.dwml" />
     <None Include="Files\DIM_InvoiceMainTypes.dwml" />
     <None Include="Files\DIM_InvoiceStatus.dwml" />
@@ -165,7 +168,10 @@
     <None Include="Files\DIM_Tenants.dwml" />
     <None Include="Files\DIM_TransportModes.dwml" />
     <None Include="Files\DIM_Types.dwml" />
+    <None Include="Files\DIM_Contacts.dwml" />
     <None Include="Files\DIM_Users.dwml" />
+    <None Include="Files\DIM_VatTypes.dwml" />
+    <None Include="Files\Fact_ARInvoices.dwml" />
     <None Include="Files\Fact_Charges.dwml" />
     <None Include="Files\Fact_Invoices.dwml" />
     <None Include="Files\Fact_MasterCharges.dwml" />

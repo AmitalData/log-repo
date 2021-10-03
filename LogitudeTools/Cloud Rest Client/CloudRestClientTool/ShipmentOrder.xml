@@ -1,12 +1,13 @@
 ﻿<ShipmentOrder xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<OrderNumber>31</OrderNumber>
+	<ShipmentNumber>23</ShipmentNumber>
 	<TransportMode Code="A">
 		<Name>Air</Name>
 	</TransportMode>
 	<AccountManager Code="specflowtest@logitudeworld.com">
-      <EnglishName>SpecflowTest</EnglishName>
-      <LocalName>SpecflowTest</LocalName>
-   </AccountManager>
+		<EnglishName>SpecflowTest</EnglishName>
+		<LocalName>SpecflowTest</LocalName>
+	</AccountManager>
 	<Consignee Code="10011">
 		<EnglishName>agent 55</EnglishName>
 		<MainAddress>
@@ -162,7 +163,6 @@
 	<Direction Code="E">
 		<Name>Export</Name>
 	</Direction>
-	<ShipmentNumber>23</ShipmentNumber>
 	<SupplyDateTime>2021-08-15T11:29:10.12</SupplyDateTime>
 	<OriginPort Code="ILASH">
 		<LocalName>Ashdod</LocalName>
@@ -226,4 +226,6 @@
 	<Quantity>1</Quantity>
 	<GrossWeight>2</GrossWeight>
 	<Volume>3</Volume>
+	<LastExceptionDate>2020-03-12T11:29:10.12</LastExceptionDate>
+	<LastExceptionDescription>test</LastExceptionDescription>
 </ShipmentOrder>

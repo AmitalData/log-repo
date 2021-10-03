@@ -1,7 +1,6 @@
 import * as Actions from "../../actions/Actions"
 import { ShipmentSelectors } from "../../selectors/Selectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
@@ -40,12 +39,9 @@ Given("the user add order package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillOrdersTab(packagesDetails)
 });
-//#endregion
 
-//#region Update partners tab given step
-Given("the user add partners with following details", (dataTable) => {
-    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
-    Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
+Given("the user delete the first order package", () => {
+    Actions.DeleteOrderPackage()
 });
 //#endregion
 
@@ -53,6 +49,10 @@ Given("the user add partners with following details", (dataTable) => {
 Given("the user add package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
+});
+
+Given("the user delete the package in the packages tabs", () => {
+    Actions.DeleteShipmentPackages()
 });
 //#endregion
 
@@ -64,12 +64,18 @@ Given("the user fill receivables with the following details", (dataTable) => {
 //#endregion
 
 //#region Update routing tab given steps
+Given("add transshipments with {string} as via port and {string} as airline", (viaPort, airline) => {
+    Actions.AddTransshipments(viaPort, airline)
+});
+
 Given("the user add new pickup", () => {
     Actions.FillPickupRouting()
 });
+
 Given("add delivery with {string} as a partner routing", (partner) => {
     Actions.FillDeliveryRouting(partner)
 });
+
 Given("add pre carriage and on carriage from port {string} to port {string}", (fromPort, toPort) => {
     Actions.FillPreCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
     Actions.FillOnCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)

@@ -1,4 +1,4 @@
-@release @FeatureToggle
+@devrelease @FeatureToggle
 Feature: Create New Surcharge Cost Tariff
     The authenticated user will create new air, ocean LCL, and ocean FCL surcharge cost tariff.
 

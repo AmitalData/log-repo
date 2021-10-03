@@ -8,8 +8,6 @@ namespace Logitude.TimeManagementTests.Models
 {
     public class TMEmployeeTimePM
     {
-		public string Id { get; set; }
-		public int Tenant { get; set; }
         public string ProjectId { get; set; }
         public string Description { get; set; }
         public string WINumber { get; set; }
@@ -18,6 +16,5 @@ namespace Logitude.TimeManagementTests.Models
         public int TimeInMinutes { get; set; }
         public DateTime DateOfWork { get; set; }
         public string SprintId { get; set; }
-
-	}
+    }
 }

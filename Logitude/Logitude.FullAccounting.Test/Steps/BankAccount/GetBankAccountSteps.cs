@@ -22,8 +22,8 @@ namespace Logitude.FullAccounting.Test.Steps.BankAccount
             context.BankAccountPM = APICaller.CallGet<BankAccountPM>(Urls.BankAccountsGetSingle(FullAccountingData.BankAccountId), UserTenant.Token).Data;
         }
 
-        [Then(@"bank account should be avaliable")]
-        public void ThenBankAccountShouldBeAvaliable()
+        [Then(@"bank account should be available")]
+        public void ThenBankAccountShouldBeAvailable()
         {
             context.BankAccountPM.Should().NotBeNull();
         }

@@ -723,8 +723,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                 bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                if (!isAllPortsEC && !isAllPortsNA)
+                if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
                 {
                     throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                 }
@@ -748,6 +749,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
                         });
                     }
                 }

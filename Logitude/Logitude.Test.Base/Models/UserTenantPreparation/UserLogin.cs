@@ -6,6 +6,7 @@
         public string UserName { get; set; }
         public int Tenant { get; set; }
         public string Token { get; set; }
+        public string DocumentDownloadToken { get; set; }
         public bool InvalidToken { get; set; }
     }
 }

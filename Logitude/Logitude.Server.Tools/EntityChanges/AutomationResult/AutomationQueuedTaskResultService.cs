@@ -21,11 +21,14 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationQueuedTaskResultService : GeneralAutomationResultService, IAutomationResultService
     {
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
+        public string ResultCode { get { return "QUEUE"; } }
+
         AutomationResultArgs automationResultArgs { get; set; }
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
-            List<Automation> queueautomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "QUEUE").ToList();
+            List<Automation> queueautomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (queueautomationsList.Count > 0)
             {
 

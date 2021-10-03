@@ -15,6 +15,7 @@ export class VatTypesSelectors {
     public static readonly AccountingTab = "#VatTypeTHAccounting"
     public static readonly AccountingReceivablesExternalId = "#VatType_ReceivablesExternalId"
     public static readonly AccountingPayablesExternalId = "#VatType_PayablesExternalId"
+    public static readonly IsRegionalTaxCheckBox = "#VatType_IsRegionalTax"
     public static readonly InActive = "#VatType_InActive"
     public static readonly MultiSimpleGridViewRow = "tr.SimpleGridViewRow"
     public static readonly MultiCheckBoxes = "input[type^='checkbox']"

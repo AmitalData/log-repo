@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.PaymentCheques
+namespace Logitude.FullAccountingTests.Features.PaymentCheques
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.PaymentCheques
 #line 1 "GetPaymentCheques.feature"
 #line hidden
         
-        public GetPaymentChequesFeature(GetPaymentChequesFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetPaymentChequesFeature(GetPaymentChequesFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.PaymentCheques
         [Xunit.SkippableFactAttribute(DisplayName="Get payment cheques")]
         [Xunit.TraitAttribute("FeatureTitle", "Get Payment cheques")]
         [Xunit.TraitAttribute("Description", "Get payment cheques")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetPaymentCheques()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get payment cheques", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get payment cheques with paymentChequesId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("payment cheques should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("payment cheques should be", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

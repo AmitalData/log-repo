@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-ARIvoice
 Feature: Create AR Invoice
 	We want to create AR invoice.
-
+@Smoke
 Scenario: Create AR invoice
 	Given I have the following AR invoice lines:
 		| Line | InvoiceCurrency | ForiegnCurrency | ForiegnExchangeRate | Description  | VatType | VatPercentage | DueDate    | Quantity | InvoiceCurrencyAmount | UnitPrice | ChargesType | ProfitCurrencyAmount | LocalCurrencyAmount | ForiegnCurrencyAmount |

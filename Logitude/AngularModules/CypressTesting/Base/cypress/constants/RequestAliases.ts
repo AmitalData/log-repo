@@ -39,6 +39,10 @@ export class RequestAliases {
     public static readonly GetAll = 'GetAll';
     public static readonly EntityResourceAccountingPeriod = "EntityResource"
     public static readonly ContainerFollowUpViewsGetbyfilters = 'ContainerFollowUpViewsGetbyfilters';
+
+    public static readonly PostQuery = "PostQuery"
+    public static readonly PutQuery = "PutQuery"
+    public static readonly DeleteQuery = "DeleteQuery"
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
@@ -179,6 +183,8 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
+    public static readonly PutAgent = "PutAgent";
+
     public static readonly PutTrucker = "PostTrucker"
     public static readonly PostTrucker = "PostTrucker"
 
@@ -213,10 +219,16 @@ export class RequestAliases {
     public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
     public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
 
+    public static readonly PutCompanyAddressSettings = "PutCompanyAddressSettings"
+
+    public static readonly PostUser = "PostUser"
+    public static readonly PutUser = "PutUser"
+
+    public static readonly PutShipperConsignee = "PutShipperConsignee"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
-    public static readonly GetQuickSearch = "GetQuickSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
     public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
@@ -273,4 +285,9 @@ export class RequestAliases {
 
     public static readonly PostInterestBases = 'PostInterestBases';
     public static readonly PutInterestBases = 'PutInterestBases';
+
+    public static readonly PostChequeDeposit = "PostChequeDeposit"
+    public static readonly PutChequeDeposit = "PutChequeDeposit"
+    public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
+
 }

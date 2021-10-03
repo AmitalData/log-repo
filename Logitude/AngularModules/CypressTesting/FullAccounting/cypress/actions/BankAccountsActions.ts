@@ -14,7 +14,7 @@ export function GetCurrentDateTime() {
 }
 
 export function NavigatesBankAccountWizerd() {
-    cy.Click("#FABNKS", null)
+    cy.Click(BankAccountsSelectors.BankAccountsTab, null)
     cy.Click(BankAccountsSelectors.NEWBANKButton, null)
 }
 

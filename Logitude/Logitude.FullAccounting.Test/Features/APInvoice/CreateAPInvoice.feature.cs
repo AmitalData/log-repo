@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.APInvoice
+namespace Logitude.FullAccountingTests.Features.APInvoice
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.APInvoice
 #line 1 "CreateAPInvoice.feature"
 #line hidden
         
-        public CreateAPInvoiceFeature(CreateAPInvoiceFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateAPInvoiceFeature(CreateAPInvoiceFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.APInvoice
         [Xunit.SkippableFactAttribute(DisplayName="Create AP Invoice")]
         [Xunit.TraitAttribute("FeatureTitle", "Create AP Invoice")]
         [Xunit.TraitAttribute("Description", "Create AP Invoice")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateAPInvoice()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create AP Invoice", null, tagsOfScenario, argumentsOfScenario);
 #line 5

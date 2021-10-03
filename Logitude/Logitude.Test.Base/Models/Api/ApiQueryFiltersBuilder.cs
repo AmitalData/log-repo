@@ -41,38 +41,32 @@ namespace Logitude.Test.Base.Models.Api
             _apiQueryFilters.Filter2Name = Filter2Name;
             return this;
         }
-
         public ApiQueryFiltersBuilder Filter2Value(string Filter2Value)
         {
             _apiQueryFilters.Filter2Value = Filter2Value;
             return this;
         }
-        
         public ApiQueryFiltersBuilder Filter2Operator(string Filter2Operator)
         {
             _apiQueryFilters.Filter2Operator = Filter2Operator;
             return this;
         }
-        public ApiQueryFiltersBuilder PageIndex(int PageIndex)
+        public ApiQueryFiltersBuilder PageSize(int pageSize)
         {
-            _apiQueryFilters.PageIndex = PageIndex;
+            _apiQueryFilters.PageSize = pageSize;
             return this;
         }
-        public ApiQueryFiltersBuilder PageSize(int PageSize)
+        public ApiQueryFiltersBuilder SortBy(string sortBy)
         {
-            _apiQueryFilters.PageSize = PageSize;
+            _apiQueryFilters.SortBy = sortBy;
             return this;
         }
-        public ApiQueryFiltersBuilder SortBy(string SortBy)
+        public ApiQueryFiltersBuilder SortDirection(string sortDirection)
         {
-            _apiQueryFilters.SortBy = SortBy;
+            _apiQueryFilters.SortDirection = sortDirection;
             return this;
         }
-        public ApiQueryFiltersBuilder SortDirection(string SortDirection)
-        {
-            _apiQueryFilters.SortDirection = SortDirection;
-            return this;
-        }
+
         public ApiQueryFilters Build()
         {
             ApiQueryFilters result = _apiQueryFilters;
@@ -85,7 +79,7 @@ namespace Logitude.Test.Base.Models.Api
             _apiQueryFilters = apiQueryFilters;
             return this;
         }
-        
+
         public ApiQueryFiltersBuilder WithDefualtValues()
         {
             _apiQueryFilters = new ApiQueryFilters

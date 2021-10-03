@@ -153,6 +153,10 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        CustomerName = a.Customer == null ? "" : a.Customer.EnglishName,
 
+                                                       LastExceptionDate = a.LastExceptionDate,
+
+                                                       LastExceptionDescription = a.LastExceptionDescription,
+
                                                    });
             return query;
         }

@@ -52,6 +52,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "LongName": false
     }
     private entityResourceService: EntityResourceService;
+    public HasExportShipmentToggle: boolean = false;
 
 
     public IsExportActivated: boolean = false;
@@ -64,7 +65,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
-        } 
+        }
+        this.checkAirShipmentToggle();
     }
      
     private InitializeServices() {
@@ -77,6 +79,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.entityResourceService = new EntityResourceService();
     }
  
+    private checkAirShipmentToggle() {
+        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.HasExportShipmentToggle = true;
+
+        }
+    }
 
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
@@ -420,7 +429,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: this.isPrivateLabel ? 'Supplier / Consignee' : 'Supplier' ,
+            Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier' ,
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -428,10 +437,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
 
         this.QueryColumns.push(
-            this.GetQueryColumn("ShipperName", 'Text', this.isPrivateLabel ? 'Supplier / Consignee' : 'Supplier')
+            this.GetQueryColumn("ShipperName", 'Text', this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier')
         );
 
-        if (this.isPrivateLabel) { 
+        if (this.HasExportShipmentToggle) { 
             this.DisplayAgentColumn();
         }
 
@@ -448,7 +457,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = this.isPrivateLabel ? 6 : 5;
+            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
 
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
@@ -539,6 +548,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
+            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({
@@ -932,8 +942,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
-
+ 
         if (!this.isLogbox && this.IsExportActivated) {
+ 
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
             newWindowComponentPath = this.LoadAddEditComponent(newWindow, newWindowComponentPath);

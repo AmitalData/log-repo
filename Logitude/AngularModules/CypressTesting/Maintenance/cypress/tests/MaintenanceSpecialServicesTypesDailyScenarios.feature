@@ -25,6 +25,7 @@ Feature: Special Services Type fake Create and Edit in Maintenance Module
 
     Scenario: Edit the special services type
         Given edit special services type local name
+        And the user inactivate the special services type
         When update special services type
         Then the special services type should update successfully
         And the following event should appear in events tab

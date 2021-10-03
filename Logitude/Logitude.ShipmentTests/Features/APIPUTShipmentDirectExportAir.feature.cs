@@ -84,12 +84,16 @@ namespace Logitude.ShipmentTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="PUT Shipment Direct Export Air")]
         [Xunit.TraitAttribute("FeatureTitle", "PUT Shipment Direct Export Air")]
         [Xunit.TraitAttribute("Description", "PUT Shipment Direct Export Air")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
         public virtual void PUTShipmentDirectExportAir()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PUT Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
-#line 5
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -127,7 +131,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table16.AddRow(new string[] {
                             "Height",
                             "100"});
-#line 6
+#line 7
  testRunner.Given("a direct package with the following properties", ((string)(null)), table16, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -151,7 +155,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table17.AddRow(new string[] {
                             "ShipmentPayableLineStatus",
                             "OAMT"});
-#line 13
+#line 14
  testRunner.And("a direct payable with the following properties", ((string)(null)), table17, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -172,7 +176,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table18.AddRow(new string[] {
                             "ShipmentReceivableLineStatusCode",
                             "OAMT"});
-#line 21
+#line 22
  testRunner.And("a direct receivable with the following properties", ((string)(null)), table18, "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -187,16 +191,16 @@ this.ScenarioInitialize(scenarioInfo);
                 table19.AddRow(new string[] {
                             "Country",
                             "US"});
-#line 28
+#line 29
  testRunner.And("a partners with the following properties", ((string)(null)), table19, "And ");
 #line hidden
-#line 33
+#line 34
  testRunner.And("a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 35
  testRunner.When("update a direct shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 35
+#line 36
  testRunner.Then("the direct should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

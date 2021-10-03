@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props" Condition="Exists('..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props')" />
   <Import Project="..\..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -1003,6 +1004,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ProductItemViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
@@ -1045,6 +1047,8 @@
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\ListControllers\ShipmentOrderViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\PMControllers\ShipmentOrderController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentOrderModel\ShipmentOrderExtendedController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ForwarderExportShipmentsController.cs" />
@@ -2610,7 +2614,6 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
-    <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
@@ -2729,7 +2732,10 @@
     <Compile Include="Helpers\UploadTariffHelper.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\PODImageConverterService.cs" />
     <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
@@ -7233,6 +7239,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props'))" />
   </Target>
   <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

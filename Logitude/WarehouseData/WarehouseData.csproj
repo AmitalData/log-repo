@@ -168,6 +168,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildAddressDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -198,6 +201,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildEntityStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildFactARInvoicesTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -250,13 +254,20 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildTransportModeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildContactDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildUsersDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildVatTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateAddressDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
@@ -268,6 +279,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCustomPickListDimensionsTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactARInvoicesTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -340,9 +352,13 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTransportModeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateContactDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVatTypeDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

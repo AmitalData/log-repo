@@ -1,4 +1,4 @@
-@dev
+@devsmoke
 Feature: Chart of Account Create, Search and Edit from Maintenance
     The user creates a Chart of Account, searches for and edits it from the Maintenance Module.
 

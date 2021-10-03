@@ -1,6 +1,6 @@
-@smoke @stable @all
+@devsmoke @stable @all
 Feature: Shipment Update
- The user creates a Direct Export Air shipment and updates it.
+  The user creates a Direct Export Air shipment and updates it.
 
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
@@ -23,25 +23,11 @@ Feature: Shipment Update
     Given the user add order package with the following details
       | Quantity | Length | Width | Height | GrossWeight |
       | 5        | 1      | 2     | 3      | 100         |
-      | 5        | 1      | 2     | 3      | 100         |
     When update shipment
     Then the direct should update successfully
 
-  Scenario: Update partners tab
-    Given the user add partners with following details
-      | Consignee            | TestConsigneeExport |
-      | Agent                | TestAgent           |
-      | CustomsAgentExport   | TestCustomAgent     |
-      | CustomsAgentImport   | TestCustomAgent     |
-      | Notify1              | TestAgent           |
-      | Notify2              | TestAgent           |
-      | ShipperNotExporter   | TestShipperExport   |
-      | ConsigneeNotImporter | TestConsigneeExport |
-      | FreightForwarder     | TestAgent           |
-      | Coloader             | TestAgent           |
-      | CustomClearancePoint | TestWarehouse       |
-      | Consolidator         | TestAgent           |
-      | ReleasingAgent       | TestAgent           |
+  Scenario: Delete order package
+    Given the user delete the first order package
     When update shipment
     Then the direct should update successfully
 
@@ -49,6 +35,11 @@ Feature: Shipment Update
     Given the user add package with the following details
       | Quantity | Length | Width | Height | GrossWeight |
       | 5        | 1      | 2     | 3      | 100         |
+    When update shipment
+    Then the direct should update successfully
+
+  Scenario: Delete packages tab
+    Given the user delete the package in the packages tabs
     When update shipment
     Then the direct should update successfully
 
@@ -60,7 +51,8 @@ Feature: Shipment Update
     Then the direct should update successfully
 
   Scenario: Update routing tab
-    Given the user add new pickup
+    Given add transshipments with "EZE" as via port and "AA" as airline
+    And the user add new pickup
     And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
     When update shipment

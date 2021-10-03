@@ -28,7 +28,6 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
             ShipmentData.ShipmentSubTypeTSSTId = shipmentVariables.ShipmentSubTypeTSSTId;
         }
-
         [BeforeFeature("Pre-Prepare-OceanInsight")]
         public static void SetUpPrepareDataBeforeFeatureRun()
         {

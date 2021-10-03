@@ -23,6 +23,10 @@ export class NewShipmentComponentArgs {
     public ParentShipmentDirectionId: string = null;
     public ParentShipmentNumber: string = null;
     public ParentShipmentType: string = null;
+    public ParentShipmentCustomerId: string = null;
+    public ParentShipmentCustomerType: string = null;
+    public ParentShipmentCustomerAddressId: string = null;
+
 }
 export class FSRWizardArgs {
     EntityPM: any;

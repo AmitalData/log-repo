@@ -1,4 +1,4 @@
-@dev
+@devsmoke
 Feature: AP Invoice
     The user creates new AP Invoice, add new line and approve the AP Invoice
 

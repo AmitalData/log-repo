@@ -101,16 +101,14 @@ Given("the user add payable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
   payableDetails = Assists.CreateInstance<PayableDetails>(dataTable, true);
   ShipmentActions.FillPayablesTab(payableDetails);
-  cy.wait(5000)
 });
 
 When("update shipment", () => {
-  ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
+  ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveCloseButton);
 });
 
 Then("the direct should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-  cy.Click(BaseSelectors.Backbutton, null, false);
 });
 //#endregion
 

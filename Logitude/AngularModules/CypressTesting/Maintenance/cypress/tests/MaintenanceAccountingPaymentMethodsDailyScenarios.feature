@@ -1,4 +1,4 @@
-@stable @daily @all
+@stable @daily @release
 Feature: Accounting Payment Method fake Create, Search and Edit from Maintenance
     The user creates a accounting payment, searches for and edits it from the Maintenance Module.
 

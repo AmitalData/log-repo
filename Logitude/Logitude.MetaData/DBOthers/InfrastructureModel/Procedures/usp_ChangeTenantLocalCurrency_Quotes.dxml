@@ -211,6 +211,13 @@ BEGIN
 			EstimateProfit = Round(@QuoteTotalSaleAmount - @QuoteTotalCostAmountInSale, 2)
 			where Id = @QuoteId and Tenant = @Tenant
 
+      update QuoteComputedFields
+			set
+			EstimatedPayablesInLocal = (select Sum(QuoteCharges.CostTotalAmountLocal) from QuoteCharges where QuoteCharges.QuoteId = @QuoteId And CostTotalAmountLocal is not null),
+			EstimatedPayablesInSales = (select Sum(QuoteCharges.CostAmountInSaleCurrency)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId And CostAmountInSaleCurrency is not null),
+			EstimatedReceivablesInLocal = (select Sum(QuoteCharges.SaleTotalAmountLocal)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId AND QuoteCharges.IsAllIN ='0' And SaleTotalAmountLocal is not null ),
+			EstimatedReceivablesInSales = (select Sum(QuoteCharges.SaleAmountInSaleCurrency)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId AND QuoteCharges.IsAllIN ='0'  And SaleAmountInSaleCurrency is not null)
+			where Id = @QuoteId and Tenant = @Tenant
 			
 		FETCH NEXT FROM QuotesCursor INTO @QuoteId, @QuoteDate, @QuoteSaleCurrencyId
 		END

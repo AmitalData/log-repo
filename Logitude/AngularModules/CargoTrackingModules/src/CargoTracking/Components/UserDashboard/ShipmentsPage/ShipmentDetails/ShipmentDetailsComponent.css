@@ -253,7 +253,7 @@ h1 {
 }
 
 .data-cards > div {
-    width: 180px;
+    width: 150px;
     height: 85px;
     line-height: 24px;
     margin: 10px;
@@ -301,8 +301,13 @@ h1 {
             border: none;
             outline: none;
         }
-
+        .back-to-shipments{
+            display: block;
+        }
 @media screen and (max-width: 479px) {
+    .back-to-shipments{
+        display: none;
+    }
     .shipment-details-container {
         display: flex;
         flex-direction: column;
@@ -310,11 +315,30 @@ h1 {
     }
 
     .slider-wrapper {
-        height: 110px;
+        /* height: 110px; */
         background: none;
-        margin: 0 -15px;
+        margin-right: -15px;
+        margin-top: 70px;
+        height: 130px;
+        position: relative;
+    }
+    .pager{
+        position: absolute;
+        z-index: 1;
+        width: 30px;
+        background: #F5F6FF;
+        height: 150px;
+    }
+    .left-arrow{
+    }
+    .right-arrow{
+        right: 0px;
     }
 
+    .slider .card:hover {
+        box-shadow: initial;
+    }
+    
     .slider {
         width: 100% !important;
     }
@@ -342,17 +366,22 @@ h1 {
         /* background: white;
             box-shadow: 0px 0px 8px 0px #00000025;
             border-radius: 8px; */
-    }
+        }
 
         .data-cards > div {
             width: calc(50% - 20px);
+            height: 50px;
         }
 
     .PanelsNavigator {
         width: 100%;
-        margin: 20px 0 0 0;
+        margin: 0;
+        padding-top: 15px;
         overflow: auto;
-        height: 60px;
+        height: 50px;
+        position: fixed;
+        background-color: #F5F6FF;
+        z-index: 1;
     }
 
     .panels-wrapper {
@@ -365,6 +394,7 @@ h1 {
         border: 1px solid gray;
         padding: 4px 14px;
         margin-right: 10px;
+        color: black;
     }
 
         .PanelsNavigator button.active {
@@ -372,6 +402,9 @@ h1 {
             background: #e9f2ff;
             box-shadow: 6px 4px 10px 0px #00000020;
             font-weight: bold;
+        }
+        .package-list-table tr th{
+            font-size: 9px !important;
         }
 }
 
@@ -396,7 +429,7 @@ h1 {
         width: 30px;
     }
 .routing-card {
-    width: calc(100% - 50px);
+    width: calc(100% - 70px);
     min-height: 80px;
     height:148px;
     border-radius: 5px;
@@ -523,7 +556,6 @@ h1 {
         left: 0;
         right: unset !important;
     }
-
 }
 @media screen and (max-width: 479px){
     .mobile-font-18{
@@ -532,8 +564,16 @@ h1 {
     .route-direction{
         align-self: flex-end;
     }
+    .routes{
+        text-align: right;
+        min-height: 45px;
+    }
     .routing-card {
-        height: 60px;
+        height: 84px;
+    }
+
+    .description a{
+        display: block;
     }
 }
 
@@ -643,8 +683,18 @@ h1 {
         justify-content: space-between;
         align-items: center;
     }
-}
 
+    .no-data-available {
+        padding: 13px;
+    }
+    .route-description{
+        max-height: 44px;
+        white-space: normal   
+    }
+    .package-list-table tr th{
+        line-height: 10px;
+    }
+}
 
 .document-card{
     width: 100%;
@@ -669,11 +719,11 @@ h1 {
 .col-50{
     width: 50%;
 }
-.col-40{
-    width: 40%;
+.col-35{
+    width: 35%;
 }
-.col-10{
-    width: 10%;
+.col-15{
+    width: 15%;
 }
 .text-end{
     text-align: end;
@@ -698,4 +748,15 @@ h1 {
 
 .document-mobile-card .details-section{
     padding: 10px 15px;
+}
+
+.package-list-table tr th{
+    font-size: 11px;
+}
+
+.package-list-table tr td{
+    font-size: 12px;
+}
+.no-milestones{
+    height: 50px;
 }

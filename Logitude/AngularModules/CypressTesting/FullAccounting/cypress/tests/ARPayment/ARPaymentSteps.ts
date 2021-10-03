@@ -26,11 +26,11 @@ Then("the AR Payment should get successfully", () => {
 //#endregion
 
 //#region Approve the AR Invoice
-When("ARprove the AR Payment", () => {
-    ARPaymentActions.ARproveARPayment()
+When("Approve the AR Payment", () => {
+    ARPaymentActions.ApproveARPayment()
 });
 
 Then("the AR Payment should approve successfully", () => {
-    ARPaymentActions.AssertARproveARPayment()
+    ARPaymentActions.AssertApproveARPayment()
 });
 //#endregion

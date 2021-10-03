@@ -1,5 +1,5 @@
 export class BankAccountsSelectors {
-    public static readonly BankAccountsTab = '#FAMISC';
+    public static readonly BankAccountsTab = '#FABNKS';
     public static readonly NEWBANKButton = '#NEWBANK';
     public static readonly BankCode = "#BankAccount_BankId";
     public static readonly BranchCode = '#BankAccount_BranchNumber';

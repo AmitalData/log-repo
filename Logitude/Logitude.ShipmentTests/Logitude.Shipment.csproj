@@ -195,7 +195,9 @@
     <None Include="Features\SecurityTests\CreateAndUpdateShipmentSecurityAccess.feature" />
     <None Include="Features\SecurityTests\GetShipmentSecurityAccess.feature" />
     <None Include="Features\UpdateShipments.feature" />
-    <None Include="MetaData\GetContainerStatusesFeatureData.xml.vsspell" />
+    <None Include="Data\GetContainerStatusesFeatureData.xml.vsspell">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -209,14 +211,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MetaData\GetContainerStatusesFeatureData.xml">
+    <Content Include="Data\GetContainerStatusesFeatureData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MetaData\GetShipmentContainersStatusesFeatureData.xml">
+    <Content Include="Data\GetShipmentContainersStatusesFeatureData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SpecFlow.3.5.14\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.5.14\build\SpecFlow.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

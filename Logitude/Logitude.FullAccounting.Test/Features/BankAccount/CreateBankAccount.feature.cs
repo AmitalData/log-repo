@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.BankAccount
+namespace Logitude.FullAccountingTests.Features.BankAccount
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
 #line 1 "CreateBankAccount.feature"
 #line hidden
         
-        public CreateBankAccountFeature(CreateBankAccountFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateBankAccountFeature(CreateBankAccountFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.BankAccount
         [Xunit.SkippableFactAttribute(DisplayName="Create bank account")]
         [Xunit.TraitAttribute("FeatureTitle", "Create Bank Account")]
         [Xunit.TraitAttribute("Description", "Create bank account")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void CreateBankAccount()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create bank account", null, tagsOfScenario, argumentsOfScenario);
 #line 5

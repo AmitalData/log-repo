@@ -14772,7 +14772,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"

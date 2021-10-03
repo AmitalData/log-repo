@@ -610,6 +610,95 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrevForwardingShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingExceptionReason"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentRequiredDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentRequiredEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentRequiredDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentRequiredNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentReceivedDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentReceivedEstomationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentReceivedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentReceivedNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

@@ -2,7 +2,7 @@
 @Pre-Prepare-NewGLAccount
 Feature: Update GlAccount
 	We want to update a GlAccount
-
+@Smoke
 Scenario: Update glAccount
 	Given glAccount
 	And following new glAccount properties

@@ -364,6 +364,35 @@ export class ShipmentOrderPM {
     public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
        
 	 
+    private originPortCode: string;
+    public get OriginPortCode() { return this.originPortCode; }
+    public set OriginPortCode(newValue: string) { if (this.originPortCode != newValue) { this.originPortCode = newValue; this.MarkAsDirty("OriginPortCode"); } }
+       
+	 
+    private destinationPortCode: string;
+    public get DestinationPortCode() { return this.destinationPortCode; }
+    public set DestinationPortCode(newValue: string) { if (this.destinationPortCode != newValue) { this.destinationPortCode = newValue; this.MarkAsDirty("DestinationPortCode"); } }
+       
+	 
+    private gatewayCode: string;
+    public get GatewayCode() { return this.gatewayCode; }
+    public set GatewayCode(newValue: string) { if (this.gatewayCode != newValue) { this.gatewayCode = newValue; this.MarkAsDirty("GatewayCode"); } }
+       
+	 
+    private incotermName: string;
+    public get IncotermName() { return this.incotermName; }
+    public set IncotermName(newValue: string) { if (this.incotermName != newValue) { this.incotermName = newValue; this.MarkAsDirty("IncotermName"); } }
+
+    private lastExceptionDescription: string;
+    public get LastExceptionDescription() { return this.lastExceptionDescription; }
+    public set LastExceptionDescription(newValue: string) { if (this.lastExceptionDescription != newValue) { this.lastExceptionDescription = newValue; this.MarkAsDirty("LastExceptionDescription"); } }
+       
+	 
+    private lastExceptionDate: Date;
+    public get LastExceptionDate() { return this.lastExceptionDate; }
+    public set LastExceptionDate(newValue: Date) { if (this.lastExceptionDate != newValue) { this.lastExceptionDate = newValue; this.MarkAsDirty("LastExceptionDate"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		
@@ -392,4 +421,4 @@ export class ShipmentOrderPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

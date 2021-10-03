@@ -83,6 +83,8 @@
     <Compile Include="CargoTrackingServices\HelperClasses\RecordUpdated.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\SplittedDataArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\UpdateCargoTrackingRecords.cs" />
+    <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsOrderLogicService.cs" />
+    <Compile Include="CargoTrackingServices\Services\ShipmentOldValuesService.cs" />
     <Compile Include="CargoTrackingServices\Services\ShipmentMilestonesSyncService.cs" />
     <Compile Include="CargoTrackingServices\Services\TableList\CargoTrackingTableList.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\CargoTrackingShipmentTableStructure.cs" />

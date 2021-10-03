@@ -66,5 +66,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool IsNorthAmerica { get; set; }
 
+        [DataMember]
+        public bool IsGreaterChina { get; set; }
     }
 }

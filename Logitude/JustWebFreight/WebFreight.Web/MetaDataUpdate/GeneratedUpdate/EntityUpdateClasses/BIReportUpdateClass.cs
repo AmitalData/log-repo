@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BIReportUpdateClass
    {  		
-		public const string HashString = "25df85cab58f385ddd240ab57103725d";
+		public const string HashString = "b718f96c70525d334d0e95e7c3cbd6f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1315,6 +1315,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BIReportFeature_BIReport_Fact_Quotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_Quotes", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_Quotes", NameTextCodeDefaultText = @"Quotes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
 		   Feature BIReportFeature_BIReport_Fact_Invoices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_Invoices", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_Invoices", NameTextCodeDefaultText = @"Invoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_ARInvoices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_ARInvoices", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_ARInvoices", NameTextCodeDefaultText = @"ARInvoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
    
 	    

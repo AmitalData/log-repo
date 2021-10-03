@@ -50,8 +50,4 @@ export class RegexSelectors {
     public static WarehouseStorageRounding(mode: string) {
         return "#Warehouse_" + mode + "WeightRoundingCode"
     }
-
-    public static NewWizardButton(name: string): string {
-        return "#NewButton_" + name;
-    }
 }

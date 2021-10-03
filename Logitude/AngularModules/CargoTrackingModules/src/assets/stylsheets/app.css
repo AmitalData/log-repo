@@ -99,7 +99,7 @@ h3 {
     text-transform: uppercase;
 }
 
-.mobile-only {
+.mobile-only, .mobile-only-inline-block {
     display: none;
 }
 
@@ -152,10 +152,16 @@ h3 {
         display: block;
     }
 
-
+    .mobile-only-inline-block {
+        display: inline-block !important;
+    }
+    .mobile-inline-block{
+        display: inline-block !important;
+    }
     .dashboard-container{
         padding: 50px 0px 0 0px;
     }
+    /*end of mobile style*/
 }
 
 

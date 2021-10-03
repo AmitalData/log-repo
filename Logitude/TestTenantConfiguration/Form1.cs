@@ -520,7 +520,7 @@ namespace TestTenantConfiguration
         {
             this.Title = "accept terms";
             TermsofUseSignaturePM MyTenant = CreateTermInstance(this.ContactID);
-            TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("specflowtest_customercare@logitudeworld.com", 0));
+            TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("ahmada@logitudeworld.com", 0));
             TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, MyTenant.Tenant);
             service.Create(MyTenant);
             service.Create(CustomerCareTenant);

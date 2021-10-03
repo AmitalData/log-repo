@@ -10,12 +10,20 @@ export function NavigatesARPaymentWorkspace() {
     cy.Click(ARPaymentSelectors.NewARPaymentButton, null)
 }
 
-export function FillARPayment(ARPaymentDetails: ARPaymentDetails) {
-    cy.FillLogLov(ARPaymentSelectors.Partner, ARPaymentDetails.Partner, false)
-    cy.FillLogLov(ARPaymentSelectors.PaymentMethod, ARPaymentDetails.PaymentMethod, true)
-    cy.FillLogTextBox(ARPaymentSelectors.PaymentAmount, ARPaymentDetails.PaymentAmount)
-    cy.FillLogLov(ARPaymentSelectors.PaymentBranch, ARPaymentDetails.PaymentBranch, true)
-    cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, ARPaymentDetails.PaymentCurrency, true)
+export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
+    cy.FillLogLov(ARPaymentSelectors.Partner, aRPaymentDetails.Partner, false)
+    cy.FillLogLov(ARPaymentSelectors.PaymentMethod, aRPaymentDetails.PaymentMethod, true)
+    cy.FillLogTextBox(ARPaymentSelectors.PaymentAmount, aRPaymentDetails.PaymentAmount)
+    cy.FillLogLov(ARPaymentSelectors.PaymentBranch, aRPaymentDetails.PaymentBranch, true)
+    cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
+}
+
+export function FillChequeDetails(aRPaymentDetails: ARPaymentDetails) {
+    cy.FillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
+    cy.FillLogTextBox(ARPaymentSelectors.ChequeAccount, aRPaymentDetails.ChequeAccount)
+    cy.FillLogTextBox(ARPaymentSelectors.ChequeRef, aRPaymentDetails.ChequeRef)
+    cy.FillLogTextBox(ARPaymentSelectors.ChequeBankBranch, aRPaymentDetails.ChequeBankBranch)
+    cy.FillLogTextBox(ARPaymentSelectors.ChequeBank, aRPaymentDetails.ChequeBank)
 }
 
 export function CreateARPayment() {
@@ -28,11 +36,11 @@ export function AssertCreateARPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ARPaymentView, 200)
 }
 
-export function ARproveARPayment() {
+export function ApproveARPayment() {
     cy.DefineRequestWait(RestAPI.POST, URLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(ARPaymentSelectors.ARPaymentBApprove, null)
 }
 
-export function AssertARproveARPayment() {
+export function AssertApproveARPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 }

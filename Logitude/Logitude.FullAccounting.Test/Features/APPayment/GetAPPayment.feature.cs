@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.APPayment
+namespace Logitude.FullAccountingTests.Features.APPayment
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.APPayment
 #line 1 "GetAPPayment.feature"
 #line hidden
         
-        public GetAPPaymentFeature(GetAPPaymentFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetAPPaymentFeature(GetAPPaymentFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -86,9 +86,11 @@ namespace Logitude.FullAccounting.Test.Features.APPayment
         [Xunit.SkippableFactAttribute(DisplayName="Get ap payment")]
         [Xunit.TraitAttribute("FeatureTitle", "Get AP Payment")]
         [Xunit.TraitAttribute("Description", "Get ap payment")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void GetApPayment()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get ap payment", null, tagsOfScenario, argumentsOfScenario);
 #line 5
@@ -115,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("get ap payment with APPaymentId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("ap payment should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("ap payment should be", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

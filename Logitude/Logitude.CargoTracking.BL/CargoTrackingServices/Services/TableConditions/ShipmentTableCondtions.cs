@@ -11,8 +11,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
     public static class ShipmentTableCondtions
     {
 
-
-
         public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
             CargoTrackingTable table, string LastUpdate)
         {
@@ -48,6 +46,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
+             "NULL OrderShipmentNumber , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
@@ -96,7 +98,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-
+            shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @",com.ContainersNumbers,
@@ -118,9 +120,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             return sqlQuery;
         }
-
-
-
 
         public static string GetAllNonCustomShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
             CargoTrackingTable table, string LastUpdate)
@@ -160,10 +159,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
+            var shipmentOrderFields =
+             "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.House) as OrderHouse, " +
+             "min(SHO.CasualImporterName) as OrderShipperName, " +
+             "min(SHO.OrderNumber) as OrderShipmentNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} ";
+
+            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields} ";
 
 
 
@@ -174,6 +183,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
+                            LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON SHO.ShipmentId = P.Id
                             LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
                             LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
 
@@ -214,6 +224,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             // Group By
+            shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @",com.ContainersNumbers,
@@ -231,6 +242,105 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript;
+
+            return sqlQuery;
+        }
+
+        public static string GetShipmentOrders(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
+           CargoTrackingTable table, string LastUpdate)
+        {
+            var shipmentTableStructure = new CargoTrackingShipmentTableStructure();
+            string shipmentOrderColumns = shipmentTableStructure.GetShipmentOrderFields();
+            var shipmentOrderFields = string.Join(",", shipmentOrderColumns);
+            
+            var cargoTrackingShipmentDefaultFields =
+                "NULL as FirstPickupETD," +
+                "NULL as WarehouseLegActualEntryDate," +
+                "NULL as WarehouseLegExpectedEntryDate," +
+                "NULL as DeclarationDate," +
+                "NULL as CustomsClearanceDate," +
+                "NULL as FirstPickupETA," +
+                "NULL as AssginedToCustomsAgentDate," +
+                "NULL as AssignedToTruckerDate," +
+                "NULL as ExceptionDate," +
+                "NULL as ContainersNumbers," +
+                "SHO.OrderNumber as ShipmentNumber," +
+
+                "0 as CreateDone," +
+                "0 as PickupDone," +
+                "0 as DepartureDone," +
+                "0 as ArrivalDone," +
+                "0 as ToWarehouseDone," +
+                "0 as CustomsPaymentDone," +
+                "0 as ClearanceDone," +
+                "0 as DeliveredDone," +
+                "0 as FromWarehouseDone," +
+                "0 as AssignedTruckerDone," +
+                "0 as AssignedCustomsAgentDone," +
+                "0 as DeliveryDone," +
+                "0 as DocumentInspectionDone," +
+                "0 as GoodsClassificationDone," +
+                "0 as PaymentRequiredDone," +
+                "0 as PaymentReceivedDone," +
+                "0 as GatepassArrivedDone," +
+                "0 as ShipmentPickUpIndex," +
+                "0 as PackagesQuantity," +
+
+                " '' as CustomFileNumber," +
+                " '' as ForwarderShipmentNumber," +
+                " '' as ForwardingShipmentLevelCode," +
+                " '' as CustomsDeclarationNumber," +
+                " CasualImporterName as ShipperName," +
+                " '' as MasterShipmentDataId," +
+                " '' as FromPortId," +
+                " '' as ToPortId," +
+                " '' as CustomConnectToShipment," +
+                " '' as CustomFileId," +
+                " '' as ConsigneeName," +
+                " '' as CustomerReference1," +
+                " '' as CustomerReference2," +
+                " '' as WarehouseLegRemarks," +
+                " '' as GrossWeightUnitCode," +
+                " '' as ShipmentTypeId," +
+                " '' as ExceptionDescription," +
+
+                "'O' as EntityType," +
+                "CreateDate as CreateDateTime," +
+                "UpdateDate as AutomaticLastUpdateDate," +
+                "PickupActualDateTime as PickupDate," +
+                "PickupEstimatedDateTime as PickupEstimationDate";
+
+            var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
+
+            var fromScript = $"FROM dbo.ShipmentOrders SHO ";
+
+            List<string> whereConditions = new List<string>();
+
+            if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
+            {
+                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+
+                string lastUpdateCondition = $" (SHO.UpdateDate > '{LastUpdate}')";
+                whereConditions.Add(lastUpdateCondition);
+            }
+            else
+            {
+                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
+                {
+                    string tenantCondition = $" SHO.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
+                    whereConditions.Add(tenantCondition);
+                }
+
+
+                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, SHO.CreateDate ), 0)";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                whereConditions.Add(datePeriodCondition);
+            }
+
+            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
+
+            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, whereScript);
 
             return sqlQuery;
         }

@@ -2435,6 +2435,328 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string prevForwardingShipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrevForwardingShipmentId  
+	   {
+	    
+	     get
+		{
+		   return prevForwardingShipmentId;
+		 }
+		 set
+		 {
+		   if(prevForwardingShipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrevForwardingShipmentId",OldValue=prevForwardingShipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   prevForwardingShipmentId=value;
+		   }
+			
+		 }
+	   }
+	  private bool? bookingDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? BookingDone  
+	   {
+	    
+	     get
+		{
+		   return bookingDone;
+		 }
+		 set
+		 {
+		   if(bookingDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingDone",OldValue=bookingDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   bookingDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? bookingDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? BookingDate  
+	   {
+	    
+	     get
+		{
+		   return bookingDate;
+		 }
+		 set
+		 {
+		   if(bookingDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingDate",OldValue=bookingDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   bookingDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? bookingEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? BookingEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return bookingEstimationDate;
+		 }
+		 set
+		 {
+		   if(bookingEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingEstimationDate",OldValue=bookingEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   bookingEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingNotes  
+	   {
+	    
+	     get
+		{
+		   return bookingNotes;
+		 }
+		 set
+		 {
+		   if(bookingNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingNotes",OldValue=bookingNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingExceptionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingExceptionReason  
+	   {
+	    
+	     get
+		{
+		   return bookingExceptionReason;
+		 }
+		 set
+		 {
+		   if(bookingExceptionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingExceptionReason",OldValue=bookingExceptionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingExceptionReason=value;
+		   }
+			
+		 }
+	   }
+	  private bool? paymentRequiredDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? PaymentRequiredDone  
+	   {
+	    
+	     get
+		{
+		   return paymentRequiredDone;
+		 }
+		 set
+		 {
+		   if(paymentRequiredDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentRequiredDone",OldValue=paymentRequiredDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   paymentRequiredDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? paymentRequiredEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentRequiredEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return paymentRequiredEstimationDate;
+		 }
+		 set
+		 {
+		   if(paymentRequiredEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentRequiredEstimationDate",OldValue=paymentRequiredEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentRequiredEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? paymentRequiredDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentRequiredDate  
+	   {
+	    
+	     get
+		{
+		   return paymentRequiredDate;
+		 }
+		 set
+		 {
+		   if(paymentRequiredDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentRequiredDate",OldValue=paymentRequiredDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentRequiredDate=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentRequiredNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentRequiredNotes  
+	   {
+	    
+	     get
+		{
+		   return paymentRequiredNotes;
+		 }
+		 set
+		 {
+		   if(paymentRequiredNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentRequiredNotes",OldValue=paymentRequiredNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentRequiredNotes=value;
+		   }
+			
+		 }
+	   }
+	  private bool? paymentReceivedDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? PaymentReceivedDone  
+	   {
+	    
+	     get
+		{
+		   return paymentReceivedDone;
+		 }
+		 set
+		 {
+		   if(paymentReceivedDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReceivedDone",OldValue=paymentReceivedDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   paymentReceivedDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? paymentReceivedEstomationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentReceivedEstomationDate  
+	   {
+	    
+	     get
+		{
+		   return paymentReceivedEstomationDate;
+		 }
+		 set
+		 {
+		   if(paymentReceivedEstomationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReceivedEstomationDate",OldValue=paymentReceivedEstomationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentReceivedEstomationDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? paymentReceivedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentReceivedDate  
+	   {
+	    
+	     get
+		{
+		   return paymentReceivedDate;
+		 }
+		 set
+		 {
+		   if(paymentReceivedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReceivedDate",OldValue=paymentReceivedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentReceivedDate=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentReceivedNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentReceivedNotes  
+	   {
+	    
+	     get
+		{
+		   return paymentReceivedNotes;
+		 }
+		 set
+		 {
+		   if(paymentReceivedNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReceivedNotes",OldValue=paymentReceivedNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentReceivedNotes=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

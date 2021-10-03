@@ -34,6 +34,7 @@ Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
 
     Scenario: Edit the shipment sub type
         Given "Testing Edit Shipment Sub Type Daily Scenario" as shipment sub type name
+        And the user inactivate the shipment sub type
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab

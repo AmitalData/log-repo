@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ShippingLinePM} from '../../EntityPMs/ShippingLinePM';
 
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
+import {ShippingLinePMInitService} from '../../EntityPMInitServices/ShippingLinePMInitService';
 
 @Injectable()
 
@@ -46,6 +47,8 @@ export class ShippingLinePMService {
 						var entity: ShippingLinePM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      ShippingLinePMInitService.InitValues(entity, false);
+                      ShippingLinePMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -325,6 +328,10 @@ export class ShippingLinePMService {
 		    var entityPM: ShippingLinePM;
 			entityPM = new ShippingLinePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			ShippingLinePMInitService.InitValues(entityPM, true);
+			ShippingLinePMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

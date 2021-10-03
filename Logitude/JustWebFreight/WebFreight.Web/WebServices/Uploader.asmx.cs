@@ -61,7 +61,6 @@ namespace WebFreight.Web.WebServices
         {
 
         }
-        private static string fileName;
         CloudBlobContainer blobContainer;
         CloudBlockBlob tempcloudBlockBlob;
         CloudBlockBlob finalcloudBlockBlob;
@@ -133,7 +132,7 @@ namespace WebFreight.Web.WebServices
                 return str;
         }
 
-        private string BuidDocument(int tenant, string externalDocumentId, long fileSize)
+        private string BuidDocument(int tenant, string externalDocumentId, long fileSize , string fileName)
         {
             try
             {
@@ -141,7 +140,7 @@ namespace WebFreight.Web.WebServices
                 DocumentRepository docRepository = new DocumentRepository(tenant);
                 DocumentsFiling externalDocument = externalDocumentRepository.GetSingleDocumentsFiling(externalDocumentId, tenant);
                 Document document = null;
-
+               
 
                 if (externalDocument != null)
                 {
@@ -308,7 +307,7 @@ namespace WebFreight.Web.WebServices
         public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
         {
             string filelocation = GetFileLocation("images");
-            fileName = filename.ToLower();
+           string  fileName = filename.ToLower();
             string filePath = "tenant" + tenant.ToString() + "/";
             string imagedetailid = null;
             try
@@ -698,7 +697,7 @@ namespace WebFreight.Web.WebServices
                 {
 
 
-                    fileName = documentId + "." + documentExtension;
+                  string  fileName = documentId + "." + documentExtension;
                     string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), fileLocation);
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                     BlobFileInfo fileInfo = new BlobFileInfo()
@@ -755,7 +754,7 @@ namespace WebFreight.Web.WebServices
                     //string filelocation = GetFileLocation(FileLocation);
                     try
                     {
-                        fileName = document.Id + "." + document.Extension;
+                        string   fileName = document.Id + "." + document.Extension;
 
                         BlobFileInfo fileInfo = new BlobFileInfo()
                         {
@@ -1101,7 +1100,7 @@ namespace WebFreight.Web.WebServices
             }
             string filelocation = GetFileLocation(fileLocation);
 
-            fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
+           string fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
             string filePath = "tenant" + tenant.ToString() + "/";
 
             string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -1124,7 +1123,7 @@ namespace WebFreight.Web.WebServices
             }
             else
             {
-                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize);
+                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize , fileName);
                 fileName = fileNameAndExtension;
             }
 
@@ -1401,11 +1400,12 @@ namespace WebFreight.Web.WebServices
 
                 if (document != null)
                 {
-                    if (string.IsNullOrEmpty(document.CalculatedFileName) || documentFiling.DirectionCode == "I")
+                    document.CalculatedFileName =!string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+
+                    if (documentFiling.DirectionCode == "I" && !FeatureToggleHelper.HasFeatureToggle("SFC", documentFiling.Tenant))
                     {
                         document.CalculatedFileName = document.FileName;
                     }
-
                     return document;
                 }
                 else return null;

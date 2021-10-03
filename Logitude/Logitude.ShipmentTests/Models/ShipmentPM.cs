@@ -14,6 +14,8 @@ namespace Logitude.ShipmentTests.Models
         public string NewConcurrencyGUID { get; set; }
         public string DirectionId { get; set; }
         public string TransportModeId { get; set; }
+        public string Master { get; set; }
+        public string LongMaster { get; set; }
         public string ShipmentLevelCode { get; set; }
         public string BranchId { get; set; }
         public string DepartmentId { get; set; }
@@ -22,10 +24,16 @@ namespace Logitude.ShipmentTests.Models
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public string MainCarriageToPortId { get; set; }
+        public string MainCarriageCarrierId { get; set; }
+        public string ShipmentTypeId { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public int? PackagesQuantity { get; set; }
         public string ConcurrencyGUID { get; set; }
-        public DateTime CreateDateTime { get; set; }//
+        public DateTime CreateDateTime { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
         public string StatusId { get; set; }
         public int ShipmentPickUpIndex { get; set; }
         public int ShipmentDeliveryIndex { get; set; }
@@ -40,15 +48,5 @@ namespace Logitude.ShipmentTests.Models
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentReceivableStatusCode { get; set; }
         public double? GrossWeight { get; set; }
-        public string MainCarriageCarrierId { get; set; }
-        public string ShipmentTypeId { get; set; }
-
-        public string MainCarriageCarrierCode { get; set; }
-        public string Master { get; set; }
-        public string LongMaster { get; set; }
-        public DateTime? MainCarriageATD { get; set; }
-        public DateTime? MainCarriageATA { get; set; }
-        public DateTime? MainCarriageETD { get; set; }
-        public DateTime? MainCarriageETA { get; set; }
     }
 }

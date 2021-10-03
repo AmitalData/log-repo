@@ -22,13 +22,15 @@ namespace Logitude.CargoTracking.BL.CloseTables
         public const string CustomsProcess = "9";
         public const string GoodsClassification = "10";
         public const string DocumentInspection = "11";
-        public const string CustomsPayment = "12";
-        public const string Clearance = "13";
-        public const string GatepassArrived = "14";
-        public const string DeliveryOut = "15";
-        public const string AssignedToTrucker = "16";
-        public const string Delivered = "17";
-        public const string Invoiced = "18";
+        public const string PaymentRequested  = "12";
+        public const string PaymentReceived  = "13";
+        public const string CustomsPayment = "14";
+        public const string Clearance = "15";
+        public const string GatepassArrived = "16";
+        public const string AssignedToTrucker = "17";
+        public const string DeliveryOut = "18";
+        public const string Delivered = "19";
+        public const string Invoiced = "20";
     }
 }
 

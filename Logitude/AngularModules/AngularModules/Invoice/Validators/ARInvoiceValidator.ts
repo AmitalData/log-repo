@@ -39,11 +39,14 @@ export class ARInvoiceValidator {
         if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && this.EntityPM.IsAutoCredit) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
-
-        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        var date1 = new Date(this.EntityPM.InvoiceDate.toString());
+        var date2 = new Date();
+        date2.setHours(23);
+        date2.setMinutes(59);
+        
+        if (date1.valueOf() > date2.valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
-
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VatNumber)) {

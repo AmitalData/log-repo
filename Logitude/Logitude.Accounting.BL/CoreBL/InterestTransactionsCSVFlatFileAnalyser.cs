@@ -587,7 +587,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 0)
             {
-                rec.GLAccount = values[0].TrimStart('G');
+                rec.GLAccount = values[0].TrimStart('H'); //.TrimStart('G');
             }
 
 
@@ -690,8 +690,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "AccountingDate";
                         pos = "0, 10";
-                        date = InterestTransactionsCSVFlatFileAnalyser.TryGetDateTime(values[2], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
-                        rec.InterestValueDate = date;
+                        date = InterestTransactionsCSVFlatFileAnalyser.TryGetDateTime(values[8], txtDateTime, fieldname, pos, format: "dd.MM.yyyy");
+                        rec.AccountingDate = date;
                     }
                 }
                 else
@@ -702,12 +702,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         fieldname = "AccountingDate";
                         pos = "0, 8";
-                        date = InterestTransactionsCSVFlatFileAnalyser.TryGetDateTime(values[2], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                        rec.InterestValueDate = date;
+                        date = InterestTransactionsCSVFlatFileAnalyser.TryGetDateTime(values[8], txtDateTime, fieldname, pos, format: "dd.MM.yy");
+                        rec.AccountingDate = date;
                     }
                 }
 
-                string yyyy = rec.InterestValueDate.Year.ToString();
+                string yyyy = rec.AccountingDate.Year.ToString();
                 rec.ExternalNumber = yyyy + ":" + rec.ExternalNumber;
             }
 

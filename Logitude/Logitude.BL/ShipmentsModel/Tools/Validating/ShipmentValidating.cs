@@ -217,8 +217,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         {
                             bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                             bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                            bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                            if (!isAllPortsEC && !isAllPortsNA)
+                            if (!isAllPortsEC && !isAllPortsNA &&!isAllPortsChina)
                             {
                                 throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                             }
@@ -243,8 +244,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                        bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA)
+                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
                         {
                             throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
                         }
@@ -1445,6 +1447,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryId = iPort.CountryId,
                             CountryIsEC = iPort.CountryEC,
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
                         });
                     }
                 }
@@ -1515,6 +1518,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
                         });
                     }
                 }
@@ -1537,6 +1541,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryId = iCountry.Id,
                             CountryIsEC = iCountry.EC,
                             CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
                         });
                     }
                 }
@@ -1599,5 +1604,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         public string CountryId { get; set; }
         public bool CountryIsEC { get; set; }
         public bool CountryIsNorthAmerica { get; set; }
+        public bool CountryIsGreaterChinese { get; set; }
+
     }
 }

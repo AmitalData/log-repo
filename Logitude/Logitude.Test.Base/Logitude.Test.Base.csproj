@@ -100,6 +100,8 @@
     <Compile Include="Models\PackageTypesPreparation\PackageType.cs" />
     <Compile Include="Models\PackageTypesPreparation\PackageTypesData.cs" />
     <Compile Include="Models\PackageTypesPreparation\PackageTypesVariables.cs" />
+    <Compile Include="Models\Shared\GetCreateDocumentsFilingArgs.cs" />
+    <Compile Include="Models\Shared\GetDocumentCopyArgs.cs" />
     <Compile Include="Models\Shared\PostReturnChequeArgs.cs" />
     <Compile Include="Models\UserTenantPreparation\UserEmptyTenant.cs" />
     <Compile Include="Services\ObjectTableService.cs" />

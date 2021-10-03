@@ -279,6 +279,11 @@ export function FillOrdersTab(packagesDetails: PackagesDetails[], shipmentType?:
         cy.Click(ShipmentSelectors.OrderOKButton, null)
     }
 }
+
+export function DeleteOrderPackage() {
+    cy.Click(BaseSelectors.DeleteButton, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
 //#endregion
 //#region Partner Tab
 export function FillPartnersTab(direction: string, transportMode: string, partnersDetails: PartnersDetails) {
@@ -305,6 +310,27 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
     AddPartner(ShipmentSelectors.AddCustomClearancePointButton, ShipmentSelectors.ShipmentCustomClearancePoint, partnersDetails.CustomClearancePoint)
     AddPartner(ShipmentSelectors.AddConsolidatorButton, ShipmentSelectors.ShipmentConsolidator, partnersDetails.Consolidator)
     AddPartner(ShipmentSelectors.AddReleasingAgentButton, ShipmentSelectors.ShipmentReleasingAgent, partnersDetails.ReleasingAgent)
+}
+
+export function DeletePartnersInPartnersTab(partnersDetails: PartnersDetails) {
+    DeletePartner(partnersDetails.Consignee)
+    DeletePartner(partnersDetails.Agent)
+    DeletePartner(partnersDetails.CustomsAgentExport)
+    DeletePartner(partnersDetails.CustomsAgentImport)
+    DeletePartner(partnersDetails.Notify1)
+    DeletePartner(partnersDetails.Notify2)
+    DeletePartner(partnersDetails.ShipperNotExporter)
+    DeletePartner(partnersDetails.ConsigneeNotImporter)
+    DeletePartner(partnersDetails.FreightForwarder)
+    DeletePartner(partnersDetails.Coloader)
+    DeletePartner(partnersDetails.CustomClearancePoint)
+    DeletePartner(partnersDetails.Consolidator)
+    DeletePartner(partnersDetails.ReleasingAgent)
+}
+
+function DeletePartner(selector) {
+    cy.Click("#Delete-" + selector, null)
+    cy.Click(BaseSelectors.RedButton, null)
 }
 //#endregion
 //#region Package Tab
@@ -340,6 +366,11 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
             cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
+}
+
+export function DeleteShipmentPackages() {
+    cy.Click(ShipmentSelectors.DeletePackages, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
@@ -465,8 +496,8 @@ export function GenerateReceivablesFromPayables() {
 //#endregion
 //#region Routing Tab
 export function FillPickupRouting() {
-    cy.Click(ShipmentSelectors.RoutingsTab, null, true)
-    cy.Click(ShipmentSelectors.RoutingToggle, null, true)
+    cy.get(ShipmentSelectors.RoutingToggle)
+    cy.Click(ShipmentSelectors.RoutingToggle, null)
     cy.DefineRequestWait(RestAPI.GET, URLs.CardViews, RequestAliases.CardViewsRequest)
     cy.DefineRequestWait(RestAPI.GET, URLs.AddressViews, RequestAliases.AddressViewsRequest)
     cy.Click(ShipmentSelectors.PickUp, null)
@@ -483,7 +514,6 @@ export function EditMainCarriageLegs(Airline: string) {
     cy.Click(ShipmentSelectors.ShipmentDateMaincarriageATD, null)
     cy.Click(BaseSelectors.Button, "Today")
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
-    //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 }
 
 export function AddMainCarriageATDDateAndTime(date: string, time: string) {
@@ -502,6 +532,7 @@ export function AddMainCarriageATADateAndTime(date: string, time: string) {
 
 export function FillDeliveryRouting(partner: string) {
     cy.Click(ShipmentSelectors.RoutingsTab, null)
+    cy.get(ShipmentSelectors.RoutingToggle)
     cy.Click(ShipmentSelectors.RoutingToggle, null, true)
     cy.DefineRequestWait(RestAPI.GET, URLs.CardViews, RequestAliases.CardViewsRequest)
     cy.DefineRequestWait(RestAPI.GET, URLs.AddressViews, RequestAliases.AddressViewsRequest)
@@ -516,6 +547,7 @@ export function FillDeliveryRouting(partner: string) {
 
 export function FillPreCarriageRouting(transportMode: string, fromPort: string, toPort: string) {
     cy.Click(ShipmentSelectors.RoutingsTab, null)
+    cy.get(ShipmentSelectors.RoutingToggle)
     cy.Click(ShipmentSelectors.RoutingToggle, null)
     cy.get(ShipmentSelectors.PreCarriage).then((btn) => {
         if (!btn.is('[disabled]')) {
@@ -532,6 +564,7 @@ export function FillPreCarriageRouting(transportMode: string, fromPort: string, 
 
 export function FillOnCarriageRouting(transportMode: string, fromPort: string, toPort: string) {
     cy.Click(ShipmentSelectors.RoutingsTab, null)
+    cy.get(ShipmentSelectors.RoutingToggle)
     cy.Click(ShipmentSelectors.RoutingToggle, null)
     cy.get(ShipmentSelectors.OnCarriage).then((btn) => {
         if (!btn.is('[disabled]')) {
@@ -544,6 +577,14 @@ export function FillOnCarriageRouting(transportMode: string, fromPort: string, t
             cy.Click(ShipmentSelectors.RoutingsTab, null)
         }
     })
+}
+
+export function AddTransshipments(viaPort, airline) {
+    cy.Click(ShipmentSelectors.RoutingsTab, null, true)
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null, true)
+    cy.FillLogLov(ShipmentSelectors.MainCarriagePort1Id, viaPort, true)
+    cy.FillLogLov(ShipmentSelectors.Transshipment1CarrierId, airline, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertRoutingLegAppeared(legName: string, ContainerNumber: string) {

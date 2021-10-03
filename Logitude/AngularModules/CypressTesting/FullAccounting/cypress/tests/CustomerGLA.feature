@@ -1,4 +1,4 @@
-@dev
+@devsmoke
 Feature: Customer GLA
     The user creates new Customer and activate it in accounting system
 

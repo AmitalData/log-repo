@@ -1,4 +1,4 @@
-@release @all @stable
+@release @all @stable @devsmoke
 Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
 
     The user creates a quote, sets it as Sent to Customer, returns it to draft,
@@ -26,6 +26,11 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
         And following event should appear in events tab
             | Event      | Notes                               |
             | Quote Sent | Testing The set as sent to customer |
+
+    Scenario: Edit quote details tab
+        Given fill "3:00" as transit time
+        When update quote
+        Then the quote should update successfully
 
     Scenario: Return quote to draft
         When "Return To Draft" action with "Testing The return quote to draft" note

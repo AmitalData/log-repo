@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {ContainerPMCustomCode} from '../EntityPMCustomCode/ContainerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -128,11 +129,6 @@ export class ContainerPM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-       
-	 
-    private emptyPickupLocation: string;
-    public get EmptyPickupLocation() { return this.emptyPickupLocation; }
-    public set EmptyPickupLocation(newValue: string) { if (this.emptyPickupLocation != newValue) { this.emptyPickupLocation = newValue; this.MarkAsDirty("EmptyPickupLocation"); } }
        
 	 
     private estimatedEmptyPickupDate: Date;
@@ -315,11 +311,6 @@ export class ContainerPM {
     public set ShipmentLastDeliveryTo(newValue: string) { if (this.shipmentLastDeliveryTo != newValue) { this.shipmentLastDeliveryTo = newValue; this.MarkAsDirty("ShipmentLastDeliveryTo"); } }
        
 	 
-    private originLocation: string;
-    public get OriginLocation() { return this.originLocation; }
-    public set OriginLocation(newValue: string) { if (this.originLocation != newValue) { this.originLocation = newValue; this.MarkAsDirty("OriginLocation"); } }
-       
-	 
     private estimatedOriginPickup: Date;
     public get EstimatedOriginPickup() { return this.estimatedOriginPickup; }
     public set EstimatedOriginPickup(newValue: Date) { if (this.estimatedOriginPickup != newValue) { this.estimatedOriginPickup = newValue; this.MarkAsDirty("EstimatedOriginPickup"); } }
@@ -328,11 +319,6 @@ export class ContainerPM {
     private actualOriginPickup: Date;
     public get ActualOriginPickup() { return this.actualOriginPickup; }
     public set ActualOriginPickup(newValue: Date) { if (this.actualOriginPickup != newValue) { this.actualOriginPickup = newValue; this.MarkAsDirty("ActualOriginPickup"); } }
-       
-	 
-    private pOLLocation: string;
-    public get POLLocation() { return this.pOLLocation; }
-    public set POLLocation(newValue: string) { if (this.pOLLocation != newValue) { this.pOLLocation = newValue; this.MarkAsDirty("POLLocation"); } }
        
 	 
     private estimatedPOLArrival: Date;
@@ -368,11 +354,6 @@ export class ContainerPM {
     private transshipmentCount: string;
     public get TransshipmentCount() { return this.transshipmentCount; }
     public set TransshipmentCount(newValue: string) { if (this.transshipmentCount != newValue) { this.transshipmentCount = newValue; this.MarkAsDirty("TransshipmentCount"); } }
-       
-	 
-    private transshipment1Location: string;
-    public get Transshipment1Location() { return this.transshipment1Location; }
-    public set Transshipment1Location(newValue: string) { if (this.transshipment1Location != newValue) { this.transshipment1Location = newValue; this.MarkAsDirty("Transshipment1Location"); } }
        
 	 
     private estimatedTrans1VesselArrival: Date;
@@ -415,11 +396,6 @@ export class ContainerPM {
     public set ActualTrans1VesselDeparture(newValue: Date) { if (this.actualTrans1VesselDeparture != newValue) { this.actualTrans1VesselDeparture = newValue; this.MarkAsDirty("ActualTrans1VesselDeparture"); } }
        
 	 
-    private transshipment2Location: string;
-    public get Transshipment2Location() { return this.transshipment2Location; }
-    public set Transshipment2Location(newValue: string) { if (this.transshipment2Location != newValue) { this.transshipment2Location = newValue; this.MarkAsDirty("Transshipment2Location"); } }
-       
-	 
     private estimatedTrans2VesselArrival: Date;
     public get EstimatedTrans2VesselArrival() { return this.estimatedTrans2VesselArrival; }
     public set EstimatedTrans2VesselArrival(newValue: Date) { if (this.estimatedTrans2VesselArrival != newValue) { this.estimatedTrans2VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans2VesselArrival"); } }
@@ -460,11 +436,6 @@ export class ContainerPM {
     public set ActualTrans2VesselDeparture(newValue: Date) { if (this.actualTrans2VesselDeparture != newValue) { this.actualTrans2VesselDeparture = newValue; this.MarkAsDirty("ActualTrans2VesselDeparture"); } }
        
 	 
-    private transshipment3Location: string;
-    public get Transshipment3Location() { return this.transshipment3Location; }
-    public set Transshipment3Location(newValue: string) { if (this.transshipment3Location != newValue) { this.transshipment3Location = newValue; this.MarkAsDirty("Transshipment3Location"); } }
-       
-	 
     private estimatedTrans3VesselArrival: Date;
     public get EstimatedTrans3VesselArrival() { return this.estimatedTrans3VesselArrival; }
     public set EstimatedTrans3VesselArrival(newValue: Date) { if (this.estimatedTrans3VesselArrival != newValue) { this.estimatedTrans3VesselArrival = newValue; this.MarkAsDirty("EstimatedTrans3VesselArrival"); } }
@@ -503,11 +474,6 @@ export class ContainerPM {
     private actualTrans3VesselDeparture: Date;
     public get ActualTrans3VesselDeparture() { return this.actualTrans3VesselDeparture; }
     public set ActualTrans3VesselDeparture(newValue: Date) { if (this.actualTrans3VesselDeparture != newValue) { this.actualTrans3VesselDeparture = newValue; this.MarkAsDirty("ActualTrans3VesselDeparture"); } }
-       
-	 
-    private transshipment4Location: string;
-    public get Transshipment4Location() { return this.transshipment4Location; }
-    public set Transshipment4Location(newValue: string) { if (this.transshipment4Location != newValue) { this.transshipment4Location = newValue; this.MarkAsDirty("Transshipment4Location"); } }
        
 	 
     private estimatedTrans4VesselArrival: Date;
@@ -600,11 +566,6 @@ export class ContainerPM {
     public set Leg5Voyage(newValue: string) { if (this.leg5Voyage != newValue) { this.leg5Voyage = newValue; this.MarkAsDirty("Leg5Voyage"); } }
        
 	 
-    private pODLocation: string;
-    public get PODLocation() { return this.pODLocation; }
-    public set PODLocation(newValue: string) { if (this.pODLocation != newValue) { this.pODLocation = newValue; this.MarkAsDirty("PODLocation"); } }
-       
-	 
     private estimatedPODVesselArrival: Date;
     public get EstimatedPODVesselArrival() { return this.estimatedPODVesselArrival; }
     public set EstimatedPODVesselArrival(newValue: Date) { if (this.estimatedPODVesselArrival != newValue) { this.estimatedPODVesselArrival = newValue; this.MarkAsDirty("EstimatedPODVesselArrival"); } }
@@ -635,11 +596,6 @@ export class ContainerPM {
     public set ActualPODDeparture(newValue: Date) { if (this.actualPODDeparture != newValue) { this.actualPODDeparture = newValue; this.MarkAsDirty("ActualPODDeparture"); } }
        
 	 
-    private deliveryLocation: string;
-    public get DeliveryLocation() { return this.deliveryLocation; }
-    public set DeliveryLocation(newValue: string) { if (this.deliveryLocation != newValue) { this.deliveryLocation = newValue; this.MarkAsDirty("DeliveryLocation"); } }
-       
-	 
     private estimatedDelivery: Date;
     public get EstimatedDelivery() { return this.estimatedDelivery; }
     public set EstimatedDelivery(newValue: Date) { if (this.estimatedDelivery != newValue) { this.estimatedDelivery = newValue; this.MarkAsDirty("EstimatedDelivery"); } }
@@ -648,11 +604,6 @@ export class ContainerPM {
     private actualDelivery: Date;
     public get ActualDelivery() { return this.actualDelivery; }
     public set ActualDelivery(newValue: Date) { if (this.actualDelivery != newValue) { this.actualDelivery = newValue; this.MarkAsDirty("ActualDelivery"); } }
-       
-	 
-    private lIFLocation: string;
-    public get LIFLocation() { return this.lIFLocation; }
-    public set LIFLocation(newValue: string) { if (this.lIFLocation != newValue) { this.lIFLocation = newValue; this.MarkAsDirty("LIFLocation"); } }
        
 	 
     private estimatedLIFArrival: Date;
@@ -683,11 +634,6 @@ export class ContainerPM {
     private gateOut: Date;
     public get GateOut() { return this.gateOut; }
     public set GateOut(newValue: Date) { if (this.gateOut != newValue) { this.gateOut = newValue; this.MarkAsDirty("GateOut"); } }
-       
-	 
-    private emptyReturnLocation: string;
-    public get EmptyReturnLocation() { return this.emptyReturnLocation; }
-    public set EmptyReturnLocation(newValue: string) { if (this.emptyReturnLocation != newValue) { this.emptyReturnLocation = newValue; this.MarkAsDirty("EmptyReturnLocation"); } }
        
 	 
     private estimatedEmptyReturn: Date;
@@ -725,11 +671,6 @@ export class ContainerPM {
     public set AvailablityDate(newValue: Date) { if (this.availablityDate != newValue) { this.availablityDate = newValue; this.MarkAsDirty("AvailablityDate"); } }
        
 	 
-    private availabilityLocation: string;
-    public get AvailabilityLocation() { return this.availabilityLocation; }
-    public set AvailabilityLocation(newValue: string) { if (this.availabilityLocation != newValue) { this.availabilityLocation = newValue; this.MarkAsDirty("AvailabilityLocation"); } }
-       
-	 
     private lastFreeDayDate: Date;
     public get LastFreeDayDate() { return this.lastFreeDayDate; }
     public set LastFreeDayDate(newValue: Date) { if (this.lastFreeDayDate != newValue) { this.lastFreeDayDate = newValue; this.MarkAsDirty("LastFreeDayDate"); } }
@@ -750,6 +691,201 @@ export class ContainerPM {
     public set ShipmentStatusName(newValue: string) { if (this.shipmentStatusName != newValue) { this.shipmentStatusName = newValue; this.MarkAsDirty("ShipmentStatusName"); } }
        
 	 
+    private emptyPickupLocation: string;
+    public get EmptyPickupLocation() { return this.emptyPickupLocation; }
+    public set EmptyPickupLocation(newValue: string) { if (this.emptyPickupLocation != newValue) { this.emptyPickupLocation = newValue; this.MarkAsDirty("EmptyPickupLocation"); } }
+       
+	 
+    private deliveryLocation: string;
+    public get DeliveryLocation() { return this.deliveryLocation; }
+    public set DeliveryLocation(newValue: string) { if (this.deliveryLocation != newValue) { this.deliveryLocation = newValue; this.MarkAsDirty("DeliveryLocation"); } }
+       
+	 
+    private emptyReturnLocation: string;
+    public get EmptyReturnLocation() { return this.emptyReturnLocation; }
+    public set EmptyReturnLocation(newValue: string) { if (this.emptyReturnLocation != newValue) { this.emptyReturnLocation = newValue; this.MarkAsDirty("EmptyReturnLocation"); } }
+       
+	 
+    private availabilityLocation: string;
+    public get AvailabilityLocation() { return this.availabilityLocation; }
+    public set AvailabilityLocation(newValue: string) { if (this.availabilityLocation != newValue) { this.availabilityLocation = newValue; this.MarkAsDirty("AvailabilityLocation"); } }
+       
+	 
+    private originLocation: string;
+    public get OriginLocation() { return this.originLocation; }
+    public set OriginLocation(newValue: string) { if (this.originLocation != newValue) { this.originLocation = newValue; this.MarkAsDirty("OriginLocation"); } }
+       
+	 
+    private lIFLocation: string;
+    public get LIFLocation() { return this.lIFLocation; }
+    public set LIFLocation(newValue: string) { if (this.lIFLocation != newValue) { this.lIFLocation = newValue; this.MarkAsDirty("LIFLocation"); } }
+       
+	 
+    private pOLLocation: string;
+    public get POLLocation() { return this.pOLLocation; }
+    public set POLLocation(newValue: string) { if (this.pOLLocation != newValue) { this.pOLLocation = newValue; this.MarkAsDirty("POLLocation"); } }
+       
+	 
+    private pODLocation: string;
+    public get PODLocation() { return this.pODLocation; }
+    public set PODLocation(newValue: string) { if (this.pODLocation != newValue) { this.pODLocation = newValue; this.MarkAsDirty("PODLocation"); } }
+       
+	 
+    private transshipment1Location: string;
+    public get Transshipment1Location() { return this.transshipment1Location; }
+    public set Transshipment1Location(newValue: string) { if (this.transshipment1Location != newValue) { this.transshipment1Location = newValue; this.MarkAsDirty("Transshipment1Location"); } }
+       
+	 
+    private transshipment2Location: string;
+    public get Transshipment2Location() { return this.transshipment2Location; }
+    public set Transshipment2Location(newValue: string) { if (this.transshipment2Location != newValue) { this.transshipment2Location = newValue; this.MarkAsDirty("Transshipment2Location"); } }
+       
+	 
+    private transshipment3Location: string;
+    public get Transshipment3Location() { return this.transshipment3Location; }
+    public set Transshipment3Location(newValue: string) { if (this.transshipment3Location != newValue) { this.transshipment3Location = newValue; this.MarkAsDirty("Transshipment3Location"); } }
+       
+	 
+    private transshipment4Location: string;
+    public get Transshipment4Location() { return this.transshipment4Location; }
+    public set Transshipment4Location(newValue: string) { if (this.transshipment4Location != newValue) { this.transshipment4Location = newValue; this.MarkAsDirty("Transshipment4Location"); } }
+       
+	 
+    private emptyPickupLocationPortId: string;
+    public get EmptyPickupLocationPortId() { return this.emptyPickupLocationPortId; }
+    public set EmptyPickupLocationPortId(newValue: string) { if (this.emptyPickupLocationPortId != newValue) { this.emptyPickupLocationPortId = newValue; this.MarkAsDirty("EmptyPickupLocationPortId"); } }
+       
+	 
+    private deliveryLocationPortId: string;
+    public get DeliveryLocationPortId() { return this.deliveryLocationPortId; }
+    public set DeliveryLocationPortId(newValue: string) { if (this.deliveryLocationPortId != newValue) { this.deliveryLocationPortId = newValue; this.MarkAsDirty("DeliveryLocationPortId"); } }
+       
+	 
+    private emptyReturnLocationPortId: string;
+    public get EmptyReturnLocationPortId() { return this.emptyReturnLocationPortId; }
+    public set EmptyReturnLocationPortId(newValue: string) { if (this.emptyReturnLocationPortId != newValue) { this.emptyReturnLocationPortId = newValue; this.MarkAsDirty("EmptyReturnLocationPortId"); } }
+       
+	 
+    private availabilityLocationPortId: string;
+    public get AvailabilityLocationPortId() { return this.availabilityLocationPortId; }
+    public set AvailabilityLocationPortId(newValue: string) { if (this.availabilityLocationPortId != newValue) { this.availabilityLocationPortId = newValue; this.MarkAsDirty("AvailabilityLocationPortId"); } }
+       
+	 
+    private originLocationPortId: string;
+    public get OriginLocationPortId() { return this.originLocationPortId; }
+    public set OriginLocationPortId(newValue: string) { if (this.originLocationPortId != newValue) { this.originLocationPortId = newValue; this.MarkAsDirty("OriginLocationPortId"); } }
+       
+	 
+    private lIFLocationPortId: string;
+    public get LIFLocationPortId() { return this.lIFLocationPortId; }
+    public set LIFLocationPortId(newValue: string) { if (this.lIFLocationPortId != newValue) { this.lIFLocationPortId = newValue; this.MarkAsDirty("LIFLocationPortId"); } }
+       
+	 
+    private pOLLocationPortId: string;
+    public get POLLocationPortId() { return this.pOLLocationPortId; }
+    public set POLLocationPortId(newValue: string) { if (this.pOLLocationPortId != newValue) { this.pOLLocationPortId = newValue; this.MarkAsDirty("POLLocationPortId"); } }
+       
+	 
+    private pODLocationPortId: string;
+    public get PODLocationPortId() { return this.pODLocationPortId; }
+    public set PODLocationPortId(newValue: string) { if (this.pODLocationPortId != newValue) { this.pODLocationPortId = newValue; this.MarkAsDirty("PODLocationPortId"); } }
+       
+	 
+    private transshipment1LocationPortId: string;
+    public get Transshipment1LocationPortId() { return this.transshipment1LocationPortId; }
+    public set Transshipment1LocationPortId(newValue: string) { if (this.transshipment1LocationPortId != newValue) { this.transshipment1LocationPortId = newValue; this.MarkAsDirty("Transshipment1LocationPortId"); } }
+       
+	 
+    private transshipment2LocationPortId: string;
+    public get Transshipment2LocationPortId() { return this.transshipment2LocationPortId; }
+    public set Transshipment2LocationPortId(newValue: string) { if (this.transshipment2LocationPortId != newValue) { this.transshipment2LocationPortId = newValue; this.MarkAsDirty("Transshipment2LocationPortId"); } }
+       
+	 
+    private transshipment3LocationPortId: string;
+    public get Transshipment3LocationPortId() { return this.transshipment3LocationPortId; }
+    public set Transshipment3LocationPortId(newValue: string) { if (this.transshipment3LocationPortId != newValue) { this.transshipment3LocationPortId = newValue; this.MarkAsDirty("Transshipment3LocationPortId"); } }
+       
+	 
+    private transshipment4LocationPortId: string;
+    public get Transshipment4LocationPortId() { return this.transshipment4LocationPortId; }
+    public set Transshipment4LocationPortId(newValue: string) { if (this.transshipment4LocationPortId != newValue) { this.transshipment4LocationPortId = newValue; this.MarkAsDirty("Transshipment4LocationPortId"); } }
+       
+	 
+    private terminalId: string;
+    public get TerminalId() { return this.terminalId; }
+    public set TerminalId(newValue: string) { if (this.terminalId != newValue) { this.terminalId = newValue; this.MarkAsDirty("TerminalId"); } }
+       
+	 
+    private terminalAddress: string;
+    public get TerminalAddress() { return this.terminalAddress; }
+    public set TerminalAddress(newValue: string) { if (this.terminalAddress != newValue) { this.terminalAddress = newValue; this.MarkAsDirty("TerminalAddress"); } }
+       
+	 
+    private terminalPhone: string;
+    public get TerminalPhone() { return this.terminalPhone; }
+    public set TerminalPhone(newValue: string) { if (this.terminalPhone != newValue) { this.terminalPhone = newValue; this.MarkAsDirty("TerminalPhone"); } }
+       
+	 
+    private terminalName: string;
+    public get TerminalName() { return this.terminalName; }
+    public set TerminalName(newValue: string) { if (this.terminalName != newValue) { this.terminalName = newValue; this.MarkAsDirty("TerminalName"); } }
+       
+	 
+    private terminalAddressId: string;
+    public get TerminalAddressId() { return this.terminalAddressId; }
+    public set TerminalAddressId(newValue: string) { if (this.terminalAddressId != newValue) { this.terminalAddressId = newValue; this.MarkAsDirty("TerminalAddressId"); } }
+       
+	 
+    private field1: CustomFieldClass;
+    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "Container");} return this.field1; }
+    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+       
+	 
+    private field2: CustomFieldClass;
+    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "Container");} return this.field2; }
+    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+       
+	 
+    private field3: CustomFieldClass;
+    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "Container");} return this.field3; }
+    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+       
+	 
+    private field4: CustomFieldClass;
+    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "Container");} return this.field4; }
+    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+       
+	 
+    private field5: CustomFieldClass;
+    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "Container");} return this.field5; }
+    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+       
+	 
+    private field6: CustomFieldClass;
+    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "Container");} return this.field6; }
+    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+       
+	 
+    private field7: CustomFieldClass;
+    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "Container");} return this.field7; }
+    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+       
+	 
+    private field8: CustomFieldClass;
+    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "Container");} return this.field8; }
+    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+       
+	 
+    private field9: CustomFieldClass;
+    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "Container");} return this.field9; }
+    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+       
+	 
+    private field10: CustomFieldClass;
+    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "Container");} return this.field10; }
+    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
@@ -762,6 +898,7 @@ export class ContainerPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ContainerPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Container");
            
         }

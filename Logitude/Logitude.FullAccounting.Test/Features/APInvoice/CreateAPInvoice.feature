@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-APIvoice
 Feature: Create AP Invoice
 	We want to create AP invoice.
-
+@Smoke
 Scenario: Create AP Invoice
 	Given I have the following AP invoice lines:
 		| Description  | VatType | ForiegnCurrencyIdByCode | ForiegnExchangeRate | VatPercentage | InvoiceCurrencyAmount | ChargesType | ProfitCurrencyAmount | LocalCurrencyAmount | ForiegnCurrencyAmount |

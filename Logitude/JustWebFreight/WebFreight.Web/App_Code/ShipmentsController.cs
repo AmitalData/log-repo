@@ -448,7 +448,7 @@ namespace WebFreight.Web
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
                                                      House = entity.House,
                                                      LongMaster = entity.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
-                                                   
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
                                                  };
             return shipments;
         }
@@ -505,6 +505,7 @@ namespace WebFreight.Web
                                                      MainCarriageETD = m.MainCarriageETD,
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
                                                  };
             return shipments;
         }
@@ -951,6 +952,7 @@ namespace WebFreight.Web
                              DescriptionOfGoods = f.DescriptionOfGoods,
                              ProjectNumber = f.ProjectNumber,
                              Tenant = f.Tenant,
+                             IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
                          };
 
             return query2;
@@ -2961,6 +2963,7 @@ namespace WebFreight.Web
                                                      ShipmentLevelCode = entity.ShipmentLevelCode,
                                                      ShipmentMasterDataId = entity.MasterShipmentDataId,
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
                                                  };
             return shipments;
         }

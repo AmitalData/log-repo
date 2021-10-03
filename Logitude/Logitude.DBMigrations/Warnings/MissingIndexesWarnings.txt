@@ -1,1 +1,14 @@
-Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentsFilings_Tenant_DocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentsFilings_CustomerDocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is DocumentsFilings_Tenant_ForwarderDocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentsFilings_Tenant_Code, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File APInvoice.dxml, The Found Index On DB Is IX_APInvoices_MainEntityId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_CustomFileId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is Shipment_CustomerId_LastStatusLogDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is Shipments_CustomerId_ComputedStatusDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Tenant_ShipmentLEvelCode_CreateDateTime, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_QuoteId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentComputedFields.dxml, The Found Index On DB Is IX_ShipmentComputedFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentMasterData.dxml, The Found Index On DB Is IX_ShipmentMasterDatas_Tenant_Master_InterlineId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentMasterData.dxml, The Found Index On DB Is MainCarriageATD_MainCarriageATA_MainCarriageETD, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentMasterData.dxml, The Found Index On DB Is DepartureArrivalToDate, The Index Should Added To The DXML File

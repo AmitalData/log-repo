@@ -1,15 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Xunit;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Logitude.FullAccounting")]
+[assembly: AssemblyTitle("Logitude.FullAccountingTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Logitude.FullAccounting")]
+[assembly: AssemblyProduct("Logitude.FullAccountingTests")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5f5b0456-70ac-4d6c-a7a5-ff7a74956501")]
+[assembly: Guid("8b4039ce-e827-478d-872b-15ebcc7f64de")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,4 +35,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: Xunit.CollectionBehavior(DisableTestParallelization = true)]
+[assembly: CollectionBehavior(DisableTestParallelization = true)]

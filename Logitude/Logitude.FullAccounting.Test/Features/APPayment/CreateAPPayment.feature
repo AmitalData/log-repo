@@ -1,7 +1,7 @@
 ﻿@Pre-Prepare-CrateAPPayment
 Feature: Create AP Payment
 	We want to create ap payment.
-
+@Smoke
 Scenario: Create ap payment
 	Given a ap payment with the following properties
 		| property                    | Value    |

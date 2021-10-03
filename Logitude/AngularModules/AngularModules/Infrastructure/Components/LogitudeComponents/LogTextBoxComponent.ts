@@ -1194,8 +1194,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     onchange(event) {
-        const txtValue = this.TextValue ? this.TextValue : "";
-        this.Change.emit(txtValue);
+        this.Change.emit(this.TextValue);
     }
 
     GetValueFormatted(valueFromField: any) {

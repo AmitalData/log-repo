@@ -1,4 +1,4 @@
-@dev
+@devsmoke
 Feature: GL Accounts
     The user creates new GL Account and edits it
 
