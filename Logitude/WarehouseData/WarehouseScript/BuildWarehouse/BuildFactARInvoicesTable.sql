@@ -75,7 +75,7 @@
 	dw_ARInvoices.AmountInLocalCurrency, dw_ARInvoices.AmountInProfitCurrency, dw_ARInvoices.AmountDueInLocalCurrency, dw_ARInvoices.AmountDueInProfitCurrency,dw_Shipments.ShipmentNumber,
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, NewDIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
-	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoiceLines.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
+	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
 	NewDIM_Directions.Name,TransportModes.Name, NewDIM_Types.Name, dw_Shipments.ShipmentSubTypeId, NewDIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, NewDIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber
 
 	 

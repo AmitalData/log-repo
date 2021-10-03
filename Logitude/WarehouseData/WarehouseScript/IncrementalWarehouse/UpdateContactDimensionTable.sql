@@ -2,7 +2,7 @@
  declare @MaxAutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
- set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'User' )
+ set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Contact' )
  set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Contacts )
 
  
@@ -26,6 +26,7 @@
 	SELECT dw_Contacts.Id, dw_Contacts.EnglishName,dw_Contacts.LocalName , dw_Contacts.Email, dw_Contacts.BusinessPhone, dw_Contacts.Tenant, dw_DWHSettings.ParentTenant, dw_Contacts.AutomaticLastUpdateDate, dw_Contacts.InActive
 	From dw_Contacts
 	INNER JOIN dw_DWHSettings ON dw_Contacts.Tenant = dw_DWHSettings.Tenant
+	where dw_Contacts.AutomaticLastUpdateDate > @LastUpdateDate
 	OPEN ContactsCursor FETCH NEXT FROM ContactsCursor INTO @Id , @Name, @LocalName , @Email ,@Phone ,@SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
