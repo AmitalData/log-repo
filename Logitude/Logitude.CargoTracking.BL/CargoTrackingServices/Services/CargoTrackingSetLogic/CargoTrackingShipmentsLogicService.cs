@@ -561,7 +561,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetPaymentRequestedMilestone(DataRow tableRow)
         {
-            var isPaymentRequiredDateFilled = !IsFieldNullOrEmpty(tableRow, "PaymentDateTime") && tableRow["IsPaymentRequired"].Equals(true);
+            var isPaymentRequiredDateFilled = IsFieldNullOrEmpty(tableRow, "PaymentDateTime") && tableRow["IsPaymentRequired"].Equals(true);
             tableRow.SetField("PaymentRequiredDate", isPaymentRequiredDateFilled ? tableRow["PaymentRequestDateTime"]: null);
             tableRow.SetField("PaymentRequiredDone", isPaymentRequiredDateFilled ? !IsFieldNullOrEmpty(tableRow, "PaymentRequestDateTime") : false);
         }
