@@ -194,5 +194,68 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetSpecialServiceItemsList(string DIRECTIONID, string TRANSPORTMODEID, string search, int top, bool searchNULLVendor = true)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                if (search != null && (search.ToLower() == "undefined" || search.ToLower() == "null"))
+                {
+                    search = null;
+                }
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                {
+
+                    if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
+                    {
+                        var ETBSERLVRepo = new ETBSERLVRepository(GetAmitalContext(tenant));
+                        var ETBSERLVquery =
+                        from itm in ETBSERLVRepo
+                            .GetAll().Select(o => new
+                            {
+                                Name = o.NAMEENG,
+                                SERVLEVEL_ID = o.SERVLEVELID,
+                            })
+                        select new { itm };
+                        ETBSERLVquery = ETBSERLVquery.Distinct();
+                        ETBSERLVquery = ETBSERLVquery.Take(top);
+
+                        var ETBSERLVList = ETBSERLVquery.ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, ETBSERLVList);
+                    }
+                    else
+                    {
+                        string systemVariable = (DIRECTIONID == "E" && TRANSPORTMODEID == "O") ? "M" : ((DIRECTIONID == "I" && TRANSPORTMODEID == "A") ? "I" : ((DIRECTIONID == "I" && TRANSPORTMODEID == "O") ? "R" : ""));
+                        var GTBSERLVRepo = new GTBSERLVRepository(GetAmitalContext(tenant));
+                        var GTBSERLVquery =
+                        from itm in GTBSERLVRepo
+                            .GetAll().Where(a => a.SYSTEM == systemVariable).Select(o => new
+                            {
+                                Name = o.NAMEENG,
+                                SERVLEVEL_ID = o.SERVLEVELID,
+                            })
+                        select new { itm };
+                        GTBSERLVquery = GTBSERLVquery.Distinct();
+                        GTBSERLVquery = GTBSERLVquery.Take(top);
+                        var GTBSERLVList = GTBSERLVquery.ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, GTBSERLVList);
+                    }
+
+
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

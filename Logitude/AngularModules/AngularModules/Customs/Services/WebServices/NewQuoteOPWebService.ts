@@ -65,4 +65,28 @@ export class NewQuoteOPWebService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetSpecialServiceItemsList(DIRECTIONID: string, TRANSPORTMODEID: string, search: string, top: number, isSearchNULLVendor: boolean) {
+
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetSpecialServiceItemsList/?DIRECTIONID=" + DIRECTIONID
+                + "&TRANSPORTMODEID=" + TRANSPORTMODEID
+                + "&search=" + search
+                + "&top=" + top
+                + "&searchNULLVendor=" + isSearchNULLVendor
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
