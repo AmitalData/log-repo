@@ -63,6 +63,8 @@
     declare @Consignee as int
 	declare @Routing as varchar(100)
 	declare @Branch as int 
+	declare @StatusCode as varchar(2)
+	declare @DraftNumber as varchar(20)
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -116,7 +118,7 @@
 	 @ARInvoicesSalesman,@ShipmentSalesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber,
-	 @Direction,@TransportMode, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch
+	 @Direction,@TransportMode, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch,@StatusCode, @DraftNumber
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -128,6 +130,21 @@
 		set @Salesman = @ARInvoicesSalesman;
 		if(@Salesman =1 )BEGIN set @Salesman = @ShipmentSalesman;END
 
+     	--------------AR Invoice Number------------------
+		 
+				IF(@StatusCode = 'DR' or @StatusCode = 'LL')
+					BEGIN
+						IF(@DraftNumber is not null)
+							BEGIN
+								SET @InvoiceNumber = @DraftNumber;
+							END
+						ELSE
+							BEGIN
+								SET @InvoiceNumber = @Id;
+							END
+					END
+		 
+		----------------------------------------------
 
 
 
@@ -168,7 +185,7 @@ END CATCH
 	@ARInvoicesSalesman,@ShipmentSalesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
 	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
-	@Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch
+	@Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber
 
 		End
 	CLOSE ARInvoicesCursor

@@ -1,2 +1,0 @@
-Warning: Missing Index In DXML File Quote.dxml, The Found Index On DB Is IX_QuoteClosingReasonCode, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ShipmentComputedFields.dxml, The Found Index On DB Is IX_ShipmentComputedFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File

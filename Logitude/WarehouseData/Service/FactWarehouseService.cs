@@ -58,6 +58,10 @@ namespace WarehouseData.Helper
 
         private void RemoveOldRowsFromFactTable(TableClass table, string connectionString)
         {
+           // if(table.DWObjectTableCode == "Fact_ARInvoices")
+           // {
+
+           // }
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
@@ -86,15 +90,26 @@ namespace WarehouseData.Helper
         private void RemoveOldRowsFromSingleDWFactTable(TableClass table, string connectionString, SqlConnection sourceConnection)
         {
             SqlCommand commandSourceData = new SqlCommand(
-                           "SELECT " + table.DWTableKeyName +
+                           "SELECT " + table.DWTableKeyName + (!string.IsNullOrEmpty(table.AdditionalKeyName) ? (","+ table.AdditionalKeyName) : "") +
+
                            " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
             SqlDataReader reader = commandSourceData.ExecuteReader();
             if (reader.HasRows)
             {
                 var dataTable = new DataTable();
                 dataTable.Load(reader);
-                var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.DWTableKeyName].ToString()).ToList();
+                var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.AdditionalKeyName].ToString()).ToList();
                 generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
+
+                if (!string.IsNullOrEmpty(table.AdditionalKeyName))
+                {
+                    var additionalKeyNamecolumns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.AdditionalKeyName].ToString()).ToList();
+
+                    if (additionalKeyNamecolumns.Count() > 0)
+                    {
+                        generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName = table.AdditionalKeyName, IdsList = additionalKeyNamecolumns, ConnectionString = connectionString });
+                    }
+                }
             }
             reader.Close();
         }
