@@ -192,6 +192,24 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
+    SetTitleForSupplierOrClient(directionId: string) {
+        var title;
+        console.log('ddd', directionId)
+        switch (directionId) {
+            case 'E': {
+                title = "CLIENT"
+                break;
+            }
+
+            case 'I':
+            case 'C': {
+                title = "SUPPLIER"
+                break;
+            }
+        }
+
+        return title;
+    }
     SetTypeTitle() {
         if (this.Shipment.ShipmentList.TransportModeId == "A") {
             this.TypeTitle = "PACKAGE TYPE";
