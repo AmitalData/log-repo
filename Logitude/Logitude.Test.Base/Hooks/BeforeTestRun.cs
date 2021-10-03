@@ -30,7 +30,7 @@ namespace Logitude.Test.Base.Hooks
             SetupPackageTypePreparationVariables();
         }
 
-        public static void PrepareTheData(string email, string password,string url)
+        public static void PrepareTheData(string email, string password, string url)
         {
             SetupBaseSettingsForForm(email, password, url);
             SetupDefaultUserAuthentication();
@@ -44,12 +44,50 @@ namespace Logitude.Test.Base.Hooks
         private static void SetupBaseSettings()
         {
             Configurations configurations = GetConfigurations();
-            if(configurations != null)
+            if (configurations != null)
             {
                 Settings.ServerUrl = configurations.ServerSettings.Url;
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
             }
+            Settings.ServerUrl = Environment.GetEnvironmentVariable("URL") ?? Settings.ServerUrl;
+            Settings.DefaultUserCredentials = GetDefaultUserCredentialsFromEnvironmentVariable() ?? Settings.DefaultUserCredentials;
+            Settings.OtherUserCredentials = GetOtherUserCredentialsFromEnvironmentVariable() ?? Settings.OtherUserCredentials;
+
+        }
+
+        private static Credentials GetOtherUserCredentialsFromEnvironmentVariable()
+        {
+            var email = Environment.GetEnvironmentVariable("OtherUserEmail");
+            var password = Environment.GetEnvironmentVariable("OtherUserPassword");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+
+            return userCredentials;
+        }
+
+        private static Credentials GetDefaultUserCredentialsFromEnvironmentVariable()
+        {
+            var email = Environment.GetEnvironmentVariable("DefaultUserEmail");
+            var password = Environment.GetEnvironmentVariable("DefaultUserPassword");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+
+            return userCredentials;
         }
 
         private static void SetupBaseSettingsForForm(string email, string password, string url)
@@ -172,7 +210,7 @@ namespace Logitude.Test.Base.Hooks
                 .Filter1Name("SearchFields")
                 .Filter1Operator("Contains")
                 .Filter1Value(Settings.DefaultUserCredentials.Email)
-                .Build(); 
+                .Build();
 
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
 
