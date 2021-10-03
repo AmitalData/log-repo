@@ -64,7 +64,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         .GetAll().Select(o => new
                         {
                             Name = o.NAMEENG,
-                            PTERMID = o.PTERMID ,
+                            PTERMID = o.PTERMID,
                         })
                     select new { itm };
 
@@ -88,6 +88,101 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, string search, int top, bool searchNULLVendor = true)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                if (search != null && (search.ToLower() == "undefined" || search.ToLower() == "null"))
+                {
+                    search = null;
+                }
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                {
+                    switch ((DIRECTIONID, TRANSPORTMODEID))
+                    {
+                        case ("E", "A"):
+                            var ETBAIRLINERepo = new ETBAIRLINERepository(GetAmitalContext(tenant));
+                            var ETBAIRLINEquery =
+                            from itm in ETBAIRLINERepo
+                                .GetAll().Select(o => new
+                                {
+                                    Name = o.NAMEENG,
+                                    AIRLINE_ID = o.AIRLINEID,
+                                    Prefix = o.AIRLINENUM,
+                                })
+                            select new { itm };
+                            ETBAIRLINEquery = ETBAIRLINEquery.Distinct();
+                            ETBAIRLINEquery = ETBAIRLINEquery.Take(top);
+
+                            var ETBAIRLINEList = ETBAIRLINEquery.ToList();
+                            return Request.CreateResponse(HttpStatusCode.OK, ETBAIRLINEList);
+                        case ("E", "O"):
+                            var MTBCARRRepo = new MTBCARRRepository(GetAmitalContext(tenant));
+                            var MTBCARRquery =
+                            from itm in MTBCARRRepo
+                                .GetAll().Select(o => new
+                                {
+                                    Name = o.NAMEENG,
+                                    AIRLINE_ID = o.AIRLINEID,
+                                    Prefix = "",
+                                })
+                            select new { itm };
+                            MTBCARRquery = MTBCARRquery.Distinct();
+                            MTBCARRquery = MTBCARRquery.Take(top);
+
+                            var MTBCARRList = MTBCARRquery.ToList();
+                            return Request.CreateResponse(HttpStatusCode.OK, MTBCARRList);
+                        case ("I", "A"):
+                            var ETBVENDRepo = new ETBVENDRepository(GetAmitalContext(tenant));
+                            var ETBVENDquery =
+                            from itm in ETBVENDRepo
+                                .GetAll().Where(a => a.ISHANDAGNT == "A").Select(o => new
+                                {
+                                    Name = o.NAMEENG,
+                                    VENDOR_ID = o.VENDORID,
+                                    Prefix = o.VENDORPREFIX,
+                                })
+                            select new { itm };
+                            ETBVENDquery = ETBVENDquery.Distinct();
+                            ETBVENDquery = ETBVENDquery.Take(top);
+
+                            var ETBVENDList = ETBVENDquery.ToList();
+                            return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList);
+                        case ("I", "O"):
+                            var ETBVENDRepo2 = new ETBVENDRepository(GetAmitalContext(tenant));
+                            var ETBVENDquery2 =
+                            from itm in ETBVENDRepo2
+                                .GetAll().Where(a => a.ISHANDAGNT == "S").Select(o => new
+                                {
+                                    Name = o.NAMEENG,
+                                    VENDOR_ID = o.VENDORID,
+                                    Prefix = "",
+                                })
+                            select new { itm };
+                            ETBVENDquery2 = ETBVENDquery2.Distinct();
+                            ETBVENDquery2 = ETBVENDquery2.Take(top);
+
+                            var ETBVENDList2 = ETBVENDquery2.ToList();
+                            return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList2);
+                        default:
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid TRANSPORTMODEID or DIRECTIONID");
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
-

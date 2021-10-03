@@ -310,6 +310,11 @@ export class ProductTypeGeneralTabComponent extends BaseComponent {
         ToggleBTN.className = "ToggleButtonMenu";
     }
 
+    setToggleButtonMenuSaleTariffTemp() {
+        var ToggleBTN = document.getElementById(this.SearchTextSaleTariffDropButtonProductType) as HTMLDivElement;
+        ToggleBTN.className = "ToggleButtonMenuTemp";
+    }
+
     setToggleButtonMenuSaleTariff() {
         var ToggleBTN = document.getElementById(this.SearchTextSaleTariffDropButtonProductType) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenu";

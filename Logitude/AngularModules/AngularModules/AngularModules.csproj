@@ -1769,6 +1769,7 @@
     <TypeScriptCompile Include="Customs\Services\WebServices\ContainerizationMessagesService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\NewQuoteOPWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
