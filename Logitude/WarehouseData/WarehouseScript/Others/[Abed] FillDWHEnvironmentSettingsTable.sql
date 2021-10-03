@@ -1,2 +1,2 @@
 delete DWHEnvironmentSettings
-INSERT into DWHEnvironmentSettings values ('Fact_Shipments,Fact_Charges,Fact_Quotes,Fact_Invoices', 'Fact_ARInvoices')
+INSERT into DWHEnvironmentSettings values ('Fact_Shipments,Fact_Charges,Fact_Quotes,Fact_Invoices,Fact_ARInvoices')
