@@ -116,16 +116,12 @@
     <Compile Include="Models\ARInvoiceLinePM.cs" />
     <Compile Include="Models\ARInvoicePM.cs" />
     <Compile Include="Models\ARPaymentPM.cs" />
-    <Compile Include="Models\AutomaticReconcileEnum.cs" />
     <Compile Include="Models\AutomaticReconcileMethodPM.cs" />
     <Compile Include="Models\BankAccountPM.cs" />
     <Compile Include="Models\BankCodePM.cs" />
     <Compile Include="Models\BankDepositLinePM.cs" />
     <Compile Include="Models\BankDepositPM.cs" />
-    <Compile Include="Models\Builders\APPaymentPMBuilder.cs" />
-    <Compile Include="Models\Builders\ARPaymentPMBuilder.cs" />
     <Compile Include="Models\CashBookLineList.cs" />
-    <Compile Include="Models\CashBookTypeCodeEnum.cs" />
     <Compile Include="Models\BranchPM.cs" />
     <Compile Include="Models\Builders\APInvoiceBuilder.cs" />
     <Compile Include="Models\Builders\APInvoiceLineBuilder.cs" />
@@ -153,8 +149,6 @@
     <Compile Include="Models\Codes\BranchCodes.cs" />
     <Compile Include="Models\Codes\CashBookCodes.cs" />
     <Compile Include="Models\Codes\PartnerTypeCodes.cs" />
-    <Compile Include="Models\CustomerPM.cs" />
-    <Compile Include="Models\JournalTypeEnum.cs" />
     <Compile Include="Models\ChartOfAccountsTypeEnum.cs" />
     <Compile Include="Models\CustomerPM.cs" />
     <Compile Include="Models\FullAccountingContext.cs" />
@@ -173,10 +167,7 @@
     <Compile Include="Models\VendorPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APInvoiceService .cs" />
-    <Compile Include="Services\BankDepositService.cs" />
     <Compile Include="Services\AccountingEntegrityCheckServices.cs" />
-    <Compile Include="Services\PaymentChequesService.cs" />
-    <Compile Include="Services\BankAccountService.cs" />
     <Compile Include="Services\APPaymentService.cs" />
     <Compile Include="Services\ARInvoiceService.cs" />
     <Compile Include="Services\ARPaymentService.cs" />
@@ -280,7 +271,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\APInvoice\Security\" />
     <Folder Include="Steps\APInvoice\Security\" />
   </ItemGroup>
   <ItemGroup />

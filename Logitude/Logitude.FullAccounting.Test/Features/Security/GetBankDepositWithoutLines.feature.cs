@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccountingTests.Features.BankDeposit
+namespace Logitude.FullAccountingTests.Features.Security
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,21 +19,21 @@ namespace Logitude.FullAccountingTests.Features.BankDeposit
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Xunit.TraitAttribute("Category", "Pre-Prepare-CreateBankDeposit")]
-    public partial class CreateBankDepositFeature : object, Xunit.IClassFixture<CreateBankDepositFeature.FixtureData>, System.IDisposable
+    [Xunit.TraitAttribute("Category", "Pre-Prepare-GetBankDeposit")]
+    public partial class GetBankDepositWithoutLinesFeature : object, Xunit.IClassFixture<GetBankDepositWithoutLinesFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Pre-Prepare-CreateBankDeposit"};
+                "Pre-Prepare-GetBankDeposit"};
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreateBankDeposit.feature"
+#line 1 "GetBankDepositWithoutLines.feature"
 #line hidden
         
-        public CreateBankDepositFeature(CreateBankDepositFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetBankDepositWithoutLinesFeature(GetBankDepositWithoutLinesFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -42,8 +42,8 @@ namespace Logitude.FullAccountingTests.Features.BankDeposit
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/BankDeposit", "Create Bank Deposit", "\tWe want to bank deposit.", ProgrammingLanguage.CSharp, new string[] {
-                        "Pre-Prepare-CreateBankDeposit"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Security", "Get Bank Deposit Without Lines", "\tWe want to get bank deposit without lines from unauthorizes tenant.", ProgrammingLanguage.CSharp, new string[] {
+                        "Pre-Prepare-GetBankDeposit"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,16 +83,14 @@ namespace Logitude.FullAccountingTests.Features.BankDeposit
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create bank deposit")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Bank Deposit")]
-        [Xunit.TraitAttribute("Description", "Create bank deposit")]
-        [Xunit.TraitAttribute("Category", "Smoke")]
-        public virtual void CreateBankDeposit()
+        [Xunit.SkippableFactAttribute(DisplayName="Get bank deposit without lines from unauthorizes tenant.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Get Bank Deposit Without Lines")]
+        [Xunit.TraitAttribute("Description", "Get bank deposit without lines from unauthorizes tenant.")]
+        public virtual void GetBankDepositWithoutLinesFromUnauthorizesTenant_()
         {
-            string[] tagsOfScenario = new string[] {
-                    "Smoke"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create bank deposit", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get bank deposit without lines from unauthorizes tenant.", null, tagsOfScenario, argumentsOfScenario);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -113,29 +111,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table21.AddRow(new string[] {
-                            "CashBook",
-                            "new cash book"});
-                table21.AddRow(new string[] {
-                            "DepositCurrency",
-                            "NIS"});
-                table21.AddRow(new string[] {
-                            "ForeignAmount",
-                            "300"});
-                table21.AddRow(new string[] {
-                            "LocalDepositAmount",
-                            "300"});
 #line 6
- testRunner.Given("a bank deposit with the following properties", ((string)(null)), table21, "Given ");
+ testRunner.When("get bank deposit without lines from unauthorizes tenant", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
- testRunner.When("create bank deposit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
- testRunner.Then("the bank deposit should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+ testRunner.Then("The bank deposit without lines API should return you have no permissions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -148,12 +128,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreateBankDepositFeature.FeatureSetup();
+                GetBankDepositWithoutLinesFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateBankDepositFeature.FeatureTearDown();
+                GetBankDepositWithoutLinesFeature.FeatureTearDown();
             }
         }
     }

@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccounting.Test.Features.Security
+namespace Logitude.FullAccountingTests.Features.Security
 {
     using TechTalk.SpecFlow;
     using System;
@@ -33,7 +33,7 @@ namespace Logitude.FullAccounting.Test.Features.Security
 #line 1 "GetSingleGLAccountByInternalNumberAndTenant.feature"
 #line hidden
         
-        public GetSingleGLAccountByInternalNumberAndTenantFeature(GetSingleGLAccountByInternalNumberAndTenantFeature.FixtureData fixtureData, Logitude_FullAccounting_Test_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public GetSingleGLAccountByInternalNumberAndTenantFeature(GetSingleGLAccountByInternalNumberAndTenantFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
