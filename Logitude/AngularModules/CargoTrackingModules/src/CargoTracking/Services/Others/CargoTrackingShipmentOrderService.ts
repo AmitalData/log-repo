@@ -12,7 +12,7 @@ export class CargoTrackingShipmentOrderService {
     public authHeaders = ServiceHelper.GetHeadersWithToken();
 
     constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/ShipmentOrders';
+        this._apiUrl = ServiceHelper.GetAppURL(baseUrl) + 'api/ShipmentOrderExtended';
     }
 
     get(id: string) {
