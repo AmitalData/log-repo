@@ -266,6 +266,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as ContainersNumbers," +
                 "SHO.OrderNumber as ShipmentNumber," +
 
+                "0 as CreateDone," +
                 "0 as PickupDone," +
                 "0 as DepartureDone," +
                 "0 as ArrivalDone," +
