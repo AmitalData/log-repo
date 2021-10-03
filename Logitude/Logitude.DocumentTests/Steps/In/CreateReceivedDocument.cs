@@ -25,9 +25,6 @@ namespace Logitude.DocumentTests.Steps
         public void WhenCreateDocument()
         {
             context.Document = service.CreateDocument();
-            string envParam = Environment.GetEnvironmentVariable("URL");
-
-            throw new Exception("URL : " + envParam + " ");
         }
 
         [Then(@"document should be available")]
