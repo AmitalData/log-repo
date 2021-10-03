@@ -3,6 +3,9 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
@@ -195,7 +198,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+            if (!IsOceanInsightFeatureToggleExistInTenant( this.initializer.Tenant))
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -207,6 +210,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return true;
         }
 
+
+        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
+        {
+            string ocaenInsightFeatureToggleCode = "OIC";
+            bool isOceanInsightFeatureToggleExist = false;
+
+            isOceanInsightFeatureToggleExist = (from a in initializer.IInfrastructureContext.FeatureToggles
+                                                where a.ToggleCode == ocaenInsightFeatureToggleCode
+                                                && (a.TenantNumber == tenant || (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber))
+                                                && !a.Inactive
+                                                && a.Tenant == 0
+                                                select a).Any();
+            return isOceanInsightFeatureToggleExist;
+        }
+        
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
             if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
@@ -316,7 +334,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
             // Container 
-            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant);
+            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
             if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
             {
                 myHelper.SendContainerStatusRequest();

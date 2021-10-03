@@ -10,19 +10,34 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class ShipmentOldValuesService
     {
-        public void CreateOldDataDBTable(CargoTrackingArgs cargoArgs)
+        public void CreatePreOldDataDBTable(CargoTrackingArgs cargoArgs)
         {
-            var sql = BuildScriptForCreateShipmentOldDataValues();
+            var sql = BuildScriptForCreatePreOldCargoShipment();
             ExcuteSqlScript(cargoArgs, sql);
         }
-       
-        private string BuildScriptForCreateShipmentOldDataValues()
+        public void CreateOldCargoShipmentsFromPreOldCargoShipments(CargoTrackingArgs cargoArgs)
+        {
+            var sql = BuildScriptForCreateOldCargoShipmentsFromPreOldCargoShipments();
+            ExcuteSqlScript(cargoArgs, sql);
+        }
+        private string BuildScriptForCreatePreOldCargoShipment()
         {
             var sql = string.Concat(
-                        $"IF OBJECT_ID(N'dbo.PreOldCargoShipments', N'U') IS NOT NULL  drop table PreOldCargoShipments;select  * into PreOldCargoShipments from CargoTrackingShipments");
+                        $"IF OBJECT_ID(N'dbo.PreOldCargoShipments', N'U') IS NOT NULL  drop table PreOldCargoShipments; " ,
+                        $"select  * into PreOldCargoShipments from CargoTrackingShipments");
             return sql;
         }
-       
+        private string BuildScriptForCreateOldCargoShipmentsFromPreOldCargoShipments()
+        {
+            var sql =
+                       $"IF OBJECT_ID(N'dbo.OldCargoShipments', N'U') IS NOT NULL drop table OldCargoShipments;" + Environment.NewLine +
+                       $"IF OBJECT_ID(N'dbo.PreOldCargoShipments', N'U') IS NOT NULL " + Environment.NewLine +
+                       $"BEGIN" + Environment.NewLine +
+                       $"   select  * into OldCargoShipments from PreOldCargoShipments;" + Environment.NewLine +
+                       $"   drop table PreOldCargoShipments;" + Environment.NewLine +
+                       $"END";
+            return sql;
+        }
         private void ExcuteSqlScript(CargoTrackingArgs cargoArgs, string sql)
         {
             ServiceHelper.ExecuteSql(sql, cargoArgs.DestinationConnectionString);
