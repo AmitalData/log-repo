@@ -72,7 +72,7 @@
 	dw_ARInvoices.InvoiceDate, dw_ARInvoices.CreateDate, dw_ARInvoices.ApprovedDate, dw_ARInvoices.DueDate, dw_ARInvoices.PrintDate, dw_ARInvoices.PaidDate,
 	ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, SalesmanUser.Id_Number,ShipmentSalesmanUser.Id_Number, dw_ARInvoiceStatus.Name, dw_ARInvoices.PrintNotes,NewDIM_PaymentTerms.Id_Number,
 	LocalCurrency.Id_Number, InvoiceCurrency.Id_Number, dw_ARInvoices.VatNumber, BillTo.Id_Number,dw_ARInvoices.SubTotalInLocalCurrency, dw_ARInvoices.SubTotalInInvoiceCurrency,
-	dw_ARInvoices.AmountInLocalCurrency, dw_ARInvoices.AmountInProfitCurrency, dw_ARInvoices.AmountDueInLocalCurrency, dw_ARInvoices.AmountDueInProfitCurrency,dw_ARInvoices.ShipmentsNumbers,
+	dw_ARInvoices.AmountInLocalCurrency, dw_ARInvoices.AmountInProfitCurrency, dw_ARInvoices.AmountDueInLocalCurrency, dw_ARInvoices.AmountDueInProfitCurrency,dw_Shipments.ShipmentNumber,
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, NewDIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoiceLines.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
@@ -157,7 +157,7 @@
        [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax], [Shipment House Number], [Shipment Master Number], [Shipment Direction],[Shipment Transport Mode], [Shipment Type],[Shipment Sub Type],[Department],[Shipper], [Consignee],[Routing],[Invoice Branch] )
 	   
 	   
-      values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber, @InvoiceDate, @CreateDate, @ApprovedDate, @DueDate, @PrintDate,@PaidDate,
+      values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber, dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),dbo.GetDateFormateAsNumber(@ApprovedDate),  dbo.GetDateFormateAsNumber(@DueDate) ,dbo.GetDateFormateAsNumber(@PrintDate),dbo.GetDateFormateAsNumber(@PaidDate),
 	  @ApprovedBy, @CreatedBy, @PrintedBy, @Salesman, @Status, @PrintNotes,  @PaymentTerm, @LocalCurrency, @InvoiceCurrency,@VATNumber, @BillTo,
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
