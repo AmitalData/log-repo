@@ -110,29 +110,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "ChequeNumber",
                             "Random"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "Currency",
                             "NIS"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "BankAccount",
                             "new Bank Account"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "LocalAmount",
                             "100"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "PayToGLAccount",
                             "new account"});
-                table26.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "PayToName",
                             "Bank Account Test"});
 #line 5
- testRunner.Given("a payment cheques with the following properties", ((string)(null)), table26, "Given ");
+ testRunner.Given("a payment cheques with the following properties", ((string)(null)), table13, "Given ");
 #line hidden
 #line 13
  testRunner.When("create payment cheques", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
