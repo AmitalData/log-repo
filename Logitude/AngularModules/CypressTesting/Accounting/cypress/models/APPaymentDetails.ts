@@ -1,7 +1,7 @@
 export interface APPaymentDetails {
     Vendor: string,
     PaymentMethod: string,
-    PaymentAmount: number,
+    PaymentAmount: string,
     PaymentCurrency:string,
     Rate:number,
     RegisterDate:string,
