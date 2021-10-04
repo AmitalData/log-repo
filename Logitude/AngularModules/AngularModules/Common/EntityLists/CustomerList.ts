@@ -145,5 +145,7 @@ export class CustomerList {
 		GLAccountNumber: string;
 		SearchWeight: number;
 		IsAutonomy: boolean;
+		BillToId: string;
+		BillToName: string;
 	
 }
