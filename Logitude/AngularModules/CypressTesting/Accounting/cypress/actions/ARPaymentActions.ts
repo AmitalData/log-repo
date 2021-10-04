@@ -7,7 +7,7 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { AccountingURLs } from '../constants/URLs';
 
 export function NavigatesARPaymentWorkspace() {
-    cy.get(".QueryLink").contains("New Payment").click()
+    cy.get(BaseSelectors.QueryLink).contains("New Payment").click()
 }
 
 export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
