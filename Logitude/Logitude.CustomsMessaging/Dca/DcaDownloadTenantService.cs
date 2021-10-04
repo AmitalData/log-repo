@@ -219,16 +219,27 @@ namespace Logitude.CustomsMessaging.Dca
         }
 
 
-        public void DownloadAll(string debugIIGMessageId)
+        public void DownloadAll(string debugIIGMessageId, DedicatedCourierDCAModel  dedicatedCourierDCAModel)
         {
 
 
 
-            if (this.HasFeature_DcaDirect9200())
+            if (this.HasFeature_DcaDirect9200() || dedicatedCourierDCAModel!=null)
             {
                 
-                var dcaDirect9200TenantService = new DcaDirect9200TenantService(this._CustomsSettingPM, _AllDcaPreFixWithoutInOutUpper,this._InterfaceListDCA, _AllInterface);
+                var dcaDirect9200TenantService = new DcaDirect9200TenantService(
+                    this._CustomsSettingPM, 
+                    _AllDcaPreFixWithoutInOutUpper,
+                    this._InterfaceListDCA, 
+                    _AllInterface,
+                    dedicatedCourierDCAModel
+                    );
                 dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
+                if (dedicatedCourierDCAModel != null)
+                {
+                    var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
+                    removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
+                }
                 return;
             }
 
@@ -1053,4 +1064,5 @@ out myMessageOut);
 
         public HashSet<string> FileMessagesNotBelong2OurEnvironment { get; set; }
     }
+   
 }

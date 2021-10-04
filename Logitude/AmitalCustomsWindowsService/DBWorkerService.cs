@@ -19,6 +19,8 @@ using CustomsWorkerRole;
 using Logitude.Customs.BL.PatchDistribution;
 using System.Diagnostics;
 using CommunicationWorkerRole;
+using System.IO;
+using Logitude.CustomsMessaging.Dca;
 
 namespace AmitalCustomsWindowsService
 {
@@ -248,7 +250,13 @@ namespace AmitalCustomsWindowsService
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
             }
-            
+            var dedicatedCourierDCAService = new DedicatedCourierDCAService();
+            var modelDedicatedCourierDCA= dedicatedCourierDCAService.CreateDedicatedCourierDCA();
+            if (modelDedicatedCourierDCA != null)//Task 147744: AMITALCUSTOMSSERVER העברת הטיפול בכספת בבלדרות לתהליך
+            {
+                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
+                listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
+            }
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
@@ -262,9 +270,10 @@ namespace AmitalCustomsWindowsService
                         AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
                     }
                 }
-
             }
         }
+
+        
 
         private List<BatchServicesDefinitionPM> GetBatchServicesDefinitions()
         {
