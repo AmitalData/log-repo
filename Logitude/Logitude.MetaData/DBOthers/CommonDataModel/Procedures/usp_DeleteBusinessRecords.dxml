@@ -29,6 +29,7 @@ delete from QuoteComputedFields where Tenant = @Tenant
 delete from Quotes where Tenant = @Tenant
 
 delete from ShipmentCustomsTransmissions where Tenant = @Tenant
+delete from ARInvoiceChargesConstraints where Tenant= @Tenant
 delete from ShipmentReceivables where Tenant= @Tenant
 delete from ShipmentPayables where Tenant= @Tenant
 delete from InsideShipmentPackages where Tenant = @Tenant
@@ -44,7 +45,6 @@ delete from ShipmentCarrierStatuses where Tenant= @Tenant
 delete from AWBOCIs where Tenant= @Tenant
 delete from ShipmentCommodities where Tenant= @Tenant
 delete from ShipmentAssemblies where Tenant= @Tenant
-delete from ShipmentReceivables where Tenant= @Tenant
 delete from MessagingStockUsageHistories where Tenant = @Tenant
 delete from ShipmentMasterDatas where Tenant = @Tenant
 delete from ShipmentComputedFields where Tenant = @Tenant
