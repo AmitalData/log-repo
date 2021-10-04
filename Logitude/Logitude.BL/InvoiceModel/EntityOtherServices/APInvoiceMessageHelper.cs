@@ -414,12 +414,15 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     if (item.IsMultipleEntities)
                     {
-                        if (!string.IsNullOrEmpty(myline.EntityId))
+                        if (FeatureToggleHelper.HasFeatureToggle("MLS", tenant))
                         {
-                            Shipment multipleLineShipment = shipmentRepository.GetSingleShipment(myline.EntityId, tenant);
-                            if(multipleLineShipment != null)
+                            if (!string.IsNullOrEmpty(myline.EntityId))
                             {
-                                lineElement.ShipmentNumber = multipleLineShipment.ShipmentNumber;
+                                Shipment multipleLineShipment = shipmentRepository.GetSingleShipment(myline.EntityId, tenant);
+                                if (multipleLineShipment != null)
+                                {
+                                    lineElement.ShipmentNumber = multipleLineShipment.ShipmentNumber;
+                                }
                             }
                         }
                     }
