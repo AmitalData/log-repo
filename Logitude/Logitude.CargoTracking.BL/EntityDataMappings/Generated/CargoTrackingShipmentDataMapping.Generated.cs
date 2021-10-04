@@ -1256,14 +1256,24 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPM.CreatedDone = entityPOCO.CreatedDone;
 			}
 
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingDone))
-			{
-				entityPM.BookingDone = entityPOCO.BookingDone;
-			}
+            {
+					entityPM.BookingDone = entityPOCO.BookingDone;
+            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingDate))
-			{
-				entityPM.BookingDate = entityPOCO.BookingDate;
+            {
+					entityPM.BookingDate = entityPOCO.BookingDate;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImportManifest))
+            {
+					entityPM.ImportManifest = entityPOCO.ImportManifest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrevForwardingShipmentId))
+            {
+					entityPM.PrevForwardingShipmentId = entityPOCO.PrevForwardingShipmentId;
 			}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentRequiredDone))
@@ -1300,6 +1310,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.PaymentReceivedDate = entityPOCO.PaymentReceivedDate;
 			}
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BookingEstimationDate))
 			{
 				entityPM.BookingEstimationDate = entityPOCO.BookingEstimationDate;
@@ -1785,7 +1796,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			{
 				oldEntityPM.BookingDone = entityPM.BookingDone;
 			}
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BookingDate))
 			{
 				oldEntityPM.BookingDate = entityPM.BookingDate;
@@ -1807,9 +1817,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			}
 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedDone))
-			{
-				oldEntityPM.CreatedDone = entityPM.CreatedDone;
-			}
+            {
+                oldEntityPM.CreatedDone = entityPM.CreatedDone;
+            }
 
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentRequiredDone))
@@ -1859,7 +1869,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			{
 				oldEntityPM.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
 			}
-
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImportManifest))
+            {
+                oldEntityPM.ImportManifest = entityPM.ImportManifest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrevForwardingShipmentId))
+            {
+                oldEntityPM.PrevForwardingShipmentId = entityPM.PrevForwardingShipmentId;
+            }
 		}
 
 		public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)

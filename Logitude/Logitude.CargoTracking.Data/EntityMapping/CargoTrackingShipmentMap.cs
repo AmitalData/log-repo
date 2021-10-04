@@ -210,6 +210,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ImportManifest).HasColumnName("ImportManifest").HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.CreatedDone).HasColumnName("CreatedDone");
+            
             this.Property(t => t.PrevForwardingShipmentId).HasColumnName("PrevForwardingShipmentId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.BookingDone).HasColumnName("BookingDone");
