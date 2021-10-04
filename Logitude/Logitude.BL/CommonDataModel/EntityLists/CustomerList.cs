@@ -423,7 +423,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public bool IsAutonomy { get; set; }
 
-  
+        public string BillToId { get; set; }
+
+        public string BillToName { get; set; }
 
     }
 }
