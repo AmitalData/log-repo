@@ -2753,8 +2753,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReceivedNotes",OldValue=paymentReceivedNotes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   paymentReceivedNotes=value;
-		   
-	  
 		   }
 			
 		 }
