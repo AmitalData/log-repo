@@ -1,24 +1,32 @@
 import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { CardList } from "Common/EntityLists/CardList";
-import { ContactList } from "Common/EntityLists/ContactList";
-import { CardListService } from "Common/Services/StandardLists/CardListService";
-import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
-import { transporations } from "./components/new-quote-left-side/new-quote-left-side.component";
+import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
+
 
 @Component({
     templateUrl: './NewQuoteComponent.html',
     styleUrls: ['./NewQuoteComponent.scss'],
 })
 export class NewQuoteComponent {
-    public EntityPM: QuoteOPPM = new QuoteOPPM();
-
+    EntityPM: QuoteOPPM = new QuoteOPPM();
     formGroup = new FormGroup({});
-    transporations = transporations;
 
-    constructor() { }
+    constructor(
+        private newQuoteDataService: NewQuoteDataService,
+    ) { }
+
+    create() {
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK')
+        this.newQuoteDataService.creatingNewQuote(this.EntityPM)
+    }
+
+    cancel() {
+        SessionLocator.SelectedSession.CloseCurrentWindow();
+    }
+
 
     async ngOnInit() {
-    }    
+    }
 }

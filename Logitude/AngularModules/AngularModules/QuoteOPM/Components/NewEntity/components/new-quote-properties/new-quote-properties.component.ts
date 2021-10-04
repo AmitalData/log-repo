@@ -18,15 +18,16 @@ export class NewQuotePropertiesComponent implements OnInit {
   mainCarriageCarrierList:any[] = []
   incotermList:any[] = []
 
+  exportCode: string = 'E';
+  importCode: string = 'I';
+  oceanCode: string = 'O';
+  airCode: string = 'A';
+
   constructor(
     private newQuoteDataService: NewQuoteDataService,
   ) { }
 
   ngOnInit(): void {
-    this.getFromPort()
-    this.getToPort()
-    this.getSpecialService()
-    this.getMainCarriageCarrier()
     this.getIncoterms()
 
     // this.EntityPM.FromPortId 
@@ -37,8 +38,10 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('fromPort'))
+    if (!this.formGroup.contains('fromPort')){
       this.addFormControls()
+      this.subscribeTransport()
+    }
   }
 
   addFormControls() {
@@ -48,24 +51,43 @@ export class NewQuotePropertiesComponent implements OnInit {
     this.formGroup.addControl('mainCarriageCarrier', new FormControl());
     this.formGroup.addControl('incoterm', new FormControl());
   }
+
+  subscribeTransport() {
+    this.formGroup.controls.transportMode.valueChanges.subscribe(()=>this.updateList())
+    this.formGroup.controls.direction.valueChanges.subscribe(()=>this.updateList())
+  }
+  transportModeId: string = '';
+  directionId: string = '';
+  updateList() {
+    this.transportModeId = this.formGroup.controls.transportMode.value?.Id;
+    this.directionId = this.formGroup.controls.direction.value?.Id;
+
+    if(!this.transportModeId || !this.directionId) return;
+    
+    this.getFromPort()
+    this.getToPort()
+    this.getSpecialService()
+    this.getMainCarriageCarrier()
+  }
   
   async getFromPort() {
-    this.fromPortList = await this.newQuoteDataService.getIncoterms();
+    console.log(this.directionId, this.transportModeId)
+    this.fromPortList = await this.newQuoteDataService.getPort(this.directionId, this.transportModeId);
     console.log(this.fromPortList)
   }
 
   async getToPort() {
-    this.toPortList= await this.newQuoteDataService.getIncoterms();
+    this.toPortList= await this.newQuoteDataService.getPort(this.directionId, this.transportModeId);
     console.log(this.toPortList)
   }
 
   async getSpecialService() {
-    this.specialServiceList= await this.newQuoteDataService.getIncoterms();
+    this.specialServiceList= await this.newQuoteDataService.getSpecialService(this.directionId, this.transportModeId);
     console.log(this.specialServiceList)
   }
 
   async getMainCarriageCarrier() {
-    this.mainCarriageCarrierList = await this.newQuoteDataService.getIncoterms();
+    this.mainCarriageCarrierList = await this.newQuoteDataService.getSpecialServiceItems(this.directionId, this.transportModeId);
     console.log(this.mainCarriageCarrierList)
   }
 

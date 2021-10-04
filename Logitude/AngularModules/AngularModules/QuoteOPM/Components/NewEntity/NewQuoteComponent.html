@@ -2,14 +2,14 @@
     <h2>Create New Quote</h2>
 </div>
 
-<div class="grid container" [formGroup]="formGroup">
+<div class="grid container">
     <div class="col-2 section right-grid">
-        <app-new-quote-left-side [formGroup]='formGroup'></app-new-quote-left-side>
+        <app-new-quote-left-side [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-left-side>
     </div>
 
-    <!-- [ngClass]="{'disabled':!formGroup.controls.direction.value || !formGroup.controls.transporation.value ||  
-    (formGroup.controls.transporation.value === transporations[1].value || formGroup.controls.transporation.value === transporations[2].value) &&  !formGroup.controls.shipmentType.value}" -->
-    <div class="col-10 right-side">
+   
+    <div class="col-10 right-side"  [ngClass]="{'disabled':!formGroup.controls.direction?.value || !formGroup.controls.transportMode?.value ||  
+    (formGroup.controls.transportMode?.value?.Name !== 'Ocean' && formGroup.controls.transportMode?.value?.Name !== 'Inland') &&  !formGroup.controls.shipmentType?.value}">
         <div class="section">
             <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
             <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
@@ -43,8 +43,8 @@
         </div>
         <div class="section">
 
-            <button pButton type="button" label="Cancel" class="p-button-danger"></button>
-            <button pButton type="button" label="Create" class="p-button-primary"></button>
+            <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'></button>
+            <button pButton type="button" label="Create" class="p-button-primary" (click)='create()'></button>
         </div>
 
     </div>

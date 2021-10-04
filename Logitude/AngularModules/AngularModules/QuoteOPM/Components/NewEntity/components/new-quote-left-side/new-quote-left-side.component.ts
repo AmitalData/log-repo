@@ -1,7 +1,12 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
+import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
+import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
-export const transporations: RadioBtnList = [
+export const transporations = [
   { value: 'Air', icon: 'assets/icons/airplane.png' },
   { value: 'Ocean', icon: 'assets/icons/ocean.png' },
   { value: 'Inland', icon: 'assets/icons/inland.png' },
@@ -13,40 +18,72 @@ export const transporations: RadioBtnList = [
   styleUrls: ['./new-quote-left-side.component.scss']
 })
 export class NewQuoteLeftSideComponent implements OnInit {
+  @Input() EntityPM: QuoteOPPM = null as any;
+  @Input() formGroup: FormGroup = null as any;
+
+  transportModeList: TransportModeList[] = []
+  shipmentTypeList: ShipmentTypeList[] = []
+  directionList: DirectionList[] = []
+
   transporations = transporations;
-  
-  directions: RadioBtnList = [
-    { value: 'Export', icon: 'assets/icons/box-up.png' },
-    { value: 'Import', icon: 'assets/icons/house.png' },
-    { value: 'Domestic', icon: 'assets/icons/box-down.png' },
-    { value: 'Drop', icon: 'assets/icons/recycle.png' },
-  ]
-  
-  shipmentTypes: RadioBtnList = [
-    { value: 'FTL', icon: 'assets/icons/inland.png' },
-    { value: 'LTL', icon: 'assets/icons/inland.png' },
-  ]
 
-
-  @Input() formGroup: FormGroup = new FormGroup({});
-  constructor() { }
-
-  ngOnInit(): void {
+  icons: {} = { 
+    Air: 'assets/icons/airplane.png', 
+    Ocean: 'assets/icons/ocean.png', 
+    Inland: 'assets/icons/inland.png',
+    Export: 'assets/icons/box-up.png' ,
+    Import: 'assets/icons/house.png' ,
+    Domestic: 'assets/icons/box-down.png' ,
+    Drop: 'assets/icons/recycle.png' ,
+    FTL: 'assets/icons/inland.png',
+    LTL: 'assets/icons/inland.png',
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('shipmentType'))
+  a(e){
+    console.log(this.formGroup.controls)
+    console.log(this.formGroup.controls.direction.value)
+  }
+
+  constructor(
+    private newQuoteDataService: NewQuoteDataService,
+  ) { }
+
+  ngOnInit(): void {
+    this.getTransportModeList()
+    this.getDirectionList();
+    this.getShipmentTypeList()
+  }
+  
+  async getDirectionList() {
+    this.directionList = await this.newQuoteDataService.getDirectionList()
+    this.directionList = this.directionList.filter(x=>!x.Name.toLowerCase().includes('customs'))
+  }
+
+  async getTransportModeList() {
+    this.transportModeList = await this.newQuoteDataService.getTransportModeList()
+  }  
+  
+  async getShipmentTypeList() {
+    this.shipmentTypeList = await this.newQuoteDataService.getShipmentTypeList()
+    this.shipmentTypeList = this.shipmentTypeList.filter(x=>x.Name === 'FTL' || x.Name === 'LTL')
+  }
+  
+  ngOnChanges(changes: SimpleChanges) {        
+    if (!this.formGroup.contains('shipmentType')){
       this.addFormControls()
+      this.subscribeCtrls()
+    }
   }
 
   addFormControls() {
-    this.formGroup.addControl('direction', new FormControl(''));
-    this.formGroup.addControl('transporation', new FormControl(''));
-    this.formGroup.addControl('shipmentType', new FormControl(''));
+    this.formGroup.addControl('direction', new FormControl());
+    this.formGroup.addControl('transportMode', new FormControl());
+    this.formGroup.addControl('shipmentType', new FormControl());
   }
-}
 
-type RadioBtnList = {
-  value: string
-  icon: string
-}[]
+  subscribeCtrls() {
+    this.formGroup.controls.direction.valueChanges.subscribe((val:DirectionList)=> this.EntityPM.DirectionId = val.Id);
+    this.formGroup.controls.transportMode.valueChanges.subscribe((val:TransportModeList)=> this.EntityPM.TransportModeId = val.Id);
+    this.formGroup.controls.shipmentType.valueChanges.subscribe((val:ShipmentTypeList)=> this.EntityPM.ShipmentTypeId = val.Id);
+  }   
+}

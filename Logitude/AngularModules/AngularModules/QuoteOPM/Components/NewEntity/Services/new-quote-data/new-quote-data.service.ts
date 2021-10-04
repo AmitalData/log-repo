@@ -8,12 +8,21 @@ import { AddressService } from 'Common/Services/ExtendedLists/AddressService';
 import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWebService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
 import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
+import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
 import { ObjectTablePM } from 'Infrastructure/EntityPMs/ObjectTablePM';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DirectionListService } from 'Infrastructure/Services/StandardLists/DirectionListService';
+import { TransportModeListService } from 'Infrastructure/Services/StandardLists/TransportModeListService';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { QuoteOPPMService } from 'QuoteOPM/Services/StandardPMs/QuoteOPPMService';
 import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
+import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/ShipmentTypeListService';
 
 declare const window: any;
 
@@ -26,6 +35,18 @@ export class NewQuoteDataService {
     private entityListService: EntityListService,
     private newQuoteOPWebService: NewQuoteOPWebService,
   ) { }
+
+  async getDirectionList(): Promise<DirectionList[]> {
+    return this.getDataFromService(new DirectionListService().getAllFromCache());
+  }
+
+  async getTransportModeList(): Promise<TransportModeList[]> {
+    return this.getDataFromService(new TransportModeListService().getAllFromCache())
+  }
+
+  async getShipmentTypeList(): Promise<ShipmentTypeList[]> {
+    return this.getDataFromService(new ShipmentTypeListService().getAll());
+  }
 
   async getCardsTable(): Promise<CardList[]> {
     return await this.getTable('Card') as CardList[];
@@ -79,8 +100,23 @@ export class NewQuoteDataService {
     });
   }
 
+  async getPort(directionId: string, transportModed: string): Promise<Incoterm[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000, false).toPromise();
+    return res.Result as Incoterm[];
+  }
+
+  async getSpecialService(directionId: string, transportModed: string): Promise<Incoterm[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, '', 1000, false).toPromise();
+    return res.Result as Incoterm[];
+  }
+
+  async getSpecialServiceItems(directionId: string, transportModed: string): Promise<Incoterm[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 1000, false).toPromise();
+    return res.Result as Incoterm[];
+  }
+
   async getIncoterms(): Promise<Incoterm[]> {
-    const res:ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('','',1000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 1000, false).toPromise();
     return res.Result as Incoterm[];
   }
 
@@ -124,6 +160,19 @@ export class NewQuoteDataService {
         .subscribe((myResult: ServiceResponse) => resolve(myResult.Result)));
   }
 
+  creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      new QuoteOPPMService().insert(entityPM).subscribe((myResponse: ServiceResponse) => {
+        if (myResponse.HasError)
+          reject(myResponse.ErrorsArray);
+        else
+          resolve(null);
+      });
+    })
+  }
+
+
+
   private getTable(tableName: string): Promise<any> {
     return new Promise<ServiceResponse>((resolve, reject) => {
       this._entityResourceService.getEntityResourceByTableName(tableName, 0)
@@ -138,6 +187,14 @@ export class NewQuoteDataService {
           resolve(response.Result);
         });
     })
+  }
+
+  private getDataFromService(ob: Observable<any>): Promise<any[]> {
+    return new Promise<TransportModeList[]>((resolve, reject) =>
+      ob.pipe(filterIsNotNull(), take(1))
+        .subscribe((res: ServiceResponse) =>
+          resolve(res.Result)
+        ));
   }
 }
 

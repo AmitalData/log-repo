@@ -33,12 +33,13 @@ export class NewQuoteGeneralComponent implements OnInit {
 
   async getMoveTypeData(){
     this.moveTypes = await this.newQuoteDataService.getMoveTypeTable("A");
-    console.log(this.moveTypes)
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('quoteType'))
+    if (!this.formGroup.contains('quoteType')){
       this.addFormControls()
+      this.subscribeCtrls();
+    }
   }
 
   addFormControls() {
