@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             TaxReportRepository reportsRepo = new TaxReportRepository(context);
 
-            List<TaxReport> reports= reportsRepo.GetTransmittedReports( tenant).OrderBy(d=> d.TaxReportMonth).ToList();
+            List<TaxReport> reports= reportsRepo.GetTransmittedReports( tenant).OrderByDescending(d=> d.TaxReportMonth).ToList();
             return reports.Select(r => this.GetEntityPM(r, false)).ToList();
             
         }

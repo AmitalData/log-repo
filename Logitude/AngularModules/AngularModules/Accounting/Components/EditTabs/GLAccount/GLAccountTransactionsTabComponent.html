@@ -287,7 +287,7 @@
 
     .FiltersMenu li {
         /* width: fit-content !important; */
-        width: 75px;
+       width: auto;
         padding: 0 7px;
         border-width: 1px;
         margin-right: -1px;
@@ -363,7 +363,7 @@
                                                     {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
                                                 </td>
 
-                                                <td style="width: 300px;">
+                                                <td [style.width]="UseTaxreportFilter ? '350px' : '270px'" >
                                                     <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                                         <li float-start id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="height: 22px;"
                                                             [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
@@ -461,7 +461,10 @@
                                                                     <div [style.float]="isRTL ? 'left' : 'right'"
                                                                          [style.text-align]="isRTL ? 'right' : 'left'"
                                                                          style="width: 260px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                                                        {'GLAccount.O.NotIncludedInTax' | TextCodeTranslationPipe}
+                                                                        {{
+'GLAccount.O.NotIncludedInTax' |
+                                                                        TextCodeTranslationPipe
+                                                                        }}
                                                                     </div>
                                                                 </div>
 
