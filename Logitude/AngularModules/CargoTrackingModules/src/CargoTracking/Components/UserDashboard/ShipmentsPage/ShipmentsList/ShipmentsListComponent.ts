@@ -44,6 +44,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
     isMilestonesStatusFilterExpanded: boolean = false;
+    isShipmentTypeFilterExpanded: boolean = false;
+    isShipmentDirectionFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
     showSortDetailsMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
@@ -333,6 +335,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SelectedInvitedCustomers: any[] = [];
     selectedFilterMilestonesStatus: any[] = [];
     appliedSelectedFilterMilestonesStatus: any[] = [];
+    selectedShipmentTypesFilter: any[] = [];
+    selectedShipmentDirectionsFilter: any[] = [];
     private GetInvitedCustomers()
     {
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
@@ -454,6 +458,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     sortField: string = '';
     isSortDescending: string = '';
     hasException: boolean = false;
+    hasExceptionAdvancedFilter: boolean = false;
     private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
     {
         if (this.ShipmentsDataSource)
@@ -563,7 +568,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     OnHasExceptionChanged(event){
         RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
+        this.hasExceptionAdvancedFilter = event;
         this.LoadScreenData();
+    }
+
+    OnAdvancedHasExceptionChanged(event) {
+        this.hasExceptionAdvancedFilter = event;
     }
 
     sortBySelectionChangedHandler(event) {
@@ -811,9 +821,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         if(filter.FilterName == 'shipmentType')
         {
             this.shipmentTypeMultipleSelection.DeselectFilter(filter.Code);
+            var index = this.selectedShipmentTypesFilter.findIndex(d=>d.Code==filter.Code);
+            if(index >= 0){
+                    this.selectedShipmentTypesFilter.splice(index,1);
+            };
         } else if (filter.FilterName == 'shipmentDirection')
         {
             this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
+            var index = this.selectedShipmentDirectionsFilter.findIndex(d=>d.Code==filter.Code);
+            if(index >= 0){
+                    this.selectedShipmentDirectionsFilter.splice(index,1);
+            };
         }
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
@@ -834,19 +852,35 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
         this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
+        this.toggleMobileAdvancedFilters();
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
+
+    private toggleMobileAdvancedFilters(){
+        this.SelectedFilters = this.SelectedFilters.filter(item => !this.ToggleFilters.includes(item));
+        if(this.selectedShipmentTypesFilter.length) {
+            this.SelectToggleFilters(this.selectedShipmentTypesFilter.map(x => x.Code).join(','));
+        }
+        if(this.selectedShipmentDirectionsFilter.length) {
+            this.SelectToggleFilters(this.selectedShipmentDirectionsFilter.map(x => x.Code).join(','));
+        }
+        this.hasException = this.hasExceptionAdvancedFilter;
+    }
+
     ClearAdvancedFilters(){
-        this.isFiltersSideBarOpened = false;
+        // this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
             this.MilestonesStatus[index].IsSelected = false; 
         });
+        this.selectedShipmentTypesFilter = [];
+        this.selectedShipmentDirectionsFilter = [];
+        this.hasExceptionAdvancedFilter = false;
         this.appliedSelectedFilterMilestonesStatus= [];
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
+        // RootContext.ShipmentsScrollPosition = 0;
+        // this.LoadScreenData();
     }
     SortMenuClicked(buttonCode: string)
     {
@@ -943,6 +977,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         else if(value === false && index >= 0){
             this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
                 this.selectedFilterMilestonesStatus.splice(index,1);
+        }
+    }
+
+    OnShipmentTypeFilterChanged(value,item){
+        var index = this.selectedShipmentTypesFilter.findIndex(d=>d==item);
+        if(value === true && index < 0){
+                this.selectedShipmentTypesFilter.push(item);
+        }
+        else if(value === false && index >= 0){
+                this.selectedShipmentTypesFilter.splice(index,1);
+        };
+    }
+
+    OnShipmentDirectionFilterChanged(value,item){
+        var index = this.selectedShipmentDirectionsFilter.findIndex(d=>d==item);
+        if(value === true && index < 0){
+                this.selectedShipmentDirectionsFilter.push(item);
+        }
+        else if(value === false && index >= 0){
+                this.selectedShipmentDirectionsFilter.splice(index,1);
         }
     }
 
