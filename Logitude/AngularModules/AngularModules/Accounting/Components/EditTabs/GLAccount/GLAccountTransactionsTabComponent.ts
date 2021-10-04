@@ -153,6 +153,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this.TenatTaxReports.forEach(p => {                   
                     this.TaxReportLists.push(new CodeNameClass(p.Id,this.FormatTaxReportDate(p.TaxReportMonth)));                   
                 });
+             
             }
 
 
@@ -1119,6 +1120,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             case 'filter_Tax':
                 this._dateTypeCode = '4';
                 this.ResetLTBFields();
+                this.NotIncludedInAnyTaxReport = true;
                 break;
             default:
                 break;
