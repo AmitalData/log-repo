@@ -20,7 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " C.DirectionId = 'I' AND C.ConsigneeId IS NULL then C.ConsigneeName end) as ConsigneeName");
 
             updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName", "(case when C.DirectionId = 'E' AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
-                " C.DirectionId = 'I' AND C.ShipperId IS NULL then C.ShipperName end) as ShipperName");
+                " C.DirectionId = 'E' AND C.ShipperId IS NULL then C.ShipperName end) as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -140,7 +140,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " P.DirectionId = 'I' AND P.ConsigneeId IS NULL then P.ConsigneeName end) as ConsigneeName");
 
             updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", "(case when P.DirectionId = 'E' AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
-                " P.DirectionId = 'I' AND P.ShipperId IS NULL then P.ShipperName end) as ShipperName");
+                " P.DirectionId = 'E' AND P.ShipperId IS NULL then P.ShipperName end) as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
