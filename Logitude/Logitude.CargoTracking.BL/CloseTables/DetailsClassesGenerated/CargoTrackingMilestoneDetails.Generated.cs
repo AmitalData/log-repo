@@ -114,57 +114,82 @@ namespace Logitude.CargoTracking.BL
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "12", 
-                EnglishName = "Customs Payment", 
-                SearchFields = "12,Customs Payment", 
-                LocalName = "Customs Payment", 
+                EnglishName = "Payment Requested", 
+                SearchFields = "12,Payment Requested", 
+                LocalName = "Payment Requested", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "13", 
-                EnglishName = "Clearance", 
-                SearchFields = "13,Clearance", 
-                LocalName = "Clearance", 
+                EnglishName = "Payment Received", 
+                SearchFields = "13,Payment Received", 
+                LocalName = "Payment Received", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "14", 
-                EnglishName = "Gatepass Arrived", 
-                SearchFields = "14,Gatepass Arrived", 
-                LocalName = "Gatepass Arrived", 
+                EnglishName = "Customs Payment", 
+                SearchFields = "14,Customs Payment", 
+                LocalName = "Customs Payment", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "15", 
-                EnglishName = "Assigned to Trucker", 
-                SearchFields = "15,Assigned to Trucker", 
-                LocalName = "Assigned to Trucker", 
+                EnglishName = "Clearance", 
+                SearchFields = "15,Clearance", 
+                LocalName = "Clearance", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "16", 
-                EnglishName = "Delivery Out", 
-                SearchFields = "16,Delivery Out", 
-                LocalName = "Delivery Out", 
+                EnglishName = "Gatepass Arrived", 
+                SearchFields = "16,Gatepass Arrived", 
+                LocalName = "Gatepass Arrived", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "17", 
-                EnglishName = "Delivered", 
-                SearchFields = "17,Delivered", 
-                LocalName = "Delivered", 
+                EnglishName = "Assigned to Trucker", 
+                SearchFields = "17,Assigned to Trucker", 
+                LocalName = "Assigned to Trucker", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "18", 
+                EnglishName = "Delivery Out", 
+                SearchFields = "18,Delivery Out", 
+                LocalName = "Delivery Out", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CargoTrackingMilestoneDetails()
+            {    
+                Code = "19", 
+                EnglishName = "Delivered", 
+                SearchFields = "19,Delivered", 
+                LocalName = "Delivered", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new CargoTrackingMilestoneDetails()
+            {    
+                Code = "20", 
                 EnglishName = "Invoiced", 
-                SearchFields = "18,Invoiced", 
+                SearchFields = "20,Invoiced", 
                 LocalName = "Invoiced", 
+                Inactive = false, 
 			});
 			
             return all;

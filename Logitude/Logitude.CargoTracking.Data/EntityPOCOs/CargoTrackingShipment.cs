@@ -225,6 +225,22 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string BookingNotes { get; set; }
         [Column("BookingExceptionReason")]
 	    public string BookingExceptionReason { get; set; }
+        [Column("PaymentRequiredDone")]
+	    public bool? PaymentRequiredDone { get; set; }
+        [Column("PaymentRequiredEstimationDate")]
+	    public DateTime? PaymentRequiredEstimationDate { get; set; }
+        [Column("PaymentRequiredDate")]
+	    public DateTime? PaymentRequiredDate { get; set; }
+        [Column("PaymentRequiredNotes")]
+	    public string PaymentRequiredNotes { get; set; }
+        [Column("PaymentReceivedDone")]
+	    public bool? PaymentReceivedDone { get; set; }
+        [Column("PaymentReceivedEstomationDate")]
+	    public DateTime? PaymentReceivedEstomationDate { get; set; }
+        [Column("PaymentReceivedDate")]
+	    public DateTime? PaymentReceivedDate { get; set; }
+        [Column("PaymentReceivedNotes")]
+	    public string PaymentReceivedNotes { get; set; }
     }
 }
 	 

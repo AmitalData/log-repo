@@ -256,6 +256,22 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool? CreatedDone  { get; set; }
        [DataMember]
        public string PrevForwardingShipmentId  { get; set; }
+       [DataMember]
+       public bool? PaymentRequiredDone  { get; set; }
+       [DataMember]
+       public DateTime? PaymentRequiredEstimationDate  { get; set; }
+       [DataMember]
+       public DateTime? PaymentRequiredDate  { get; set; }
+       [DataMember]
+       public string PaymentRequiredNotes  { get; set; }
+       [DataMember]
+       public bool? PaymentReceivedDone  { get; set; }
+       [DataMember]
+       public DateTime? PaymentReceivedEstomationDate  { get; set; }
+       [DataMember]
+       public DateTime? PaymentReceivedDate  { get; set; }
+       [DataMember]
+       public string PaymentReceivedNotes  { get; set; }
    }
 
 }

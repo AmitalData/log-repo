@@ -46,6 +46,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
              "NULL OrderShipmentNumber , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
@@ -95,7 +98,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-
+            shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @",com.ContainersNumbers,
@@ -156,6 +159,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
             var shipmentOrderFields =
@@ -218,6 +224,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             // Group By
+            shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @",com.ContainersNumbers,
@@ -273,6 +280,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "0 as DeliveryDone," +
                 "0 as DocumentInspectionDone," +
                 "0 as GoodsClassificationDone," +
+                "0 as PaymentRequiredDone," +
+                "0 as PaymentReceivedDone," +
                 "0 as GatepassArrivedDone," +
                 "0 as ShipmentPickUpIndex," +
                 "0 as PackagesQuantity," +
