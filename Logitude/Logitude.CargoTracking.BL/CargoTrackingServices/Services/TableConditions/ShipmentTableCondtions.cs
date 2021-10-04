@@ -16,6 +16,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         {
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ?  cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
             shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
+            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName", "(case when C.DirectionId = 'I' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName when" +
+                " C.DirectionId = 'I' AND C.ConsigneeId IS NULL then C.ConsigneeName end) as ConsigneeName");
+
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName", "(case when C.DirectionId = 'E' AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
+                " C.DirectionId = 'E' AND C.ShipperId IS NULL then C.ShipperName end) as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -54,7 +59,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
-            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}";
+            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}";
 
 
 
@@ -65,7 +70,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
+                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id " +
+                             $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
+                             $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
 
 
             List<string> whereConditions = new List<string>();
@@ -101,7 +108,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
-                @",com.ContainersNumbers,
+                @", ConsigneeCard.EnglishName,
+                    ShipperCard.EnglishName,
+                    com.ContainersNumbers,
                     com.FinalDeliveryETA,
                     com.FinalDeliveryATA,
                     com.FirstPickupATD,
@@ -130,6 +139,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
 
             shipmentFields = " P." + shipmentFields.Replace(",", " ,P.");
+            string updatedShipmentFields = shipmentFields.Replace("P.ConsigneeName", "(case when P.DirectionId = 'I' AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName when" +
+                " P.DirectionId = 'I' AND P.ConsigneeId IS NULL then P.ConsigneeName end) as ConsigneeName");
+
+            updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", "(case when P.DirectionId = 'E' AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
+                " P.DirectionId = 'E' AND P.ShipperId IS NULL then P.ShipperName end) as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -172,7 +186,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields} ";
+            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields} ";
 
 
 
@@ -185,7 +199,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
                             LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON SHO.ShipmentId = P.Id
                             LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
-                            LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id ";
+                            LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id
+							LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = P.ConsigneeId
+							LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = P.ShipperId";
 
 
 
@@ -227,7 +243,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
-                @",com.ContainersNumbers,
+                @", ConsigneeCard.EnglishName,
+                    ShipperCard.EnglishName,
+                    com.ContainersNumbers,
                     com.FinalDeliveryETA,
                     com.FinalDeliveryATA,
                     com.FirstPickupATD,
