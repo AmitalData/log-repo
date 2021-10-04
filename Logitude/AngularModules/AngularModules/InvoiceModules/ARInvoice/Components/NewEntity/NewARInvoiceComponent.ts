@@ -871,11 +871,18 @@ export class NewARInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyId")));
         }
 
+        var date1 = new Date(this.InvoiceDate.toString());
+        var date2 = new Date();
+        date2.setHours(23);
+        date2.setMinutes(59);
+
+        
+        
         if (this.InvoiceDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        else if (date1.valueOf() > date2.valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
 

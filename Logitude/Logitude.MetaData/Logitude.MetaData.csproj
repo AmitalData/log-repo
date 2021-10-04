@@ -345,7 +345,7 @@
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
-    <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
     <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
       <SubType>Designer</SubType>
@@ -537,7 +537,7 @@
     <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
     <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
-    <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.ssxxml" />
     <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
     <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />

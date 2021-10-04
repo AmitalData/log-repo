@@ -30,6 +30,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 ShippingLineQuery shippingLineQuery = new ShippingLineQuery(authToken.Tenant);
                 IQueryable<ShippingLinePM> iQueryable = shippingLineQuery.GetShippinngLinePMsByTenant(tenant);
+                iQueryable = iQueryable.Where(d => !d.InActive);
                 return Request.CreateResponse(HttpStatusCode.OK, iQueryable);
             }
 
