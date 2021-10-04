@@ -76,3 +76,8 @@ Feature: Opportunity Create, Search, and Edit from CRM
         Given the user choose a quote to connect it to the Opportunity
         When connect quote
         And the quote should connect successfully
+
+    Scenario: Edit general tab
+        Given fill "new edit" as description
+        When save Opportunity
+        Then the Opportunity should update successfully

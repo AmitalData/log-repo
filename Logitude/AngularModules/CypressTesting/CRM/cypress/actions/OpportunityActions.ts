@@ -10,6 +10,7 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { OpportunitySelectors } from "../selectors/OpportunitySelectors"
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import { update } from "cypress/types/lodash";
 
 let searchFieldValue = null
 
@@ -144,4 +145,31 @@ export function ChooseQuote() {
 export function ConnectQuote() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetQuotesByOpportunityId, RequestAliases.GetQuotesByOpportunityId)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function FillDescription(description) {
+    cy.Click(OpportunitySelectors.GeneralTab, null)
+    cy.FillLogTextBox(OpportunitySelectors.Description, description)
+}
+
+export function OpenOpportunityAction(action: string) {
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(OpportunitySelectors.OpportunityActionsButton(action), null, true);
+}
+
+export function CloseASWon() {
+    DefinePutOpportunityRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function SelectStageWhenReOpen(satge) {
+    DefinePutOpportunityRequest()
+    cy.FillLogLov(OpportunitySelectors.ReOpenStage, satge, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function CloseASLost(closeReason) {
+    DefinePutOpportunityRequest()
+    cy.FillLogLov(OpportunitySelectors.CloseReason, closeReason, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
