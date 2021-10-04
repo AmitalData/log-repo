@@ -14,7 +14,7 @@ namespace Logitude.Server.Tools.Utils
     public class LogChangesService_custom
     {
         StringBuilder sb = new StringBuilder();
-        string AppSettingKeyValueIsLogUntilDateyyyyMMdd;
+        string AppSettingKeyValueIsLogUntilDateyyyyMMdd = "";
         bool IsDateValid = true;
         public LogChangesService_custom(string appSettingKeyValueIsLogUntilDateyyyyMMdd)
         {
