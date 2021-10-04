@@ -247,8 +247,15 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         BookingEstimationDate, 
 	         BookingNotes, 
 	         BookingExceptionReason,
-
-	      }
+            PaymentRequiredDone,
+            PaymentRequiredEstimationDate,
+            PaymentRequiredDate,
+            PaymentRequiredNotes,
+            PaymentReceivedDone,
+            PaymentReceivedEstomationDate,
+            PaymentReceivedDate,
+            PaymentReceivedNotes,
+        }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
