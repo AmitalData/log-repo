@@ -8,6 +8,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CRMMenu = "#GeneralMHCRM"
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
+    public static readonly FullAccountingTab = "#GeneralMHFullAccounting"
+    public static readonly FullAccountingVendorsTab = "#FAVND"
 	public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
     //#endregion

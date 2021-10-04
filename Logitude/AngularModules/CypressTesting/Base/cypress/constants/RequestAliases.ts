@@ -235,6 +235,7 @@ export class RequestAliases {
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     public static readonly GetList = "GetList"
+    public static readonly GetQuickSearch = "GetQuickSearch"
 
     //#endregion
     public static readonly PostChangePassword = "PostChangePassword"

@@ -9,7 +9,7 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 
 export function NavigatesAPInvoiceWizerd() {
-    cy.Click(BaseSelectors.VendorsTab, null)
+    cy.Click(BaseSelectors.FullAccountingVendorsTab, null)
     cy.Click(APInvoiceSelectors.APInvoiceButton, null)
 }
 
