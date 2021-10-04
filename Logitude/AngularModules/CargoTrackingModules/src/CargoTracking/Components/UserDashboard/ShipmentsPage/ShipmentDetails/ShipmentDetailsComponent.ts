@@ -210,6 +210,15 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
         return title;
     }
+    SetSupplierOrCleintValueByDirection(shipmentList) {
+        if(shipmentList.DirectionId == 'E') 
+        {
+            return shipmentList.ShipperName;
+        } else if(shipmentList.DirectionId == 'I') {
+            return shipmentList.ConsigneeName;   
+        }
+        return '';
+    }
     SetTypeTitle() {
         if (this.Shipment.ShipmentList.TransportModeId == "A") {
             this.TypeTitle = "PACKAGE TYPE";
