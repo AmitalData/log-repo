@@ -40,7 +40,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("PickupDate", "PickupActualDateTime"),
             new FieldMap("BookingDate", "BookingConfirmationDate"),
             new FieldMap("PickupEstimationDate", "PickupEstimatedDateTime"),
-            
+            new FieldMap("DepartureEstimationDate", "ETD"),
+            new FieldMap("DepartureDate", "ATD"),
+            new FieldMap("ArrivalEstimationDate", "ETA"),
+            new FieldMap("ArrivalDate", "ATA"),
+
         };
         public static void SetTableLogic(DataRow tableRow)
         {
@@ -63,6 +67,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
             tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
             tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
+            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "ATD"));
+            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ATA"));
+
+
         }
         private static void SetMainEntity(DataRow tableRow)
         {
@@ -70,7 +78,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
-            if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
+            if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Arrival);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["ArrivalDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
+            {
+       
+
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Departure);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DepartureDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
