@@ -248,6 +248,7 @@ import { CargoTypeListService } from './Services/StandardLists/CargoTypeListServ
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
+import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 
 //#endregion
 
@@ -360,6 +361,8 @@ import { SupplierInvioceItemCertificatsService } from './Services/WebServices/Su
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
 import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
+import { NewQuoteOPWebService } from './Services/WebServices/NewQuoteOPWebService';
+
 
 //#endregion
 
@@ -702,6 +705,7 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "ContainerizationHataraStatusListService": { myResult = new ContainerizationHataraStatusListService(); break; }
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
@@ -824,6 +828,8 @@ export class ModuleProviders {
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+            case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
+
 
             //#endregion
 

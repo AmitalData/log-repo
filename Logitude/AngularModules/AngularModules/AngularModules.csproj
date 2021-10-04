@@ -427,6 +427,7 @@
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\ProductTypeModificationPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\QuoteGroupSectionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
@@ -434,6 +435,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\QuoteGroupSectionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\ProductTypeModificationPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.ts" />
@@ -1451,6 +1453,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClassificationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClientsPoaList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ContainerizationHataraStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerizationList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerizationStatusCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContainerTypeList.ts" />
@@ -1533,6 +1536,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ClassificationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClientsPoaPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ConsignmentPackDangerPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ContainerizationHataraStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContainerizationPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContainerizationStatusCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContainerTypePM.ts" />
@@ -1645,6 +1649,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClassificationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClientsPoaListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerizationHataraStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerizationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerizationStatusCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContainerTypeListService.ts" />
@@ -1764,6 +1769,7 @@
     <TypeScriptCompile Include="Customs\Services\WebServices\ContainerizationMessagesService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\NewQuoteOPWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />

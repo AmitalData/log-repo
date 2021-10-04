@@ -21,17 +21,16 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class CourierMasterDataMapping: IMapping<CourierMasterPM, CourierMaster>
-   {
+
+    public partial class CourierMasterDataMapping : IMapping<CourierMasterPM, CourierMaster>
+    {
 
         public void CustomPMToPOCO(CourierMasterPM entityPM, CourierMaster entityPOCO)
         {
             entityPOCO.Id = entityPM.Id;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
-
-     
+            entityPOCO.ShortHAWB = entityPM.HAWB;
         }
 
         public void CustomPOCOToPM(CourierMasterPM entityPM, CourierMaster entityPOCO)
@@ -52,15 +51,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             var rep = new CustomsAirlineQueryService(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
-            var customsAirline = rep.GetSingle(entityPOCO.AirlineId, false,true);
+            var customsAirline = rep.GetSingle(entityPOCO.AirlineId, false, true);
             if (customsAirline != null)
             {
                 entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
                 entityPM.AirlineName = customsAirline.LocalName;
             }
 
-            User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant,true);
-            if(user != null)
+            User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant, true);
+            if (user != null)
             {
                 entityPM.CreatedByUserName = user.Contact.LocalName != null ? user.Contact.LocalName : user.Contact.EnglishName;
             }
@@ -87,7 +86,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPOCO.Tenant);
                 InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPOCO.OriginPortCode, false, true);
-                if(internationalSitePM != null)
+                if (internationalSitePM != null)
                 {
                     entityPM.OriginPortName = internationalSitePM.LocalName;
                 }
@@ -158,7 +157,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? customsAirline.AirlinePrefix : result + "," + customsAirline.AirlinePrefix;
             }
 
-           
+
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
         }
@@ -166,4 +165,3 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 
 }
-   

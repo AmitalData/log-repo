@@ -303,25 +303,38 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     }
     CancelContainerizationMethod() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerizationStatus) || this.EntityPM.ContainerizationStatus == "4") {
-            //let messageWindow = new MessageWindow();
-            let messageWindow = new ConfirmWindow();
-            messageWindow.Width = 300;
-            messageWindow.Height = 180;
-            messageWindow.Title = "שליחת המכלה";
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations))
+            {
+                let messageWindow = new MessageWindow();
+                messageWindow.Width = 300;
+                messageWindow.Height = 180;
+                messageWindow.Title = "שליחת המכלה";
+                messageWindow.Show("המכלה לא קיימת במכס");
+            }
+            else
+            {
+                let messageWindow = new ConfirmWindow();
+                messageWindow.Width = 300;
+                messageWindow.Height = 180;
+                messageWindow.Title = "שליחת המכלה";
+                messageWindow.YesButtonText = "אישור";
+                messageWindow.ShowCancelButton = true;
+                messageWindow.ShowNoButton = false;
             //messageWindow.RTL = true;
             //messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("המכלה לא קיימת במכס, האם לשחרר תיקים?");
-            messageWindow.WindowClosed.subscribe((event: any) => {
-                if (messageWindow.Yes)
-                {
-                    this.EntityPM.NotConnectedDeclarations = this.EntityPM.ConnectedDeclarations;
-                    this.EntityPM.ConnectedDeclarations = "";
-                    this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
-                    });
-                }
-            });
+                messageWindow.Show("המכלה לא קיימת במכס, האם לשחרר תיקים?");
+                messageWindow.WindowClosed.subscribe((event: any) => {
+                    if (messageWindow.Yes) {
+                        this.EntityPM.NotConnectedDeclarations = this.EntityPM.ConnectedDeclarations;
+                        this.EntityPM.ConnectedDeclarations = "";
+                        this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                        });
+                    }
+                });
+            }
         }
         else
         {
