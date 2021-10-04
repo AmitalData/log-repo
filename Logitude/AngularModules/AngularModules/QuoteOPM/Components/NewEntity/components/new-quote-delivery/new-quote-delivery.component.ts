@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote-autocomplate.service';
+import { CountryCityList } from 'Common/EntityLists/CountryCityList';
+import { CountryList } from 'Common/EntityLists/CountryList';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-delivery',
@@ -8,24 +11,37 @@ import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote
   styleUrls: ['./new-quote-delivery.component.scss']
 })
 export class NewQuoteDeliveryComponent implements OnInit {
-  @Input() formGroup: FormGroup = new FormGroup({});
-  
-  deliveryCountrySelected: string[] = []
-  countryList: string[] = ['a', 'b']
+  @Input() formGroup: FormGroup = null as any;
+  @Input() EntityPM: QuoteOPPM = null as any;
 
-  keyUp:any;
+  countryList: CountryList[] = []
+  cityListAll: CountryCityList[] = []
+  cityList: CountryCityList[] = []
+
   constructor(
-    private autocomplateService: NewQuoteAutocomplateService
-  ) { 
-    this.keyUp = autocomplateService.keyUp;
-  }
+    private newQuoteDataService: NewQuoteDataService,
+  ) { }
 
   ngOnInit(): void {
+    this.InitCountries();
+    this.InitCity();
+  }
+
+  private async InitCountries() {
+    this.countryList = await this.newQuoteDataService.getCounriesTable();
+  }
+
+  private async InitCity() {
+    this.cityListAll = await this.newQuoteDataService.getCityTable();
+    this.cityList = this.cityListAll;
+    console.log(this.cityList )
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('deliveryInclude'))
+    if (!this.formGroup.contains('deliveryInclude')) {
       this.addFormControls()
+      this.subscribeCtrls();
+    }
   }
 
   addFormControls() {
@@ -35,8 +51,24 @@ export class NewQuoteDeliveryComponent implements OnInit {
     this.formGroup.addControl('deliveryCountry', new FormControl(''));
   }
 
-
-  deliveryCountrySearch(event: any) {
-    this.deliveryCountrySelected = this.countryList.filter(x => x.includes(event.query));
+  subscribeCtrls() {
+    // this.formGroup.controls.deliveryCity.valueChanges.subscribe(val=>{
+    //   this.EntityPM.DeliveryAddressId = 
+    // })
+      this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val=> this.EntityPM.FromAddressZipCode = val);
+      this.formGroup.controls.deliveryCity.valueChanges.subscribe(val=> this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
   }
-}
+  
+  includeCheckboxChange(e: {checked: boolean, originalEvent: PointerEvent}) {
+    console.log(e)
+    if(e)
+      this.EntityPM.IncludeDelivery = e.checked;
+  }
+  
+  // onSelectedCity(e) {
+  //   console.log(e)    
+  // }
+  
+  onSelectedCountry(country: CountryList) {
+    this.EntityPM.FromAddressCountryId = country.Id;
+  }}

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
-import { CardListService } from 'Common/Services/StandardLists/CardListService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote-autocomplate.service';
+import { ContactList } from 'Common/EntityLists/ContactList';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-shipper',
@@ -11,73 +12,91 @@ import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote
   styleUrls: ['./new-quote-shipper.component.scss']
 })
 export class NewQuoteShipperComponent implements OnInit {
-  @Input() formGroup: FormGroup = new FormGroup({});
+  @Input() formGroup: FormGroup = null as any;
+  @Input() EntityPM: QuoteOPPM = null as any;
 
-  shipperNamesSelected: ShipperData[] = []
-  shipperNames: ShipperData[] = []
-
-  shipperContactSelected: string[] = []
-  shipperContacts: string[] = ['a', 'b']
-
-  keyUp: any;
+  shipperNames: CardList[] = []
+  shipperContacts: ContactList[] = []
+  Address: AddressList = null as any;
 
   constructor(
-    private autocomplateService: NewQuoteAutocomplateService
-  ) {
-    this.keyUp = autocomplateService.keyUp;
-  }
+    private newQuoteDataService: NewQuoteDataService,
+  ) { }
 
   ngOnInit(): void {
     this.initShipperNames();
-  }
-
-  private async initShipperNames() {
-    const cards: CardList[] = await this.getCards();
-    this.shipperNames = cards.map(({ Code, EnglishName, Address1, CityName, CountryName, PartnerTypeName }) => ({ Code, EnglishName, Address1, CityName, CountryName, PartnerTypeName }));
-    console.log(this.shipperNames)
+    this.formGroup.controls.shipperNotes.disable();
+    this.test();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('shipperName'))
-      this.addFormControls()
+    if (!this.formGroup.contains('shipperName')) {
+      this.addFormControls();
+      this.subscribeShipperName();
+      this.subscribeCtrls();
+    }
+  }
+
+  async test() {
+    while (!this.shipperNames.length) {
+      console.log('wait')
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    this.formGroup.controls.shipperName.setValue(this.shipperNames[16])
+    this.onSelectedName(this.shipperNames[16])
+
+    while (!this.shipperContacts.length) {
+      console.log('wait')
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    this.formGroup.controls.shipperContact.setValue(this.shipperContacts[0])
+    this.onSelectedContact(this.shipperContacts[0])
+  }
+
+  private async initShipperNames() {
+    this.shipperNames = await this.newQuoteDataService.getCardsTable();
   }
 
   addFormControls() {
     this.formGroup.addControl('shipperName', new FormControl(''));
     this.formGroup.addControl('shipperContact', new FormControl(''));
-    this.formGroup.addControl('shipperAddress', new FormControl(''));
     this.formGroup.addControl('shipperNotes', new FormControl(''));
     this.formGroup.addControl('shipperReference1', new FormControl(''));
     this.formGroup.addControl('shipperReference2', new FormControl(''));
   }
 
-
-  searchShipperNames(event: any) {
-    console.log(event.query, this.shipperNames)
-    this.shipperNamesSelected = this.shipperNames.filter(x => 
-      x.Code?.toLowerCase().includes(event.query) ||
-      x.EnglishName?.toLowerCase().includes(event.query) ||
-      x.Address1?.toLowerCase().includes(event.query) ||
-      x.CityName?.toLowerCase().includes(event.query) ||
-      x.CountryName?.toLowerCase().includes(event.query) ||
-      x.PartnerTypeName?.toLowerCase().includes(event.query)
-      // x..includes(event.query) 
-    );
+  private subscribeShipperName() {
+    this.formGroup.controls.shipperName.valueChanges.pipe(filterIsNotNull()).subscribe((shipperName: CardList) => {
+      this.formGroup.controls.shipperContact.reset();
+      this.formGroup.controls.shipperNotes.setValue(shipperName.Notes);
+      this.initShipperContacts(shipperName.Id);
+      this.setShipperAddress(shipperName);
+    })
   }
 
-  onBlurName() {
-    
+  private subscribeCtrls() {
+    this.formGroup.controls.shipperNotes.valueChanges.subscribe(newVal => this.EntityPM.ShipperNote = newVal);
+    this.formGroup.controls.shipperReference1.valueChanges.subscribe(newVal => this.EntityPM.ShipperReference1 = newVal);
+    this.formGroup.controls.shipperReference2.valueChanges.subscribe(newVal => this.EntityPM.ShipperReference2 = newVal);
   }
 
-  searchShipperContact(event: any) {
-    this.shipperContactSelected = this.shipperContacts.filter(x => x.includes(event.query));
+  private async setShipperAddress(shipperName: CardList): Promise<void> {
+    this.Address = await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant)
   }
 
-  private async getCards(): Promise<CardList[]> {
-    const cards: ServiceResponse = await new CardListService().getAll().toPromise() as ServiceResponse;
-    console.log(JSON.stringify(cards.Result))
-    return cards.Result as CardList[];
+  private async initShipperContacts(cardId: string) {
+    this.shipperContacts = await this.newQuoteDataService.getContactsTable(cardId);
+  }
+
+  onSelectedName(val: CardList) {
+    this.EntityPM.ShipperName = val.EnglishName;
+    this.EntityPM.ShipperId = val.Id;
+    this.EntityPM.ShipperMainAddressId = val.MainAddressId;
+    this.EntityPM.ShipperPickAddressId = val.PickAddressId;
+  }
+
+  onSelectedContact(val: ContactList) {
+    this.EntityPM.ShipperContactId = val.Id;
   }
 }
-
-type ShipperData = { Code: string; EnglishName: string; Address1: string; CityName: string; CountryName: string; PartnerTypeName: string; }

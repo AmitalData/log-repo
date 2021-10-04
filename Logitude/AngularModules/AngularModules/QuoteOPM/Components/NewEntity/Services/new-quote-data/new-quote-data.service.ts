@@ -1,0 +1,139 @@
+import { Injectable } from '@angular/core';
+import { AddressList } from 'Common/EntityLists/AddressList';
+import { CardList } from 'Common/EntityLists/CardList';
+import { ContactList } from 'Common/EntityLists/ContactList';
+import { CountryCityList } from 'Common/EntityLists/CountryCityList';
+import { CountryList } from 'Common/EntityLists/CountryList';
+import { AddressService } from 'Common/Services/ExtendedLists/AddressService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
+import { ObjectTablePM } from 'Infrastructure/EntityPMs/ObjectTablePM';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
+
+declare const window: any;
+
+@Injectable()
+export class NewQuoteDataService {
+  _entityResourceService: EntityResourceService = new EntityResourceService();
+  addressService: AddressService = new AddressService();
+
+  constructor(
+    private entityListService: EntityListService,
+  ) { }
+
+  async getCardsTable(): Promise<CardList[]> {
+    return await this.getTable('Card') as CardList[];
+    //   const cards: ServiceResponse = await new CardListService().getAll().toPromise() as ServiceResponse;
+    //   return cards.Result as CardList[];
+  }
+
+  async getContactsTable(cardId: string): Promise<ContactList[]> {
+    const filters = new ApiQueryFilters();
+    filters.addAdditionalFilter('CardId', cardId, null, null, "Contains", true, false, false, "Text", false, false);
+    filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
+    filters.SortDirection = "Ascending";
+    filters.PageIndex = 0;
+    filters.PageSize = 50;
+
+    return new Promise<ContactList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('Contact', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+
+    //     var v = {
+    // usePrimNG: false,
+    // ForceCacheRefresh: false,
+    // DontApplyVirtualization: false,
+    // GetAll: false,
+    // PageIndex: 0,
+    // PageSize: 50,
+    // SortBy: EnglishName,
+    // SortDirection: Descending,
+    // AdditionalFilters: [{"FieldName":"InActive","FieldValue":false,"FieldValue2":null,"FieldValue3":null,"Operator":"Equals","IsCustom":false,"DisplayInList":true,"IsCustomField":false,"FieldDataType":"Boolean","IgnoreFilter":false,"IsCacheOnClient":false,"IsLookUpfilter":false},
+    // {"FieldName":"CountryId","FieldValue":"1-257","FieldValue2":null,"FieldValue3":null,"Operator":"Equals","IsCustom":false,"DisplayInList":true,"IsCustomField":false,"FieldDataType":"Boolean","IgnoreFilter":false,"IsCacheOnClient":false,"IsLookUpfilter":false}]
+    //     }
+
+  }
+
+  async getMoveTypeTable(transportModeId: string): Promise<MoveTypeList[]> {
+    const filters = new ApiQueryFilters();
+    filters.addAdditionalFilter('TransportModeId', transportModeId, null, null, "Equals", false, true, false, "LookUp", false, true, false);
+    filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, true, false);
+    filters.SortDirection = "Ascending";
+    filters.PageIndex = 0;
+    filters.PageSize = 1000;
+
+    return new Promise<MoveTypeList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('MoveType', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+  }
+
+  async getCityTable(countryId: string = null): Promise<CountryCityList[]> {
+    const filters = new ApiQueryFilters();
+    filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, true, false, "Boolean", false, false, false);
+    filters.SortDirection = "Ascending";
+    filters.PageIndex = 0;
+    filters.PageSize = 1000;
+
+    if (countryId)
+      filters.addAdditionalFilter('CountryId', countryId, null, null, "Equals", false, true, false, "Boolean", false, false, false);
+
+    return new Promise<CountryCityList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('CountryCity', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+  }
+
+  async getCounriesTable(): Promise<CountryList[]> {
+    const filters = new ApiQueryFilters();
+    filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false, false);
+    filters.SortDirection = "Ascending";
+    filters.PageIndex = 0;
+    filters.PageSize = 1000;
+
+    return new Promise<CountryList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('Country', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+  }
+
+  async getAddress(cardId: string, tenant: number): Promise<AddressList> {
+    return new Promise<AddressList>((resolve, reject) =>
+      this.addressService.GetMainAddressByCardId(cardId, tenant)
+        .pipe(filterIsNotNull(), take(1))
+        .subscribe((myResult: ServiceResponse) => resolve(myResult.Result)));
+  }
+
+  private getTable(tableName: string): Promise<any> {
+    return new Promise<ServiceResponse>((resolve, reject) => {
+      this._entityResourceService.getEntityResourceByTableName(tableName, 0)
+        .pipe(filterIsNotNull(), take(1))
+        .subscribe(async () => {
+          const LookUpTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name === tableName)[0];
+          const loadPr: any = (LookUpTable?.CacheOnClient) ?
+            await this.entityListService.getAllFromCache(tableName, new ApiQueryFilters()) :
+            await this.entityListService.getAll(tableName);
+
+          const response: ServiceResponse = await (<Observable<Promise<ServiceResponse>>>loadPr).toPromise();
+          resolve(response.Result);
+        });
+    })
+  }
+}
+
+export function filterIsNotNull() {
+  return filter((x: any) => x);
+}

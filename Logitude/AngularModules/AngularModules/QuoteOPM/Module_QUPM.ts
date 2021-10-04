@@ -11,6 +11,8 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
+import {DialogModule} from 'primeng/dialog';
+import { NewQuoteDataService } from './Components/NewEntity/Services/new-quote-data/new-quote-data.service';
 
 @NgModule({
     imports: [InfrastructureModule, 
@@ -24,8 +26,10 @@ import {TableModule} from 'primeng/table';
     CheckboxModule,
     ButtonModule,
     TableModule,
+    DialogModule,
     ],
     declarations: [...Components,...SharedComponents],
+    providers: [NewQuoteDataService],
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],
 })

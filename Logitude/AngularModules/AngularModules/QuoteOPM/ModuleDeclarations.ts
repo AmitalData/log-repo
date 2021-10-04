@@ -19,6 +19,8 @@ import { NewQuoteMyCustomersComponent } from './Components/NewEntity/components/
 import { NewQuotePickupComponent } from './Components/NewEntity/components/new-quote-pickup/new-quote-pickup.component';
 import { NewQuotePropertiesComponent } from './Components/NewEntity/components/new-quote-properties/new-quote-properties.component';
 import { NewQuoteShipperComponent } from './Components/NewEntity/components/new-quote-shipper/new-quote-shipper.component';
+import { AddressTextareaComponent } from './Components/NewEntity/components/address-textarea/address-textarea.component';
+import { AutocomplateTableComponent } from './Components/NewEntity/components/autocomplate-table/autocomplate-table.component';
 
 export const Components =
     [
@@ -43,6 +45,8 @@ export const Components =
         NewQuotePickupComponent,
         NewQuoteDeliveryComponent,
         NewQuoteExpectedOrderComponent,
+        AddressTextareaComponent,
+        AutocomplateTableComponent,
     ];
 
 export const SharedComponents =

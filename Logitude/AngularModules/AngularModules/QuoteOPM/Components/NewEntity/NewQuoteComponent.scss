@@ -2,10 +2,6 @@
     .p-field {
         margin-bottom: 1em !important;
     }
-    
-    .p-radiobutton {
-        display: none;
-    }
 }
 
 :host {
@@ -41,6 +37,7 @@
     padding-top: 13px;
     overflow-x: hidden;
     height: 100%;
+    position: relative;
 }
 
 .section-pickup {

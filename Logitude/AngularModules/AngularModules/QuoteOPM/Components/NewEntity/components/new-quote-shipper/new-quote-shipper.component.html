@@ -1,52 +1,18 @@
-<h3 class="sub-header">Shipper</h3>
-<!-- <p-table [value]="shipperNames">
-  <ng-template pTemplate="header">
-      <tr>
-          <th>Vin</th>
-          <th>Year</th>
-          <th>Brand</th>
-          <th>Color</th>
-          <th>Color</th>
-          <th>Color</th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-shipper>
-      <tr>
-          <td>{{shipper.Code}}</td>
-          <td>{{shipper.EnglishName}}</td>
-          <td>{{shipper.Address1}}</td>
-          <td>{{shipper.CityName}}</td>
-          <td>{{shipper.CountryName}}</td>
-          <td>{{shipper.PartnerTypeName}}</td>
-      </tr>
-  </ng-template>
-</p-table> -->
+<h3 class="sub-header">{{'QuoteOP.F.Shipper' | TextCodeTranslationPipe}}</h3>
 
-<div class="grid"  [formGroup]='formGroup'>
-    <div class="col-6 p-fluid">
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table
+      [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
+      [data]='shipperNames' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"shipperName"'
+      [formGroup]='formGroup' (onSelect)='onSelectedName($event)'>
+    </app-autocomplate-table>
+    </div>
+
+    <div *ngIf='formGroup.value.shipperName'>
       <div class="p-field">
-        <label for="shipperName">Name</label>
-        <p-autoComplete formControlName="shipperName" id="shipperName" [suggestions]="shipperNamesSelected"
-          [dropdown]="true" (completeMethod)="searchShipperNames($event)"
-          (onBlur)='onBlurName()' field='EnglishName'>
-
-            <ng-template pTemplate="item" let-shipper>
-                <tr>
-                    <td>{{shipper.Code}}</td>
-                    <td>{{shipper.EnglishName}}</td>
-                    <td>{{shipper.Address1}}</td>
-                    <td>{{shipper.CityName}}</td>
-                    <td>{{shipper.CountryName}}</td>
-                    <td>{{shipper.PartnerTypeName}}</td>
-                </tr>
-            </ng-template>
-          <!-- <ng-template let-x pTemplate="item">{{x.EnglishName}}</ng-template> -->
-        </p-autoComplete>
-      </div>
-
-      <div class="p-field">
-        <label for="shipperAddress">Address</label>
-        <input formControlName="shipperAddress" id="shipperAddress" type="text" pInputText>
+        <app-address-textarea [Address]='Address'></app-address-textarea>
       </div>
 
       <div class="p-field">
@@ -54,20 +20,19 @@
         <input formControlName="shipperReference1" id="shipperReference1" type="text" pInputText>
       </div>
     </div>
+  </div>
 
-    <div class="col-6 p-fluid">
+  <div class="col-6 p-fluid">
+    <div *ngIf='formGroup.value.shipperName'>
       <div class="p-field">
-        <label for="shipperContact">Contact</label>
-        <p-autoComplete formControlName="shipperContact" id="shipperContact"
-          [suggestions]="shipperContactSelected" [dropdown]="true" (completeMethod)="searchShipperContact($event)"
-          (onKeyUp)='keyUp(formGroup.controls.shipperContact, shipperContacts)'>
-          <ng-template let-x pTemplate="item">{{x}}</ng-template>
-        </p-autoComplete>
+        <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='shipperContacts'
+          [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"shipperContact"' [formGroup]='formGroup'
+          (onSelect)='onSelectedContact($event)'>
+        </app-autocomplate-table>
       </div>
-
       <div class="p-field">
-        <label for="shipperNotes">Notes</label>
-        <input formControlName="shipperNotes" id="shipperNotes" type="text" pInputText>
+        <label for="shipperNotes">{{'QuoteOP.S.NewQuote.ShipperNotes' | TextCodeTranslationPipe}}</label>
+        <textarea formControlName="shipperNotes" id="shipperNotes" pInputTextarea [rows]="4"></textarea>
       </div>
 
       <div class="p-field">
@@ -76,3 +41,4 @@
       </div>
     </div>
   </div>
+</div>

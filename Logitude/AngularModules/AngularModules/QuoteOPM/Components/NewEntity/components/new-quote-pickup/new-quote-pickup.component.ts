@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote-autocomplate.service';
+import { CountryCityList } from 'Common/EntityLists/CountryCityList';
+import { CountryList } from 'Common/EntityLists/CountryList';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-pickup',
@@ -8,24 +11,37 @@ import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote
   styleUrls: ['./new-quote-pickup.component.scss']
 })
 export class NewQuotePickupComponent implements OnInit {
-  @Input() formGroup: FormGroup = new FormGroup({});
-  
-  pickupCountrySelected: string[] = []
-  countryList: string[] = ['a', 'b']
+  @Input() formGroup: FormGroup = null as any;
+  @Input() EntityPM: QuoteOPPM = null as any;
 
-  keyUp:any;
+  countryList: CountryList[] = []
+  cityListAll: CountryCityList[] = []
+  cityList: CountryCityList[] = []
+
   constructor(
-    private autocomplateService: NewQuoteAutocomplateService
-  ) { 
-    this.keyUp = autocomplateService.keyUp;
-  }
+    private newQuoteDataService: NewQuoteDataService,
+  ) { }
 
   ngOnInit(): void {
+    this.InitCountries();
+    this.InitCity();
+  }
+
+  private async InitCountries() {
+    this.countryList = await this.newQuoteDataService.getCounriesTable();
+  }
+
+  private async InitCity() {
+    this.cityListAll = await this.newQuoteDataService.getCityTable();
+    this.cityList = this.cityListAll;
+    console.log(this.cityList )
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('pickupInclude'))
+    if (!this.formGroup.contains('pickupInclude')) {
       this.addFormControls()
+      this.subscribeCtrls();
+    }
   }
 
   addFormControls() {
@@ -35,9 +51,25 @@ export class NewQuotePickupComponent implements OnInit {
     this.formGroup.addControl('pickupCountry', new FormControl(''));
   }
 
-
-  pickupCountrySearch(event: any) {
-    this.pickupCountrySelected = this.countryList.filter(x => x.includes(event.query));
+  subscribeCtrls() {
+    // this.formGroup.controls.pickupCity.valueChanges.subscribe(val=>{
+    //   this.EntityPM.PickUpAddressId = 
+    // })
+      this.formGroup.controls.pickupZipCode.valueChanges.subscribe(val=> this.EntityPM.FromAddressZipCode = val);
+      this.formGroup.controls.pickupCity.valueChanges.subscribe(val=> this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
   }
-
+  
+  includeCheckboxChange(e: {checked: boolean, originalEvent: PointerEvent}) {
+    console.log(e)
+    if(e)
+      this.EntityPM.IncludePickUp = e.checked;
+  }
+  
+  // onSelectedCity(e) {
+  //   console.log(e)    
+  // }
+  
+  onSelectedCountry(country: CountryList) {
+    this.EntityPM.FromAddressCountryId = country.Id;
+  }
 }

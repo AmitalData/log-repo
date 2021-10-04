@@ -1,28 +1,32 @@
-<h3>Delivery</h3>
+<h3>{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h3>
 <div [formGroup]='formGroup'>
-    <p-checkbox formControlName='deliveryInclude' [binary]="true" label='Include Delivery'></p-checkbox>
+    <p-checkbox formControlName='deliveryInclude' [binary]="true" label='Include Delivery'
+        (onChange)="includeCheckboxChange($event)"></p-checkbox>
 
-    <h5>Delivery Address</h5>
-    <div class="p-fluid">
-        <div class="p-field">
-            <label for="deliveryZipCode">Zip code</label>
-            <p-inputNumber formControlName='deliveryZipCode' id="deliveryZipCode" mode="decimal" [useGrouping]="false">
-            </p-inputNumber>
-        </div>
+    <div [hidden]='!formGroup.controls.deliveryInclude.value'>
+        <h5>{{"QuoteOP.S.NewQuote.DeliveryAddress" | TextCodeTranslationPipe}}</h5>
+        <div class="p-fluid">
+            <div class="p-field">
+                <label for="deliveryZipCode">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>
+                <p-inputNumber formControlName='deliveryZipCode' id="deliveryZipCode" mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
 
-        <div class="p-field">
-            <label for="deliveryCity">City</label>
-            <input formControlName="deliveryCity" id="deliveryCity" type="text" pInputText>
-        </div>
+            <div class="p-field">
+                <!-- <app-autocomplate-table [columnsShow]="['Name', 'LocalName', 'Country', 'State']" [data]='cityList'
+                    [fieldShow]='"Name"' [label]='"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe'
+                    [controlName]='"deliveryCity"' [formGroup]='formGroup' (onSelect)='onSelectedCity($event)'>
+                </app-autocomplate-table> -->
+                <label for="deliveryZipCode">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
+                <input formControlName='deliveryCity' id="deliveryZipCode" pInputText />
+            </div>
 
-        <div class="p-field">
-            <label for="deliveryCountry">Country</label>
-            <p-autoComplete formControlName="deliveryCountry" id="deliveryCountry"
-                [suggestions]="deliveryCountrySelected" [dropdown]="true"
-                (completeMethod)="deliveryCountrySearch($event)"
-                (onKeyUp)='keyUp(formGroup.controls.deliveryCountry, countryList)'>
-                <ng-template let-x pTemplate="item">{{x}}</ng-template>
-            </p-autoComplete>
+            <div class="p-field">
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
+                    [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
+                    [controlName]='"deliveryCountry"' [formGroup]='formGroup' (onSelect)='onSelectedCountry($event)'>
+                </app-autocomplate-table>
+            </div>
         </div>
     </div>
 </div>

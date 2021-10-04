@@ -11,32 +11,31 @@
     (formGroup.controls.transporation.value === transporations[1].value || formGroup.controls.transporation.value === transporations[2].value) &&  !formGroup.controls.shipmentType.value}" -->
     <div class="col-10 right-side">
         <div class="section">
-
-            <app-new-quote-shipper [formGroup]='formGroup'></app-new-quote-shipper>
-            <app-new-quote-consignee [formGroup]='formGroup'></app-new-quote-consignee>
-            <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers>
+            <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
+            <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
+            <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
         </div>
 
-        <div class="section">
+        <!-- <div class="section">
             <app-new-quote-properties [formGroup]='formGroup'></app-new-quote-properties>
-        </div>
+        </div> -->
 
         <div class="section">
-            <app-new-quote-general [formGroup]='formGroup'></app-new-quote-general>
+            <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>
         </div>
 
         <div class="grid">
             <div class="col-6 section section-pickup">
-                <app-new-quote-pickup [formGroup]='formGroup'></app-new-quote-pickup>
+                <app-new-quote-pickup [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
             </div>
 
             <div class="col-6 section section-delivery">
-                <app-new-quote-delivery [formGroup]='formGroup'></app-new-quote-delivery>
+                <app-new-quote-delivery [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
             </div>
         </div>
 
         <div class="section">
-            <app-new-quote-expected-order [formGroup]='formGroup'></app-new-quote-expected-order>
+            <app-new-quote-expected-order [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-expected-order>
         </div>
 
         <div class="section">

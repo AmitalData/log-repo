@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote-autocomplate.service';
 
 @Component({
   selector: 'app-new-quote-properties',
@@ -26,10 +25,7 @@ export class NewQuotePropertiesComponent implements OnInit {
 
 
   constructor(
-    private autocomplateService: NewQuoteAutocomplateService
-  ) { 
-    this.keyUp = autocomplateService.keyUp;
-  }
+  ) {}
 
   ngOnInit(): void {
   }
