@@ -1144,9 +1144,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ShipmentRouteSteps.push(step);
     }
 
-    DownloadDocument(document: string) {
-        if(document)
-            this.documentDownloadService.DownloadPage(document);
+    DownloadDocument(documentId: string, documentTypeName: string) {
+        if (documentId)
+            this.documentDownloadService.DownloadPage(documentId, this.Shipment.ShipmentList.ShipmentNumber + '-' + documentTypeName);
     }
 
     DownloadAllClick(entityId: string, securityKey: string) {
