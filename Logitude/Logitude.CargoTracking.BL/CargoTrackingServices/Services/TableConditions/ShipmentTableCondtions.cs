@@ -298,10 +298,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "'O' as EntityType," +
                 "CreateDate as CreateDateTime," +
                 "UpdateDate as AutomaticLastUpdateDate," +
-                "ETD as DepartureEstimationDate," +
-                "ATD as DepartureDate," +
-                "ETA as ArrivalEstimationDate," +
-                "ATA as ArrivalDate," +
                 "PickupActualDateTime as PickupDate," +
                 "PickupEstimatedDateTime as PickupEstimationDate";
 

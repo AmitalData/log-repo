@@ -245,7 +245,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)
         {
-            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
+            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals(0) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
                 return true;
             return false;
         }
