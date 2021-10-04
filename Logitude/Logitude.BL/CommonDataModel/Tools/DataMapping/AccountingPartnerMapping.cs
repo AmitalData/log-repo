@@ -26,6 +26,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
+            entityPOCO.CreditLimit = entityPM.CreditLimit;
+            entityPOCO.InsuredCreditlimit = entityPM.InsuredCreditlimit;
 
             entityCard.UpdateDate = entityPM.UpdateDate;
             entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;

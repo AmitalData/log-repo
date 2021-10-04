@@ -1003,6 +1003,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ProductItemViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
@@ -1045,6 +1046,7 @@
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\ListControllers\ShipmentOrderViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\PMControllers\ShipmentOrderController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentOrderModel\ShipmentOrderExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
@@ -2611,7 +2613,6 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
-    <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
@@ -2730,7 +2731,10 @@
     <Compile Include="Helpers\UploadTariffHelper.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\PODImageConverterService.cs" />
     <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
+    <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />

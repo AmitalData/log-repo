@@ -1633,6 +1633,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             break;
                         }
                 }
+
+                entityPM.Routing = entityPM.FromCity + " > " + entityPM.ToCity;
             }
 
             else
@@ -1670,7 +1672,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }
                     }
                 }
-            }
+
+                entityPM.Routing = entityPM.FromCountryName + " > " + entityPM.ToCountryName;
+            }            
             #endregion
 
             #region Partners
@@ -2729,6 +2733,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Address address = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, entityPM.Tenant);
                 if (address != null)
                 {
+                    entityPM.FromCity = address.City;
+
                     if (!string.IsNullOrEmpty(address.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
@@ -2748,6 +2754,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.FromPortId);
                 if (port != null)
                 {
+                    entityPM.FromCity = port.Code;
+
                     if (!string.IsNullOrEmpty(port.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
@@ -2762,6 +2770,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
         private void GetFromCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
         {
+            entityPM.FromCity = entityPM.InlandDomesticFromCity;
+
             if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId))
             {
                 Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
@@ -2780,6 +2790,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Address address = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, entityPM.Tenant);
                 if (address != null)
                 {
+                    entityPM.ToCity = address.City;
+
                     if (!string.IsNullOrEmpty(address.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
@@ -2799,6 +2811,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.ToPortId);
                 if (port != null)
                 {
+                    entityPM.ToCity = port.Code;
+
                     if (!string.IsNullOrEmpty(port.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
@@ -2813,6 +2827,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
         private void GetToCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
         {
+            entityPM.ToCity = entityPM.InlandDomesticToCity;
+
             if (!string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId))
             {
                 Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);

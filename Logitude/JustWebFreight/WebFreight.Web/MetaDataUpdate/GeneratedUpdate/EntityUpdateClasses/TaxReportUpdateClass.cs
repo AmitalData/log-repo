@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "f00113c9c18f5fc0aa9a8a3fc2fa56a2";
+		public const string HashString = "f6da21ff0a684807adf16c7f0093c773";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2526,7 +2526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_AccountingOCompletedReportExistForPreviousTwoMonths = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CompletedReportExistForPreviousTwoMonths", DefaultText = "Can’t create tax report for the chosen month, there is no tax report In the previous two months",LocalDefaultText = @", לא ניתן להפיק דוח מעמ לחודש הנבחר משום שלא הופק דוח מעמ בחודשיים האחרונים", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportTextCode_AccountingOReportExistForPreviousMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportExistForPreviousMonth", DefaultText = "There is already a report for the previous month of the chosen month",LocalDefaultText = @"קיים כבר דוח קודם לחודש הנבחר", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_AccountingOReportExistForPreviousMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportExistForPreviousMonth", DefaultText = "There is already a report for the previous month of the chosen month",LocalDefaultText = @"המערכת מוגדרת לדיווח דו-חודשי וקיים כבר דוח מעמ לחודש קודם", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -1,7 +1,11 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
@@ -42,12 +46,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 this.HandelShipmentMasterDataFieldsChanges();
                 this.HandelShipmentPackagesChangeSets();
+                this.SendAutomaticallyOceanOnsightsRequest();
                 this.HandelShipmentPickUpsChangeSets();
                 this.HandelShipmentDeliveriesChangeSets();
                 this.HandelDeletedShipmentPickUpsChangeSets();
                 this.HandelDeletedShipmentDeliveriesChangeSets();
-
-
             }
         }
 
@@ -55,7 +58,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (CheckIfShipmentMasterDataFieldsUpdated()) {
                 this.UpdateShipmentPackagesChangeSetOperation();
-            }          
+            }
         }
 
         private bool CheckIfShipmentMasterDataFieldsUpdated()
@@ -119,7 +122,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             List<ContainerPM> containersToBeUpdatedFromDeleteedPackages = this.GetPickUpContainersToBeDeletedByContainerEntityId(updatedShipmentPickUp);
 
             if (updatedShipmentPickUp != null && containersToBeUpdated.Count > 0)
-               this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated, false);
+                this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdated, false);
 
             if (updatedShipmentPickUp != null && containersToBeUpdatedFromDeleteedPackages.Count > 0)
                 this.UpdateContainerFieldsFromPickUp(updatedShipmentPickUp, containersToBeUpdatedFromDeleteedPackages, true);
@@ -195,7 +198,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private bool ShouldUpdateContainers()
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+            if (!IsOceanInsightFeatureToggleExistInTenant( this.initializer.Tenant))
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -207,6 +210,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             return true;
         }
 
+
+        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
+        {
+            string ocaenInsightFeatureToggleCode = "OIC";
+            bool isOceanInsightFeatureToggleExist = false;
+
+            isOceanInsightFeatureToggleExist = (from a in initializer.IInfrastructureContext.FeatureToggles
+                                                where a.ToggleCode == ocaenInsightFeatureToggleCode
+                                                && (a.TenantNumber == tenant || (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber))
+                                                && !a.Inactive
+                                                && a.Tenant == 0
+                                                select a).Any();
+            return isOceanInsightFeatureToggleExist;
+        }
+        
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
             if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
@@ -264,6 +282,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
 
+        private void SendAutomaticallyOceanOnsightsRequest()
+        {
+            if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
+            {
+                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => (a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert) && a.ContainerNumber != null);
+                foreach (var container in allUpdatedContainers)
+                {
+                    this.SendAutomaticallyOceanOnsightsRequestByContainer(container.ContainerEntityId);
+                }
+            }
+        }
+
+        private bool IsSendAutomaticallyOceanOnsightsRequestByShipment()
+        {
+            if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && this.initializer.EntityPM.Master != this.initializer.EntityMasterData.Master)
+            {
+                return true;
+            }
+
+            if (initializer.ShipmentPackagesChangeSet == null)
+            {
+                return false;
+            }
+
+            var isContainerUpdated = initializer.ShipmentPackagesChangeSet
+               .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
+               .Any(a => a.ContainerNumber != null);
+            
+            if (isContainerUpdated && !string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool IsSendAutomaticallyOceanOnsightsRequestByContainer()
+        {
+            if (initializer.ShipmentPackagesChangeSet != null)
+            {
+                var isContainerUpdated = initializer.ShipmentPackagesChangeSet
+                      .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
+                      .Any(a => a.ContainerNumber != null);
+                if (string.IsNullOrEmpty(this.initializer.EntityPM.Master) && isContainerUpdated)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
+        {
+            // Container 
+            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
+            if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
+            {
+                myHelper.SendContainerStatusRequest();
+            }
+        }
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
@@ -291,6 +367,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     this.UpdateStandaloneShipmentPackage(containerId);
                     this.UpdatePickupDeliveryPackage(shipmentPackage, containerId);
                     shipmentPackage.ContainerEntityId = containerId;
+                    initializer.ShipmentPackagesChangeSet.Where(a=>a.Id == shipmentPackage.Id).FirstOrDefault().ContainerEntityId = containerId;
                     shipmentPackageRepository.Update(shipmentPackage);
                     shipmentPackageRepository.SubmitChanges();
                 }                

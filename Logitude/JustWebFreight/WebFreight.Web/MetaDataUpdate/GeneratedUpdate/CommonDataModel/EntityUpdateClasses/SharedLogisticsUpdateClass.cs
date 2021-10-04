@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class SharedLogisticsUpdateClass
    {  		
-		public const string HashString = "a2bc268637db13640b551447d5f4e052";
+		public const string HashString = "fd63a1f8076ea13ba3de723fd9e70acb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SharedLogistics",
-			      				    Code =  "d9d1",
+			      				    Code =  "7363",
 			      				    Name =  "SharedLogistics",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -691,7 +691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CargoTrackingURL",
+					 						FieldName =  "URLprivateCargoTracking",
 					  						ObjectTableName =  "SharedLogistics",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -710,8 +710,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CargoTrackingURL",
-					  						ListPropertyPath =  "CargoTrackingURL",
+					  						PMPropertyPath =  "URLprivateCargoTracking",
+					  						ListPropertyPath =  "URLprivateCargoTracking",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -728,8 +728,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CargoTrackingURL",
-					  						DefaultText =  "Cargo Tracking URL",
+					  						FullFieldLable =  "URLprivateCargoTracking",
+					  						DefaultText =  "URL Private Cargo Tracking",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

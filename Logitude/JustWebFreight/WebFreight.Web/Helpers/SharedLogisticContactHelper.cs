@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
@@ -12,6 +14,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -290,8 +293,7 @@ namespace WebFreight.Web.Helpers
 
                 if (tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated || tenantCompany.IsMobileActivated)
                 {
-
-                    string from = LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
+                    string from = GetEmailFrom(sharedLogisticsContact.Tenant);
 
                     if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
                     {
@@ -347,6 +349,36 @@ namespace WebFreight.Web.Helpers
             objectContext.SaveChanges();
         }
 
+        private string GetEmailFrom(int tenant)
+        {
+            string systemUrl = GetSystemURL(tenant);
+            if (!string.IsNullOrEmpty(systemUrl))
+                return "no-reply@" + systemUrl;
+
+            return LogitudeSettings.WorkEnvironment == "cloud" ? "no-reply@amital.co.il" : "no-reply@LogitudeWorld.com";
+        }
+
+        private string GetSystemURL(int tenant)
+        {
+            string systemUrl = "";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetTenantManagementPM(tenant);
+                if (tenantManagementPM != null)
+                {
+                    systemUrl = tenantManagementPM.CustomerURL;
+                }
+                scope.Complete();
+            }
+            return GetOnlyDomainNameFromSystemUrl(systemUrl);
+        }
+
+        private string GetOnlyDomainNameFromSystemUrl(string systemUrl)
+        {
+            if(string.IsNullOrEmpty(systemUrl)) return null;
+            return systemUrl.Split('/')[0];
+        }
 
         private static string ResolveInvitationvariable(string htmlTemplate, Contact contact, string password)
         {
@@ -372,48 +404,48 @@ namespace WebFreight.Web.Helpers
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
-            if (documenttype != null)
-            {
-                messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                if (documenttype != null)
                 {
-                    messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
-                    return messageArgs.HtmlTemplate;
+                    messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
+                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        return messageArgs.HtmlTemplate;
+                    }
+
                 }
 
-            }
 
+                StringBuilder HtmlTemplate = new StringBuilder();
+                string emailMessage = "";
+                string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
+                HtmlTemplate.Append("<!DOCTYPE html>");
+                HtmlTemplate.Append("<p style='text-align:left'>");
+                HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to connect to their operation system to check on your shipments.");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Please use the following:");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Password: </b>" + password);
 
-            StringBuilder HtmlTemplate = new StringBuilder();
-            string emailMessage = "";
-            string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
-            HtmlTemplate.Append("<!DOCTYPE html>");
-            HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to connect to their operation system to check on your shipments.");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Please use the following:");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Password: </b>" + password);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated online on your shipments, statuses, documents and more");
+                HtmlTemplate.Append("<br /><br />");
 
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated online on your shipments, statuses, documents and more");
-            HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
 
-            HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
+                HtmlTemplate.Append("<br /><br />");
 
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
-            emailMessage = HtmlTemplate.ToString();
+                HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
+                emailMessage = HtmlTemplate.ToString();
 
                 scope.Complete();
 
@@ -426,50 +458,50 @@ namespace WebFreight.Web.Helpers
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
-            if (documenttype != null)
-            {
-                messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                if (documenttype != null)
                 {
-                    messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
-                    return messageArgs.HtmlTemplate;
+                    messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
+                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        return messageArgs.HtmlTemplate;
+                    }
+
+
                 }
 
+                string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
 
-            }
+                StringBuilder HtmlTemplate = new StringBuilder();
+                string emailMessage = "";
+                HtmlTemplate.Append("<!DOCTYPE html>");
+                HtmlTemplate.Append("<p style='text-align:left'>");
+                HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
+                HtmlTemplate.Append("<br /><br />");
 
-            string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
+                HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
+                HtmlTemplate.Append("<br />");
 
-            StringBuilder HtmlTemplate = new StringBuilder();
-            string emailMessage = "";
-            HtmlTemplate.Append("<!DOCTYPE html>");
-            HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
-            HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("Please use the following:");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Password: </b>" + password);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("By Using Logitude Mobile, you can stay up-to-date online with your shipments, statuses and more");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
 
-            HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
-            HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
 
-            HtmlTemplate.Append("Please use the following:");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Password: </b>" + password);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("By Using Logitude Mobile, you can stay up-to-date online with your shipments, statuses and more");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
 
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
-
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
-
-            emailMessage = HtmlTemplate.ToString();
+                emailMessage = HtmlTemplate.ToString();
                 scope.Complete();
 
                 return emailMessage;
@@ -535,130 +567,130 @@ namespace WebFreight.Web.Helpers
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, tenantCompany.IsCargoTrackWebAccessActivated);
-            if (documenttype != null)
-            {
-                messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                if (documenttype != null)
                 {
-                    messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
-                    return messageArgs.HtmlTemplate;
+                    messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
+                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    {
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        return messageArgs.HtmlTemplate;
+                    }
+
+
+                }
+                string logo = GetLogoInvitation(tenantCompany.Id, "Cloud");
+                StringBuilder HtmlTemplate = new StringBuilder();
+                string message = "";
+                HtmlTemplate.Append("<!DOCTYPE html>");
+
+                HtmlTemplate.Append("<div  dir='rtl'  style='text-align:right;  font-size: 15px ; font-family:Arial'>");
+
+
+                if (logo == "AppMobileLogo")
+                {
+                    HtmlTemplate.Append(" <img  align='button' valign='button' width='50' height='50' src='cid:" + logo + "' />");
+                }
+                else
+                {
+                    HtmlTemplate.Append(" <img  align='button' valign='button' width='auto' height='auto' src='cid:" + logo + "' />");
+                }
+
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("לכבוד: " + contact.EnglishName);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("מאת : " + "<span dir='ltr'>" + currentUsername + " / " + tenantCompany.Company + "</span>");
+
+
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("<div>");
+                HtmlTemplate.Append("<b style ='color :#1D66F0;font-size :16px;width:60% ;float:left; dir='ltr' '>Invitation to use Unifreight Mobile</b>");
+                HtmlTemplate.Append("<b style ='color :#1D66F0;font-size :16px;width:40%;float:left;'>הזמנה להתחבר ל Unifreight Mobile</b>");
+
+                HtmlTemplate.Append("</div>");
+
+
+
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("Unifreight Mobile הינה אפליקציית מידע לטלפונים חכמים (אייפון ואנדרואיד), שפותחה במטרה להזרים אליכם מידע שוטף על המשלוחים שלכם ולאפשר לכם לעקוב אחריהם בכל עת ובכל מקום.האפליקציה קלה לשימוש ומאפשרת שליטה בהתרעות (ללא התרעות בכלל , התרעות רק למשלוחים מועדפים)");
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("האפליקצייה זמינה להורדה חינם ב Apple Store וב Google Play");
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("להלן שם המשתמש והסיסמא שלך לכניסה למערכת");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("שם משתמש: " + contact.Email);
+                HtmlTemplate.Append("<br />");
+                var Password = password;
+                if (password != "הסיסמה הנוכחית שלך")
+                {
+                    Password = "<span  dir='ltr'>" + password + "</span>";
+                }
+
+                HtmlTemplate.Append("סיסמה: " + Password);
+
+                if (password == "הסיסמה הנוכחית שלך")
+                {
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("(אם אינך זוכר/ת את הסיסמא הנוכחית שלך , אנא השתמש ב forgot password בכדי לבצע החלפת סיסמא)");
+
+
                 }
 
 
-            }
-            string logo = GetLogoInvitation(tenantCompany.Id, "Cloud");
-            StringBuilder HtmlTemplate = new StringBuilder();
-            string message = "";
-            HtmlTemplate.Append("<!DOCTYPE html>");
-
-            HtmlTemplate.Append("<div  dir='rtl'  style='text-align:right;  font-size: 15px ; font-family:Arial'>");
-
-
-            if (logo == "AppMobileLogo")
-            {
-                HtmlTemplate.Append(" <img  align='button' valign='button' width='50' height='50' src='cid:" + logo + "' />");
-            }
-            else
-            {
-                HtmlTemplate.Append(" <img  align='button' valign='button' width='auto' height='auto' src='cid:" + logo + "' />");
-            }
-
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("לכבוד: " + contact.EnglishName);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("מאת : " + "<span dir='ltr'>" + currentUsername + " / " + tenantCompany.Company + "</span>");
-
-
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("<div>");
-            HtmlTemplate.Append("<b style ='color :#1D66F0;font-size :16px;width:60% ;float:left; dir='ltr' '>Invitation to use Unifreight Mobile</b>");
-            HtmlTemplate.Append("<b style ='color :#1D66F0;font-size :16px;width:40%;float:left;'>הזמנה להתחבר ל Unifreight Mobile</b>");
-
-            HtmlTemplate.Append("</div>");
-
-
-
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("Unifreight Mobile הינה אפליקציית מידע לטלפונים חכמים (אייפון ואנדרואיד), שפותחה במטרה להזרים אליכם מידע שוטף על המשלוחים שלכם ולאפשר לכם לעקוב אחריהם בכל עת ובכל מקום.האפליקציה קלה לשימוש ומאפשרת שליטה בהתרעות (ללא התרעות בכלל , התרעות רק למשלוחים מועדפים)");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("האפליקצייה זמינה להורדה חינם ב Apple Store וב Google Play");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("להלן שם המשתמש והסיסמא שלך לכניסה למערכת");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("שם משתמש: " + contact.Email);
-            HtmlTemplate.Append("<br />");
-            var Password = password;
-            if (password != "הסיסמה הנוכחית שלך")
-            {
-                Password = "<span  dir='ltr'>" + password + "</span>";
-            }
-
-            HtmlTemplate.Append("סיסמה: " + Password);
-
-            if (password == "הסיסמה הנוכחית שלך")
-            {
                 HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("(אם אינך זוכר/ת את הסיסמא הנוכחית שלך , אנא השתמש ב forgot password בכדי לבצע החלפת סיסמא)");
+
+                HtmlTemplate.Append("<b style ='color :#FAA61A;font-size :16px'>הורידו עכשיו והישארו מקוונים ומעודכנים</b>");
+
+                HtmlTemplate.Append("</div>");
 
 
-            }
+                HtmlTemplate.Append("<br /><br />");
+                // English
 
+                HtmlTemplate.Append("<div  dir='ltr'  style='text-align:left;  font-size: 15px ; font-family:Arial'>");
 
-            HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append(currentUsername + " from / " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
+                HtmlTemplate.Append("<br /><br />");
 
-            HtmlTemplate.Append("<b style ='color :#FAA61A;font-size :16px'>הורידו עכשיו והישארו מקוונים ומעודכנים</b>");
+                HtmlTemplate.Append("Please use the following:");
+                HtmlTemplate.Append("<br /><br />");
 
-            HtmlTemplate.Append("</div>");
+                HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
+                HtmlTemplate.Append("<br />");
 
+                var englishPassword = password;
 
-            HtmlTemplate.Append("<br /><br />");
-            // English
+                if (password == "הסיסמה הנוכחית שלך")
+                {
+                    englishPassword = "your current password (If you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password)";
+                }
 
-            HtmlTemplate.Append("<div  dir='ltr'  style='text-align:left;  font-size: 15px ; font-family:Arial'>");
+                HtmlTemplate.Append("<b>Password: </b>" + englishPassword);
 
-            HtmlTemplate.Append(currentUsername + " from / " + tenantCompany.Company + " is sending you this invitation to use the new Mobile Application to track your shipments.");
-            HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("if you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password");
 
-            HtmlTemplate.Append("Please use the following:");
-            HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<br />");
 
-            HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
-            HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b style ='color :#FAA61A;font-size :16px'>With Unifreight mobile you can access your shipments with real time information and status, as well as receive push notifications on all statuses.</b>");
+                HtmlTemplate.Append("</div>");
 
-            var englishPassword = password;
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
 
-            if (password == "הסיסמה הנוכחית שלך")
-            {
-                englishPassword = "your current password (If you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password)";
-            }
+                message = HtmlTemplate.ToString();
 
-            HtmlTemplate.Append("<b>Password: </b>" + englishPassword);
+                if (message.Contains("{"))
+                {
+                    message.Replace("}", "");
+                    message.Replace("{", "");
+                }
 
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("if you lost your password press on forgot password link in the login page and fill your e-mail address to receive new password");
-
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<br />");
-
-            HtmlTemplate.Append("<b style ='color :#FAA61A;font-size :16px'>With Unifreight mobile you can access your shipments with real time information and status, as well as receive push notifications on all statuses.</b>");
-            HtmlTemplate.Append("</div>");
-
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
-
-            message = HtmlTemplate.ToString();
-
-            if (message.Contains("{"))
-            {
-                message.Replace("}", "");
-                message.Replace("{", "");
-            }
-             
                 scope.Complete();
 
                 return message;

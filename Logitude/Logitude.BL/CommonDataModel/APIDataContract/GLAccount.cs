@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public string EnglishName { get; set; }
         public bool? IsMultiCurrency { get; set; }
         public string InternalNumber { get; set; }
-
+        public string DeductionFileNumber { get; set;}
+        public string AssessingOfficeCode { get; set; }
+        public string DeductionFileTypeId { get; set; }
+        public string ConsolidationVat { get; set; }
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }
         public ChartOfAccount ChartOfAccount { get; set; }
@@ -45,6 +48,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
     {
         public string Id { get; set; }
         public string DisplayNumber { get; set; }
+        public string InternalNumber { get; set; }
+
         public string LocalName { get; set; }
         public string EnglishName { get; set; }
         public bool? IsMultiCurrency { get; set; }
@@ -71,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
             try
             {
                 return new GLAccountPM();
+            
             }
             catch (Exception ex)
             {

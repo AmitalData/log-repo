@@ -6,13 +6,10 @@ using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
-
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -23,7 +20,8 @@ namespace CommunicationWorkerRole
     {
         public override void Run()
         {
-            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment, new List<string> { KafkaTopics.TasksDoneTopic, KafkaTopics.ShipmentSetValues }, null);
+            var LogitudeConsumer = new Consumer(KafkaConsumerGroups.UpdateShipment,
+                    new List<string> { KafkaTopics.TasksDoneTopic, KafkaTopics.ShipmentSetValues }, null);
 
             while (IsRunning)
             {
@@ -70,33 +68,6 @@ namespace CommunicationWorkerRole
         }
 
         #region Private methods
-        private void UpdateShipment(string jsonLogitudeUpdateMessage)
-        {
-            try
-            {
-                LogitudeUpdateMessage LogitudeUpdateMessage = JsonConvert.DeserializeObject<LogitudeUpdateMessage>(jsonLogitudeUpdateMessage);
-
-                ShipmentRepository shipmentRepository = new ShipmentRepository(LogitudeUpdateMessage.Tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
-
-                var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
-
-                foreach (KeyValuePair<string, string> entry in entryFields)
-                {
-                    PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
-                    Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
-                    object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
-                    propertyInfo.SetValue(shipment, safeValue, null);
-                }
-
-                shipmentRepository.Update(shipment);
-                shipmentRepository.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
         private void UpdateShipmentPM(string jsonLogitudeUpdateMessage)
         {
             try
@@ -118,17 +89,6 @@ namespace CommunicationWorkerRole
                     PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
                     Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
                     object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
-                    if (entry.Key == "OBLTypeCode")
-                    {
-                        OBLTypeRepository myOBLRepo = new OBLTypeRepository(shipment.Tenant);
-                        var myOBL = myOBLRepo.GetSingleOBLType(entry.Value);
-                        if (myOBL == null)
-                        {
-                            myOBL = myOBLRepo.GetAll().FirstOrDefault();
-                        }
-                        safeValue = myOBL.Code;
-                    }
-                   
                     propertyInfo.SetValue(shipment, safeValue, null);
                 }
 
@@ -138,7 +98,7 @@ namespace CommunicationWorkerRole
             }
             catch (Exception e)
             {
-                throw e;
+                ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "Shipment Update Error", null, null);
             }
         }
         #endregion

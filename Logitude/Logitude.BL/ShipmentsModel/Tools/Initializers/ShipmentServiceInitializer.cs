@@ -5,6 +5,7 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.CompositionBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -32,6 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentMasterData EntityMasterData { get; set; } //private set;
         public IShipmentsContext ShipmentContext { get; private set; }
         public ICommonDataContext CommonContext { get; private set; }
+        public IInfrastructureContext IInfrastructureContext { get; private set; }
         public ShipmentRepository Repository { get; private set; }
         public ShipmentMasterDataRepository MasterDataRepository { get; private set; }
         public CardRepository CardRepository { get; private set; }
@@ -107,7 +109,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.ShipmentPackageItemRepository = new ShipmentPackageItemRepository(ShipmentContext);
             this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
             this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
-
+            this.IInfrastructureContext = InfrastructureContext.GetContext(0);
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);

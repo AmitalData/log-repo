@@ -650,7 +650,7 @@ h1{
                 padding-top: 10px;
                 padding-right: 20px;
                 min-height: 30px;
-                max-height: 170px;
+                max-height: 250px;
                 overflow: auto;
             }
         .checkbox-filteritem{
@@ -814,6 +814,7 @@ h1{
     padding-left: 9px;
 }
 
+
 .multipe-select {
     margin-right: 20px;
 }
@@ -839,4 +840,47 @@ h1{
 
 ::ng-deep .mat-option.ATD{
  border-bottom: 1px solid var(--MainColor);
+}
+
+
+.multipe-select {
+    margin-right: 20px;
+}
+
+.has-exception-checkbox-filter {
+    display: inline-block;
+    width: 220px !important;
+    background: #FFF;
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid var(--MainColor);
+    top: 8px;
+    position: relative;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%) !important;
+    color: rgba(0,0,0,.6);
+    margin-right: 20px;
+}
+.has-exception-checkbox-filter CheckBox{
+    display: block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+::ng-deep .mat-option.ATD{
+ border-bottom: 1px solid var(--MainColor);
+}
+
+.shipment-references{
+    display: inline-block;
+}
+
+.order-icon{
+    position: absolute;
+    top:73px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
 }

@@ -185,7 +185,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
          this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
         this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
 
-        if (!FeatureLocator.HasFeaturePermession("General", "MOBILE")) {
+        if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking") {
             this.IsShowMobileActivateArea = false;
         }
         else {

@@ -1,18 +1,25 @@
-﻿using Logitude.BL.Security;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Web;
 
-namespace WebFreight.Web.Helpers
+namespace Logitude.BL.Helpers
 {
     public class ContainerStatusesHelper
     {
@@ -34,15 +41,25 @@ namespace WebFreight.Web.Helpers
         private string communicationLogAdditionalFields;
         private string scacCode;
         private string entityReference;
-        private string communicationLogId; 
+        private string communicationLogId;
+        private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
+        private ShippingLinePM tenantZeroShippingLine;
+        private ShippingLinePM shippingLine;
+        ShippingLineRepository shippingLineRepository;
+        ShippingLineQuery shippingLineQuery;
+        IShipmentsContext shipmentsContext;
 
-        public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant)
+        public ContainerStatusesHelper(string shipmentId, string containerId, bool isContainer, int tenant, IShipmentsContext shipmentsContext = null)
         {
             this.tenant = tenant;
             this.shipmentId = shipmentId;
             this.containerId = containerId;
             this.isContainer = isContainer;
             this.commonContext = CommonDataContext.GetContext(this.tenant);
+            this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
+            this.shippingLineRepository = new ShippingLineRepository(tenant);
+            this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
+            this.shipmentsContext = shipmentsContext != null? shipmentsContext : ShipmentsContext.GetContext(this.tenant);
             if (!isContainer)
                 this.GetSingleShipmentById();
             else
@@ -52,17 +69,20 @@ namespace WebFreight.Web.Helpers
             this.GetCommuniactionLogObjectTableId();
             this.GetLoggedContactId();
             this.GetShipmentScacCode();
+            this.GetTenantZeroShippingLine();
             this.GetentityReference();
             this.BuildCommunicationLogAdditionalFields();
         }
         private void GetSingleShipmentById()
         {
-            this.shipmentQuery = new ShipmentQuery(tenant);
+            var shipmentRepository = new ShipmentRepository(this.shipmentsContext);
+            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
             this.shipment = shipmentQuery.GetSingleShipmentPM(shipmentId, tenant);
         }
         private void GetSingleContainerById()
         {
-            this.containerQuery = new ContainerQuery(tenant);
+            var containerRepository = new ContainerRepository(this.shipmentsContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
             this.container = containerQuery.GetSinglePM(containerId, tenant);
         }
         private void GetCommuniactionLogObjectTableId()
@@ -81,16 +101,31 @@ namespace WebFreight.Web.Helpers
         private void GetLoggedContactId()
         {
             ContactRepository contactRepository = new ContactRepository(this.commonContext);
-            var loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            string email = "system@tenant" + tenant + ".com";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            var loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             this.loggedContactId = loggedContact.Id;
         }
         private void GetShipmentScacCode()
         {
             string mainCarriageCarrierId = isContainer ? container?.MainCarriageCarrierId : this.shipment?.MainCarriageCarrierId;
-            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
-            var shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrierId, tenant);
-            this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+            if (!string.IsNullOrEmpty(mainCarriageCarrierId))
+            {
+                shippingLine = shippingLineQuery.GetSinglePMByIdAndTenant(mainCarriageCarrierId, tenant);
+                if (shippingLine != null)
+                    this.scacCode = shippingLine != null ? shippingLine.SCACCode : "";
+            }
         }
+        private void GetTenantZeroShippingLine()
+        {
+            int tenantZero = 0;
+            if (this.shippingLine != null)
+                tenantZeroShippingLine = shippingLineQuery.GetSinglePMByCode(this.shippingLine.Code, tenantZero);
+        }
+
         private void GetentityReference()
         {
             this.entityReference = this.isContainer ? container?.ContainerNumber : shipment?.Master;
@@ -104,7 +139,7 @@ namespace WebFreight.Web.Helpers
             {
                 oceanInsightType = "c_id"; // Container
             }
-            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + (container != null? container.ContainerNumber:null);
+            this.communicationLogAdditionalFields = scacCode + "," + oceanInsightType + "," + this.shipmentId + "," + (container != null ? container.ContainerNumber : null);
         }
 
         public void SendContainerStatusRequest()
@@ -112,7 +147,7 @@ namespace WebFreight.Web.Helpers
             this.BuildCommunicationLog();
             this.SendDBQueueForContainerStatuses();
         }
-       
+
         private void BuildCommunicationLog()
         {
             communicationLogParams = new CommunicationsParams()
@@ -160,11 +195,51 @@ namespace WebFreight.Web.Helpers
         public bool Validate()
         {
             bool isValid = true;
-            if (string.IsNullOrEmpty(this.scacCode) || string.IsNullOrEmpty(this.entityReference))
+            if (string.IsNullOrEmpty(this.scacCode) || string.IsNullOrEmpty(this.entityReference) || !this.IsValidShippingLine())
             {
                 isValid = false;
             }
             return isValid;
+        }
+
+        public bool IsValidShippingLine()
+        {
+            if (this.tenantZeroShippingLine == null)
+            {
+                return false;
+            }
+            if (this.isContainer && !this.tenantZeroShippingLine.IsSendingByContainer)
+            {
+                return false;
+            }
+            if (!this.isContainer && !this.tenantZeroShippingLine.IsSendingByBillOfLading)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsLogitudeOceanInsightsRequestExistForShipment()
+        {
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByOBLNumberAndScac(shipment?.Master, scacCode, shipmentId);
+
+            if (logitudeOceanInsightsRequest == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public bool IsLogitudeOceanInsightsRequestExistForConatiner()
+        {
+            LogitudeOceanInsightsRequest logitudeOceanInsightsRequest = logitudeOceanInsightsRequestRepository.GetSingleLogitudeOceanInsightsRequestByContainerAndScac(container?.ContainerNumber, scacCode, shipmentId);
+
+            if (logitudeOceanInsightsRequest == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

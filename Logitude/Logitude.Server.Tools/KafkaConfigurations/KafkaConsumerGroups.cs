@@ -20,5 +20,6 @@
         public static string UpdateWorkflowsVariables = "updateworkflowsvariables";
         public static string ObjectFieldTrackChanges = "objectfieldtrackchanges";
         public static string LogitudeCustomFields = "customfields";
+        public static string UpdateContainer = "updatecontainer";
     }
 }

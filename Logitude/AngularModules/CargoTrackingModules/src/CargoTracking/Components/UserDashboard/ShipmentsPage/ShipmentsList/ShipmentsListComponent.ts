@@ -223,13 +223,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
+            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
             this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
             this.updateShipmentTypeAndDirectionSelectedFilters();
             this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
             this.setSortFilterValues();
-            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
+            
             this.LoadScreenData();
         }
     }
@@ -274,28 +276,29 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.sortField = SessionInfo.ShipmentsFilters.SortFieldName;
             this.isSortDescending = SessionInfo.ShipmentsFilters.SortDescending;
         }
-        var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
-        var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
-        var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
-        var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
-        
-        if(this.sortField == 'ATA') {
-            AtdSelectOption.deselect();
-            AtaSelectOption.select();
-        } else if(this.sortField == 'ATD'){
-            AtdSelectOption.select();
-            AtaSelectOption.deselect();
-        }
-        if(this.isSortDescending == 'DESC') {
-            AscSelectOption.deselect();
-            DescSelectOption.select();
-        } else if(this.isSortDescending == 'ASC'){
-            DescSelectOption.deselect();
-            AscSelectOption.select();
-        }
+            var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
+            var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
+            var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
+            var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
+            
+            if(this.sortField == 'ATA') {
+                AtdSelectOption.deselect();
+                AtaSelectOption.select();
+            } else if(this.sortField == 'ATD'){
+                AtdSelectOption.select();
+                AtaSelectOption.deselect();
+            }
+            if(this.isSortDescending == 'DESC') {
+                AscSelectOption.deselect();
+                DescSelectOption.select();
+            } else if(this.isSortDescending == 'ASC'){
+                DescSelectOption.deselect();
+                AscSelectOption.select();
+            }
     }
 
     SetMoreReferenceText(reference: string) {
+        console.log('aaaa', reference)
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
@@ -645,13 +648,35 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     OpenMessageWindow(references) {
+        let referencesArray = references != null ? references.split(',') : null;
+        referencesArray = referencesArray.slice(1, referencesArray.length + 1);
+        referencesArray = referencesArray.map(x => x.trim());
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
 
-                description: references.toString().split(',').join("\n"),
+                description: referencesArray.toString().split(',').join("\n"),
             }
         });
+    }
+
+    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+        references = references.map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'References',	
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
+            }	
+        });	
+    }
+
+    OpenExceptionMessageWindow(messageDescription) {	
+        this.dialog.open(MessageWindowComponent, {	
+            data: {	
+                title: 'Exception',	
+                description: messageDescription,	
+            }	
+        });	
     }
 
     GetModeIcon(mode: string)

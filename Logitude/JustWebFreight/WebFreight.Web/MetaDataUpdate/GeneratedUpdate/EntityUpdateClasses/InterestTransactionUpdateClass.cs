@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestTransactionUpdateClass
    {  		
-		public const string HashString = "d776a52717f0043d0297e768d9aee20b";
+		public const string HashString = "2aa022eedbebc3add9876b46e1960109";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1481,6 +1481,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable InterestTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestTransaction" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode InterestTransactionTextCode_InterestTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransaction.O.TotalLocalAmount", DefaultText = "Total",LocalDefaultText = @"סה''כ", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.Line", DefaultText = "Line",LocalDefaultText = @"שורה", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"חסר/ה", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לא נמצא/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOAlreadyFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.AlreadyFound", DefaultText = "already found",LocalDefaultText = @"כבר נמצא/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.GLAccount", DefaultText = "GLAccount Id",LocalDefaultText = @"חשבון", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOJExternalNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.JExternalNumber", DefaultText = "External Journal Number",LocalDefaultText = @"מספר פקודת יומן חיצוני", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.Journal", DefaultText = "Journal",LocalDefaultText = @"פקודת יומן", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOJournalLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.JournalLine", DefaultText = "Journal Line",LocalDefaultText = @"שורת פקודת יומן", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOTransactionLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.TransactionLine", DefaultText = "Transaction Line",LocalDefaultText = @"שורת תנועת ריבית", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
