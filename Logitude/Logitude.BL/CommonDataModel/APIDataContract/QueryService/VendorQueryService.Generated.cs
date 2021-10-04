@@ -118,7 +118,16 @@ using Simplog.Data.CommonDataModel;
 				   
 				   temp.Code = MyEntityPM.Code;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");   
+
+			  
+				   if(MyEntityPM.BillingAddressId != null)
+				   {
+					   AddressQueryService AddressService3 = new AddressQueryService(Tenant);
+					   					   temp.BillingAddress = AddressService3.GetAddressById(MyEntityPM.BillingAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -301,7 +310,28 @@ using Simplog.Data.CommonDataModel;
 						}  
 
 						
-					}					   
+					}
+					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.BillingAddress != null)
+					{
+						var myBillingAddressPM = BillingAddressAddressService.AddressDataMappingAndValidatin(MyEntity.BillingAddress,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myBillingAddressPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("BillingAddress Can't be update"); 
+								temp.BillingAddressId = myBillingAddressPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+										   
 					return temp;
 		    }
             catch (Exception ex)
