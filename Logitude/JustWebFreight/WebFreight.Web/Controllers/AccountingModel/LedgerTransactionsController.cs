@@ -33,6 +33,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class LedgerTransactionsController : ApiController
     {
+     
         [HttpGet]
         public HttpResponseMessage GetLedgerTransactionsByFilters([FromUri] ApiQueryFilters filters)
         {
@@ -42,30 +43,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 int tenant = AuthinticateTenant();
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(filters, tenant);
-                var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+                LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
+                IAccountingContext  accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 List<LedgerTransactionList> ledgerTransactions = new List<LedgerTransactionList>();
-                LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
-                LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
-
-                if (LTBFilter.TaxreportId != null)
+                if (LTBFilter.UseTaxreportFilter)
                 {
-                    ledgerTransactions = ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter.TaxreportId, tenant,LTBFilter.GLAccountId);
-                 
-                          ledgerTransactions.ForEach(rec =>
-                          {
-                              ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
-                          });
-                }
+                    if (LTBFilter.TaxreportId != null)
+                    {
+                        ledgerTransactions = GetLedgerTransactinByTaxReportId(LTBFilter, tenant);
 
-                else if (LTBFilter.NotIncludedInAnyTaxReport)
-                {
-                    ledgerTransactions = ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(null, tenant, LTBFilter.GLAccountId);
+                    }
+
+                    else if (LTBFilter.NotIncludedInAnyTaxReport)
+                    {
+                        ledgerTransactions = GetLedgerTransactinNotIncludedInAnyTaxReport(LTBFilter, tenant);
+                    }
+
                     ledgerTransactions.ForEach(rec =>
                     {
                         ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
                     });
                 }
+               
+               
                 else
                 {
                     ledgerTransactionBalanceService.Run();
@@ -95,6 +96,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
        
+        private List<LedgerTransactionList> GetLedgerTransactinByTaxReportId(LedgerTransactionBalanceFilter LTBFilter, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter.TaxreportId, tenant, LTBFilter.GLAccountId);                 
+        }
+        private List<LedgerTransactionList> GetLedgerTransactinNotIncludedInAnyTaxReport(LedgerTransactionBalanceFilter LTBFilter, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+            return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(null, tenant, LTBFilter.GLAccountId);
+        }
         public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
         {
             try

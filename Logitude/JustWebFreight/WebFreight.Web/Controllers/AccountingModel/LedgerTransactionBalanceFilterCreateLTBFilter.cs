@@ -30,6 +30,8 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
             string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
             LTBFilter.TaxreportId = filters_list.Where(d => d.FieldName == "TaxReportId").FirstOrDefault()?.FieldValue.ToString();
             LTBFilter.NotIncludedInAnyTaxReport = Convert.ToBoolean(filters_list.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault().FieldValue);
+            LTBFilter.UseTaxreportFilter = Convert.ToBoolean(filters_list.Where(d => d.FieldName == "UseTaxreportFilter").FirstOrDefault().FieldValue);
+
             // dates
             var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
             if (createDateFilter != null)

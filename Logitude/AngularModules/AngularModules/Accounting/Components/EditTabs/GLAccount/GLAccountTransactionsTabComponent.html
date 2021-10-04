@@ -363,7 +363,7 @@
                                                     {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
                                                 </td>
 
-                                                <td [style.width]="UseTaxreportFilter ? '350px' : '270px'" >
+                                                <td [style.width]="DisplayTaxReportFilter ? '350px' : '270px'" >
                                                     <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                                         <li float-start id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="height: 22px;"
                                                             [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
@@ -377,7 +377,7 @@
                                                             [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
                                                             {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
                                                         </li>
-                                                        <li *ngIf="UseTaxreportFilter" (click)="FilterItemClicked('filter_Tax')" style="height: 22px;"
+                                                        <li *ngIf="DisplayTaxReportFilter" (click)="FilterItemClicked('filter_Tax')" style="height: 22px;"
                                                             [class.SelectedFilter]="filterSelectedValue === 'filter_Tax'">
                                                             {{'TaxReport' | TextCodeTranslationPipe}}
                                                         </li>
@@ -386,7 +386,7 @@
                                                 <td style="width:15px;">
                                                     <div></div>
                                                 </td>
-                                                <td style="width:100px" *ngIf="UseTaxreportFilter&& filterSelectedValue === 'filter_Tax'">
+                                                <td style="width:100px" *ngIf="DisplayTaxReportFilter&& filterSelectedValue === 'filter_Tax'">
                                                     <div style="width:100px">
                                                         <ComboBox [ItemsSource]="TaxReportLists" [IsDisabled]="NotIncludedInAnyTaxReport" [Binding]="'Name'" [SelectedItem]="SelectedTaxReport" (SelectedItemChanged)="SelectedTaxReport = $event"></ComboBox>
                                                     </div>

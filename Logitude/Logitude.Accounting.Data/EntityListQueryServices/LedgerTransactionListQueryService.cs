@@ -88,8 +88,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IAccountingContext context = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
             IQueryable<LedgerTransaction> transactions;
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-            TaxReportListQueryService taxReportListQueryService = new TaxReportListQueryService(accountingContext);
+          
+            TaxReportListQueryService taxReportListQueryService = new TaxReportListQueryService(context);
             TaxReportList taxReport = taxReportListQueryService.GetSingle(taxreportid);
 
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
@@ -116,7 +116,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 
-            return GetIqueryableList(transactions).ToList();
+            return GetIqueryableList(transactions).Distinct().ToList();
            
 
 
@@ -1486,7 +1486,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string TaxreportId { get; set; }
         public int PageSize { get; set; }
         public int PageStartAtRecordIndex { get; set; }
-
+        public bool UseTaxreportFilter { get; set; }
         public bool IncludeRelatedCurrenciesAccount { get; set; }
 
         public bool IncludeChildAccounts { get; set; }

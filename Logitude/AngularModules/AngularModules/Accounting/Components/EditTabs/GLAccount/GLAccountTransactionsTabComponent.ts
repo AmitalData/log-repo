@@ -123,6 +123,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.GetFullAccountingSettings();
         
     }
+    DisplayTaxReportFilter: boolean;
     GetFullAccountingSettings() {
         this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
             this.CurrentSession.StopBusyIndicator();
@@ -133,9 +134,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     this.fullAccountingSetting = res;
                     if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
                         this.UseTaxreportFilter = true;
+                        this.DisplayTaxReportFilter = true;
                         this.GetTransmittedTaxReports();
                     }
-                    else this.UseTaxreportFilter = false;
+                    else {
+                        this.UseTaxreportFilter = false;
+                        this.DisplayTaxReportFilter = false;
+                    }
                 }
             })
         });
@@ -559,8 +564,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
-
         
+        this.filterAgrs.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter , null, null, "Equals", false, false, false, "boolean");
+
         return this._entityListService.getExtendedByFilters("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
@@ -1117,8 +1123,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             default:
                 break;
         }
-        if (this._dateTypeCode!='4')
-        this.RefreshButtonClicked();
+        if (this._dateTypeCode != '4') {
+           this.UseTaxreportFilter = false;
+            this.RefreshButtonClicked();
+        }
 
 
     }

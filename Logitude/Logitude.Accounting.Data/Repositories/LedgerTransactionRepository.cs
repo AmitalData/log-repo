@@ -1459,7 +1459,7 @@ on record.JournalId equals j.Id
                                                          where a.Tenant == tenant && a.AccountId == accountId
 
                                                          select a
-                    );
+                    ).Distinct();
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
@@ -1470,13 +1470,13 @@ on record.JournalId equals j.Id
 
                                                         where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null)
 
-                                                                && a.OppositeAccountId != setting.VATOutputGLAccountId
-                            && a.Tenant == tenant
-                            && a.LocalAmountDebit != 0
-                           && a.AccountId == accountId
+                                                        && a.OppositeAccountId != setting.VATOutputGLAccountId
+                                                      && a.Tenant == tenant
+                                                      && a.LocalAmountDebit != 0
+                                                      && a.AccountId == accountId
 
-                                                        select a
-                    );
+                                                        select a).Distinct();
+                   
             return outputLines.Concat(inputLines);
         }
         public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
