@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ContactService contactService;
+       private  CardService cardService;
 
         public AccountingPartnerService(ICommonDataContext objectContext, int tenant)
         {
@@ -55,6 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.GetLoggedContact();
+            cardService = new CardService(objectContext, tenant);
         }
 
         public AccountingPartnerService(ICommonDataContext objectContext, AccountingPartnerPM entityPM, string loggedContactId)
@@ -227,7 +229,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-
+            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
