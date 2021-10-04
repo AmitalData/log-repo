@@ -401,6 +401,7 @@
     <Compile Include="Utils\ConcurrentKiller.cs" />
     <Compile Include="Utils\DateTimeUtil.cs" />
     <Compile Include="Utils\IdCounterUtil.cs" />
+    <Compile Include="Utils\LogChangesService_custom.cs" />
     <Compile Include="Utils\LogChangesService.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\MultiProcessLockTableUtil.cs" />
