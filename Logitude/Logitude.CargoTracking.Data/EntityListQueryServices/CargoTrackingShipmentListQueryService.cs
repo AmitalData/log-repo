@@ -21,12 +21,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                            join toPort in ports on shipment.ToPortId equals toPort.Id
                                                            join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
 
-                                                           join consignee in context.CargoTrackingCards on shipment.ConsigneeId equals consignee.Id into consigneeJoined
-                                                           from consignee in consigneeJoined.DefaultIfEmpty()
-
-                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id into shipperJoined
-                                                           from shipper in shipperJoined.DefaultIfEmpty()
-
                                                            join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code into lm
                                                            from milestone in lm.DefaultIfEmpty()
 
@@ -96,7 +90,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedTruckerNotes = shipment.AssignedTruckerNotes,
                                                                NumberOfPackages = shipment.PackagesQuantity,
                                                                PackagesQuantity = shipment.PackagesQuantity,
-                                                               ConsigneeName = consignee == null ? null : consignee.EnglishName,
+                                                               ConsigneeName = shipment.ConsigneeName,
                                                                CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
                                                                ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
                                                                ForwardingShipmentLevelCode = shipment.ForwardingShipmentLevelCode,
@@ -114,7 +108,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                // card
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
-                                                               ShipperName = shipper == null ? null : shipper.EnglishName,
+                                                               ShipperName = shipment.ShipperName,
                                                                ForwardingMaster = shipment.ForwardingMaster,
                                                                ForwardingHouse = shipment.ForwardingHouse,
                                                                ImportManifest = shipment.ImportManifest,
