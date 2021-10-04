@@ -179,11 +179,11 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
         var PopupHeight = 130;
 
         if (this.IsAddViewVisible) {
-            PopupHeight = 230;
+            PopupHeight = 270;
         }
 
         else if (this.IsEditViewVisible) {
-            PopupHeight = 205;
+            PopupHeight = 245;
         }
 
         else {
@@ -297,20 +297,6 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
                 this.IsOpened = false;
             }
         }
-
-        //if (this.IsInputBoxFocused) {
-        //    this.IsInputBoxFocused = false;
-
-        //    if (!this.IsMouseOverButton) {
-        //        if (this.IsMouseOver) {
-        //            document.getElementById(this.ComponentButtonId).focus();
-        //        }
-
-        //        else {
-        //            this.IsOpened = false;
-        //        }
-        //    }
-        //}
     }
 
     public IsAddViewVisible: boolean = false;
@@ -394,7 +380,7 @@ export class HelperFollowup {
         this.TextColor = this.Done ? '#8F9293' : '#292E30';
 
         if (this.Date) {
-            if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateTimeAsUtc().valueOf()) {
                 this.IsOld = true;
                 this.Background = "#F7E3E3";
             }
@@ -522,7 +508,7 @@ export class AddDataContext extends BaseComponent {
 
     NumericButtonClicked(isIncreas: boolean) {
         if (this.Date == null) {
-            this.Date = DateTool.GetCurrentDateAsUtc();
+            this.Date = DateTool.GetCurrentDateTimeAsUtc();
         }
 
         else {
@@ -675,7 +661,7 @@ export class EditDataContext extends BaseComponent {
 
     DateNumericButtonClicked(isIncreas: boolean) {
         if (this.Date == null) {
-            this.Date = DateTool.GetCurrentDateAsUtc();
+            this.Date = DateTool.GetCurrentDateTimeAsUtc();
         }
 
         else {
@@ -697,7 +683,7 @@ export class EditDataContext extends BaseComponent {
     }
     DoneDateNumericButtonClicked(isIncreas: boolean) {
         if (this.DoneDateTime == null) {
-            this.DoneDateTime = DateTool.GetCurrentDateAsUtc();
+            this.DoneDateTime = DateTool.GetCurrentDateTimeAsUtc();
         }
 
         else {

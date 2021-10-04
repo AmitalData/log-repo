@@ -34,7 +34,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             {
                 if (value != null)
                 {
-                    date = value.Value.Date;
+                    date = value.Value;
                 }
             }
         }

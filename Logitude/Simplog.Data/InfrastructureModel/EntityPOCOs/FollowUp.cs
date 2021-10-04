@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
             {
                 if (value != null)
                 {
-                    date = value.Value.Date;
+                    date = value.Value;
                 }
             }
         }
