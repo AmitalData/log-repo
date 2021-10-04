@@ -208,7 +208,8 @@ BEGIN
 			update Quotes
 			set
 			ExchangeRate = Round(@QuoteSaleCurrencyRate, 5),
-			EstimateProfit = Round(@QuoteTotalSaleAmount - @QuoteTotalCostAmountInSale, 2)
+			EstimateProfit = Round(@QuoteTotalSaleAmount - @QuoteTotalCostAmountInSale, 2),
+      EstimatedProfitInLocal =  (Round(@QuoteSaleCurrencyRate, 5) * Round(@QuoteTotalSaleAmount - @QuoteTotalCostAmountInSale, 2)) 
 			where Id = @QuoteId and Tenant = @Tenant
 
       update QuoteComputedFields
