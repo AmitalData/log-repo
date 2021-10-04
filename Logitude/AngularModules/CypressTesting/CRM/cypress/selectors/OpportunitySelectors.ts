@@ -21,4 +21,15 @@ export class OpportunitySelectors {
     public static readonly QuickSearchTextBox = ".LogitudeQuickSearchTextBox";
     public static readonly ConnectQuoteButton = "#ConnectQuote";
     public static readonly ConnectQuoteCheckBox = "input[id^='IsChecked']"
+    public static readonly Description = "#Opportunity_LeadDescription";
+    public static readonly GeneralTab = "#OpportunityTHGeneral";
+    public static readonly EventsTab = "#OpportunityTHEvents";
+    public static readonly ReOpenStage = "#Opportunity_StageId_1";
+    public static readonly CloseReason = "#Opportunity_ClosingReasonId";
+
+    public static OpportunityActionsButton(action: string): string {
+        action = action.replace(/\s/g, "");
+        return "#OpportunityB" + action;
+    }
+
 }

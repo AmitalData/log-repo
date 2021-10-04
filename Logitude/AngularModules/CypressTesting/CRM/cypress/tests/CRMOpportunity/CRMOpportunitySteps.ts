@@ -152,3 +152,9 @@ When("connect quote", () => {
     OpportunityActions.ConnectQuote();
 });
 //#endregion
+
+//#region Edit general tab
+Given("fill {string} as description", (description) => {
+    OpportunityActions.FillDescription(description)
+});
+//#endregion
