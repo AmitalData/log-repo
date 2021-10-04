@@ -356,6 +356,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "BAF,ARInvoices DWH,Allow Tenants to Show ARInvoices Fact on the BI Report Screen", 
                 Description = "Allow Tenants to Show ARInvoice Fact on the BI Report Screen", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MLS", 
+                Name = "Shipment Number In Generic Interface", 
+                SearchFields = "MLS,Shipment Number In Generic Interface", 
+                Description = "Sending shipment number for multiple AP invoice in generic interface", 
+			});
 			
             return all;
        }
