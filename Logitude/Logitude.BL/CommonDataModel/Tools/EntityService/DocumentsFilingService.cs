@@ -879,6 +879,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
+            this.MapPODReceivedShipmentField(theEntityPm);
 
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
@@ -905,6 +906,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddShipmentUpdateKafkaQueueMessage(theEntityPm);
+        }
+
+        private void MapPODReceivedShipmentField(DocumentsFilingPM documentFiling)
+        {
+            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
+            if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment" && documentFiling.DocumentTypeCode == "POD")
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(documentFiling.EntityId, tenant);
+                shipment.IsPODReceived = true;
+                shipmentRepository.Update(shipment);
+                shipmentRepository.SubmitChanges();
+            }
         }
 
         private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)

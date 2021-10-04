@@ -2740,7 +2740,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OperationalStatusId { get; set; }
         public string BillingStatusId { get; set; } 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AccountingClosedByUserId { get; set; } 
+        public string AccountingClosedByUserId { get; set; }
+        public bool IsPODReceived { get; set; }
     }
 
     public class TransshipmentLeg

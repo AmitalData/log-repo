@@ -516,7 +516,7 @@ namespace WebFreight.Web.WebServices
 
 
                     UpdateDocument(commonContext, document);
-
+                    MapPODReceivedShipmentField(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;
@@ -557,6 +557,48 @@ namespace WebFreight.Web.WebServices
                 document.HasFile = false;
                 document.Extension = null;
                 commonContext.SaveChanges();
+            }
+        }
+
+        private void MapPODReceivedShipmentField(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        {
+            int tenant = documentsFiling.Tenant;
+            ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(tenant); ;
+            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentsFiling.ObjectTableId, tenant, false);
+            if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment")
+            {
+                var documentsFilings = this.GetShipmentDocsIn(documentsFiling, commonContext);
+                this.UpdateSHipment(documentsFilings, documentsFiling);
+            }
+        }
+
+        private List<DocumentsFilingPM> GetShipmentDocsIn(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        {
+            var tenant = documentsFiling.Tenant;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonDataContext);
+            var documentsFilings = (from a in commonContext.DocumentsFilings.Include("DocumentType")
+                                    where a.Tenant == tenant && a.EntityId == documentsFiling.EntityId
+                                    && a.ObjectTableId == documentsFiling.ObjectTableId
+                                    && a.IsDeleted == false
+                                    && (a.DocumentType != null && a.DocumentType.Code == "POD")
+                                    select new DocumentsFilingPM()
+                                    {
+                                        Id = a.Id,
+                                    }).ToList();
+
+            return documentsFilings;
+        }
+        private void UpdateSHipment(List<DocumentsFilingPM> documentsFilings, DocumentsFilingPM documentsFiling)
+        {
+            var tenant = documentsFiling.Tenant;
+            if (documentsFilings == null || (documentsFilings != null && documentsFilings.Count() == 0))
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(documentsFiling.EntityId, tenant);
+                shipment.IsPODReceived = false;
+                shipmentRepository.Update(shipment);
+                shipmentRepository.SubmitChanges();
             }
         }
 
