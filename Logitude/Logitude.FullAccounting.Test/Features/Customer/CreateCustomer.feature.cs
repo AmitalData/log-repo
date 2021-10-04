@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.FullAccountingTests.Features.PaymentCheques
+namespace Logitude.FullAccountingTests.Features.Customer
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Logitude.FullAccountingTests.Features.PaymentCheques
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreatePaymentChequesFeature : object, Xunit.IClassFixture<CreatePaymentChequesFeature.FixtureData>, System.IDisposable
+    public partial class CreateCustomerFeature : object, Xunit.IClassFixture<CreateCustomerFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Logitude.FullAccountingTests.Features.PaymentCheques
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "CreatePaymentCheques.feature"
+#line 1 "CreateCustomer.feature"
 #line hidden
         
-        public CreatePaymentChequesFeature(CreatePaymentChequesFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CreateCustomerFeature(CreateCustomerFeature.FixtureData fixtureData, Logitude_FullAccountingTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Logitude.FullAccountingTests.Features.PaymentCheques
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/PaymentCheques", "Create Payment Cheques", "\tWe want to payment cheques.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Customer", "CreateCustomer", "\tWe want to create customer.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,17 +80,17 @@ namespace Logitude.FullAccountingTests.Features.PaymentCheques
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create payment cheques")]
-        [Xunit.TraitAttribute("FeatureTitle", "Create Payment Cheques")]
-        [Xunit.TraitAttribute("Description", "Create payment cheques")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create customer")]
+        [Xunit.TraitAttribute("FeatureTitle", "CreateCustomer")]
+        [Xunit.TraitAttribute("Description", "Create customer")]
         [Xunit.TraitAttribute("Category", "Smoke")]
-        public virtual void CreatePaymentCheques()
+        public virtual void CreateCustomer()
         {
             string[] tagsOfScenario = new string[] {
                     "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create payment cheques", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create customer", null, tagsOfScenario, argumentsOfScenario);
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -110,35 +110,18 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
-                            "property",
-                            "Value"});
-                table14.AddRow(new string[] {
-                            "ChequeNumber",
-                            "Random"});
-                table14.AddRow(new string[] {
-                            "Currency",
-                            "NIS"});
-                table14.AddRow(new string[] {
-                            "BankAccount",
-                            "new Bank Account"});
-                table14.AddRow(new string[] {
-                            "LocalAmount",
-                            "100"});
-                table14.AddRow(new string[] {
-                            "PayToGLAccount",
-                            "new account"});
-                table14.AddRow(new string[] {
-                            "PayToName",
-                            "Bank Account Test"});
-#line 5
- testRunner.Given("a payment cheques with the following properties", ((string)(null)), table14, "Given ");
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table10.AddRow(new string[] {
+                            "Test"});
+#line 6
+ testRunner.Given("a customer with the following properties", ((string)(null)), table10, "Given ");
 #line hidden
-#line 13
- testRunner.When("create payment cheques", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+ testRunner.When("create customer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
- testRunner.Then("the payment cheques should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.Then("the customer should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -151,12 +134,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                CreatePaymentChequesFeature.FeatureSetup();
+                CreateCustomerFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreatePaymentChequesFeature.FeatureTearDown();
+                CreateCustomerFeature.FeatureTearDown();
             }
         }
     }

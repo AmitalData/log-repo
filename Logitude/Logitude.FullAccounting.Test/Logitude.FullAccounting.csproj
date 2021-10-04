@@ -106,8 +106,9 @@
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\AccountingIntegrityCheckPM.cs" />
-    <Compile Include="Models\AccountingNotePM.Generated.cs" />
+    <Compile Include="Models\AccountingNotePM.cs" />
     <Compile Include="Models\AccountingPaymentMethodPM.cs" />
+    <Compile Include="Models\AccountingPeriodList.cs" />
     <Compile Include="Models\AddressPM.cs" />
     <Compile Include="Models\APInvoiceLinePM.cs" />
     <Compile Include="Models\APInvoicePM.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Models\CustomerPM.cs" />
     <Compile Include="Models\FullAccountingContext.cs" />
     <Compile Include="Models\FullAccountingData.cs" />
+    <Compile Include="Models\FullAccountingSettingPM.cs" />
     <Compile Include="Models\GLAccountPM.cs" />
     <Compile Include="Models\GLAccountTypeEnum.cs" />
     <Compile Include="Models\JournalActionType.cs" />
@@ -174,6 +176,8 @@
     <Compile Include="Services\BankAccountService.cs" />
     <Compile Include="Services\BankDepositService.cs" />
     <Compile Include="Services\CashbooktService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\FullAccountingSettingService.cs" />
     <Compile Include="Services\GlAccountService.cs" />
     <Compile Include="Services\JournalService.cs" />
     <Compile Include="Services\PaymentChequesService.cs" />
@@ -211,6 +215,8 @@
     <Compile Include="Steps\BankDeposit\GetBankDepositSteps.cs" />
     <Compile Include="Steps\Cashbook\CreateCashbooktSteps.cs" />
     <Compile Include="Steps\Cashbook\GetCashbooktSteps.cs" />
+    <Compile Include="Steps\Customer\CreateCustomerSteps.cs" />
+    <Compile Include="Steps\Customer\GetCustomerSteps.cs" />
     <Compile Include="Steps\GLAccount\UpdateGlAccountSteps.cs" />
     <Compile Include="Steps\Journal\CreateApprovedJournalSteps.cs" />
     <Compile Include="Steps\PaymentCheques\CreatePaymentChequesSteps.cs" />
@@ -248,6 +254,8 @@
     <None Include="Features\BankDeposit\GetBankDeposit.feature" />
     <None Include="Features\CashBook\CreateARPayment.feature" />
     <None Include="Features\CashBook\GetARPayment.feature" />
+    <None Include="Features\Customer\CreateCustomer.feature" />
+    <None Include="Features\Customer\GetCustomer.feature" />
     <None Include="Features\GLAccount\UpdateGlAccount.feature" />
     <None Include="Features\Journal\CreateApprovedJournal.feature" />
     <None Include="Features\PaymentCheques\CreatePaymentCheques.feature" />

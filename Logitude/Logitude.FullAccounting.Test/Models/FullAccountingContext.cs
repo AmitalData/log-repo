@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Test.Base.Models.PartnersPreparation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,5 +36,7 @@ namespace Logitude.FullAccounting.Test.Models
         public BankDepositPM BankDeposit { get; internal set; }
         public BankDepositPM AddedBankDeposit { get; internal set; }
         public Action Action { get; internal set; }
+        public Partner CustomerPartner { get; internal set; }
+        public CustomerPM Customer { get; internal set; }
     }
 }

@@ -43,6 +43,8 @@ namespace Logitude.Test.Base.Models.Shared
         public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
         public static string ShipmentContainersWebServiceController = "ShipmentContainersWebService";
         public static string ChartOfAccountsController = "ChartOfAccounts";
+        public static string FullAccountingSettingsController = "FullAccountingSettings";
+        public static string AccountingPeriodsController = "AccountingPeriods";
         public static string ChargesGroupsController = "ChargesGroups";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
@@ -73,6 +75,7 @@ namespace Logitude.Test.Base.Models.Shared
 
         public static string SpecialServicesTypesController = "SpecialServicesTypes";
         public static string SpecialServicesTypeViewsGetByFilters = "SpecialServicesTypeViews/GetByFilters";
+        public static string AccountingPeriodViewsGetByFilters = "AccountingPeriodViews/GetByFilters";
 
         public static string QuoteController = "Quotes";
         public static string QuoteViewsGetByFilters = "Quoteviews/Getbyfilters";
@@ -160,6 +163,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return "Tenants/GetSingle?id=" + id.ToString();
         }
+        public static string GetCustomerById(string id)
+        {
+            return $"PartnersDomain/GetCustomerById?id={id}" ;
+        }
 
         public static string TenantsUpdate(int id)
         {
@@ -238,6 +245,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string AddressesGetSingle(string id)
         {
             return "Addresses/GetSingle?id=" + id;
+        }
+        public static string FullAccountingSettingsGetSingle(int tenant)
+        {
+            return $"fullaccountingsettings/getsingle?id={tenant}";
         }
 
         public static string ShipmentGetSingle(string id)
