@@ -17,6 +17,7 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { intersection } from 'cypress/types/lodash';
 import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/InvoiceSettingsDetails";
+
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
 }
@@ -46,7 +47,7 @@ export function changeAccountingsSystem(AccountingsSystem: string, ExternalTrans
         cy.SelectCheckBox(AccountingSelectors.IsARInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsARPaymentsTransferEnabled)
-        cy.SelectCheckBox(AccountingSelectors.IsAPPaymentsTransferEnabled)  
+        cy.SelectCheckBox(AccountingSelectors.IsAPPaymentsTransferEnabled)
     }
     if (ExternalTransmissionType) {
         // if (ExternalTransmissionType != AccountingSelectors.ContainNone) {
@@ -127,7 +128,7 @@ export function ReceiveAPInvoice() {
         }
     })
 }
-export function AssertSaveMultipleAPInvoice(){
+export function AssertSaveMultipleAPInvoice() {
     BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
         if (interception.response.body) {
             ClickOnSaveOnConfirmWindow()
@@ -171,7 +172,7 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
     cy.SelectDropDownListItem(AccountingSelectors.LogLovARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency)
-    if(aRInvoiceDetails.InvoiceExchangeRate) {
+    if (aRInvoiceDetails.InvoiceExchangeRate) {
         cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
     }
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
@@ -230,13 +231,13 @@ function CompleteVoidProcess() {
     DefinePutARInvoicesRequest()
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
-function DefinePutARInvoicesRequest(){
+function DefinePutARInvoicesRequest() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
 }
 export function CancelDraftARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null,true)
+    cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null, true)
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null)
 }
 
@@ -265,7 +266,7 @@ export function AddShipmentLines(shipmentNumbers: string[]) {
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
     }
 }
-export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[],VATType: string,payableDetails: PayableDetails){
+export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[], VATType: string, payableDetails: PayableDetails) {
     const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
     const totalAmount = amount * shipmentNumbers.length;
     for (let i = 0; i < shipmentNumbers.length; i++) {
@@ -275,9 +276,9 @@ export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[]
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
         cy.DefineRequestWait(RestAPI.GET, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
-     BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-}
-cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoiceCurrency, totalAmount.toString());
+        BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
+    }
+    cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoiceCurrency, totalAmount.toString());
 
 }
 //#endregion
@@ -344,7 +345,7 @@ export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     if (aRPaymentDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     }
-    cy.FillLogLov(AccountingSelectors.ARPaymentCurrency, aRPaymentDetails.PaymentCurrency, true) 
+    cy.FillLogLov(AccountingSelectors.ARPaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
     cy.FillLogLov(AccountingSelectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(AccountingSelectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(AccountingSelectors.OkAddARPayment, null)
@@ -390,7 +391,7 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber)
     cy.get(BaseSelectors.ListDataLoaded)
-        ClickOnRowDependingOnARInvoiceNumber(draftConsolidationInvoiceNumber)
+    ClickOnRowDependingOnARInvoiceNumber(draftConsolidationInvoiceNumber)
 }
 //#endregion
 export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
@@ -399,7 +400,7 @@ export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
 }
 export function AssertTransferStatus(TransferStatus: string) {
     cy.get(BaseSelectors.HeaderScreen).eq(1)
-    .should("contain", TransferStatus)
+        .should("contain", TransferStatus)
     // cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable).contains(AccountingSelectors.ContainTransferStatus)
     // .next(BaseSelectors.HeaderScreenValue)
     //     .should("contain.text", TransferStatus)
@@ -452,9 +453,9 @@ function AssertSelectedInvoicNumber(SelectedInvoicNumber: string) {
 }
 
 export function ExportARInvoice(ARInvoiceNumber: string) {
-    cy.get(AccountingSelectors.CheckAll).click({force:true})
+    cy.get(AccountingSelectors.CheckAll).click({ force: true })
     AssertSelectedInvoicNumber('0')
-    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
+    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({ force: true });
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 
@@ -473,15 +474,15 @@ function ClickOnSaveOnConfirmWindow() {
 
 }
 
-export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
+export function CreateARInvoiceGeneratedFromRoutingLeg(vat: string) {
     WaitToLoad(AccountingSelectors.CreateARInvoiceButton);
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
     WaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
-    cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
+    cy.FillLogLov(AccountingSelectors.ARInvoiceVatType, vat, true)
     WaitToLoad(AccountingSelectors.VatTypeApplyToAll);
 }
 
-function WaitToLoad(ButtonSelector:string){
+function WaitToLoad(ButtonSelector: string) {
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);

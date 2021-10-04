@@ -6,6 +6,7 @@ export class AccountingURLs {
     public static readonly ARInvoiceViewsGetByFilters = '**/arinvoiceviews/getbyfilters?**';
     public static readonly APPayments = '**/appayments';
     public static readonly ARPayments = '**/arpayments';
+    public static readonly InvoicesGetSingle = '**/cardviews/getsingle/?**';
     public static readonly InvoiceDomain = '**/InvoiceDomain';
     public static readonly APInvoicesGetSingle = '**/apinvoices/getsingle?**';
     public static readonly ConsilidationInvoiceDomain = "**/ConsilidationInvoiceDomain"
