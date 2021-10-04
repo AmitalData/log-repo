@@ -550,7 +550,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
-            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
+            this.HoverTemplateIndex = this.HasExportShipmentToggle || !this.isPrivateLabel? 6 : 5;
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({
