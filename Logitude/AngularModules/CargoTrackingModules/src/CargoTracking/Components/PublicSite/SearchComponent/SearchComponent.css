@@ -85,6 +85,17 @@ li a {
     display: none;
 }
 
+.order-icon{
+    position: absolute;
+    top:60px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
+}
+
 @media screen and (max-width: 479px) {
     .side-menu {
         display: block;
@@ -129,6 +140,19 @@ li a {
     }
     .column {
         display: block;
+    }
+
+    .order-icon{
+        position: absolute;
+        top:60px;
+        display: block;
+        background: #000;
+        color: #FFF;
+        width: 50px;
+        border-radius: 14px;
+        text-align: center;
+        left: 6px;
+        line-height: 14px;
     }
 
 }
@@ -564,16 +588,4 @@ li a {
     .no-result-div {
         padding-top: 50px;
     }
-}
-
-
-.order-icon{
-    position: absolute;
-    top:60px;
-    display: block;
-    background: #000;
-    color: #FFF;
-    width: 65px;
-    border-radius: 14px;
-    text-align: center;
 }

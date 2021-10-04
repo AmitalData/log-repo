@@ -213,6 +213,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ImportManifest { get; set; }
         [Column("CreatedDone")]
 	    public bool? CreatedDone { get; set; }
+        [Column("PrevForwardingShipmentId")]
+	    public string PrevForwardingShipmentId { get; set; }
         [Column("BookingDone")]
 	    public bool? BookingDone { get; set; }
         [Column("BookingDate")]
@@ -223,8 +225,6 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string BookingNotes { get; set; }
         [Column("BookingExceptionReason")]
 	    public string BookingExceptionReason { get; set; }
-        [Column("PrevForwardingShipmentId")]
-	    public string PrevForwardingShipmentId { get; set; }
     }
 }
 	 

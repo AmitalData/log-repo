@@ -547,7 +547,8 @@ export class CargoTrackingShipmentPM {
     private createdDone: boolean;
     public get CreatedDone() { return this.createdDone; }
     public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
-  
+       
+	 
     private prevForwardingShipmentId: string;
     public get PrevForwardingShipmentId() { return this.prevForwardingShipmentId; }
     public set PrevForwardingShipmentId(newValue: string) { if (this.prevForwardingShipmentId != newValue) { this.prevForwardingShipmentId = newValue; this.MarkAsDirty("PrevForwardingShipmentId"); } }

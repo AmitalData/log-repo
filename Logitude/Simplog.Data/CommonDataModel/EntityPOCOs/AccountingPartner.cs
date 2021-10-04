@@ -11,7 +11,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-
+        public double? CreditLimit { get; set; }
+        public double? InsuredCreditlimit { get; set; }
         public virtual Card Card { get; set; }
     }
 }

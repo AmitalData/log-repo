@@ -83,6 +83,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                     ImageDetailId = a.Card.ImageDetailId,
+                                    IsSendingByContainer = a.IsSendingByContainer,
+                                    IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -117,6 +119,71 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(shippingLine, securedPm, "ShippingLine", tenant);
 
             return securedPm;
+        }
+        
+        public ShippingLinePM GetSinglePMByIdAndTenant(string id, int tenant)
+        {
+            var shippingLine = (from a in repository.context.ShippingLines.Include("Card")
+                                where a.Id == id && a.Tenant == tenant
+                                select new ShippingLinePM()
+                                {
+                                    Tenant = a.Tenant,
+                                    Id = a.Id,
+                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                    AccountingVATSplit = a.Card.AccountingVATSplit,
+                                    AddedManually = a.AddedManually,
+                                    OurCreditNumber = a.OurCreditNumber,
+                                    Remark = a.OurCreditNumber,
+                                    ShippingAgentId = a.ShippingAgentId,
+                                    VatNumber = a.Card.VatNumber,
+                                    Code = a.Card.Code,
+                                    EnglishName = a.Card.EnglishName,
+                                    LocalName = a.Card.LocalName,
+                                    CarrierTypeId = a.Card.PartnerTypeId,
+                                    InActive = a.Card.InActive,
+                                    PaymentTermId = a.Card.PaymentTermId,
+                                    SCACCode = a.SCACCode,
+                                    Website = a.Card.Website,
+                                    Notes = a.Card.Notes,
+                                    ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                                    ShippingAgentName = a.ShippingAgent != null ? a.ShippingAgent.Card.EnglishName : null,
+                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                    VatTypeId = a.Card.VatTypeId,
+                                    AccountNumber = a.Card.AccountNumber,
+                                    Swift = a.Card.Swift,
+                                    IBANNumber = a.Card.IBANNumber,
+                                    BankName = a.Card.BankName,
+                                    BankAddress = a.Card.BankAddress,
+                                    PrimaryContactId = a.Card.PrimaryContactId,
+                                    EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                    IRSNumber = a.Card.IRSNumber,
+                                    IRSPlace = a.Card.IRSPlace,
+                                    ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                    PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                    ExternalId2 = a.Card.ExternalId2,
+                                    SATForeignRFC = a.Card.SATForeignRFC,
+                                    MetodoPagoCode = a.Card.MetodoPagoCode,
+                                    UsoCFDICode = a.Card.UsoCFDICode,
+                                    IsINTTRARegistered = a.IsINTTRARegistered,
+                                    INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                    INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
+                                    CAAT = a.CAAT,
+                                    CBSA = a.CBSA,
+                                    ImageDetailId = a.Card.ImageDetailId,
+                                    IsSendingByContainer = a.IsSendingByContainer,
+                                    IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    Card = new CardPM()
+                                    {
+                                        Id = a.Id,
+                                        Tenant = a.Tenant,
+                                        EnglishName = a.Card.EnglishName,
+                                        PrimaryContactId = a.Card.PrimaryContactId,
+                                    },
+                                    BillToId = a.Card.BillToId,
+                                }).FirstOrDefault();
+
+            return shippingLine;
         }
 
         public bool CheckShippingLinesAddedManually(string id, int tenant)
@@ -179,6 +246,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     CAAT = a.CAAT,
                                     CBSA = a.CBSA,
                                     ImageDetailId = a.Card.ImageDetailId,
+                                    IsSendingByContainer = a.IsSendingByContainer,
+                                    IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -241,6 +310,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            CBSA = a.CBSA,
                                                            ImageDetailId = a.Card.ImageDetailId,
                                                            BillToId = a.Card.BillToId,
+                                                           IsSendingByContainer = a.IsSendingByContainer,
+                                                           IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                        };
             return shippingLines;
         }
@@ -300,6 +371,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CBSA = a.CBSA,
                              ImageDetailId = a.Card.ImageDetailId,
                              BillToId = a.Card.BillToId,
+                             IsSendingByContainer = a.IsSendingByContainer,
+                             IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                          }).AsQueryable();
 
             IQueryable<ShippingLinePM> query2 = null;
@@ -375,7 +448,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CAAT = a.CAAT,
                                                        CBSA = a.CBSA,
                                                        StateName = a.Card.StateName,
-                                                       GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                       GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                       IsSendingByContainer = a.IsSendingByContainer,
+                                                       IsSendingByBillOfLading = a.IsSendingByBillOfLading,
                                                    });
 
 

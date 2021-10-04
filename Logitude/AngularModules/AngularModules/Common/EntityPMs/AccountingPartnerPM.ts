@@ -387,6 +387,16 @@ export class AccountingPartnerPM {
     public set CollectorId(newValue: string) { if (this.collectorId != newValue) { this.collectorId = newValue; this.MarkAsDirty("CollectorId"); } }
        
 	 
+    private creditLimit: number;
+    public get CreditLimit() { return this.creditLimit; }
+    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
+       
+	 
+    private insuredCreditlimit: number;
+    public get InsuredCreditlimit() { return this.insuredCreditlimit; }
+    public set InsuredCreditlimit(newValue: number) { if (this.insuredCreditlimit != newValue) { this.insuredCreditlimit = newValue; this.MarkAsDirty("InsuredCreditlimit"); } }
+       
+	 
 
     public OldEntityPM: AccountingPartnerPM;
 		

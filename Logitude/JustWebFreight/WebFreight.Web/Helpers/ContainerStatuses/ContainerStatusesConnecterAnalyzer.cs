@@ -26,6 +26,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -57,6 +58,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string objectTableName = "Container";
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
+        private ComputingPartnerTranslationHelper computingPartnerTranslator;
         private string oceanInsightsId;
         private string container_number;
         private string shipmentPackagesId;
@@ -194,6 +196,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string availability_loc =  null;
         string POLShipmentUpdateIndicator = null;
         string PODShipmentUpdateIndicator = null;
+        string computingPartnerCode;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -202,7 +205,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.tenant = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);                
+                this.computingPartnerCode = "G-OCI";
             }
         }
 
@@ -592,7 +596,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
             availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
         }
-
         private void GetAvailabilityLocationElement(XmlNode node)
         {
             XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
@@ -641,14 +644,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                         this.logitudeTenant = item.Tenant;
                         if (this.logitudeTenant != null)
                         {
-                            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
-                            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
-                            this.containerRepository = new ContainerRepository(shipmentContext);
-                            this.containerQuery = new ContainerQuery(containerRepository);
-                            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
-                            this.shipmentRepository = new ShipmentRepository(shipmentContext);
-                            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
-                            this.portRepository = new PortRepository(logitudeTenant.Value);
+                            this.Initialize();                            
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
                             this.AddContainerStatusCommunicationLog(item);
@@ -665,7 +661,18 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-
+        private void Initialize()
+        {
+            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
+            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
+            this.containerRepository = new ContainerRepository(shipmentContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
+            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
+            this.shipmentRepository = new ShipmentRepository(shipmentContext);
+            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+            this.portRepository = new PortRepository(logitudeTenant.Value);
+            this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
+        }
         private bool IsUpdatingShipmentAndContainer()
         {
             if (this.eventCode != null && this.eventCode != "20" &&
@@ -1061,6 +1068,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, container);
                 this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
                 this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
+
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
                 container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                 container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
@@ -1146,6 +1154,18 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.CarrierReleaseDate = containerUpdatedFields.CarrierReleaseDate;
                 container.AvailablityDate = containerUpdatedFields.AvailablityDate;
                 container.AvailabilityLocation = containerUpdatedFields.AvailabilityLocation;
+                container.EmptyPickupLocationPortId = this.GetPortId(containerUpdatedFields.EmptyPickupLocation);
+                container.DeliveryLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
+                container.EmptyReturnLocationPortId = this.GetPortId(containerUpdatedFields.EmptyReturnLocation);
+                container.AvailabilityLocationPortId = this.GetPortId(containerUpdatedFields.AvailabilityLocation);
+                container.OriginLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
+                container.LIFLocationPortId = this.GetPortId(containerUpdatedFields.LIFLocation);
+                container.POLLocationPortId = this.GetPortId(containerUpdatedFields.POLLocation);
+                container.PODLocationPortId = this.GetPortId(containerUpdatedFields.PODLocation);
+                container.Transshipment1LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment1Location);
+                container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
+                container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
+                container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
                 this.SaveContainer();
             }
         }
@@ -1189,22 +1209,22 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
             containerUpdatedFields.EstimatedPOLArrival = this.ComputeEstimatedGateInDate();
             containerUpdatedFields.ActualPOLArrival = this.ComputeActualGateInDate();
-            containerUpdatedFields.EmptyPickupLocation = this.emptyPickupLocation;
+            containerUpdatedFields.EmptyPickupLocation = this.GetTranslatedPortCode(emptyPickupLocation);            
             containerUpdatedFields.DepartureLocation = this.departureLocation;
             containerUpdatedFields.DestinationLocation = this.destinationLocation;
             containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
             containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
             containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
-            containerUpdatedFields.OriginLocation = origin_loc_locode;
+            containerUpdatedFields.OriginLocation = this.GetTranslatedPortCode(origin_loc_locode);
             containerUpdatedFields.EstimatedOriginPickup = this.ComputeEstimatedOriginPickup();
             containerUpdatedFields.ActualOriginPickup = this.ComputeActualOriginPickup();
-            containerUpdatedFields.POLLocation = pol_loc_locode;
+            containerUpdatedFields.POLLocation = this.GetTranslatedPortCode(pol_loc_locode);
             containerUpdatedFields.EstimatedPOLLoaded = this.ComputeEstimatedPOLLoaded();
             containerUpdatedFields.ActualPOLLoaded = this.ComputeActualPOLLoaded();
             containerUpdatedFields.EstimatedPOLVesselDeparture = this.ComputeEstimatedPOLVesselDeparture();
             containerUpdatedFields.ActualPOLVesselDeparture = ComputeActualPOLVesselDeparture();
             containerUpdatedFields.TransshipmentCount = ts_count;
-            containerUpdatedFields.Transshipment1Location = tsp1_loc_locode;
+            containerUpdatedFields.Transshipment1Location = this.GetTranslatedPortCode(tsp1_loc_locode);
             containerUpdatedFields.EstimatedTrans1VesselArrival = this.ComputeEstimatedTrans1VesselArrival();
             containerUpdatedFields.ActualTransshipment1VesselArrival = this.ComputeActualTransshipment1VesselArrival();
             containerUpdatedFields.EstimatedTransshipment1Discharge = this.ComputeEstimatedTransshipment1Discharge();
@@ -1213,7 +1233,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment1Loaded = ComputeActualTransshipment1Loaded();
             containerUpdatedFields.EstimatedTrans1VesselDeparture = this.ComputeEstimatedTransshipment1VesselDeparture();
             containerUpdatedFields.ActualTrans1VesselDeparture = ComputeActualTransshipment1VesselDeparture();
-            containerUpdatedFields.Transshipment2Location = tsp2_loc_locode;
+            containerUpdatedFields.Transshipment2Location = this.GetTranslatedPortCode(tsp2_loc_locode);
             containerUpdatedFields.EstimatedTrans2VesselArrival = this.ComputeEstimatedTrans2VesselArrival();
             containerUpdatedFields.ActualTransshipment2VesselArrival = this.ComputeActualTransshipment2VesselArrival();
             containerUpdatedFields.EstimatedTransshipment2Discharge = this.ComputeEstimatedTransshipment2Discharge();
@@ -1222,7 +1242,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment2Loaded = ComputeActualTransshipment2Loaded();
             containerUpdatedFields.EstimatedTrans2VesselDeparture = this.ComputeEstimatedTransshipment2VesselDeparture();
             containerUpdatedFields.ActualTrans2VesselDeparture = ComputeActualTransshipment2VesselDeparture();
-            containerUpdatedFields.Transshipment3Location = tsp3_loc_locode;
+            containerUpdatedFields.Transshipment3Location = this.GetTranslatedPortCode(tsp3_loc_locode);
             containerUpdatedFields.EstimatedTrans3VesselArrival = this.ComputeEstimatedTrans3VesselArrival();
             containerUpdatedFields.ActualTransshipment3VesselArrival = this.ComputeActualTransshipment3VesselArrival();
             containerUpdatedFields.EstimatedTransshipment3Discharge = this.ComputeEstimatedTransshipment3Discharge();
@@ -1231,7 +1251,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.ActualTransshipment3Loaded = ComputeActualTransshipment3Loaded();
             containerUpdatedFields.EstimatedTrans3VesselDeparture = this.ComputeEstimatedTransshipment3VesselDeparture();
             containerUpdatedFields.ActualTrans3VesselDeparture = ComputeActualTransshipment3VesselDeparture();
-            containerUpdatedFields.Transshipment4Location = tsp4_loc_locode;
+            containerUpdatedFields.Transshipment4Location = this.GetTranslatedPortCode(tsp4_loc_locode);
             containerUpdatedFields.EstimatedTrans4VesselArrival = this.ComputeEstimatedTrans4VesselArrival();
             containerUpdatedFields.ActualTransshipment4VesselArrival = this.ComputeActualTransshipment4VesselArrival();
             containerUpdatedFields.EstimatedTransshipment4Discharge = this.ComputeEstimatedTransshipment4Discharge();
@@ -1250,22 +1270,22 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.Leg4Voyage = leg4_voyage;
             containerUpdatedFields.Leg5Vessel = leg5_vessel_name;
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
-            containerUpdatedFields.PODLocation = pod_loc_locode;
+            containerUpdatedFields.PODLocation = this.GetTranslatedPortCode(pod_loc_locode);
             containerUpdatedFields.EstimatedPODVesselArrival = ComputeEstimatedPODVesselArrival();
             containerUpdatedFields.ActualPODVesselArrival = ComputeActualPODVesselArrival();
             containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
             containerUpdatedFields.ActualPODDischarge = ComputeActualPODDischarge();
             containerUpdatedFields.EstimatedPODDeparture = ComputeEstimatedPODDeparture();
             containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();
-            containerUpdatedFields.DeliveryLocation = dlv_loc_locode;
+            containerUpdatedFields.DeliveryLocation = this.GetTranslatedPortCode(dlv_loc_locode);
             containerUpdatedFields.EstimatedDelivery = ComputeEstimatedDelivery();
             containerUpdatedFields.ActualDelivery = ComputeActualDelivery();
-            containerUpdatedFields.LIFLocation = lif_loc_locode;
+            containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
             containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
             containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
             containerUpdatedFields.EstimatedLIFDeparture = ComputeEstimatedLIFDeparture();
             containerUpdatedFields.ActualLIFDeparture = this.ComputeActualLIFDeparture();
-            containerUpdatedFields.EmptyReturnLocation = empty_return_loc_locode;
+            containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
             containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
             containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
@@ -1273,7 +1293,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-            containerUpdatedFields.AvailabilityLocation = availability_loc;
+            containerUpdatedFields.AvailabilityLocation = this.GetTranslatedPortCode(availability_loc);
 
             return containerUpdatedFields;
         }
@@ -2041,16 +2061,9 @@ namespace WebFreight.Web.Helpers.Analyzers
 
                 else
                 {
-                    string POL_PortId = this.GetPortId(pol_loc_locode);
-                    string POD_PortId = this.GetPortId(pod_loc_locode);
 
-                    this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(POL_PortId);
-                    this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(POD_PortId);
+                    this.StartProcessingUpdateShipment();
 
-                    if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
-                    {
-                        this.StartProcessingUpdateShipment();
-                    }
                 }
             }
         }
@@ -2063,6 +2076,18 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
 
             return null;
+        }
+        private string GetTranslatedPortCode(string XMLportCode)
+        {
+            string portCode = XMLportCode;
+
+            string translatedPortCode = this.computingPartnerTranslator.GetLogitudeCodeTranslation(XMLportCode, computingPartnerCode, "Port");
+            if (!string.IsNullOrEmpty(translatedPortCode))
+            {
+                portCode = translatedPortCode;
+            }
+
+            return portCode;
         }
         private string GetPOLShipmentUpdateIndicator(string portId)
         {
@@ -2111,8 +2136,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void UpdateShipmentDates()
         {
-            this.UpdatePOLDates();
-            this.UpdatePODDates();            
+            string POL_PortId = this.GetPortId(pol_loc_locode);
+            string POD_PortId = this.GetPortId(pod_loc_locode);
+
+            this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(POL_PortId);
+            this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(POD_PortId);
+
+            if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
+            {
+                this.UpdatePOLDates();
+                this.UpdatePODDates();
+            }       
         }
         private void UpdatePOLDates()
         {

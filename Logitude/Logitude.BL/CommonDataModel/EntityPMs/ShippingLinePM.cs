@@ -285,5 +285,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string GLAccountNumber { get; set; }
         [DataMember]
         public string BillToId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsSendingByContainer { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsSendingByBillOfLading { get; set; }
     }
 }

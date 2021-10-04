@@ -4446,7 +4446,7 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
-                if (fieldName == "ticketheader" || fieldName == "ticketfooter" || fieldName == "iosapplink" || fieldName == "androidapplink" || fieldName == "resetpasswordurl" || fieldName == "systemurl" || fieldName == "inviteename" || fieldName == "cargotrackingurl")
+                if (fieldName == "ticketheader" || fieldName == "ticketfooter" || fieldName == "iosapplink" || fieldName == "androidapplink" || fieldName == "resetpasswordurl" || fieldName == "systemurl" || fieldName == "inviteename" || fieldName == "urlprivatecargotracking")
                 {
                     result = true;
                 }
@@ -7033,6 +7033,7 @@ namespace WebFreight.Web.Helpers
                         ObjectTableId = objectTableId, 
                         Tenant = tenant , 
                         DocumentTemplateId = template.Id ,
+                        IsSendMail =true
 
                     };
 

@@ -223,13 +223,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetPreservedToggleFiltersFromSessionInfo()
     {
         if (SessionInfo.ShipmentsFilters) {
+            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
+            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
             this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
             this.updateShipmentTypeAndDirectionSelectedFilters();
             this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
             this.setSortFilterValues();
-            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
+            
             this.LoadScreenData();
         }
     }
@@ -274,25 +276,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.sortField = SessionInfo.ShipmentsFilters.SortFieldName;
             this.isSortDescending = SessionInfo.ShipmentsFilters.SortDescending;
         }
-        var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
-        var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
-        var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
-        var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
-        
-        if(this.sortField == 'ATA') {
-            AtdSelectOption.deselect();
-            AtaSelectOption.select();
-        } else if(this.sortField == 'ATD'){
-            AtdSelectOption.select();
-            AtaSelectOption.deselect();
-        }
-        if(this.isSortDescending == 'DESC') {
-            AscSelectOption.deselect();
-            DescSelectOption.select();
-        } else if(this.isSortDescending == 'ASC'){
-            DescSelectOption.deselect();
-            AscSelectOption.select();
-        }
+            var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
+            var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
+            var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
+            var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
+            
+            if(this.sortField == 'ATA') {
+                AtdSelectOption.deselect();
+                AtaSelectOption.select();
+            } else if(this.sortField == 'ATD'){
+                AtdSelectOption.select();
+                AtaSelectOption.deselect();
+            }
+            if(this.isSortDescending == 'DESC') {
+                AscSelectOption.deselect();
+                DescSelectOption.select();
+            } else if(this.isSortDescending == 'ASC'){
+                DescSelectOption.deselect();
+                AscSelectOption.select();
+            }
     }
 
     SetMoreReferenceText(reference: string) {

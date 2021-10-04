@@ -40,5 +40,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string GLAccountNumber { get; set; }
         public string CollectorId { get; set; }
+        public double? CreditLimit { get; set; }
+        public double? InsuredCreditlimit { get; set; }
+
+
     }
 }

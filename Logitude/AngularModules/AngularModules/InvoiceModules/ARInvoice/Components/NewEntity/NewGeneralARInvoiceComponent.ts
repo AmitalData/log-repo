@@ -38,7 +38,7 @@ import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-    
+
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 
@@ -699,7 +699,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
- 
+
         this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 
@@ -755,7 +755,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         else {
             var date1 = new Date(this.InvoiceDate.toString());
-            var date2 = DateTool.GetCurrentDateAsUtcForAccountingValidation();
+            var date2 = new Date();
+            date2.setHours(23);
+            date2.setMinutes(59);
 
             if (date1.valueOf() > date2.valueOf()) {
                 this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));

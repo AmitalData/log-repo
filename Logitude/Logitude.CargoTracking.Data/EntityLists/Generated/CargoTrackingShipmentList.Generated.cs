@@ -243,6 +243,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string ImportManifest  { get; set; }
        [DataMember]
+       public bool? CreatedDone  { get; set; }
+       [DataMember]
+       public string PrevForwardingShipmentId  { get; set; }
+       [DataMember]
        public bool? BookingDone  { get; set; }
        [DataMember]
        public DateTime? BookingDate  { get; set; }
@@ -252,10 +256,6 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string BookingNotes  { get; set; }
        [DataMember]
        public string BookingExceptionReason  { get; set; }
-       [DataMember]
-       public bool? CreatedDone  { get; set; }
-       [DataMember]
-       public string PrevForwardingShipmentId  { get; set; }
    }
 
 }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AccountingPartnerUpdateClass
    {  		
-		public const string HashString = "64b6ed5b333e6038d102afbaf101fcca";
+		public const string HashString = "55f84d1121ba34ae61f6f3df641d9dab";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2617,6 +2617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CollectorId",
 					  						ListPropertyPath =  "CollectorId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2635,6 +2636,132 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorId",
 					  						DefaultText =  "Collector",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreditLimit",
+					  						ObjectTableName =  "AccountingPartner",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "LessThan",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreditLimit",
+					  						ListPropertyPath =  "CreditLimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AccountingPartner",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreditLimit",
+					  						DefaultText =  "Credit Limit",
+					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						ListFieldLable =  "CreditLimitListLable",
+					  						ListLableDefaultText =  "Credit Limit",
+					  						ListLocalDefaultText =  "מסגרת אשראי",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InsuredCreditlimit",
+					  						ObjectTableName =  "AccountingPartner",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "LessThan",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InsuredCreditlimit",
+					  						ListPropertyPath =  "InsuredCreditlimit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AccountingPartner",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InsuredCreditlimit",
+					  						DefaultText =  "Insured Credit limit",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListFieldLable =  "InsuredCreditlimitListLable",
+					  						ListLableDefaultText =  "Insured Credit limit",
+					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2742,7 +2869,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	            
 	      
 
-	         Screen AccountingPartnerBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen AccountingPartnerBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -2754,15 +2881,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.CreditLimit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.InsuredCreditlimit", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
