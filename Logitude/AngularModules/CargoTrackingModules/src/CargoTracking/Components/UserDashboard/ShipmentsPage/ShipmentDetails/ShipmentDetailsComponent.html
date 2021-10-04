@@ -828,7 +828,7 @@ item.CreateDate | date:'d-MMM-yyyy,
 
                     <details-menu [Show]="item.ShowDetailsMenu" [Toggle]="'ShowDetailsMenu'" [DataContext]="item"
                                   [MenuTitle]="item.DocumentTypeName" [Buttons]="[{Code: 'download', Name:'Download'}]"
-                                  (ButtonClicked)="DownloadDocument(item.DocumentId)"></details-menu>
+                                  (ButtonClicked)="DownloadDocument(item.DocumentId,item.DocumentTypeName)"></details-menu>
                 </div>
             </div>
         </div>
