@@ -19,6 +19,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.Utils;
 using System.Threading;
 using Logitude.Server.Tools.Utils;
+using System.IO;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -28,19 +29,22 @@ namespace Logitude.CustomsMessaging.Dca
         private List<string> _AllDcaPreFixWithoutInOutUpper;
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
+        private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel;
         StringBuilder _SBInfoLog;
         StringBuilder _SBErrorLog;
         Stopwatch sw;
         int NumOfMessages;
         private bool _SaveError;
 
-        public DcaDirect9200TenantService(CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA, 
-            List<InterfaceTenantDefinitionManagementPM> allInterface)
+        public DcaDirect9200TenantService(
+            CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA, 
+            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
             this._CustomsSettingPM = costomSetting;
             this._AllDcaPreFixWithoutInOutUpper = allDcaPreFixWithoutInOutUpper;
             this._InterfaceListDCA = interfaceListDCA;
             this._AllInterface = allInterface;
+            this._DedicatedCourierDCAModel =dedicatedCourierDCAModel;
         }
 
         public Action SetLastActivity { get; set; }
@@ -74,8 +78,13 @@ namespace Logitude.CustomsMessaging.Dca
 
                 while (Send9100Take100Messages_HaveMore().GetValueOrDefault() > 0)
                 {
+
                     if (sw.Elapsed > TimeSpan.FromMinutes(1))
                     {
+                        if (this._DedicatedCourierDCAModel != null)// _DedicatedCourierDCAModel== fast very fast
+                        {
+                            continue;//continue work on the same tenant! Do not stop! 
+                        }
                         break;//do next tenant
                     }
                 }
@@ -257,9 +266,23 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 }
                 else
                 {
-
+                    
                     sbFilename.AppendLine($"NOT NEEDED!!!! {myFileName}");
                     Debug.WriteLine($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
+                    if (_DedicatedCourierDCAModel != null)
+                    {
+                        string fileBackupPath=null;
+                        try
+                        {
+                            fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
+                            File.WriteAllText(fileBackupPath, itemOutgoingMessage.MSG);
+                        }
+                        catch (System.Exception e)
+                        {
+
+                            sbFilename.AppendLine($"WriteAllText error!!!! {e.Message} {fileBackupPath}");
+                        }
+                    }
                     NumOfMessages++;
                     correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 }
