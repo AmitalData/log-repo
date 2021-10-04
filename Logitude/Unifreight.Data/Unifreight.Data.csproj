@@ -173,6 +173,7 @@
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\MTBCARRKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\MTBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\RTBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\YCULTASKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\YTBTABLEKeys.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPORT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBCARR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBPORT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.RTBPORT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.VRELEASE2ENTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULPROCESS.cs" />
@@ -371,6 +373,7 @@
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\MTBCARRRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\MTBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\RTBPORTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />

@@ -8567,6 +8567,82 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
 
             #endregion
+
+            #region MTBPORT
+
+            modelBuilder.Entity<MTBPORT>()
+                .HasKey(p => p.PORTID)
+                .ToTable("MTBPORT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.PORTID)
+                    .HasColumnName(@"PORT_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.BRANID)
+                    .HasColumnName(@"BRAN_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.COLLECTDEBIT)
+                    .HasColumnName(@"COLLECT_DEBIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.CONSALLOWED)
+                    .HasColumnName(@"CONS_ALLOWED")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NOHRBFEE)
+                    .HasColumnName(@"NO_HRB_FEE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.TIMEZONE)
+                    .HasColumnName(@"TIME_ZONE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.FRWDCREDIT)
+                    .HasColumnName(@"FRWD_CREDIT")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+
+            #endregion
             #region Disabled conventions
 
 
@@ -8687,5 +8763,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GTBSERLV> GTBSERLVs { get; set; }
         public virtual DbSet<ETBVEND> ETBVENDs { get; set; }
         public virtual DbSet<MTBCARR> MTBCARRs { get; set; }
+        public virtual DbSet<MTBPORT> MTBPORTs { get; set; }
+
     }
 }
