@@ -194,15 +194,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     SetTitleForSupplierOrClient(directionId: string) {
         var title;
-        console.log('ddd', directionId)
         switch (directionId) {
-            case 'E': {
+            case ShipmentDirections.Export: {
                 title = "CLIENT"
                 break;
             }
 
-            case 'I':
-            case 'C': {
+            case ShipmentDirections.Import:
+            case ShipmentDirections.Customs: {
                 title = "SUPPLIER"
                 break;
             }
@@ -211,10 +210,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
         return title;
     }
     SetSupplierOrCleintValueByDirection(shipmentList) {
-        if(shipmentList.DirectionId == 'E') 
+        if(shipmentList.DirectionId == ShipmentDirections.Export) 
         {
             return shipmentList.ShipperName;
-        } else if(shipmentList.DirectionId == 'I') {
+        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
             return shipmentList.ConsigneeName;   
         }
         return '';
@@ -1239,4 +1238,10 @@ export class PartnerCard
     PhoneNumber: string;
     FaxNumber: string;
     ShowDetails: boolean = false;
+}
+
+enum ShipmentDirections {
+    Import = "I",
+    Export = "E",
+    Customs = "C"
 }
