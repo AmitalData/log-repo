@@ -172,6 +172,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var value;
         value = this.SetSupplierOrCleintValueByDirection(shipment, value);
+        value = this.SetSupplierOrCleintValueByEntityType(shipment, value);
 
         this.SupplierOrClientValue = value;
     }
@@ -187,6 +188,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 value = shipment.ConsigneeName;
                 break;
             }
+        }
+        return value;
+    }
+
+    private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
+        const EntityType_Customs = "C";
+        if (shipment.EntityType == EntityType_Customs) {
+            value = shipment.ConsigneeName;
         }
         return value;
     }
