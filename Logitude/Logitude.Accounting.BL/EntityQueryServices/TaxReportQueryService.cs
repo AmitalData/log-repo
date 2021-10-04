@@ -107,8 +107,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return reports.Where(d=>d.IsCancelled == false).ToList();
         }
-       
-    
+        public List<TaxReportPM> GetTransmittedTaxReports(int tenant) 
+        {
+            TaxReportRepository reportsRepo = new TaxReportRepository(context);
+
+            List<TaxReport> reports= reportsRepo.GetTransmittedReports( tenant).OrderByDescending(d=> d.TaxReportMonth).ToList();
+            return reports.Select(r => this.GetEntityPM(r, false)).ToList();
+            
+        }
+
+
     }
 
 }

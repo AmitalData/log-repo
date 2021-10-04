@@ -1361,9 +1361,7 @@ on record.JournalId equals j.Id
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-            //DateTime date = DateTime.Now.AddDays(-180);
-            //DateTime last180days=  new DateTime(date.Year, date.Month, 1);
-            //taxReportMonth. = 1;
+           
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
@@ -1394,6 +1392,32 @@ on record.JournalId equals j.Id
 
 
         }
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, int tenant, List<string> journalIds, string accountId)
+        {
+
+            int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
+            DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
+
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+
+            return (from a in context.LedgerTransactions
+                    join j in context.Journals on a.JournalId equals j.Id
+                    join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
+
+                    where (m.TaxReportId != null )
+                            && a.DocumentDate <= endOfTaxReportDate
+                           
+                            && a.Tenant == tenant
+                            && a.LocalAmountDebit != 0
+                           && a.AccountId== accountId
+                            && journalIds.Contains(a.JournalId)
+                   select a
+                    );
+
+
+        }
+
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
         {
 
@@ -1406,7 +1430,55 @@ on record.JournalId equals j.Id
 
 
         }
+        public IQueryable<LedgerTransaction> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, int tenant, DateTime date, string accountId)
+        {
+            int days = DateTime.DaysInMonth(date.Year, date.Month);
+            DateTime reportDate = new DateTime(date.Year, date.Month, days);
+            
 
+            return (from a in context.LedgerTransactions
+                   join j in context.Journals on a.JournalId equals j.Id
+                   
+                    join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
+                    where j.AccountingEntityCode == "2" && (m.TaxReportId != null ) && a.Tenant == tenant
+                    && a.DocumentDate <= reportDate
+                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
+
+                    select a
+                    );
+        }
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsNotIncludedInTaxReports(int tenant, string accountId)
+        {
+
+            IQueryable<LedgerTransaction> outputLines = (from a in context.LedgerTransactions
+                                                         join j in context.Journals on a.JournalId equals j.Id
+
+                                                         join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
+                                                         where j.AccountingEntityCode == "2" && (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant == tenant
+
+                                                         where a.Tenant == tenant && a.AccountId == accountId
+
+                                                         select a
+                    ).Distinct();
+
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+
+            IQueryable<LedgerTransaction> inputLines = (from a in context.LedgerTransactions
+                                                        join j in context.Journals on a.JournalId equals j.Id
+                                                        join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
+
+                                                        where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null)
+
+                                                        && a.OppositeAccountId != setting.VATOutputGLAccountId
+                                                      && a.Tenant == tenant
+                                                      && a.LocalAmountDebit != 0
+                                                      && a.AccountId == accountId
+
+                                                        select a).Distinct();
+                   
+            return outputLines.Concat(inputLines);
+        }
         public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
         {
             // there is two closed periods:

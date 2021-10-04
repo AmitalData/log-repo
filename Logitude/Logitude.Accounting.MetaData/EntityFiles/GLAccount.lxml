@@ -16793,19 +16793,19 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccounts.O.filter_accounting&quot;"
-      DefaultText="&quot;Accounting&quot;"
+      DefaultText="&quot;Accounting Date&quot;"
       LocalDefaultText="&quot;חשבונאי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccounts.O.filter_reference&quot;"
-      DefaultText="&quot;Document&quot;"
+      DefaultText="&quot;Document Date&quot;"
       LocalDefaultText="&quot;אסמכתא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccounts.O.filter_due&quot;"
-      DefaultText="&quot;Due&quot;"
+      DefaultText="&quot;Due Date&quot;"
       LocalDefaultText="&quot;פרעון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -17555,6 +17555,12 @@
       Code="&quot;GLAccounts.O.RecoCurrencyErr&quot;"
       DefaultText="&quot;The reconcile method for an accounting currency account must be local currency&quot;"
       LocalDefaultText="&quot;שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.NotIncludedInTax&quot;"
+      DefaultText="&quot;Not included in any Tax Report&quot;"
+      LocalDefaultText="&quot;לא דווחו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

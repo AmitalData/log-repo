@@ -86,6 +86,22 @@ export class TaxReportExtendedPMService {
             
         
     }
+
+    GetTenantTransmittedTaxReports() {
+        return this.httpClient.get(this._apiUrl + '/GetTenantTransmittedTaxReports', ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
     GetReturnToDraftButtonStatus(createDate:Date) {
         return this.httpClient.get(this._apiUrl + '/GetReturnToDraftButtonStatus?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
