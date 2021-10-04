@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipment&quot;"
-  Code="&quot;e18c&quot;"
+  Code="&quot;4eee&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"

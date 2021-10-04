@@ -112,9 +112,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null and OrderShipment.EntityType='O'  "
                 , Environment.NewLine
                 , " update  OrderShipment   "
-                , " set     OrderShipment.CurrentMilestoneCode = ForwardingShipment.CurrentMilestoneCode,  OrderShipment.CurrentMilestoneDate = ForwardingShipment.CurrentMilestoneDate    "
-                , " from	CargoTrackingShipments OrderShipment  join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = OrderShipment.EntityId  "
-                , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null  "
+                , " set OrderShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode, OrderShipment.CurrentMilestoneCode), OrderShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate, OrderShipment.CurrentMilestoneDate)    "
+                , " from	CargoTrackingShipments OrderShipment  join CargoTrackingShipments ForwardingShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId "
+                , " where	OrderShipment.EntityType='O' and (ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null)  "
                 , Environment.NewLine
                 ,"update  ForwardingShipment    "
                 , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "

@@ -62,6 +62,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
             tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
+            tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
         }
         private static void SetMainEntity(DataRow tableRow)
         {
@@ -69,18 +70,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
-             if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
+            if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Booking);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["BookingDate"]);
-
             }
-
             else if (!IsFieldNullOrEmpty(tableRow, "CreateDone") && !tableRow["CreateDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
-
             }
 
         }
@@ -221,7 +224,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)
         {
-            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
+            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals(0) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
                 return true;
             return false;
         }
