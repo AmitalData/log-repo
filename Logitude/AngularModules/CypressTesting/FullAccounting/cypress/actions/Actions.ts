@@ -1,4 +1,5 @@
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import { RegexSelectors } from "../selectors/RegexSelectors";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
@@ -41,7 +42,7 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
 }
 
 export function OpenNewWizard(tabName: string) {
-    cy.Click(BaseSelectors.NewWizardButton(tabName), null);
+    cy.Click(RegexSelectors.NewWizardButton(tabName), null);
 }
 
 export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {

@@ -7,7 +7,7 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 
 export function NavigatesAPPaymentWorkspace() {
-    cy.Click(BaseSelectors.VendorsTab, null)
+    cy.Click(BaseSelectors.FullAccountingVendorsTab, null)
     cy.Click(APPaymentSelectors.NewAPPaymentButton, null)
 }
 

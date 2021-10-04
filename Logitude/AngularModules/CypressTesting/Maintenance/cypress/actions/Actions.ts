@@ -7,7 +7,6 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as BaseActions from "../../../Base/cypress/actions/Actions";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
-import * as ShipmentActions from "../../../Shipment/cypress/actions/Actions"
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../../../Base/cypress/models/Datepicker";
 import { ContactDetails } from "../models/ContactDetails";
