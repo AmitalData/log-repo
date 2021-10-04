@@ -33,6 +33,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         GLAccountPM mainGLAccount;
         List<GLAccountPM> splitByCurrencyGLAccounts;
         CardPM card;
+        
         public HttpResponseMessage GetDisconnectGLAccountFromCard(string Id, string partnerTypeId,string eventTypeCode)
         {
             try
@@ -46,7 +47,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     GLAccountPM glaccount = UpdateGLAccountFields(card);
                     SendHybridTask(glaccount);
                     UpdateCard(card);
-                    if (card.PartnerTypeId == "CS" || partnerTypeId == "VD")
+                    if (card.PartnerTypeId == PartnerTypes.Customer || partnerTypeId == PartnerTypes.Vendor || partnerTypeId== PartnerTypes.AccountingPartner)
                         HandleGLAccountCardsData(glaccount);
                   //  DeleteGLAccountCardData(glaccount);
                     CreateEvents(Id, eventTypeCode);
@@ -312,5 +313,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+    }
+
+
+    public static class PartnerTypes
+    {
+
+        public static string Customer = "CS";
+        public static string Vendor = "VD";
+        public static string AccountingPartner = "AC";
+
     }
 }

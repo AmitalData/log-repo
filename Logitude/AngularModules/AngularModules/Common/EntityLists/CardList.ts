@@ -113,5 +113,6 @@ export class CardList {
 		SearchWeight: number;
 		RecordDate: Date;
 		BillToId: string;
+		AccountingPartnerCreditLimit: number;
 	
 }
