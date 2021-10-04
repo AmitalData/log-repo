@@ -41,5 +41,6 @@ namespace WebFreight.Web.DataProviders
         public double? OpenAmount { get; set; }
 
         public DateTime? FinalArrivalDate { get; set; }
+        public string TruckContainerNumber { get; set; }
     }    
 }
