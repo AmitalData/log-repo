@@ -1,19 +1,11 @@
 <div class="grid" [formGroup]='formGroup'>
 
-  <div class="col-6">
+  <div class="col-12">
     <h2>{{'QuoteOP.S.NewQuote.General' | TextCodeTranslationPipe}}</h2>
     <h5>Quote Type</h5>
     <div class='radio-row' *ngFor='let x of quoteTypes'>
       <p-radioButton name="quoteTypeGroup" (click)='checkType(x.code)' [value]="x.code" formControlName="quoteType"
         [label]='x.text'></p-radioButton>
-    </div>
-  </div>
-
-  <div class="col-6 p-fluid">
-    <div class="p-field">
-      <app-autocomplate-table [columnsShow]="['A', 'B']" [data]='incoterms' [fieldShow]='"A"' [label]="'Incoterm'"
-        [controlName]='"incoterm"' [formGroup]='formGroup' (onSelect)='onSelectedIncoterm($event)'>
-      </app-autocomplate-table>
     </div>
   </div>
 

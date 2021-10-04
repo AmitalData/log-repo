@@ -3,46 +3,37 @@
 <div class="grid" [formGroup]='formGroup'>
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <label for="geteway">Geteway</label>
-      <p-autoComplete formControlName="geteway" id="geteway" [suggestions]="getewaySelected" [dropdown]="true"
-        (completeMethod)="getewaySearch($event)" (onKeyUp)='keyUp(formGroup.controls.geteway, getewayList)'>
-        <ng-template let-x pTemplate="item">{{x}}</ng-template>
-      </p-autoComplete>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='toPortList' [fieldShow]='"Name"' [label]="'Geteway'"
+        [controlName]='"toPort"' [formGroup]='formGroup' (onSelect)='onSelectedtoPort($event)'>
+      </app-autocomplate-table>
     </div>
 
     <div class="p-field">
-      <label for="destination">Destination</label>
-      <p-autoComplete formControlName="destination" id="destination" [suggestions]="destinationSelected"
-        [dropdown]="true" (completeMethod)="destinationSearch($event)"
-        (onKeyUp)='keyUp(formGroup.controls.destination, destinationList)'>
-        <ng-template let-x pTemplate="item">{{x}}</ng-template>
-      </p-autoComplete>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='fromPortList' [fieldShow]='"Name"' [label]="'Destination'"
+        [controlName]='"fromPort"' [formGroup]='formGroup' (onSelect)='onSelectedFromPort($event)'>
+      </app-autocomplate-table>
     </div>
   </div>
 
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <label for="airline">Airline</label>
-      <p-autoComplete formControlName="airline" id="airline" [suggestions]="airlineSelected" [dropdown]="true"
-        (completeMethod)="airlineSearch($event)" (onKeyUp)='keyUp(formGroup.controls.airline, airlineList)'>
-        <ng-template let-x pTemplate="item">{{x}}</ng-template>
-      </p-autoComplete>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',Prefix:'Prefix'}" [data]='mainCarriageCarrierList' [fieldShow]='"Name"' [label]="'Airline'"
+        [controlName]='"mainCarriageCarrier"' [formGroup]='formGroup' (onSelect)='onMainCarriageCarrier($event)'>
+      </app-autocomplate-table>
     </div>
-
+    
     <div class="p-field">
-      <label for="incoterm">Incoterm</label>
-      <p-autoComplete formControlName="incoterm" id="incoterm" [suggestions]="incotermSelected"
-        [dropdown]="true" (completeMethod)="incotermSearch($event)"
-        (onKeyUp)='keyUp(formGroup.controls.incoterm, incotermList)'>
-        <ng-template let-x pTemplate="item">{{x}}</ng-template>
-      </p-autoComplete>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name'}" [data]='incotermList' [fieldShow]='"Name"' [label]="'Incoterm'"
+        [controlName]='"incoterm"' [formGroup]='formGroup' (onSelect)='onSelectedIncoterm($event)'>
+      </app-autocomplate-table>
     </div>
   </div>
 
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <label for="sepcialServiceType">Special Services Type</label>
-      <input formControlName="sepcialServiceType" id="sepcialServiceType" type="text" pInputText>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name'}" [data]='specialServiceList' [fieldShow]='"Name"' [label]="'Special Services Type'"
+        [controlName]='"specialService"' [formGroup]='formGroup' (onSelect)='onSelectedSpecialService($event)'>
+      </app-autocomplate-table>
     </div>
   </div>
 </div>

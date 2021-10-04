@@ -13,6 +13,7 @@ import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import { NewQuoteDataService } from './Components/NewEntity/Services/new-quote-data/new-quote-data.service';
+import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWebService';
 
 @NgModule({
     imports: [InfrastructureModule, 
@@ -29,7 +30,7 @@ import { NewQuoteDataService } from './Components/NewEntity/Services/new-quote-d
     DialogModule,
     ],
     declarations: [...Components,...SharedComponents],
-    providers: [NewQuoteDataService],
+    providers: [NewQuoteDataService, NewQuoteOPWebService],
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],
 })

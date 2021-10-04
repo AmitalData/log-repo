@@ -5,6 +5,7 @@ import { ContactList } from 'Common/EntityLists/ContactList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { AddressService } from 'Common/Services/ExtendedLists/AddressService';
+import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWebService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
@@ -23,6 +24,7 @@ export class NewQuoteDataService {
 
   constructor(
     private entityListService: EntityListService,
+    private newQuoteOPWebService: NewQuoteOPWebService,
   ) { }
 
   async getCardsTable(): Promise<CardList[]> {
@@ -75,6 +77,11 @@ export class NewQuoteDataService {
       resService.pipe(filterIsNotNull(), take(1))
         .subscribe((resp: any) => resolve(resp.Result));
     });
+  }
+
+  async getIncoterms(): Promise<Incoterm[]> {
+    const res:ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('','',1000, false).toPromise();
+    return res.Result as Incoterm[];
   }
 
   async getCityTable(countryId: string = null): Promise<CountryCityList[]> {
@@ -136,4 +143,15 @@ export class NewQuoteDataService {
 
 export function filterIsNotNull() {
   return filter((x: any) => x);
+}
+
+export interface Itm {
+  $id: string;
+  Name: string;
+  PTERMID: string;
+}
+
+export interface Incoterm {
+  $id: string;
+  itm: Itm;
 }

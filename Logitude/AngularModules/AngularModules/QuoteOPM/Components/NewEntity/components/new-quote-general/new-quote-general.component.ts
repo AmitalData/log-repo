@@ -1,11 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CourierPendingReasonLineComponent } from 'CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
 import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
-import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
-import { NewQuoteAutocomplateService } from '../new-quote-autocomplate/new-quote-autocomplate.service';
+import { Incoterm, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-general',
@@ -21,8 +19,7 @@ export class NewQuoteGeneralComponent implements OnInit {
     { text: TextCodeTranslator.Translate('QuoteOP.S.NewQuote.RoutingRates'), code: 'P' },
   ]
 
-  moveTypeSelected: string[] = []
-  incoterms: {}[] = [{A:'a',B: 'b'}]
+  moveTypeSelected: string[] = []  
   moveTypes: MoveTypeList[] = []
 
   constructor(
@@ -30,8 +27,9 @@ export class NewQuoteGeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getMoveTypeData()
+    this.getMoveTypeData()    
   }
+
 
   async getMoveTypeData(){
     this.moveTypes = await this.newQuoteDataService.getMoveTypeTable("A");
