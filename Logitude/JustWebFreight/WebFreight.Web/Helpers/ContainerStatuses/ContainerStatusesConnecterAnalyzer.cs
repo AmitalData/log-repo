@@ -2061,9 +2061,13 @@ namespace WebFreight.Web.Helpers.Analyzers
 
                 else
                 {
+                    this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(container.POLLocationPortId);
+                    this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(container.PODLocationPortId);
 
-                    this.StartProcessingUpdateShipment();
-
+                    if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
+                    {
+                        this.StartProcessingUpdateShipment();
+                    }
                 }
             }
         }
@@ -2136,17 +2140,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void UpdateShipmentDates()
         {
-            string POL_PortId = this.GetPortId(pol_loc_locode);
-            string POD_PortId = this.GetPortId(pod_loc_locode);
-
-            this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(POL_PortId);
-            this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(POD_PortId);
-
-            if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
-            {
-                this.UpdatePOLDates();
-                this.UpdatePODDates();
-            }       
+            this.UpdatePOLDates();
+            this.UpdatePODDates();
         }
         private void UpdatePOLDates()
         {
