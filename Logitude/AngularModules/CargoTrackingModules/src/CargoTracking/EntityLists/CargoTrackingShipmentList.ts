@@ -122,14 +122,11 @@ export class CargoTrackingShipmentList {
 	GatepassArrivedNotes: string;
 	GatepassArrivedDone: boolean;
 	ImportManifest: string;
-	CreatedDone: boolean;
-	PrevForwardingShipmentId: string;
 	BookingDone: boolean;
 	BookingDate: Date;
 	BookingEstimationDate: Date;
 	BookingNotes: string;
 	BookingExceptionReason: string;
-	
 	PaymentRequiredDone: boolean;
 	PaymentRequiredEstimationDate: Date;
 	PaymentRequiredDate: Date;
@@ -138,5 +135,7 @@ export class CargoTrackingShipmentList {
 	PaymentReceivedEstomationDate: Date;
 	PaymentReceivedDate: Date;
 	PaymentReceivedNotes: string;
+	ShipmentOrderGateway: string;
+	ShipmentOrderPONumber: string;
 	
 }

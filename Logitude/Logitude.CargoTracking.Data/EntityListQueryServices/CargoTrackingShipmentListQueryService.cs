@@ -375,7 +375,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetFilteredShipmentsByIds(ShipmentIds, tenant);
-            var xxxxx = shipments.ToList();
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
             return shipmetsLists;
         }
