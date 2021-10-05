@@ -25,11 +25,15 @@ using Simplog.Data.InvoiceModel;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class InterestReportUpdateService
     {
+        string oldLabel = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0);
+        string newLabel = TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0);
+        const string  RecalculateEventCode= "IREC";
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
             if (!entityPM.IsCreatedFromBatch)
@@ -43,7 +47,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             InterestReportLinesByDateUpdateService interestReportLinesByDateUpdateService = new InterestReportLinesByDateUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             interestReportLinesByDateUpdateService.UpdateMulti(entityPM.InterestReportLinesByDates, entityPM.DeletedInterestReportLinesByDates, entityPM, false);
         }
-         private void CreateEvent(string eventCode, InterestReportPM interestReport,string Notes = null)
+        private void CreateEvent(string eventCode, InterestReportPM interestReport, string Notes = null)
         {
             ContactPM contact = GetLoggedContact(interestReport.Tenant);
             EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -69,13 +73,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update && !entityPM.IsUpdatedFromBatch)
             {
-                if (entityPM.RecalculateData) 
+                if (entityPM.RecalculateData)
                 {
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
                 if (entityPM.InterestCalculationDate != entityPOCO.InterestCalculationDate)
                 {
-                    
+
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
 
@@ -84,10 +88,61 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CreateBatchTaskExecutionForRecalculatingData(entityPM);
                 }
 
+
+            }
+            CreateEventForRecalculatingData(entityPM);
+
+        }
+        string eventNotes;
+        private void CreateEventForRecalculatingData(InterestReportPM interestReport)
+        {
+            if (interestReport.IsUpdatedFromBatch && interestReport.InterestReportStatusCode == InterestReportStatuseValues.Draft)
+            {
+               SetEventNoteForRecalculateData(interestReport);
+               
+                if (eventNotes != null)
+                    CreateEvent(RecalculateEventCode, interestReport, eventNotes);
+            }
+
+            CreateRecalculateEventForUpdateCalculationDate();
+           
+        }
+        private void SetEventNoteForRecalculateData(InterestReportPM interestReport)
+        {
+            if (interestReport.GLAccountInterestCreditLimit != EntityPOCO.GLAccountInterestCreditLimit)
+            {
+                eventNotes = SetEventNote("Credit Limit", EntityPOCO.GLAccountInterestCreditLimit.ToString(), interestReport.GLAccountInterestCreditLimit.ToString());
+
+            }
+            if (interestReport.CreditAllotmentPercentage != EntityPOCO.CreditAllotmentPercentage)
+            {
+                eventNotes = SetEventNote("Credit Allotment Percentage", EntityPOCO.CreditAllotmentPercentage.ToString(), interestReport.CreditAllotmentPercentage.ToString());
+            }
+            if (interestReport.CalculatedPostponedChequesCommision != EntityPOCO.CalculatedPostponedChequesCommision)
+            {
+                eventNotes = SetEventNote("Calculated Postponed Cheques Commision", EntityPOCO.CalculatedPostponedChequesCommision.ToString(), interestReport.CalculatedPostponedChequesCommision.ToString());
+            }
+        }
+
+        private string SetEventNote(string fieldLabel, string oldValue, string newValue)
+        {
+            return eventNotes+ fieldLabel + ": " + "old value: " + oldValue + ",new value: " + newValue + Environment.NewLine;
+
+
+        }
+        private void CreateRecalculateEventForUpdateCalculationDate()
+        {
+           string eventNotes = null;
+            if (EntityPM.InterestCalculationDate != EntityPOCO.InterestCalculationDate)
+            {
+
+                string FieldLabel = "Interest Calculation Date";
+                eventNotes =   FieldLabel + ": " + "old value: " + EntityPOCO.InterestCalculationDate + ",new value: "+ EntityPM.InterestCalculationDate + Environment.NewLine;
+                CreateEvent("IREC", EntityPM, eventNotes);
+
             }
 
         }
-
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
