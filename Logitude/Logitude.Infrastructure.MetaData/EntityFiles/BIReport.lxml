@@ -1738,5 +1738,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;BIReport.Fact_InlandDomesticShipments&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;BIReport.Features.BIReport.Fact_InlandDomesticShipments&quot;"
+      FeatureDefaultText="&quot;Inland Domestic Shipments&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

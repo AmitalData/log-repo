@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;6b01&quot;"
+  Code="&quot;d121&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -607,6 +607,11 @@
       Name="&quot;Shipment Number In Generic Interface&quot;"
       SearchFields="&quot;MLS,Shipment Number In Generic Interface&quot;"
       Description="&quot;Sending shipment number for multiple AP invoice in generic interface&quot;" />
+    <Record
+      Code="&quot;IDS&quot;"
+      Name="&quot;InlandDomesticShipments DWH&quot;"
+      SearchFields="&quot;IDS,InlandDomesticShipments DWH&quot;"
+      Description="&quot;Allow Tenants to Show InlandDomesticShipments  Fact on the BI Report Screen&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
