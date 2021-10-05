@@ -131,10 +131,7 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
                 newTemplatePM.AutomationId = !this.DataContext.AutomationId ? null : this.DataContext.AutomationId;
-                newTemplatePM.DefultAttachmentsXML = this.SelectedTemplate.DefultAttachmentsXML;
-                newTemplatePM.DocumentDefultAttachments = this.SelectedTemplate.DocumentDefultAttachments;
-                newTemplatePM.AttachedExternalDocumentsIds = this.SelectedTemplate.AttachedExternalDocumentsIds;
-                newTemplatePM.IsDefultAttachmentsXMLChanged = true;
+                this.MapDefultAttachmentsDocumentFields(newTemplatePM);
                  
                 if (this.DataContext) {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
@@ -182,4 +179,11 @@ export class SaveAsTemplateComponent implements OnInit {
 
 
 
+
+    private MapDefultAttachmentsDocumentFields(newTemplatePM: any) {
+        newTemplatePM.DefultAttachmentsXML = this.SelectedTemplate.DefultAttachmentsXML;
+        newTemplatePM.DocumentDefultAttachments = this.SelectedTemplate.DocumentDefultAttachments;
+        newTemplatePM.AttachedExternalDocumentsIds = this.SelectedTemplate.AttachedExternalDocumentsIds;
+        newTemplatePM.IsDefultAttachmentsXMLChanged = true;
+    }
 }
