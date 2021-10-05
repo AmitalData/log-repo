@@ -88,13 +88,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
         private List<OpportunityItem> GetOpportunityItems(IEnumerable<OpportunityCRMDetails> opportunityDetails, string currencyCode)
         {
-            return opportunityDetails.GroupBy(a => 1).Select(a => new OpportunityItem
-            {
-                NumberOfUsers = a.Sum(b => b.NumberOfUsers),
-                Total = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
-                TotalNet = ConvertToUsd(currencyCode, a.Sum(b => b.TotalNet)),
+            return opportunityDetails
+                .GroupBy(a => 1)
+                .Select(a => new OpportunityItem
+                {
+                    NumberOfUsers = a.Sum(b => b.NumberOfUsers),
+                    Total = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
+                    TotalNet = ConvertToUsd(currencyCode, a.Sum(b => b.TotalNet)),
 
-            }).ToList();
+                }).ToList();
         }
 
         private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails, string currencyCode)
@@ -114,12 +116,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
         private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth, string currencyCode)
         {
-            return opportunityDetails.Where(b => b.CreateDate.Year == DateTime.Now.Year && b.CreateDate.Month == mounth).GroupBy(a => 1).Select(a => new OpportunityPeriodSummary
-            {
-                NumberOfUsers = a.Sum(b => b.NumberOfUsers),
-                IsNewCustomer = opportunityDetails.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.CreateDate).FirstOrDefault()?.IsNewCustomer,
-                NewIncome = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
-            }).ToList();
+            return opportunityDetails
+                .Where(b => b.CreateDate.Year == DateTime.Now.Year && b.CreateDate.Month == mounth)
+                .GroupBy(a => 1)
+                .Select(a => new OpportunityPeriodSummary
+                {
+                    NumberOfUsers = a.Sum(b => b.NumberOfUsers),
+                    IsNewCustomer = opportunityDetails.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.CreateDate).FirstOrDefault()?.IsNewCustomer,
+                    NewIncome = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
+                }).ToList();
         }
 
         private int? HasError(IEnumerable<OpportunityCRMDetails> opportunityDetails)
