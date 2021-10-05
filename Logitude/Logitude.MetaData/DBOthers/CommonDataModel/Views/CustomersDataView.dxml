@@ -1,11 +1,12 @@
 <View DBType="Main" Name="CustomersDataView" Schema="dbo" Module="Common">
   <SqlScript>
     <![CDATA[
+
 CREATE VIEW [dbo].[CustomersDataView]
 AS
 SELECT        
 dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,dbo.cards.Address1,dbo.cards.Address2,dbo.cards.Phone,dbo.Cards.LocalName,dbo.Cards.ReceivablesAccountingCard, dbo.Cards.PayablesAccountingCard, dbo.Cards.ExternalId2,dbo.Cards.InActive,dbo.Cards.EnableConsolidationInvoices, dbo.Cards.ExternalAccountingBusinessArea, dbo.Cards.SATPaymentMethodCode,dbo.Cards.SATForeignRFC,dbo.Cards.MetodoPagoCode,dbo.Cards.UsoCFDICode
-,dbo.Cards.Notes,dbo.Cards.Website,dbo.Customers.SalesmanUserId,dbo.Cards.PaymentTermId,dbo.Cards.CreateDate,dbo.Cards.UpdateDate,dbo.Cards.CreatedByUserId,dbo.Cards.UpdatedByUserId
+,dbo.Cards.Notes,dbo.Cards.BillToId as BillToId,BillToCards.EnglishName as BillToName, dbo.Cards.Website,dbo.Customers.SalesmanUserId,dbo.Cards.PaymentTermId,dbo.Cards.CreateDate,dbo.Cards.UpdateDate,dbo.Cards.CreatedByUserId,dbo.Cards.UpdatedByUserId
 ,dbo.Cards.VatNumber,dbo.Cards.SearchFields,dbo.PaymentTerms.EnglishName as PaymentTermEnglishName,dbo.Cards.InvoiceCurrencyId,dbo.Customers.LastShipmentDate,dbo.Customers.StartWorkingDate,dbo.Customers.StartWorkingManuallySet
 ,AccountManagerUserContacts.EnglishName as AccountManagerUserEnglishName,SalesmanUserContacts.EnglishName as SalesmanUserEnglishName,CollectorContacts.EnglishName as CollectorName,ClassifierContacts.EnglishName as ClassifierName
 ,dbo.Cards.CityName ,dbo.Cards.VatTypeId,dbo.Customers.Field1,dbo.Customers.Field2,dbo.Customers.Field3,dbo.Customers.Field4,dbo.Customers.Field5,dbo.Customers.Field6,dbo.Customers.Field7,dbo.Customers.Field8
@@ -32,7 +33,8 @@ ActivatedByUserContacts.EnglishName as ActivatedByUserName, SetAsInactiveByUserC
 ActivationRequestedByUserContacts.EnglishName as ActivationRequestedByUserName, dbo.Customers.ActivationDate, dbo.Customers.InactiveDate, dbo.Customers.ActivationRequestDate,dbo.cards.CreatedByPartner, dbo.cards.StateName, dbo.cards.GLAccountId , dbo.cards.GLAccountDisplayNumber, dbo.cards.IsAutonomy as  IsAutonomy
 
 
-FROM            dbo.Customers Inner join
+FROM dbo.Customers  Inner join
+                        
                          dbo.Cards ON  dbo.Customers.Id = dbo.Cards.Id LEFT OUTER JOIN
                          dbo.PaymentTerms ON dbo.Cards.PaymentTermId = dbo.PaymentTerms.Id LEFT OUTER JOIN
                          dbo.Contacts AS AccountManagerUserContacts ON dbo.Customers.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
@@ -58,10 +60,12 @@ FROM            dbo.Customers Inner join
 						 dbo.Currencies as InvoiceCurrency on dbo.Cards.InvoiceCurrencyId = InvoiceCurrency.Id LEFT OUTER JOIN
 						 dbo.Contacts AS ActivatedByUserContacts ON dbo.Customers.ActivatedByUserId = ActivatedByUserContacts.Id LEFT OUTER JOIN
 						 dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
+             dbo.Cards AS CustomerCard ON dbo.Customers.Id = CustomerCard.Id LEFT OUTER JOIN dbo.Cards as BillToCards on CustomerCard.BillToId = BillToCards.Id LEFT OUTER JOIN
 						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
-						
-						 
+          
 where dbo.Cards.PartnerTypeId <> 'AC'
+
+
     ]]>
   </SqlScript>
   <OracleScript>
