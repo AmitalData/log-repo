@@ -36,7 +36,11 @@ namespace Logitude.TimeManagementTests.Models.Builders
             _timeManagementAPIHelper.LocationCode = lcoations[locationName];
             return this;
         }
-
+        public TimeManagementAPIHelperBuilder WithItemsPM(List<TMEmployeeTimePM> tMEmployeeTimePMs)
+        {
+            _timeManagementAPIHelper.ItemsPM = tMEmployeeTimePMs;
+            return this;
+        }
         public TimeManagementAPIHelperBuilder ItemsPM(TMEmployeeTimePM tMEmployeeTime)
         {
             if (_timeManagementAPIHelper.ItemsPM == null)

@@ -59,8 +59,16 @@ namespace Logitude.TimeManagementTests.Models.Builders
             _tMEmployeeTime.DateOfWork = dateOfWork;
             return this;
         }
-
-
+        public TMEmployeeTimePMBuilder ProjectId(string projectId)
+        {
+            _tMEmployeeTime.ProjectId = projectId;
+            return this;
+        }
+        public TMEmployeeTimePMBuilder SprintId(string sprintId)
+        {
+            _tMEmployeeTime.SprintId = sprintId;
+            return this;
+        }
         public TMEmployeeTimePMBuilder WINumber(string wINumber)
         {
             _tMEmployeeTime.WINumber = wINumber;
