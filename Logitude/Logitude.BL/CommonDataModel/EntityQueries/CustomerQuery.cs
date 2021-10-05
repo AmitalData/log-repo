@@ -2478,7 +2478,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    StateName = customer.StateName,
                                                    GLAccountNumber = customer.GLAccountDisplayNumber,
                                                    IsAutonomy = customer.IsAutonomy,
-
+                                                   BillToId = customer.BillToId,
+                                                   BillToName = customer.BillToName,
                                                });
 
 
@@ -2617,7 +2618,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              GLAccountNumber = customer.Card.GLAccountDisplayNumber,
                                              IsAutonomy = customer.Card.IsAutonomy,
-
+                                             BillToName = customer.Card.EnglishName,
+                                             BillToId = customer.Card.BillToId,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2805,6 +2807,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              IsAutonomy = customer.Card.IsAutonomy,
+                                             BillToName = customer.Card.EnglishName,
+                                             BillToId = customer.Card.BillToId,
 
                                          }).FirstOrDefault();
 
@@ -2927,7 +2931,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              IsAutonomy = customer.Card.IsAutonomy,
-
+                                             BillToName = customer.Card.EnglishName,
+                                             BillToId = customer.Card.BillToId,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -3062,7 +3067,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UsoCFDICode = a.Card.UsoCFDICode,
                         CreatedByPartner = a.Card.CreatedByPartner,
                         IsAutonomy = a.Card.IsAutonomy,
-
+                        BillToName = a.Card.EnglishName,
+                        BillToId = a.Card.BillToId,
                     };
 
                     entityList.Add(list);
