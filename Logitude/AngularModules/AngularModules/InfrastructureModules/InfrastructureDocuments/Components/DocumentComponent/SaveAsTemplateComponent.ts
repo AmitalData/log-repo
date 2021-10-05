@@ -10,7 +10,7 @@ import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs'
 declare var  StringToBase64, Base64ToString: any;
 import {ReportsTemplatePM} from '../../../../Common/EntityPMs/ReportsTemplatePM';
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
-
+ 
 @Component({
     
     selector: 'SaveAsTemplate',
@@ -61,7 +61,7 @@ export class SaveAsTemplateComponent implements OnInit {
 
         this.CurrentSession.CloseCurrentWindow();
     }
-
+ 
 
 
     SaveButtonClicked() {
@@ -131,7 +131,11 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
                 newTemplatePM.AutomationId = !this.DataContext.AutomationId ? null : this.DataContext.AutomationId;
-
+                newTemplatePM.DefultAttachmentsXML = this.SelectedTemplate.DefultAttachmentsXML;
+                newTemplatePM.DocumentDefultAttachments = this.SelectedTemplate.DocumentDefultAttachments;
+                newTemplatePM.AttachedExternalDocumentsIds = this.SelectedTemplate.AttachedExternalDocumentsIds;
+                newTemplatePM.IsDefultAttachmentsXMLChanged = true;
+                 
                 if (this.DataContext) {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
                 }
