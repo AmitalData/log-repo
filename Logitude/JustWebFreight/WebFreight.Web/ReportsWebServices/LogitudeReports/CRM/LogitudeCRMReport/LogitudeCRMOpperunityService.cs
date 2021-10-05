@@ -50,9 +50,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 opportunityCRMDetails.ResellerCommission = tenantManagement.ResellerCommission;
                 opportunityCRMDetails.TenantManagementNumberOfUsers = logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
                 opportunityCRMDetails.TenantManagementTotalPrice = (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
-                opportunityCRMDetails.TenantManagementAveragePrice = (opportunityCRMDetails.TenantManagementNumberOfUsers == null || opportunityCRMDetails.TenantManagementNumberOfUsers == 0) ? 0 : opportunityCRMDetails.TenantManagementTotalPrice / opportunityCRMDetails.TenantManagementNumberOfUsers;
-                opportunityCRMDetails.TotalNet = opportunityCRMDetails.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
+                opportunityCRMDetails.TenantManagementAveragePrice = CalculateAveragePrice(opportunityCRMDetails);
+                opportunityCRMDetails.TotalNet = CalculateTotalNet(opportunityCRMDetails, tenantManagement);
             }
+        }
+
+        private decimal? CalculateAveragePrice(OpportunityCRMDetails opportunityCRMDetails)
+        {
+            if (opportunityCRMDetails.TenantManagementNumberOfUsers == null || opportunityCRMDetails.TenantManagementNumberOfUsers == 0)
+            {
+                return 0;
+            }
+            return opportunityCRMDetails.TenantManagementTotalPrice / opportunityCRMDetails.TenantManagementNumberOfUsers;
+        }
+
+        private decimal? CalculateTotalNet(OpportunityCRMDetails opportunityCRMDetails, TenantManagementPM tenantManagement)
+        {
+            if (logitudeCRMReportFilter.ShowNet)
+            {
+                return opportunityCRMDetails.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
+            }
+            return opportunityCRMDetails.NumberOfUsers * opportunityCRMDetails.Total;
         }
 
         private List<Card> GetResellersForIds(List<string> cardIds)
