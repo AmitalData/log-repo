@@ -114,7 +114,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                 if (MyEntity.BillingAddress != null)
                 {
-                    SetBillingAddress(MyEntity, ComputingPartnerName, temp);
+                    SetBillingAddress(MyEntity, Tenant, ComputingPartnerName, temp);
                 }
 
                 return temp;
@@ -126,23 +126,23 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        private static void SetBillingAddress(Vendor MyEntity, string ComputingPartnerName, VendorPM temp)
+        private static void SetBillingAddress(Vendor MyEntity, int Tenant, string ComputingPartnerName, VendorPM temp)
         {
-            AddressQueryService AddressQueryService = new AddressQueryService(temp.Tenant);
-            AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, temp.Tenant);
+            AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
+            AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, Tenant);
             if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
             {
-                address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, temp.Tenant, ComputingPartnerName);
+                address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
             }
 
             else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
             {
-                address.City = MyEntity.MainAddress.City;
+                address.City = MyEntity.BillingAddress.City;
             }
 
             address.AddressTypeId = "B";
             address.Description = "Billing Address";
-            address.Tenant = temp.Tenant;
+            address.Tenant = Tenant;
 
             if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Name))
             {
@@ -155,6 +155,5 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
             temp.Addresses.Add(address);
         }
-
     }
 }
