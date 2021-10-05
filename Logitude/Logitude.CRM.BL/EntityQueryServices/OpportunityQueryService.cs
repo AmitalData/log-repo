@@ -995,8 +995,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
             ICRMContext context = MainContext as ICRMContext;
             IQueryable<OpportunityCRMDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer")
                                                                  join opportunityType in context.OpportunityTypes on a.OpportunityTypeId equals opportunityType.Id
-                                                                 where a.Tenant == tenant
-                                                                 select new OpportunityCRMDetails()
+                                                                 where a.Tenant == tenant && a.IsClosed && 
+                                                                 context.OpportunityClosingReasons.FirstOrDefault(b => b.Tenant == tenant && b.Code == "WN").Id == a.ClosingReasonId
+                                                                    select new OpportunityCRMDetails()
                                                                  {
                                                                      CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
                                                                      ResellerId = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.Field2 : null,
