@@ -2,9 +2,12 @@
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -331,7 +334,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-
+                    if (ConnectedAfterSend_Need2UpdateDocumentStatuscode(declarationPM))
+                    {
+                        UpdateDocumentStatuscode(declarationPM);
+                    }
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -437,6 +443,40 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
             }
+
+        }
+
+        private void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM)
+        {
+            ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                
+                if (currentDeclarationCourierStatusPM.DocumentStatusCode != "V")
+                {
+                    LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
+
+        private bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM)
+        {
+
+            var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
+            var customsDocument =customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
+            if (string.IsNullOrWhiteSpace(customsDocument.CustomsDocId))
+            {
+                return false;
+            }
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
+            var declarationCourierStatus =declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
+            return declarationCourierStatus.DocumentStatusCode != "V";
 
         }
 
