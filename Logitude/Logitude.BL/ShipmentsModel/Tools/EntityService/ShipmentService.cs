@@ -660,6 +660,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsUpdatingStandaloneShipments()
         {
+            if (this.entityPM.IsHybrid)
+                return false;
             if (this.entityPM.DirectionId != this.entityPoco.DirectionId)
                 return true;
             if (this.entityPM.ShipmentLevelCode != this.entityPoco.ShipmentLevelCode)
