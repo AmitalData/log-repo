@@ -526,6 +526,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleDocumentsFiling(theEntityPm.Id, theEntityPm.Tenant);
+            if (string.IsNullOrWhiteSpace(this.Poco.EntityId) && !string.IsNullOrWhiteSpace(theEntityPm.EntityId))
+            {
+                this._Connect2EntityId = true;
+            }
             if (!string.IsNullOrEmpty(Poco.CustomerDocumentId))
             {
                 theEntityPm.CustomerDocumentId = Poco.CustomerDocumentId;
@@ -1390,6 +1394,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
         private bool HaveENDOC_DocumentsFilingMetaDataValues=false;
+        private bool _Connect2EntityId;
 
         public void SetChangeSet(List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet)
         {

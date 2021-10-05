@@ -1,0 +1,44 @@
+<h3 class="sub-header">{{'QuoteOP.F.Shipper' | TextCodeTranslationPipe}}</h3>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table
+      [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
+      [data]='shipperNames' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"shipperName"'
+      [formGroup]='formGroup' (onSelect)='onSelectedName($event)'>
+    </app-autocomplate-table>
+    </div>
+
+    <div *ngIf='formGroup.value.shipperName'>
+      <div class="p-field">
+        <app-address-textarea [Address]='Address'></app-address-textarea>
+      </div>
+
+      <div class="p-field">
+        <label for="shipperReference1">Reference 1</label>
+        <input formControlName="shipperReference1" id="shipperReference1" type="text" pInputText>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div *ngIf='formGroup.value.shipperName'>
+      <div class="p-field">
+        <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='shipperContacts'
+          [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"shipperContact"' [formGroup]='formGroup'
+          (onSelect)='onSelectedContact($event)'>
+        </app-autocomplate-table>
+      </div>
+      <div class="p-field">
+        <label for="shipperNotes">{{'QuoteOP.S.NewQuote.ShipperNotes' | TextCodeTranslationPipe}}</label>
+        <textarea formControlName="shipperNotes" id="shipperNotes" pInputTextarea [rows]="4"></textarea>
+      </div>
+
+      <div class="p-field">
+        <label for="shipperReference2">Reference 2</label>
+        <input formControlName="shipperReference2" id="shipperReference2" type="text" pInputText>
+      </div>
+    </div>
+  </div>
+</div>

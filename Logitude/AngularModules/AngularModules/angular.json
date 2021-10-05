@@ -29,9 +29,10 @@
               "Js",
               "Images"
             ],
-            "styles": [
+            "styles": [              
               "styles.css",
-              "./node_modules/collaboration-tool-core/dist/index.css"
+              "./node_modules/collaboration-tool-core/dist/index.css",
+              "./node_modules/primeflex/primeflex.css"
             ],
             "scripts": [
               "_Resources/js/FaviconManager.js",

@@ -160,7 +160,7 @@ namespace CustomsWorkerRole
             if (_DedicatedCourierDCAModel!=null)
             {
                 costomSettingDCAList = _AllCustomsSetting
-                    .Where(env => env.CompanyType == "B")
+                    //.Where(env => env.CompanyType == "B")
                     .Where(env=>env.Tenant== _DedicatedCourierDCAModel.Tenant);//Courier
                 if (!costomSettingDCAList.Any())
                 {

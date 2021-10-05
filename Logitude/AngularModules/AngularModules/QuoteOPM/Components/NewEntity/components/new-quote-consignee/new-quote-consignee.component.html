@@ -1,0 +1,47 @@
+<h3 class="sub-header">{{'QuoteOP.F.Consignee' | TextCodeTranslationPipe}}</h3>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table
+        [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
+        [data]='consigneeNames' [fieldShow]='"EnglishName"'
+        [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe" [controlName]='"consigneeName"'
+        [formGroup]='formGroup' (onSelect)='onSelectedName($event)'>
+      </app-autocomplate-table>
+    </div>
+
+    <div *ngIf='formGroup.value.consigneeName'>
+      <div class="p-field">
+        <app-address-textarea [Address]='Address'></app-address-textarea>
+      </div>
+
+      <div class="p-field">
+        <label for="consigneeReference1">Reference 1</label>
+        <input formControlName="consigneeReference1" id="consigneeReference1" type="text" pInputText>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div *ngIf='formGroup.value.consigneeName'>
+
+      <div class="p-field">
+        <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='consigneeContacts'
+          [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"consigneeContact"' [formGroup]='formGroup'
+          (onSelect)='onSelectedContact($event)'>
+        </app-autocomplate-table>
+      </div>
+
+      <div class="p-field">
+        <label for="consigneeNotes">{{'QuoteOP.S.NewQuote.ConsigneeNotes' | TextCodeTranslationPipe}}</label>
+        <textarea formControlName="consigneeNotes" id="consigneeNotes" pInputTextarea [rows]="4"></textarea>
+      </div>
+
+      <div class="p-field">
+        <label for="consigneeReference2">Reference 2</label>
+        <input formControlName="consigneeReference2" id="consigneeReference2" type="text" pInputText>
+      </div>
+    </div>
+  </div>
+</div>
