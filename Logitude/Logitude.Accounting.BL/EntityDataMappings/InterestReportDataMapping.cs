@@ -158,13 +158,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
                 GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
-                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
-                //if (!entityPM.CanRecalculate)
-                //{
-                //    entityPM.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
-                //    entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
-                //}
-
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;              
             }
 
 

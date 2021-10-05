@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         string oldLabel = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0);
         string newLabel = TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0);
+        const string  RecalculateEventCode= "IREC";
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
             if (!entityPM.IsCreatedFromBatch)
@@ -97,29 +98,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (interestReport.IsUpdatedFromBatch && interestReport.InterestReportStatusCode == InterestReportStatuseValues.Draft)
             {
-
-                 eventNotes = null;
-                if (interestReport.GLAccountInterestCreditLimit != EntityPOCO.GLAccountInterestCreditLimit)
-                {
-                    eventNotes= SetEventNote("Credit Limit", EntityPOCO.GLAccountInterestCreditLimit.ToString(), interestReport.GLAccountInterestCreditLimit.ToString());
-
-                 }
-                if (interestReport.CreditAllotmentPercentage != EntityPOCO.CreditAllotmentPercentage)
-                {
-                    eventNotes = SetEventNote("Credit Allotment Percentage", EntityPOCO.CreditAllotmentPercentage.ToString(), interestReport.CreditAllotmentPercentage.ToString());
-                }
-                if (interestReport.CalculatedPostponedChequesCommision != EntityPOCO.CalculatedPostponedChequesCommision)
-                {
-                    eventNotes = SetEventNote("Calculated Postponed Cheques Commision", EntityPOCO.CalculatedPostponedChequesCommision.ToString(), interestReport.CalculatedPostponedChequesCommision.ToString());
-                }
-
+               SetEventNoteForRecalculateData(interestReport);
+               
                 if (eventNotes != null)
-                    CreateEvent("IREC", interestReport, eventNotes);
+                    CreateEvent(RecalculateEventCode, interestReport, eventNotes);
             }
 
             CreateRecalculateEventForUpdateCalculationDate();
            
         }
+        private void SetEventNoteForRecalculateData(InterestReportPM interestReport)
+        {
+            if (interestReport.GLAccountInterestCreditLimit != EntityPOCO.GLAccountInterestCreditLimit)
+            {
+                eventNotes = SetEventNote("Credit Limit", EntityPOCO.GLAccountInterestCreditLimit.ToString(), interestReport.GLAccountInterestCreditLimit.ToString());
+
+            }
+            if (interestReport.CreditAllotmentPercentage != EntityPOCO.CreditAllotmentPercentage)
+            {
+                eventNotes = SetEventNote("Credit Allotment Percentage", EntityPOCO.CreditAllotmentPercentage.ToString(), interestReport.CreditAllotmentPercentage.ToString());
+            }
+            if (interestReport.CalculatedPostponedChequesCommision != EntityPOCO.CalculatedPostponedChequesCommision)
+            {
+                eventNotes = SetEventNote("Calculated Postponed Cheques Commision", EntityPOCO.CalculatedPostponedChequesCommision.ToString(), interestReport.CalculatedPostponedChequesCommision.ToString());
+            }
+        }
+
         private string SetEventNote(string fieldLabel, string oldValue, string newValue)
         {
             return eventNotes+ fieldLabel + ": " + "old value: " + oldValue + ",new value: " + newValue + Environment.NewLine;
