@@ -2850,7 +2850,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 AddImporterApprovalReceivedQueue();
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequiredValueFromDeclarationXMLData();
                             shipmentAdditionalCloudData.ApprovedByUserName = null;
                             shipmentAdditionalCloudData.ApproveDateTime = null;
                             shipmentAdditionalCloudData.DenyReason = null;
@@ -2932,6 +2932,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 behaviour.Handle();
                 this.initializer.IsUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
+        }
+
+        private bool GetIsImporterApprovalRequiredValueFromDeclarationXMLData()
+        {
+            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
+            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(entityPM.DeclarationXMLData);
+            return IsImporterApprovalRequried;
         }
 
         private void FillDefaultSubType()
