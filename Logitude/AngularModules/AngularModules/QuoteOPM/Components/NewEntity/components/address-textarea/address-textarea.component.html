@@ -1,0 +1,8 @@
+<label for="shipperAddress">Address</label>
+<textarea [(ngModel)]="addressTextarea" id="shipperAddress" pInputTextarea [rows]="4" disabled></textarea>
+<div *ngIf='Address'>
+    <img [attr.src]="Address.CountryCode | CountryFlagPipe" />
+    <div class="google-map">
+        <GoogleMapsButton [AddressList]="Address"></GoogleMapsButton>
+    </div>
+</div>

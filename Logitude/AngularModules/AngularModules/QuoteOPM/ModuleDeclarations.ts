@@ -10,6 +10,17 @@ import {ApproveBuildShipmentComponent} from './Components/MenuButtons/ApproveBui
 import {QuoteEventNotesComponent} from './Components/MenuButtons/QuoteEventNotesComponent';
 
 import { QuoteSaleCurrencyTypeComponent } from './Components/Shared/QuoteSaleCurrencyTypeComponent';
+import { NewQuoteConsigneeComponent } from './Components/NewEntity/components/new-quote-consignee/new-quote-consignee.component';
+import { NewQuoteDeliveryComponent } from './Components/NewEntity/components/new-quote-delivery/new-quote-delivery.component';
+import { NewQuoteExpectedOrderComponent } from './Components/NewEntity/components/new-quote-expected-order/new-quote-expected-order.component';
+import { NewQuoteGeneralComponent } from './Components/NewEntity/components/new-quote-general/new-quote-general.component';
+import { NewQuoteLeftSideComponent } from './Components/NewEntity/components/new-quote-left-side/new-quote-left-side.component';
+import { NewQuoteMyCustomersComponent } from './Components/NewEntity/components/new-quote-my-customers/new-quote-my-customers.component';
+import { NewQuotePickupComponent } from './Components/NewEntity/components/new-quote-pickup/new-quote-pickup.component';
+import { NewQuotePropertiesComponent } from './Components/NewEntity/components/new-quote-properties/new-quote-properties.component';
+import { NewQuoteShipperComponent } from './Components/NewEntity/components/new-quote-shipper/new-quote-shipper.component';
+import { AddressTextareaComponent } from './Components/NewEntity/components/address-textarea/address-textarea.component';
+import { AutocomplateTableComponent } from './Components/NewEntity/components/autocomplate-table/autocomplate-table.component';
 
 export const Components =
     [
@@ -24,6 +35,18 @@ export const Components =
         ApproveBuildShipmentComponent,
 
         QuoteEventNotesComponent,
+
+        NewQuoteLeftSideComponent,
+        NewQuoteShipperComponent,
+        NewQuoteConsigneeComponent,
+        NewQuoteMyCustomersComponent,
+        NewQuotePropertiesComponent,
+        NewQuoteGeneralComponent,
+        NewQuotePickupComponent,
+        NewQuoteDeliveryComponent,
+        NewQuoteExpectedOrderComponent,
+        AddressTextareaComponent,
+        AutocomplateTableComponent,
     ];
 
 export const SharedComponents =

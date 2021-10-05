@@ -1,0 +1,79 @@
+<h2>
+  {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
+  <span>(Please Insert Data of <p-button (click)="showDialog()" label="Fill Description" styleClass="p-button-link"></p-button>)</span>
+</h2>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <label for="grossWeight">Grros Weight (KG)</label>
+      <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="volume">Volume (CBM)</label>
+      <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="chargeableWeight">Chargeable Weight (KG)</label>
+      <p-inputNumber formControlName='chargeableWeight' id="chargeableWeight" mode="decimal" [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+
+    <div class="p-field">
+      <label for="numberOfPackages">Number of Packages</label>
+      <p-inputNumber formControlName='numberOfPackages' id="numberOfPackages" mode="decimal" [useGrouping]="false">
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
+
+    <div class="p-field">
+      <label for="descriptionOfGoods">Description of Goods</label>
+      <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="3"></textarea>
+    </div>
+
+    <div class="p-field">
+      <label for="notes">Notes</label>
+      <textarea formControlName='notes' id="notes" pInputTextarea [rows]="3"></textarea>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Fill Dimensions" [(visible)]="displayDialog" (onHide)='onDilogCancel()' styleClass="mydialog">
+  <p-button label='add package' (onClick)='addNewPackageForm()'></p-button>
+  <p-table [value]="formsPackage">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Quantity</th>
+        <th>L</th>
+        <th>W</th>
+        <th>H</th>
+        <th>Volume</th>
+        <th>Volumetric Weight</th>
+        <th>Gross Weight</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-form let-i="rowIndex">
+        <tr [formGroup]='form' class="p-fluid">
+          <td class="p-field"><p-inputNumber formControlName='quantity'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='l'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='w'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='h'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='volume'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='volumetricWeight'></p-inputNumber> </td>
+          <td class="p-field"><p-inputNumber formControlName='grossWeight'></p-inputNumber> </td>
+          <td>
+            <button pButton type="button" class="p-button-secondary" icon="pi pi-times" (click)='removePackage(i)'></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-button label='cancel' (onClick)='onDilogSave()'></p-button>
+    <p-button label='add' (onClick)='onDilogCancel()'></p-button>
+</p-dialog>

@@ -30,3 +30,8 @@
 @import "node_modules/primeicons/primeicons.css";
 @import "node_modules/quill/dist/quill.snow.css"; */
 
+
+.p-field {
+    margin-bottom: 1rem;
+    white-space: initial !important;
+}
