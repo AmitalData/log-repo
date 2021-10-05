@@ -4,6 +4,7 @@ using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using Logitude.TimeManagementTests.Models;
+using Logitude.TimeManagementTests.Models.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,5 +219,38 @@ namespace Logitude.TimeManagementTests.Services
 
         #endregion
 
+        public void PreparForUpdate()
+        {
+            CreateDataEntry();
+            TimeManagementData.UpdateProjectId = GetProjectId("specflow project update", UserTenant.UserId);
+            TimeManagementData.UpdateSprintId = GetSprintId("specflow sprint update");
+            TimeManagementData.UpdatedDateNumber = -1;
+        }
+        private void CreateDataEntry()
+        {
+            var dataEntry = CreateInstance();
+            var wINumber = dataEntry.ItemsPM.First().WINumber;
+            var updatedDataEntry = APICaller.CallPut<TimeManagementAPIHelper>(dataEntry, Urls.TimeManagementDomainController, UserTenant.Token)?.Data;
+            var item = updatedDataEntry.ItemsPM.Where(e => e.WINumber == wINumber).First();
+            TimeManagementData.DataEntryID = item.Id;
+        }
+        private TimeManagementAPIHelper CreateInstance()
+        {
+            return new TimeManagementAPIHelperBuilder()
+                .WithDefualtValues()
+                .LocationCode("Office")
+                .ItemsPM(GetTMEmployeeTime())
+                .Build();
+        }
+        private TMEmployeeTimePM GetTMEmployeeTime()
+        {
+            return new TMEmployeeTimePMBuilder().WithDefualtValues()
+                .LocationCode("Office")
+                .Description("Description")
+                .TimeInMinutes(200)
+                .DateOfWork(DateTime.Now)
+                .WINumber(DateTime.Now.Ticks.ToString())
+                .Build();
+        }
     }
 }
