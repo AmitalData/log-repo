@@ -761,13 +761,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string TaxCode { get; set; }
         public string VATExternalId { get; set; }
         public string PayableLineId { get; set; }
-
         public string DebitAccount { get; set; }
         public decimal? Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
-
         public bool IsMultiTAX { get; set; }
+        public string ShipmentNumber { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }

@@ -858,9 +858,15 @@ class JournalLineModel extends BaseComponent {
         this.DebitAccountFilterItems = new ApiQueryFilters();
         this.DebitAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
         //#endregion
-        this.glaccountListService=new GLAccountListService();
+        this.glaccountListService = new GLAccountListService();
+        this.SetCurrencyFieldEnabilityForCopyJournal();
     }
+    SetCurrencyFieldEnabilityForCopyJournal() {
 
+        if (this.JournalLinePM.CurrencyId != "Multi") {
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        }
+    }
 
     get AccountingDate() { return this.JournalLinePM.AccountingDate; }
     set AccountingDate(value: Date) {

@@ -192,6 +192,32 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
+    SetTitleForSupplierOrClient(directionId: string) {
+        var title;
+        switch (directionId) {
+            case ShipmentDirections.Export: {
+                title = "CLIENT"
+                break;
+            }
+
+            case ShipmentDirections.Import:
+            case ShipmentDirections.Customs: {
+                title = "SUPPLIER"
+                break;
+            }
+        }
+
+        return title;
+    }
+    SetSupplierOrCleintValueByDirection(shipmentList) {
+        if(shipmentList.DirectionId == ShipmentDirections.Export) 
+        {
+            return shipmentList.ShipperName;
+        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
+            return shipmentList.ConsigneeName;   
+        }
+        return '';
+    }
     SetTypeTitle() {
         if (this.Shipment.ShipmentList.TransportModeId == "A") {
             this.TypeTitle = "PACKAGE TYPE";
@@ -1118,9 +1144,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ShipmentRouteSteps.push(step);
     }
 
-    DownloadDocument(document: string) {
-        if(document)
-            this.documentDownloadService.DownloadPage(document);
+    DownloadDocument(documentId: string, documentTypeName: string) {
+        if (documentId)
+            this.documentDownloadService.DownloadPage(documentId, this.Shipment.ShipmentList.ShipmentNumber + '-' + documentTypeName);
     }
 
     DownloadAllClick(entityId: string, securityKey: string) {
@@ -1212,4 +1238,10 @@ export class PartnerCard
     PhoneNumber: string;
     FaxNumber: string;
     ShowDetails: boolean = false;
+}
+
+enum ShipmentDirections {
+    Import = "I",
+    Export = "E",
+    Customs = "C"
 }

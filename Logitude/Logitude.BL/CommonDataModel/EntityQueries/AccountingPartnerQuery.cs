@@ -994,5 +994,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         BillToId = a.Card.BillToId,
                     }).FirstOrDefault();
         }
+
+        public List<AccountingPartnerPM> GetAccountingPartnersByIds(List<string> Ids, int tenant)
+        {
+
+            List<AccountingPartner> accountingPartners = repository.GetAccountingPartnersByIds(Ids, tenant);
+            return (from a in accountingPartners
+
+                    select new AccountingPartnerPM()
+                    {
+                        Id = a.Id,
+                        InsuredCreditlimit = a.InsuredCreditlimit,
+                        Tenant = a.Tenant,
+
+                    }).ToList();
+
+
+
+        }
+
     }
 }

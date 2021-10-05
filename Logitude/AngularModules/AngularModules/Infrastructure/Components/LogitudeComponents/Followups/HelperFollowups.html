@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .LogitudeHelperFollowups {
         position: relative;
@@ -325,6 +325,17 @@
                                                     </td>
                                                 </tr>
 
+                                                <!-- Time -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [Text]="'Time'"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogDatePicker [InputType]="'time'" [TimeMode]="12" [ObjectFieldName]="'Date'" [SelectedDateValue]="AddDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
+                                                    </td>
+                                                </tr>
+
                                                 <!-- OwnerUserId -->
                                                 <tr class="FormFieldRow">
                                                     <td>
@@ -479,6 +490,17 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Time -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [Text]="'Time'"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogDatePicker [InputType]="'time'" [TimeMode]="12" [ObjectFieldName]="'Date'" [SelectedDateValue]="EditDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
                                                     </td>
                                                 </tr>
 
