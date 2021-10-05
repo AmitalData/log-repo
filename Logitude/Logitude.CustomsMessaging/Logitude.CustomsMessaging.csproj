@@ -143,6 +143,8 @@
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
     <Compile Include="Dca\DcaDirect9200TenantService.cs" />
+    <Compile Include="Dca\DedicatedCourierDCAService.cs" />
+    <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />

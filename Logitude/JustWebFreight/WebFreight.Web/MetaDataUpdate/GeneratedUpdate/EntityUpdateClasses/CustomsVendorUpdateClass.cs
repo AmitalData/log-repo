@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsVendorUpdateClass
    {  		
-		public const string HashString = "0ed663177842404a232613b802ce7229";
+		public const string HashString = "41879e5f7770f054cad5e7c2bf16a951";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1900,7 +1900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsVendorTextCode_CustomsVendorOAddingVendorSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.AddingVendorSuccessfully", DefaultText = "Adding vendor completed successfully.",LocalDefaultText = @"הוספת ספק הושלם בהצלחה.", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsVendorTextCode_CustomsVendorONewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.NewClient", DefaultText = "New Client",LocalDefaultText = @"שליפת יבואן", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsVendorTextCode_CustomsVendorONewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.NewClient", DefaultText = "New Client",LocalDefaultText = @"שליפת יבואן/יצואן ", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsVendorTextCode_CustomsVendorOSearchVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vendor.O.SearchVendors", DefaultText = "Search Vendors",LocalDefaultText = @"חיפוש ספקים", ObjectTableId = CustomsVendorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

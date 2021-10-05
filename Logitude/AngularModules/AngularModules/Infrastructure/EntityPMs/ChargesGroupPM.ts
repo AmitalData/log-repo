@@ -60,6 +60,11 @@ export class ChargesGroupPM {
     public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
        
 	 
+    private quoteGroupSectionID: string;
+    public get QuoteGroupSectionID() { return this.quoteGroupSectionID; }
+    public set QuoteGroupSectionID(newValue: string) { if (this.quoteGroupSectionID != newValue) { this.quoteGroupSectionID = newValue; this.MarkAsDirty("QuoteGroupSectionID"); } }
+       
+	 
 
     public OldEntityPM: ChargesGroupPM;
 		

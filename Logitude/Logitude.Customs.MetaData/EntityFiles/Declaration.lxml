@@ -23381,7 +23381,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.ImporterDetails&quot;"
       DefaultText="&quot;Importer Details&quot;"
-      LocalDefaultText="&quot;נתונים נוספים ליבואן&quot;"
+      LocalDefaultText="&quot;נתונים נוספים ליבואן/יצואן&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -24086,6 +24086,12 @@
       LocalDefaultText="&quot;נפתח עי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExistsClosingAmendments&quot;"
+      DefaultText="&quot;Exists declaration closing amendment in status &quot;"
+      LocalDefaultText="&quot;קיים תיקון הצהרה מסוג סגירה בסטטוס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -24246,6 +24252,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.EscapeSign&quot;"
       FeatureDefaultText="&quot;Escape Sign&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CUSTOMERSVIEW&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.CUSTOMERSVIEW&quot;"
+      FeatureDefaultText="&quot;CUSTOMERSVIEW&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

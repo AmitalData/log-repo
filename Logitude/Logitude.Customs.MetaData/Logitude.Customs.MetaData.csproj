@@ -155,6 +155,7 @@
     <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
     <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
+    <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -234,6 +235,7 @@
     <None Include="DBTables\ConstraintType.dxml" />
     <None Include="DBTables\ContactRoleType.dxml" />
     <None Include="DBTables\Containerization.dxml" />
+    <None Include="DBTables\ContainerizationHataraStatus.dxml" />
     <None Include="DBTables\ContainerizationStatusCode.dxml" />
     <None Include="DBTables\ContainerType.dxml" />
     <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />
@@ -517,12 +519,13 @@
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\AmedmentType.lxml" />
+    <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\BuyerRoleType.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
-    <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
+    <None Include="EntityFiles\ContainerizationHataraStatus.lxml" />
     <None Include="EntityFiles\CustomerClassificationType.lxml">
       <SubType>Designer</SubType>
     </None>

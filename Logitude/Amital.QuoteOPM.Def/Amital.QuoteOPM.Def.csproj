@@ -60,7 +60,10 @@
     <Compile Include="EntityPMs\Generated\QuoteOPComputedFieldPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPCostChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPCustomerTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuoteOPDocumentVersionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuoteOPPropertiesPM.Generated.cs" />
+    <Compile Include="EntityPMs\QuoteOPPM.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPPriceStepsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuoteOPRatingPM.Generated.cs" />
@@ -80,6 +83,8 @@
     <Compile Include="EntityPMs\Generated\QuoteOPVATsTotalPM.Generated.cs" />
     <Compile Include="EntityPMs\QuoteOPDocumentVersionPM.cs" />
     <Compile Include="EntityPMs\QuoteOPFollowUpPM.cs" />
+    <Compile Include="EntityPMs\QuoteOPSalesTotalPM.cs" />
+    <Compile Include="EntityPMs\QuoteOPVATsTotalPM.cs" />
     <Compile Include="EntityPMs\QuoteStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\QuoteOPMValidationClass.cs" />

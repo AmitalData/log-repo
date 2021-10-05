@@ -79,6 +79,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 		SpecialServicesTypeUpdateClass SpecialServicesTypeUpdateClass = new SpecialServicesTypeUpdateClass();
 		public void LoadObjectsTenantZero(IWebFreightContext context)
 		{
+			ObjectContext = context;
+			TextCodeRepository = new TextCodeRepository(ObjectContext);
+			Dictionary<string, TextCode> textcodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+			ObjectTable GeneralTable = ObjectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
+			AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes", LocalDefaultText = "הצעות מחיר", ObjectTableId = GeneralTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
 			return;// quit SpecialServicesType
 			ICommonDataContext commonContext = CommonDataContext.GetContext(0);
 			ObjectContext = context;

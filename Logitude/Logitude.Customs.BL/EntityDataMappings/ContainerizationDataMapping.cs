@@ -55,8 +55,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             var containerizationStatusCodeQueryService = new ContainerizationStatusCodeQueryService(entityPOCO.Tenant);
             entityPM.ContainerizationStatusName= containerizationStatusCodeQueryService.GetSingle(entityPOCO.ContainerizationStatus,false,true)?.Name;
-            var declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(entityPOCO.Tenant);
-            entityPM.HataraStatusName = declarationStatusTypeQueryService.GetSingle(entityPOCO.HataraStatus,false,true)?.LocalName;
+            var ContainerizationStatusQueryService = new ContainerizationHataraStatusQueryService(entityPOCO.Tenant);
+            entityPM.HataraStatusName = ContainerizationStatusQueryService.GetSingle(entityPOCO.HataraStatus,false,true)?.Name;
 
         }
         private static void BuildSearchFields(ContainerizationPM entityPM, Containerization poco, bool isNewEntity)

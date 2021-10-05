@@ -5,6 +5,27 @@
   DBType="Main"
   Module="Infrastructure">
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Id"
     Type="varchar"
     Size="15"
@@ -28,31 +49,22 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="5">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ViewOrder"
     Type="int"
     DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="QuoteGroupSectionID"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="QuoteGroupSectionID"
+    ReferencedTable="QuoteGroupSections"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
 </Table>

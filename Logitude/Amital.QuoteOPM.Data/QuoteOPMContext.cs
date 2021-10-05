@@ -80,9 +80,13 @@ namespace Amital.QuoteOPM.Data
 	
             modelBuilder.Configurations.Add(new QuoteOPCustomerTypeMap());
 	
+            modelBuilder.Configurations.Add(new QuoteOPDocumentVersionMap());
+	
             modelBuilder.Configurations.Add(new QuoteOPPackageMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPPriceStepsMap());
+	
+            modelBuilder.Configurations.Add(new QuoteOPPropertiesMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPRatingMap());
 	
@@ -422,12 +426,22 @@ namespace Amital.QuoteOPM.Data
 	      get; set;
 	 
 	 }
+		 public IDbSet<QuoteOPDocumentVersion> QuoteOPDocumentVersions 
+	 {
+	      get; set;
+	 
+	 }
 		 public IDbSet<QuoteOPPackage> QuoteOPPackages 
 	 {
 	      get; set;
 	 
 	 }
 		 public IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPProperties> QuoteOPPropertiess 
 	 {
 	      get; set;
 	 

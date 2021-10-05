@@ -33,15 +33,15 @@ namespace AmitalCustomsWindowsService
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main1()
-        {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new MyWinService()
-            };
-            ServiceBase.Run(ServicesToRun);
-        }
+        //static void Main1()
+        //{
+        //    ServiceBase[] ServicesToRun;
+        //    ServicesToRun = new ServiceBase[]
+        //    {
+        //        new MyWinService()
+        //    };
+        //    ServiceBase.Run(ServicesToRun);
+        //}
 
         [STAThread]
         static void Main()

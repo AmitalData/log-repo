@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "2bf71d6bf5827d960b7073be54628b43";
+		public const string HashString = "fcd6e8888b3363e589e4743d7d9a685d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9618,50 +9618,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = @"By Last Shipment",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BYLASTSHIPMETN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ByLastShipment", NameTextCodeDefaultText = "By Last Shipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.AllCustomers", DefaultText = @"AllCustomers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Q.AllCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.AllCustomers", NameTextCodeDefaultText = "AllCustomers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = @"Shippers and Consignees",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers And Consignees", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = @"By Last Shipment",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BYLASTSHIPMETN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ByLastShipment", NameTextCodeDefaultText = "By Last Shipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = @"Shared Logistics Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICSCUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogisticsCustomers", NameTextCodeDefaultText = "Shared Logistics Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = @"Shippers and Consignees",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers And Consignees", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = @"Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Customers", NameTextCodeDefaultText = "Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = @"Shared Logistics Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICSCUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogisticsCustomers", NameTextCodeDefaultText = "Shared Logistics Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = @"My Customers (as Account Manager)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMRERSASACCMNGR", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomersAsAccMngr", NameTextCodeDefaultText = "My customers (as Account Manager)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = @"Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Customers", NameTextCodeDefaultText = "Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = @"My Customers (as Salesman)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.MyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomers", NameTextCodeDefaultText = "My customers (as Salesman)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = @"My Customers (as Account Manager)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMRERSASACCMNGR", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomersAsAccMngr", NameTextCodeDefaultText = "My customers (as Account Manager)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = @"Waiting for Activation",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ReadyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyCustomers", NameTextCodeDefaultText = "Waiting for Activation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = @"My Customers (as Salesman)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.MyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomers", NameTextCodeDefaultText = "My customers (as Salesman)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = @"Potential Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.PotentialCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PotentialCustomers", NameTextCodeDefaultText = "Potential Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = @"Waiting for Activation",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ReadyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyCustomers", NameTextCodeDefaultText = "Waiting for Activation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ActiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ActiveCustomers", NameTextCodeDefaultText = "Active Customer", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = @"Potential Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.PotentialCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PotentialCustomers", NameTextCodeDefaultText = "Potential Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ActiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ActiveCustomers", NameTextCodeDefaultText = "Active Customer", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode CustomerTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "AllCustomers",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = "customers" }, addedQueries);
+	
+			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
+  
+	      
+
+			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn ByLastShipmentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9682,7 +9700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, addedQueries);
+			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_2.Id, NameTextCodeCode = CustomerTextCode_2.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, addedQueries);
 	
 			 QueryColumn ShippersAndConsigneesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9712,8 +9730,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query SharedLogisticsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_2.Id, NameTextCodeCode = CustomerTextCode_2.Code, ObjectTableName = "Customer", Code = "Shared Logistics Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
-			   QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
+			  Query SharedLogisticsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Shared Logistics Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
+			   QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn SharedLogisticsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9736,7 +9754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn CustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9775,7 +9793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9807,7 +9825,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_MyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9839,7 +9857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_ReadyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9867,7 +9885,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_PotentialCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9890,7 +9908,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_ActiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -9913,7 +9931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_10.Id, NameTextCodeCode = CustomerTextCode_10.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 10, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_10.Id,FeatureUniqeCode= CustomerFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_InactiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 

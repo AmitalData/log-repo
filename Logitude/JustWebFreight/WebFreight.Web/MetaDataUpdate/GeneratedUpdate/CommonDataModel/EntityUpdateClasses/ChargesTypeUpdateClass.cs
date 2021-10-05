@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "356dabf7432dc9ae416074ffda0e4d24";
+		public const string HashString = "20c6af22838cd15538720bcbb392cef2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3813,7 +3813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "QuoteGroupSection",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

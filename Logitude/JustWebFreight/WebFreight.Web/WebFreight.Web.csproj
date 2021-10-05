@@ -999,11 +999,13 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\QuoteGroupSectionViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ProductTypeModificationsController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmedmentTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\BuyerRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CargoTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientsPoaViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationHataraStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationStatusCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerizationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ContainerTypeViewsController.Generated.cs" />
@@ -1032,6 +1034,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\NewQuoteOPWebService.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
@@ -1079,9 +1082,11 @@
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\OPSpecialServicesTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPPropertiesViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\OPSpecialServicesTypeController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPPropertiesController.Generated.cs" />
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
@@ -2688,6 +2693,7 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
+    <Compile Include="Helpers\QuoteOPTemplateReportHelper.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -3061,6 +3067,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerTypeUpdateClass.cs" />
@@ -3187,8 +3194,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPComputedFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPCostChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPCustomerTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPDocumentVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPriceStepsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPropertiesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPRatingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSalesTotalUpdateClass.cs" />

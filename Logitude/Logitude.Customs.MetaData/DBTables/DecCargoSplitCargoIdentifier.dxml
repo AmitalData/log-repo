@@ -13,16 +13,16 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="LineNumber"
     Type="int">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -46,9 +46,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CargoTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationCargoSplitId"
     ReferencedTable="DeclarationCargoSplits"
     ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CargoTypeCode"
+    ReferencedTable="CargoIdentifireTypes"
+    ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

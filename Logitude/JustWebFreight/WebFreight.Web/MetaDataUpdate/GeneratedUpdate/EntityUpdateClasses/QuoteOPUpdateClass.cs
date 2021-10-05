@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "2b62a8eed739396601962dcdfcea5964";
+		public const string HashString = "94be03f82803151b5249012893d137cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15539,6 +15539,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature QuoteOPFeature_General_Features_QuoteOPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.QuoteOPSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.QuoteOPSettings", NameTextCodeDefaultText = @"Quote Settings(OP)" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
 
 		   Feature QuoteOPFeature_QPDBOP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QPDBOP", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.QPDBOP", NameTextCodeDefaultText = @"Quotes Performance Dashboard(OP)" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
+
+		   Feature QuoteOPFeature_QuoteOPMaintence = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOPMaintence", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.QuoteOPMaintence", NameTextCodeDefaultText = @"Quote OP Maintence" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
 
    
 	    

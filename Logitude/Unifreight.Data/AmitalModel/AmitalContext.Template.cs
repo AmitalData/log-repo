@@ -7858,6 +7858,791 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+
+
+            #region GTBPTYPE
+
+            modelBuilder.Entity<GTBPTYPE>()
+                .HasKey(p => new { p.APPLICATION, p.PRICETYPE })
+                .ToTable("GTBPTYPE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.APPLICATION)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.PRICETYPE)
+                    .HasColumnName(@"PRICE_TYPE")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.OWNERTYPE)
+                    .HasColumnName(@"OWNER_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.OWNER)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.QUOTESMANAGM)
+                    .HasColumnName(@"QUOTES_MANAGM")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.TARIFFTYPE)
+                    .HasColumnName(@"TARIFF_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.STEPBREAKBY)
+                    .HasColumnName(@"STEP_BREAK_BY")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.CALCBREAK)
+                    .HasColumnName(@"CALC_BREAK")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.STEPTYPE)
+                    .HasColumnName(@"STEP_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBPTYPE>()
+                .Property(p => p.TARIFFUSE)
+                    .HasColumnName(@"TARIFF_USE")
+                    .HasColumnType("long");
+
+            #endregion
+
+            #region ETBPAYTR
+
+            modelBuilder.Entity<ETBPAYTR>()
+                .HasKey(p => p.PTERMID)
+                .ToTable("ETBPAYTR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.PTERMID)
+                    .HasColumnName(@"PTERM_ID")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.WTVAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.OTHER)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPAYTR>()
+                .Property(p => p.SERTYPEDEF)
+                    .HasColumnName(@"SERTYPE_DEF")
+                    .HasColumnType("long");
+
+            #endregion
+
+            #region ETBPORT
+
+            modelBuilder.Entity<ETBPORT>()
+                .HasKey(p => p.PORTID)
+                .ToTable("ETBPORT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.PORTID)
+                    .HasColumnName(@"PORT_ID")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.COLLECTDEBIT)
+                    .HasColumnName(@"COLLECT_DEBIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.LOCALCODE)
+                    .HasColumnName(@"LOCAL_CODE")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.CONSALLOWED)
+                    .HasColumnName(@"CONS_ALLOWED")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBPORT>()
+                .Property(p => p.TIMEZONE)
+                    .HasColumnName(@"TIME_ZONE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region ETBAIRLINE
+
+            modelBuilder.Entity<ETBAIRLINE>()
+                .HasKey(p => p.AIRLINEID)
+                .ToTable("ETBAIRLINE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AIRLINEID)
+                    .HasColumnName(@"AIRLINE_ID")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.TMPACCCARD)
+                    .HasColumnName(@"TMP_ACC_CARD")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AWBTOTPRT)
+                    .HasColumnName(@"AWB_TOT_PRT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.MAINPORT)
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AWBADRPRT3)
+                    .HasColumnName(@"AWB_ADR_PRT_3")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.FILLER)
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.CHECKDIGIT)
+                    .HasColumnName(@"CHECK_DIGIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AWBADRPRT1)
+                    .HasColumnName(@"AWB_ADR_PRT_1")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AWBADRPRT2)
+                    .HasColumnName(@"AWB_ADR_PRT_2")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.CONSOLIDATOR)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AIRLINENUM)
+                    .HasColumnName(@"AIRLINE_NUM")
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.MINQUAN)
+                    .HasColumnName(@"MIN_QUAN")
+                    .HasColumnType("int");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.STACKBRDEP)
+                    .HasColumnName(@"STACK_BR_DEP")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.AWBACTPRT)
+                    .HasColumnName(@"AWB_ACT_PRT")
+                    .HasMaxLength(16)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.PRINTRATE)
+                    .HasColumnName(@"PRINT_RATE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBAIRLINE>()
+                .Property(p => p.MESSAGETEXT)
+                    .HasColumnName(@"MESSAGE_TEXT")
+                    .HasColumnType("long");
+
+            #endregion
+
+            #region ITBPORT
+
+            modelBuilder.Entity<ITBPORT>()
+                .HasKey(p => p.PORTID)
+                .ToTable("ITBPORT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.PORTID)
+                    .HasColumnName(@"PORT_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ITBPORT>()
+                .Property(p => p.TIMEZONE)
+                    .HasColumnName(@"TIME_ZONE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region RTBPORT
+
+            modelBuilder.Entity<RTBPORT>()
+                .HasKey(p => p.PORTID)
+                .ToTable("RTBPORT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.PORTID)
+                    .HasColumnName(@"PORT_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<RTBPORT>()
+                .Property(p => p.TIMEZONE)
+                    .HasColumnName(@"TIME_ZONE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region ETBSERLV
+
+            modelBuilder.Entity<ETBSERLV>()
+                .HasKey(p => p.SERVLEVELID)
+                .ToTable("ETBSERLV", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.SERVLEVELID)
+                    .HasColumnName(@"SERVLEVEL_ID")
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBSERLV>()
+                .Property(p => p.TEXTFORACCOUNT)
+                    .HasColumnName(@"TEXT_FOR_ACCOUNT")
+                    .HasColumnType("long");
+
+            #endregion
+
+            #region GTBSERLV
+
+            modelBuilder.Entity<GTBSERLV>()
+                .HasKey(p => p.SERVLEVELID)
+                .ToTable("GTBSERLV", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.SERVLEVELID)
+                    .HasColumnName(@"SERVLEVEL_ID")
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GTBSERLV>()
+                .Property(p => p.SYSTEM)
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region ETBVEND
+
+            modelBuilder.Entity<ETBVEND>()
+                .HasKey(p => p.VENDORID)
+                .ToTable("ETBVEND", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.VENDORID)
+                    .HasColumnName(@"VENDOR_ID")
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.ADDRESS)
+                    .HasMaxLength(35)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.ISHANDAGNT)
+                    .HasColumnName(@"IS_HAND_AGNT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.CITY)
+                    .HasMaxLength(17)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.ADDRESS2)
+                    .HasColumnName(@"ADDRESS_2")
+                    .HasMaxLength(35)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.STATE)
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.COUNTRY)
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.ZIPCODE)
+                    .HasColumnName(@"ZIP_CODE")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.VENDORPREFIX)
+                    .HasColumnName(@"VENDOR_PREFIX")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.CARDID)
+                    .HasColumnName(@"CARD_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.CHECKDIGIT)
+                    .HasColumnName(@"CHECK_DIGIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.PRINTRATE)
+                    .HasColumnName(@"PRINT_RATE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.TMPACCOUNTNO)
+                    .HasColumnName(@"TMP_ACCOUNT_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.CHARACTERS)
+                    .HasMaxLength(200)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.TAM)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.TEL)
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.FAX)
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.CONTACT)
+                    .HasMaxLength(64)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.EMAIL)
+                    .HasColumnName(@"E_MAIL")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.BILLTO)
+                    .HasColumnName(@"BILL_TO")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.FILLERB1)
+                    .HasColumnName(@"FILLER_B_1")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<ETBVEND>()
+                .Property(p => p.FILLERB2)
+                    .HasColumnName(@"FILLER_B_2")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region MTBCARR
+
+            modelBuilder.Entity<MTBCARR>()
+                .HasKey(p => p.AIRLINEID)
+                .ToTable("MTBCARR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.AIRLINEID)
+                    .HasColumnName(@"AIRLINE_ID")
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.TMPACCCARD)
+                    .HasColumnName(@"TMP_ACC_CARD")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.FWDCREDITNO)
+                    .HasColumnName(@"FWD_CREDIT_NO")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.AWBADRPRT3)
+                    .HasColumnName(@"AWB_ADR_PRT_3")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.AWBADRPRT1)
+                    .HasColumnName(@"AWB_ADR_PRT_1")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.AWBADRPRT2)
+                    .HasColumnName(@"AWB_ADR_PRT_2")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.CONTPREFIX)
+                    .HasColumnName(@"CONT_PREFIX")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.BLPRNT)
+                    .HasColumnName(@"BL_PRNT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.SCAC)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.MESSAGETEXT)
+                    .HasColumnName(@"MESSAGE_TEXT")
+                    .HasColumnType("clob");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.BLPREFIX)
+                    .HasColumnName(@"BL_PREFIX")
+                    .HasColumnType("clob");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.TRANSMITYN)
+                    .HasColumnName(@"TRANSMIT_YN")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBCARR>()
+                .Property(p => p.VENDORID)
+                    .HasColumnName(@"VENDOR_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+            #region MTBPORT
+
+            modelBuilder.Entity<MTBPORT>()
+                .HasKey(p => p.PORTID)
+                .ToTable("MTBPORT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.PORTID)
+                    .HasColumnName(@"PORT_ID")
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.BRANID)
+                    .HasColumnName(@"BRAN_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.COLLECTDEBIT)
+                    .HasColumnName(@"COLLECT_DEBIT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.CONSALLOWED)
+                    .HasColumnName(@"CONS_ALLOWED")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.AGENTID)
+                    .HasColumnName(@"AGENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.NOHRBFEE)
+                    .HasColumnName(@"NO_HRB_FEE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.TIMEZONE)
+                    .HasColumnName(@"TIME_ZONE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+            modelBuilder.Entity<MTBPORT>()
+                .Property(p => p.FRWDCREDIT)
+                    .HasColumnName(@"FRWD_CREDIT")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+
+            #endregion
             #region Disabled conventions
 
 
@@ -7967,5 +8752,18 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
         public virtual DbSet<GGGQC> GGGQCs { get; set; }
         public virtual DbSet<GAQTEAMUSR> GAQTEAMUSRs { get; set; }
+
+        public virtual DbSet<GTBPTYPE> GTBPTYPEs { get; set; }
+        public virtual DbSet<ETBPAYTR> ETBPAYTRs { get; set; }
+        public virtual DbSet<ETBPORT> ETBPORTs { get; set; }
+        public virtual DbSet<ETBAIRLINE> ETBAIRLINEs { get; set; }
+        public virtual DbSet<ITBPORT> ITBPORTs { get; set; }
+        public virtual DbSet<RTBPORT> RTBPORTs { get; set; }
+        public virtual DbSet<ETBSERLV> ETBSERLVs { get; set; }
+        public virtual DbSet<GTBSERLV> GTBSERLVs { get; set; }
+        public virtual DbSet<ETBVEND> ETBVENDs { get; set; }
+        public virtual DbSet<MTBCARR> MTBCARRs { get; set; }
+        public virtual DbSet<MTBPORT> MTBPORTs { get; set; }
+
     }
 }

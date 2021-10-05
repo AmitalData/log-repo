@@ -15,8 +15,6 @@ using Amital.QuoteOPM.Data.Repsitories;
 using Amital.QuoteOPM.Data.EntityKeys;
 using Amital.QuoteOPM.Data;
 using Simplog.Server.Infrastructure;
-using Logitude.BL.DataContracts;
-
 namespace Amital.QuoteOPM.BL.EntityQueryServices
 { 
    public partial class QuoteOPQueryService: EntityQueryService<QuoteOP,QuoteOPKeys,QuoteOPPM,object,QuoteOPKeys>
@@ -63,9 +61,9 @@ namespace Amital.QuoteOPM.BL.EntityQueryServices
             QuoteOPKeys entityKeys = new QuoteOPKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
-
-      
-    }
+     
+	 
+   }
    
 }
 	 

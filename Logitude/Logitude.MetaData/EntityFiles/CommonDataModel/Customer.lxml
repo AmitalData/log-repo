@@ -17099,7 +17099,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  
   <field
     Id="&quot;68b6c16c-973d-4d50-b245-0d455badfb44&quot;"
     FieldName="&quot;InsuredcreditLimit&quot;"
@@ -17250,10 +17249,53 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
+    Code="&quot;AllCustomers&quot;"
+    TextCode="&quot;AllCustomers&quot;"
+    QueryGroupCode="&quot;CLNT&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customer&quot;"
+    QuerySection="&quot;Customer&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;Id&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false"
+    Perspective="&quot;customers&quot;">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;RankCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CityName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllCustomers&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;StartWorkingDate&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
     Code="&quot;By Last Shipment&quot;"
     TextCode="&quot;By Last Shipment&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="0"
+    IndexOrder="1"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17318,7 +17360,7 @@
     Code="&quot;ShippersAndConsignees&quot;"
     TextCode="&quot;Shippers and Consignees&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="1"
+    IndexOrder="2"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17404,7 +17446,7 @@
     Code="&quot;Shared Logistics Customers&quot;"
     TextCode="&quot;Shared Logistics Customers&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="2"
+    IndexOrder="3"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17475,7 +17517,7 @@
     Code="&quot;Customers&quot;"
     TextCode="&quot;Customers&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="3"
+    IndexOrder="4"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17583,7 +17625,7 @@
     Code="&quot;Customer.Q.MyCustomersAccMngr&quot;"
     TextCode="&quot;My Customers (as Account Manager)&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="4"
+    IndexOrder="5"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17672,7 +17714,7 @@
     Code="&quot;Customer.MyCustomers&quot;"
     TextCode="&quot;My Customers (as Salesman)&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="5"
+    IndexOrder="6"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17761,7 +17803,7 @@
     Code="&quot;Customer.ReadyCustomers&quot;"
     TextCode="&quot;Waiting for Activation&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="6"
+    IndexOrder="7"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17840,7 +17882,7 @@
     Code="&quot;Customer.PotentialCustomers&quot;"
     TextCode="&quot;Potential Customers&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="7"
+    IndexOrder="8"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17908,7 +17950,7 @@
     Code="&quot;Customer.ActiveCustomers&quot;"
     TextCode="&quot;Active Customers&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="8"
+    IndexOrder="9"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -17976,7 +18018,7 @@
     Code="&quot;Customer.InactiveCustomers&quot;"
     TextCode="&quot;Inactive Customers&quot;"
     QueryGroupCode="&quot;CLNT&quot;"
-    IndexOrder="9"
+    IndexOrder="10"
     ObjectTableName="&quot;Customer&quot;"
     QuerySection="&quot;Customer&quot;"
     SystemLevel="true"
@@ -18201,7 +18243,7 @@
     FeatureTextCodeCode="&quot;Customer.Features.Overview&quot;"
     FeatureDefaultText="&quot;Overview&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />  
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Sales&quot;"
     ObjectTableName="&quot;Customer&quot;"

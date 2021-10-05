@@ -625,14 +625,14 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         if (this.SelectedQuoteOPTemplate != null) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
-            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(/*this.QuoteOPPM*/);
+            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(this.QuoteOPPM);
 
             quoteDocumentVersion.Tenant = SessionLocator.Tenant;
             quoteDocumentVersion.QuoteOPId = this.QuoteOPPM.Id;
             quoteDocumentVersion.CreatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.UpdatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.VersionType = "G";
-            quoteDocumentVersion.QuoteTemplateId = this.SelectedQuoteOPTemplate.Id;
+            quoteDocumentVersion.QuoteOPTemplateId = this.SelectedQuoteOPTemplate.Id;
             quoteDocumentVersion.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             quoteDocumentVersion.UpdateByUserName = SessionInfo.LoggedUserPM.EnglishName;
             quoteDocumentVersion.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
@@ -879,14 +879,14 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         }
         else {
 
-            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(/*this.QuoteOPPM*/);
+            var quoteDocumentVersion: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(this.QuoteOPPM);
 
             quoteDocumentVersion.Tenant = SessionLocator.Tenant;
             quoteDocumentVersion.QuoteOPId = this.QuoteOPPM.Id;
             quoteDocumentVersion.CreatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.UpdatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.VersionType = "U";
-            quoteDocumentVersion.QuoteTemplateId = null;
+            quoteDocumentVersion.QuoteOPTemplateId = null;
             quoteDocumentVersion.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             quoteDocumentVersion.UpdateByUserName = SessionInfo.LoggedUserPM.EnglishName;
             quoteDocumentVersion.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;

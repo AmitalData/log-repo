@@ -7,9 +7,8 @@
 //------------------------------------------------------------------------------
 
 export class QuoteGroupSectionList {
-   		Id: string;
-		Tenant: number;
-		Code: string;
+   		Code: string;
 		Name: string;
+		Searchfields: string;
 	
-}
+}

@@ -83,8 +83,10 @@
     <None Include="DBTables\QuoteOPClosingReason.dxml" />
     <None Include="DBTables\QuoteOPComputedField.dxml" />
     <None Include="DBTables\QuoteOPCustomerType.dxml" />
+    <None Include="DBTables\QuoteOPDocumentVersion.dxml" />
     <None Include="DBTables\QuoteOPPackage.dxml" />
     <None Include="DBTables\QuoteOPPriceSteps.dxml" />
+    <None Include="DBTables\QuoteOPProperties.dxml" />
     <None Include="DBTables\QuoteOPRating.dxml" />
     <None Include="DBTables\QuoteOPSetting.dxml" />
     <None Include="DBTables\QuoteOPStage.dxml" />
@@ -99,6 +101,7 @@
     <None Include="DBTables\QuoteOPType.dxml" />
     <None Include="EntityFiles\BorderOPType.lxml" />
     <None Include="EntityFiles\MarkUpOPType.lxml" />
+    <None Include="EntityFiles\QuoteOPDocumentVersion.lxml" />
     <None Include="EntityFiles\QuoteOPCharge.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -109,6 +112,7 @@
     <None Include="EntityFiles\QuoteOPCustomerType.lxml" />
     <None Include="EntityFiles\QuoteOPPackage.lxml" />
     <None Include="EntityFiles\QuoteOPPriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteOPProperties.lxml" />
     <None Include="EntityFiles\QuoteOPRating.lxml" />
     <None Include="EntityFiles\QuoteOPSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteOPSalesTotal.lxml" />

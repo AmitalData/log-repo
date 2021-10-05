@@ -75,11 +75,17 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "10f79df9aa2f18b832e6f6bf09124dc7";
+		public const string HashString = "89bc54a576618db7077b5b8250311c9a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "0c71",
+			      				    Code =  "1ca9",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -1621,16 +1627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCTablesCouriersVat = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.CouriersVat", DefaultText = "Couriers Vat",LocalDefaultText = @"רשימת בלדרים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            #region QuoteOP
-
-            TextCode GeneralTextCode_GeneralMCTablesQuotesOP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes(OP)", LocalDefaultText = @"הצעות מחיר(OP)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-            //MenusTable - teaxtcode
-            TextCode GeneralTextCode_GeneralMCOPSpecialServiceTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.OPSpecialServiceTypes", DefaultText = "Special Service Types (OP)", LocalDefaultText = "סוגי שירות מיוחדים(OP)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, TextCodes);
-            #endregion
-
-            //Feature GeneralSpecialServicesTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SPECIALSERVICESTYPES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SpecialServicesType", NameTextCodeDefaultText = "Special Service Types", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            TextCode GeneralTextCode_GeneralMHDocumentsFiling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DocumentsFiling", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHDocumentsFiling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DocumentsFiling", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCRMIntegrationSystemsSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CRM.IntegrationSystemsSetting", DefaultText = "Integration Systems Setting",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2445,6 +2442,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingMMoreThanPaymentCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.M.MoreThanPaymentCheque", DefaultText = "There are more than one Cheque for this payment. Click on Edit to view them",LocalDefaultText = "ישנם מספר שקים לקבלה זאת, לחץ על כפתור ''עריכה'' כדי להציגם", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingMMoreThanChequeWithTheSameChequeNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.M.MoreThanChequeWithTheSameChequeNumber", DefaultText = "Can't Add more than one cheque with the same cheque number ",LocalDefaultText = @"לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMHQuotesOP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.QuotesOP", DefaultText = "Quotes (OP)",LocalDefaultText = @" הצעות מחיר (OP)", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

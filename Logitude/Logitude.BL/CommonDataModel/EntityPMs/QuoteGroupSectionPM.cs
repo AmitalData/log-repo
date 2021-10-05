@@ -10,11 +10,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
     public class QuoteGroupSectionPM
     {
         [Key]
-        public string Id { get; set; }
-        public int Tenant { get; set; }
         public string Code { get; set; }
 
         public string Name { get; set; }
+
+        public string Searchfields { get; set; }
 
     }
 }

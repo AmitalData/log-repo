@@ -104,6 +104,11 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         if (!this.CustomerId) {
             errors.push("עליך להזין לקוח");
         }
+
+        if (!this.TransportMode) {
+            errors.push("סוג הובלה - שדה חובה ");
+        }
+       
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
             return;

@@ -23,7 +23,8 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "NoValidation",
         "IsSmallLabel",
         "Replace",
-        "ReplaceWith",
+            "ReplaceWith",
+        "LayoutDirection"
     ],
 
     template:
@@ -59,11 +60,11 @@ export class LogLabelComponent implements OnInit {
     }
     public set ObjectTableName(value: string) {
         this._ObjectTableName = value;
-        if (!AppTool.IsNullOrEmpty(this._ObjectTableName)) {
-            if (this._ObjectTableName.toLowerCase().startsWith("quoteop")) {
-                this.LayoutDirection = 'ltr';
-            }
-        }
+        //if (!AppTool.IsNullOrEmpty(this._ObjectTableName)) {
+        //    if (this._ObjectTableName.toLowerCase().startsWith("quoteop")) {
+        //        this.LayoutDirection = 'ltr';
+        //    }
+        //}
     }
     public LabelText: string;
     public HideColumns: boolean = false;
@@ -75,11 +76,11 @@ export class LogLabelComponent implements OnInit {
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 
-    LayoutDirection: string = 'ltr';
+    LayoutDirection: string;// = 'ltr';
 
     constructor(private _entityResourceService: EntityResourceService) {
-        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
+        if (AppTool.IsNullOrEmpty(this.LayoutDirection)) this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+         this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
         
             });
     }

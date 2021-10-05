@@ -54,6 +54,7 @@
             this.internationalSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountingTesterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tESTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customsBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -220,7 +221,7 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
-            this.tESTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MapUnifreightTables = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -396,21 +397,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -421,7 +422,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -448,23 +449,30 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
             // accountingTesterToolStripMenuItem
             // 
             this.accountingTesterToolStripMenuItem.Name = "accountingTesterToolStripMenuItem";
-            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.accountingTesterToolStripMenuItem.Text = "AccountingTester";
             this.accountingTesterToolStripMenuItem.Click += new System.EventHandler(this.accountingTesterToolStripMenuItem_Click);
+            // 
+            // tESTToolStripMenuItem
+            // 
+            this.tESTToolStripMenuItem.Name = "tESTToolStripMenuItem";
+            this.tESTToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.tESTToolStripMenuItem.Text = "TEST";
+            this.tESTToolStripMenuItem.Click += new System.EventHandler(this.tESTToolStripMenuItem_Click);
             // 
             // productionToolStripMenuItem
             // 
@@ -484,7 +492,7 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem.Text = "Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -510,7 +518,7 @@
             this.expPackagesToolStripMenuItem,
             this.expRolesToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // expPackagesToolStripMenuItem
@@ -533,7 +541,7 @@
             this.impPackagesToolStripMenuItem,
             this.impRolesToolStripMenuItem});
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem1.Text = "Import";
             // 
             // impPackagesToolStripMenuItem
@@ -570,14 +578,14 @@
             // rTLToolStripMenuItem
             // 
             this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
-            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rTLToolStripMenuItem.Text = "RTL";
             this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
             // 
             // lTRToolStripMenuItem
             // 
             this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
-            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lTRToolStripMenuItem.Text = "LTR";
             this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
             // 
@@ -592,7 +600,7 @@
             // executeToolStripMenuItem
             // 
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.executeToolStripMenuItem.Text = "Execute";
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
@@ -1746,6 +1754,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.MapUnifreightTables);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.uploadPackagesLabel);
             this.tabPage2.Controls.Add(this.uploadPackagesTypes);
@@ -2200,12 +2209,15 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
-            // tESTToolStripMenuItem
+            // MapUnifreightTables
             // 
-            this.tESTToolStripMenuItem.Name = "tESTToolStripMenuItem";
-            this.tESTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tESTToolStripMenuItem.Text = "TEST";
-            this.tESTToolStripMenuItem.Click += new System.EventHandler(this.tESTToolStripMenuItem_Click);
+            this.MapUnifreightTables.Location = new System.Drawing.Point(271, 579);
+            this.MapUnifreightTables.Name = "MapUnifreightTables";
+            this.MapUnifreightTables.Size = new System.Drawing.Size(184, 23);
+            this.MapUnifreightTables.TabIndex = 105;
+            this.MapUnifreightTables.Text = "Map Unifreight Tables";
+            this.MapUnifreightTables.UseVisualStyleBackColor = true;
+            this.MapUnifreightTables.Click += new System.EventHandler(this.MapUnifreightTables_Click);
             // 
             // Form1
             // 
@@ -2454,6 +2466,7 @@
         private System.Windows.Forms.Button UpdateQuoteOPM;
         private System.Windows.Forms.Button buttonQuoteOPMZIP;
         private System.Windows.Forms.ToolStripMenuItem tESTToolStripMenuItem;
+        private System.Windows.Forms.Button MapUnifreightTables;
     }
 }
 

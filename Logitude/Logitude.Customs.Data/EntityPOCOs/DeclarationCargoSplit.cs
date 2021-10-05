@@ -64,6 +64,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ResponseStatusCode { get; set; }
 	      
         public virtual CargoSplitRequestStatus CargoSplitRequestStatus { get; set; }
+        [Column("Direction")]
+	    public string Direction { get; set; }
+        [ForeignKey("CustomsTransportMode")]
+        [Column("TransportModeId")]
+	    public string TransportModeId { get; set; }
+	      
+        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
     }
 }
 	 

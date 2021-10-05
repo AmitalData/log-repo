@@ -44,6 +44,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         ViewOrder = a.ViewOrder,
+                        QuoteGroupSectionID =a.QuoteGroupSectionID
 
                     }).FirstOrDefault();
         }
@@ -61,6 +62,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         ViewOrder = a.ViewOrder,
+                        QuoteGroupSectionID = a.QuoteGroupSectionID
+
                     }).FirstOrDefault();
         }
 
@@ -79,6 +82,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         ViewOrder = a.ViewOrder,
+                        QuoteGroupSectionID = a.QuoteGroupSectionID
+
                     }).FirstOrDefault();
         }
 
@@ -99,6 +104,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       Name = entity.Name,
                                                       SearchFields = entity.SearchFields,
                                                       ViewOrder = entity.ViewOrder,
+                                                      QuoteGroupSectionID = entity.QuoteGroupSectionID
+
                                                   };
             return result;
         }
@@ -117,6 +124,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Name = a.Name,
                                                     SearchFields = a.SearchFields,
                                                      ViewOrder = a.ViewOrder,
+                                                     QuoteGroupSectionID = a.QuoteGroupSectionID
+
                                                  };
             return charges;
         }
@@ -137,6 +146,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      Name = a.Name,
                                                      SearchFields = a.SearchFields,
                                                      ViewOrder = a.ViewOrder,
+                                                     QuoteGroupSectionID = a.QuoteGroupSectionID
+
                                                  };
             return charges;
         }
