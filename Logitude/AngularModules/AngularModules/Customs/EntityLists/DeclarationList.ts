@@ -201,7 +201,6 @@ export class DeclarationList {
 	ThirdCargoID: string;
 	RowNumber: number;
 	IsSubmitDeclaration: boolean;
-	IsHatraDateNull: boolean;
 	
 }
  
