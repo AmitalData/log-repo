@@ -2482,21 +2482,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (IsAutomaticallyOceanOnsightsRequest())
             {
-                if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+                // Shipment
+                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant, objectContext);
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
                 {
-                    // Shipment
-                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant, objectContext);
-                    if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
-                    {
-                        myHelper.SendContainerStatusRequest();
-                    }
+                    myHelper.SendContainerStatusRequest();
                 }
             }
         }
 
         private bool IsAutomaticallyOceanOnsightsRequest()
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant) || !FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -2505,7 +2502,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
                 return false;
 
+            if (string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+                return false;
+
+            if (!this.IsFirstFourDigitsOfMasterNumberAreLetters())
+                return false;
+
             return true;
+        }
+
+        private bool IsFirstFourDigitsOfMasterNumberAreLetters()
+        {
+            string masterNumber = this.initializer.EntityPM.Master.Substring(0, 4);
+            if (masterNumber.All(char.IsLetter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void MapMainCarriageLegsForAutomation()
