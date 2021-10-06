@@ -2,7 +2,6 @@
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
-using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -170,7 +169,7 @@ namespace Logitude.ShipmentTests.Models.Accounting.APInvoice
                 BranchId = UserTenant.BranchId,
                 CreatedByUserId = UserTenant.UserId,
                 UpdatedByUserId = UserTenant.UserId,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                CreateDate = DateTime.Now,
             };
             return this;
         }

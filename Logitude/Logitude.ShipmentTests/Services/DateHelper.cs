@@ -1,5 +1,4 @@
 ﻿using Logitude.Test.Base.Models.UserTenantPreparation;
-using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +13,9 @@ namespace LLogitude.ShipmentTests.Services
         {
             if (Date.ToUpper() == "TODAY")
             {
-                return TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+                return DateTime.Now;
             }
-            return TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant); 
+            return DateTime.Now; 
         }
     }
 }
