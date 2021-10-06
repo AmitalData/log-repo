@@ -2844,7 +2844,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
                         }
 
-                        if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
+                        if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData))
                         {
                             //var tempShipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
                             if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
