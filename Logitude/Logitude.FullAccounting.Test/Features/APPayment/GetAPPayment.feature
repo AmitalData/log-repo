@@ -4,4 +4,4 @@ Feature: Get AP Payment
 @Smoke
 Scenario: Get ap payment
 	When get ap payment with APPaymentId
-	Then ap payment should be 
+	Then ap payment should be available
