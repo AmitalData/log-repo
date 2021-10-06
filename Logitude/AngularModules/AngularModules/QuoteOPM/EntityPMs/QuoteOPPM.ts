@@ -1659,7 +1659,8 @@ export class QuoteOPPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteOP");           
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteOP");
+           
         }
        }
     }

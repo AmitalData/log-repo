@@ -197,16 +197,10 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string ConsigneeReference1 { get; set; }
         [Column("ConsigneeReference2")]
 	    public string ConsigneeReference2 { get; set; }
-        [ForeignKey("FromPort")]
         [Column("FromPortId")]
 	    public string FromPortId { get; set; }
-	      
-        public virtual Port FromPort { get; set; }
-        [ForeignKey("ToPort")]
         [Column("ToPortId")]
 	    public string ToPortId { get; set; }
-	      
-        public virtual Port ToPort { get; set; }
         [ForeignKey("Incoterm")]
         [Column("IncotermId")]
 	    public string IncotermId { get; set; }

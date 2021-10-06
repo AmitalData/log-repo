@@ -37,13 +37,14 @@ namespace Logitude.CustomsMessaging.Dca
                 {
                     throw new Exception($"DedicatedCourierDCA:BackupPath please create backupPath !!!  {backupPath} ");
                 }
-
+                bool UseTPL = !string.IsNullOrWhiteSpace( ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:UseTPL"));
+                Logger.LogMe($"DedicatedCourierDCA:UseTPL={UseTPL}", false);
 
                 return new DedicatedCourierDCAModel()
                 {
                     Tenant = t,
-                    BackupPath = backupPath
-
+                    BackupPath = backupPath,
+                    UseTPL = UseTPL
                 };
             }
             return null;
@@ -53,5 +54,6 @@ namespace Logitude.CustomsMessaging.Dca
     {
         public int Tenant { get; set; }
         public string BackupPath { get; set; }
+        public bool UseTPL { get; set; }
     }
 }

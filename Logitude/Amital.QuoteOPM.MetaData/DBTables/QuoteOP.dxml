@@ -1363,16 +1363,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="FromPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="IncotermId"
     ReferencedTable="Incoterms"
     ReferencedColumn="Id"
