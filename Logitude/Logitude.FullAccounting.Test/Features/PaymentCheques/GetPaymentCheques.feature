@@ -4,4 +4,4 @@ Feature: Get Payment cheques
 @Smoke
 Scenario: Get payment cheques
 	When get payment cheques with paymentChequesId
-	Then payment cheques should be 
+	Then payment cheques should be available
