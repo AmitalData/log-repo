@@ -345,7 +345,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPMOrg.HatraDate = entityPM.HatraDate;
                   //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
 
-                    UpdateUnifreight(entityPMOrg, true);
+                    UpdateUnifreight(entityPMOrg);
 
 
                 }
