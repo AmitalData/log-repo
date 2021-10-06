@@ -59,6 +59,7 @@
             this.reqSheetStatisticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rePushAnalyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fTPCommunicationWorkerRoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.commDecServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.send1966ByDCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +101,9 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.commDecServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -113,7 +116,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.debugToolStripMenuItem,
-            this.adHockToolStripMenuItem});
+            this.adHockToolStripMenuItem,
+            this.rabbitMQToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(638, 24);
@@ -133,6 +137,7 @@
             // 
             // toolStripTextBoxBolbXml
             // 
+            this.toolStripTextBoxBolbXml.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxBolbXml.Name = "toolStripTextBoxBolbXml";
             this.toolStripTextBoxBolbXml.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxBolbXml.Text = "c:\\1.xml";
@@ -140,21 +145,21 @@
             // bolbToolStripMenuItem
             // 
             this.bolbToolStripMenuItem.Name = "bolbToolStripMenuItem";
-            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.bolbToolStripMenuItem.Text = "Bolb";
             this.bolbToolStripMenuItem.Click += new System.EventHandler(this.BlobToolStripMenuItem_Click);
             // 
             // multiBolbToolStripMenuItem
             // 
             this.multiBolbToolStripMenuItem.Name = "multiBolbToolStripMenuItem";
-            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.multiBolbToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.multiBolbToolStripMenuItem.Text = "MultiBolb";
             this.multiBolbToolStripMenuItem.Click += new System.EventHandler(this.multiBlobToolStripMenuItem_Click);
             // 
             // clearCacheToolStripMenuItem
             // 
             this.clearCacheToolStripMenuItem.Name = "clearCacheToolStripMenuItem";
-            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearCacheToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.clearCacheToolStripMenuItem.Text = "ClearCache";
             this.clearCacheToolStripMenuItem.Click += new System.EventHandler(this.clearCacheToolStripMenuItem_Click);
             // 
@@ -298,7 +303,7 @@
             // viaUpdateCloseTableToolStripMenuItem
             // 
             this.viaUpdateCloseTableToolStripMenuItem.Name = "viaUpdateCloseTableToolStripMenuItem";
-            this.viaUpdateCloseTableToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.viaUpdateCloseTableToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.viaUpdateCloseTableToolStripMenuItem.Text = "ViaUpdateCloseTable";
             this.viaUpdateCloseTableToolStripMenuItem.Click += new System.EventHandler(this.viaUpdateCloseTableToolStripMenuItem_Click);
             // 
@@ -358,6 +363,13 @@
             this.fTPCommunicationWorkerRoleToolStripMenuItem.Text = "FTPCommunicationWorkerRole";
             this.fTPCommunicationWorkerRoleToolStripMenuItem.Click += new System.EventHandler(this.fTPCommunicationWorkerRoleToolStripMenuItem_Click);
             // 
+            // commDecServiceToolStripMenuItem
+            // 
+            this.commDecServiceToolStripMenuItem.Name = "commDecServiceToolStripMenuItem";
+            this.commDecServiceToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.commDecServiceToolStripMenuItem.Text = "CommDecService";
+            this.commDecServiceToolStripMenuItem.Click += new System.EventHandler(this.commDecServiceToolStripMenuItem_Click);
+            // 
             // adHockToolStripMenuItem
             // 
             this.adHockToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -415,6 +427,7 @@
             // 
             // _txCustomsRequestsSheetsId
             // 
+            this._txCustomsRequestsSheetsId.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._txCustomsRequestsSheetsId.Name = "_txCustomsRequestsSheetsId";
             this._txCustomsRequestsSheetsId.Size = new System.Drawing.Size(100, 23);
             // 
@@ -538,6 +551,7 @@
             // 
             // checkUniqueUploadTextBox1
             // 
+            this.checkUniqueUploadTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkUniqueUploadTextBox1.Name = "checkUniqueUploadTextBox1";
             this.checkUniqueUploadTextBox1.Size = new System.Drawing.Size(100, 23);
             this.checkUniqueUploadTextBox1.Text = "\\\\fileserver\\d\\DMStore45M\\Y2018-BLOB\\M07\\D19";
@@ -574,6 +588,7 @@
             // 
             // _tstbMamanBaldarSTB
             // 
+            this._tstbMamanBaldarSTB.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._tstbMamanBaldarSTB.Name = "_tstbMamanBaldarSTB";
             this._tstbMamanBaldarSTB.Size = new System.Drawing.Size(100, 23);
             this._tstbMamanBaldarSTB.Text = "AirlinePreFix-MAWB";
@@ -581,7 +596,7 @@
             // buildMamanBaldarSTBToolStripMenuItem
             // 
             this.buildMamanBaldarSTBToolStripMenuItem.Name = "buildMamanBaldarSTBToolStripMenuItem";
-            this.buildMamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.buildMamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.buildMamanBaldarSTBToolStripMenuItem.Text = "BuildMessage  MamanBaldarSTB";
             this.buildMamanBaldarSTBToolStripMenuItem.Click += new System.EventHandler(this.buildMamanBaldarSTBToolStripMenuItem_Click);
             // 
@@ -717,12 +732,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // commDecServiceToolStripMenuItem
+
+            // rabbitMQToolStripMenuItem
             // 
-            this.commDecServiceToolStripMenuItem.Name = "commDecServiceToolStripMenuItem";
-            this.commDecServiceToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
-            this.commDecServiceToolStripMenuItem.Text = "CommDecService";
-            this.commDecServiceToolStripMenuItem.Click += new System.EventHandler(this.commDecServiceToolStripMenuItem_Click);
+            this.rabbitMQToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendToolStripMenuItem,
+            this.recivedToolStripMenuItem});
+            this.rabbitMQToolStripMenuItem.Name = "rabbitMQToolStripMenuItem";
+            this.rabbitMQToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.rabbitMQToolStripMenuItem.Text = "RabbitMQ";
+            // 
+            // sendToolStripMenuItem
+            // 
+            this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sendToolStripMenuItem.Text = "Send";
+            this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
+            // 
+            // recivedToolStripMenuItem
+            // 
+
+            this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recivedToolStripMenuItem.Text = "Recived";
+            this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -824,5 +857,9 @@
         private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem commDecServiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rabbitMQToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
+
     }
 }

@@ -2,9 +2,12 @@
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -14,6 +17,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using RabbitMQ.Client;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -175,14 +179,34 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                    //ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                    //{
+                    //    SelectedFileDownload = fileName,
+                    //    TimStamp = transmitionDateTime
+
+                    //}, xmlESBResponseXmlClass);
+
+                    var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                    using (var connection = factory.CreateConnection())
+                    using (var channel = connection.CreateModel())
                     {
-                        SelectedFileDownload = fileName,
-                        TimStamp = transmitionDateTime
 
-                    }, xmlESBResponseXmlClass);
+                        channel.QueueDeclare(queue: "connectToTicket",
+                                             durable: false,
+                                             exclusive: false,
+                                             autoDelete: false,
+                                             arguments: null);
 
+                        string message = xmlESBResponseXmlClass;
+                        var body2 = Encoding.UTF8.GetBytes(message);
 
+                        channel.BasicPublish(exchange: "",
+                                             routingKey: "connectToTicket",
+                                             basicProperties: null,
+                                             body: body2);
+
+                        Console.WriteLine(" [x] Sent {0}", message);
+                    }
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -331,7 +355,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-
+                    if (ConnectedAfterSend_Need2UpdateDocumentStatuscode(declarationPM))
+                    {
+                        UpdateDocumentStatuscode(declarationPM);
+                    }
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -437,6 +464,43 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
             }
+
+        }
+
+        private void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM)
+        {
+            ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+                currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
+                if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
+                {
+                    LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
+
+        private bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM)
+        {
+
+            var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
+            var customsDocument =customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
+            if (string.IsNullOrWhiteSpace(customsDocument.CustomsDocId))
+            {
+                return false;
+            }
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
+            var declarationCourierStatus =declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
+            return declarationCourierStatus.DocumentStatusCode != "V";
 
         }
 
