@@ -87,7 +87,7 @@ export class DocumentDefultAttachmentsComponent implements OnInit {
                 var documentTypeCopyLists: DocumentTypeCopyList[] = pmResponse.Result;
                 documentTypeCopyLists.forEach((copy) => {
                     var item = new DocumentDefultAttachmentItem(copy.DocumentTypeId, "DocOut", copy.Name, copy.Id)
-                    if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeId == item.DocumentTypeId && d.Type == "DocOut")[0]) {
+                    if (this.DocumentDefultAttachments.filter(d => d.DocumentTypeCopyId == item.DocumentTypeCopyId && d.Type == "DocOut")[0]) {
                         item.IsChecked = true;
                     }
                   this.DocOutAttachmentLists.push(item);
