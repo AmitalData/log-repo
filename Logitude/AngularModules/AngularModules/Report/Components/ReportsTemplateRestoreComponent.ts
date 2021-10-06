@@ -14,6 +14,7 @@ import {ReportsTemplatesVersionListExtendedService} from '../../Common/Services/
 import {ReportsTemplatesVersionList} from '../../Common/EntityLists/ReportsTemplatesVersionList';
 import {ReportsTemplatesVersionPMExtendedService} from '../../Common/Services/ExtendedPMs/ReportsTemplatesVersionPMExtendedService';
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 @Component({
 
     moduleId: './Report/Components/',
@@ -190,6 +191,11 @@ export class ReportsTemplateRestoreComponent implements OnInit {
         });
 
 
+
+    }
+
+    DownloadButtonClicked(item: ReportsTemplateRestoreItem) {
+        DownloadManager.DownloadPage(item.ReportDocumentId);
 
     }
 }

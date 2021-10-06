@@ -124,7 +124,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
                 }
 
-                string extension = reportsTemplatePM.TemplateType == "R" ? "mrt" : "html";
+                string extension = reportsTemplatePM.TemplateType == "R" ? "mrt" : reportsTemplatePM.TemplateType == "M"? "html" : "xml";
 
                 ReportHelper reportHelper = new ReportHelper();
                 DocumentFile documentFile = new DocumentFile() { FileName = reportsTemplatePM.Description, FileData = reportsTemplatePM.TemplateData, Extension = extension, Folder = "reports", Tenant = tenant };
@@ -141,7 +141,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(tenant);
                 ReportsTemplatePM result = reportsTemplateQuery.GetSinglePM(reportTemplateId,tenant);
 
-                if(result.TemplateType == "M")
+                if(result.TemplateType == "M" || result.TemplateType == "E")
                 {
                     result.TemplateData = reportsTemplatePM.TemplateData;
                 }

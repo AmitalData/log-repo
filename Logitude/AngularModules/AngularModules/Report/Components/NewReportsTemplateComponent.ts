@@ -76,7 +76,7 @@ export class NewReportsTemplateComponent implements OnInit {
         if (file) {
             var fileExtension = file.name.split('.')[1];
             if (fileExtension) {
-                if (((fileExtension == "mrt" || fileExtension == "MRT") && this.TemplateType == "R") || ((fileExtension == "xml" || fileExtension == "XML") && this.TemplateType == "M")) {
+                if (((fileExtension == "mrt" || fileExtension == "MRT") && this.TemplateType == "R") || ((fileExtension == "xml" || fileExtension == "XML") && (this.TemplateType == "M" || this.TemplateType == "E"))) {
 
                     if (fileExtension.length > 10) {
                         this.ShowMessage("File extension should be less than or equal 10 characters");
@@ -155,7 +155,7 @@ export class NewReportsTemplateComponent implements OnInit {
             this.CurrentSession.StartBusyIndicatorSaving();
 
           
-            if (this.NewReportTypeRadioChoice == "FromFile" && this.TemplateType == "M") {
+            if (this.NewReportTypeRadioChoice == "FromFile" && (this.TemplateType == "M" || this.TemplateType == "E")) {
 
                 this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.TemplateData).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
@@ -236,6 +236,13 @@ export class NewReportsTemplateComponent implements OnInit {
                                 }
                             }  
                             
+                        }else if(this.TemplateType == "E") {
+                            this.DataViewModel.ExcellReportsTemplatePMLists.push(this.ReportsTemplatePM);
+                            this.DataViewModel.CurrentExcelReportsTemplatePM = this.ReportsTemplatePM;
+                            if (this.DataViewModel.ExcellReportsTemplatePMLists.length == 1) {
+                                this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
+                            }
+
                         }
 
                     }

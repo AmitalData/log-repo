@@ -19,6 +19,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 
 import {ReportsTemplatePMService} from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
+import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 
 @Component({
 
@@ -50,8 +51,8 @@ export class ReportTemplateComponent implements OnInit {
     MessageReportsTemplatePMLists : ReportsTemplatePM[] = [];
     CurrentMessageReportsTemplatePM:ReportsTemplatePM;
 
-
-
+    ExcellReportsTemplatePMLists : ReportsTemplatePM[] = [];
+    CurrentExcelReportsTemplatePM:ReportsTemplatePM;
 
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -101,6 +102,7 @@ export class ReportTemplateComponent implements OnInit {
     LoadReportsTemplatePMLists() {
         this.ReportsTemplatePMLists = [];
         this.MessageReportsTemplatePMLists = [];
+        this.ExcellReportsTemplatePMLists = [];
         this.CurrentSession.StartBusyIndicatorLoading();
         this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -113,6 +115,8 @@ export class ReportTemplateComponent implements OnInit {
                             this.ReportsTemplatePMLists.push(item);
                         } else if (item.TemplateType == "M") {
                             this.MessageReportsTemplatePMLists.push(item);
+                        }else if (item.TemplateType == "E") {
+                            this.ExcellReportsTemplatePMLists.push(item);
                         }
 
                     });
@@ -127,6 +131,13 @@ export class ReportTemplateComponent implements OnInit {
 
                     if (this.MessageReportsTemplatePMLists.length > 0) {
                         var tempate = this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
+                        if (tempate) {
+                            tempate.IsDefault = true;
+                            tempate.IsDirty = false;
+                        }
+                    }
+                    if (this.ExcellReportsTemplatePMLists.length > 0) {
+                        var tempate = this.ExcellReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultExcelTemplateId)[0];
                         if (tempate) {
                             tempate.IsDefault = true;
                             tempate.IsDirty = false;
@@ -273,12 +284,19 @@ export class ReportTemplateComponent implements OnInit {
 
     SetAsDefaultButtonClicked(type:string) {
 
-        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : this.CurrentMessageReportsTemplatePM;
+        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : type == "M"?  this.CurrentMessageReportsTemplatePM: this.CurrentExcelReportsTemplatePM;
 
         if (currentTemplate) {
             if (!currentTemplate.InActive) {
 
-                var tempate = type == "R" ? this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0] : this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
+                var tempate;
+                if(type == "R"){
+                    tempate = this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0] 
+                }else if (type == "M"){
+                    tempate = this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0]
+                }else{
+                    tempate = this.ExcellReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultExcelTemplateId)[0]
+                }
                 if (tempate) {
                     tempate.IsDefault = false;
                 }
@@ -287,6 +305,7 @@ export class ReportTemplateComponent implements OnInit {
                 currentTemplate.IsDefault = true;
                 if (type == "R") this.EntityPM.DefaultTemplateId = currentTemplate.Id;
                 else if (type == "M") this.EntityPM.DefaultMessageTemplateId = currentTemplate.Id;
+                else if (type == "E") this.EntityPM.DefaultExcelTemplateId = currentTemplate.Id;
             }
             else this.ShowMessage("Please note that you can't set an inactive template as default");
         
@@ -304,7 +323,7 @@ export class ReportTemplateComponent implements OnInit {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 700;
             logWindow.Height = 500;
-            logWindow.Title = type == "R" ? "New Report Template":"New Message Template";
+            logWindow.Title = type == "R" ? "New Report Template" : type == "M" ? "New Message Template" : "New Excel Report Template";
             logWindow.WindowArgs = windowArgs;
   
             logWindow.Show("./Report/Components/NewReportsTemplateComponent");
@@ -324,18 +343,25 @@ export class ReportTemplateComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-                    if (!this.ReportsTemplatePMLists) {
-                        this.ReportsTemplatePMLists = [];
+                    if(item.TemplateType == "R"){
+                        if (!this.ReportsTemplatePMLists) {
+                            this.ReportsTemplatePMLists = [];
+                        }
+                        this.ReportsTemplatePMLists.push(result);
+                        this.CurrentReportsTemplatePM = result;
+                    }else{
+                        if (!this.ExcellReportsTemplatePMLists) {
+                            this.ExcellReportsTemplatePMLists = [];
+                        }
+                        this.ExcellReportsTemplatePMLists.push(result);
+                        this.CurrentExcelReportsTemplatePM = result;
                     }
-                    this.ReportsTemplatePMLists.push(result);
-                    this.CurrentReportsTemplatePM = result;
+      
                 }
             }
             this.CurrentSession.StopBusyIndicator();
         });
     }
-
-
 
 }
 
