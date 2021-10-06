@@ -1,51 +1,54 @@
-<div class="section root-header">
-    <h2>Create New Quote</h2>
-</div>
-
-<div class="grid container">
-    <div class="col-2 section right-grid">
-        <app-new-quote-left-side [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-left-side>
+<form (submit)='create()'>
+    <div class="section root-header">
+        <h2 class="root-header-text">Create New Quote</h2>
     </div>
 
-   
-    <div class="col-10 right-side"  [ngClass]="{'disabled':!formGroup.controls.direction?.value || !formGroup.controls.transportMode?.value ||  
-    (formGroup.controls.transportMode?.value?.Name !== 'Ocean' && formGroup.controls.transportMode?.value?.Name !== 'Inland') &&  !formGroup.controls.shipmentType?.value}">
-        <div class="section">
-            <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
-            <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
-            <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
+    <div class="grid container">
+        <div class="col-2 section left-side">
+            <app-new-quote-left-side [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-left-side>
         </div>
 
-        <div class="section">
-            <app-new-quote-properties [formGroup]='formGroup'></app-new-quote-properties>
-        </div>
 
-        <div class="section">
-            <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>
-        </div>
-
-        <div class="grid">
-            <div class="col-6 section section-pickup">
-                <app-new-quote-pickup [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+        <div class="col-10 right-side"
+            [ngClass]="{'disabled':!formGroup.controls.direction?.value || !formGroup.controls.transportMode?.value ||  
+    (formGroup.controls.transportMode?.value?.Name === 'Ocean' || formGroup.controls.transportMode?.value?.Name === 'Inland') &&  !formGroup.controls.shipmentType?.value}">
+            <div class="section">
+                <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
+                <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
+                <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
             </div>
 
-            <div class="col-6 section section-delivery">
-                <app-new-quote-delivery [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+            <div class="section">
+                <app-new-quote-properties [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-properties>
             </div>
-        </div>
 
-        <div class="section">
-            <app-new-quote-expected-order [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-expected-order>
-        </div>
+            <div class="section">
+                <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>
+            </div>
 
-        <div class="section">
-            <h2>Additional Fields</h2>
-        </div>
-        <div class="section">
+            <div class="grid">
+                <div class="col-5 section section-pickup">
+                    <app-new-quote-pickup [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-5 section section-delivery">
+                    <app-new-quote-delivery [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+                </div>
+            </div>
 
-            <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'></button>
-            <button pButton type="button" label="Create" class="p-button-primary" (click)='create()'></button>
-        </div>
+            <div class="section">
+                <app-new-quote-expected-order [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                </app-new-quote-expected-order>
+            </div>
 
+            <div class="section">
+                <h2 class="sub-header">Additional Fields</h2>
+            </div>
+
+        </div>
     </div>
-</div>
+    <div class="section section-btn">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'></button>
+        <button pButton type="submit" label="Create" class="p-button-primary"></button>
+    </div>
+</form>

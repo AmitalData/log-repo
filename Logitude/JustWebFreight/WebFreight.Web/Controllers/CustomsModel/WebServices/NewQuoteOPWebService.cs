@@ -294,7 +294,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var ETBPORTList = ETBPORTquery.ToList();
                         foreach (var item in ETBPORTList)
                         {
-                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, false);
+                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, true);
                             var port = new Port();
                             if (country != null)
                             {
@@ -322,7 +322,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var MTBPORTList = MTBPORTquery.ToList();
                         foreach (var item in MTBPORTList)
                         {
-                            var country= countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant,false);
+                            var country= countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant,true);
                             var port = new Port();
                             if (country != null)
                             {
@@ -352,7 +352,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var ITBPORTList = ITBPORTquery.ToList();
                         foreach (var item in ITBPORTList)
                         {
-                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, false);
+                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, true);
                             var port = new Port();
                             if (country != null)
                             {
@@ -382,7 +382,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var RTBPORTList = RTBPORTquery.ToList();
                         foreach (var item in RTBPORTList)
                         {
-                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, false);
+                            var country = countryRepository.GetSingleCountryByCode(item.COUNTRYID, tenant, true);
                             var port = new Port();
                             if (country != null)
                             {

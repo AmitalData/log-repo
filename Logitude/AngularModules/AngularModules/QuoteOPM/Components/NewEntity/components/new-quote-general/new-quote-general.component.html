@@ -1,7 +1,7 @@
 <div class="grid" [formGroup]='formGroup'>
 
   <div class="col-12">
-    <h2>{{'QuoteOP.S.NewQuote.General' | TextCodeTranslationPipe}}</h2>
+    <h2 class="sub-header">{{'QuoteOP.S.NewQuote.General' | TextCodeTranslationPipe}}</h2>
     <h5>Quote Type</h5>
     <div class='radio-row' *ngFor='let x of quoteTypes'>
       <p-radioButton name="quoteTypeGroup" (click)='checkType(x.code)' [value]="x.code" formControlName="quoteType"

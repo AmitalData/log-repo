@@ -26,7 +26,7 @@ export class NewQuoteConsigneeComponent implements OnInit {
   ngOnInit(): void {
     this.initConsigneeNames();
     this.formGroup.controls.consigneeNotes.disable();
-    this.test();
+    // this.test();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,22 +37,22 @@ export class NewQuoteConsigneeComponent implements OnInit {
     }
   }
 
-  async test() {
-    while (!this.consigneeNames.length) {
-      console.log('wait')
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-    this.formGroup.controls.consigneeName.setValue(this.consigneeNames[16])
-    this.onSelectedName(this.consigneeNames[16])
+  // async test() {
+  //   while (!this.consigneeNames.length) {
+  //     console.log('wait')
+  //     await new Promise(resolve => setTimeout(resolve, 100));
+  //   }
+  //   this.formGroup.controls.consigneeName.setValue(this.consigneeNames[16])
+  //   this.onSelectedName(this.consigneeNames[16])
 
-    while (!this.consigneeContacts.length) {
-      console.log('wait')
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
+  //   while (!this.consigneeContacts.length) {
+  //     console.log('wait')
+  //     await new Promise(resolve => setTimeout(resolve, 100));
+  //   }
 
-    this.formGroup.controls.consigneeContact.setValue(this.consigneeContacts[0])
-    this.onSelectedContact(this.consigneeContacts[0])
-  }
+  //   this.formGroup.controls.consigneeContact.setValue(this.consigneeContacts[0])
+  //   this.onSelectedContact(this.consigneeContacts[0])
+  // }
 
   private async initConsigneeNames() {
     this.consigneeNames = await this.newQuoteDataService.getCardsTable();

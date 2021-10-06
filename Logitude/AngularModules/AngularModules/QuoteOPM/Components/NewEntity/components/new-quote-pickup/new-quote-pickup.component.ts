@@ -34,13 +34,13 @@ export class NewQuotePickupComponent implements OnInit {
   private async InitCity() {
     this.cityListAll = await this.newQuoteDataService.getCityTable();
     this.cityList = this.cityListAll;
-    console.log(this.cityList )
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('pickupInclude')) {
       this.addFormControls()
       this.subscribeCtrls();
+      this.initDefaultValue()
     }
   }
 
@@ -52,15 +52,16 @@ export class NewQuotePickupComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    // this.formGroup.controls.pickupCity.valueChanges.subscribe(val=>{
-    //   this.EntityPM.PickUpAddressId = 
-    // })
+    this.formGroup.controls.pickupCity.valueChanges.subscribe(val=>this.EntityPM.FromAddressCity = val)
       this.formGroup.controls.pickupZipCode.valueChanges.subscribe(val=> this.EntityPM.FromAddressZipCode = val);
       this.formGroup.controls.pickupCity.valueChanges.subscribe(val=> this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
   }
-  
+    
+  initDefaultValue() {
+    this.formGroup.controls.pickupInclude.setValue(false)
+  }
+
   includeCheckboxChange(e: {checked: boolean, originalEvent: PointerEvent}) {
-    console.log(e)
     if(e)
       this.EntityPM.IncludePickUp = e.checked;
   }

@@ -33,7 +33,7 @@ export class AutocomplateTableComponent {
   }
 
   search(event: any) {
-    this.selected = this.data.filter(this.searchValueInObject(event.query, this.columnsNames));
+    this.selected = this.data?.filter(this.searchValueInObject(event.query, this.columnsNames));
     this.selected.unshift(this.columnsHeader);
   }
 
@@ -48,7 +48,7 @@ export class AutocomplateTableComponent {
     const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
     const val: any = ctrl.value;
 
-    if (!this.data.includes(val))
+    if (!this.data?.includes(val))
       ctrl.reset();
     else
       this.onSelect.emit(val)
