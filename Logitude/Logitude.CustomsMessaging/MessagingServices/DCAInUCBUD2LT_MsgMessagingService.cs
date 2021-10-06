@@ -453,13 +453,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
             if (currentDeclarationCourierStatusPM != null)
             {
-                
-                if (currentDeclarationCourierStatusPM.DocumentStatusCode != "V")
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+                currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
+                if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
                 {
                     LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                    ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }
