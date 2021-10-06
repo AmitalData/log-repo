@@ -232,6 +232,9 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
+
+            
+
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
@@ -248,8 +251,8 @@ namespace AmitalCustomsWindowsService
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
             }
-            
 
+            SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {
@@ -264,6 +267,19 @@ namespace AmitalCustomsWindowsService
                 }
 
             }
+        }
+
+        private void SingletonFTPCommunicationLogQueue(List<Logitude.Server.Tools.WorkerEntryPoint> listOfWorkerEntryPoint)
+        {
+            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONS"(CODE, CLASSNAME) VALUES('SingletonFTPCommunicationWorkerRoleWinService', 'SingletonFTPCommunicationWorkerRoleWinService');
+            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONMODS" VALUES('SingletonFTPCommunicationWorkerRoleWinService', '0', '1');
+
+            ///< add key = "SingletonFTPCommunicationWorkerRoleWinService" value = "1" />
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("SingletonFTPCommunicationWorkerRoleWinService")))/*"SingletonFTPCommunicationLogQueue"*/
+            {
+                listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService());
+            }
+
         }
 
         private List<BatchServicesDefinitionPM> GetBatchServicesDefinitions()

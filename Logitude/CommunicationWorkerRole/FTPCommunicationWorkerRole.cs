@@ -39,7 +39,7 @@ namespace CommunicationWorkerRole
             }
         }
         
-        public void WorkOnce1()
+        public void WorkOnce1(bool singleton=false)
         {
             if (!General.IsUpdating())
             {
@@ -48,7 +48,7 @@ namespace CommunicationWorkerRole
                     int tenant = 0;
                     int d = 0;
                     queueservice = new DbQueueService();
-                    queueservice.InitializeQueue("FTPCommunicationLogQueue", 0);
+                    queueservice.InitializeQueue((singleton ? "Singleton" : "") + "FTPCommunicationLogQueue", 0);
 
                     var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                     LastActivity = DateTime.UtcNow;
@@ -541,6 +541,25 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         {
             _FTPCommunicationWorkerRole.OnStart();
             _FTPCommunicationWorkerRole.WorkOnce1();
+        }
+    }
+
+    public class SingletonFTPCommunicationWorkerRoleWinService : Logitude.Server.Tools.WorkerEntryPointDoneLog
+    {
+        FTPCommunicationWorkerRole _FTPCommunicationWorkerRole;
+        public SingletonFTPCommunicationWorkerRoleWinService()
+        {
+            _FTPCommunicationWorkerRole = new FTPCommunicationWorkerRole();
+        }
+        public override void StartMe()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WorkOnce()
+        {
+            _FTPCommunicationWorkerRole.OnStart();
+            _FTPCommunicationWorkerRole.WorkOnce1(true);
         }
     }
 }
