@@ -3,7 +3,6 @@ using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
-using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -211,8 +210,8 @@ namespace Logitude.ShipmentTests.Services
             ShipmentSub.Code = code;
             ShipmentSub.Name = "Test Shipment Sub Type";
             ShipmentSub.ShipmentTypeCode = shipmentTypeCpde;
-            ShipmentSub.CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
-            ShipmentSub.UpdateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant);
+            ShipmentSub.CreateDate = DateTime.Now;
+            ShipmentSub.UpdateDate = DateTime.Now;
             ShipmentSub.CreatedByUserId = UserTenant.UserId;
             ShipmentSub.UpdatedByUserId = UserTenant.UserId;
             return ShipmentSub;

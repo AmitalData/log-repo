@@ -1,7 +1,7 @@
 ﻿using Logitude.ShipmentTests.Models.Accounting;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.UserTenantPreparation;
-using Simplog.Data.Helpers;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -165,8 +165,8 @@ namespace Logitude.ShipmentTests.Models.Builders
             _receivablePM = new ShipmentReceivablePM
             {
                 Tenant = UserTenant.Tenant,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
-                UpdateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
                 CreatedByUserId = UserTenant.UserId,
                 DueTypeCode = "CA",
                 IATACodeId="1-2",

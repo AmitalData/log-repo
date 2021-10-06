@@ -205,10 +205,6 @@
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
       <Name>Logitude.Test.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
-      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
-      <Name>Simplog.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\GetContainerStatusesFeatureData.xml">

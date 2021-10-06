@@ -1,5 +1,4 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Test.Base.Models;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.LocationsPreparation;
