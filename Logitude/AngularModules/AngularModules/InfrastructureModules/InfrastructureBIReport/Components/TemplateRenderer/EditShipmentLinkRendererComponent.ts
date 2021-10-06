@@ -34,6 +34,8 @@ export class EditShipmentLinkRendererComponent implements ICellRendererAngularCo
     // This was needed to make the link work correctly
     navigate(shipmentId) { 
         shipmentId = shipmentId.trim();
-        this.params.context.componentParent.methodFromParent(`${shipmentId}`)  
+        if (shipmentId != "Not Specified") {
+            this.params.context.componentParent.methodFromParent(`${shipmentId}`)
+        }
     }
 }
