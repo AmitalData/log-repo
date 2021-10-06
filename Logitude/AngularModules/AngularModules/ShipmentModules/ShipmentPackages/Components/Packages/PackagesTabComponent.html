@@ -507,6 +507,15 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Dimensions -->
+                                    <log-column [width]="'230'" [header]="DimensionsColumnHeader">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                                {{item.Dimensions}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Container# -->
                                     <log-column [width]="'100'" [header]="'ShipmentPackage.F.ContainerNumber.Short' | TextCodeTranslationPipe">
                                         <ng-template let-item>
