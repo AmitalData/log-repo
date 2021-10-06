@@ -2853,10 +2853,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                             shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequiredValueFromDeclarationXMLData();
-                            shipmentAdditionalCloudData.ApprovedByUserName = null;
-                            shipmentAdditionalCloudData.ApproveDateTime = null;
-                            shipmentAdditionalCloudData.DenyReason = null;
-                            shipmentAdditionalCloudData.VersionApproved = null;
+                            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried) {
+                                shipmentAdditionalCloudData.ApprovedByUserName = null;
+                                shipmentAdditionalCloudData.ApproveDateTime = null;
+                                shipmentAdditionalCloudData.DenyReason = null;
+                                shipmentAdditionalCloudData.VersionApproved = null; 
+                            }
                         }
                         else if (entityPM.IsShipmentAdditionalCloudDataChange)
                         {
