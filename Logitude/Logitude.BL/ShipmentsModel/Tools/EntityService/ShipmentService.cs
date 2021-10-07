@@ -2853,12 +2853,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                             shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequiredValueFromDeclarationXMLData();
-                            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried) {
-                                shipmentAdditionalCloudData.ApprovedByUserName = null;
-                                shipmentAdditionalCloudData.ApproveDateTime = null;
-                                shipmentAdditionalCloudData.DenyReason = null;
-                                shipmentAdditionalCloudData.VersionApproved = null; 
-                            }
+                            ClearApprovalDenialFields();
                         }
                         else if (entityPM.IsShipmentAdditionalCloudDataChange)
                         {
@@ -2943,6 +2938,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
             bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(entityPM.DeclarationXMLData);
             return IsImporterApprovalRequried;
+        }
+
+        private void ClearApprovalDenialFields()
+        {
+            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried)
+            {
+                shipmentAdditionalCloudData.ApprovedByUserName = null;
+                shipmentAdditionalCloudData.ApproveDateTime = null;
+                shipmentAdditionalCloudData.DenyReason = null;
+                shipmentAdditionalCloudData.VersionApproved = null;
+            }
         }
 
         private void FillDefaultSubType()
