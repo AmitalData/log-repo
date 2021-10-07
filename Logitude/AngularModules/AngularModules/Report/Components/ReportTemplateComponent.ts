@@ -109,34 +109,12 @@ export class ReportTemplateComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-
                     result.forEach((item) => {
                         this.AddReportsTemplateToList(item);
                     });
-
-                    if (this.ReportsTemplatePMLists.length > 0) {
-                        var tempate = this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0];
-                        if (tempate) {
-                            tempate.IsDefault = true;
-                            tempate.IsDirty = false;
-                        }
-                    }
-
-                    if (this.MessageReportsTemplatePMLists.length > 0) {
-                        var tempate = this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
-                        if (tempate) {
-                            tempate.IsDefault = true;
-                            tempate.IsDirty = false;
-                        }
-                    }
-                    if (this.ExcellReportsTemplatePMLists.length > 0) {
-                        var tempate = this.ExcellReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultExcelTemplateId)[0];
-                        if (tempate) {
-                            tempate.IsDefault = true;
-                            tempate.IsDirty = false;
-                        }
-                    }
-
+                    this.SetTemplateAsDefault(this.ReportsTemplatePMLists,this.EntityPM.DefaultTemplateId);
+                    this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists,this.EntityPM.DefaultMessageTemplateId);
+                    this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists,this.EntityPM.DefaultExcelTemplateId);
                 }
             }
 
@@ -146,6 +124,15 @@ export class ReportTemplateComponent implements OnInit {
         });
 
 
+    }
+    SetTemplateAsDefault(templateList: ReportsTemplatePM[], templateId: any) {
+        if (templateList.length > 0) {
+            var tempate = templateList.filter(d => d.Id == templateId)[0];
+            if (tempate) {
+                tempate.IsDefault = true;
+                tempate.IsDirty = false;
+            }
+        }
     }
 
     AddReportsTemplateToList(reportsTemplate: any) {
@@ -293,17 +280,8 @@ export class ReportTemplateComponent implements OnInit {
     }
 
     CanEditTemplate(reportsTemplate: ReportsTemplatePM): boolean {
-        if (!reportsTemplate)
+        if (!reportsTemplate || !this.IsEnableEditAllReportTemplate || reportsTemplate.IsSystem || !this.IsEnableEditUserReportTemplate)
             return false;
-
-        if (!this.IsEnableEditAllReportTemplate) {
-            return false;
-        }
-
-        if (reportsTemplate.IsSystem || !this.IsEnableEditUserReportTemplate) {
-            return false;
-        }
-
         return true;
     }
 
