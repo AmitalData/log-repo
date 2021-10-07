@@ -407,7 +407,7 @@ namespace Logitude.Test.Base.Services
             ApiResponse<AirlinePM> responseUpdate = APICaller.CallPut<AirlinePM>(airline, putRequestUrl, UserTenant.Token);
         }
 
-        private static Partner BuildPartner(PartnerParameters partnerParameters)
+        public static Partner BuildPartner(PartnerParameters partnerParameters)
         {
             Partner partner = new Partner
             {

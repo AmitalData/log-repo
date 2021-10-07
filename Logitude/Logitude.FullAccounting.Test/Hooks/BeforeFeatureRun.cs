@@ -130,6 +130,12 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new BankAccountPreparation().Prepare();
             new BankDepositPreparation().ChequePrepare();
         }
+        [BeforeFeature("Pre-Prepare-GetCustomer")]
+        public static void PrePrepareGetCustomer()
+        {
+            new AccountPreparation().Prepare();
+            new CustomerPreparation().Prepare();
+        }
 
 
 

@@ -1,4 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Services.Preparation;
+using Logitude.FullAccountingTests.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new CashBookPreparation().Prepare();
             new BankCodePreparation().Prepare();
             new AccountingPaymentMethodPreparation().Prepare();
+
+            new FullAccountingSettingService().UpdateSetting();
 
         }
 
