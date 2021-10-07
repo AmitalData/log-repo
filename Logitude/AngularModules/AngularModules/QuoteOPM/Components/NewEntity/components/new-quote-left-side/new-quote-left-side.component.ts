@@ -6,11 +6,6 @@ import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
-export const transporations = [
-  { value: 'Air', icon: 'assets/icons/airplane.png' },
-  { value: 'Ocean', icon: 'assets/icons/ocean.png' },
-  { value: 'Inland', icon: 'assets/icons/inland.png' },
-]
 
 @Component({
   selector: 'app-new-quote-left-side',
@@ -25,8 +20,6 @@ export class NewQuoteLeftSideComponent implements OnInit {
   shipmentTypeList: ShipmentTypeList[] = []
   directionList: DirectionList[] = []
 
-  transporations = transporations;
-
   icons: {} = { 
     Air: 'assets/icons/airplane.png', 
     Ocean: 'assets/icons/ocean.png', 
@@ -37,11 +30,6 @@ export class NewQuoteLeftSideComponent implements OnInit {
     Drop: 'assets/icons/recycle.png' ,
     FTL: 'assets/icons/inland.png',
     LTL: 'assets/icons/inland.png',
-  }
-
-  a(e){
-    console.log(this.formGroup.controls)
-    console.log(this.formGroup.controls.direction.value)
   }
 
   constructor(

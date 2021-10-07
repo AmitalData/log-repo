@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
-import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-properties',
@@ -12,16 +12,13 @@ export class NewQuotePropertiesComponent implements OnInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
-  fromPortList:any[] = []
-  toPortList:any[] = []
-  specialServiceList:any[] = []
-  mainCarriageCarrierList:any[] = []
-  incotermList:any[] = []
-
-  exportCode: string = 'E';
-  importCode: string = 'I';
-  oceanCode: string = 'O';
-  airCode: string = 'A';
+  fromPortList:Port[] = []
+  toPortList:Port[] = []
+  specialServiceList:SpecialService[] = []
+  mainCarriageCarrierList:Carrier[] = []
+  incotermList:Incoterm[] = []
+  transportModeId: string = '';
+  directionId: string = '';
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -29,12 +26,6 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getIncoterms()
-
-    // this.EntityPM.FromPortId 
-    // this.EntityPM.ToPortId 
-    // this.EntityPM.SpecialServiceId 
-    // this.EntityPM.MainCarriageCarrierId 
-    // this.EntityPM.IncotermId
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -56,64 +47,52 @@ export class NewQuotePropertiesComponent implements OnInit {
     this.formGroup.controls.transportMode.valueChanges.subscribe(()=>this.updateList())
     this.formGroup.controls.direction.valueChanges.subscribe(()=>this.updateList())
   }
-  transportModeId: string = '';
-  directionId: string = '';
+
   updateList() {
     this.transportModeId = this.formGroup.controls.transportMode.value?.Id;
     this.directionId = this.formGroup.controls.direction.value?.Id;
 
     if(!this.transportModeId || !this.directionId) return;
     
-    this.getFromPort()
-    this.getToPort()
+    this.getPorts()
     this.getSpecialService()
     this.getMainCarriageCarrier()
   }
   
-  async getFromPort() {
-    console.log(this.directionId, this.transportModeId)
-    this.fromPortList = await this.newQuoteDataService.getPort(this.directionId, this.transportModeId);
-    console.log(this.fromPortList)
-  }
-
-  async getToPort() {
-    this.toPortList= await this.newQuoteDataService.getPort(this.directionId, this.transportModeId);
-    console.log(this.toPortList)
+  async getPorts() {
+    this.fromPortList = await this.newQuoteDataService.getPorts(this.directionId, this.transportModeId);
+    this.toPortList = this.fromPortList;
   }
 
   async getSpecialService() {
-    this.specialServiceList= await this.newQuoteDataService.getSpecialService(this.directionId, this.transportModeId);
-    console.log(this.specialServiceList)
+    this.specialServiceList= await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
   }
 
   async getMainCarriageCarrier() {
-    this.mainCarriageCarrierList = await this.newQuoteDataService.getSpecialServiceItems(this.directionId, this.transportModeId);
-    console.log(this.mainCarriageCarrierList)
+    this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
   }
 
   async getIncoterms() {
     this.incotermList = await this.newQuoteDataService.getIncoterms();
-    console.log(this.incotermList)
   }
   
-  onSelectedtoPort(value:any){
-    this.EntityPM.ToPortId = value;
+  onSelectedtoPort(value:Port){
+    this.EntityPM.ToPortId = value.Code;
   }
 
-  onSelectedFromPort(value:any){
-    this.EntityPM.FromPortId = value;
+  onSelectedFromPort(value:Port){
+    this.EntityPM.FromPortId = value.Code;
   }
 
-  onMainCarriageCarrier(value:any){
-    this.EntityPM.MainCarriageCarrierId = value;
+  onMainCarriageCarrier(value:Carrier){
+    this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
   }
 
-  onSelectedIncoterm(value:any){
-    this.EntityPM.IncotermId = value;
+  onSelectedIncoterm(value:Incoterm){
+    this.EntityPM.IncotermId = value.PTERMID;
   }
 
-  onSelectedSpecialService(value:any){
-    this.EntityPM.SpecialServiceId = value;
+  onSelectedSpecialService(value:SpecialService){
+    this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
   }
-
 }

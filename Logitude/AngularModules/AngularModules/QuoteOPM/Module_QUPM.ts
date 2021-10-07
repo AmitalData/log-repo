@@ -14,6 +14,8 @@ import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import { NewQuoteDataService } from './Components/NewEntity/Services/new-quote-data/new-quote-data.service';
 import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWebService';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
     imports: [InfrastructureModule, 
@@ -28,9 +30,14 @@ import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWeb
     ButtonModule,
     TableModule,
     DialogModule,
+    ToastModule,
     ],
     declarations: [...Components,...SharedComponents],
-    providers: [NewQuoteDataService, NewQuoteOPWebService],
+    providers: [
+        NewQuoteDataService, 
+        NewQuoteOPWebService, 
+        MessageService
+    ],
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],
 })

@@ -2,6 +2,34 @@
     .p-field {
         margin-bottom: 1em !important;
     }
+
+    .root-header-text {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .sub-header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--surface-200);
+    }
+    
+    app-autocomplate-table label,
+    .simple-text {
+        font-size: 13px;
+    }
+
+    .col-4,
+    .col-6 {
+        padding: 1.5rem;
+    }
+
+    .ng-submitted p-autocomplete.ng-invalid input,
+    .ng-submitted .ng-invalid {
+        border-color: #f44336;
+    }
 }
 
 :host {
@@ -13,23 +41,41 @@
 }
 
 .container {
-    height: 700px;
+    height: 70vh;
 }
 
 .section {
     background: var(--surface-0);
     padding: 27px;
-    margin-bottom: 3px;
+    margin-bottom: 20px;
     border-radius: 14px;
 }
 
+.section-btn {
+    height: 67px;
+    border-radius: 0;
+    text-align: right;    
+    padding: 20px;
+    margin-bottom: 0;
+
+    .p-button-danger {
+        margin-right: 30px;
+    }
+}
+
 .root-header {
-    margin-bottom: 11px;
-    padding: 13px 0;
+    margin-bottom: 8px;
+    padding: 13px 20px;
+    border-radius: 0;
 
     h2 {
-        margin: 0;
+        font-size: 24px;
     }
+}
+
+.left-side {
+    border-radius: 0px;
+    margin-bottom: 1px;
 }
 
 .right-side {

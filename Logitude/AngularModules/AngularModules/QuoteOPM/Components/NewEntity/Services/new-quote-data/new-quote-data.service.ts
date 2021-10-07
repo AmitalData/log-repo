@@ -59,8 +59,9 @@ export class NewQuoteDataService {
     filters.addAdditionalFilter('CardId', cardId, null, null, "Contains", true, false, false, "Text", false, false);
     filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
     filters.SortDirection = "Ascending";
-    filters.PageIndex = 0;
-    filters.PageSize = 50;
+    // filters.PageIndex = 0;
+    // filters.PageSize = 50;
+    filters.GetAll = true;
 
     return new Promise<ContactList[]>(async (resolve, reject) => {
       const resService: any = await this.entityListService.getByFilters('Contact', filters).then();
@@ -68,20 +69,6 @@ export class NewQuoteDataService {
       resService.pipe(filterIsNotNull(), take(1))
         .subscribe((resp: any) => resolve(resp.Result));
     });
-
-    //     var v = {
-    // usePrimNG: false,
-    // ForceCacheRefresh: false,
-    // DontApplyVirtualization: false,
-    // GetAll: false,
-    // PageIndex: 0,
-    // PageSize: 50,
-    // SortBy: EnglishName,
-    // SortDirection: Descending,
-    // AdditionalFilters: [{"FieldName":"InActive","FieldValue":false,"FieldValue2":null,"FieldValue3":null,"Operator":"Equals","IsCustom":false,"DisplayInList":true,"IsCustomField":false,"FieldDataType":"Boolean","IgnoreFilter":false,"IsCacheOnClient":false,"IsLookUpfilter":false},
-    // {"FieldName":"CountryId","FieldValue":"1-257","FieldValue2":null,"FieldValue3":null,"Operator":"Equals","IsCustom":false,"DisplayInList":true,"IsCustomField":false,"FieldDataType":"Boolean","IgnoreFilter":false,"IsCacheOnClient":false,"IsLookUpfilter":false}]
-    //     }
-
   }
 
   async getMoveTypeTable(transportModeId: string): Promise<MoveTypeList[]> {
@@ -89,8 +76,9 @@ export class NewQuoteDataService {
     filters.addAdditionalFilter('TransportModeId', transportModeId, null, null, "Equals", false, true, false, "LookUp", false, true, false);
     filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, true, false);
     filters.SortDirection = "Ascending";
-    filters.PageIndex = 0;
-    filters.PageSize = 1000;
+    // filters.PageIndex = 0;
+    // filters.PageSize = 1000;
+    filters.GetAll = true;
 
     return new Promise<MoveTypeList[]>(async (resolve, reject) => {
       const resService: any = await this.entityListService.getByFilters('MoveType', filters).then();
@@ -100,23 +88,23 @@ export class NewQuoteDataService {
     });
   }
 
-  async getPort(directionId: string, transportModed: string): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000, false).toPromise();
-    return res.Result as Incoterm[];
+  async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    return res.Result as Port[];
   }
 
-  async getSpecialService(directionId: string, transportModed: string): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, '', 1000, false).toPromise();
-    return res.Result as Incoterm[];
+  async getCarrierses(directionId: string, transportModed: string): Promise<Carrier[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    return res.Result as Carrier[];
   }
 
-  async getSpecialServiceItems(directionId: string, transportModed: string): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 1000, false).toPromise();
-    return res.Result as Incoterm[];
+  async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    return res.Result as SpecialService[];
   }
 
   async getIncoterms(): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 1000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 1000000, false).toPromise();
     return res.Result as Incoterm[];
   }
 
@@ -142,8 +130,9 @@ export class NewQuoteDataService {
     const filters = new ApiQueryFilters();
     filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false, false);
     filters.SortDirection = "Ascending";
-    filters.PageIndex = 0;
-    filters.PageSize = 1000;
+    // filters.PageIndex = 0;
+    // filters.PageSize = 1000;
+    filters.GetAll = true;
 
     return new Promise<CountryList[]>(async (resolve, reject) => {
       const resService: any = await this.entityListService.getByFilters('Country', filters).then();
@@ -162,16 +151,16 @@ export class NewQuoteDataService {
 
   creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      new QuoteOPPMService().insert(entityPM).subscribe((myResponse: ServiceResponse) => {
-        if (myResponse.HasError)
-          reject(myResponse.ErrorsArray);
-        else
-          resolve(null);
-      });
+      new QuoteOPPMService().insert(entityPM)
+        .pipe(filterIsNotNull(), take(1))
+        .subscribe((myResponse: ServiceResponse) => {
+          if (myResponse.HasError)
+            reject(myResponse.ErrorsArray);
+          else
+            resolve(null);
+        });
     })
   }
-
-
 
   private getTable(tableName: string): Promise<any> {
     return new Promise<ServiceResponse>((resolve, reject) => {
@@ -202,13 +191,26 @@ export function filterIsNotNull() {
   return filter((x: any) => x);
 }
 
-export interface Itm {
-  $id: string;
-  Name: string;
-  PTERMID: string;
+export type Port = {
+  Code: string
+  CountryId: string
+  CountryName: string
+  Name: string
 }
 
-export interface Incoterm {
-  $id: string;
-  itm: Itm;
+export type Carrier = {
+  Prefix: string
+  Name: string
+  AIRLINE_ID: string
 }
+
+export type Incoterm = {
+  Name: string
+  PTERMID: string
+}
+
+export type SpecialService = {
+  SERVLEVEL_ID: string
+  Name: string
+}
+

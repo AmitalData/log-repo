@@ -26,7 +26,7 @@ export class NewQuoteShipperComponent implements OnInit {
   ngOnInit(): void {
     this.initShipperNames();
     this.formGroup.controls.shipperNotes.disable();
-    this.test();
+    // this.test();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,22 +37,22 @@ export class NewQuoteShipperComponent implements OnInit {
     }
   }
 
-  async test() {
-    while (!this.shipperNames.length) {
-      console.log('wait')
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-    this.formGroup.controls.shipperName.setValue(this.shipperNames[16])
-    this.onSelectedName(this.shipperNames[16])
+  // async test() {
+  //   while (!this.shipperNames.length) {
+  //     console.log('wait')
+  //     await new Promise(resolve => setTimeout(resolve, 100));
+  //   }
+  //   this.formGroup.controls.shipperName.setValue(this.shipperNames[16])
+  //   this.onSelectedName(this.shipperNames[16])
 
-    while (!this.shipperContacts.length) {
-      console.log('wait')
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
+  //   while (!this.shipperContacts.length) {
+  //     console.log('wait')
+  //     await new Promise(resolve => setTimeout(resolve, 100));
+  //   }
 
-    this.formGroup.controls.shipperContact.setValue(this.shipperContacts[0])
-    this.onSelectedContact(this.shipperContacts[0])
-  }
+  //   this.formGroup.controls.shipperContact.setValue(this.shipperContacts[0])
+  //   this.onSelectedContact(this.shipperContacts[0])
+  // }
 
   private async initShipperNames() {
     this.shipperNames = await this.newQuoteDataService.getCardsTable();
