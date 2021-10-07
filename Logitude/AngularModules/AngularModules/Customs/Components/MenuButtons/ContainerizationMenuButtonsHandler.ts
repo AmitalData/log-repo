@@ -241,7 +241,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0].Id;
         currRequestParams.LoggingEntityId = this.EntityPM.Id;
-        currRequestParams.LoggingEntityId2 = this.EntityPM.ConnectedDeclarations;
+        currRequestParams.DeclarationList = this.EntityPM.ConnectedDeclarations;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         currRequestParams.Tenant = SessionLocator.Tenant;
         //currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
