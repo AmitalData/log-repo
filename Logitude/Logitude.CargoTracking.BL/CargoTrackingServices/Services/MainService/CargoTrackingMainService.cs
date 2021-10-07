@@ -868,7 +868,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionsNumber == CargoTrackingTable_MultiConditions)
                 {
                     UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
-                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments);
+                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments,true);
                     UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
