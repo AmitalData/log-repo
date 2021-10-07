@@ -35,3 +35,8 @@
     margin-bottom: 1rem;
     white-space: initial !important;
 }
+
+html body .p-toast-message-text .p-toast-detail {
+    white-space: initial;
+    width: auto !important;
+}

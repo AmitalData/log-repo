@@ -34,13 +34,13 @@ export class NewQuoteDeliveryComponent implements OnInit {
   private async InitCity() {
     this.cityListAll = await this.newQuoteDataService.getCityTable();
     this.cityList = this.cityListAll;
-    console.log(this.cityList )
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('deliveryInclude')) {
       this.addFormControls()
       this.subscribeCtrls();
+      this.initDefaultValue()
     }
   }
 
@@ -52,23 +52,25 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    // this.formGroup.controls.deliveryCity.valueChanges.subscribe(val=>{
-    //   this.EntityPM.DeliveryAddressId = 
-    // })
-      this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val=> this.EntityPM.FromAddressZipCode = val);
-      this.formGroup.controls.deliveryCity.valueChanges.subscribe(val=> this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
+    this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.ToAddressCity = val)
+    this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
+    this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
   }
-  
-  includeCheckboxChange(e: {checked: boolean, originalEvent: PointerEvent}) {
-    console.log(e)
-    if(e)
+
+  initDefaultValue() {
+    this.formGroup.controls.deliveryInclude.setValue(false)
+  }
+
+  includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
+    if (e)
       this.EntityPM.IncludeDelivery = e.checked;
   }
-  
+
   // onSelectedCity(e) {
   //   console.log(e)    
   // }
-  
+
   onSelectedCountry(country: CountryList) {
-    this.EntityPM.FromAddressCountryId = country.Id;
-  }}
+    this.EntityPM.ToAddressCountryId = country.Id;
+  }
+}

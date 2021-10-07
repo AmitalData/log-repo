@@ -2,12 +2,18 @@
     display: none;
 }
 
+p-radiobutton {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
 .radio-section {
     margin-bottom: 20px;
 }
 
 .radio-checked {
     background-color: #e2f0fb;
+    color: #1084DC !important;
  }
 
 .radio-row {
