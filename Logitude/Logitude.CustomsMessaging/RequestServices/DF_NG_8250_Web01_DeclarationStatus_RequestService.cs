@@ -117,7 +117,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
                     this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
-                    this.MyRequestSheetParam.RequestDescription = "שאילתא לסטטוס הצהרות בטיסה";
+                    this.MyRequestSheetParam.RequestDescription = "שאילתא לסטטוס הצהרות בטיסה" + requestParams.CourierMaster;
                 }
                 else
                 {

@@ -18,4 +18,5 @@ export class DeclarationStatusRequestParams extends GenericRequestParams {
 
     public RequestOrigin: string;
     public DeclarationList: string;
+    public CourierMaster: string;
 }
