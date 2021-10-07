@@ -2851,12 +2851,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                             shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
-                            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried) {
-                                shipmentAdditionalCloudData.ApprovedByUserName = null;
-                                shipmentAdditionalCloudData.ApproveDateTime = null;
-                                shipmentAdditionalCloudData.DenyReason = null;
-                                shipmentAdditionalCloudData.VersionApproved = null; 
-                            }
+                            ClearApprovalDenialFields();
                         }
                         else if (entityPM.IsShipmentAdditionalCloudDataChange)
                         {
@@ -2933,6 +2928,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ShipmentFinalArrivalDateBehaviour behaviour = new ShipmentFinalArrivalDateBehaviour(this.entityPM, this.objectContext, isNewEntity);
                 behaviour.Handle();
                 this.initializer.IsUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
+            }
+        }
+
+        private void ClearApprovalDenialFields()
+        {
+            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried)
+            {
+                shipmentAdditionalCloudData.ApprovedByUserName = null;
+                shipmentAdditionalCloudData.ApproveDateTime = null;
+                shipmentAdditionalCloudData.DenyReason = null;
+                shipmentAdditionalCloudData.VersionApproved = null;
             }
         }
 
