@@ -21165,13 +21165,6 @@
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
-      <MenuItem
-        EventCode="&quot;MultiUpdate&quot;"
-        DefaultText="&quot;Multi update Process Code/TaxExemptCode&quot;"
-        MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="15"
-        LocalDefaultText="&quot;עדכון קוד תהליך/הנחה פטור&quot;"
-        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
@@ -23314,6 +23307,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.ICL&quot;"
       FeatureDefaultText="&quot;ICL Interface&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MultiUpdate&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.MultiUpdate&quot;"
+      FeatureDefaultText="&quot;Multi update Process Code/TaxExemptCode&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

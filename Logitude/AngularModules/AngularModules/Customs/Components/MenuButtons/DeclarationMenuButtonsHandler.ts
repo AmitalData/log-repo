@@ -228,22 +228,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
 
                     }
-                    if (button.EventCode == "MultiUpdate") {
-                        if (this.IsDisplayOnly) {
-                            button.IsDisabled = true;
-                            button.IsHidden = false;
-                        }
-                        else {
-                            button.IsDisabled = false;
 
-                            button.IsHidden = false;
-
-                        }
-
-
-
-
-                    }
 
                     if (button.EventCode == "SendManifest") {
                         if (this.IsDisplayOnly) {
@@ -502,11 +487,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenDeclarationCancellationWindow();
                         break;
                     }
-                case "MultiUpdate":
-                    {
-                        this.OpenMultiUpdateWindow();
-                        break;
-                    }
                 case "PrintTzrufa":
                     {
                         this.PrintTzrufaMethod(false);
@@ -648,21 +628,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
-    OpenMultiUpdateWindow() {
-        var args: any = {
-            Declaration: this.EntityPM,
-        };
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 320;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
-        logWindow.WindowArgs = args;
-        logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiUpdateComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
-    }
+ 
     OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,
