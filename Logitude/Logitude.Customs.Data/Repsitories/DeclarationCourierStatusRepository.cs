@@ -122,6 +122,19 @@ namespace Logitude.Customs.Data.Repsitories
             return q;
         }
 
+        public List<string> GetByMasterIDDeclarationList(int tenant, string CourierMasterId)
+        {
+            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in GetAll(tenant) on dec.DeclarationId equals status.DeclarationId
+                     where rDec.DeclarationNumber != null
+                     select status.DeclarationId);
+            return q.ToList();
+        }
+
         public List<DeclarationCourierStatus> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
     , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue)
         {
