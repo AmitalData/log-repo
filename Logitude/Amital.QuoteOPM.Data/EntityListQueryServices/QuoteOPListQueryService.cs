@@ -174,7 +174,7 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
                                                AutomaticallyCloseDays = f.AutomaticallyCloseDays,
                                                UpdateDate = f.UpdateDate,
                                                UpdatedByUserId = f.UpdatedByUserId,
-                                               IncotermCode = f.Incoterm == null ? "" : f.Incoterm.Code,
+                                             // IncotermCode = f.Incoterm == null ? "" : f.Incoterm.Code,
 
                                               // FromPortName = f.FromPort == null ? "" : f.FromPort.EnglishName,
                                              //  ToPortName = f.ToPort == null ? "" : f.ToPort.EnglishName,

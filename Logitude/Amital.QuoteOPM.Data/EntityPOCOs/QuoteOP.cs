@@ -201,11 +201,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string FromPortId { get; set; }
         [Column("ToPortId")]
 	    public string ToPortId { get; set; }
-        [ForeignKey("Incoterm")]
         [Column("IncotermId")]
 	    public string IncotermId { get; set; }
-	      
-        public virtual Incoterm Incoterm { get; set; }
         [ForeignKey("SalesmanUser")]
         [Column("SalesmanUserId")]
 	    public string SalesmanUserId { get; set; }
@@ -556,11 +553,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public DateTime? AutomaticLastUpdateDate { get; set; }
         [Column("IsMultiCurrency")]
 	    public bool IsMultiCurrency { get; set; }
-        [ForeignKey("OPSpecialServicesType")]
         [Column("SpecialServiceId")]
 	    public string SpecialServiceId { get; set; }
-	      
-        public virtual OPSpecialServicesType OPSpecialServicesType { get; set; }
     }
 }
 	 
