@@ -2083,14 +2083,22 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             else
             {
-                PortQuery portQuery = new PortQuery(portRepository);
-                Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
-                if (portZero != null)
-                {
-                    var newPort =  portQuery.GetPortCopyToCurrentTenant(portZero.Id, this.logitudeTenant.Value);
-                    portId = newPort.Id;
-                }
+                portId = this.CopyPortCopyToCurrentTenant(portCode);
             }
+            return portId;
+        }
+
+        private string CopyPortCopyToCurrentTenant(string portCode)
+        {
+            string portId = null;
+            PortQuery portQuery = new PortQuery(portRepository);
+            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
+            if (portZero != null)
+            {
+                var newPort = portQuery.GetPortCopyToCurrentTenant(portZero.Id, this.logitudeTenant.Value);
+                portId = newPort.Id;
+            }
+
             return portId;
         }
 
