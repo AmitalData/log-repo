@@ -39,10 +39,21 @@
                                 </div>
                             </div>
                         </td>
-
-                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
-                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
-
+                      
+                        <td style="height: 20px; padding: 5px; padding-bottom: 0px;">
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td *ngIf="!IsDisplayOnly && MultiUpdate" style="float:left;">
+                                            <button class="Button" (click)="OpenMultiUpdateWindow()">  עדכון קוד תהליך/הנחה פטור </button>
+                                        </td>
+                                        <td style="width:10px;"><div></div></td>
+                                        <td style="width:15px;">
+                                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
 
                     </tr>

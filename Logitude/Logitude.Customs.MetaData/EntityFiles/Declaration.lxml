@@ -24337,5 +24337,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MultiUpdate&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.MultiUpdate&quot;"
+      FeatureDefaultText="&quot;Multi update Process Code/TaxExemptCode&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
