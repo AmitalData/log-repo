@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FeatureUniqeCode = report.FeatureUniqeCode,
                                    AvailableForScheduling = report.AvailableForScheduling,
                                    DisablePreview = report.DisablePreview,
+                                   DefaultExcelTemplateId = report.DefaultExcelTemplateId,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -97,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FeatureUniqeCode = a.FeatureUniqeCode,
                                                AvailableForScheduling = a.AvailableForScheduling,
                                                DisablePreview = a.DisablePreview,
+                                               DefaultExcelTemplateId = a.DefaultExcelTemplateId,
                                            };
             return reports;
         }
@@ -128,6 +130,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FeatureUniqeCode = a.FeatureUniqeCode,
                              AvailableForScheduling = a.AvailableForScheduling,
                              DisablePreview = a.DisablePreview,
+                             DefaultExcelTemplateId = a.DefaultExcelTemplateId,
                          }).FirstOrDefault();
 
             return query;
@@ -156,6 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FeatureUniqeCode = report.FeatureUniqeCode,
                                                 AvailableForScheduling = report.AvailableForScheduling,
                                                 DisablePreview = report.DisablePreview,
+                                                DefaultExcelTemplateId = report.DefaultExcelTemplateId,
                                             };
             return result;
         }
@@ -188,6 +192,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
+                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
 
                                        }).ToList();
 
@@ -238,7 +243,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
-
+                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -281,7 +286,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
                                            DisablePreview = report.DisablePreview,
-
+                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
                                        }).ToList();
 
           

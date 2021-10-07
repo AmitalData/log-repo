@@ -134,7 +134,10 @@ export class ReportPM {
     public get DisablePreview() { return this.disablePreview; }
     public set DisablePreview(newValue: boolean) { if (this.disablePreview != newValue) { this.disablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
        
-	 
+    private defaultExcelTemplateId: string;
+    public get DefaultExcelTemplateId() { return this.defaultExcelTemplateId; }
+    public set DefaultExcelTemplateId(newValue: string) { if (this.defaultExcelTemplateId != newValue) { this.defaultExcelTemplateId = newValue; this.MarkAsDirty("DefaultExcelTemplateId"); } }
+       
 
     public OldEntityPM: ReportPM;
 		
@@ -162,4 +165,4 @@ export class ReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

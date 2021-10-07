@@ -23,8 +23,9 @@ export class ReportList {
 		FilterHtmlComponentUrl: string;
 		DefaultTemplateId: string;
 		DefaultMessageTemplateId: string;
+		DefaultExcelTemplateId: string;
 		FeatureUniqeCode: string;
 		AvailableForScheduling: boolean;
 		DisablePreview: boolean;
 	
-}
+}

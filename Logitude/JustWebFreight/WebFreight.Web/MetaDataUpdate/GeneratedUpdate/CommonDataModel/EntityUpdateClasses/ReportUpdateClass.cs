@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "66f39119eeefe358c1ff3aa19d0ce240";
+		public const string HashString = "a0758f16ae6e1d8ccfd754e5ffa6318c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

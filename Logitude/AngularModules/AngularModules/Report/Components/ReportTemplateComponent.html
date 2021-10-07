@@ -222,6 +222,193 @@
                             <div style="height:5%;"></div>
 
 
+                            <div  style="height:45%;vertical-align:top;">
+
+                                <table>
+  
+                                    <tr style="height:25px">
+                                        <td>
+                                            <div style="text-align:left;width:100%;height:25px;"><span style="vertical-align:central;text-align:left;font-size:16px;color:#1B90CB">Excel Report Template</span></div>
+                                        </td>
+                                    </tr>
+  
+  
+                                    <tr style="height:32px;">
+                                        <td>
+  
+                                            <div style="text-align:right;width:100%;height:32px;vertical-align:central;">
+                                                <table style="height: 32px;">
+                                                    <tr style="height:32px">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+  
+                                                        <td *ngIf="IsShowNewButton" style="width: 30px;vertical-align:middle">
+  
+                                                            <button class="Button" (click)="AddReportTemplateButtonClicked('E')">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+                                                        </td>
+  
+  
+                                                        <td *ngIf="IsShowNewButton" style="width: 7px;"></td>
+  
+                                                        <td style="width: 70px;vertical-align:middle">
+                                                            <button class="Button" (click)="SetAsDefaultButtonClicked('E')">Set as Default</button>
+                                                        </td>
+  
+                                                    </tr>
+                                                </table>
+  
+                                            </div>
+  
+                                        </td>
+                                    </tr>
+  
+  
+  
+                                    <tr>
+                                        <td class="CellStretch">
+                                            <div *ngIf="IsVisibile" class="SimpleGridView">
+                                                <div class="SimpleGridViewHeader">
+                                                    <table>
+  
+  
+                                                        <tr>
+  
+                                                            <td style="width:60px; min-width:60px;max-width:60px">Default</td>
+                                                            <td style="width: 200px; min-width: 200px;max-width:200px">{{'ReportsTemplate.F.Description' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 150px; min-width: 150px;max-width:150px">Last Update</td>
+                                                            <td style="width: 150px; min-width: 150px;max-width:150px">{{'ReportsTemplate.F.UpdatedByUserId' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 60px; min-width: 60px;max-width:60px">{{'ReportsTemplate.F.InActive' | TextCodeTranslationPipe}}</td>
+                                                            <!--<td style="width: 27px; min-width: 27px;max-width:27px"></td>-->
+  
+  
+                                                            <td style="width: 100%; min-width: 100%;"></td>
+  
+                                                        </tr>
+  
+  
+  
+  
+                                                    </table>
+                                                </div>
+  
+                                                <div class="SimpleGridViewBody">
+                                                    <table>
+  
+                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ExcellReportsTemplatePMLists">
+                                                            <td>
+                                                                <table>
+                                                                    <tr (click)="CurrentExcelReportsTemplatePM =item"  [class.RowSelected]="item === CurrentExcelReportsTemplatePM">
+  
+  
+                                                                        <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                                            <div class="MediaFill">
+                                                                                <div class="MediaFillRelative">
+                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                        <CheckBox [IsEnabled]="false" [IsChecked]="item.IsDefault"></CheckBox>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+  
+  
+                                                                            <input (blur)="DescriptionKeyUpMethod(item)" type="text" autocomplete="off" style="height:22px;width: 190px;" [(ngModel)]="item.Description" value="" />
+  
+  
+                                                                        </td>
+  
+                                                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+  
+  
+                                                                            {{item.UpdateDate | DateTimeToDatePipe}} {{item.UpdateDate | DateTimeToTimePipe}}
+                                                                        </td>
+  
+                                                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                                                            {{item.UpdateByUserName}}
+  
+                                                                        </td>
+  
+                                                                        <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                                            <div class="MediaFill">
+                                                                                <div class="MediaFillRelative">
+                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                        <CheckBox [IsEnabled]="!item.IsDefault" [IsChecked]="item.InActive" (Checked)="CheckInActiveclick(item)"></CheckBox>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+  
+                                                                        <td style="width:100%">
+                                                                            <div>
+                                                                                <table style="height: 22px;">
+                                                                                    <tr>
+                                                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                                                        <td style="width: 57px;">
+                                                                                            <div>
+                                                                                                <button [disabled]="!item.IsSystem ? !IsEnableEditAllReportTemplate && !IsEnableEditUserReportTemplate :!IsEnableEditAllReportTemplate" style="display:inline;width:57px;vertical-align:middle" class="Button" (click)="EditReportsTemplate(item)">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:20px;"><img style="margin-bottom:-1px" src="./Images/Buttons/Edit.png" /></td>
+                                                                                                            <td style="width:30px;margin-left:-2px">Edit</td>
+                                                                                                            <td></td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </td>
+  
+                                                                                        <td style="width:5px"><div style="width:5px"></div></td>
+  
+                                                                                        <td style="width: 57px;">
+                                                                                            <button class="Button" (click)="CopyButtonClicked(item)">Copy</button>
+                                                                                        </td>
+  
+                                                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                                                        <td style="width: 100px;">
+                                                                                            <div>
+                                                                                                <button class="Button" (click)="RestoreVersionButtonClicked(item)">Version History</button>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+  
+  
+                                                                            </div>
+                                                                        </td>
+  
+  
+  
+  
+  
+                                                                    </tr>
+                                                                    <tr><td colspan="9"></td></tr>
+                                                                </table>
+  
+  
+                                                            </td>
+                                                        </tr>
+  
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+  
+                              </div>
+  
+                              <div style="height:5%;"></div>
+
+
                             <div style="height:45%;vertical-align:top;">
 
                                 <table>
