@@ -1782,7 +1782,7 @@ export class DateTool {
         if (dateFormats) {
 
             var dayIndex = dateFormats.DateParts.DateObject.getDay();
-            var monthIndex = dateFormats.DateParts.DateObject.getMonth();
+            var monthIndex = dateFormats.DateParts.Month - 1;
 
             switch (dayIndex) {
                 case 0: { dateFormats.DayName = "Sunday", dateFormats.DayNameShort = "Sun"; break; }
