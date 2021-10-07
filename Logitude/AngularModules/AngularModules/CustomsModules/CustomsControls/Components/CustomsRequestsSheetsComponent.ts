@@ -1,9 +1,9 @@
 declare var window: any;
 import { Component, EventEmitter, Output, Input, OnInit, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core'; 
+import { ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { AppTool, DateTool } from   '../../../Infrastructure/Tools';
-import { SessionLocator } from      '../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ResponseDataBase, CustomsStepEnum } from '../../../Customs/DataContract/ResponseData/ResponseDataBase';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
@@ -11,21 +11,22 @@ import { CustomsRequestsSheetList } from '../../../Customs/EntityLists/CustomsRe
 import { CustomsRequestsSheetStatusList } from '../../../Customs/EntityLists/CustomsRequestsSheetStatusList';
 import { CustomsRequestsSheetStatusListService } from '../../../Customs/Services/StandardLists/CustomsRequestsSheetStatusListService';
 
-import { TextCodeTranslator } from      '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ApiQueryFilters } from         '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ObservableCollection } from    '../../../Infrastructure/Utilities/ObservableCollection';
-import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { CustomsRequestsSheetWebService } from '../../../Customs/Services/WebServices/CustomsRequestsSheetWebService';
 
 //////////////////////////////////////////////////////////////////
 
 
 @Component({
     selector: 'CustomsRequestsSheetsComponent',
-    
+
     templateUrl: './CustomsRequestsSheetsComponent.html',
     providers: [CustomsRequestsSheetExtendedListService]
 })
@@ -93,6 +94,7 @@ export class CustomsRequestsSheetsComponent
     public _TranslationLoaded: boolean = false;
     _AllCRSSChecked: boolean
     FiltersSectionVisibility: boolean = true;
+    StatisticsVisibility: boolean = false;
     RefreshButtonVisibility: boolean;
     CloseButtonVisibility: boolean;//?????
     selectStatusesHeight: string;
@@ -116,7 +118,7 @@ export class CustomsRequestsSheetsComponent
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
         this._AllCustomsRequestsSheetStatusListVM = [];
         console.log("12....");
-        
+
     }
 
     SetWindowArgs(args) {
@@ -135,14 +137,14 @@ export class CustomsRequestsSheetsComponent
         this.entityArgs = entityArgs;
     }
     ngOnInit() {
+        this.GetStatistics();
         this.MyRequestOnly = true;
-       
         if (this.entityArgs.ObjectTableName) {
             if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
 
                 this.RefreshButtonVisibility = true;//Visibility.Visible;
                 this.CustomFileNo = this.entityArgs.EntityPM.CustomFileNo;
-               
+
                 this.MyRequestOnly = false;
                 this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, false);
 
@@ -159,7 +161,7 @@ export class CustomsRequestsSheetsComponent
         }
 
         this.InitScreen()
-    
+
     }
     ngOnDestroy() {
         console.log("CustomsRequestsSheetsComponent:ngOnDestroy");
@@ -169,9 +171,9 @@ export class CustomsRequestsSheetsComponent
     }
     InitScreen() {
         //this.CurrentSession.StartBusyIndicator("");
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response:any) => {
-                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
                     //this._entityResourceService.getEntityResourceByTableName("CustomsRequestsSheetStatus", 0).subscribe((response:any) => {
                     if (AppTool.IsNullOrEmpty(this.Title)) {
                         this.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
@@ -193,9 +195,9 @@ export class CustomsRequestsSheetsComponent
 
                         }).forEach((item) => {
                             if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
-                                 this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
-}
-                            else if (!this.isReAnAnalysis ){
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
+                            }
+                            else if (!this.isReAnAnalysis) {
                                 this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false));
 
                             }
@@ -223,6 +225,23 @@ export class CustomsRequestsSheetsComponent
         })
     }
 
+     customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
+
+    GetStatistics() {
+        var service = new CustomsRequestsSheetWebService();
+        var statistics = service.GetStatistics().subscribe((response: any) => {
+            if (response.Result != null) {
+                this.customsRequestsSheetSummary.ReleaseGoodsMessage = response.Result.ReleaseGoodsMessage;
+                this.customsRequestsSheetSummary.Tzrufa = response.Result.Tzrufa;
+                this.customsRequestsSheetSummary.DeclarationStatusSearch = response.Result.DeclarationStatusSearch;
+                this.customsRequestsSheetSummary.Total = response.Result.ReleaseGoodsMessage + response.Result.Tzrufa + response.Result.DeclarationStatusSearch;
+                debugger;
+                this.StatisticsVisibility = true;
+            }
+
+        });
+    }
+
     ngAfterViewInit() {
         //this._CD.detectChanges();
         //this.CRSSearch();
@@ -238,7 +257,7 @@ export class CustomsRequestsSheetsComponent
         //}
         this.CurrentSession.StartBusyIndicator("");
 
-         this.InitFilter();
+        this.InitFilter();
         this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe(
             data => {
                 this.CurrentSession.StopBusyIndicator();
@@ -254,20 +273,20 @@ export class CustomsRequestsSheetsComponent
                 }
 
                 else {
-                 var messageWindow = new MessageWindow();
-                messageWindow.Width = 400;
-                messageWindow.Height = 150;
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllSuccess"));
                 }
 
-           
+
             }
         );
 
-       
-      
-        
+
+
+
     }
 
     ReAnalysisByFilters() {
@@ -287,22 +306,22 @@ export class CustomsRequestsSheetsComponent
                 this.CurrentSession.StopBusyIndicator();
 
                 if (data.HasError) {
-                         var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 150;
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(data.ErrorsArray[0]);
                     //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
-                  
+
                 }
                 else {
-              var messageWindow = new MessageWindow();
-                messageWindow.Width = 400;
-                messageWindow.Height = 150;
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.SendReAnalysisInBackground"));
                 }
-            
+
             });
     }
     CheckValidation(type: string) {
@@ -315,22 +334,22 @@ export class CustomsRequestsSheetsComponent
                 if (type == "Cancel" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "15")
                     return false;
             }
-        }  
+        }
 
-            
-      
+
+
         return true;
-     }
+    }
 
     InitFilter() {
 
- 
-          var  filters = new ApiQueryFilters();
-        
- 
+
+        var filters = new ApiQueryFilters();
+
+
         filters.GetAll = true;
         filters.GetCount = true;
- 
+
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
             filters.SortBy = "RequestCreateDate";
         }
@@ -421,7 +440,7 @@ export class CustomsRequestsSheetsComponent
     }
 
     CRSSearch() {
-        
+
         this.IsSearchButtonEnabled = false;
         //this.CurrentSession.StartBusyIndicator("");
         setTimeout(() => {
@@ -469,7 +488,7 @@ export class CustomsRequestsSheetsComponent
             Styles: { width: '160px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
-          HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
             ServerSideSortable: true,
             SortByName: 'RequestCreateDate'
 
@@ -518,8 +537,8 @@ export class CustomsRequestsSheetsComponent
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
             AdditionalDataCustom: this.isReAnAnalysis
         });
-        
-        
+
+
         this.columns.push({
             FieldName: 'ShowFormatedResponse',
             DataTypeCode: 'String',
@@ -583,17 +602,17 @@ export class CustomsRequestsSheetsComponent
     };
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
- 
 
-       // if (filters == null) {
-            filters = new ApiQueryFilters();
-       // }
+
+        // if (filters == null) {
+        filters = new ApiQueryFilters();
+        // }
 
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
-        
+
         filters.SortBy = sortingCol;//"RequestCreateDate";
         filters.SortDirection = sortingDir; //"Descending";
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
@@ -692,9 +711,9 @@ export class CustomsRequestsSheetsComponent
     }
 
     GetRequestStatusString(filters: any) {
-         let RequestStatusString: string = "";
+        let RequestStatusString: string = "";
         if (this.AllCRSSChecked) return;
-         this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
+        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
 
             if (requestStatus.IsChecked) {
                 if (!AppTool.IsNullOrEmpty(RequestStatusString)) {
@@ -715,13 +734,13 @@ export class CustomsRequestsSheetsComponent
 
     public DatesValidate(mydate: string) {
 
-        
+
         if (!AppTool.IsNullOrEmpty(this.FromRequestCreateDate)) {
             this.FromDateTime = new Date(this.FromRequestCreateDate.toString());
             this.FromDateTime = new Date(
-                this.FromDateTime.getUTCFullYear(), this.FromDateTime.getUTCMonth(), this.FromDateTime.getUTCDate(),0, 0, 0);
+                this.FromDateTime.getUTCFullYear(), this.FromDateTime.getUTCMonth(), this.FromDateTime.getUTCDate(), 0, 0, 0);
         }
-        
+
         if (this.FromRequestTime) {
             //this.FromDateTime = DateTool.AddHour(this.FromDateTime, this.FromRequestTime.getHours())
             //this.FromDateTime = DateTool.AddMinute(this.FromDateTime, this.FromRequestTime.getMinutes())
@@ -730,11 +749,11 @@ export class CustomsRequestsSheetsComponent
                 this.FromDateTime.getUTCFullYear(), this.FromDateTime.getUTCMonth(), this.FromDateTime.getUTCDate() + 1,
                 this.FromRequestTime.getUTCHours(), this.FromRequestTime.getUTCMinutes(), this.FromRequestTime.getUTCSeconds());
         }
-        
+
         if (!AppTool.IsNullOrEmpty(this.ToRequestCreateDate)) {
             this.ToDateTime = new Date(this.ToRequestCreateDate.toString());
             this.ToDateTime = new Date(
-                this.ToDateTime.getUTCFullYear(), this.ToDateTime.getUTCMonth(), this.ToDateTime.getUTCDate(),23, 59, 59);
+                this.ToDateTime.getUTCFullYear(), this.ToDateTime.getUTCMonth(), this.ToDateTime.getUTCDate(), 23, 59, 59);
         }
         if (this.ToRequestTime) {
             //this.ToDateTime = DateTool.AddHour(this.ToDateTime, this.ToRequestTime.getHours())
@@ -745,12 +764,12 @@ export class CustomsRequestsSheetsComponent
                 this.ToRequestTime.getUTCHours(), this.ToRequestTime.getUTCMinutes(), this.ToRequestTime.getUTCSeconds());
         }
 
-        if (DateTool.IsNullOrMinDateTime(this.FromDateTime) && DateTool.IsNullOrMinDateTime(this.ToDateTime)){
+        if (DateTool.IsNullOrMinDateTime(this.FromDateTime) && DateTool.IsNullOrMinDateTime(this.ToDateTime)) {
             this.DateOk();
             return;
-        
+
         }
-        if (!DateTool.IsNullOrMinDateTime(this.FromDateTime ) && DateTool.IsNullOrMinDateTime(this.ToDateTime )) {
+        if (!DateTool.IsNullOrMinDateTime(this.FromDateTime) && DateTool.IsNullOrMinDateTime(this.ToDateTime)) {
             this.DateOk();
             return;
         }
@@ -792,7 +811,7 @@ export class CustomsRequestsSheetsComponent
 export class CustomsRequestsSheetStatusListVM {
     constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
         var Code = MyItem.Code;
-         if (!isReAnAnalysis) {
+        if (!isReAnAnalysis) {
             if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
                 this.IsChecked = true;
             }
@@ -806,5 +825,14 @@ export class CustomsRequestsSheetStatusListVM {
         }
     }
     IsChecked: boolean;
+}
+export class CustomsRequestsSheetSummary {
+    ReleaseGoodsMessage: number;
+    Tzrufa: number;
+    SuccessInFiveMinutes: number;
+    SuccessInOneMinute: number;
+    DeclarationStatusSearch: number;
+    Total: number;
+
 }
 //////////////////////////////////////////////////
