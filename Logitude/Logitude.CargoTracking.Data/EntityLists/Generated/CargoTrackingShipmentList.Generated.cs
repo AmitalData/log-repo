@@ -257,10 +257,6 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string BookingExceptionReason  { get; set; }
        [DataMember]
-       public bool? CreatedDone  { get; set; }
-       [DataMember]
-       public string PrevForwardingShipmentId  { get; set; }
-       [DataMember]
        public bool? PaymentRequiredDone  { get; set; }
        [DataMember]
        public DateTime? PaymentRequiredEstimationDate  { get; set; }
