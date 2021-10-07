@@ -457,7 +457,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (declarations.Count == 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                    return Request.CreateResponse(HttpStatusCode.OK, "אין הצהרות לשליחה");
                 }
 
                 var declarationsText = string.Join(",", declarations);
