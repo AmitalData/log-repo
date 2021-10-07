@@ -482,7 +482,6 @@ export class SendDeclarationService implements OnDestroy {
 
         }
         else {
-
             this.ValidationErrors.push(TextCodeTranslator.Translate(taxationDateTimeMessage));
             var windowArgs: any = {};
             windowArgs.Errors = this.ValidationErrors;
@@ -492,7 +491,13 @@ export class SendDeclarationService implements OnDestroy {
             windowArgs.SaveButtonText = "עדכן";
             windowArgs.CancelButtonText = "בטל";
             windowArgs.ComponentHeight = '328px';
-            var windowTitle = TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck");
+            if (this.EntityPM.Direction == "E") {
+                var windowTitle = TextCodeTranslator.Translate("Customs.General.O.ExportTaxationDateTime");
+
+            } else {
+                var windowTitle = TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck");
+            }
+
 
             var logWindow = new LogitudeWindow(this.CurrentSession);
             logWindow.Width = 600;

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "f7e9597019a5a55efe15aac72cdbecf0";
+		public const string HashString = "43b452b6d7450ca08cc5ea1ee075f5df";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "dea9",
+			      				    Code =  "918f",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2037,6 +2037,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_GeneralOClientPoas = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ClientPoas", DefaultText = "ClientPoas",LocalDefaultText = @"כתבי הרשאה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONoPaymentDateExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NoPaymentDateExport", DefaultText = "Declaration was already paid , can’t send",LocalDefaultText = @"הצהרה כבר הוגשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportTaxationDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportTaxationDateTime", DefaultText = "Taxes date",LocalDefaultText = @"בדיקת תאריך חישוב ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportTaxationDateTimeNT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportTaxationDateTimeNT", DefaultText = "Taxes date is different from today , continue ?",LocalDefaultText = @"תאריך חישוב שונה מהיום , האם לעדכן לתאריך של היום?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -1056,6 +1056,8 @@ namespace WebFreight.Web.InfrastructureModel
                     ObjectfieldId = field.ObjectfieldId,
                     ObjectfieldCode = field.ObjectfieldCode,
                     ObjectTableId = field.ObjectTableId,
+                    IsImport=field.IsImport,
+                    IsExport=field.IsExport,
                     Tenant = tenant,
                 };
                 customsRequiredFieldRepository.Add(newField);
