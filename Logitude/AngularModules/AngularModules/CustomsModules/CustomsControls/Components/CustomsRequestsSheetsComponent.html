@@ -33,7 +33,7 @@
             <td colspan="7"></td>
         </tr>
         <tr *ngIf="FiltersSectionVisibility">
-            <td>
+            <td width="80%">
                 <table  style="padding-top: 10px;width:1020px">
                     <tr>
                         <td style="width:400px;">
@@ -502,10 +502,54 @@
                     </tr>
                 </table>
             </td>
+            <td *ngIf="StatisticsVisibility"  width="20%">
+                <table>
+                    <tr>
+                        <td>
+                            סוג בקשה
+                        </td>
+                        <td>
+                            כמות
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            שאילתת סטטוס הצהרה
+                        </td>
+                        <td>
+                            {{this.customsRequestsSheetSummary.DeclarationStatusSearch}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            התרה
+                        </td>
+                        <td>
+                            {{this.customsRequestsSheetSummary.ReleaseGoodsMessage}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            שליחת צרופה
+                        </td>
+                        <td>
+                            {{this.customsRequestsSheetSummary.Tzrufa}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            {{this.customsRequestsSheetSummary.Total}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
 
         </tr>
 
-
+       
  
 
         <tr style="width:150px" >
