@@ -266,6 +266,26 @@ export class ReportTemplateComponent implements OnInit {
         }
     }
 
+    EditExcelReportsTemplate(item: ReportsTemplatePM) {
+        if (item) {
+            if (this.IsEnableEditAllReportTemplate || (!item.IsSystem && this.IsEnableEditUserReportTemplate)) {
+                var windowArgs: any = {};
+                windowArgs.DataViewModel = this;
+                windowArgs.TemplateId = item.Id;
+                windowArgs.Tenant = item.Tenant;
+                windowArgs.ReportTemplatePM = item;
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width =668;
+                logWindow.Height = 500;
+                logWindow.Title = "Edit Excel Template";
+
+                logWindow.WindowArgs = windowArgs;
+                //logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
+            }
+        }
+    }
+
     RestoreVersionButtonClicked(item: ReportsTemplatePM) {
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
