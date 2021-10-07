@@ -66,7 +66,7 @@
                                                   
                                                       <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="!item.IsCurrentVersion"  class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Restore</button></span>
                                                      
-                                                      <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="ReportsTemplatePM.templateType ==='E'" class="Button"  style="width:90px;height:22px;display:inline;" (click)="DownloadButtonClicked(item)">Download</button></span>
+                                                      <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="ReportsTemplatePM.TemplateType ==='E'" class="Button"  style="width:90px;height:22px;display:inline;" (click)="DownloadButtonClicked(item)">Download</button></span>
 
                                                       <span  *ngIf="item.VisibleRestoredViewButton"><button [disabled]="true"  *ngIf="item.IsCurrentVersion" class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Current Version</button></span>
 
