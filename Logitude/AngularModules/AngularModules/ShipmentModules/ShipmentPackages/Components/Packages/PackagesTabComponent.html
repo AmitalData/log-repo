@@ -508,7 +508,7 @@
                                     </log-column>
 
                                     <!-- Dimensions -->
-                                    <log-column [width]="'230'" [header]="DimensionsColumnHeader">
+                                    <log-column [width]="'230'" [header]="DimensionsColumnHeader" *ngIf="IsLCLEntity">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
                                                 {{item.Dimensions}}
