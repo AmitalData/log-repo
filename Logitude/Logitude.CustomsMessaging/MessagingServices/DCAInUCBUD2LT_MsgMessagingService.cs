@@ -484,7 +484,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
             var customsDocument =customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
-            if (string.IsNullOrWhiteSpace(customsDocument.CustomsDocId))
+            if (string.IsNullOrWhiteSpace(customsDocument?.CustomsDocId))
             {
                 return false;
             }
