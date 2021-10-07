@@ -29,6 +29,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Text;
 using Logitude.Accounting.BL.CoreBL.Testers;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -74,6 +76,31 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, btePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage CancelTaxReportInBatch(TaxReportPM entityPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+       
+
+                BatchTaskExecutionPM batchTaskPM = TaxReportService.CancelTaxReportInBatch(entityPM.Id, tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchTaskPM);
             }
 
             catch (Exception ex)

@@ -56,6 +56,21 @@ export class TaxReportExtendedPMService {
 
     }
 
+    CancelTaxReportInBatch(taxReportPM: TaxReportPM) {
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.post(this._apiUrl + "/CancelTaxReportInBatch", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
     PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
         return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {

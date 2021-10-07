@@ -26,6 +26,10 @@ export class TaxReportMenuButtonsHandler {
     public ObjectTableName: string = "TaxReport"
     private fullAccountingSettingListService: FullAccountingSettingListService;
     taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
+    public CancelationInProgressStatusCode: string = "CP";
+    public CancelationFailedStatusCode: string = "CF";
+
+
     private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -120,11 +124,27 @@ export class TaxReportMenuButtonsHandler {
                     confirmWindow.Show(msg);
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
-                            this.EntityPM.IsCancelled = true;
+                            this.EntityPM.StatusCode = this.CancelationInProgressStatusCode;
                             this.entityArgs.EditComponent.SaveChanges();
                             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                 if (isSaveSuccess) {
                                     this.entityArgs.EditComponent.ReloadEntityPM();
+                                    this.taxReportExtendedPMService.CancelTaxReportInBatch(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+                                        var mm: ServiceResponse = myResult;
+                                        if (!mm.HasError) {
+                                            this.entityArgs.EditComponent.ReloadEntityPM();
+                                        }
+                                        else {
+                                            this.EntityPM.IsCancelled = false;
+                                            this.EntityPM.StatusCode = this.CancelationFailedStatusCode;
+                                            this.entityArgs.EditComponent.SaveChanges();
+                                            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                                if (isSaveSuccess) {
+                                                    this.entityArgs.EditComponent.ReloadEntityPM();
+                                                }
+                                            })
+                                        }
+                                    })
                                 } else {
                                     this.EntityPM.IsCancelled = false;
                                 }

@@ -206,6 +206,7 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\Batch\BatchCancelTaxReportTask.cs" />
     <Compile Include="CoreBL\Batch\BatchYearlyFIXService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidationService.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\RealOpenAmountService.cs" />
