@@ -18,7 +18,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override DF_NG_8250_Web01_DeclarationStatus_Request GetRequest(DeclarationStatusRequestParams requestParams)
         {
             var req = new DF_NG_8250_Web01_DeclarationStatus_Request();
-            if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Containerization"))
+            if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Containerization")
+                || requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
             {
                 ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
