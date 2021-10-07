@@ -207,21 +207,21 @@ export class NewReportsTemplateComponent implements OnInit {
                         }
 
                         if (this.TemplateType == "E") {
-                            this.AddTemplateToExcelList();
+                            this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM);
                             this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM);
+                            this.CloseButtonClicked();
+                            return;
                         }
-                        else if (this.TemplateType == "R") {
+                        if (this.TemplateType == "R") {
                             this.AddTemplateToReportList();
                             this.OpenStimulsoftDesigner();
-                        } else if (this.TemplateType == "M") {
+                            this.CloseButtonClicked();
+                            return;
+                        } if (this.TemplateType == "M") {
                             this.AddTemplateToMessageList(viewModel);
-                            if (this.Area == "GeneralSendComponent") {
-                                this.DataViewModel.EditTemplate(viewModel, true);
-                            }
-                            else {
-                                this.DataViewModel.EditMessageReportsTemplate(this.ReportsTemplatePM, true);
-                            }
-
+                            this.Area == "GeneralSendComponent" ? this.DataViewModel.EditTemplate(viewModel, true) : this.DataViewModel.EditMessageReportsTemplate(this.ReportsTemplatePM, true);
+                            this.CloseButtonClicked();
+                            return;
                         }
                     }
 
@@ -233,7 +233,7 @@ export class NewReportsTemplateComponent implements OnInit {
         });
 
     }
-    
+
     AddTemplateToMessageList(viewModel: any) {
         if (this.Area == "GeneralSendComponent") {
 
@@ -279,14 +279,6 @@ export class NewReportsTemplateComponent implements OnInit {
         this.DataViewModel.ReportsTemplatePMLists.push(this.ReportsTemplatePM);
         this.DataViewModel.CurrentReportsTemplatePM = this.ReportsTemplatePM;
         if (this.DataViewModel.ReportsTemplatePMLists.length == 1) {
-            this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
-        }
-    }
-
-    AddTemplateToExcelList() {
-        this.DataViewModel.ExcellReportsTemplatePMLists.push(this.ReportsTemplatePM);
-        this.DataViewModel.CurrentExcelReportsTemplatePM = this.ReportsTemplatePM;
-        if (this.DataViewModel.ExcellReportsTemplatePMLists.length == 1) {
             this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
         }
     }
