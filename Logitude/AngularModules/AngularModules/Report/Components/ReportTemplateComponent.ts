@@ -109,30 +109,22 @@ export class ReportTemplateComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-                    result.forEach((item) => {
-                        this.AddReportsTemplateToList(item);
-                    });
-                    this.SetTemplateAsDefault(this.ReportsTemplatePMLists,this.EntityPM.DefaultTemplateId);
-                    this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists,this.EntityPM.DefaultMessageTemplateId);
-                    this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists,this.EntityPM.DefaultExcelTemplateId);
+                    this.InitReportTemplates(result);
                 }
             }
-
             this.CurrentSession.StopBusyIndicator();
-
-
         });
 
 
     }
-    SetTemplateAsDefault(templateList: ReportsTemplatePM[], templateId: any) {
-        if (templateList.length > 0) {
-            var tempate = templateList.filter(d => d.Id == templateId)[0];
-            if (tempate) {
-                tempate.IsDefault = true;
-                tempate.IsDirty = false;
-            }
-        }
+
+    InitReportTemplates(result:any) {
+        result.forEach((item: any) => {
+            this.AddReportsTemplateToList(item);
+        });
+        this.SetTemplateAsDefault(this.ReportsTemplatePMLists,this.EntityPM.DefaultTemplateId);
+        this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists,this.EntityPM.DefaultMessageTemplateId);
+        this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists,this.EntityPM.DefaultExcelTemplateId);
     }
 
     AddReportsTemplateToList(reportsTemplate: any) {
@@ -149,6 +141,15 @@ export class ReportTemplateComponent implements OnInit {
         }
     }
 
+    SetTemplateAsDefault(templateList: ReportsTemplatePM[], templateId: any) {
+        if (templateList.length > 0) {
+            var tempate = templateList.filter(d => d.Id == templateId)[0];
+            if (tempate) {
+                tempate.IsDefault = true;
+                tempate.IsDirty = false;
+            }
+        }
+    }
 
     //Description
     DescriptionKeyUpMethod(item: ReportsTemplatePM) {
