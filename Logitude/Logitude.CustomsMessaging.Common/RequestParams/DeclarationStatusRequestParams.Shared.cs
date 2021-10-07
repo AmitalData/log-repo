@@ -21,5 +21,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string OldReshimonNumber { get; set; }
         public string RequestOrigin { get; set; } // moran 20.1.16 - Task 19428
         public string TesterSendOption { get; set; }
+        public string DeclarationList { get; set; }
     }
 }
