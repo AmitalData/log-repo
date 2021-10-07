@@ -451,9 +451,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 //var messagingService = new DCAInUCB8250_MsgMessagingService();
                 //var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
                 var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(customContext);
-
+                string HAWB = "";
                 List<string> declarations = declarationCourierStatusRepository.
-                    GetByMasterIDDeclarationList(tenant, CourierMasterId);
+                    GetByMasterIDDeclarationList(tenant, CourierMasterId,out HAWB);
 
                 if (declarations.Count == 0)
                 {
@@ -476,7 +476,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     DeclarationRadio = true,
                     TesterSendOption = testerSendOption,
-
+                    CourierMaster = HAWB
                 };
                 var res = service.Send(requestParams8250);
                 if (res.HasException)
