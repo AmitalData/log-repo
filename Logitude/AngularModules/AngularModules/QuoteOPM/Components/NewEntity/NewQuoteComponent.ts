@@ -27,11 +27,15 @@ export class NewQuoteComponent {
             this.test()
     }
 
-    create() {
+    async create() {
         if(this.formGroup.invalid) return;
         
+        SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator('Create new quote... ');
+        
         this.addProperty()
-        this.newQuoteDataService.creatingNewQuote(this.EntityPM)
+        await this.newQuoteDataService.creatingNewQuote(this.EntityPM)
+        
+        SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator();
         SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK')
         console.log(this.EntityPM)
     }
