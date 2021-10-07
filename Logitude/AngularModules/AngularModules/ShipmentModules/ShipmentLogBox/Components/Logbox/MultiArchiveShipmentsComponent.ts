@@ -47,6 +47,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
     public isLogbox = SystemEnvironmentService.IsLogBox();
+    public IsExportActivated: boolean = false;
+    public IsImportActivated: boolean = false;
 
     constructor(private _entityListService: EntityListService) {
         super();
@@ -65,6 +67,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         if (SessionLocator.PrivateLableSettings) {
             this.IsPrivateLabel = true;
             this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+            this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
+            this.IsImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
         }
     }
 
