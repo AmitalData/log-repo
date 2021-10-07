@@ -108,7 +108,7 @@ namespace Logitude.Customs.BL.Messaging
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
 
-
+            bool singleton = false; ///!!!!!
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -127,7 +127,8 @@ namespace Logitude.Customs.BL.Messaging
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
                 LogSettings = settingsData,
-                QueueName = "FTPCommunicationLogQueue",///using  by FTPCommunicationWorkerRole
+                //
+                QueueName = (singleton ? "Singleton" : "") + "FTPCommunicationLogQueue",///using  by FTPCommunicationWorkerRole
                 CreatedByUserId = loggedContactId
             };
 
