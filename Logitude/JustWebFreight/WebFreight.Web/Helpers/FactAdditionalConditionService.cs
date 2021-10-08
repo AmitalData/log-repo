@@ -19,7 +19,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string Get()
+        public string Build()
         {
             string additionalCondition = GetAdditionalCondition(dWObjectTablePM);
             if (string.IsNullOrEmpty(additionalCondition)) return null;
@@ -30,14 +30,14 @@ namespace WebFreight.Web.Helpers
 
         private string GetAdditionalCondition(DWObjectTablePM dWObjectTablePM)
         {
-            if (string.IsNullOrEmpty(dWObjectTablePM.AdditionalCondition) && string.IsNullOrEmpty(dWObjectTablePM.AdditionalFactCode)) return null;
-            if (!string.IsNullOrEmpty(dWObjectTablePM.AdditionalCondition)) return dWObjectTablePM.AdditionalCondition;
-            return GetDWObjectTable(dWObjectTablePM.AdditionalFactCode, dWObjectTablePM.Tenant)?.AdditionalCondition;
+            if (string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions) && string.IsNullOrEmpty(dWObjectTablePM.AdditionalFactCode)) return null;
+            if (!string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions)) return dWObjectTablePM.AdditionalConditions;
+            return GetDWObjectTableByCode(dWObjectTablePM.AdditionalFactCode, dWObjectTablePM.Tenant)?.AdditionalConditions;
         }
 
 
 
-        private DWObjectTablePM GetDWObjectTable(string code, int tenant)
+        private DWObjectTablePM GetDWObjectTableByCode(string code, int tenant)
         {
             DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(tenant);
             return dWObjectTableQuery.GetSinglePM(code, tenant);

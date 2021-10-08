@@ -352,7 +352,6 @@
 
    INSERT INTO @DIM_AddressesTable (Id, Id_Number) SELECT Id, Id_Number FROM DIM_Addresses
    INSERT INTO @DIM_ContactsTable (Id, Id_Number) SELECT Id, Id_Number FROM DIM_Contacts 
-	   declare @IsStandalonePickupDelivery as  bit
   
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
@@ -403,8 +402,7 @@
 	1,1,1,1,
 	1,1,1,1,
 	1,1,1,1,
-    1,1,1,1,
-    dw_Shipments.IsStandalonePickupDelivery
+    1,1,1,1
 	 --ShipperAddress.Id_Number,ShipperContact.Id_Number,ShipperNotExporterAddress.Id_Number,ShipperNotExporterContact.Id_Number,
 	 --FreelancerAddress.Id_Number,FreelancerContact.Id_Number,ReleasingAgentAddress.Id_Number,ReleasingAgentContact.Id_Number,
 	 --CustomerAddress.Id_Number,CustomerContact.Id_Number,ConsigneeAddress.Id_Number,ConsigneeContact.Id_Number,
@@ -557,7 +555,7 @@
    --inner JOIN @DIM_ContactsTable ConsolidatorContact ON dw_Shipments.ConsolidatorContactId = ConsolidatorContact.Id
 
 
-	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') 
+	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C')  and   dw_Shipments.IsStandalonePickupDelivery = 0
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type, @OBLType,@Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages ,@DangerousGoods , @NumberOfContainers , @Salesman ,@AccountManager ,@TotalProfitInLocalCurrency , 
 	 @TotalProfitInProfitCurrency ,  @LocalCurrency , @ProfitCurrency  , @OperationallyClosed , @AccountingClosed  , @Location   ,
@@ -601,7 +599,7 @@
 	  @ConsigneeNotImporterAddress,@ConsigneeNotImporterContact,
 	  @CustomClearancePointAddress,@CustomClearancePointContact,
 	  @ColoaderAddress,@ColoaderContact,
-	  @ConsolidatorAddress,@ConsolidatorContact,@IsStandalonePickupDelivery
+	  @ConsolidatorAddress,@ConsolidatorContact
  
 
 
@@ -612,11 +610,7 @@
 
 
 
-
-	
-	 --   declare @RecordType as varchar(100)
-		--set @RecordType = 'Master';
-		--if(@DirectHouse = 'House' or @DirectHouse = 'Direct') begin  set @RecordType = 'Shipment'; end
+	   declare @IsInlandDomesticShipment as  bit = 0; If(@DirectionId = 'D' and @TransportModeId = 'I') begin  set @IsInlandDomesticShipment =1; end
 
 
 			   declare @percentage as   float=1000
@@ -788,7 +782,7 @@
 	   [Custom Agent Import Address],[Custom Agent Import Contact],[Notify1 Address],[Notify1 Contact],
 	   [Notify2 Address],[Notify2 Contact],[Freight Forwarder Address],[Freight Forwarder Contact],
 	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
-	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsStandalonePickupDelivery]
+	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment]
 	  )  
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared  , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , @MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServicesType ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 	   ,@Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency, @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,@NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
@@ -809,7 +803,7 @@
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @IsStandalonePickupDelivery )
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @IsInlandDomesticShipment )
 
 	   	END TRY 
 BEGIN CATCH  
@@ -868,7 +862,7 @@ END CATCH
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsStandalonePickupDelivery
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact 
  
 
 

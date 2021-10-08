@@ -759,7 +759,7 @@ namespace WebFreight.Web.Helpers
                 factCondation += ") ";
             }
 
-            factCondation += new FactAdditionalConditionService(dWObjectTablePM, factCondation).Get();
+            factCondation += new FactAdditionalConditionService(dWObjectTablePM, factCondation).Build();
 
             if (DWQueryParam.UserEmail != "ahmadb@test.com")
             {
