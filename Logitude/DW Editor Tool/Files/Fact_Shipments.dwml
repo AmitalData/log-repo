@@ -330,12 +330,12 @@
       <Index Columns="[Source Tenant],[Create Date Time]" />
       <Index Columns="[Source Tenant],[DirectHouse]" />
       <Index Columns="[Source Tenant], [Operationally Closed]" />
-      <Index Columns="[Source Tenant],[DirectHouse], [IsInland Domestic Shipment]" />
+      <Index Columns="[Source Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
 
       <Index Columns="[Parent Tenant],[Create Date]" />
       <Index Columns="[Parent Tenant],[Create Date Time]" />
       <Index Columns="[Parent Tenant],[DirectHouse]" />
-      <Index Columns="[Parent Tenant],[DirectHouse], [IsInland Domestic Shipment]" />
+      <Index Columns="[Parent Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
       <Index Columns="[Operationally Closed], [Parent Tenant], [First Operational Close Date]" />
 
 

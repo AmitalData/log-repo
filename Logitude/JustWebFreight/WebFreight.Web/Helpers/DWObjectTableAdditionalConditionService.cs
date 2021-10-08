@@ -7,34 +7,22 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
-    public class FactAdditionalConditionService
+    public class DWObjectTableAdditionalConditionService
     {
 
-        private string factCondition = string.Empty;
         private DWObjectTablePM dWObjectTablePM;
-        public FactAdditionalConditionService(DWObjectTablePM dWObjectTablePM , string factCondition)
+        public DWObjectTableAdditionalConditionService(DWObjectTablePM dWObjectTablePM)
         {
             this.dWObjectTablePM = dWObjectTablePM;
-            this.factCondition = factCondition;
         }
 
 
-        public string Build()
-        {
-            string additionalCondition = GetAdditionalCondition(dWObjectTablePM);
-            if (string.IsNullOrEmpty(additionalCondition)) return null;
-            return (!string.IsNullOrEmpty(factCondition) ? " and " : " ") + additionalCondition;
-        }
-
-
-
-        private string GetAdditionalCondition(DWObjectTablePM dWObjectTablePM)
+        public string Get()
         {
             if (string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions) && string.IsNullOrEmpty(dWObjectTablePM.AdditionalFactCode)) return null;
             if (!string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions)) return dWObjectTablePM.AdditionalConditions;
             return GetDWObjectTableByCode(dWObjectTablePM.AdditionalFactCode, dWObjectTablePM.Tenant)?.AdditionalConditions;
         }
-
 
 
         private DWObjectTablePM GetDWObjectTableByCode(string code, int tenant)

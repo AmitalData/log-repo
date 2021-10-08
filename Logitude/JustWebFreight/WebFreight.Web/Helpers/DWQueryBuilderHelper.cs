@@ -741,25 +741,23 @@ namespace WebFreight.Web.Helpers
             }
 
 
+            string additionalCondition = new DWObjectTableAdditionalConditionService(dWObjectTablePM).Get();
 
-
-            string factCondation = "";
             List<string>shipmentLevelLists = GetShipmentLevelListsByRecordType(dWObjectTablePM.RecordType);
             if (shipmentLevelLists.Count() > 0)
             {
-
-                factCondation = (" " + Fact + ".[DirectHouse] in (");
+                additionalCondition += !string.IsNullOrEmpty(additionalCondition) ? " and " : " ";
+                additionalCondition += (Fact + ".[DirectHouse] in (");
                 foreach (string shipmentType in shipmentLevelLists)
                 {
                     string parameterTenantName = "@ShipmentLevel" + shipmentType.ToString();
-                    factCondation += parameterTenantName + ",";
+                    additionalCondition += parameterTenantName + ",";
                     sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = shipmentType.ToString() ,DataType = "MultiValue" });
                 }
-                factCondation = factCondation.Remove(factCondation.Length - 1);
-                factCondation += ") ";
+                additionalCondition = additionalCondition.Remove(additionalCondition.Length - 1);
+                additionalCondition += ") ";
             }
 
-            factCondation += new FactAdditionalConditionService(dWObjectTablePM, factCondation).Build();
 
             if (DWQueryParam.UserEmail != "ahmadb@test.com")
             {
@@ -767,13 +765,13 @@ namespace WebFreight.Web.Helpers
                 {
 
                     string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
-                    if (!string.IsNullOrEmpty(factCondation)) finarlCondition += factCondation + " and";
+                    if (!string.IsNullOrEmpty(additionalCondition)) finarlCondition += additionalCondition + " and";
                     FinalQuery = FinalQuery.Replace("where", finarlCondition);
                 }
                 else if (FinalQuery.Contains("group by"))
                 {
                     string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
-                    if (!string.IsNullOrEmpty(factCondation)) finarlCondition += (" and " + factCondation);
+                    if (!string.IsNullOrEmpty(additionalCondition)) finarlCondition += (" and " + additionalCondition);
                     finarlCondition += " group by";
                     FinalQuery = FinalQuery.Replace("group by", finarlCondition);
 
@@ -781,7 +779,7 @@ namespace WebFreight.Web.Helpers
                 else
                 {
                     FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
-                    if (!string.IsNullOrEmpty(factCondation)) FinalQuery += (" and" + factCondation);
+                    if (!string.IsNullOrEmpty(additionalCondition)) FinalQuery += (" and" + additionalCondition);
 
                 }
             }
