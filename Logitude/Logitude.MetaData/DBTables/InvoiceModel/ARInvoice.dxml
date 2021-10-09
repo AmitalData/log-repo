@@ -784,6 +784,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="GlobalTaxCalculation"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

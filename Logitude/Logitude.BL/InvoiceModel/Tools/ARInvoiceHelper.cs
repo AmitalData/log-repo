@@ -649,7 +649,10 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     if (this.isIndiaCountry)
@@ -1133,10 +1136,20 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             return myResult;
         }
-
-
-
-
-
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string GetGlobalTaxCalculation)
+        {
+            if (GetGlobalTaxCalculation == "Tax Excluded")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (GetGlobalTaxCalculation == "Tax Inclusive")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
     }
 }

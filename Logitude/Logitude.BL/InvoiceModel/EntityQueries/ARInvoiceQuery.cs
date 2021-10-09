@@ -1420,6 +1420,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
                             PaidDate  = a.PaidDate,
                             PartnerId = a.PartnerId,
+                            GlobalTaxCalculation = a.GlobalTaxCalculation,
                         };
 
             return query;
@@ -1568,6 +1569,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterNumbers = entity.MasterNumbers,
                              MasterShipmentNumbers = entity.MasterShipmentNumbers,
                              HouseNumbers = entity.HouseNumbers,
+                             GlobalTaxCalculation = entity.GlobalTaxCalculation,
                          };
 
             return result;
@@ -1688,6 +1690,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               MasterNumbers = a.MasterNumbers,
                                               MasterShipmentNumbers = a.MasterShipmentNumbers,
                                               HouseNumbers = a.HouseNumbers,
+                                              GlobalTaxCalculation = a.GlobalTaxCalculation,
                                           }).ToList();
             return invoices;
         }
@@ -1812,6 +1815,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     MasterNumbers = entityPOCO.MasterNumbers,
                     MasterShipmentNumbers = entityPOCO.MasterShipmentNumbers,
                     HouseNumbers = entityPOCO.HouseNumbers,
+                    GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
+
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2148,6 +2153,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaidDate = entity.PaidDate,
                              PartnerId = entity.PartnerId,
                              PartnerName = entity.Partner.EnglishName,
+                             GlobalTaxCalculation = entity.GlobalTaxCalculation,
                          };
 
             return result;

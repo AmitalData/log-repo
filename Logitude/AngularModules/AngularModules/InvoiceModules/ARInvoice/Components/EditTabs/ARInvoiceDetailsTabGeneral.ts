@@ -61,7 +61,9 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
-    IsAccountingActivated:boolean = false;
+    IsAccountingActivated: boolean = false;
+    public GlobalTaxCalculationItemsSource: string[] = [];
+    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
@@ -80,6 +82,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.InitializeComponent();
         this.SetUIProperties();
         this.BuildScreenData();
+        this.BuildGlobalTaxCalculationItemsSource();
         this.Listen();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -543,6 +546,35 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     }
                 });
             }
+        }
+    }
+
+    BuildGlobalTaxCalculationItemsSource() {
+        if (this.IsQBOAccountingSystem()) {
+            this.IsGlobalTaxCalculationVisible = true;
+        }
+        this.GlobalTaxCalculationItemsSource = [];
+        this.GlobalTaxCalculationItemsSource.push("None");
+        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
+        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
+        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
+    }
+
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (ObjectsLocator.GlobalSetting) {
+            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
+        }
+        return isQBOAccountingSystem;
+    }
+
+    get SelectedGlobalTaxCalculation() {
+        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
+    }
+    set SelectedGlobalTaxCalculation(value: string) {
+        if (this.EntityPM.GlobalTaxCalculation != value) {
+            this.EntityPM.GlobalTaxCalculation = value;
         }
     }
 

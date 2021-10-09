@@ -312,6 +312,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.DocNumber = invoice.InvoiceNumber;
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.MainEntityReference))
                     {
@@ -683,9 +687,20 @@ namespace Logitude.BL.InvoiceModel.Tools
             communicationLogRepository.SubmitChanges();
         }
 
-
-
-
-
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string GetGlobalTaxCalculation)
+        {
+            if (GetGlobalTaxCalculation == "Tax Excluded")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (GetGlobalTaxCalculation == "Tax Inclusive")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
     }
 }

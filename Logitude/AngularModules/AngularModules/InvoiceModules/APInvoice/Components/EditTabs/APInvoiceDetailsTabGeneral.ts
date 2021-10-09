@@ -50,12 +50,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public IsGlobalTaxCalculationVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     InvoiceLineHeader: string;
     accountingActivated: boolean= false;
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
-    VendorLovSizeForFullAccounting:number;
+    VendorLovSizeForFullAccounting: number;
+    public GlobalTaxCalculationItemsSource: string[] = [];
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -67,6 +69,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.InitializeServices();
         this.SetUIProperties();
         this.BuildScreenData();
+        this.BuildGlobalTaxCalculationItemsSource();
         this.Listen();
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.F.Description");
@@ -492,6 +495,33 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         return myResult;
     }
 
+    BuildGlobalTaxCalculationItemsSource() {
+        if (this.IsQBOAccountingSystem()) {
+            this.IsGlobalTaxCalculationVisible = true;
+        }
+        this.GlobalTaxCalculationItemsSource = [];
+        this.GlobalTaxCalculationItemsSource.push("None");
+        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
+        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
+        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
+    }
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (ObjectsLocator.GlobalSetting) {
+            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
+        }
+        return isQBOAccountingSystem;
+    }
+
+    get SelectedGlobalTaxCalculation() {
+        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
+    }
+    set SelectedGlobalTaxCalculation(value: string) {
+        if (this.EntityPM.GlobalTaxCalculation != value) {
+            this.EntityPM.GlobalTaxCalculation = value;
+        }
+    }
 
     private isTotalInLocalCurrency: boolean = false;
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
@@ -1993,4 +2023,6 @@ export class APInvoiceLineItem extends BaseComponent {
             logWindow.Show('./CommonModules/CommonOthers/Components/UpdateVATPercentage/UpdateVATPercentageComponent');
         }
     }
+
 }
+

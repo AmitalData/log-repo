@@ -98,5 +98,6 @@ export class APInvoiceList {
 		MasterNumbers: string;
 		MasterShipmentNumbers: string;
 		HouseNumbers: string;
+		GlobalTaxCalculation: string;
 	
 }

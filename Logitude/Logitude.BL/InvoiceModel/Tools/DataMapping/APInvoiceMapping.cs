@@ -158,6 +158,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.MasterNumbers = entityPM.MasterNumbers;
             entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
             entity.HouseNumbers = entityPM.HouseNumbers;
+            entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
 
             if (entityPM.SetApproved)
             {

@@ -72,6 +72,28 @@
                                                 </td>
                                             </tr>
 
+                                            <!-- GlobalTaxCalculation -->
+                                            <tr class="FormFieldRow"  *ngIf="IsGlobalTaxCalculationVisible">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'GlobalTaxCalculation'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <ComboBox [ItemsSource]="GlobalTaxCalculationItemsSource" [SelectedItem]="SelectedGlobalTaxCalculation" (SelectedItemChanged)="SelectedGlobalTaxCalculation=$event" [IsDisabled]="!IsEditingEnabled"></ComboBox>
+                                                            </td>
+                                                            <td style="width: 40px;">
+                                                                <div></div>
+                                                            </td>
+                                                       </tr>
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+
                                         </table>
                                     </td>
 
@@ -150,6 +172,16 @@
 
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 
