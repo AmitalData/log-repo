@@ -333,13 +333,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
-            // Container 
-            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
-            if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
-            {
-                myHelper.SendContainerStatusRequest();
+            if (FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
+            { 
+                // Container 
+                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
+                {
+                    myHelper.SendContainerStatusRequest();
+                }
             }
         }
+
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
