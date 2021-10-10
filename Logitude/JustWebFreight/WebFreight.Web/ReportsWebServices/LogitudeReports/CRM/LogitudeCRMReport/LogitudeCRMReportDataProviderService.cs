@@ -77,13 +77,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 HasError = HasError(opportunityCRMDetail.ToList()),
                 CurrentTotal = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, opportunityCRMDetail.ToList().Sum(b => b.Total)),
                 OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList(), opportunityCRMDetail.First().CurrencyCode),
-                TotalNetBeforeYear = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, GetTotalNetBeforeYear(opportunityCRMDetail.ToList()))
+                TotalNetBeforeYear = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, GetTotalNetBeforeYear(opportunityCRMDetail.ToList())),
+                InActive = opportunityCRMDetail.First().InActive,
             };
         }
 
         private decimal? GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
         {
-            return opportunityDetails.Where(a => a.CreateDate.Year < DateTime.Now.Year).Sum(a => a.Total);
+            return opportunityDetails.Where(a => a.ActualClosingDate.Year < DateTime.Now.Year).Sum(a => a.Total);
         }
 
         private List<OpportunityItem> GetOpportunityItems(IEnumerable<OpportunityCRMDetails> opportunityDetails, string currencyCode)
@@ -117,12 +118,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth, string currencyCode)
         {
             return opportunityDetails
-                .Where(b => b.CreateDate.Year == DateTime.Now.Year && b.CreateDate.Month == mounth)
+                .Where(b => b.ActualClosingDate.Year == DateTime.Now.Year && b.ActualClosingDate.Month == mounth)
                 .GroupBy(a => 1)
                 .Select(a => new OpportunityPeriodSummary
                 {
                     NumberOfUsers = a.Sum(b => b.NumberOfUsers),
-                    IsNewCustomer = opportunityDetails.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.CreateDate).FirstOrDefault()?.IsNewCustomer,
+                    IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.ActualClosingDate).FirstOrDefault()?.IsNewCustomer,
                     NewIncome = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
                 }).ToList();
         }
