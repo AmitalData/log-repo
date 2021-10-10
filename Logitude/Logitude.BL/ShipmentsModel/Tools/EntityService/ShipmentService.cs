@@ -2933,6 +2933,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void ClearApprovalDenialFields()
+        {
+            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried)
+            {
+                shipmentAdditionalCloudData.ApprovedByUserName = null;
+                shipmentAdditionalCloudData.ApproveDateTime = null;
+                shipmentAdditionalCloudData.DenyReason = null;
+                shipmentAdditionalCloudData.VersionApproved = null;
+            }
+        }
+
+        private bool GetIsImporterApprovalRequiredValueFromDeclarationXMLData()
+        {
+            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
+            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(entityPM.DeclarationXMLData);
+            return IsImporterApprovalRequried;
+        }
+
         private bool GetIsImporterApprovalRequiredValueFromDeclarationXMLData()
         {
             ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();

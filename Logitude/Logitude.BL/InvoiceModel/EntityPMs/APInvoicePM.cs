@@ -345,5 +345,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public Boolean IsNew { get; set; }
         public Boolean IsCopied { get; set; }
         public string CopiedFrom { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+
     }
 }

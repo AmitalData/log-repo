@@ -49,6 +49,8 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
     private invoiceDomainService: InvoiceDomainService;
+    public GlobalTaxCalculationItemsSource: string[] = [];
+    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -187,6 +189,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         });
 
         this.BuildTotalsCollection();
+        this.BuildGlobalTaxCalculationItemsSource();
     }
 
     // Vendor
@@ -371,6 +374,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     ComputeTotals() {
         this.BuildTotalsCollection(true);
     }
+
     BuildTotalsCollection(isComputingTotals: boolean = false) {
         var totalsList: InvoiceTotalsClass[] = [];
         var myDataList = this.EntityPM.InvoiceMultipleShipments;
@@ -523,6 +527,34 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         this.SummaryItems.push(mySummaryItem_All);
     }
 
+    BuildGlobalTaxCalculationItemsSource() {
+        if (this.IsQBOAccountingSystem()) {
+            this.IsGlobalTaxCalculationVisible = true;
+        }
+        this.GlobalTaxCalculationItemsSource = [];
+        this.GlobalTaxCalculationItemsSource.push("None");
+        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
+        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
+        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
+    }
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (ObjectsLocator.GlobalSetting) {
+            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
+        }
+        return isQBOAccountingSystem;
+    }
+
+    get SelectedGlobalTaxCalculation() {
+        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
+    }
+    set SelectedGlobalTaxCalculation(value: string) {
+        if (this.EntityPM.GlobalTaxCalculation != value) {
+            this.EntityPM.GlobalTaxCalculation = value;
+        }
+    }
+
     ConvertToDouble(myString: string) {
         var myResult: number = 0;
 
@@ -532,6 +564,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
         return myResult;
     }
+
 
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
     set SubTotalInLocalCurrency(value: number) {

@@ -47,6 +47,8 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
+    public GlobalTaxCalculationItemsSource: string[] = [];
+    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
@@ -57,10 +59,10 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.InitializeComponent();
         this.SetUIProperties();
         this.BuildScreenData();
+        this.BuildGlobalTaxCalculationItemsSource();
         this.Listen()
 
         this.BuildEntityWarnings();
-
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -548,6 +550,35 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     set PrintNotes(newValue: string) {
         if (this.EntityPM.PrintNotes != newValue) {
             this.EntityPM.PrintNotes = newValue;
+        }
+    }
+
+    BuildGlobalTaxCalculationItemsSource() {
+        if (this.IsQBOAccountingSystem()) {
+            this.IsGlobalTaxCalculationVisible = true;
+        }
+        this.GlobalTaxCalculationItemsSource = [];
+        this.GlobalTaxCalculationItemsSource.push("None");
+        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
+        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
+        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
+    }
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (ObjectsLocator.GlobalSetting) {
+            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
+        }
+        return isQBOAccountingSystem;
+    }
+
+
+    get SelectedGlobalTaxCalculation() {
+        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
+    }
+    set SelectedGlobalTaxCalculation(value: string) {
+        if (this.EntityPM.GlobalTaxCalculation != value) {
+            this.EntityPM.GlobalTaxCalculation = value;
         }
     }
 

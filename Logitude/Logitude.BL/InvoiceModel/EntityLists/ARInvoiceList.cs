@@ -192,5 +192,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string MasterNumbers { get; set; }
         public string MasterShipmentNumbers { get; set; }
         public string HouseNumbers { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+
     }
 }
