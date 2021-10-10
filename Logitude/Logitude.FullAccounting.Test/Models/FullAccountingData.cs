@@ -48,5 +48,6 @@ namespace Logitude.FullAccounting.Test.Models
         public static string ChequePaymentMethodId { get; internal set; }
         public static string ChequeARPaymenId { get; internal set; }
         public static string ChequeBankDepositARPaymentChequeId { get; internal set; }
+        public static string RevenuesChartOfAccountId { get; internal set; }
     }
 }
