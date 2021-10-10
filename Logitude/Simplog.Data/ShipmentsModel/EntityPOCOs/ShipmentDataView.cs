@@ -243,6 +243,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomerReference2 { get; set; }
         public string CustomerName { get; set; }
         public string CustomerNote { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactEmail { get; set; }
 
         public string FreightForwarderId { get; set; }
         public string FreightForwarderAddressId { get; set; }

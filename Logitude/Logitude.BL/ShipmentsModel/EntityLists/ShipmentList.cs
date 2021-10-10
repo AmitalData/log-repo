@@ -556,32 +556,24 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ParentShipmentNumber { get; set; }
         public string ParentShipmentType { get; set; }
         public string ParentShipmentDirectionId { get; set; }
-
         public bool IsHTSMissing { get; set; }
-
         public string PrivateLabelInvoiceNumber { get; set; } 
         public DateTime? RequestedFlightDate { get; set; }
         public bool PrivateLabelIncludePickup { get; set; }
         public bool PrivateLabelIncludeDelivery { get; set; }
-
-
         public DateTime? PlannedCargoReadyDate { get; set; }
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
         public string HandlerUserName { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
-
         public string GrossWeightUnitCode { get; set; }
         public string OperationalStatusId { get; set; }
         public string BillingStatusId { get; set; }
         public string ShipperNotExporterReference1 { get; set; }
-        public string ShipperNotExporterReference2 { get; set; }
-
-         
-
-
+        public string ShipperNotExporterReference2 { get; set; } 
         public string TruckContainerNumber { get; set; }
         public string ContainersNumbersandTypesArray { get; set; }
-
+        public string CustomerContactName { get; set; }
+        public string CustomerContactEmail { get; set; }
     }
 }
