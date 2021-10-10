@@ -4436,7 +4436,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                invoiceLine.InvoiceCurrencyAmount = MethodHelper.Round((invoiceLine.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate), 2);
+                if (IsFullAccountingActivated(entityPM.Tenant))
+                {
+                    invoiceLine.InvoiceCurrencyAmount = SetInvoiceCurrencyAmountForFullAccountingTenant(invoiceLine);
+                }
+                else
+                {
+                    invoiceLine.InvoiceCurrencyAmount = MethodHelper.Round((invoiceLine.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate), 2);
+                }
+            }
+        }
+        private double? SetInvoiceCurrencyAmountForFullAccountingTenant(ARInvoiceLinePM aRInvoiceLinePM)
+        {
+            if(aRInvoiceLinePM.InvoiceCurrencyExchangeRate != null)
+            {
+                return MethodHelper.Round((aRInvoiceLinePM.LocalCurrencyAmount / aRInvoiceLinePM.InvoiceCurrencyExchangeRate), 2);
+            }
+            else
+            {
+                return aRInvoiceLinePM.InvoiceCurrencyAmount = MethodHelper.Round((aRInvoiceLinePM.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate), 2);
+
             }
         }
         private void ComputeInvoiceAmounts()
