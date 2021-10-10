@@ -1,4 +1,4 @@
-@stable @daily @all @release @smoke
+@stable @daily @all @release
 Feature: Shipping Line fake Create, Search and Edit from Maintenance
     The user creates a ShippingLine, searches for and edits it from the Maintenance Module.
 

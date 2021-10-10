@@ -45,4 +45,3 @@ Feature: Vendor Create, Search and Edit from Maintenance
     Scenario: Save and close the vendor
         When save and close vendor
         Then the vendor should close successfully
-

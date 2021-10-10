@@ -1,4 +1,4 @@
-@release @all @dev @smoke
+@release @all @dev
 Feature: Agent Create, Search and Edit from Maintenance
     The user creates an agent, searches for and edits it from the Maintenance Module.
 
