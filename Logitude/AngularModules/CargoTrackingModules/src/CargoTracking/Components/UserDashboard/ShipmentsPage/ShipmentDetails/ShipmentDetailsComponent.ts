@@ -920,11 +920,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InitRoutes()
     {
         if (this.ShipmentPM) {
-            this.CreatePickupsRoutesFromShipmentPM();
-            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
-            this.CreateMainCarriageLegsRoutesFromShipmentPM();
-            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+            this.SetShipmentRoutesAccordingToShipmentDirection();
         }
+
         if (this.ShipmentOrder) {
             if (this.ShipmentOrder.GatewayId) {
                 this.AddShipmentRouteStep(this.CreateShipmentOrderOriginRoute());
@@ -935,6 +933,21 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         }
     }
+    private SetShipmentRoutesAccordingToShipmentDirection() {
+        if (this.Shipment.ShipmentList.DirectionId == ShipmentDirections.Export) {
+            this.CreatePickupsRoutesFromShipmentPM();
+            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+            this.CreateMainCarriageLegsRoutesFromShipmentPM();
+            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+        }
+        else {
+            this.CreatePickupsRoutesFromShipmentPM();
+            this.CreateMainCarriageLegsRoutesFromShipmentPM();
+            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+        }
+    }
+
     CreateShipmentOrderNoGatewayRoute() {
         var step = new RoutingStep();
         step.TransportModeCode = this.ShipmentOrder.TransportModeId;
