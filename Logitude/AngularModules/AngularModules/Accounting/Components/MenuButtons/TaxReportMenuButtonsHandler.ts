@@ -87,28 +87,6 @@ export class TaxReportMenuButtonsHandler {
         return menuButtons;
     }
 
-    private SetMenuButtonEnabilityAccordingToCancelationProgress(button: MenuButtonPM) {
-        if (this.EntityPM.StatusCode == TaxReportStatus.CancelationInProgress)
-            button.IsDisabled = true;
-
-        if (this.EntityPM.StatusCode == TaxReportStatus.CancelationFailed)
-            button.IsDisabled = false;
-    }
-
-    private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
-        this.taxReportExtendedPMService.GetReturnToDraftButtonStatus(this.EntityPM.CreateDate).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (response != null) {
-                if (!response.Result.Result && this.EntityPM.StatusCode == TaxReportStatus.Transmitted) {
-                    button.IsDisabled = false;
-                }
-                else {
-                    button.IsDisabled = true;
-                }
-            }
-         
-        });
-    }
     private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
         this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((response: any) => {
             this.CurrentSession.StopBusyIndicator();         
@@ -124,6 +102,27 @@ export class TaxReportMenuButtonsHandler {
                 }
         });
     }
+
+    private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
+        this.taxReportExtendedPMService.GetReturnToDraftButtonStatus(this.EntityPM.CreateDate).subscribe((response: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response != null) {
+                if (!response.Result.Result && this.EntityPM.StatusCode == TaxReportStatus.Transmitted) {
+                    button.IsDisabled = false;
+                }
+                else {
+                    button.IsDisabled = true;
+                }
+            }
+
+        });
+    }
+
+    private SetMenuButtonEnabilityAccordingToCancelationProgress(button: MenuButtonPM) {
+        if (this.EntityPM.StatusCode == TaxReportStatus.CancelationInProgress)
+            button.IsDisabled = true;
+    }
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         switch (menuButton.EventCode) {
