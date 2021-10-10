@@ -147,15 +147,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetCustomerReference(DataRow tableRow)
         {
-            if (!tableRow["CustomerReference1"].Equals(null) && !tableRow["CustomerReference1"].Equals("") && tableRow["CustomerReference1"].GetType().Name != "DBNull" && !tableRow["CustomerReference2"].Equals(null) && !tableRow["CustomerReference2"].Equals("") && tableRow["CustomerReference2"].GetType().Name != "DBNull")
+            if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals("") && !tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals(""))
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference1"] + "," + tableRow["CustomerReference2"]);
             }
-            else if (!tableRow["CustomerReference1"].Equals(null) && tableRow["CustomerReference1"].GetType().Name != "" && tableRow["CustomerReference1"].GetType().Name != "DBNull")
+            else if (!tableRow.IsNull("CustomerReference1") && tableRow["CustomerReference1"].GetType().Name != "")
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference1"]);
             }
-            else if (!tableRow["CustomerReference2"].Equals(null) && tableRow["CustomerReference2"].GetType().Name != "" && tableRow["CustomerReference2"].GetType().Name != "DBNull")
+            else if (!tableRow.IsNull("CustomerReference2") && tableRow["CustomerReference2"].GetType().Name != "")
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference2"]);
             }
