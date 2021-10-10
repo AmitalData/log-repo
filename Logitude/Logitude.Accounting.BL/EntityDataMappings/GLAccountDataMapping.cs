@@ -627,7 +627,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
 
-            entityPM.Access = CheckIfUserHasSecurityAccessToGLAccount(entityPM.Tenant, entityPM.ChartOfAccountSecurityLevel);
+            //entityPM.Access = CheckIfUserHasSecurityAccessToGLAccount(entityPM.Tenant, entityPM.ChartOfAccountSecurityLevel);
 
             if (entityPM.Access == false)
                 ResetAccountBalances(entityPM);
