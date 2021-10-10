@@ -1,4 +1,4 @@
-@stabel @daily @all @release @smoke
+@stabel @daily @all @release
 Feature: Airlines Mock Create, Search and Edit from Maintenance
     The user creates an airline, searches for and edits it from the Maintenance Module.
 

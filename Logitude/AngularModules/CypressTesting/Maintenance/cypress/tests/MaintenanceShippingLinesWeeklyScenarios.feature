@@ -1,4 +1,4 @@
-@stable @weekly @all @release @smoke
+@stable @weekly @all @release
 Feature: Shipping Line Create, Search and Edit from Maintenance
     The user creates a ShippingLine, searches for and edits it from the Maintenance Module.
 
