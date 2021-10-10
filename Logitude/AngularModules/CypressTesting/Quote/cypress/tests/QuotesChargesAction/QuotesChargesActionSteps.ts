@@ -53,6 +53,10 @@ Then("the quote should update successfully", () => {
 //#endregion
 
 //#region Add charge with fixed sale currency mode
+Given("change sales currency to {string}", (currency) => {
+  cy.FillLogLov(QuoteSelectors.QuoteSaleCurrencyId, currency, true)
+});
+
 Given("the user add charge with {string} as charge type", (chargeType) => {
   QuotesActions.AddCharge(chargeType)
 });
