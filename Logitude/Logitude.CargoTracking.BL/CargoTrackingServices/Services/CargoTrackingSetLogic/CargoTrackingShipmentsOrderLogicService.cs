@@ -46,6 +46,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("ArrivalDate", "ATA"),
 
         };
+
+     
         public static void SetTableLogic(DataRow tableRow)
         {
             SetFixedValueFields(tableRow);
@@ -55,6 +57,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetMainEntity(tableRow);
             SetPreviousForwardingShipmentHeader(tableRow);
             SetCurrentMilestone(tableRow);
+            SetExceptionDescription(tableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -106,6 +109,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
             }
 
+        }
+        private static void SetExceptionDescription(DataRow tableRow)
+        {
+            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString(): null;
+            var exceptionDescription = !IsFieldNullOrEmpty(tableRow, "LastExceptionDescription") ? "," + tableRow["LastExceptionDescription"] : null;
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate +"," + tableRow["LastExceptionDescription"]);
         }
         private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
         {

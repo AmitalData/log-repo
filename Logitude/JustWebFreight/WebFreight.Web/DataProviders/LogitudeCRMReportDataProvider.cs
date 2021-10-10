@@ -47,7 +47,7 @@ namespace WebFreight.Web.DataProviders
         public decimal? CurrentTotal { get; set; }
         public List<OpportunityPeriod> OpportunityPeriods { get; set; }
         public decimal? TotalNetBeforeYear { get; set; }
-
+        public bool InActive { get; set; }
     }
 
     public class OpportunityItem
