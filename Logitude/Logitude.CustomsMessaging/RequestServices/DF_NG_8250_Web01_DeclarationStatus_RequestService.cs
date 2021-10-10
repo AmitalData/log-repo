@@ -18,12 +18,13 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override DF_NG_8250_Web01_DeclarationStatus_Request GetRequest(DeclarationStatusRequestParams requestParams)
         {
             var req = new DF_NG_8250_Web01_DeclarationStatus_Request();
-            if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Containerization"))
+            if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Containerization")
+                || requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
             {
                 ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
 
-                var connectedDeclarations = requestParams.LoggingEntityId2.Split(',').ToList();
+                var connectedDeclarations = requestParams.DeclarationList.Split(',').ToList();
                 var pms = declarationQueryService.GetDeclarationsByIds(connectedDeclarations, requestParams.Tenant);
                 var queryDetails = new List<DF_NG_8250_Web01_DeclarationStatus_RequestQueryDetails>();
                 foreach (var item in pms)
@@ -112,11 +113,19 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             else
             {
-                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                this.MyRequestSheetParam.EntityId1 = declarationId;
-                this.MyRequestSheetParam.RequestDescription = "שאילתא לסטטוס הצהרה " + requestDescription;
+                if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                    this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+                    this.MyRequestSheetParam.RequestDescription = "שאילתא לסטטוס הצהרות בטיסה" + requestParams.CourierMaster;
+                }
+                else
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    this.MyRequestSheetParam.EntityId1 = declarationId;
+                    this.MyRequestSheetParam.RequestDescription = "שאילתא לסטטוס הצהרה " + requestDescription;
+                }
             }
-
             return declarationStatus_RequestQueryDetailsList.ToArray();
         }
     }
