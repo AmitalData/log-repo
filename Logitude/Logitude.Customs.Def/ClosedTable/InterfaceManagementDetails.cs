@@ -2712,6 +2712,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
                 InterfaceType = "B",
             });
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "DCAMU",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון קוד תהליך/הנחה פטור",
+                DcaPrefixName = "DCAMU_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                InterfaceType = "C",
+            });
 
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
             all.Add(new InterfaceManagementDetails()

@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -8,6 +8,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {SupplierInvoicePM} from '../../EntityPMs/SupplierInvoicePM';
 
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { SendMultiUpdateRequestParams } from '../../DataContract/RequestParams/SendMultiUpdateRequestParams';
 
 @Injectable()
 
@@ -55,5 +56,29 @@ export class SupplierInvoiceService {
         });
 
 
+    }
+
+    PostSendMultiUpdate(requestParams: SendMultiUpdateRequestParams) {
+
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendMultiUpdate/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+            ;
+
+        });
     }
 }

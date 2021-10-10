@@ -229,6 +229,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                     }
 
+
                     if (button.EventCode == "SendManifest") {
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
@@ -486,7 +487,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenDeclarationCancellationWindow();
                         break;
                     }
-
                 case "PrintTzrufa":
                     {
                         this.PrintTzrufaMethod(false);
@@ -628,6 +628,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
+ 
     OpenDeclarationCancellationWindow_() {
         var args: any = {
             Declaration: this.EntityPM,
