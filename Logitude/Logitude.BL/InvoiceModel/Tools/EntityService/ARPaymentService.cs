@@ -1472,6 +1472,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateDocOutNeedsRebuild()
         {
+            if (string.IsNullOrEmpty(paymentPoco.Id))
+            {
+                return;
+            }
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
             DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(paymentPoco.Id, null);
             if (docOut != null)
