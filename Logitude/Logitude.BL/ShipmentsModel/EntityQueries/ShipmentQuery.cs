@@ -2609,7 +2609,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
                 {
-                    LegIndex = 2,
+                    LegIndex = 3,
                     ATA = shipmentPM.Transshipment2ATA,
                     ATD = shipmentPM.Transshipment2ATD,
                     ETA = shipmentPM.Transshipment2ETA,
@@ -2627,7 +2627,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
                 {
-                    LegIndex = 2,
+                    LegIndex = 4,
                     ATA = shipmentPM.Transshipment3ATA,
                     ATD = shipmentPM.Transshipment3ATD,
                     ETA = shipmentPM.Transshipment3ETA,
