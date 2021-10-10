@@ -174,7 +174,40 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.TerminalAddress = containerPM.TerminalAddress; 
             container.TerminalPhone = containerPM.TerminalPhone;
             container.TerminalAddressId = containerPM.TerminalAddressId;
-
+            container.ShipmentPickupETA = containerPM.ShipmentPickupETA;
+            container.ShipmentPickupETD = containerPM.ShipmentPickupETD;
+            container.ShipmentPickupATA = containerPM.ShipmentPickupATA;
+            container.ShipmentPickupATD = containerPM.ShipmentPickupATD;
+            container.ShipmentPreCarriageETA = containerPM.ShipmentPickupATD;
+            container.ShipmentPreCarriageETD = containerPM.ShipmentPreCarriageETD;
+            container.ShipmentPreCarriageATA = containerPM.ShipmentPreCarriageATA;
+            container.ShipmentPreCarriageATD = containerPM.ShipmentPreCarriageATD;
+            container.ShipmentMainCarriageETA = containerPM.ShipmentMainCarriageETA;
+            container.ShipmentMainCarriageETD = containerPM.ShipmentMainCarriageETD;
+            container.ShipmentMainCarriageATA = containerPM.ShipmentMainCarriageATA;
+            container.ShipmentMainCarriageATD = containerPM.ShipmentMainCarriageATD;
+            container.ShipmentTransshipment1ETA = containerPM.ShipmentTransshipment1ETA;
+            container.ShipmentTransshipment1ETD = containerPM.ShipmentTransshipment1ETD;
+            container.ShipmentTransshipment1ATA = containerPM.ShipmentTransshipment1ATA;
+            container.ShipmentTransshipment1ATD = containerPM.ShipmentTransshipment1ATD;
+            container.ShipmentTransshipment2ETA = containerPM.ShipmentTransshipment2ETA;
+            container.ShipmentTransshipment2ETD = containerPM.ShipmentTransshipment2ETD;
+            container.ShipmentTransshipment2ATA = containerPM.ShipmentTransshipment2ATA;
+            container.ShipmentTransshipment2ATD = containerPM.ShipmentTransshipment2ATD;
+            container.ShipmentTransshipment3ETA = containerPM.ShipmentTransshipment3ETA;
+            container.ShipmentTransshipment3ETD = containerPM.ShipmentTransshipment3ETD;
+            container.ShipmentTransshipment3ATA = containerPM.ShipmentTransshipment3ATA;
+            container.ShipmentTransshipment3ATD = containerPM.ShipmentTransshipment3ATD;
+            container.ShipmentOnCarriageETA = containerPM.ShipmentOnCarriageETA;
+            container.ShipmentOnCarriageETD = containerPM.ShipmentOnCarriageETD;
+            container.ShipmentOnCarriageATA = containerPM.ShipmentOnCarriageATA;
+            container.ShipmentOnCarriageATD = containerPM.ShipmentOnCarriageATD;
+            container.ShipmentDeliveryETA = containerPM.ShipmentDeliveryETA;
+            container.ShipmentDeliveryETD = containerPM.ShipmentDeliveryETD;
+            container.ShipmentDeliveryATA = containerPM.ShipmentDeliveryATA;
+            container.ShipmentDeliveryATD = containerPM.ShipmentDeliveryATD;
+            container.ShipmentOriginAgentId = containerPM.ShipmentOriginAgentId;
+            container.ShipmentDestinationAgentId = containerPM.ShipmentDestinationAgentId;
             BuildSearchField(containerPM, container);
         }
 

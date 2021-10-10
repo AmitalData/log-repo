@@ -183,5 +183,41 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field8 { get; set; }
         public string Field9 { get; set; }
         public string Field10 { get; set; }
+        public DateTime? ShipmentPickupETA { get; set; }
+        public DateTime? ShipmentPickupETD { get; set; }
+        public DateTime? ShipmentPickupATA { get; set; }
+        public DateTime? ShipmentPickupATD { get; set; }
+        public DateTime? ShipmentPreCarriageETA { get; set; }
+        public DateTime? ShipmentPreCarriageETD { get; set; }
+        public DateTime? ShipmentPreCarriageATA { get; set; }
+        public DateTime? ShipmentPreCarriageATD { get; set; }
+        public DateTime? ShipmentMainCarriageETA { get; set; }
+        public DateTime? ShipmentMainCarriageETD { get; set; }
+        public DateTime? ShipmentMainCarriageATA { get; set; }
+        public DateTime? ShipmentMainCarriageATD { get; set; }
+        public DateTime? ShipmentTransshipment1ETA { get; set; }
+        public DateTime? ShipmentTransshipment1ETD { get; set; }
+        public DateTime? ShipmentTransshipment1ATA { get; set; }
+        public DateTime? ShipmentTransshipment1ATD { get; set; }
+        public DateTime? ShipmentTransshipment2ETA { get; set; }
+        public DateTime? ShipmentTransshipment2ETD { get; set; }
+        public DateTime? ShipmentTransshipment2ATA { get; set; }
+        public DateTime? ShipmentTransshipment2ATD { get; set; }
+        public DateTime? ShipmentTransshipment3ETA { get; set; }
+        public DateTime? ShipmentTransshipment3ETD { get; set; }
+        public DateTime? ShipmentTransshipment3ATA { get; set; }
+        public DateTime? ShipmentTransshipment3ATD { get; set; }
+        public DateTime? ShipmentOnCarriageETA { get; set; }
+        public DateTime? ShipmentOnCarriageETD { get; set; }
+        public DateTime? ShipmentOnCarriageATA { get; set; }
+        public DateTime? ShipmentOnCarriageATD { get; set; }
+        public DateTime? ShipmentDeliveryETA { get; set; }
+        public DateTime? ShipmentDeliveryETD { get; set; }
+        public DateTime? ShipmentDeliveryATA { get; set; }
+        public DateTime? ShipmentDeliveryATD { get; set; }
+        public string ShipmentOriginAgentId { get; set; }
+        public string ShipmentDestinationAgentId { get; set; }
+        public string ShipmentOriginAgentName { get; set; }
+        public string ShipmentDestinationAgentName { get; set; }
     }
 }
