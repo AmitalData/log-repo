@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
@@ -36,9 +37,24 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
 
-            taxReportPM.IsCancelled = true;
-            taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-            taxReportUpdateService.Update(taxReportPM, true);
+
+            try
+            {
+                taxReportPM.IsCancelled = true;
+                taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportUpdateService.Update(taxReportPM, true);
+            }
+
+            catch (Exception ex)
+            {
+                taxReportPM.IsCancelled = false;
+                taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportUpdateService.Update(taxReportPM, true);
+                throw;
+
+            }
         }
 
 

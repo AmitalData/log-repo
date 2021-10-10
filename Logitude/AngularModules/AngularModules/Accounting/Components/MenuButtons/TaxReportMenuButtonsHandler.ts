@@ -26,8 +26,6 @@ export class TaxReportMenuButtonsHandler {
     public ObjectTableName: string = "TaxReport"
     private fullAccountingSettingListService: FullAccountingSettingListService;
     taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
-    public CancelationInProgressStatusCode: string = "CP";
-    public CancelationFailedStatusCode: string = "CF";
 
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -80,12 +78,23 @@ export class TaxReportMenuButtonsHandler {
                             this.SetReturnToDraftButtonStatus(button);
                         }
                     }
+
+                    this.SetMenuButtonEnabilityAccordingToCancelationProgress(button);
                 }
             }
         }
 
         return menuButtons;
     }
+
+    private SetMenuButtonEnabilityAccordingToCancelationProgress(button: MenuButtonPM) {
+        if (this.EntityPM.StatusCode == TaxReportStatus.CancelationInProgress)
+            button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == TaxReportStatus.CancelationFailed)
+            button.IsDisabled = false;
+    }
+
     private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
         this.taxReportExtendedPMService.GetReturnToDraftButtonStatus(this.EntityPM.CreateDate).subscribe((response: any) => {
             this.CurrentSession.StopBusyIndicator();
@@ -110,7 +119,8 @@ export class TaxReportMenuButtonsHandler {
                     }
                     else {
                         button.IsDisabled = true;
-                    }
+                }
+
                 }
         });
     }
@@ -124,7 +134,7 @@ export class TaxReportMenuButtonsHandler {
                     confirmWindow.Show(msg);
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
-                            this.EntityPM.StatusCode = this.CancelationInProgressStatusCode;
+                            this.EntityPM.StatusCode = TaxReportStatus.CancelationInProgress;
                             this.entityArgs.EditComponent.SaveChanges();
                             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                 if (isSaveSuccess) {
@@ -136,7 +146,7 @@ export class TaxReportMenuButtonsHandler {
                                         }
                                         else {
                                             this.EntityPM.IsCancelled = false;
-                                            this.EntityPM.StatusCode = this.CancelationFailedStatusCode;
+                                            this.EntityPM.StatusCode = TaxReportStatus.CancelationFailed;
                                             this.entityArgs.EditComponent.SaveChanges();
                                             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                                 if (isSaveSuccess) {
@@ -233,4 +243,6 @@ enum TaxReportStatus {
 
     Darft = "D",
     Transmitted = "T",
+    CancelationInProgress = "CP",
+    CancelationFailed = "CF"
 }
