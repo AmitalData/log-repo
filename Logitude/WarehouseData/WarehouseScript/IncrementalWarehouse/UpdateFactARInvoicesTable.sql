@@ -73,6 +73,8 @@
 	declare @Branch as int 
 	declare @StatusCode as varchar(2)
 	declare @DraftNumber as varchar(20)
+    declare @IsConsolidationInvoice  as bit
+	declare @InvoiceShipmentsNumbers as varchar(1000) 
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -84,7 +86,8 @@
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, DIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
-	DIM_Directions.Name,TransportModes.Name, DIM_Types.Name, dw_Shipments.ShipmentSubTypeId, DIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber
+	DIM_Directions.Name,TransportModes.Name, DIM_Types.Name, dw_Shipments.ShipmentSubTypeId, DIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
+	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.ShipmentsNumbers
 
 	 
     From dw_ARInvoices
@@ -126,7 +129,7 @@
 	 @ARInvoicesSalesman, @ShipmentSalesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber,
-	 @Direction,@TransportMode, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber
+	 @Direction,@TransportMode, @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @InvoiceShipmentsNumbers
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -154,6 +157,16 @@
 							END
 					END
 		 
+	 ----------------------------------------------
+		 
+		declare @IsCancelled as bit  
+		set @IsCancelled =0;
+		if(@StatusCode = 'AR'or @StatusCode = 'AC' or @StatusCode = 'CN' or @StatusCode = 'VD' or @StatusCode = 'AR') 
+		begin set @IsCancelled = 1 end  
+
+		 ----------------------------------------------
+		if(@IsConsolidationInvoice = 1) 
+		begin set @ShipmentsNumbers = @InvoiceShipmentsNumbers end  
 		----------------------------------------------
 
 
@@ -164,7 +177,7 @@
 	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
 	   [Shipment Number], [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
 	   [Line VAT Percentage],[Line Amount (Local)], [Line Amount (Foreign)],[Line Amount (Invoice Currency)], [Foreign Currency], [Foreign Exchange Rate],[Line Amount (Profit)],
-       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax], [Shipment House Number], [Shipment Master Number], [Shipment Direction],[Shipment Transport Mode], [Shipment Type],[Shipment Sub Type],[Department],[Shipper], [Consignee],[Routing],[Invoice Branch] )
+       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax], [Shipment House Number], [Shipment Master Number], [Shipment Direction],[Shipment Transport Mode], [Shipment Type],[Shipment Sub Type],[Department],[Shipper], [Consignee],[Routing],[Invoice Branch],[Is Cancelled] )
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber,dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),dbo.GetDateFormateAsNumber(@ApprovedDate),  dbo.GetDateFormateAsNumber(@DueDate) ,dbo.GetDateFormateAsNumber(@PrintDate),dbo.GetDateFormateAsNumber(@PaidDate),
@@ -172,7 +185,7 @@
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
 	  @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
-	  @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch)
+	  @Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch,@IsCancelled)
 
 
 
@@ -195,7 +208,7 @@ END CATCH
 	@ARInvoicesSalesman, @ShipmentSalesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
 	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
-	@Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber
+	@Type, @ShipmentSubTypeId, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @InvoiceShipmentsNumbers
 
 		End
 	CLOSE ARInvoicesCursor

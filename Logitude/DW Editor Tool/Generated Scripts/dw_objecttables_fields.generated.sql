@@ -1123,6 +1123,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesIsRegionalTaxNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesIsRegionalTaxNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesIsRegionalTaxNewId,0,'Fact_ARInvoices','[Is Regional Tax]','Is Regional Tax','Boolean','false',0,0,'false','false','true','InvoiceLines','false','false','false','ARInvoiceLine.IsRegionalTax','false','false')  
+declare @Fact_ARInvoicesIsCancelledNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesIsCancelledNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesIsCancelledNewId,0,'Fact_ARInvoices','[Is Cancelled]','Is Cancelled','Boolean','false',0,0,'false','false','true','General','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
