@@ -934,17 +934,19 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
     private SetShipmentRoutesAccordingToShipmentDirection() {
+        this.CreatePickupsRoutesFromShipmentPM();
+        this.ReorderRoutesAccordingToShipmentDirection();
+        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+    }
+
+    private ReorderRoutesAccordingToShipmentDirection() {
         if (this.Shipment.ShipmentList.DirectionId == ShipmentDirections.Export) {
-            this.CreatePickupsRoutesFromShipmentPM();
             this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
             this.CreateMainCarriageLegsRoutesFromShipmentPM();
-            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
         }
         else {
-            this.CreatePickupsRoutesFromShipmentPM();
             this.CreateMainCarriageLegsRoutesFromShipmentPM();
             this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
-            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
         }
     }
 
