@@ -27,6 +27,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -2072,16 +2073,36 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
+
         private string GetPortId(string portCode)
         {
             Port port = portRepository.GetOceanPortByCombinedCode(portCode, this.logitudeTenant.Value);
+            string portId = null;
             if (port != null)
             {
-                return port.Id;
+                portId= port.Id;
+            }
+            else
+            {
+                portId = this.CopyPortCopyToCurrentTenant(portCode);
+            }
+            return portId;
+        }
+
+        private string CopyPortCopyToCurrentTenant(string portCode)
+        {
+            string portId = null;
+            PortQuery portQuery = new PortQuery(portRepository);
+            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
+            if (portZero != null)
+            {
+                var newPort = portQuery.GetPortCopyToCurrentTenant(portZero.Id, this.logitudeTenant.Value);
+                portId = newPort.Id;
             }
 
-            return null;
+            return portId;
         }
+
         private string GetTranslatedPortCode(string XMLportCode)
         {
             string portCode = XMLportCode;
