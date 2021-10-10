@@ -20,14 +20,14 @@ Feature: Create Quote, Delete all charges and add charge
         Then the quote should update successfully
 
     Scenario: Add charge with fixed sale currency mode
-        Given the user add charge with "Fuel Surcharges" as charge type
+        Given change sales currency to "NIS"
+        And the user add charge with "AFT" as charge type
         When update quote
         Then the quote should update successfully
-        And sale currency should have "EUR" value
+        And sale currency should have "NIS" value
 
-
-    Scenario: Change currency mode to same as cost 
+    Scenario: Change currency mode to same as cost
         Given the user change currency mode to same as cost currency
         When update quote
         Then the quote should update successfully
-        And sale currency should have "AED" value
+        And sale currency should have "EUR" value

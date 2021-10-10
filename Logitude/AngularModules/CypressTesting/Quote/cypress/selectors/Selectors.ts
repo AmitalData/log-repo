@@ -14,6 +14,8 @@ export class QuoteSelectors {
      public static readonly TransitTime = "#Quote_TransitTime"
      public static readonly DetailsTab = "#QuoteTHDetails"
      public static readonly QuotePartnersTab = "#QuoteTHPartners"
+     public static readonly QuoteSaleCurrencyId = "#Quote_SaleCurrencyId"
+
      //#endregion
      //#region Quick Search
      public static readonly QuoteSearch = '#Quote_Search';
@@ -72,7 +74,7 @@ export class QuoteSelectors {
      public static readonly AddChargesButton = "#AddCharges";
      public static readonly ChargesType = "#QuoteCharge_ChargesTypeId";
      public static readonly ChargeSaleCurrency = "#QuoteCharge_SaleCurrencyId";
-     public static readonly SameAsCostCurrencyComboBox = "#ComboBoxItem_200";
+     public static readonly SameAsCostCurrencyComboBox = "[data-cy='Same as Cost Currency']"
 
      //#endregion
 
