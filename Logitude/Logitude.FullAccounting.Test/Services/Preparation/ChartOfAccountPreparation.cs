@@ -22,8 +22,10 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             FullAccountingData.CustomerChartOfAccountId = GetCustomer();
             FullAccountingData.VendorChartOfAccountId = GetVendor();
             FullAccountingData.BankChartOfAccountId = GetBank();
+            FullAccountingData.RevenuesChartOfAccountId = GetRevenues();
         }
 
+        
         private string GetDebtorsAndCreditors()
         {
             return GetIdByCode(ChartOfAccountCodes.DebtorsAndCreditorsChart) ?? Create(CreateDebtorsAndCreditorsInstance());
@@ -42,6 +44,10 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetBank()
         {
             return GetIdByCode(ChartOfAccountCodes.BankChart) ?? Create(CreateBankChartInstance());
+        }
+        private string GetRevenues()
+        {
+            return GetIdByCode(ChartOfAccountCodes.RevenuesChart) ?? Create(CreateRevenuesChartInstance());
         }
 
         private string GetIdByCode(string code)
@@ -113,6 +119,19 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 Tenant = UserTenant.Tenant,
                 SearchFields = $"{ChartOfAccountCodes.BankChart},Banks Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Banks + ""
+
+            };
+        }
+        private ChartOfAccountPM CreateRevenuesChartInstance()
+        {
+            return new ChartOfAccountPM()
+            {
+                Code = ChartOfAccountCodes.RevenuesChart,
+                EnglishName = "Revenues Chart",
+                LocalName = "Revenues Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{ChartOfAccountCodes.RevenuesChart},Revenues Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Revenues + ""
 
             };
         }

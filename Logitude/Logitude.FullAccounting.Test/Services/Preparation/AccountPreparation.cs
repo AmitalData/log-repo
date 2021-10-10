@@ -122,6 +122,8 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                     return FullAccountingData.DebtorsAndCreditorsChartOfAccountId;
 
                 case ChartOfAccountsTypeEnum.Revenues:
+                    return FullAccountingData.RevenuesChartOfAccountId;
+
                 case ChartOfAccountsTypeEnum.Expenses:
                 case ChartOfAccountsTypeEnum.Works:
                 default:
