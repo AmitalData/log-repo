@@ -738,7 +738,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             var myLegType: string = myRoutingItem.LegType;
 
             if (myLegType == "Pick Up") {
-                if (this.EntityPM.ShipmentPickUps.filter(d => d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
+                if (this.EntityPM.ShipmentPickUps.filter(d => !AppTool.IsNullOrEmpty(d.ParentPickUpDeliveryId) && d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
                     var messageSindow: MessageWindow = new MessageWindow();
                     messageSindow.Show("Please delete the consequent pickups before deleting this pickup");
                 }
@@ -749,7 +749,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             else if (myLegType == "Delivery") {
-                if (this.EntityPM.ShipmentDeliveries.filter(d => d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
+                if (this.EntityPM.ShipmentDeliveries.filter(d => !AppTool.IsNullOrEmpty(d.ParentPickUpDeliveryId) && d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
                     var messageSindow: MessageWindow = new MessageWindow();
                     messageSindow.Show("Please delete the consequent deliveries before deleting this delivery");
                 }
