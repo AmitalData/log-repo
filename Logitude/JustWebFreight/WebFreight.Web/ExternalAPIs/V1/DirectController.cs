@@ -268,7 +268,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-
+                        if (entityPM.CustomsClearanceDate != null)
+                        {
+                            entityPM.IncludesCustoms = true;
+                        }
                         if (!IsInlandDomesticShipment(entityPM))
                         {
                             if (entityPM.ShipmentPackages.Count > 0)
@@ -334,6 +337,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
+                
 
                         if (entityPM.MainCarriageLegs != null && entityPM.MainCarriageLegs.Count > 0)
                         {
@@ -818,6 +822,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
                             }
+
+                            if (directPM.CustomsClearanceDate != null && directPM.IncludesCustoms == false)
+                            {
+                                directPM.IncludesCustoms = true;
+                            }
+
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
@@ -942,5 +952,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
         }
+
+        private void UpdateIncludeCustomesFeild(ShipmentPM shipmentPM)
+        {
+
+        }
+       
     }
 }
