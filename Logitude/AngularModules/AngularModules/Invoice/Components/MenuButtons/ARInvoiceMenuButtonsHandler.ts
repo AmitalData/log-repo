@@ -56,6 +56,7 @@ export class ARInvoiceMenuButtonsHandler {
                         case "SaveAsDraft": {
                             if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                 myButtonIsDisabled = true;
+                                button.IsHidden = true;
                             }
                             else {
 
